@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFilmAutoDetachCleanMC", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFilmAutoDetachCleanMC.Test", "PIFilmAutoDetachCleanMC.Test\PIFilmAutoDetachCleanMC.Test.csproj", "{FD601CAA-BD6F-E767-BD43-769F6260B15F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EQX.Device", "EQX.Device\EQX.Device\EQX.Device.csproj", "{4F0A13B6-5268-50EC-3763-2722295CD2F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,12 @@ Global
 		{FD601CAA-BD6F-E767-BD43-769F6260B15F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FD601CAA-BD6F-E767-BD43-769F6260B15F}.Simulation|Any CPU.ActiveCfg = Release|Any CPU
 		{FD601CAA-BD6F-E767-BD43-769F6260B15F}.Simulation|Any CPU.Build.0 = Release|Any CPU
+		{4F0A13B6-5268-50EC-3763-2722295CD2F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F0A13B6-5268-50EC-3763-2722295CD2F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F0A13B6-5268-50EC-3763-2722295CD2F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F0A13B6-5268-50EC-3763-2722295CD2F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F0A13B6-5268-50EC-3763-2722295CD2F4}.Simulation|Any CPU.ActiveCfg = Release|Any CPU
+		{4F0A13B6-5268-50EC-3763-2722295CD2F4}.Simulation|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
