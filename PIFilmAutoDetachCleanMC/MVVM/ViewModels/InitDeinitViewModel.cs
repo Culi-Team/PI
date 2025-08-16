@@ -1,0 +1,271 @@
+﻿using EQX.Core.Common;
+using EQX.Core.InOut;
+using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Threading;
+using PIFilmAutoDetachCleanMC.Defines;
+using PIFilmAutoDetachCleanMC.Process;
+
+namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
+{
+    /// <summary>
+    /// Step list for initialization / deinitialization machine
+    /// </summary>
+    public enum EHandleStep
+    {
+        Start,
+
+        FileSystemHandle,
+
+        MotionDeviceHandle,
+        IODeviceHandle,
+
+        RecipeHandle,
+
+        ProcessHandle,
+
+        End,
+        Error,
+
+        Navigate,
+    }
+
+    public enum EHandleMode
+    {
+        None,
+        Init,
+        Deinit,
+    }
+
+    public class InitDeinitViewModel : ViewModelBase
+    {
+        #region Properties
+        public string MessageText
+        {
+            get { return _messageText; }
+            set
+            {
+                _messageText = value;
+                // The property may be updated from another thread.
+                // So that, call OnPropertyChanged() inside and UI Invoke to make sure UI update properly
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    OnPropertyChanged();
+                }), DispatcherPriority.Render);
+            }
+        }
+
+        public List<string> ErrorMessages { get; private set; }
+        #endregion
+
+        public InitDeinitViewModel(Devices devices,
+            Processes processes,
+            INavigationService navigationService)
+        {
+            _devices = devices;
+            _processes = processes;
+            _navigationService = navigationService;
+
+            _task = new Task(() => { });
+            ErrorMessages = new List<string>();
+        }
+
+        public void Initialization()
+        {
+            ErrorMessages = new List<string>();
+
+            _task = new Task(() =>
+            {
+                if (HandlePreCheck(EHandleMode.Init) == false) return;
+
+                OnInitialization();
+                mode = EHandleMode.None;
+            });
+
+            _task.Start();
+        }
+
+        public void Deinitialization()
+        {
+            _task = new Task(() =>
+            {
+                if (HandlePreCheck(EHandleMode.Deinit) == false) return;
+
+                OnDeinitialization();
+                mode = EHandleMode.None;
+            });
+
+            _task.Start();
+        }
+
+        private bool HandlePreCheck(EHandleMode _mode)
+        {
+            if (mode == _mode)
+            {
+                // Already handle the same mode
+                return false;
+            }
+
+            while (mode != EHandleMode.None)
+            {
+                Thread.Sleep(10);
+            }
+
+            mode = _mode;
+            isHandling = true;
+            _step = EHandleStep.Start;
+
+            return true;
+        }
+
+        private void OnInitialization()
+        {
+            while (isHandling)
+            {
+                switch (_step)
+                {
+                    case EHandleStep.Start:
+                        MessageText = "Init Start";
+                        _step++;
+                        break;
+                    case EHandleStep.FileSystemHandle:
+                        _step++;
+                        break;
+                    case EHandleStep.MotionDeviceHandle:
+                        MessageText = "Connect Motion Deivices";
+                        _devices.Motions.All.ForEach(m => m.Connect());
+
+                        if (_devices.Motions.All.Any(m => m.IsConnected == false))
+                        {
+                            ErrorMessages.Add($"Motion device is not connected: " +
+                                $"{string.Join(", ", _devices.Motions.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
+                        }
+
+                        _step++;
+                        break;
+                    case EHandleStep.IODeviceHandle:
+                        MessageText = "Connect IO Deivices";
+                        _isSuccess = true;
+
+                        _isSuccess &= _devices.Inputs.Initialize();
+                        _isSuccess &= _devices.Outputs.Initialize();
+
+                        _isSuccess &= _devices.Inputs.Connect();
+                        _isSuccess &= _devices.Outputs.Connect();
+
+                        if (_isSuccess == false)
+                        {
+                            ErrorMessages.Add("IO Deivices init failed.");
+                        }
+
+                        _step++;
+                        break;
+                    case EHandleStep.RecipeHandle:
+                        _step++;
+                        break;
+                    case EHandleStep.ProcessHandle:
+                        _processes.Initialize();
+                        _step++;
+                        break;
+                    case EHandleStep.End:
+                        _step++;
+                        break;
+                    case EHandleStep.Error:
+                        if (ErrorMessages.Count > 0)
+                        {
+                            MessageText = "Error: " + string.Join(", ", ErrorMessages);
+                            Thread.Sleep(5000);
+                        }
+                        else
+                        {
+                            MessageText = "Initialization completed successfully.";
+                        }
+                        _step++;
+                        break;
+                    case EHandleStep.Navigate:
+                        MessageText = "Navigating...";
+                        _navigationService.NavigateTo<AutoViewModel>();
+                        _step++;
+                        break;
+                    default:
+                        isHandling = false;
+                        return;
+                }
+                Thread.Sleep(2);
+            }
+        }
+
+        private void OnDeinitialization()
+        {
+            while (isHandling)
+            {
+                switch (_step)
+                {
+                    case EHandleStep.Start:
+                        MessageText = "Deinit Start";
+                        _step++;
+                        break;
+                    case EHandleStep.FileSystemHandle:
+                        _step++;
+                        break;
+                    case EHandleStep.MotionDeviceHandle:
+                        MessageText = "Connect Motion Deivices";
+                        _devices.Motions.All.ForEach(m => m.Disconnect());
+                        _step++;
+                        break;
+                    case EHandleStep.IODeviceHandle:
+                        MessageText = "Connect IO Deivices";
+                        _devices.Inputs.Disconnect();
+                        _devices.Outputs.Disconnect();
+                        _step++;
+                        break;
+                    case EHandleStep.RecipeHandle:
+                        _step++;
+                        break;
+                    case EHandleStep.ProcessHandle:
+                        _step++;
+                        break;
+                    case EHandleStep.End:
+                        _step++;
+                        break;
+                    case EHandleStep.Error:
+                        _step++;
+                        break;
+                    case EHandleStep.Navigate:
+                        _step++;
+                        break;
+                    default:
+                        // Set isHandling to false to stop the loop
+
+                        Thread.Sleep(1000);
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            Application.Current.Shutdown(100);
+                        });
+                        break;
+                }
+                Thread.Sleep(2);
+            }
+        }
+
+        #region Private fields
+        private readonly INavigationService _navigationService;
+        private readonly Devices _devices;
+        private readonly Processes _processes;
+
+        private string _messageText = "";
+        private Task _task;
+
+        EHandleMode mode = EHandleMode.None;
+        bool isHandling = true;
+
+        private EHandleStep _step;
+
+        /// <summary>
+        /// Common use for all case (in switch statement)
+        /// </summary>
+        private bool _isSuccess = true;
+        #endregion
+    }
+}
