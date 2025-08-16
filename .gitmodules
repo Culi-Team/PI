@@ -1,0 +1,21 @@
+[submodule "EQX.Core"]
+	path = EQX.Core
+	url = https://github.com/TopEngineering/EQX.Core.git
+[submodule "EQX.Device"]
+	path = EQX.Device
+	url = https://github.com/TopEngineering/EQX.Device.git
+[submodule "EQX.Motion"]
+	path = EQX.Motion
+	url = https://github.com/TopEngineering/EQX.Motion.git
+[submodule "EQX.InOut"]
+	path = EQX.InOut
+	url = https://github.com/TopEngineering/EQX.InOut.git
+[submodule "EQX.UI"]
+	path = EQX.UI
+	url = https://github.com/TopEngineering/EQX.UI.git
+[submodule "EQX.Process"]
+	path = EQX.Process
+	url = https://github.com/TopEngineering/EQX.Process.git
+[submodule "EQX.ThirdParty"]
+	path = EQX.ThirdParty
+	url = https://github.com/TopEngineering/EQX.ThirdParty.git
