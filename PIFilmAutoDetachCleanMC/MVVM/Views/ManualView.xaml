@@ -20,7 +20,12 @@
         <ContentControl Content="{Binding Outputs.All[1]}"/>
         <ContentControl Content="{Binding Outputs.All[2]}"/>
 
-        <uc:MotionView Motion="{Binding DataContext.Motions.X1Axis,ElementName=root}"/>
+        <StackPanel Orientation="Horizontal">
+            <uc:MotionView Motion="{Binding DataContext.Motions.X1Axis,ElementName=root}" />
+            <uc:MotionView Motion="{Binding DataContext.Motions.Y1Axis,ElementName=root}" />
+            <uc:MotionView Motion="{Binding DataContext.Motions.ZAxis,ElementName=root}" />
+
+        </StackPanel>
 
         <Button Content="Connect Motion" Command="{Binding ConnectMotionCommand}"/>
     </StackPanel>
