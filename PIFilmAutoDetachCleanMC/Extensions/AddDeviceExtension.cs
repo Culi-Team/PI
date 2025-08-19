@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using System.IO;
 using PIFilmAutoDetachCleanMC.Defines;
+using EQX.Motion.ByVendor.Inovance;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -17,11 +18,11 @@ namespace PIFilmAutoDetachCleanMC.Extensions
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
-                services.AddSingleton<List<IMotionParameter>>((ser) =>
+                services.AddSingleton<List<MotionInovanceParameter>>((ser) =>
                 {
                     var configuration = ser.GetRequiredService<IConfiguration>();
 
-                    var motionParameters = JsonConvert.DeserializeObject<List<MotionParameter>>(
+                    var motionParameters = JsonConvert.DeserializeObject<List<MotionInovanceParameter>>(
                         File.ReadAllText(configuration["Files:MotionParaConfigFile"] ?? "")
                     );
                     if (motionParameters == null)
@@ -29,7 +30,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                         throw new FormatException("MotionParaConfigFile format error");
                     }
 
-                    List<IMotionParameter> result = new List<IMotionParameter>();
+                    List<MotionInovanceParameter> result = new List<MotionInovanceParameter>();
                     foreach (var parameter in motionParameters)
                     {
                         result.Add(parameter);
@@ -38,7 +39,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 });
 
 #if SIMULATION
-                services.AddSingleton<IMotionFactory<IMotion>, SimulationMotionFactory>();
+                services.AddSingleton<IMotionFactory<IMotion>, MotionInovanceFactory>();
 #else
                 services.AddSingleton<IMotionFactory<IMotion>, MotionEziPlusEFactory>();
 #endif

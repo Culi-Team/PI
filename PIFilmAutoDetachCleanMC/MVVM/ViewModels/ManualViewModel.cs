@@ -2,6 +2,7 @@
 using EQX.Core.Common;
 using System.Diagnostics;
 using PIFilmAutoDetachCleanMC.Defines;
+using System.Windows.Input;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -17,5 +18,16 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public Inputs Inputs { get; }
         public Outputs Outputs { get; }
         public Motions Motions { get; }
+
+        public ICommand ConnectMotionCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    Motions.All.ForEach(m => m.Connect());
+                });
+            }
+        }
     }
 }

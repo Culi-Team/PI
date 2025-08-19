@@ -2,10 +2,8 @@
 {
     public enum EMotion
     {
-        XAxis,
-        ZAxis,
+        X1Axis,
         Y1Axis,
-        Y2Axis,
-        TAxis,
+        ZAxis,
     }
 }
