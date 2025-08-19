@@ -38,10 +38,17 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     return result;
                 });
 
+                services.AddKeyedScoped<IMotionController, MotionControllerInovance>("InovanceController#1");
+
 #if SIMULATION
-                services.AddSingleton<IMotionFactory<IMotion>, MotionInovanceFactory>();
+                services.AddSingleton<IMotionFactory<IMotion>, SimulationMotionFactory>();
 #else
-                services.AddSingleton<IMotionFactory<IMotion>, MotionEziPlusEFactory>();
+                services.AddSingleton<IMotionFactory<IMotion>>(sp =>
+                    new MotionInovanceFactoryWithDefaultCardHandler
+                    {
+                        MotionController = sp.GetRequiredKeyedService<IMotionController>("InovanceController#1")
+                    }
+                );
 #endif
 
                 services.AddSingleton<Motions>();
@@ -59,7 +66,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 #if SIMULATION
                 services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new SimulationInputDevice_Client<EInput1>() { Id = 1, Name = "InDevice1", MaxPin = 32 }; });
 #else
-                services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new SimulationInputDevice<EInput>(1, "Input Device #1"); });
+                //services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new SimulationInputDevice_Client<EInput1>(1, "Input Device #1"); });
 #endif
 
 #if SIMULATION
