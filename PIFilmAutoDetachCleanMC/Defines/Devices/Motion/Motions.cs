@@ -1,15 +1,21 @@
 ﻿using EQX.Core.Motion;
 using EQX.Motion;
 using EQX.Motion.ByVendor.Inovance;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
     public class Motions : MotionList<EMotion>
     {
-        public Motions(IMotionFactory<IMotion> motionFactory, List<MotionInovanceParameter> parameterList)
+        public Motions(IMotionFactory<IMotion> motionFactory,
+            List<MotionInovanceParameter> parameterList,
+            [FromKeyedServices("InovanceController#1")] IMotionController motionControllerInovance)
             : base(motionFactory, parameterList)
         {
+            MotionControllerInovance = motionControllerInovance;
         }
+
+        public IMotionController MotionControllerInovance { get; }
 
         public IMotion X1Axis => All.First(m => m.Id == (int)EMotion.X1Axis);
         public IMotion ZAxis => All.First(m => m.Id == (int)EMotion.ZAxis);

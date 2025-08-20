@@ -134,6 +134,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         break;
                     case EHandleStep.MotionDeviceHandle:
                         MessageText = "Connect Motion Deivices";
+
+                        _devices.Motions.MotionControllerInovance.Connect();
+
                         _devices.Motions.All.ForEach(m => m.Connect());
 
                         if (_devices.Motions.All.Any(m => m.IsConnected == false))
@@ -211,6 +214,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         break;
                     case EHandleStep.MotionDeviceHandle:
                         MessageText = "Connect Motion Deivices";
+
+                        _devices.Motions.MotionControllerInovance.Disconnect();
+
                         _devices.Motions.All.ForEach(m => m.Disconnect());
                         _step++;
                         break;
