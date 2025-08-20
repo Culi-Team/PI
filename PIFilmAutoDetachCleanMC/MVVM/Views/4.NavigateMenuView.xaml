@@ -71,6 +71,11 @@
                 Content="{DynamicResource str_Log}"
                 DisabledImage="{StaticResource image_log_normal_dark}"
                 Image="{StaticResource image_log_selected}"/>
+            <ui:ImageRadioButton GroupName="VMNavigateButton"
+                                 Content="Exit"
+                                 Image="{StaticResource image_exit_normal}"
+                                 DisabledImage="{StaticResource image_exit_disable}" />
+
         </StackPanel>
     </Grid>
 </UserControl>

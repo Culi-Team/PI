@@ -15,12 +15,6 @@
         <Grid Height="30"
               Background="Transparent"
               MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="{StaticResource ImageTopLogo1}"
-                       Margin="4"/>
-                <Image Source="{StaticResource ImageCustomerLogo}"
-                       Margin="4"/>
-            </StackPanel>
             <eqxui:WindowResizeCloseButtons HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 CloseButtonClickCommand="{Binding DataContext.ApplicationCloseCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
@@ -29,9 +23,9 @@
         <Grid Height="37"
               Background="{StaticResource PrimaryBackgroundColor}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.7*"/>
+                <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="1.3*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0.8*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -47,7 +41,7 @@
                        FontFamily="{StaticResource FontHighlight}"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
-                       FontSize="30"
+                       FontSize="26"
                        Grid.Column="1"
                        Grid.RowSpan="2"/>
 

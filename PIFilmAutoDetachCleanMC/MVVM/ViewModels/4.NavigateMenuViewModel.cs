@@ -112,7 +112,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _userStore = userStore;
 
             // TODO: Remove this
-            _userStore.Permission = EPermission.SuperUser;
+            _userStore.Permission = EPermission.Admin;
 
             _userStore.UserChanged += _userStore_UserChanged;
             UpdateNavigationButtons();
@@ -132,7 +132,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             NavigationButtons.Add(new NavigationButton { Label = "Manual", Command = ManualNavigate, ImageKey = "image_manual_selected", DisabledImageKey = "image_manual_normal_dark" });
             NavigationButtons.Add(new NavigationButton { Label = "Data", Command = DataNavigate, ImageKey = "image_data_selected", DisabledImageKey = "image_data_normal" });
             NavigationButtons.Add(new NavigationButton { Label = "Teach", Command = TeachNavigate, ImageKey = "image_teach_selected", DisabledImageKey = "image_teach_normal" });
-            NavigationButtons.Add(new NavigationButton { Label = "Vision", Command = VisionNavigate, ImageKey = "image_camera_selected", DisabledImageKey = "image_camera_normal_light" });
 
             if (_userStore.Permission == EPermission.Admin)
             {
