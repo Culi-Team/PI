@@ -9,9 +9,10 @@ using Newtonsoft.Json;
 using System.IO;
 using PIFilmAutoDetachCleanMC.Defines;
 using EQX.Motion.ByVendor.Inovance;
-using EQX.Core.Device.RollerController;
-using EQX.Device.RollerController;
 using System.IO.Ports;
+using EQX.Core.Communication.Modbus;
+using EQX.Core.Device.SpeedController;
+using EQX.Device.SpeedController;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -43,9 +44,16 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
                 services.AddKeyedScoped<IMotionController, MotionControllerInovance>("InovanceController#1");
 
-                services.AddSingleton<IRollerController>(services =>
+                services.AddKeyedScoped<IModbusCommunication>("RollerModbusCommunication", (services, obj) =>
                 {
-                    return new SD201SRollerController(1, "SD201S", "COM3", 9600, StopBits.One);
+                    return new ModbusRTUCommunication("COM1", 9600);
+                });
+                services.AddSingleton<ISpeedController>(services =>
+                {
+                    return new SD201SSpeedController(1, "SD201S", "COM3", 9600, StopBits.One) 
+                    {
+                        ModbusCommunication = services.GetRequiredKeyedService<IModbusCommunication>("RollerModbusCommunication") 
+                    };
                 });
 #if SIMULATION
                 services.AddSingleton<IMotionFactory<IMotion>, SimulationMotionFactory>();

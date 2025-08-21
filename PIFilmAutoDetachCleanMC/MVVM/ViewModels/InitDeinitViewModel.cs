@@ -6,7 +6,8 @@ using System.Windows;
 using System.Windows.Threading;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Process;
-using EQX.Core.Device.RollerController;
+using EQX.Core.Device.SpeedController;
+using EQX.Core.Communication.Modbus;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -63,12 +64,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public InitDeinitViewModel(Devices devices,
             Processes processes,
             INavigationService navigationService,
-            IRollerController rollerController)
+            [FromKeyedServices("RollerModbusCommunication")]IModbusCommunication rollerModbusCommunication)
         {
             _devices = devices;
             _processes = processes;
             _navigationService = navigationService;
-            _rollerController = rollerController;
+            _rollerModbusCommunication = rollerModbusCommunication;
             _task = new Task(() => { });
             ErrorMessages = new List<string>();
         }
@@ -147,7 +148,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                                 $"{string.Join(", ", _devices.Motions.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
                         }
 
-                        _rollerController.Connect();
+                        _rollerModbusCommunication.Connect();
                         _step++;
                         break;
                     case EHandleStep.IODeviceHandle:
@@ -222,7 +223,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         _devices.Motions.All.ForEach(m => m.Disconnect());
 
-                        _rollerController.Disconnect();
+                        _rollerModbusCommunication.Disconnect();
                         _step++;
                         break;
                     case EHandleStep.IODeviceHandle:
@@ -262,7 +263,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         #region Private fields
         private readonly INavigationService _navigationService;
-        private readonly IRollerController _rollerController;
+        private readonly IModbusCommunication _rollerModbusCommunication;
         private readonly Devices _devices;
         private readonly Processes _processes;
 

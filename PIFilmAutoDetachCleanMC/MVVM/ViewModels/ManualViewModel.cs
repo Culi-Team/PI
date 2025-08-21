@@ -3,15 +3,15 @@ using EQX.Core.Common;
 using System.Diagnostics;
 using PIFilmAutoDetachCleanMC.Defines;
 using System.Windows.Input;
-using EQX.Core.Device.RollerController;
+using EQX.Core.Device.SpeedController;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
     public class ManualViewModel : ViewModelBase
     {
-        private readonly IRollerController _rollerController;
+        private readonly ISpeedController _rollerController;
 
-        public ManualViewModel(Devices devices,IRollerController rollerController)
+        public ManualViewModel(Devices devices, ISpeedController rollerController)
         {
             Inputs = devices.Inputs;
             Outputs = devices.Outputs;
