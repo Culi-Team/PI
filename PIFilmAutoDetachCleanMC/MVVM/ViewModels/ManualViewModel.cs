@@ -42,7 +42,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
-        public ICommand SetSpeed
+        public ICommand SetSpeedCommand
         {
             get
             {
@@ -53,7 +53,29 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
-        public ICommand Start
+        public ICommand SetAccCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _rollerController.SetAcceleration(Speed);
+                });
+            }
+        }
+
+        public ICommand SetDecCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _rollerController.SetDeceleration(Speed);
+                });
+            }
+        }
+
+        public ICommand RunCommand
         {
             get
             {
@@ -64,7 +86,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
-        public ICommand Stop
+        public ICommand StopCommand
         {
             get
             {
