@@ -3,16 +3,28 @@ using EQX.Core.Common;
 using System.Diagnostics;
 using PIFilmAutoDetachCleanMC.Defines;
 using System.Windows.Input;
+using EQX.Core.Device.RollerController;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
     public class ManualViewModel : ViewModelBase
     {
-        public ManualViewModel(Devices devices)
+        private readonly IRollerController _rollerController;
+
+        public ManualViewModel(Devices devices,IRollerController rollerController)
         {
             Inputs = devices.Inputs;
             Outputs = devices.Outputs;
             Motions = devices.Motions;
+            _rollerController = rollerController;
+        }
+
+        private int _speed = 1000;
+
+        public int Speed
+        {
+            get { return _speed; }
+            set { _speed = value; OnPropertyChanged(); }
         }
 
         public Inputs Inputs { get; }
@@ -26,6 +38,39 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 return new RelayCommand(() =>
                 {
                     Motions.All.ForEach(m => m.Connect());
+                });
+            }
+        }
+
+        public ICommand SetSpeed
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _rollerController.SetSpeed(Speed);
+                });
+            }
+        }
+
+        public ICommand Start
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _rollerController.Start();
+                });
+            }
+        }
+
+        public ICommand Stop
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _rollerController.Stop();
                 });
             }
         }

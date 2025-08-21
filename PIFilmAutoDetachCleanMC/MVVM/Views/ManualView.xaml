@@ -10,23 +10,38 @@
              mc:Ignorable="d"
              x:Name="root"
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel>
-        <!-- TODO: Use ItemsControl? -->
-        <ContentControl Content="{Binding Inputs.All[0]}"/>
-        <ContentControl Content="{Binding Inputs.All[1]}"/>
-        <ContentControl Content="{Binding Inputs.All[2]}"/>
+    <TabControl>
+        <TabItem Header="Motion Test">
+            <StackPanel>
+                <!-- TODO: Use ItemsControl? -->
+                <ContentControl Content="{Binding Inputs.All[0]}" />
+                <ContentControl Content="{Binding Inputs.All[1]}" />
+                <ContentControl Content="{Binding Inputs.All[2]}" />
 
-        <ContentControl Content="{Binding Outputs.All[0]}"/>
-        <ContentControl Content="{Binding Outputs.All[1]}"/>
-        <ContentControl Content="{Binding Outputs.All[2]}"/>
+                <ContentControl Content="{Binding Outputs.All[0]}" />
+                <ContentControl Content="{Binding Outputs.All[1]}" />
+                <ContentControl Content="{Binding Outputs.All[2]}" />
 
-        <StackPanel Orientation="Horizontal">
-            <uc:MotionView Motion="{Binding DataContext.Motions.X1Axis,ElementName=root}" />
-            <uc:MotionView Motion="{Binding DataContext.Motions.Y1Axis,ElementName=root}" />
-            <uc:MotionView Motion="{Binding DataContext.Motions.ZAxis,ElementName=root}" />
+                <StackPanel Orientation="Horizontal">
+                    <uc:MotionView Motion="{Binding DataContext.Motions.X1Axis,ElementName=root}" />
+                    <uc:MotionView Motion="{Binding DataContext.Motions.Y1Axis,ElementName=root}" />
+                    <uc:MotionView Motion="{Binding DataContext.Motions.ZAxis,ElementName=root}" />
 
-        </StackPanel>
+                </StackPanel>
 
-        <Button Content="Connect Motion" Command="{Binding ConnectMotionCommand}"/>
-    </StackPanel>
+                <Button Content="Connect Motion"
+                        Command="{Binding ConnectMotionCommand}" />
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Roller Test">
+            <StackPanel Orientation="Vertical">
+                <TextBox Text="{Binding Speed}"/>
+                <Button Content="Run" Command="{Binding RunCommand}"/>
+                <Button Content="Stop" Command="{Binding StopCommand}"/>
+                <Button Content="SetSpeed" Command="{Binding SetSpeedCommand}"/>
+                <Button Content="Set Accelaration" Command="{Binding SetAccCommand}"/>
+                <Button Content="Set Deccelation" Command="{Binding SetDecCommand}"/>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
 </UserControl>
