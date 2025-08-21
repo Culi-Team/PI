@@ -41,6 +41,8 @@
                 <Button Content="SetSpeed" Command="{Binding SetSpeedCommand}"/>
                 <Button Content="Set Accelaration" Command="{Binding SetAccCommand}"/>
                 <Button Content="Set Deccelation" Command="{Binding SetDecCommand}"/>
+                <Button Content="Set CW" Command="{Binding SetCWDirection}"/>
+                <Button Content="Set CCW" Command="{Binding SetCCWDirection}"/>
             </StackPanel>
         </TabItem>
     </TabControl>

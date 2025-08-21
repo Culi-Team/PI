@@ -96,5 +96,27 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 });
             }
         }
+
+        public ICommand SetCWDirection
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _rollerController.SetDirection(true);
+                });
+            }
+        }
+
+        public ICommand SetCCWDirection
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _rollerController.SetDirection(false);
+                });
+            }
+        }
     }
 }
