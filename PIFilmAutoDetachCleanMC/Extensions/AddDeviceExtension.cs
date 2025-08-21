@@ -11,6 +11,7 @@ using PIFilmAutoDetachCleanMC.Defines;
 using EQX.Motion.ByVendor.Inovance;
 using EQX.Core.Device.RollerController;
 using EQX.Device.RollerController;
+using System.IO.Ports;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -42,7 +43,10 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
                 services.AddKeyedScoped<IMotionController, MotionControllerInovance>("InovanceController#1");
 
-                services.AddSingleton<IRollerController, SD201SRollerController>();
+                services.AddSingleton<IRollerController>(services =>
+                {
+                    return new SD201SRollerController(1, "SD201S", "COM3", 9600, StopBits.One);
+                });
 #if SIMULATION
                 services.AddSingleton<IMotionFactory<IMotion>, SimulationMotionFactory>();
 #else
