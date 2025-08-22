@@ -33,7 +33,6 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     {
                         throw new FormatException("MotionParaConfigFile format error");
                     }
-
                     List<MotionInovanceParameter> result = new List<MotionInovanceParameter>();
                     foreach (var parameter in motionParameters)
                     {
@@ -41,20 +40,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     }
                     return result;
                 });
-
                 services.AddKeyedScoped<IMotionController, MotionControllerInovance>("InovanceController#1");
-
-                services.AddKeyedScoped<IModbusCommunication>("RollerModbusCommunication", (services, obj) =>
-                {
-                    return new ModbusRTUCommunication("COM1", 9600);
-                });
-                services.AddSingleton<ISpeedController>(services =>
-                {
-                    return new SD201SSpeedController(1, "SD201S", "COM3", 9600, StopBits.One) 
-                    {
-                        ModbusCommunication = services.GetRequiredKeyedService<IModbusCommunication>("RollerModbusCommunication") 
-                    };
-                });
 #if SIMULATION
                 services.AddSingleton<IMotionFactory<IMotion>, SimulationMotionFactory>();
 #else
@@ -98,5 +84,41 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
             return hostBuilder;
         }
+
+        public static IHostBuilder AddTorqueControllerDevices(this IHostBuilder hostBuilder)
+        {
+            hostBuilder.ConfigureServices((hostContext, services) =>
+            {
+                services.AddKeyedScoped<IModbusCommunication>("TorqueControllerModbusCommunication", (services, obj) =>
+                {
+                    return new ModbusRTUCommunication("COM2", 9600);
+                });
+            });
+
+            return hostBuilder;
+        }
+
+        public static IHostBuilder AddRollerControllerDevices(this IHostBuilder hostBuilder)
+        {
+            hostBuilder.ConfigureServices((hostContext, services) =>
+            {
+                services.AddKeyedScoped<IModbusCommunication>("RollerModbusCommunication", (services, obj) =>
+                {
+                    return new ModbusRTUCommunication("COM3", 9600);
+                });
+
+                services.AddSingleton<ISpeedController>(services =>
+                {
+                    return new SD201SSpeedController(1, "SD201S")
+                    {
+                        ModbusCommunication = services.GetRequiredKeyedService<IModbusCommunication>("RollerModbusCommunication")
+                    };
+                });
+
+            });
+
+            return hostBuilder;
+        }
+
     }
 }

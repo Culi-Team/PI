@@ -182,7 +182,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         if (ErrorMessages.Count > 0)
                         {
                             MessageText = "Error: " + string.Join(", ", ErrorMessages);
-                            Thread.Sleep(5000);
+                            Thread.Sleep(500);
                         }
                         else
                         {

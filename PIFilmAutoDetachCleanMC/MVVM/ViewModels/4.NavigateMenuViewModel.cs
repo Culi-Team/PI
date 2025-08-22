@@ -122,16 +122,16 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             NavigationButtons = new ObservableCollection<NavigationButton>();
 
-            NavigationButtons.Add(new NavigationButton { Label = "Auto", Command = AutoNavigate, ImageKey = "image_auto_selected", DisabledImageKey = "image_auto_normal_dark" });
+            NavigationButtons.Add(new NavigationButton { Label = "Auto", Command = AutoNavigate, ImageKey = "MainUI_SS_Auto_Hover", DisabledImageKey = "MainUI_SS_Auto_Default" });
 
             if (_userStore.Permission == EPermission.Operator)
             {
                 return;
             }
 
-            NavigationButtons.Add(new NavigationButton { Label = "Manual", Command = ManualNavigate, ImageKey = "image_manual_selected", DisabledImageKey = "image_manual_normal_dark" });
-            NavigationButtons.Add(new NavigationButton { Label = "Data", Command = DataNavigate, ImageKey = "image_data_selected", DisabledImageKey = "image_data_normal" });
-            NavigationButtons.Add(new NavigationButton { Label = "Teach", Command = TeachNavigate, ImageKey = "image_teach_selected", DisabledImageKey = "image_teach_normal" });
+            NavigationButtons.Add(new NavigationButton { Label = "Manual", Command = ManualNavigate, ImageKey = "MainUI_SS_Manual_Hover", DisabledImageKey = "MainUI_SS_Manual_Default" });
+            NavigationButtons.Add(new NavigationButton { Label = "Data", Command = DataNavigate, ImageKey = "MainUI_SS_Data_Hover", DisabledImageKey = "MainUI_SS_Data_Default" });
+            NavigationButtons.Add(new NavigationButton { Label = "Teach", Command = TeachNavigate, ImageKey = "MainUI_SS_Teach_Hover", DisabledImageKey = "MainUI_SS_Teach_Default" });
 
             if (_userStore.Permission == EPermission.Admin)
             {

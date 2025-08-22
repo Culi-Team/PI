@@ -36,10 +36,9 @@
         <ItemsControl ItemsSource="{Binding NavigationButtons}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <ui:ImageRadioButton
+                    <ui:ImageRadioButtonV2
                         GroupName="VMNavigateButton"
                         Command="{Binding Command}"
-                        Content="{Binding Label}"
                         DisabledImage="{Binding DisabledImageKey, Converter={StaticResource ImageKeyToImageConverter}}"
                         Image="{Binding ImageKey, Converter={StaticResource ImageKeyToImageConverter}}"/>
                 </DataTemplate>
@@ -59,22 +58,20 @@
         <StackPanel Orientation="Horizontal"
                 DockPanel.Dock="Right"
                 Grid.Column="2">
-            <ui:ImageRadioButton
+            <!--<ui:ImageRadioButton
                 GroupName="VMNavigateButton"
                 Command="{Binding LogoutNavigate}"
                 Content="{DynamicResource str_UserGroup}"
                 DisabledImage="{StaticResource image_user_change_normal_dark}"
-                Image="{StaticResource image_user_change_selected}"/>
-            <ui:ImageRadioButton
+                Image="{StaticResource image_user_change_selected}"/>-->
+            <ui:ImageRadioButtonV2
                 GroupName="VMNavigateButton"
                 Command="{Binding LogNavigate}"
-                Content="{DynamicResource str_Log}"
-                DisabledImage="{StaticResource image_log_normal_dark}"
-                Image="{StaticResource image_log_selected}"/>
-            <ui:ImageRadioButton GroupName="VMNavigateButton"
-                                 Content="Exit"
-                                 Image="{StaticResource image_exit_normal}"
-                                 DisabledImage="{StaticResource image_exit_disable}" />
+                DisabledImage="{StaticResource MainUI_SS_Log_Default}"
+                Image="{StaticResource MainUI_SS_Log_Hover}"/>
+            <ui:ImageRadioButtonV2 GroupName="VMNavigateButton"
+                                 Image="{StaticResource MainUI_SS_Exit_Hover}"
+                                 DisabledImage="{StaticResource MainUI_SS_Exit_Default}" />
 
         </StackPanel>
     </Grid>
