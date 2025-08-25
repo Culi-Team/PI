@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PIFilmAutoDetachCleanMC.Defines;
+using PIFilmAutoDetachCleanMC.Process;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -11,6 +12,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
                 services.AddSingleton<Information>();
+                services.AddSingleton<MachineStatus>();
             });
 
             return hostBuilder;
