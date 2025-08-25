@@ -36,8 +36,9 @@
         <ItemsControl ItemsSource="{Binding NavigationButtons}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <ui:ImageRadioButtonV2
+                    <ui:ImageRadioButton
                         GroupName="VMNavigateButton"
+                        Content="{Binding Label}"
                         Command="{Binding Command}"
                         DisabledImage="{Binding DisabledImageKey, Converter={StaticResource ImageKeyToImageConverter}}"
                         Image="{Binding ImageKey, Converter={StaticResource ImageKeyToImageConverter}}"/>
@@ -64,14 +65,16 @@
                 Content="{DynamicResource str_UserGroup}"
                 DisabledImage="{StaticResource image_user_change_normal_dark}"
                 Image="{StaticResource image_user_change_selected}"/>-->
-            <ui:ImageRadioButtonV2
+            <ui:ImageRadioButton
                 GroupName="VMNavigateButton"
+                Content="Log"
                 Command="{Binding LogNavigate}"
-                DisabledImage="{StaticResource MainUI_SS_Log_Default}"
-                Image="{StaticResource MainUI_SS_Log_Hover}"/>
-            <ui:ImageRadioButtonV2 GroupName="VMNavigateButton"
-                                 Image="{StaticResource MainUI_SS_Exit_Hover}"
-                                 DisabledImage="{StaticResource MainUI_SS_Exit_Default}" />
+                DisabledImage="{StaticResource image_log_normal}"
+                Image="{StaticResource image_log_selected}"/>
+            <ui:ImageRadioButton GroupName="VMNavigateButton"
+                                 Content="Exit"
+                                 Image="{StaticResource image_exit_normal}"
+                                 DisabledImage="{StaticResource image_exit_selected}" />
 
         </StackPanel>
     </Grid>

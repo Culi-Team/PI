@@ -9,14 +9,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
     public class ManualViewModel : ViewModelBase
     {
-        private readonly ISpeedController _rollerController;
 
-        public ManualViewModel(Devices devices, ISpeedController rollerController)
+        public ManualViewModel(Devices devices)
         {
             Inputs = devices.Inputs;
             Outputs = devices.Outputs;
             MotionsInovance = devices.MotionsInovance;
-            _rollerController = rollerController;
         }
 
         private int _speed = 1000;
@@ -38,83 +36,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 return new RelayCommand(() =>
                 {
                     MotionsInovance.MotionControllerInovance.Connect();
-                });
-            }
-        }
-
-        public ICommand SetSpeedCommand
-        {
-            get
-            {
-                return new RelayCommand(() =>
-                {
-                    _rollerController.SetSpeed(Speed);
-                });
-            }
-        }
-
-        public ICommand SetAccCommand
-        {
-            get
-            {
-                return new RelayCommand(() =>
-                {
-                    _rollerController.SetAcceleration(Speed);
-                });
-            }
-        }
-
-        public ICommand SetDecCommand
-        {
-            get
-            {
-                return new RelayCommand(() =>
-                {
-                    _rollerController.SetDeceleration(Speed);
-                });
-            }
-        }
-
-        public ICommand RunCommand
-        {
-            get
-            {
-                return new RelayCommand(() =>
-                {
-                    _rollerController.Start();
-                });
-            }
-        }
-
-        public ICommand StopCommand
-        {
-            get
-            {
-                return new RelayCommand(() =>
-                {
-                    _rollerController.Stop();
-                });
-            }
-        }
-
-        public ICommand SetCWDirection
-        {
-            get
-            {
-                return new RelayCommand(() =>
-                {
-                    _rollerController.SetDirection(true);
-                });
-            }
-        }
-
-        public ICommand SetCCWDirection
-        {
-            get
-            {
-                return new RelayCommand(() =>
-                {
-                    _rollerController.SetDirection(false);
                 });
             }
         }

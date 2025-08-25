@@ -139,6 +139,8 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 {
                     return new ModbusRTUCommunication("COM2", 9600);
                 });
+
+                services.AddSingleton<TorqueControllerList>();
             });
 
             return hostBuilder;
@@ -153,14 +155,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     return new ModbusRTUCommunication("COM3", 9600);
                 });
 
-                services.AddSingleton<ISpeedController>(services =>
-                {
-                    return new SD201SSpeedController(1, "SD201S")
-                    {
-                        ModbusCommunication = services.GetRequiredKeyedService<IModbusCommunication>("RollerModbusCommunication")
-                    };
-                });
-
+                services.AddSingleton<SpeedControllerList>();
             });
 
             return hostBuilder;
