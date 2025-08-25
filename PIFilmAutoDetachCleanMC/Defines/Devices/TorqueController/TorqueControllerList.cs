@@ -19,8 +19,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         {
             _modbusCommunication = modbusCommunication;
 
-            var torqueCtlList = Enum.GetNames(typeof(ESpeedController)).ToList();
-            var torqueCtlIndex = (int[])Enum.GetValues(typeof(ESpeedController));
+            var torqueCtlList = Enum.GetNames(typeof(ETorqueController)).ToList();
+            var torqueCtlIndex = (int[])Enum.GetValues(typeof(ETorqueController));
 
             All = new List<ITorqueController>();
 
@@ -29,5 +29,15 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 All.Add(new DX3000TorqueController(torqueCtlIndex[i], torqueCtlList[i]) { ModbusCommunication = _modbusCommunication });
             }
         }
+
+        public ITorqueController VinylCleanWinder => All.First(m => m.Id == (int)ETorqueController.VinylClean_Winder);
+        public ITorqueController WETCleanLeftWinder => All.First(m => m.Id == (int)ETorqueController.WETClean_Left_Winder);
+        public ITorqueController WETCleanLeftUnWinder => All.First(m => m.Id == (int)ETorqueController.WETClean_Left_UnWinder);
+        public ITorqueController WETCleanRightWinder => All.First(m => m.Id == (int)ETorqueController.WETClean_Right_Winder);
+        public ITorqueController WETCleanRightUnWinder => All.First(m => m.Id == (int)ETorqueController.WETClean_Right_UnWinder);
+        public ITorqueController AFCleanLeftWinder => All.First(m => m.Id == (int)ETorqueController.AFClean_Left_Winder);
+        public ITorqueController AFCleanLeftUnWinder => All.First(m => m.Id == (int)ETorqueController.AFClean_Left_UnWinder);
+        public ITorqueController AFCleanRightWinder => All.First(m => m.Id == (int)ETorqueController.AFClean_Right_Winder);
+        public ITorqueController AFCleanRightUnWinder => All.First(m => m.Id == (int)ETorqueController.AFClean_Right_UnWinder);
     }
 }
