@@ -13,6 +13,7 @@ using System.IO.Ports;
 using EQX.Core.Communication.Modbus;
 using EQX.Core.Device.SpeedController;
 using EQX.Device.SpeedController;
+using EQX.InOut.ByVendor.Inovance;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -22,7 +23,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
-                services.AddKeyedScoped<List<IMotionParameter>>("MotionInovanceParameters",(ser,obj) =>
+                services.AddKeyedScoped<List<IMotionParameter>>("MotionInovanceParameters", (ser, obj) =>
                 {
                     var configuration = ser.GetRequiredService<IConfiguration>();
 
@@ -41,7 +42,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     return result;
                 });
 
-                services.AddKeyedScoped<List<IMotionParameter>>("MotionAjinParameters", (ser,obj) =>
+                services.AddKeyedScoped<List<IMotionParameter>>("MotionAjinParameters", (ser, obj) =>
                 {
                     var configuration = ser.GetRequiredService<IConfiguration>();
 
@@ -64,7 +65,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 #if SIMULATION
                 services.AddSingleton<IMotionFactory<IMotion>, SimulationMotionFactory>();
 #else
-                services.AddKeyedScoped<IMotionFactory<IMotion>>("InovanceMotionFactory",(ser,obj) =>
+                services.AddKeyedScoped<IMotionFactory<IMotion>>("InovanceMotionFactory", (ser, obj) =>
                     new MotionInovanceFactoryWithDefaultCardHandler
                     {
                         MotionController = ser.GetRequiredKeyedService<IMotionController>("InovanceController#1")
@@ -104,14 +105,22 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 #if SIMULATION
                 services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new SimulationInputDevice_Client<EInput1>() { Id = 1, Name = "InDevice1", MaxPin = 32 }; });
 #else
-                services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new SimulationInputDevice_Client<EInput1>() { Id = 1, Name = "InDevice1", MaxPin = 32 }; });
+                services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new InovanceInputDevice<EInput1>() 
+                {
+                    Id = 1, Name = "InDevice1", MaxPin = 32 ,
+                    MotionController = (MotionControllerInovance)services.GetRequiredKeyedService<IMotionController>("InovanceController#1")
+                }; });
                 //services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new AjinInputDevice<EInput1> { Id = 1, Name = "InDevice1", MaxPin = 32 }; });
 #endif
 
 #if SIMULATION
                 services.AddKeyedScoped<IDOutputDevice>("OutputDevice#1", (services, obj) => { return new SimulationOutputDevice<EOutput1>() { Id = 1, Name = "OutDevice1", MaxPin = 32 }; });
 #else
-                services.AddKeyedScoped<IDOutputDevice>("OutputDevice#1", (services, obj) => { return new SimulationOutputDevice<EOutput1>() { Id = 1, Name = "OutDevice1", MaxPin = 32 }; });
+                services.AddKeyedScoped<IDOutputDevice>("OutputDevice#1", (services, obj) => { return new InovanceOutputDevice<EOutput1>() 
+                {
+                    Id = 1, Name = "OutDevice1", MaxPin = 32 ,
+                    MotionController = (MotionControllerInovance)services.GetRequiredKeyedService<IMotionController>("InovanceController#1")
+                }; });
                 //services.AddKeyedScoped<IDOutputDevice>("OutputDevice#1", (services, obj) => { return new AjinOutputDevice<EOutput1> { Id = 1, Name = "OutDevice1", MaxPin = 32 }; });
 #endif
 
@@ -135,7 +144,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             return hostBuilder;
         }
 
-        public static IHostBuilder AddRollerControllerDevices(this IHostBuilder hostBuilder)
+        public static IHostBuilder AddSpeedControllerDevices(this IHostBuilder hostBuilder)
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
