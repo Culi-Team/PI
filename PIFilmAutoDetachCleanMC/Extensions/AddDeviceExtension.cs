@@ -107,7 +107,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 #else
                 services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new InovanceInputDevice<EInput1>() 
                 {
-                    Id = 1, Name = "InDevice1", MaxPin = 32 ,
+                    Id = 1, Name = "InDevice1", MaxPin = 1000 ,
                     MotionController = (MotionControllerInovance)services.GetRequiredKeyedService<IMotionController>("InovanceController#1")
                 }; });
                 //services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new AjinInputDevice<EInput1> { Id = 1, Name = "InDevice1", MaxPin = 32 }; });
@@ -118,7 +118,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 #else
                 services.AddKeyedScoped<IDOutputDevice>("OutputDevice#1", (services, obj) => { return new InovanceOutputDevice<EOutput1>() 
                 {
-                    Id = 1, Name = "OutDevice1", MaxPin = 32 ,
+                    Id = 1, Name = "OutDevice1", MaxPin = 1000 ,
                     MotionController = (MotionControllerInovance)services.GetRequiredKeyedService<IMotionController>("InovanceController#1")
                 }; });
                 //services.AddKeyedScoped<IDOutputDevice>("OutputDevice#1", (services, obj) => { return new AjinOutputDevice<EOutput1> { Id = 1, Name = "OutDevice1", MaxPin = 32 }; });
