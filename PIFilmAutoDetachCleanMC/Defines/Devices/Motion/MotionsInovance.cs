@@ -5,10 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public class Motions : MotionList<EMotion>
+    public class MotionsInovance : MotionList<EMotionInovance>
     {
-        public Motions(IMotionFactory<IMotion> motionFactory,
-            List<MotionInovanceParameter> parameterList,
+        public MotionsInovance(IMotionFactory<IMotion> motionFactory,
+            List<IMotionParameter> parameterList,
             [FromKeyedServices("InovanceController#1")] IMotionController motionControllerInovance)
             : base(motionFactory, parameterList)
         {
@@ -16,9 +16,5 @@ namespace PIFilmAutoDetachCleanMC.Defines
         }
 
         public IMotionController MotionControllerInovance { get; }
-
-        public IMotion X1Axis => All.First(m => m.Id == (int)EMotion.X1Axis);
-        public IMotion ZAxis => All.First(m => m.Id == (int)EMotion.ZAxis);
-        public IMotion Y1Axis => All.First(m => m.Id == (int)EMotion.Y1Axis);
     }
 }

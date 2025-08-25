@@ -15,7 +15,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             Inputs = devices.Inputs;
             Outputs = devices.Outputs;
-            Motions = devices.Motions;
+            MotionsInovance = devices.MotionsInovance;
             _rollerController = rollerController;
         }
 
@@ -29,7 +29,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         public Inputs Inputs { get; }
         public Outputs Outputs { get; }
-        public Motions Motions { get; }
+        public MotionsInovance MotionsInovance { get; }
 
         public ICommand ConnectMotionCommand
         {
@@ -37,7 +37,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    Motions.All.ForEach(m => m.Connect());
+                    MotionsInovance.MotionControllerInovance.Connect();
                 });
             }
         }

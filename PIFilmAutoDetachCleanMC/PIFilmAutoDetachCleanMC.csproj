@@ -16,6 +16,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Process\Define\**" />
+    <Compile Remove="Process\Steps\**" />
+    <EmbeddedResource Remove="Process\Define\**" />
+    <EmbeddedResource Remove="Process\Steps\**" />
+    <None Remove="Process\Define\**" />
+    <None Remove="Process\Steps\**" />
+    <Page Remove="Process\Define\**" />
+    <Page Remove="Process\Steps\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
@@ -35,11 +46,6 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Process\Define\" />
-    <Folder Include="Process\Steps\" />
   </ItemGroup>
 
   <ItemGroup>

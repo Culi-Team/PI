@@ -22,37 +22,74 @@ namespace PIFilmAutoDetachCleanMC.Extensions
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
-                services.AddSingleton<List<MotionInovanceParameter>>((ser) =>
+                services.AddKeyedScoped<List<IMotionParameter>>("MotionInovanceParameters",(ser,obj) =>
                 {
                     var configuration = ser.GetRequiredService<IConfiguration>();
 
                     var motionParameters = JsonConvert.DeserializeObject<List<MotionInovanceParameter>>(
-                        File.ReadAllText(configuration["Files:MotionParaConfigFile"] ?? "")
+                        File.ReadAllText(configuration["Files:MotionInovanceParaConfigFile"] ?? "")
                     );
                     if (motionParameters == null)
                     {
                         throw new FormatException("MotionParaConfigFile format error");
                     }
-                    List<MotionInovanceParameter> result = new List<MotionInovanceParameter>();
+                    List<IMotionParameter> result = new List<IMotionParameter>();
                     foreach (var parameter in motionParameters)
                     {
                         result.Add(parameter);
                     }
                     return result;
                 });
+
+                services.AddKeyedScoped<List<IMotionParameter>>("MotionAjinParameters", (ser,obj) =>
+                {
+                    var configuration = ser.GetRequiredService<IConfiguration>();
+
+                    var motionParameters = JsonConvert.DeserializeObject<List<MotionAjinParameter>>(
+                        File.ReadAllText(configuration["Files:MotionAjinParaConfigFile"] ?? "")
+                    );
+                    if (motionParameters == null)
+                    {
+                        throw new FormatException("MotionParaConfigFile format error");
+                    }
+                    List<IMotionParameter> result = new List<IMotionParameter>();
+                    foreach (var parameter in motionParameters)
+                    {
+                        result.Add(parameter);
+                    }
+                    return result;
+                });
+
                 services.AddKeyedScoped<IMotionController, MotionControllerInovance>("InovanceController#1");
 #if SIMULATION
                 services.AddSingleton<IMotionFactory<IMotion>, SimulationMotionFactory>();
 #else
-                services.AddSingleton<IMotionFactory<IMotion>>(sp =>
+                services.AddKeyedScoped<IMotionFactory<IMotion>>("InovanceMotionFactory",(ser,obj) =>
                     new MotionInovanceFactoryWithDefaultCardHandler
                     {
-                        MotionController = sp.GetRequiredKeyedService<IMotionController>("InovanceController#1")
+                        MotionController = ser.GetRequiredKeyedService<IMotionController>("InovanceController#1")
                     }
                 );
+
+                services.AddKeyedScoped<IMotionFactory<IMotion>>("AjinMotionFactory", (ser, obj) => new MotionAjinFactory());
 #endif
 
-                services.AddSingleton<Motions>();
+                services.AddSingleton<MotionsInovance>(ser =>
+                {
+                    return new MotionsInovance(
+                        ser.GetRequiredKeyedService<IMotionFactory<IMotion>>("InovanceMotionFactory"),
+                        ser.GetRequiredKeyedService<List<IMotionParameter>>("MotionInovanceParameters"),
+                        ser.GetRequiredKeyedService<IMotionController>("InovanceController#1")
+                    );
+                });
+
+                services.AddSingleton<MotionsAjin>(ser =>
+                {
+                    return new MotionsAjin(
+                        ser.GetRequiredKeyedService<IMotionFactory<IMotion>>("AjinMotionFactory"),
+                        ser.GetRequiredKeyedService<List<IMotionParameter>>("MotionAjinParameters")
+                        );
+                });
 
                 services.AddSingleton<Devices>();
             });

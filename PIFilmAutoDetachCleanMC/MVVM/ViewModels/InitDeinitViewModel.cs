@@ -138,14 +138,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     case EHandleStep.MotionDeviceHandle:
                         MessageText = "Connect Motion Deivices";
 
-                        _devices.Motions.MotionControllerInovance.Connect();
+                        _devices.MotionsInovance.MotionControllerInovance.Connect();
 
-                        _devices.Motions.All.ForEach(m => m.Connect());
+                        _devices.MotionsInovance.All.ForEach(m => m.Connect());
 
-                        if (_devices.Motions.All.Any(m => m.IsConnected == false))
+                        if (_devices.MotionsInovance.All.Any(m => m.IsConnected == false))
                         {
                             ErrorMessages.Add($"Motion device is not connected: " +
-                                $"{string.Join(", ", _devices.Motions.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
+                                $"{string.Join(", ", _devices.MotionsInovance.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
                         }
 
                         _rollerModbusCommunication.Connect();
@@ -219,9 +219,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     case EHandleStep.MotionDeviceHandle:
                         MessageText = "Connect Motion Deivices";
 
-                        _devices.Motions.MotionControllerInovance.Disconnect();
+                        _devices.MotionsInovance.MotionControllerInovance.Disconnect();
 
-                        _devices.Motions.All.ForEach(m => m.Disconnect());
+                        _devices.MotionsInovance.All.ForEach(m => m.Disconnect());
 
                         _rollerModbusCommunication.Disconnect();
                         _step++;
