@@ -8,6 +8,7 @@ using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Process;
 using EQX.Core.Device.SpeedController;
 using EQX.Core.Communication.Modbus;
+using PIFilmAutoDetachCleanMC.Defines.Devices;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {

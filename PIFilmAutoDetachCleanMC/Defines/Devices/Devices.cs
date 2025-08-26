@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIFilmAutoDetachCleanMC.Defines
+namespace PIFilmAutoDetachCleanMC.Defines.Devices
 {
     public class Devices
     {

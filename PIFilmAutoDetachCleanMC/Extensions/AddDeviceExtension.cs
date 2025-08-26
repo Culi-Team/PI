@@ -14,6 +14,7 @@ using EQX.Core.Communication.Modbus;
 using EQX.Core.Device.SpeedController;
 using EQX.Device.SpeedController;
 using EQX.InOut.ByVendor.Inovance;
+using PIFilmAutoDetachCleanMC.Defines.Devices;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {

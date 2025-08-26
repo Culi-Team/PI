@@ -240,12 +240,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput GlassTransferVac1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.GLASS_TRANSFER_VAC_1);
         public IDInput GlassTransferVac2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.GLASS_TRANSFER_VAC_2);
         public IDInput GlassTransferVac3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.GLASS_TRANSFER_VAC_3);
-        public IDInput GlassTransnferCyl1Up => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.GLASS_TRANSNFER_CYL_1_UP);
-        public IDInput GlassTransnferCyl1Down => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.GLASS_TRANSNFER_CYL_1_DOWN);
-        public IDInput GlassTransnferCyl2Up => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.GLASS_TRANSNFER_CYL_2_UP);
-        public IDInput GlassTransnferCyl2Down => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.GLASS_TRANSNFER_CYL_2_DOWN);
-        public IDInput GlassTransnferCyl3Up => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.GLASS_TRANSNFER_CYL_3_UP);
-        public IDInput GlassTransnferCyl3Down => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.GLASS_TRANSNFER_CYL_3_DOWN);
+        public IDInput GlassTransferCyl1Up => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.GLASS_TRANSFER_CYL_1_UP);
+        public IDInput GlassTransferCyl1Down => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.GLASS_TRANSFER_CYL_1_DOWN);
+        public IDInput GlassTransferCyl2Up => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.GLASS_TRANSFER_CYL_2_UP);
+        public IDInput GlassTransferCyl2Down => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.GLASS_TRANSFER_CYL_2_DOWN);
+        public IDInput GlassTransferCyl3Up => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.GLASS_TRANSFER_CYL_3_UP);
+        public IDInput GlassTransferCyl3Down => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.GLASS_TRANSFER_CYL_3_DOWN);
         public IDInput DoorLock6R => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.DOOR_LOCK_6_R);
         public IDInput DoorLock6L => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.DOOR_LOCK_6_L);
         public IDInput Shuttle1RVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput3.SHUTTLE_1_R_VAC);
@@ -272,6 +272,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         // ========== EInput4 ==========
         public IDInput TrRotateRightClamp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput4.TR_ROTATE_RIGHT_CLAMP);
         public IDInput TrRotateRightUnclamp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput4.TR_ROTATE_RIGHT_UNCLAMP);
+        public IDInput TrRotateRight0Degree => _dInputDevice.Inputs.First(i => i.Id == (int)EInput4.TR_ROTATE_RIGHT_0_DEGREE);
+        public IDInput TrRotateRight180Degree => _dInputDevice.Inputs.First(i => i.Id == (int)EInput4.TR_ROTATE_RIGHT_180_DEGREE);
+        public IDInput TrRotateLeft0Degree => _dInputDevice.Inputs.First(i => i.Id == (int)EInput4.TR_ROTATE_LEFT_0_DEGREE);
+        public IDInput TrRotateLeft180Degree => _dInputDevice.Inputs.First(i => i.Id == (int)EInput4.TR_ROTATE_LEFT_180_DEGREE);
         public IDInput TrRotateRightBw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput4.TR_ROTATE_RIGHT_BW);
         public IDInput TrRotateRightFw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput4.TR_ROTATE_RIGHT_FW);
         public IDInput TrRotateRightVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput4.TR_ROTATE_RIGHT_VAC);
