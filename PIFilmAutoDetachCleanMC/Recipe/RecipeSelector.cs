@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EQX.Core.Recipe;
+using EQX.UI.Controls;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -15,8 +17,20 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 {
     public class RecipeSelector : ObservableObject
     {
+        #region Privates
         private RecipeSetting recipeSetting;
         private readonly IConfiguration _configuration;
+        private string recipeFolder => _configuration.GetValue<string>("Folders:RecipeFolder") ?? "";
+        #endregion
+
+        #region Properties
+        public ObservableCollection<string> ValidRecipes
+        {
+            get
+            {
+                return UpdateValidRecipes();
+            }
+        }
 
         public RecipeSetting RecipeSetting
         {
@@ -25,16 +39,19 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         public RecipeList CurrentRecipe { get; private set; }
+        #endregion
 
+        #region Constructor
         public RecipeSelector(IConfiguration configuration, RecipeList currentRecipe)
         {
             _configuration = configuration;
             CurrentRecipe = currentRecipe;
         }
+        #endregion
 
+        #region Methods
         public bool Load()
         {
-            string recipeFolder = _configuration.GetValue<string>("Folders:RecipeFolder");
             // 1. Get Current Recipe
             string recipeSettingFile = Path.Combine(recipeFolder, "RecipeSetting.json");
             if (File.Exists(recipeSettingFile) == false)
@@ -139,5 +156,36 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             File.WriteAllText(currentRecipeFile, serializeStr);
         }
 
+        public ObservableCollection<string> UpdateValidRecipes()
+        {
+            ObservableCollection<string> validRecipes = new ObservableCollection<string>();
+            List<string> result = Directory.GetDirectories(recipeFolder, "", SearchOption.TopDirectoryOnly)
+                .Select(d => new DirectoryInfo(d).Name)
+                .ToList();
+            foreach (var model in result)
+            {
+                validRecipes.Add(model);
+            }
+
+            return validRecipes;
+        }
+        public void SetCurrentModel(string selectedRecipe)
+        {
+            string selectedRecipeFolder = Path.Combine(recipeFolder, selectedRecipe);
+            if (Directory.Exists(selectedRecipeFolder) == false)
+            {
+                MessageBoxEx.ShowDialog($"{selectedRecipeFolder} folder not exits");
+                return;
+            }
+            string tempRecipe = RecipeSetting.CurrentRecipe;
+            RecipeSetting.CurrentRecipe = selectedRecipe;
+            File.WriteAllText((Path.Combine(recipeFolder, "RecipeSetting.json")), JsonConvert.SerializeObject(RecipeSetting));
+            if (Load() == false)
+            {
+                RecipeSetting.CurrentRecipe = tempRecipe;
+                File.WriteAllText((Path.Combine(recipeFolder, "RecipeSetting.json")), JsonConvert.SerializeObject(RecipeSetting));
+            }
+        }
+        #endregion
     }
 }

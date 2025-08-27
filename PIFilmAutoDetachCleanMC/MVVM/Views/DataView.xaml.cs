@@ -24,5 +24,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         {
             InitializeComponent();
         }
+
+        private void ReloadButton_Clicked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ChangeButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
              mc:Ignorable="d" 
+             xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -15,5 +16,57 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="1"
+                  Header="Models">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+
+                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <ListBox ItemsSource="{Binding RecipeSelector.ValidRecipes}"
+                             SelectedIndex="0"
+                             SelectedItem="{Binding SelectedRecipe,Mode=OneWayToSource}">
+                    </ListBox>
+                </ScrollViewer>
+
+                <UniformGrid Grid.Row="1"
+                            Columns="5">
+                    <ui:ImageButton Content="{DynamicResource str_Select}"
+                                    Image="{StaticResource image_setting_selected2}"
+                                    Click="ChangeButton_Click"
+                                    FontSize="12"
+                                    Margin="2"
+                                    Height="50"/>
+                    <ui:ImageButton Content="{DynamicResource str_Save}"
+                                    Command="{Binding SaveRecipeCommand}"
+                                    Image="{StaticResource image_save_all_selected}"
+                                    FontSize="12"
+                                    Margin="2"
+                                    Height="50"/>
+                    <ui:ImageButton Content="{DynamicResource str_Load}"
+                                    Image="{StaticResource image_export_selected}"
+                                    FontSize="12"
+                                    Margin="2"
+                                    Height="50"
+                                    Click="ReloadButton_Clicked" />
+                    <ui:ImageButton Content="{DynamicResource str_Refresh}"
+                                    Image="{StaticResource image_refresh_selected}"
+                                    Command="{Binding RefreshRecipeCommand}"
+                                    FontSize="11"
+                                    Margin="2"
+                                    Height="50"/>
+                    <ui:ImageButton Content="{DynamicResource str_Copy}"
+                                    Image="{StaticResource image_copy_selected}"
+                                    Command="{Binding CopyRecipeCommand}"
+                                    FontSize="12"
+                                    Height="50"
+                                    Margin="2" />
+                </UniformGrid>
+            </Grid>
+        </GroupBox>
     </Grid>
 </UserControl>
