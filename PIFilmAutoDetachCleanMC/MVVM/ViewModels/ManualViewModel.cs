@@ -4,6 +4,7 @@ using System.Diagnostics;
 using PIFilmAutoDetachCleanMC.Defines;
 using System.Windows.Input;
 using EQX.Core.Device.SpeedController;
+using PIFilmAutoDetachCleanMC.Defines.Devices;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {

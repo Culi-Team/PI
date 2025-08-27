@@ -2,6 +2,7 @@
 using EQX.Process;
 using EQX.UI.Controls;
 using PIFilmAutoDetachCleanMC.Defines;
+using PIFilmAutoDetachCleanMC.Defines.Devices;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {

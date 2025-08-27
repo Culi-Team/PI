@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PIFilmAutoDetachCleanMC.Defines;
+using PIFilmAutoDetachCleanMC.Defines.Devices;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
