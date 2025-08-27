@@ -63,10 +63,6 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 });
 
                 services.AddKeyedScoped<IMotionController, MotionControllerInovance>("InovanceController#1");
-                services.AddKeyedScoped<IMotionController, MotionControllerInovance>("InovanceController#2");
-                services.AddKeyedScoped<IMotionController, MotionControllerInovance>("InovanceController#3");
-                services.AddKeyedScoped<IMotionController, MotionControllerInovance>("InovanceController#4");
-
 #if SIMULATION
                 services.AddSingleton<IMotionFactory<IMotion>, SimulationMotionFactory>();
 #else

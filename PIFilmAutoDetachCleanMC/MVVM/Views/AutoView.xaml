@@ -33,6 +33,7 @@
             <Button Content="{Binding MachineStatus.MachineRunMode}" 
                     Background="LightBlue"/>
             <Button Content="IO Monitoring"
+                    Command="{Binding IOMonitoringNavigate}"
                     Background="LightBlue" />
             <Button Content="Initialize"
                     Background="LightBlue" />
