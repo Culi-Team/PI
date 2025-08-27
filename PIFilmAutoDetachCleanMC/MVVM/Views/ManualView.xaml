@@ -7,43 +7,96 @@
              xmlns:vm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels"
              xmlns:uc="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              d:DataContext="{d:DesignInstance Type=vm:ManualViewModel}"
+             xmlns:uiControls="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              mc:Ignorable="d"
              x:Name="root"
              d:DesignHeight="450" d:DesignWidth="800">
-    <TabControl>
-        <TabItem Header="Motion Test">
-            <StackPanel>
-                <!-- TODO: Use ItemsControl? -->
-                <ContentControl Content="{Binding Inputs.All[0]}" />
-                <ContentControl Content="{Binding Inputs.All[1]}" />
-                <ContentControl Content="{Binding Inputs.All[2]}" />
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
 
-                <ContentControl Content="{Binding Outputs.All[0]}" />
-                <ContentControl Content="{Binding Outputs.All[1]}" />
-                <ContentControl Content="{Binding Outputs.All[2]}" />
-
-                <StackPanel Orientation="Horizontal">
-                    <uc:MotionView Motion="{Binding DataContext.Motions.X1Axis,ElementName=root}" />
-                    <uc:MotionView Motion="{Binding DataContext.Motions.Y1Axis,ElementName=root}" />
-                    <uc:MotionView Motion="{Binding DataContext.Motions.ZAxis,ElementName=root}" />
-
+        <DockPanel Grid.Column="1">
+            <GroupBox Header="MOTION"
+                      DockPanel.Dock="Top">
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Width="26"
+                                 Height="26"
+                                 Fill="{Binding MotionsInovanceIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                 Stroke="{StaticResource PrimaryBorderBrush}"
+                                 StrokeThickness="1"
+                                 Margin="0 0 5 0" />
+                        <uiControls:ImageButton Grid.Column="1"
+                                                Content="Motions Inovance"
+                                                Command="{Binding MotionsInovanceConnectCommand}"
+                                                Height="40"
+                                                Margin="0 5 0 0" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Width="26"
+                                 Height="26"
+                                 Fill="{Binding MotionAjinIsConnected, Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                 Stroke="{StaticResource PrimaryBorderBrush}"
+                                 StrokeThickness="1"
+                                 Margin="0 0 5 0" />
+                        <uiControls:ImageButton Grid.Column="1"
+                                                Content="Motion Ajin"
+                                                Command="{Binding MotionAjinConnectCommand}"
+                                                Height="40"
+                                                Margin="0 5 0 0" />
+                    </Grid>
                 </StackPanel>
+            </GroupBox>
+            <GroupBox Header="ROBOT"
+                      DockPanel.Dock="Top">
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Width="26"
+                                 Height="26"
+                                 Fill="{Binding RobotLoadIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                 Stroke="{StaticResource PrimaryBorderBrush}"
+                                 StrokeThickness="1"
+                                 Margin="0 0 5 0" />
+                        <uiControls:ImageButton Grid.Column="1"
+                                                Content="Robot Load"
+                                                Command="{Binding RobotLoadConnectCommand}"
+                                                Height="40"
+                                                Margin="0 5 0 0" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Width="26"
+                                 Height="26"
+                                 Fill="{Binding RobotUnloadIsConnected, Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                 Stroke="{StaticResource PrimaryBorderBrush}"
+                                 StrokeThickness="1"
+                                 Margin="0 0 5 0" />
+                        <uiControls:ImageButton Grid.Column="1"
+                                                Content="Robot Unload"
+                                                Command="{Binding RobotUnloadConnectCommand}"
+                                                Height="40"
+                                                Margin="0 5 0 0" />
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
 
-                <Button Content="Connect Motion"
-                        Command="{Binding ConnectMotionCommand}" />
-            </StackPanel>
-        </TabItem>
-        <TabItem Header="Roller Test">
-            <StackPanel Orientation="Vertical">
-                <TextBox Text="{Binding Speed}"/>
-                <Button Content="Run" Command="{Binding RunCommand}"/>
-                <Button Content="Stop" Command="{Binding StopCommand}"/>
-                <Button Content="SetSpeed" Command="{Binding SetSpeedCommand}"/>
-                <Button Content="Set Accelaration" Command="{Binding SetAccCommand}"/>
-                <Button Content="Set Deccelation" Command="{Binding SetDecCommand}"/>
-                <Button Content="Set CW" Command="{Binding SetCWDirection}"/>
-                <Button Content="Set CCW" Command="{Binding SetCCWDirection}"/>
-            </StackPanel>
-        </TabItem>
-    </TabControl>
+        </DockPanel>
+    </Grid>
 </UserControl>

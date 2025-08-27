@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using PIFilmAutoDetachCleanMC.Defines;
+using PIFilmAutoDetachCleanMC.Recipe;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -18,6 +19,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly ViewModelProvider _viewModelProvider;
 
         public Information Information { get; }
+        public RecipeSelector RecipeSelector { get; }
+
         public DateTime Now => DateTime.Now;
 
         public ICommand ApplicationCloseCommand
@@ -39,12 +42,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         public HeaderViewModel(Information information,
             INavigationService navigationService,
-            ViewModelProvider viewModelProvider)
+            ViewModelProvider viewModelProvider,
+            RecipeSelector recipeSelector)
         {
             Information = information;
             _navigationService = navigationService;
             _viewModelProvider = viewModelProvider;
-
+            RecipeSelector = recipeSelector;
             System.Timers.Timer timer = new System.Timers.Timer(500);
             timer.Elapsed += Timer_Elapsed;
             timer.Start();

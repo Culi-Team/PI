@@ -56,7 +56,7 @@
             </DockPanel>
 
             <TextBlock Grid.Column="2"
-                       Text="Model: Galaxy S100"
+                       Text="{Binding RecipeSelector.RecipeSetting.CurrentRecipe,StringFormat='{}Model : {0}'}"
                        HorizontalAlignment="Center"/>
 
             <TextBlock TextAlignment="Center"

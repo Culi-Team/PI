@@ -30,7 +30,7 @@
         </Canvas>
         <UniformGrid Rows="7"
                      Grid.Column="1">
-            <Button Content="{Binding MachineStatus.MachineRunMode}" 
+            <Button Content="{Binding MachineStatus.MachineRunModeString}" 
                     Background="LightBlue"/>
             <Button Content="IO Monitoring"
                     Command="{Binding IOMonitoringNavigate}"

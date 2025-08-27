@@ -9,6 +9,7 @@ using PIFilmAutoDetachCleanMC.Process;
 using EQX.Core.Device.SpeedController;
 using EQX.Core.Communication.Modbus;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
+using PIFilmAutoDetachCleanMC.Recipe;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -65,12 +66,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public InitDeinitViewModel(Devices devices,
             Processes processes,
             INavigationService navigationService,
-            [FromKeyedServices("RollerModbusCommunication")]IModbusCommunication rollerModbusCommunication)
+            [FromKeyedServices("RollerModbusCommunication")]IModbusCommunication rollerModbusCommunication,
+            RecipeSelector recipeSelector)
         {
             _devices = devices;
             _processes = processes;
             _navigationService = navigationService;
             _rollerModbusCommunication = rollerModbusCommunication;
+            _recipeSelector = recipeSelector;
             _task = new Task(() => { });
             ErrorMessages = new List<string>();
         }
@@ -170,6 +173,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _step++;
                         break;
                     case EHandleStep.RecipeHandle:
+                        _recipeSelector.Load();
                         _step++;
                         break;
                     case EHandleStep.ProcessHandle:
@@ -234,6 +238,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _step++;
                         break;
                     case EHandleStep.RecipeHandle:
+                        _recipeSelector.Save();
                         _step++;
                         break;
                     case EHandleStep.ProcessHandle:
@@ -265,6 +270,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         #region Private fields
         private readonly INavigationService _navigationService;
         private readonly IModbusCommunication _rollerModbusCommunication;
+        private readonly RecipeSelector _recipeSelector;
         private readonly Devices _devices;
         private readonly Processes _processes;
 
