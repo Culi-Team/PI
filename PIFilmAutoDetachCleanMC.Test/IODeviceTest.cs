@@ -8,7 +8,7 @@ namespace PIFilmAutoDetachCleanMC.Test
         [Fact]
         public void InitialTest()
         {
-            var ioDevice = new InputDeviceBase<EInput1>() { Id = 1, Name = "InDevice1", MaxPin = 32 };
+            var ioDevice = new InputDeviceBase<EInput>() { Id = 1, Name = "InDevice1", MaxPin = 32 };
 
             ioDevice.Initialize();
 
@@ -19,7 +19,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             for (int i = 0; i < ioDevice.MaxPin; i++)
             {
                 Assert.Equal(i, ioDevice.Inputs[i].Id);
-                Assert.Equal(((EInput1)i).ToString(), ioDevice.Inputs[i].Name);
+                Assert.Equal(((EInput)i).ToString(), ioDevice.Inputs[i].Name);
             }
         }
     }

@@ -115,45 +115,12 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 #else
                 services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) =>
                 {
-                    return new InovanceInputDevice<EInput1>()
+                    return new InovanceInputDevice<EInput>()
                     {
                         Id = 1,
-                        Name = "InDevice1",
-                        MaxPin = 96,
+                        Name = "InputDevice",
+                        MaxPin = 1000,
                         MotionController = (MotionControllerInovance)services.GetRequiredKeyedService<IMotionController>("InovanceController#1")
-                    };
-                });
-
-                services.AddKeyedScoped<IDInputDevice>("InputDevice#2", (services, obj) =>
-                {
-                    return new InovanceInputDevice<EInput2>()
-                    {
-                        Id = 2,
-                        Name = "InDevice2",
-                        MaxPin = 96,
-                        MotionController = (MotionControllerInovance)services.GetRequiredKeyedService<IMotionController>("InovanceController#2")
-                    };
-                });
-
-                services.AddKeyedScoped<IDInputDevice>("InputDevice#3", (services, obj) =>
-                {
-                    return new InovanceInputDevice<EInput3>()
-                    {
-                        Id = 3,
-                        Name = "InDevice3",
-                        MaxPin = 96,
-                        MotionController = (MotionControllerInovance)services.GetRequiredKeyedService<IMotionController>("InovanceController#3")
-                    };
-                });
-
-                services.AddKeyedScoped<IDInputDevice>("InputDevice#4", (services, obj) =>
-                {
-                    return new InovanceInputDevice<EInput4>()
-                    {
-                        Id = 4,
-                        Name = "InDevice4",
-                        MaxPin = 96,
-                        MotionController = (MotionControllerInovance)services.GetRequiredKeyedService<IMotionController>("InovanceController#4")
                     };
                 });
                 //services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new AjinInputDevice<EInput1> { Id = 1, Name = "InDevice1", MaxPin = 32 }; });
@@ -167,45 +134,12 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 #else
                 services.AddKeyedScoped<IDOutputDevice>("OutputDevice#1", (services, obj) =>
                 {
-                    return new InovanceOutputDevice<EOutput1>()
+                    return new InovanceOutputDevice<EOutput>()
                     {
                         Id = 1,
-                        Name = "OutDevice1",
-                        MaxPin = 96,
+                        Name = "OutputDevice",
+                        MaxPin = 1000,
                         MotionController = (MotionControllerInovance)services.GetRequiredKeyedService<IMotionController>("InovanceController#1")
-                    };
-                });
-
-                services.AddKeyedScoped<IDOutputDevice>("OutputDevice#2", (services, obj) =>
-                {
-                    return new InovanceOutputDevice<EOutput2>()
-                    {
-                        Id = 2,
-                        Name = "OutDevice2",
-                        MaxPin = 96,
-                        MotionController = (MotionControllerInovance)services.GetRequiredKeyedService<IMotionController>("InovanceController#2")
-                    };
-                });
-
-                services.AddKeyedScoped<IDOutputDevice>("OutputDevice#3", (services, obj) =>
-                {
-                    return new InovanceOutputDevice<EOutput3>()
-                    {
-                        Id = 3,
-                        Name = "OutDevice3",
-                        MaxPin = 96,
-                        MotionController = (MotionControllerInovance)services.GetRequiredKeyedService<IMotionController>("InovanceController#3")
-                    };
-                });
-
-                services.AddKeyedScoped<IDOutputDevice>("OutputDevice#4", (services, obj) =>
-                {
-                    return new InovanceOutputDevice<EOutput4>()
-                    {
-                        Id = 4,
-                        Name = "OutDevice4",
-                        MaxPin = 96,
-                        MotionController = (MotionControllerInovance)services.GetRequiredKeyedService<IMotionController>("InovanceController#4")
                     };
                 });
                 //services.AddKeyedScoped<IDOutputDevice>("OutputDevice#1", (services, obj) => { return new AjinOutputDevice<EOutput1> { Id = 1, Name = "OutDevice1", MaxPin = 32 }; });

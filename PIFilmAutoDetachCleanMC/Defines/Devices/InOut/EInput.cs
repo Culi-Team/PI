@@ -1,6 +1,6 @@
 ﻿namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum EInput1
+    public enum EInput
     {
         IN_CST_STOPPER_UP = 00,
         IN_CST_STOPPER_DOWN = 01,
@@ -98,10 +98,7 @@
         SPARE_IN93 = 93,
         SPARE_IN94 = 94,
         SPARE_IN95 = 95,
-    }
 
-    public enum EInput2
-    {
         ROBOT_FIXTURE_ALIGN_1_BW = 96,
         ROBOT_FIXTURE_ALIGN_1_FW = 97,
         ROBOT_FIXTURE_ALIGN_2_BW = 98,
@@ -198,10 +195,7 @@
         REMOVE_ZONE_FIX_CYL_3_BW = 189,
         REMOVE_ZONE_FIX_CYL_4_FW = 190,
         REMOVE_ZONE_FIX_CYL_4_BW = 191,
-    }
 
-    public enum EInput3
-    {
         DETACH_GLASS_SHT_VAC_1 = 192,
         DETACH_GLASS_SHT_VAC_2 = 193,
         DETACH_GLASS_SHT_VAC_3 = 194,
@@ -298,10 +292,7 @@
         WET_CLEAN_LEFT_WIPER_CLEAN_DETECT_1 = 285,
         WET_CLEAN_LEFT_WIPER_CLEAN_DETECT_2 = 286,
         WET_CLEAN_LEFT_WIPER_CLEAN_DETECT_3 = 287,
-    }
 
-    public enum EInput4
-    {
         TR_ROTATE_RIGHT_CLAMP = 288,
         TR_ROTATE_RIGHT_UNCLAMP = 289,
         TR_ROTATE_RIGHT_0_DEGREE = 290, //Spare

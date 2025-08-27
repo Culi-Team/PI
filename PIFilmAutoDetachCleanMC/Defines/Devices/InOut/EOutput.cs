@@ -1,6 +1,6 @@
 ﻿namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum EOutput1
+    public enum EOutput
     {
         IN_CST_STOPPER_UP = 00,
         IN_CST_STOPPER_DOWN = 01,
@@ -98,10 +98,7 @@
         TOWEL_LAMP_YELLOW = 93,
         TOWEL_LAMP_GREEN = 94,
         TOWEL_BUZZER = 95,
-    }
 
-    public enum EOutput2
-    {
         ROBOT_FIXTURE_ALIGN_BW = 96,
         ROBOT_FIXTURE_ALIGN_FW = 97,
         SPARE_OUT98 = 98,
@@ -198,10 +195,7 @@
         REMOVE_ZONE_FIX_CYL_3_BW = 189,
         REMOVE_ZONE_FIX_CYL_4_FW = 190,
         REMOVE_ZONE_FIX_CYL_4_BW = 191,
-    }
-
-    public enum EOutput3
-    {
+    
         DETACH_GLASS_SHT_VAC_1_ON_OFF = 192,
         DETACH_GLASS_SHT_VAC_2_ON_OFF = 193,
         DETACH_GLASS_SHT_VAC_3_ON_OFF = 194,
@@ -298,10 +292,7 @@
         OP_L_BUTTON_RED_LAMP = 285,
         OP_L_BUTTON_GREEN_LAMP = 286,
         OP_L_BUTTON_YELLOW_LAMP = 287,
-    }
 
-    public enum EOutput4
-    {
         TR_ROTATE_RIGHT_CLAMP = 288,
         TR_ROTATE_RIGHT_UNCLAMP = 289,
         TR_ROTATE_RIGHT_0_DEGREE = 290,
