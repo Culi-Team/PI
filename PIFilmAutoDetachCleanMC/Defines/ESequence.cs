@@ -10,27 +10,101 @@
         AutoRun,
         Ready,
 
-        Load,
+        InWorkCSTLoad,
+        InWorkCSTUnLoad,
 
-        Pick,
-        Inspect,
-        Place,
-        PlaceNG,
+        OutWorkCSTLoad,
+        OutWorkCSTUnLoad,
 
-        Unload,
+        RobotPickFixtureFromCST,
+        RobotPlaceFixtureToVinylClean,
+        RobotPickFixtureFromVinylClean,
+        RobotPlaceFixtureToAlign,
+        RobotPickFixtureFromRemoveZone,
+        RobotPlaceFixtureToOutWorkCST,
+
+        FixtureTransfer,
+        Detach,
+        DetachUnload,
+        RemoveFilm,
+
+        GlassTransferPick,
+        GlassTransferPlace,
+
+        AlignGlass,
+
+        TransferInShuttlePick,
+        TransferInShuttlePlace,
+
+        WETCleanLoad,
+        WETClean,
+        WETCleanUnload,
+
+        TransferRotationPick,
+        TransferRotationPlace,
+
+        AFCleanLoad,
+        AFClean,
+        AFCleanUnload,
+
+        UnloadTransferPick,
+        UnloadTransferPlace,
+
+        UnloadAlignGlass,
+
+        UnloadRobotPick,
+        UnloadRobotPlasma,
+        UnloadRobotPlace,
     }
 
     public enum ESemiSequence
     {
         None,
 
-        Load,
+        InWorkCSTLoad,
+        InWorkCSTUnLoad,
 
-        Pick,
-        Inspect,
-        Place,
-        PlaceNG,
+        OutWorkCSTLoad,
+        OutWorkCSTUnLoad,
 
-        Unload,
+        RobotPickFixtureFromCST,
+        RobotPlaceFixtureToVinylClean,
+        RobotPickFixtureFromVinylClean,
+        RobotPlaceFixtureToAlign,
+        RobotPickFixtureFromRemoveZone,
+        RobotPlaceFixtureToOutWorkCST,
+
+        FixtureTransfer,
+        Detach,
+        DetachUnload,
+        RemoveFilm,
+
+        GlassTransferPick,
+        GlassTransferPlace,
+
+        AlignGlass,
+
+        TransferInShuttlePick,
+        TransferInShuttlePlace,
+
+        WETCleanLoad,
+        WETClean,
+        WETCleanUnload,
+
+        TransferRotationPick,
+        TransferRotationPlace,
+
+        AFCleanLoad,
+        AFClean,
+        AFCleanUnload,
+
+        UnloadTransferPick,
+        UnloadTransferPlace,
+
+        UnloadAlignGlass,
+
+        UnloadRobotPick,
+        UnloadRobotPlasma,
+        UnloadRobotPlace,
     }
 }
