@@ -36,7 +36,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public ISpeedController SupportConveyor1Roller => All.First(m => m.Id == (int)ESpeedController.SUPPORT_CV1_ROLLER);
         public ISpeedController InWorkConveyorRoller1 => All.First(m => m.Id == (int)ESpeedController.IN_WORK_CV_ROLLER1);
         public ISpeedController InWorkConveyorRoller2 => All.First(m => m.Id == (int)ESpeedController.IN_WORK_CV_ROLLER2);
-        public ISpeedController InWorkConveyorRoller3 => All.First(m => m.Id == (int)ESpeedController.IN_WORK_CV_ROLLER3);
         public ISpeedController SupportConveyor2Roller => All.First(m => m.Id == (int)ESpeedController.SUPPORT_CV2_ROLLER);
         public ISpeedController BufferConveyorRoller1 => All.First(m => m.Id == (int)ESpeedController.BUFFER_CV_ROLLER1);
         public ISpeedController BufferConveyorRoller2 => All.First(m => m.Id == (int)ESpeedController.BUFFER_CV_ROLLER2);
@@ -46,5 +45,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public ISpeedController SupportConveyor4Roller => All.First(m => m.Id == (int)ESpeedController.SUPPORT_CV4_ROLLER);
         public ISpeedController OutConveyorRoller1 => All.First(m => m.Id == (int)ESpeedController.OUT_CV_ROLLER1);
         public ISpeedController OutConveyorRoller2 => All.First(m => m.Id == (int)ESpeedController.OUT_CV_ROLLER2);
+        public ISpeedController OutConveyorRoller3 => All.First(m => m.Id == (int)ESpeedController.OUT_CV_ROLLER3);
     }
 }
