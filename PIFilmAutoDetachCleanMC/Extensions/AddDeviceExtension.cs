@@ -15,6 +15,7 @@ using EQX.Core.Device.SpeedController;
 using EQX.Device.SpeedController;
 using EQX.InOut.ByVendor.Inovance;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -141,8 +142,19 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 //services.AddKeyedScoped<IDOutputDevice>("OutputDevice#1", (services, obj) => { return new AjinOutputDevice<EOutput1> { Id = 1, Name = "OutDevice1", MaxPin = 32 }; });
 #endif
 
-                services.AddSingleton<Inputs>();
-                services.AddSingleton<Outputs>();
+                services.AddSingleton<Inputs>(sp =>
+                {
+                    var inDev = sp.GetRequiredKeyedService<IDInputDevice>("InputDevice#1");
+                    inDev.Initialize();
+                    return new Inputs(inDev);
+                });
+                services.AddSingleton<Outputs>(sp =>
+                {
+                    var outDev = sp.GetRequiredKeyedService<IDOutputDevice>("OutputDevice#1");
+                    outDev.Initialize();
+                    return new Outputs(outDev);
+
+                });
             });
 
             return hostBuilder;
@@ -178,5 +190,16 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             return hostBuilder;
         }
 
+        public static IHostBuilder AddCylinderDevices(this IHostBuilder hostBuilder)
+        {
+            hostBuilder.ConfigureServices((hostContext, services) =>
+            {
+                services.AddSingleton<ICylinderFactory, CylinderFactory>(); 
+
+                services.AddSingleton<Cylinders>();
+            });
+
+            return hostBuilder;
+        }
     }
 }
