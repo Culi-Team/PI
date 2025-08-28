@@ -20,6 +20,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         #region Privates
         private RecipeSetting recipeSetting;
         private readonly IConfiguration _configuration;
+        private ObservableCollection<string> validRecipes;
         private string recipeFolder => _configuration.GetValue<string>("Folders:RecipeFolder") ?? "";
         #endregion
 
@@ -29,6 +30,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             get
             {
                 return UpdateValidRecipes();
+            }
+            set
+            {
+                validRecipes = value;
+                OnPropertyChanged(nameof(ValidRecipes));
             }
         }
 

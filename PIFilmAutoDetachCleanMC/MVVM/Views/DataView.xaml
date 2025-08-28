@@ -1,72 +1,107 @@
 ﻿<UserControl x:Class="PIFilmAutoDetachCleanMC.MVVM.Views.DataView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             Loaded="DataView_Loaded"
+             xmlns:vm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels"
+             d:DataContext="{d:DesignInstance Type={x:Type vm:DataViewModel}}"
              xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450"
+             d:DesignWidth="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="15*" />
         </Grid.RowDefinitions>
+        <ListBox ItemsSource="{Binding Recipes}"
+                 SelectionChanged="RecipeChanged"
+                 SelectedIndex="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Name}"
+                           FontWeight="Bold"
+                           HorizontalContentAlignment="Center"
+                           FontSize="14"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="{Binding Recipes.Count}" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="1.5*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <GroupBox Grid.Row="1"
-                  Header="Models">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="8*"/>
-                    <RowDefinition Height="2*"/>
-                </Grid.RowDefinitions>
+            <ScrollViewer>
+                <UniformGrid x:Name="OptionsRecipe_StackPanel" 
+                             Columns="2"/>
+            </ScrollViewer>
+            <ScrollViewer Grid.Column="1"
+                          Grid.RowSpan="2">
+                <StackPanel x:Name="CurrentRecipe_StackPanel" />
+            </ScrollViewer>
+            <GroupBox Grid.Row="1"
+                      Header="Models">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="6*" />
+                        <RowDefinition Height="4*" />
+                    </Grid.RowDefinitions>
 
-                <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                              VerticalScrollBarVisibility="Auto">
-                    <ListBox ItemsSource="{Binding RecipeSelector.ValidRecipes}"
-                             SelectedIndex="0"
-                             SelectedItem="{Binding SelectedRecipe,Mode=OneWayToSource}">
-                    </ListBox>
-                </ScrollViewer>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto">
+                        <ListBox ItemsSource="{Binding RecipeSelector.ValidRecipes}"
+                                 SelectedIndex="0"
+                                 SelectedItem="{Binding SelectedRecipe,Mode=OneWayToSource}">
+                        </ListBox>
+                    </ScrollViewer>
 
-                <UniformGrid Grid.Row="1"
-                            Columns="5">
-                    <ui:ImageButton Content="{DynamicResource str_Select}"
-                                    Image="{StaticResource image_setting_selected2}"
-                                    Click="ChangeButton_Click"
-                                    FontSize="12"
-                                    Margin="2"
-                                    Height="50"/>
-                    <ui:ImageButton Content="{DynamicResource str_Save}"
-                                    Command="{Binding SaveRecipeCommand}"
-                                    Image="{StaticResource image_save_all_selected}"
-                                    FontSize="12"
-                                    Margin="2"
-                                    Height="50"/>
-                    <ui:ImageButton Content="{DynamicResource str_Load}"
-                                    Image="{StaticResource image_export_selected}"
-                                    FontSize="12"
-                                    Margin="2"
-                                    Height="50"
-                                    Click="ReloadButton_Clicked" />
-                    <ui:ImageButton Content="{DynamicResource str_Refresh}"
-                                    Image="{StaticResource image_refresh_selected}"
-                                    Command="{Binding RefreshRecipeCommand}"
-                                    FontSize="11"
-                                    Margin="2"
-                                    Height="50"/>
-                    <ui:ImageButton Content="{DynamicResource str_Copy}"
-                                    Image="{StaticResource image_copy_selected}"
-                                    Command="{Binding CopyRecipeCommand}"
-                                    FontSize="12"
-                                    Height="50"
-                                    Margin="2" />
-                </UniformGrid>
-            </Grid>
-        </GroupBox>
+                    <UniformGrid Grid.Row="1"
+                                 Rows="2">
+                        <ui:ImageButton Content="{DynamicResource str_Select}"
+                                        Image="{StaticResource image_setting_selected2}"
+                                        Click="ChangeButton_Click"
+                                        FontSize="12"
+                                        Margin="2"
+                                        Height="50" />
+                        <ui:ImageButton Content="{DynamicResource str_Save}"
+                                        Command="{Binding SaveRecipeCommand}"
+                                        Image="{StaticResource image_save_all_selected}"
+                                        FontSize="12"
+                                        Margin="2"
+                                        Height="50" />
+                        <ui:ImageButton Content="{DynamicResource str_Load}"
+                                        Image="{StaticResource image_export_selected}"
+                                        FontSize="12"
+                                        Margin="2"
+                                        Height="50"
+                                        Click="ReloadButton_Clicked" />
+                        <ui:ImageButton Content="{DynamicResource str_Refresh}"
+                                        Image="{StaticResource image_refresh_selected}"
+                                        Command="{Binding RefreshRecipeCommand}"
+                                        FontSize="11"
+                                        Margin="2"
+                                        Height="50" />
+                        <ui:ImageButton Content="{DynamicResource str_Copy}"
+                                        Image="{StaticResource image_copy_selected}"
+                                        Command="{Binding CopyRecipeCommand}"
+                                        FontSize="12"
+                                        Height="50"
+                                        Margin="2" />
+                    </UniformGrid>
+                </Grid>
+            </GroupBox>
+        </Grid>
     </Grid>
 </UserControl>
