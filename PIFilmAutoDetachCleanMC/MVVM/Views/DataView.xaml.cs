@@ -47,7 +47,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             {
                 if (this.DataContext is DataViewModel dataContext)
                 {
-                    dataContext.RecipeSelector.SetCurrentModel(dataContext.SelectedRecipe);
+                    dataContext.RecipeSelector.SetCurrentModel(dataContext.SelectedModel);
                 }
             }
         }

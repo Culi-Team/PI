@@ -12,7 +12,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
     public class DataViewModel : ViewModelBase
     {
-        private string selectedRecipe;
+        private string selectedModel;
 
         public DataViewModel(RecipeSelector recipeSelector)
         {
@@ -21,10 +21,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         public RecipeSelector RecipeSelector { get; }
 
-        public string SelectedRecipe
+        public string SelectedModel
         {
-            get { return selectedRecipe; }
-            set { selectedRecipe = value; OnPropertyChanged(); }
+            get { return selectedModel; }
+            set { selectedModel = value; OnPropertyChanged(); }
         }
 
         public event Action LoadRecipeEvent;
@@ -35,7 +35,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 var recipeProps = typeof(RecipeList)
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(p => typeof(RecipeBase).IsAssignableFrom(p.PropertyType))  // chỉ lấy property kế thừa RecipeBase
+                .Where(p => typeof(RecipeBase).IsAssignableFrom(p.PropertyType))  
                 .ToList();
 
                 var recipeObjects = recipeProps
@@ -79,9 +79,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 return new RelayCommand(() =>
                 {
                     string CopyRecipe = (string)Application.Current.Resources["str_CopyRecipe"];
-                    if (MessageBoxEx.ShowDialog($"{CopyRecipe} {SelectedRecipe} ? ") == true)
+                    if (MessageBoxEx.ShowDialog($"{CopyRecipe} {SelectedModel} ? ") == true)
                     {
-                        RecipeSelector.Copy(SelectedRecipe);
+                        RecipeSelector.Copy(SelectedModel);
                         RecipeSelector.ValidRecipes = RecipeSelector.UpdateValidRecipes();
                         LoadRecipeEvent?.Invoke();
                     }

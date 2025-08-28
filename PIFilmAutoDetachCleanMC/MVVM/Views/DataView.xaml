@@ -63,7 +63,7 @@
                                   VerticalScrollBarVisibility="Auto">
                         <ListBox ItemsSource="{Binding RecipeSelector.ValidRecipes}"
                                  SelectedIndex="0"
-                                 SelectedItem="{Binding SelectedRecipe,Mode=OneWayToSource}">
+                                 SelectedItem="{Binding SelectedModel,Mode=OneWayToSource}">
                         </ListBox>
                     </ScrollViewer>
 
