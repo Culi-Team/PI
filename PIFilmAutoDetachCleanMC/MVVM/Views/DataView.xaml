@@ -17,6 +17,7 @@
             <RowDefinition Height="15*" />
         </Grid.RowDefinitions>
         <ListBox ItemsSource="{Binding Recipes}"
+                 SelectedItem="{Binding SelectedRecipe}"
                  SelectionChanged="RecipeChanged"
                  SelectedIndex="0">
             <ListBox.ItemTemplate>

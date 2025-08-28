@@ -13,6 +13,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
     public class DataViewModel : ViewModelBase
     {
         private string selectedModel;
+        private RecipeBase _selectedRecipe;
 
         public DataViewModel(RecipeSelector recipeSelector)
         {
@@ -33,7 +34,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             get
             {
-                var recipeProps = typeof(RecipeList)
+                var recipeProps = RecipeSelector.CurrentRecipe.GetType()
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(p => typeof(RecipeBase).IsAssignableFrom(p.PropertyType))  
                 .ToList();
@@ -44,6 +45,28 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 .ToList();
 
                 return new ObservableCollection<RecipeBase>(recipeObjects);
+            }
+        }
+
+
+        public RecipeBase SelectedRecipe
+        {
+            get { return _selectedRecipe; }
+            set { _selectedRecipe = value; OnPropertyChanged(); }
+        }
+
+        public RecipeBase CurrentRecipe
+        {
+            get
+            {
+                var recipeProps = RecipeSelector.CurrentRecipe.GetType()
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(p => typeof(RecipeBase).IsAssignableFrom(p.PropertyType))
+                .ToList();
+
+                return recipeProps
+                .Select(p => p.GetValue(RecipeSelector.CurrentRecipe) as RecipeBase)
+                .ToList().First(r => r.Name == SelectedRecipe.Name);
             }
         }
 
