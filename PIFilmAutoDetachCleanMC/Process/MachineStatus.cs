@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EQX.Core.Common;
 using EQX.Core.Sequence;
+using PIFilmAutoDetachCleanMC.Defines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace PIFilmAutoDetachCleanMC.Process
     {
 		private EMachineRunMode _machineRunMode;
         private EProcessMode currentProcessMode;
+        private int _SemiAutoSequence;
         private int _OPCommand;
 
         public EMachineRunMode MachineRunMode
@@ -85,6 +87,23 @@ namespace PIFilmAutoDetachCleanMC.Process
             set
             {
                 MultiThreadingHelpers.SafeSetValue(ref _OPCommand, value);
+            }
+        }
+
+        private bool _originDone;
+
+        public bool OriginDone
+        {
+            get { return _originDone; }
+            set { _originDone = value; }
+        }
+
+        public ESemiSequence SemiAutoSequence
+        {
+            get => (ESemiSequence)_SemiAutoSequence;
+            set
+            {
+                MultiThreadingHelpers.SafeSetValue(ref _SemiAutoSequence, value);
             }
         }
     }
