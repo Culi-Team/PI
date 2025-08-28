@@ -37,6 +37,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                 if (this.DataContext is DataViewModel dataContext)
                 {
                     dataContext.RecipeSelector.Load();
+                    LoadRecipe(dataContext.CurrentRecipe);
                 }
             }
         }
@@ -47,7 +48,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             {
                 if (this.DataContext is DataViewModel dataContext)
                 {
-                    dataContext.RecipeSelector.SetCurrentModel(dataContext.SelectedRecipe);
+                    dataContext.RecipeSelector.SetCurrentModel(dataContext.SelectedModel);
+                    LoadRecipe(dataContext.CurrentRecipe);
                 }
             }
         }
@@ -154,7 +156,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         private void DataView_Loaded(object sender, RoutedEventArgs e)
         {
             if (this.DataContext is not DataViewModel viewModel) return;
-            
+
+            viewModel.LoadRecipeEvent += () =>
+            {
+                if (viewModel.CurrentRecipe != null)
+                {
+                    LoadRecipe(viewModel.CurrentRecipe);
+                }
+            };
+
         }
     }
 }

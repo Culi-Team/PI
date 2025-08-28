@@ -1,4 +1,5 @@
 ﻿using EQX.Core.Recipe;
+using EQX.Core.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,55 +20,69 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private double outCstTAxisLoadPositon;
         private double outCstTAxisWorkPosition;
 
+        [SingleRecipeDescription(Description = "Conveyor Speed", Unit = Unit.RevolutionsPerMinute)]
+        [SingleRecipeMinMax(Max = 5000, Min = 200)]
         public uint ConveyorSpeed
 		{
 			get { return conveyorSpeed; }
 			set { conveyorSpeed = value; }
 		}
 
-		public uint ConveyorAcc
+        [SingleRecipeDescription(Description = "Conveyor Acceleration", Unit = Unit.RevolutionsPerMinutePerSecond)]
+        [SingleRecipeMinMax(Max = 30000, Min = 500)]
+        public uint ConveyorAcc
 		{
 			get { return conveyorAcc; }
 			set { conveyorAcc = value; }
 		}
 
-		public uint ConveyorDec
+        [SingleRecipeDescription(Description = "Conveyor Deceleration", Unit = Unit.RevolutionsPerMinutePerSecond)]
+        [SingleRecipeMinMax(Max = 30000, Min = 500)]
+        public uint ConveyorDec
 		{
 			get { return conveyorDec; }
 			set { conveyorDec = value; }
 		}
 
-		public uint CasetteRow
+        [SingleRecipeDescription(Description = "Cassette Rows", Unit = Unit.ETC)]
+        [SingleRecipeMinMax(Max = 20, Min = 1)]
+        public uint CasetteRow
 		{
 			get { return casetteRow; }
 			set { casetteRow = value; }
 		}
 
-		public uint Pitch
+        [SingleRecipeDescription(Description = "Cassette Pitch", Unit = Unit.mm)]
+        [SingleRecipeMinMax(Max = 50.0, Min = 0.0)]
+        public uint Pitch
 		{
 			get { return pitch; }
 			set { pitch = value; }
 		}
 
-		public double InCstTAxisLoadPosition
+        [SingleRecipeDescription(Description = "In Cassette T Axis Load Position", Unit = Unit.mm)]
+        public double InCstTAxisLoadPosition
 		{
 			get { return inCstTAxisLoadPosition; }
 			set { inCstTAxisLoadPosition = value; }
 		}
 
-		public double InCstTAxisWorkPosition
+        [SingleRecipeDescription(Description = "In Cassette T Axis Work Position", Unit = Unit.mm)]
+        public double InCstTAxisWorkPosition
 		{
 			get { return inCstTAxisWorkPosition; }
 			set { inCstTAxisWorkPosition = value; }
 		}
 
-		public double OutCstTAxisLoadPosition
+        [SingleRecipeDescription(Description = "Out Cassette T Axis Load Position", Unit = Unit.mm)]
+        public double OutCstTAxisLoadPosition
 		{
 			get { return outCstTAxisLoadPositon; }
 			set { outCstTAxisLoadPositon = value; }
 		}
 
-		public double OutCstTAxisWorkPosition
+        [SingleRecipeDescription(Description = "Out Cassette T Axis Work Position", Unit = Unit.mm)]
+        public double OutCstTAxisWorkPosition
 		{
 			get { return outCstTAxisWorkPosition; }
 			set { outCstTAxisWorkPosition = value; }

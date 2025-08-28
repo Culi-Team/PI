@@ -17,6 +17,7 @@
             <RowDefinition Height="15*" />
         </Grid.RowDefinitions>
         <ListBox ItemsSource="{Binding Recipes}"
+                 SelectedItem="{Binding SelectedRecipe}"
                  SelectionChanged="RecipeChanged"
                  SelectedIndex="0">
             <ListBox.ItemTemplate>
@@ -63,7 +64,7 @@
                                   VerticalScrollBarVisibility="Auto">
                         <ListBox ItemsSource="{Binding RecipeSelector.ValidRecipes}"
                                  SelectedIndex="0"
-                                 SelectedItem="{Binding SelectedRecipe,Mode=OneWayToSource}">
+                                 SelectedItem="{Binding SelectedModel,Mode=OneWayToSource}">
                         </ListBox>
                     </ScrollViewer>
 

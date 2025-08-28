@@ -49,6 +49,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _navigationService = navigationService;
             _viewModelProvider = viewModelProvider;
             RecipeSelector = recipeSelector;
+          
             System.Timers.Timer timer = new System.Timers.Timer(500);
             timer.Elapsed += Timer_Elapsed;
             timer.Start();

@@ -41,7 +41,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public RecipeSetting RecipeSetting
         {
             get { return recipeSetting; }
-            set { recipeSetting = value; }
+            set
+            {
+                recipeSetting = value;
+                OnPropertyChanged(nameof(RecipeSetting));
+            }
         }
 
         public RecipeList CurrentRecipe { get; private set; }
@@ -52,6 +56,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         {
             _configuration = configuration;
             CurrentRecipe = currentRecipe;
+            // Ensure binding paths like RecipeSelector.RecipeSetting.CurrentRecipe are valid at startup
+            recipeSetting = new RecipeSetting();
         }
         #endregion
 

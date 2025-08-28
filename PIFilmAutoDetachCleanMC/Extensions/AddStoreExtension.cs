@@ -14,7 +14,6 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             {
                 services.AddSingleton<UserStore>();
 
-                services.AddSingleton<Processes>();
             });
 
             return hostBuilder;
