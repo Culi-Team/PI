@@ -1,0 +1,39 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PIFilmAutoDetachCleanMC.Process
+{
+    public enum EProcess
+    {
+        Root,
+        InConveyor,
+        InWorkConveyor,
+        BufferConveyor,
+        OutWorkConveyor,
+        OutConveyor,
+        RobotLoad,
+        VinylClean,
+        FixtureAlign,
+        TransferFixture,
+        Detach,
+        RemoveFilm,
+        GlassTransfer,
+        GlassAlignLeft,
+        GlassAlignRight,
+        TransferInShuttleLeft,
+        TransferInShuttleRight,
+        WETCleanLeft,
+        WETCleanRight,
+        TransferRotationLeft,
+        TransferRotationRight,
+        AFCleanLeft,
+        AFCleanRight,
+        UnloadTransferLeft,
+        UnloadTransferRight,
+        UnloadAlign,
+        RobotUnload,
+    }
+}

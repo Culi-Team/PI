@@ -29,6 +29,7 @@ namespace PIFilmAutoDetachCleanMC
                 .AddSpeedControllerDevices()
                 .AddTorqueControllerDevices()
                 .AddRecipes()
+                .AddProcesses()
                 .Build();
         }
 

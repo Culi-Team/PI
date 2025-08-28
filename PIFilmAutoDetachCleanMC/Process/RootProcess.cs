@@ -3,6 +3,7 @@ using EQX.Process;
 using EQX.UI.Controls;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
+using System.Windows;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
@@ -11,10 +12,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         where TESemiSequence : Enum
     {
         private readonly Devices _devices;
+        private readonly MachineStatus _machineStatus;
 
-        public RootProcess(Devices devices)
+        public RootProcess(Devices devices,
+            MachineStatus machineStatus)
         {
             _devices = devices;
+            _machineStatus = machineStatus;
         }
 
         public override bool PreProcess()
@@ -25,61 +29,60 @@ namespace PIFilmAutoDetachCleanMC.Process
                 CheckRealTimeAlarmStatus();
             }
 
-            // 2. CHECK USER OPERATION COMMAND (Origin / Ready / Start / Stop / Semiauto...)
-            //EOperationCommand command = EOperationCommand.None;
-            //ESemiSequence eSemiAutoSequence = ESemiSequence.None;
-            //if (_machineStatus.IsRunningProcessMode)
-            //{
-            //    // Machine is doing something : Run, Origin, To-Action
-            //    // Can Stop
-            //    if (_machineStatus.OPCommand == EOperationCommand.Stop
-            //        || _allDevice.InputList.FrontStopSW.Value == true
-            //        || _allDevice.InputList.RearStopSW.Value == true
-            //        || _machineStatus.InitDeinitStatus == EInitDeinitStatus.DeinitStarted)
-            //    {
-            //        command = EOperationCommand.Stop;
-            //    }
-            //    // Block run OPCommand actived while machine is Runiing
-            //    _machineStatus.OPCommand = EOperationCommand.None;
-            //}
-            //else
-            //{
-            //    // Machine is in standby mode (doing nothing)
-            //    // Can Origin / Ready / Start
-            //    if (_machineStatus.OPCommand == EOperationCommand.Origin)
-            //    {
-            //        command = EOperationCommand.Origin;
-            //    }
+            //2.CHECK USER OPERATION COMMAND(Origin / Ready / Start / Stop / Semiauto...)
+            EOperationCommand command = EOperationCommand.None;
+            if (_machineStatus.IsRunningProcessMode)
+            {
+                // Machine is doing something : Run, Origin, To-Action
+                // Can Stop
+                if (_machineStatus.OPCommand == EOperationCommand.Stop
+                    || _devices.Inputs.OpLButtonStop.Value == true
+                    || _devices.Inputs.OpRButtonStop.Value == true
+                    /*|| _machineStatus.InitDeinitStatus == EInitDeinitStatus.DeinitStarted*/)
+                {
+                    command = EOperationCommand.Stop;
+                }
+                // Block run OPCommand actived while machine is Runiing
+                _machineStatus.OPCommand = EOperationCommand.None;
+            }
+            else
+            {
+                // Machine is in standby mode (doing nothing)
+                // Can Origin / Ready / Start
+                if (_machineStatus.OPCommand == EOperationCommand.Origin)
+                {
+                    command = EOperationCommand.Origin;
+                }
 
-            //    if (ProcessMode != EProcessMode.ToAlarm &&
-            //        ProcessMode != EProcessMode.Alarm && ProcessMode != EProcessMode.None)
-            //    {
-            //        if (_machineStatus.OPCommand == EOperationCommand.Ready
-            //            || _allDevice.InputList.FrontResetSW.Value == true
-            //            || _allDevice.InputList.RearResetSW.Value == true)
-            //        {
-            //            command = EOperationCommand.Ready;
-            //        }
-            //        else if (_machineStatus.OPCommand == EOperationCommand.Start
-            //            || _allDevice.InputList.FrontStartSW.Value == true
-            //            || _allDevice.InputList.RearStartSW.Value == true)
-            //        {
-            //            command = EOperationCommand.Start;
-            //        }
-            //        else if (_machineStatus.OPCommand == EOperationCommand.SemiAuto)
-            //        {
-            //            command = EOperationCommand.SemiAuto;
-            //        }
-            //    }
-            //    else if (_machineStatus.OPCommand == EOperationCommand.Ready
-            //        || _machineStatus.OPCommand == EOperationCommand.Start
-            //        || _allDevice.InputList.FrontStartSW.Value == true
-            //        || _allDevice.InputList.RearStartSW.Value == true)
-            //    {
-            //        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_ResetAlarmBeforeRun"], (string)Application.Current.Resources["str_Confirm"]);
-            //        _machineStatus.OPCommand = EOperationCommand.None;
-            //    }
-            //}
+                if (ProcessMode != EProcessMode.ToAlarm &&
+                    ProcessMode != EProcessMode.Alarm && ProcessMode != EProcessMode.None)
+                {
+                    if (_machineStatus.OPCommand == EOperationCommand.Ready
+                        || _devices.Inputs.OpLButtonReset.Value == true
+                        || _devices.Inputs.OpRButtonReset.Value == true)
+                    {
+                        command = EOperationCommand.Ready;
+                    }
+                    else if (_machineStatus.OPCommand == EOperationCommand.Start
+                        || _devices.Inputs.OpLButtonStart.Value == true
+                        || _devices.Inputs.OpRButtonStart.Value == true)
+                    {
+                        command = EOperationCommand.Start;
+                    }
+                    else if (_machineStatus.OPCommand == EOperationCommand.SemiAuto)
+                    {
+                        command = EOperationCommand.SemiAuto;
+                    }
+                }
+                else if (_machineStatus.OPCommand == EOperationCommand.Ready
+                    || _machineStatus.OPCommand == EOperationCommand.Start
+                    || _devices.Inputs.OpLButtonReset.Value == true
+                    || _devices.Inputs.OpRButtonReset.Value == true)
+                {
+                    MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_ResetAlarmBeforeRun"], (string)Application.Current.Resources["str_Confirm"]);
+                    _machineStatus.OPCommand = EOperationCommand.None;
+                }
+            }
 
             // 3. HANDLE USER OPERATION COMMAND
 
