@@ -22,12 +22,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         FileSystemHandle,
 
+        CommunicationHandle,
+
         MotionDeviceHandle,
         IODeviceHandle,
 
         RecipeHandle,
 
         ProcessHandle,
+
 
         End,
         Error,
@@ -67,12 +70,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             Processes processes,
             INavigationService navigationService,
             [FromKeyedServices("RollerModbusCommunication")]IModbusCommunication rollerModbusCommunication,
+            [FromKeyedServices("TorqueControllerModbusCommunication")]IModbusCommunication torqueModbusCommnication,
             RecipeSelector recipeSelector)
         {
             _devices = devices;
             _processes = processes;
             _navigationService = navigationService;
             _rollerModbusCommunication = rollerModbusCommunication;
+            _torqueModbusCommnication = torqueModbusCommnication;
             _recipeSelector = recipeSelector;
             _task = new Task(() => { });
             ErrorMessages = new List<string>();
@@ -139,12 +144,17 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     case EHandleStep.FileSystemHandle:
                         _step++;
                         break;
+                    case EHandleStep.CommunicationHandle:
+                        _rollerModbusCommunication.Connect();
+                        _torqueModbusCommnication.Connect();
+                        _step++;
+                        break;
                     case EHandleStep.MotionDeviceHandle:
                         MessageText = "Connect Motion Deivices";
 
                         _devices.MotionsInovance.MotionControllerInovance.Connect();
 
-                        _devices.MotionsInovance.All.ForEach(m => m.Connect());
+                        _devices.MotionsAjin.All.ForEach(m => m.Connect());
 
                         if (_devices.MotionsInovance.All.Any(m => m.IsConnected == false))
                         {
@@ -152,7 +162,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                                 $"{string.Join(", ", _devices.MotionsInovance.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
                         }
 
-                        _rollerModbusCommunication.Connect();
+                        if (_devices.MotionsAjin.All.Any(m => m.IsConnected == false))
+                        {
+                            ErrorMessages.Add($"Motion device is not connected: " +
+                                $"{string.Join(", ", _devices.MotionsAjin.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
+                        }
+
+                        _devices.MotionsInovance.All.ForEach(m => m.Initialization());
+                        _devices.MotionsAjin.All.ForEach(m => m.Initialization());
+
                         _step++;
                         break;
                     case EHandleStep.IODeviceHandle:
@@ -221,6 +239,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     case EHandleStep.FileSystemHandle:
                         _step++;
                         break;
+                    case EHandleStep.CommunicationHandle:
+                        _rollerModbusCommunication.Disconnect();
+                        _torqueModbusCommnication.Disconnect();
+                        _step++;
+                        break;
                     case EHandleStep.MotionDeviceHandle:
                         MessageText = "Connect Motion Deivices";
 
@@ -270,6 +293,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         #region Private fields
         private readonly INavigationService _navigationService;
         private readonly IModbusCommunication _rollerModbusCommunication;
+        private readonly IModbusCommunication _torqueModbusCommnication;
         private readonly RecipeSelector _recipeSelector;
         private readonly Devices _devices;
         private readonly Processes _processes;
