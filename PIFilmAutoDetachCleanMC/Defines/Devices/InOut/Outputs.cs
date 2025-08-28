@@ -11,6 +11,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public Outputs([FromKeyedServices("OutputDevice#1")] IDOutputDevice dOutputDevice)
         {
             _dOutputDevice = dOutputDevice;
+
+            Initialize();
         }
 
         public bool Initialize()

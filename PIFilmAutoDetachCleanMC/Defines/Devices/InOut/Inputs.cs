@@ -16,6 +16,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
             inputUpdateTimer.Elapsed += InputUpdateTimer_Elapsed;
             inputUpdateTimer.AutoReset = true;
             inputUpdateTimer.Enabled = true;
+
+            Initialize();
         }
 
         public bool Initialize()

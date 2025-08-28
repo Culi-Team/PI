@@ -142,19 +142,8 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 //services.AddKeyedScoped<IDOutputDevice>("OutputDevice#1", (services, obj) => { return new AjinOutputDevice<EOutput1> { Id = 1, Name = "OutDevice1", MaxPin = 32 }; });
 #endif
 
-                services.AddSingleton<Inputs>(sp =>
-                {
-                    var inDev = sp.GetRequiredKeyedService<IDInputDevice>("InputDevice#1");
-                    inDev.Initialize();
-                    return new Inputs(inDev);
-                });
-                services.AddSingleton<Outputs>(sp =>
-                {
-                    var outDev = sp.GetRequiredKeyedService<IDOutputDevice>("OutputDevice#1");
-                    outDev.Initialize();
-                    return new Outputs(outDev);
-
-                });
+                services.AddSingleton<Inputs>();
+                services.AddSingleton<Outputs>();
             });
 
             return hostBuilder;
