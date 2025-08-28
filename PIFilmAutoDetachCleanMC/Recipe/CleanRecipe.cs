@@ -14,6 +14,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 		private int unwinderTorque;
         private int winderTorque;
         private double cleanVolume;
+        private double cylinderPushPressure;
         private bool usePort1;
         private bool usePort2;
         private bool usePort3;
@@ -44,6 +45,14 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 			get { return cleanVolume; }
 			set { cleanVolume = value; }
 		}
+
+        [SingleRecipeDescription(Description = "Cylinder Push Pressure", Unit = Unit.MilliPascal)]
+        [SingleRecipeMinMax(Max = 0.9, Min = 0.2)]
+        public double CylinderPushPressure
+        {
+            get { return cylinderPushPressure; }
+            set { cylinderPushPressure = value; }
+        }
 
         [SingleRecipeDescription(Description = "Use Port 1", Unit = Unit.ETC)]
         public bool UsePort1
