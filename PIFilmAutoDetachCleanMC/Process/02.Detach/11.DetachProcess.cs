@@ -1,8 +1,10 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Motion;
+using EQX.Core.Sequence;
 using EQX.Process;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
+using PIFilmAutoDetachCleanMC.Recipe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,9 @@ namespace PIFilmAutoDetachCleanMC.Process
 {
     public class DetachProcess : ProcessBase<ESequence>
     {
+        #region Privates
         private readonly Devices _devices;
+        private readonly CommonRecipe _commonRecipe;
 
         private IMotion DetachGlassZAxis => _devices.MotionsInovance.DetachGlassZAxis;
         private IMotion ShuttleTransferXAxis => _devices.MotionsInovance.ShuttleTransferXAxis;
@@ -34,17 +38,94 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDOutput glassShuttleVac1 => _devices.Outputs.DetachGlassShtVac1OnOff;
         private IDOutput glassShuttleVac2 => _devices.Outputs.DetachGlassShtVac2OnOff;
         private IDOutput glassShuttleVac3 => _devices.Outputs.DetachGlassShtVac3OnOff;
+        #endregion
 
+        #region Private Methods
         private void GlassShuttleVacOnOff(bool onOff)
         {
             glassShuttleVac1.Value = onOff;
             glassShuttleVac2.Value = onOff;
             glassShuttleVac3.Value = onOff;
         }
+        #endregion
 
-        public DetachProcess(Devices devices)
+        #region Constructor
+        public DetachProcess(Devices devices, CommonRecipe commonRecipe)
         {
             _devices = devices;
+            _commonRecipe = commonRecipe;
         }
+        #endregion
+
+        #region Override Methods
+        public override bool ProcessOrigin()
+        {
+            switch((EDetachProcessOriginStep)Step.OriginStep)
+            {
+                case EDetachProcessOriginStep.Start:
+                    Log.Debug("Origin Start");
+                    Step.OriginStep++;
+                    break;
+                case EDetachProcessOriginStep.ZAxis_Origin:
+                    Log.Debug("Detach Glass Z Axis Origin Start");
+                    Log.Debug("Shuttle Transfer Z Axis Origin Start");
+                    DetachGlassZAxis.SearchOrigin();
+                    ShuttleTransferZAxis.SearchOrigin();
+                    Wait(_commonRecipe.MotionOriginTimeout, () => { return DetachGlassZAxis.Status.IsHomeDone && ShuttleTransferZAxis.Status.IsHomeDone; });
+                    Step.OriginStep++;
+                    break;
+                case EDetachProcessOriginStep.ZAxis_Origin_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Detach Glass Z Axis Origin Done");
+                    Log.Debug("Shuttle Transfer Z Axis Origin Done");
+                    Step.OriginStep++;
+                    break;
+                case EDetachProcessOriginStep.DetachCyl_Up:
+                    Log.Debug("Detach Cylinder Up");
+                    DetachCyl1.Backward();
+                    DetachCyl2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return DetachCyl1.IsBackward && DetachCyl2.IsBackward; });
+                    Step.OriginStep++;
+                    break;
+                case EDetachProcessOriginStep.DetachCyl_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Detach Cylinder Up Done");
+                    Step.OriginStep++;
+                    break;
+                case EDetachProcessOriginStep.ShtTransferXAxis_Origin:
+                    Log.Debug("Shuttle Transfer X Axis Origin Start");
+                    ShuttleTransferXAxis.SearchOrigin();
+                    Wait(_commonRecipe.MotionOriginTimeout, () => { return ShuttleTransferXAxis.Status.IsHomeDone; });
+                    Step.OriginStep++;
+                    break;
+                case EDetachProcessOriginStep.ShtTransferXAxis_Origin_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Shuttle Transfer X Axis Origin Done");
+                    Step.OriginStep++;
+                    break;
+                case EDetachProcessOriginStep.End:
+                    Log.Debug("Origin End");
+                    ProcessStatus = EProcessStatus.OriginDone;
+                    Step.OriginStep++;
+                    return true;
+                default:
+                    Wait(20);
+                    break;
+            }
+            return true;
+        }
+        #endregion
     }
 }

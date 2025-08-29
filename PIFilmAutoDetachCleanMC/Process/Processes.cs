@@ -78,6 +78,17 @@ namespace PIFilmAutoDetachCleanMC.Process
             RootProcess.AddChild(UnloadAlignProcess);
             RootProcess.AddChild(RobotUnloadProcess);
 
+            foreach (var process in RootProcess.Childs)
+            {
+                process.AlarmRaised += ((alarmId, alarmSource) =>
+                {
+                    RootProcess.RaiseAlarm(alarmId, alarmSource);
+                });
+                process.WarningRaised += ((wawrningId, wawrningSource) =>
+                {
+                    RootProcess.RaiseWarning(wawrningId, wawrningSource);
+                });
+            }
 
             ProcessesStart();
         }

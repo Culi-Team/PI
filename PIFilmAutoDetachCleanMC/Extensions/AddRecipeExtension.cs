@@ -15,6 +15,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
+                services.AddSingleton<CommonRecipe>();
                 services.AddSingleton<CSTLoadUnloadRecipe>();
                 services.AddSingleton<DetachRecipe>();
                 services.AddKeyedScoped<CleanRecipe>("WETCleanLeftRecipe");

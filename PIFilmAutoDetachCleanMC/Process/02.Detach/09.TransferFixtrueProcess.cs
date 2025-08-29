@@ -25,5 +25,12 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             _devices = devices;
         }
+
+        #region Override Methods
+        public override bool ProcessOrigin()
+        {
+            return base.ProcessOrigin();
+        }
+        #endregion
     }
 }

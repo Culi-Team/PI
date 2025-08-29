@@ -11,16 +11,24 @@ namespace PIFilmAutoDetachCleanMC.Process
         where TESequence : Enum
         where TESemiSequence : Enum
     {
+        #region Privates
         private readonly Devices _devices;
         private readonly MachineStatus _machineStatus;
+        private int raisedAlarmCode = -1;
+        private int raisedWarningCode = -1;
+        private readonly object _lockAlarm = new object();
+        #endregion
 
+        #region Constructor
         public RootProcess(Devices devices,
             MachineStatus machineStatus)
         {
             _devices = devices;
             _machineStatus = machineStatus;
         }
+        #endregion
 
+        #region Override Methods
         public override bool PreProcess()
         {
             // 1. CHECK ALARM STATUS (Utils, Motion, Safety...)
@@ -88,6 +96,25 @@ namespace PIFilmAutoDetachCleanMC.Process
             HandleOPCommand(command);
             return base.PreProcess();
         }
+
+        public override bool ProcessOrigin()
+        {
+            if (Childs!.Count(child => child.ProcessStatus != EProcessStatus.OriginDone) == 0)
+            {
+                _machineStatus.OriginDone = true;
+
+                ProcessMode = EProcessMode.ToStop;
+                Log.Info("Origin done, Stop");
+                MessageBoxEx.Show(Application.Current.Resources["str_OriginSuccess"].ToString(), false);
+            }
+            else
+            {
+                Thread.Sleep(10);
+            }
+
+            return true;
+        }
+        #endregion
 
         private void CheckRealTimeAlarmStatus()
         {
@@ -274,6 +301,31 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void RootProcess_AlarmRaised(int alarmId, string alarmSource)
+        {
+            lock (_lockAlarm)
+            {
+                if (this.IsInAlarmMode()) return;
+
+                Log.Error($"{alarmSource} raising alarm [#{(int)(EAlarm)alarmId}] {(EAlarm)alarmId}");
+                raisedAlarmCode = alarmId;
+                ProcessMode = EProcessMode.ToAlarm;
+            }
+        }
+
+        private void RootProcess_WarningRaised(int warningId, string warningSource)
+        {
+            lock (_lockAlarm)
+            {
+                if (this.IsInWarningMode() || this.IsInAlarmMode()) return;
+
+                Log.Warn($"{warningSource} raising warning [#{(int)(EWarning)warningId}] {(EWarning)warningId}");
+
+                raisedWarningCode = warningId;
+                ProcessMode = EProcessMode.ToWarning;
             }
         }
 

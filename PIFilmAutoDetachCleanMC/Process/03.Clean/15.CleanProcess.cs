@@ -1,10 +1,12 @@
 ﻿using EQX.Core.Device.Regulator;
 using EQX.Core.InOut;
 using EQX.Core.Motion;
+using EQX.Core.Sequence;
 using EQX.Core.TorqueController;
 using EQX.Process;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
+using PIFilmAutoDetachCleanMC.Recipe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +17,9 @@ namespace PIFilmAutoDetachCleanMC.Process
 {
     public class CleanProcess : ProcessBase<ESequence>
     {
+        #region Privates
         private readonly Devices _devices;
+        private readonly CommonRecipe _commonRecipe;
 
         private EClean cleanType
         {
@@ -182,9 +186,73 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        public CleanProcess(Devices devices)
+        #endregion
+
+        #region Constructor
+        public CleanProcess(Devices devices, CommonRecipe commonRecipe)
         {
             _devices = devices;
+            _commonRecipe = commonRecipe;
         }
+        #endregion
+
+        #region Override Methods
+        public override bool ProcessOrigin()
+        {
+            switch ((ECleanOriginStep)Step.OriginStep)
+            {
+                case ECleanOriginStep.Start:
+                    Log.Debug("Origin Start");
+                    Step.OriginStep++;
+                    break;
+                case ECleanOriginStep.PushCyl_Up:
+                    Log.Debug("Push Cylinder Up");
+                    pushCyl.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return pushCyl.IsBackward; });
+                    Step.OriginStep++;
+                    break;
+                case ECleanOriginStep.PushCyl_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Push Cylinder Up Done");
+                    Step.OriginStep++;
+                    break;
+                case ECleanOriginStep.AxisOrigin:
+                    Log.Debug("X Axis Origin Start");
+                    Log.Debug("Y Axis Origin Start");
+                    Log.Debug("T Axis Origin Start");
+                    Log.Debug("Feeding Axis Origin Start");
+                    xAxis.SearchOrigin();
+                    yAxis.SearchOrigin();
+                    tAxis.SearchOrigin();
+                    feedingAxis.SearchOrigin();
+                    Wait(_commonRecipe.MotionOriginTimeout, () => { return xAxis.Status.IsHomeDone && yAxis.Status.IsHomeDone && tAxis.Status.IsHomeDone && feedingAxis.Status.IsHomeDone; });
+                    Step.OriginStep++;
+                    break;
+                case ECleanOriginStep.AxisOrigin_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("X Axis Origin Done");
+                    Log.Debug("Y Axis Origin Done");
+                    Log.Debug("T Axis Origin Done");
+                    Log.Debug("Feeding Axis Origin Done");
+                    Step.OriginStep++;
+                    break;
+                case ECleanOriginStep.End:
+                    Log.Debug("Origin done");
+                    ProcessStatus = EProcessStatus.OriginDone;
+                    Step.OriginStep++;
+                    break;
+            }
+
+            return true;
+        }
+        #endregion
     }
 }

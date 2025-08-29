@@ -10,6 +10,8 @@ using EQX.Core.Device.SpeedController;
 using EQX.Core.Communication.Modbus;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
+using log4net;
+using System.Runtime.CompilerServices;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -81,6 +83,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _recipeSelector = recipeSelector;
             _task = new Task(() => { });
             ErrorMessages = new List<string>();
+
+            Log = LogManager.GetLogger("InitVM");
         }
 
         public void Initialization()
@@ -145,11 +149,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _step++;
                         break;
                     case EHandleStep.CommunicationHandle:
+                        Log.Debug("Connect Modbus Communication");
                         _rollerModbusCommunication.Connect();
                         _torqueModbusCommnication.Connect();
                         _step++;
                         break;
                     case EHandleStep.MotionDeviceHandle:
+                        Log.Debug("Connect Motion Deivices");
+
                         MessageText = "Connect Motion Deivices";
 
                         _devices.MotionsInovance.MotionControllerInovance.Connect();
@@ -174,6 +181,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _step++;
                         break;
                     case EHandleStep.IODeviceHandle:
+                        Log.Debug("Connect IO Devices");
+
                         MessageText = "Connect IO Devices";
                         _isSuccess = true;
 
@@ -191,10 +200,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _step++;
                         break;
                     case EHandleStep.RecipeHandle:
+                        Log.Debug("Load Recipe");
+
                         _recipeSelector.Load();
                         _step++;
                         break;
                     case EHandleStep.ProcessHandle:
+                        Log.Debug("Init processes");
+
                         _processes.Initialize();
                         _step++;
                         break;
@@ -204,6 +217,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     case EHandleStep.Error:
                         if (ErrorMessages.Count > 0)
                         {
+                            Log.Error("Error: " + string.Join(", ", ErrorMessages));
                             MessageText = "Error: " + string.Join(", ", ErrorMessages);
                             Thread.Sleep(500);
                         }
