@@ -41,7 +41,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDInput Detect1 => _inputs.OutCstWorkDetect1;
         private IDInput Detect2 => _inputs.OutCstWorkDetect2;
         private IDInput Detect3 => _inputs.OutCstWorkDetect3;
-        private IDInput Detect4 => _inputs.OutCstWorkDetect4;
 
         #endregion
         #region Cylinders
