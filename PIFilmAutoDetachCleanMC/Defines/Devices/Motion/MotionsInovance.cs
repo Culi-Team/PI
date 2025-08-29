@@ -18,7 +18,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         public IMotion InCassetteTAxis => All.First(m => m.Id == (int)EMotionInovance.InCassetteTAxis);
         public IMotion OutCassetteTAxis => All.First(m => m.Id == (int)EMotionInovance.OutCassetteTAxis);
-        public IMotion FixtureLoadYAxis => All.First(m => m.Id == (int)EMotionInovance.FixtureLoadYAxis);
+        public IMotion FixtureTransferYAxis => All.First(m => m.Id == (int)EMotionInovance.FixtureTransferYAxis);
         public IMotion DetachGlassZAxis => All.First(m => m.Id == (int)EMotionInovance.DetachGlassZAxis);
         public IMotion ShuttleTransferXAxis => All.First(m => m.Id == (int)EMotionInovance.ShuttleTransferXAxis);
         public IMotion TransferInShuttleRYAxis => All.First(m => m.Id == (int)EMotionInovance.TransferInShuttleRYAxis);

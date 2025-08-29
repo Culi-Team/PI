@@ -4,7 +4,7 @@
     {
         InCassetteTAxis = 1,
         OutCassetteTAxis,
-        FixtureLoadYAxis,
+        FixtureTransferYAxis,
         DetachGlassZAxis,
         ShuttleTransferXAxis,
         TransferInShuttleRYAxis,
