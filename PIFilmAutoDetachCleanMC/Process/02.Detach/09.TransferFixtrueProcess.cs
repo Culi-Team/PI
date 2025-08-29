@@ -18,10 +18,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private Inputs Inputs => _devices.Inputs;
         private Outputs Outputs => _devices.Outputs;
         private ICylinder TransferFixtureUpDown => _devices.Cylinders.TransferFixtureUpDown;
-        private bool IsClamp1On => !Inputs.TransferFixture1Clamp.Value && !Inputs.TransferFixture1Clamp.Value &&
-                        !Inputs.TransferFixture2Clamp.Value && !Inputs.TransferFixture2Clamp.Value;
-        private bool IsClamp2On => !Inputs.TransferFixture3Clamp.Value && !Inputs.TransferFixture3Clamp.Value &&
-                        !Inputs.TransferFixture4Clamp.Value && !Inputs.TransferFixture4Clamp.Value;
+        private ICylinder TransferFixtureClamp1 => _devices.Cylinders.TransferFixture1ClampUnclamp;
+        private ICylinder TransferFixtureClamp2 => _devices.Cylinders.TransferFixture2ClampUnclamp;
 
         public TransferFixtrueProcess(Devices devices)
         {

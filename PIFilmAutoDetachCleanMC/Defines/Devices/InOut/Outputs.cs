@@ -81,6 +81,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput LoadRobDrivesOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.LOAD_ROB_DRIVES_OFF);
         public IDOutput LoadRobConfMess => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.LOAD_ROB_CONF_MESS);
         public IDOutput LoadRobExtStart => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.LOAD_ROB_EXT_START);
+        public IDOutput AlignFixtureFW => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_FIXTURE_FW);
+        public IDOutput AlignFixtureBW => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_FIXTURE_BW);
         public IDOutput VinylCleanFixture1Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_FIXTURE_1_CLAMP);
         public IDOutput VinylCleanFixture1Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_FIXTURE_1_UNCLAMP);
         public IDOutput VinylCleanFixture2Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_FIXTURE_2_CLAMP);
@@ -93,10 +95,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput TransferFixture1Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_1_UNCLAMP);
         public IDOutput TransferFixture2Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_2_CLAMP);
         public IDOutput TransferFixture2Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_2_UNCLAMP);
-        public IDOutput TransferFixture3Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_3_CLAMP);
-        public IDOutput TransferFixture3Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_3_UNCLAMP);
-        public IDOutput TransferFixture4Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_4_CLAMP);
-        public IDOutput TransferFixture4Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_4_UNCLAMP);
         public IDOutput DetachCyl1Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DETACH_CYL_1_UP);
         public IDOutput DetachCyl1Down => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DETACH_CYL_1_DOWN);
         public IDOutput DetachCyl2Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DETACH_CYL_2_UP);
@@ -105,10 +103,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput DetachFixFixtureCyl1Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DETACH_FIX_FIXTURE_CYL_1_FW);
         public IDOutput DetachFixFixtureCyl2Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DETACH_FIX_FIXTURE_CYL_2_BW);
         public IDOutput DetachFixFixtureCyl2Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DETACH_FIX_FIXTURE_CYL_2_FW);
-        public IDOutput DetachFixFixtureCyl3Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DETACH_FIX_FIXTURE_CYL_3_BW);
-        public IDOutput DetachFixFixtureCyl3Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DETACH_FIX_FIXTURE_CYL_3_FW);
-        public IDOutput DetachFixFixtureCyl4Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DETACH_FIX_FIXTURE_CYL_4_BW);
-        public IDOutput DetachFixFixtureCyl4Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DETACH_FIX_FIXTURE_CYL_4_FW);
         public IDOutput RemoveZoneIonRunStop => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_ION_RUN_STOP);
         public IDOutput RemoveZoneIonMaintenanceDetect => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_ION_MAINTENANCE_DETECT);
         public IDOutput RemoveZoneTrCylBw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_TR_CYL_BW);
@@ -127,10 +121,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput RemoveZoneFixCyl1Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FIX_CYL_1_BW);
         public IDOutput RemoveZoneFixCyl2Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FIX_CYL_2_FW);
         public IDOutput RemoveZoneFixCyl2Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FIX_CYL_2_BW);
-        public IDOutput RemoveZoneFixCyl3Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FIX_CYL_3_FW);
-        public IDOutput RemoveZoneFixCyl3Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FIX_CYL_3_BW);
-        public IDOutput RemoveZoneFixCyl4Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FIX_CYL_4_FW);
-        public IDOutput RemoveZoneFixCyl4Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FIX_CYL_4_BW);
 
         // ========== EOutput ==========
         public IDOutput DetachGlassShtVac1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DETACH_GLASS_SHT_VAC_1_ON_OFF);

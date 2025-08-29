@@ -46,6 +46,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         RobotFixture1ClampUnclamp,
         RobotFixture2ClampUnclamp,
 
+        //Fixturr Align
+        FixtureAlignCylFwBw,
+
         //Vinyl Clean
         VinylCleanFixture1ClampUnclamp,
         VinylCleanFixture2ClampUnclamp,
