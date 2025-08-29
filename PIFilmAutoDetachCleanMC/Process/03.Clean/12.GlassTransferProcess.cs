@@ -1,4 +1,5 @@
-﻿using EQX.Core.Motion;
+﻿using EQX.Core.InOut;
+using EQX.Core.Motion;
 using EQX.Process;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
@@ -16,6 +17,14 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private IMotion GlassTransferYAxis => _devices.MotionsInovance.GlassTransferYAxis;
         private IMotion GlassTransferZAxis => _devices.MotionsInovance.GlassTransferZAxis;
+
+        private IDOutput glassVac1 => _devices.Outputs.GlassTransferVac1OnOff;
+        private IDOutput glassVac2 => _devices.Outputs.GlassTransferVac2OnOff;
+        private IDOutput glassVac3 => _devices.Outputs.GlassTransferVac3OnOff;
+
+        private bool isVac1Detect => _devices.Inputs.GlassTransferVac1.Value;
+        private bool isVac2Detect => _devices.Inputs.GlassTransferVac2.Value;
+        private bool isVac3Detect => _devices.Inputs.GlassTransferVac3.Value;
 
         public GlassTransferProcess(Devices devices)
         {

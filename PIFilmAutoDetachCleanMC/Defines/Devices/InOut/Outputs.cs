@@ -210,6 +210,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput AfCleanPusherLeftDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_PUSHER_LEFT_DOWN);
         public IDOutput OutShuttleVac1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_SHUTTLE_VAC_1_ON_OFF);
         public IDOutput OutShuttleVac2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_SHUTTLE_VAC_2_ON_OFF);
+        public IDOutput UnloadTransferLVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_TRANSFER_L_VAC_ON_OFF);
+        public IDOutput UnloadTransferRVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_TRANSFER_R_VAC_ON_OFF);
         public IDOutput UnloadRobotVac1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ROBOT_VAC_1_ON_OFF);
         public IDOutput UnloadRobotVac2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ROBOT_VAC_2_ON_OFF);
         public IDOutput UnloadRobotVac3OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ROBOT_VAC_3_ON_OFF);

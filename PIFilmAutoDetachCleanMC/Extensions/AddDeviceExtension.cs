@@ -16,6 +16,9 @@ using EQX.Device.SpeedController;
 using EQX.InOut.ByVendor.Inovance;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
+using EQX.Core.Device.Regulator;
+using EQX.Device.Regulator;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -183,9 +186,36 @@ namespace PIFilmAutoDetachCleanMC.Extensions
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
-                services.AddSingleton<ICylinderFactory, CylinderFactory>(); 
+                services.AddSingleton<ICylinderFactory, CylinderFactory>();
 
                 services.AddSingleton<Cylinders>();
+            });
+
+            return hostBuilder;
+        }
+
+        public static IHostBuilder AddRegulatorDevices(this IHostBuilder hostBuilder)
+        {
+            hostBuilder.ConfigureServices((hostContext, services) =>
+            {
+                services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("WETCleanLeft", (ser, obj) =>
+                {
+                    return new ITVRegulatorRC(1, "WETCleanLeft", 0.9, "COM4", 9600);
+                });
+                services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("WETCleanRight", (ser, obj) =>
+                {
+                    return new ITVRegulatorRC(2, "WETCleanLeft", 0.9, "COM5", 9600);
+                });
+                services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("AFCleanLeft", (ser, obj) =>
+                {
+                    return new ITVRegulatorRC(3, "WETCleanLeft", 0.9, "COM6", 9600);
+                });
+                services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("AFCleanRight", (ser, obj) =>
+                {
+                    return new ITVRegulatorRC(4, "WETCleanLeft", 0.9, "COM7", 9600);
+                });
+
+                services.AddSingleton<Regulators>();
             });
 
             return hostBuilder;

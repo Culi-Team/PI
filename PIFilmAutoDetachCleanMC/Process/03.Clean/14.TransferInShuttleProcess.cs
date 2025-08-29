@@ -1,4 +1,5 @@
-﻿using EQX.Core.Motion;
+﻿using EQX.Core.InOut;
+using EQX.Core.Motion;
 using EQX.Process;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
@@ -20,6 +21,12 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private IMotion TransferInShuttleZAxis => port == EPort.Left ? _devices.MotionsInovance.TransferInShuttleLZAxis
                                                                         : _devices.MotionsInovance.TransferInShuttleRZAxis;
+
+        public IDOutput glassVac => port == EPort.Left ? _devices.Outputs.TransferInShuttleLVacOnOff
+                                                        : _devices.Outputs.TransferInShuttleRVacOnOff;
+
+        private bool isVacDetect => port == EPort.Left ? _devices.Inputs.TransferInShuttleLVac.Value
+                                                        : _devices.Inputs.TransferInShuttleRVac.Value;
 
         public TransferInShuttleProcess(Devices devices)
         {
