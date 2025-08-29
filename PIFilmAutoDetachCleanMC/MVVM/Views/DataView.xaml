@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
              mc:Ignorable="d"
+             x:Name="root"
              Loaded="DataView_Loaded"
              xmlns:vm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels"
              d:DataContext="{d:DesignInstance Type={x:Type vm:DataViewModel}}"
@@ -30,7 +31,7 @@
             </ListBox.ItemTemplate>
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="{Binding Recipes.Count}" />
+                    <UniformGrid Columns="{Binding DataContext.Recipes.Count,ElementName=root}" />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>

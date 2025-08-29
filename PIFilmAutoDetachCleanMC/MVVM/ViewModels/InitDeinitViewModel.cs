@@ -174,7 +174,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _step++;
                         break;
                     case EHandleStep.IODeviceHandle:
-                        MessageText = "Connect IO Deivices";
+                        MessageText = "Connect IO Devices";
                         _isSuccess = true;
 
                         _isSuccess &= _devices.Inputs.Initialize();

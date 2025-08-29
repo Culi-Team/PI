@@ -48,7 +48,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
-
         public RecipeBase SelectedRecipe
         {
             get { return _selectedRecipe; }
@@ -83,7 +82,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 });
             }
         }
-
         public ICommand RefreshRecipeCommand
         {
             get
