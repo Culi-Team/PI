@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EQX.Core.Common;
+using EQX.Core.Process;
 using EQX.Core.Sequence;
 using PIFilmAutoDetachCleanMC.Defines;
 using System;
@@ -10,12 +11,6 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
-	public enum EMachineRunMode
-	{
-		Auto,
-		ByPass,
-		Dryrun
-	}
     public class MachineStatus : ObservableObject
     {
 		private EMachineRunMode _machineRunMode;

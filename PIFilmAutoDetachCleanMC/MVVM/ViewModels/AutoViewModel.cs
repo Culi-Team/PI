@@ -22,6 +22,21 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         public MachineStatus MachineStatus { get; }
 
+        public ICommand SelectRunModeCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    var selected = RunModeDialog.ShowRunModeDialog();
+                    if (selected.HasValue)
+                    {
+                        MachineStatus.MachineRunMode = selected.Value;
+                    }
+                });
+            }
+        }
+
         public bool IsInputStop
         {
             get => _isInputStop;
