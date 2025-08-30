@@ -84,6 +84,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferOriginStep.End:
                     Log.Debug("Origin End");
                     ProcessStatus = EProcessStatus.OriginDone;
+                    Step.OriginStep++;
                     break;
                 default:
                     Wait(20);
