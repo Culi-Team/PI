@@ -40,6 +40,7 @@
             <Button Content="Initialize"
                     Background="LightBlue" />
             <Button Content="Origin"
+                    Command="{Binding OriginCommand}"
                     Background="LightBlue" />
             <Button Content="Production Info" 
                     Background="LightGreen"/>

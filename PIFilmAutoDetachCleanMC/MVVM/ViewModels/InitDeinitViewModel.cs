@@ -163,6 +163,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         _devices.MotionsAjin.All.ForEach(m => m.Connect());
 
+                        _devices.MotionsInovance.All.ForEach(m => m.Connect());
+
                         if (_devices.MotionsInovance.All.Any(m => m.IsConnected == false))
                         {
                             ErrorMessages.Add($"Motion device is not connected: " +

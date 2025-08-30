@@ -17,6 +17,27 @@ namespace PIFilmAutoDetachCleanMC.Process
         private int raisedAlarmCode = -1;
         private int raisedWarningCode = -1;
         private readonly object _lockAlarm = new object();
+
+        private bool DoorSensor
+        {
+            get
+            {
+                return _devices.Inputs.DoorLock1L.Value &&
+                       _devices.Inputs.DoorLock1R.Value &&
+                       _devices.Inputs.DoorLock2L.Value &&
+                       _devices.Inputs.DoorLock2R.Value &&
+                       _devices.Inputs.DoorLock3L.Value &&
+                       _devices.Inputs.DoorLock3R.Value &&
+                       _devices.Inputs.DoorLock4L.Value &&
+                       _devices.Inputs.DoorLock4R.Value &&
+                       _devices.Inputs.DoorLock5L.Value &&
+                       _devices.Inputs.DoorLock5R.Value &&
+                       _devices.Inputs.DoorLock6L.Value &&
+                       _devices.Inputs.DoorLock6R.Value &&
+                       _devices.Inputs.DoorLock7L.Value &&
+                       _devices.Inputs.DoorLock7R.Value;
+            }
+        }
         #endregion
 
         #region Constructor
@@ -112,6 +133,42 @@ namespace PIFilmAutoDetachCleanMC.Process
                 Thread.Sleep(10);
             }
 
+            return true;
+        }
+
+        public override bool ProcessToOrigin()
+        {
+            switch((ERootProcessToOriginStep)Step.OriginStep)
+            {
+                case ERootProcessToOriginStep.Start:
+                    Log.Info("To Origin started");
+                    Step.OriginStep++;
+                    break;
+                case ERootProcessToOriginStep.DoorSensorCheck:
+                    Log.Info("DoorSensorCheck");
+                    if (DoorSensor == false)
+                    {
+                        //WARNING
+                        RaiseWarning(0);
+                        break;
+                    }
+                    Step.OriginStep++;
+                    break;
+                case ERootProcessToOriginStep.ChildsToOriginDoneWait:
+                    if (Childs!.Count(child => child.ProcessStatus != EProcessStatus.ToOriginDone) != 0)
+                    {
+                        Wait(10);
+                        break;
+                    }
+
+                    Step.OriginStep++;
+                    break;
+                case ERootProcessToOriginStep.End:
+                    Log.Info("To Origin done");
+                    ProcessMode = EProcessMode.Origin;
+                    Step.OriginStep = 0;
+                    break;
+            }
             return true;
         }
         #endregion

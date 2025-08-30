@@ -1,8 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Common;
+using EQX.Core.Sequence;
 using EQX.Motion;
+using EQX.UI.Controls;
 using log4net;
 using PIFilmAutoDetachCleanMC.Process;
+using System.Windows;
 using System.Windows.Input;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
@@ -102,5 +105,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private bool _isInputStop;
         private bool _isOutputStop;
         #endregion
+
+        public ICommand OriginCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    if (MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_AreYouSureYouWantToSetMachineOrigin"], (string)Application.Current.Resources["str_Confirm"]) == false)
+                    {
+                        return;
+                    }
+
+                    MachineStatus.OPCommand = EOperationCommand.Origin;
+                });
+            }
+        }
+
     }
 }

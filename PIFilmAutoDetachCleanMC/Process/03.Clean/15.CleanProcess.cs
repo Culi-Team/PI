@@ -186,6 +186,21 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private bool IsLeakDetect
+        {
+            get
+            {
+                return cleanType switch
+                {
+                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftPumpLeakDetect.Value || _devices.Inputs.WetCleanleftAlcoholLeakDectect.Value,
+                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightPumpLeakDetect.Value || _devices.Inputs.WetCleanRightAlcoholLeakDectect.Value,
+                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftPumpLeakDetect.Value || _devices.Inputs.AFCleanLefttAlcoholLeakDectect.Value,
+                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightPumpLeakDetect.Value || _devices.Inputs.AFCleanRightAlcoholLeakDectect.Value,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+        }
+
         #endregion
 
         #region Constructor
