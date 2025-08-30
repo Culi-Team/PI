@@ -71,8 +71,6 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 #if SIMULATION
                 services.AddKeyedScoped<IMotionFactory<IMotion>, SimulationMotionFactory>("InovanceMotionFactory");
                 services.AddKeyedScoped<IMotionFactory<IMotion>, SimulationMotionFactory>("AjinMotionFactory");
-
-                services.AddKeyedScoped<IMotionController, SimulationMotionController>("InovanceController#1");
 #else
                 services.AddKeyedScoped<IMotionFactory<IMotion>>("InovanceMotionFactory", (ser, obj) =>
                     new MotionInovanceFactoryWithDefaultCardHandler
