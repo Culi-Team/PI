@@ -68,7 +68,8 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
                 services.AddKeyedScoped<IMotionController, MotionControllerInovance>("InovanceController#1");
 #if SIMULATION
-                services.AddSingleton<IMotionFactory<IMotion>, SimulationMotionFactory>();
+                services.AddKeyedScoped<IMotionFactory<IMotion>, SimulationMotionFactory>("InovanceMotionFactory");
+                services.AddKeyedScoped<IMotionFactory<IMotion>, SimulationMotionFactory>("AjinMotionFactory");
 #else
                 services.AddKeyedScoped<IMotionFactory<IMotion>>("InovanceMotionFactory", (ser, obj) =>
                     new MotionInovanceFactoryWithDefaultCardHandler
@@ -108,10 +109,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
 #if SIMULATION
-                services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new SimulationInputDevice_Client<EInput1>() { Id = 1, Name = "InDevice1", MaxPin = 96 }; });
-                services.AddKeyedScoped<IDInputDevice>("InputDevice#2", (services, obj) => { return new SimulationInputDevice_Client<EInput2>() { Id = 2, Name = "InDevice2", MaxPin = 96 }; });
-                services.AddKeyedScoped<IDInputDevice>("InputDevice#3", (services, obj) => { return new SimulationInputDevice_Client<EInput3>() { Id = 3, Name = "InDevice3", MaxPin = 96 }; });
-                services.AddKeyedScoped<IDInputDevice>("InputDevice#4", (services, obj) => { return new SimulationInputDevice_Client<EInput4>() { Id = 4, Name = "InDevice4", MaxPin = 96 }; });
+                services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new SimulationInputDevice_Client<EInput>() { Id = 1, Name = "InDevice1", MaxPin = 500 }; });
 #else
                 services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) =>
                 {
@@ -127,10 +125,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 #endif
 
 #if SIMULATION
-                services.AddKeyedScoped<IDOutputDevice>("OutputDevice#1", (services, obj) => { return new SimulationOutputDevice<EOutput1>() { Id = 1, Name = "OutDevice1", MaxPin = 96 }; });
-                services.AddKeyedScoped<IDOutputDevice>("OutputDevice#2", (services, obj) => { return new SimulationOutputDevice<EOutput2>() { Id = 2, Name = "OutDevice2", MaxPin = 96 }; });
-                services.AddKeyedScoped<IDOutputDevice>("OutputDevice#3", (services, obj) => { return new SimulationOutputDevice<EOutput3>() { Id = 3, Name = "OutDevice3", MaxPin = 96 }; });
-                services.AddKeyedScoped<IDOutputDevice>("OutputDevice#4", (services, obj) => { return new SimulationOutputDevice<EOutput4>() { Id = 4, Name = "OutDevice4", MaxPin = 96 }; });
+                services.AddKeyedScoped<IDOutputDevice>("OutputDevice#1", (services, obj) => { return new SimulationOutputDevice<EOutput>() { Id = 1, Name = "OutDevice1", MaxPin = 500 }; });
 #else
                 services.AddKeyedScoped<IDOutputDevice>("OutputDevice#1", (services, obj) =>
                 {
@@ -186,8 +181,12 @@ namespace PIFilmAutoDetachCleanMC.Extensions
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
+#if SIMULATION
+                services.AddSingleton<ICylinderFactory, SimulationCylinderFactory>();
+#else
                 services.AddSingleton<ICylinderFactory, CylinderFactory>();
 
+#endif
                 services.AddSingleton<Cylinders>();
             });
 
