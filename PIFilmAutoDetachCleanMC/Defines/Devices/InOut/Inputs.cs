@@ -95,8 +95,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput OutCstLightCurtainSafetyDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_CST_LIGHT_CURTAIN_SAFETY_DETECT);
         public IDInput DoorLock1R => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LOCK_1_R);
         public IDInput DoorLock1L => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LOCK_1_L);
-        public IDInput Fan1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.FAN_1);
-        public IDInput Fan2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.FAN_2);
         public IDInput EmoLoadR => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.EMO_LOAD_R);
         public IDInput EmoLoadL => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.EMO_LOAD_L);
 
@@ -207,10 +205,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput AlignFixtureIonMaintenanceDeteced => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_FIXTURE_ION_MAINTENANCE_DETECED);
         public IDInput AlignFixtureIonError => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_FIXTURE_ION_ERROR);
         public IDInput AlignFixtureIonSensorMonitor => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_FIXTURE_ION_SENSOR_MONITOR);
-        public IDInput Fan3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.FAN_3);
-        public IDInput Fan4 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.FAN_4);
-        public IDInput Fan5 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.FAN_5);
-        public IDInput Fan6 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.FAN_6);
         public IDInput AlignStageLVac1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_STAGE_L_VAC_1);
         public IDInput AlignStageLVac2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_STAGE_L_VAC_2);
         public IDInput AlignStageLVac3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_STAGE_L_VAC_3);
@@ -260,7 +254,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput Shuttle2LVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.SHUTTLE_2_L_VAC);
         public IDInput WetCleanPusherRightUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_PUSHER_RIGHT_UP);
         public IDInput WetCleanPusherRightDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_PUSHER_RIGHT_DOWN);
-        public IDInput WetCleanRightLeakDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_RIGHT_LEAK_DETECT);
+        public IDInput WetCleanRightPumpLeakDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_RIGHT_PUMP_LEAK_DETECT);
         public IDInput WetCleanRightWiperCleanDetect1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_RIGHT_WIPER_CLEAN_DETECT_1);
         public IDInput WetCleanRightWiperCleanDetect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_RIGHT_WIPER_CLEAN_DETECT_2);
         public IDInput WetCleanRightWiperCleanDetect3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_RIGHT_WIPER_CLEAN_DETECT_3);
@@ -270,7 +264,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput DoorLock8L => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LOCK_8_L);
         public IDInput WetCleanPusherLeftUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_PUSHER_LEFT_UP);
         public IDInput WetCleanPusherLeftDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_PUSHER_LEFT_DOWN);
-        public IDInput WetCleanLeftLeakDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_LEFT_LEAK_DETECT);
+        public IDInput WetCleanLeftPumpLeakDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_LEFT_PUMP_LEAK_DETECT);
         public IDInput WetCleanLeftWiperCleanDetect1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_LEFT_WIPER_CLEAN_DETECT_1);
         public IDInput WetCleanLeftWiperCleanDetect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_LEFT_WIPER_CLEAN_DETECT_2);
         public IDInput WetCleanLeftWiperCleanDetect3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_LEFT_WIPER_CLEAN_DETECT_3);
@@ -292,7 +286,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput TrRotateLeftVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_LEFT_VAC);
         public IDInput AfCleanPusherRightUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_PUSHER_RIGHT_UP);
         public IDInput AfCleanPusherRightDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_PUSHER_RIGHT_DOWN);
-        public IDInput AfCleanRightLeakDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_RIGHT_LEAK_DETECT);
+        public IDInput AfCleanRightPumpLeakDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_RIGHT_PUMP_LEAK_DETECT);
         public IDInput AfCleanRightWiperCleanDetect1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_RIGHT_WIPER_CLEAN_DETECT_1);
         public IDInput AfCleanRightWiperCleanDetect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_RIGHT_WIPER_CLEAN_DETECT_2);
         public IDInput AfCleanRightWiperCleanDetect3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_RIGHT_WIPER_CLEAN_DETECT_3);
@@ -300,7 +294,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput EmoUnloadL => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.EMO_UNLOAD_L);
         public IDInput AfCleanPusherLeftUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_PUSHER_LEFT_UP);
         public IDInput AfCleanPusherLeftDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_PUSHER_LEFT_DOWN);
-        public IDInput AfCleanLeftLeakDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_LEFT_LEAK_DETECT);
+        public IDInput AfCleanLeftPumpLeakDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_LEFT_PUMP_LEAK_DETECT);
         public IDInput AfCleanLeftWiperCleanDetect1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_LEFT_WIPER_CLEAN_DETECT_1);
         public IDInput AfCleanLeftWiperCleanDetect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_LEFT_WIPER_CLEAN_DETECT_2);
         public IDInput AfCleanLeftWiperCleanDetect3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_LEFT_WIPER_CLEAN_DETECT_3);
@@ -360,13 +354,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput UnloadRobOnPath => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_ROB_ON_PATH);
         public IDInput UnloadRobProAct => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_ROB_PRO_ACT);
         public IDInput UnloadRobInHome => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_ROB_IN_HOME);
-        public IDInput Fan7 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.FAN_7);
-        public IDInput Fan8 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.FAN_8);
-        public IDInput Fan9 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.FAN_9);
-        public IDInput Fan10 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.FAN_10);
-        public IDInput Fan11 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.FAN_11);
-        public IDInput Fan12 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.FAN_12);
-        public IDInput Fan13 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.FAN_13);
-        public IDInput Fan14 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.FAN_14);
+        public IDInput WetCleanRightAlcoholLeakDectect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_RIGHT_ALCOHOL_LEAK_DETECT);
+        public IDInput WetCleanleftAlcoholLeakDectect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_LEFT_ALCOHOL_LEAK_DETECT);
+        public IDInput AFCleanRightAlcoholLeakDectect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_RIGHT_ALCOHOL_LEAK_DETECT);
+        public IDInput AFCleanLefttAlcoholLeakDectect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_LEFT_ALCOHOL_LEAK_DETECT);
+        public IDInput ManualModeSwitch => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.MANUAL_MODE_SWITCH);
     }
 }
