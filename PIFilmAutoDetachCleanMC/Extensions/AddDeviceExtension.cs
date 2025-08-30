@@ -19,6 +19,7 @@ using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using EQX.Core.Device.Regulator;
 using EQX.Device.Regulator;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
+using EQX.InOut.InOut;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -109,7 +110,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
 #if SIMULATION
-                services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new SimulationInputDevice_Client<EInput>() { Id = 1, Name = "InDevice1", MaxPin = 500 }; });
+                services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new SimulationInputDeviceClientModbus<EInput>() { Id = 1, Name = "InDevice1", MaxPin = 500 }; });
 #else
                 services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) =>
                 {

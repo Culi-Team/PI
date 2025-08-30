@@ -12,12 +12,13 @@ namespace PIFilmAutoDetachCleanMC.Defines
         {
             _dInputDevice = dInputDevice;
 
-            System.Timers.Timer inputUpdateTimer = new System.Timers.Timer(100);
+            Initialize();
+
+            System.Timers.Timer inputUpdateTimer = new System.Timers.Timer(10);
             inputUpdateTimer.Elapsed += InputUpdateTimer_Elapsed;
             inputUpdateTimer.AutoReset = true;
             inputUpdateTimer.Enabled = true;
 
-            Initialize();
         }
 
         public bool Initialize()
