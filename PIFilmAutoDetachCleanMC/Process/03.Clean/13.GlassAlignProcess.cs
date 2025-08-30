@@ -15,34 +15,34 @@ namespace PIFilmAutoDetachCleanMC.Process
         private EPort port => Name == EProcess.GlassAlignLeft.ToString() ? EPort.Left : EPort.Right;
         private readonly Devices _devices;
 
-        private IDOutput alignStageVac1 => port == EPort.Left ? _devices.Outputs.AlignStageLVac1OnOff : _devices.Outputs.AlignStageRVac1OnOff;
-        private IDOutput alignStageVac2 => port == EPort.Left ? _devices.Outputs.AlignStageLVac2OnOff : _devices.Outputs.AlignStageRVac2OnOff;
-        private IDOutput alignStageVac3 => port == EPort.Left ? _devices.Outputs.AlignStageLVac3OnOff : _devices.Outputs.AlignStageRVac3OnOff;
+        private IDOutput AlignStageVac1 => port == EPort.Left ? _devices.Outputs.AlignStageLVac1OnOff : _devices.Outputs.AlignStageRVac1OnOff;
+        private IDOutput AlignStageVac2 => port == EPort.Left ? _devices.Outputs.AlignStageLVac2OnOff : _devices.Outputs.AlignStageRVac2OnOff;
+        private IDOutput AlignStageVac3 => port == EPort.Left ? _devices.Outputs.AlignStageLVac3OnOff : _devices.Outputs.AlignStageRVac3OnOff;
 
-        private ICylinder alignCyl1 => port == EPort.Left ? _devices.Cylinders.AlignStageL1AlignUnalign : _devices.Cylinders.AlignStageR1AlignUnalign;
-        private ICylinder alignCyl2 => port == EPort.Left ? _devices.Cylinders.AlignStageL2AlignUnalign : _devices.Cylinders.AlignStageR2AlignUnalign;
-        private ICylinder alignCyl3 => port == EPort.Left ? _devices.Cylinders.AlignStageL3AlignUnalign : _devices.Cylinders.AlignStageR3AlignUnalign;
+        private ICylinder AlignCyl1 => port == EPort.Left ? _devices.Cylinders.AlignStageL1AlignUnalign : _devices.Cylinders.AlignStageR1AlignUnalign;
+        private ICylinder AlignCyl2 => port == EPort.Left ? _devices.Cylinders.AlignStageL2AlignUnalign : _devices.Cylinders.AlignStageR2AlignUnalign;
+        private ICylinder AlignCyl3 => port == EPort.Left ? _devices.Cylinders.AlignStageL3AlignUnalign : _devices.Cylinders.AlignStageR3AlignUnalign;
 
-        private bool isGlass1Detect => port == EPort.Left ? _devices.Inputs.AlignStageRGlassDetect1.Value : _devices.Inputs.AlignStageRGlassDetect1.Value;
-        private bool isGlass2Detect => port == EPort.Left ? _devices.Inputs.AlignStageRGlassDetect1.Value : _devices.Inputs.AlignStageRGlassDetect1.Value;
-        private bool isGlass3Detect => port == EPort.Left ? _devices.Inputs.AlignStageRGlassDetect1.Value : _devices.Inputs.AlignStageRGlassDetect1.Value;
+        private bool IsGlass1Detect => port == EPort.Left ? _devices.Inputs.AlignStageRGlassDetect1.Value : _devices.Inputs.AlignStageRGlassDetect1.Value;
+        private bool IsGlass2Detect => port == EPort.Left ? _devices.Inputs.AlignStageRGlassDetect1.Value : _devices.Inputs.AlignStageRGlassDetect1.Value;
+        private bool IsGlass3Detect => port == EPort.Left ? _devices.Inputs.AlignStageRGlassDetect1.Value : _devices.Inputs.AlignStageRGlassDetect1.Value;
 
-        private bool isAlign => alignCyl1.IsForward && alignCyl2.IsForward && alignCyl3.IsForward;
-        private bool isUnalign => alignCyl1.IsBackward && alignCyl2.IsBackward && alignCyl3.IsBackward;
+        private bool IsAlign => AlignCyl1.IsForward && AlignCyl2.IsForward && AlignCyl3.IsForward;
+        private bool IsUnalign => AlignCyl1.IsBackward && AlignCyl2.IsBackward && AlignCyl3.IsBackward;
 
         private void AlignUnAlign(bool bAlignUnalign)
         {
             if(bAlignUnalign)
             {
-                alignCyl1.Forward();
-                alignCyl2.Forward();
-                alignCyl3.Forward();
+                AlignCyl1.Forward();
+                AlignCyl2.Forward();
+                AlignCyl3.Forward();
             }
             else
             {
-                alignCyl1.Backward();
-                alignCyl2.Backward();
-                alignCyl3.Backward();
+                AlignCyl1.Backward();
+                AlignCyl2.Backward();
+                AlignCyl3.Backward();
             }
         }
 

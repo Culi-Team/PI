@@ -16,43 +16,40 @@ namespace PIFilmAutoDetachCleanMC.Process
     public class OutConveyorProcess : ProcessBase<ESequence>
     {
         #region Private
-        private readonly Inputs _inputs;
-        private readonly Outputs _outputs;
-        private readonly Cylinders _cylinders;
-        private readonly SpeedControllerList _speedControllerList;
         private readonly Devices _devices;
         private readonly CSTLoadUnloadRecipe _cstLoadUnloadRecipe;
         #endregion
+
         #region Constructor
-        public OutConveyorProcess(Inputs inputs, Outputs outputs, Cylinders cylinders, SpeedControllerList speedControllerList, Devices devices, CSTLoadUnloadRecipe cstLoadUnloadRecipe)
+        public OutConveyorProcess(Devices devices, CSTLoadUnloadRecipe cstLoadUnloadRecipe)
         {
-            _inputs = inputs;
-            _outputs = outputs;
-            _cylinders = cylinders;
-            _speedControllerList = speedControllerList;
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
         }
         #endregion
+
         #region Inputs
-        private IDInput CST_Det1 => _inputs.OutCstDetect1;
-        private IDInput CST_Det2 => _inputs.OutCstDetect2;
-        private IDInput OutButton1 => _inputs.OutButton1;
-        private IDInput OutButton2 => _inputs.OutButton2;
-        private IDInput OutCSTLightCurtain => _inputs.OutCstLightCurtainSafetyDetect;
+        private IDInput CST_Det1 => _devices.Inputs.OutCstDetect1;
+        private IDInput CST_Det2 => _devices.Inputs.OutCstDetect2;
+        private IDInput OutButton1 => _devices.Inputs.OutButton1;
+        private IDInput OutButton2 => _devices.Inputs.OutButton2;
+        private IDInput OutCSTLightCurtain => _devices.Inputs.OutCstLightCurtainSafetyDetect;
         #endregion
+
         #region Outputs
-        private IDOutput OutButton1Lamp => _outputs.OutButtonLamp1;
-        private IDOutput OutButton2Lamp => _outputs.OutButtonLamp2;
-        private IDOutput OutCstMutingLightCurtain => _outputs.OutCstLightCurtainMuting;
+        private IDOutput OutButton1Lamp => _devices.Outputs.OutButtonLamp1;
+        private IDOutput OutButton2Lamp => _devices.Outputs.OutButtonLamp2;
+        private IDOutput OutCstMutingLightCurtain => _devices.Outputs.OutCstLightCurtainMuting;
         #endregion
+
         #region Cylinders
-        private ICylinder CstStopper => _cylinders.OutCstStopperUpDown;
+        private ICylinder CstStopper => _devices.Cylinders.OutCstStopperUpDown;
         #endregion
+
         #region Rollers
-        private ISpeedController Roller1 => _speedControllerList.OutConveyorRoller1;
-        private ISpeedController Roller2 => _speedControllerList.OutConveyorRoller2;
-        private ISpeedController Roller3 => _speedControllerList.OutConveyorRoller3;
+        private ISpeedController Roller1 => _devices.SpeedControllerList.OutConveyorRoller1;
+        private ISpeedController Roller2 => _devices.SpeedControllerList.OutConveyorRoller2;
+        private ISpeedController Roller3 => _devices.SpeedControllerList.OutConveyorRoller3;
 
         #endregion
     }

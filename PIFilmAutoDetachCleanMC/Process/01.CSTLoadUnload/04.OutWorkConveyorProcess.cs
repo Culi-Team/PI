@@ -17,44 +17,39 @@ namespace PIFilmAutoDetachCleanMC.Process
     public class OutWorkConveyorProcess : ProcessBase<ESequence>
     {
         #region Private
-        private readonly Inputs _inputs;
-        private readonly Cylinders _cylinders;
-        private readonly MotionsInovance _motionInovance;
-        private readonly SpeedControllerList _speedControllerList;
         private readonly Devices _devices;
         private readonly CSTLoadUnloadRecipe _cstLoadUnloadRecipe;
         #endregion
 
         #region Constructor
-        public OutWorkConveyorProcess(Inputs inputs, Cylinders cylinders, MotionsInovance motionInovance, SpeedControllerList speedControllerList, Devices devices, CSTLoadUnloadRecipe cstLoadUnloadRecipe)
+        public OutWorkConveyorProcess(Devices devices, CSTLoadUnloadRecipe cstLoadUnloadRecipe)
         {
-            _inputs = inputs;
-            _cylinders = cylinders;
-            _motionInovance = motionInovance;
-            _speedControllerList = speedControllerList;
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
         }
         #endregion
 
         #region Inputs
-        private IDInput Detect1 => _inputs.OutCstWorkDetect1;
-        private IDInput Detect2 => _inputs.OutCstWorkDetect2;
-        private IDInput Detect3 => _inputs.OutCstWorkDetect3;
+        private IDInput Detect1 => _devices.Inputs.OutCstWorkDetect1;
+        private IDInput Detect2 => _devices.Inputs.OutCstWorkDetect2;
+        private IDInput Detect3 => _devices.Inputs.OutCstWorkDetect3;
 
         #endregion
+
         #region Cylinders
-        private ICylinder Fix => _cylinders.OutCstFixCylFwBw;
-        private ICylinder Tilt => _cylinders.OutCstTiltCylUpDown;
-        private ICylinder RollerCyl => _cylinders.OutCvSupportUpDown;
+        private ICylinder Fix => _devices.Cylinders.OutCstFixCylFwBw;
+        private ICylinder Tilt => _devices.Cylinders.OutCstTiltCylUpDown;
+        private ICylinder RollerCyl => _devices.Cylinders.OutCvSupportUpDown;
         #endregion
+
         #region Motions
-        private IMotion OutCSTTAxis => _motionInovance.OutCassetteTAxis;
+        private IMotion OutCSTTAxis => _devices.MotionsInovance.OutCassetteTAxis;
         #endregion
+
         #region Rollers
-        private ISpeedController RollerSup => _speedControllerList.SupportConveyor4Roller;
-        private ISpeedController Roller1 => _speedControllerList.OutWorkConveyorRoller1;
-        private ISpeedController Roller2 => _speedControllerList.OutWorkConveyorRoller2;
+        private ISpeedController RollerSup => _devices.SpeedControllerList.SupportConveyor4Roller;
+        private ISpeedController Roller1 => _devices.SpeedControllerList.OutWorkConveyorRoller1;
+        private ISpeedController Roller2 => _devices.SpeedControllerList.OutWorkConveyorRoller2;
         #endregion
     }
 }

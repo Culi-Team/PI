@@ -18,10 +18,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly Devices _devices;
         private readonly CommonRecipe _commonRecipe;
 
-        private ICylinder alignFixtureCyl => _devices.Cylinders.AlignFixtureBwFw;
-        private bool isFixtureDetect => _devices.Inputs.AlignFixtureDetect.Value;
-        private bool isFixtureTiltDetect => _devices.Inputs.AlignFixtureTiltDetect.Value;
-        private bool isFixtureReverseDetect => _devices.Inputs.AlignFixtureReverseDetect.Value;
+        private ICylinder AlignFixtureCyl => _devices.Cylinders.AlignFixtureBwFw;
+        private bool IsFixtureDetect => _devices.Inputs.AlignFixtureDetect.Value;
+        private bool IsFixtureTiltDetect => _devices.Inputs.AlignFixtureTiltDetect.Value;
+        private bool IsFixtureReverseDetect => _devices.Inputs.AlignFixtureReverseDetect.Value;
 
         #region Constructor
         public FixtureAlignProcess(Devices devices,
@@ -43,8 +43,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EFixtureAlignOriginStep.AlignFixtureBackward:
                     Log.Debug("Align Fixture Backward");
-                    alignFixtureCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return alignFixtureCyl.IsBackward; });
+                    AlignFixtureCyl.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return AlignFixtureCyl.IsBackward; });
                     Step.OriginStep++;
                     break;
                 case EFixtureAlignOriginStep.AlignFixtureBackward_Wait:
