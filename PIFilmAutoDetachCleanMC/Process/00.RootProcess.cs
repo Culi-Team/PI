@@ -50,10 +50,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             this.ProcessModeUpdated += ProcessModeUpdatedHandler;
         }
 
-        private void ProcessModeUpdatedHandler(object? sender, EventArgs e)
-        {
-            _machineStatus.CurrentProcessMode = this.ProcessMode;
-        }
         #endregion
 
         #region Override Methods
@@ -178,7 +174,30 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
             return true;
         }
+
+        public override bool ProcessToStop()
+        {
+            if (Childs!.Count(child => child.ProcessStatus != EProcessStatus.ToStopDone) == 0)
+            {
+                ProcessMode = EProcessMode.Stop;
+
+                Log.Info("ToStop Done, Stop");
+            }
+            else
+            {
+                Thread.Sleep(10);
+            }
+
+            return true;
+        }
+
         #endregion
+
+        #region Private Methods
+        private void ProcessModeUpdatedHandler(object? sender, EventArgs e)
+        {
+            _machineStatus.CurrentProcessMode = this.ProcessMode;
+        }
 
         private void CheckRealTimeAlarmStatus()
         {
@@ -392,6 +411,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 ProcessMode = EProcessMode.ToWarning;
             }
         }
-
+        #endregion
     }
 }
