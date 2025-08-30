@@ -46,6 +46,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             _devices = devices;
             _machineStatus = machineStatus;
+
+            this.ProcessModeUpdated += ProcessModeUpdatedHandler;
+        }
+
+        private void ProcessModeUpdatedHandler(object? sender, EventArgs e)
+        {
+            _machineStatus.CurrentProcessMode = this.ProcessMode;
         }
         #endregion
 

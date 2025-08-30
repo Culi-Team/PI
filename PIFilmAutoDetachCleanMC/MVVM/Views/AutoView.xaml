@@ -75,8 +75,10 @@
 
             </UniformGrid>
             <Button Content="Start" 
+                    Command="{Binding StartCommand}"
                     Background="LightGray"/>
             <Button Content="Stop"
+                    Command="{Binding StopCommand}"
                     Background="OrangeRed" />
         </UniformGrid>
 

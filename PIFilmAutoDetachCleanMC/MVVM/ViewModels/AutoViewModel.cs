@@ -122,5 +122,31 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
+        public ICommand StartCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    if (MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_AreYouSureYouWantToStartMachine"], (string)Application.Current.Resources["str_Confirm"]) == false)
+                    {
+                        return;
+                    }
+
+                    MachineStatus.OPCommand = EOperationCommand.Start;
+                });
+            }
+        }
+
+        public ICommand StopCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    MachineStatus.OPCommand = EOperationCommand.Stop;
+                });
+            }
+        }
     }
 }
