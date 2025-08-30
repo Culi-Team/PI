@@ -27,11 +27,11 @@ namespace PIFilmAutoDetachCleanMC.Process
 			set 
 			{
 				_machineRunMode = value;
-				OnPropertyChanged(nameof(MachineRunModeString)); 
+				OnPropertyChanged(nameof(MachineRunModeDisplay)); 
 			}
 		}
 
-		public string MachineRunModeString
+		public string MachineRunModeDisplay
         {
             get
             {

@@ -5,7 +5,9 @@ using EQX.Motion;
 using EQX.UI.Controls;
 using log4net;
 using PIFilmAutoDetachCleanMC.Process;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
@@ -18,22 +20,30 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             MachineStatus = machineStatus;
             _navigationService = navigationService;
+            SelectRunModeCommand = new RelayCommand(SelectRunMode);
+            MachineStatus.PropertyChanged += MachineStatusOnPropertyChanged;
         }
 
         public MachineStatus MachineStatus { get; }
 
-        public ICommand SelectRunModeCommand
+        public IRelayCommand SelectRunModeCommand { get; }
+
+        public string MachineRunModeDisplay => MachineStatus.MachineRunModeDisplay;
+
+        private void SelectRunMode()
         {
-            get
+            var selected = RunModeDialog.ShowRunModeDialog(Enum.GetValues<EMachineRunMode>());
+            if (selected.HasValue)
             {
-                return new RelayCommand(() =>
-                {
-                    var selected = RunModeDialog.ShowRunModeDialog();
-                    if (selected.HasValue)
-                    {
-                        MachineStatus.MachineRunMode = selected.Value;
-                    }
-                });
+                MachineStatus.MachineRunMode = selected.Value;
+            }
+        }
+
+        private void MachineStatusOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MachineStatus.MachineRunMode))
+            {
+                OnPropertyChanged(nameof(MachineRunModeDisplay));
             }
         }
 

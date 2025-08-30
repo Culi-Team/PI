@@ -32,9 +32,9 @@
         </Canvas>
         <UniformGrid Rows="9"
                      Grid.Column="1">
-            <Button Content="{Binding MachineStatus.MachineRunModeString}" 
+            <Button Content="{Binding MachineStatus.MachineRunModeDisplay}"
                     Background="LightBlue"
-                    Command="{Binding SelectRunModeCommand}"/>
+                    Command="{Binding SelectRunModeCommand}" />
             <Button Content="IO Monitoring"
                     Command="{Binding IOMonitoringNavigate}"
                     Background="LightBlue" />
