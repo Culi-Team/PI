@@ -17,6 +17,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             MotionsAjin motionsAjin,
             Cylinders cylinders,
             TorqueControllerList torqueControllers,
+            SpeedControllerList speedControllerList,
             Regulators regulators)
         {
             Inputs = inputs;
@@ -25,6 +26,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             MotionsAjin = motionsAjin;
             Cylinders = cylinders;
             TorqueControllers = torqueControllers;
+            SpeedControllerList = speedControllerList;
             Regulators = regulators;
         }
 
@@ -34,6 +36,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public MotionsAjin MotionsAjin { get; }
         public Cylinders Cylinders { get; }
         public TorqueControllerList TorqueControllers { get; }
+        public SpeedControllerList SpeedControllerList { get; }
         public Regulators Regulators { get; }
     }
 }

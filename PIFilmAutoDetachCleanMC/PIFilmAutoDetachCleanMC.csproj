@@ -66,4 +66,11 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Defines\Process\Step\01.InConveyorProcess\" />
+    <Folder Include="Defines\Process\Step\03.BufferConveyorProcess\" />
+    <Folder Include="Defines\Process\Step\04.OutWorkConveyorProcess\" />
+    <Folder Include="Defines\Process\Step\05.OutConveyorProcess\" />
+  </ItemGroup>
+
 </Project>

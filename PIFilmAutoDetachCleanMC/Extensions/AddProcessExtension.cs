@@ -21,9 +21,9 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             {
                 services.AddKeyedScoped<IProcess<ESequence>, RootProcess<ESequence, ESemiSequence>>(EProcess.Root.ToString());
                 services.AddKeyedScoped<IProcess<ESequence>, InConveyorProcess>(EProcess.InConveyor.ToString());
-                services.AddKeyedScoped<IProcess<ESequence>, InWorkConveyorProcess>(EProcess.InWorkConveyor.ToString());
+                services.AddKeyedScoped<IProcess<ESequence>, WorkConveyorProcess>(EProcess.InWorkConveyor.ToString());
                 services.AddKeyedScoped<IProcess<ESequence>, BufferConveyorProcess>(EProcess.BufferConveyor.ToString());
-                services.AddKeyedScoped<IProcess<ESequence>, OutWorkConveyorProcess>(EProcess.OutWorkConveyor.ToString());
+                services.AddKeyedScoped<IProcess<ESequence>, WorkConveyorProcess>(EProcess.OutWorkConveyor.ToString());
                 services.AddKeyedScoped<IProcess<ESequence>, OutConveyorProcess>(EProcess.OutConveyor.ToString());
 
                 services.AddKeyedScoped<IProcess<ESequence>, VinylCleanProcess>(EProcess.VinylClean.ToString());

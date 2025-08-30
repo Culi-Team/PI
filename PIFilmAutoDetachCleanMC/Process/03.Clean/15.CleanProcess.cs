@@ -51,7 +51,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private ITorqueController winder
+        private ITorqueController Winder
         {
             get
             {
@@ -66,7 +66,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private IMotion feedingAxis
+        private IMotion FeedingAxis
         {
             get
             {
@@ -81,7 +81,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private IMotion xAxis
+        private IMotion XAxis
         {
             get
             {
@@ -96,7 +96,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private IMotion yAxis
+        private IMotion YAxis
         {
             get
             {
@@ -111,7 +111,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private IMotion tAxis
+        private IMotion TAxis
         {
             get
             {
@@ -126,7 +126,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private ICylinder pushCyl
+        private ICylinder PushCyl
         {
             get
             {
@@ -141,7 +141,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private IRegulator regulator
+        private IRegulator Regulator
         {
             get
             {
@@ -156,7 +156,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private IDOutput glassVac
+        private IDOutput GlassVac
         {
             get
             {
@@ -171,7 +171,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool isVacDetect
+        private bool IsVacDetect
         {
             get
             {
@@ -207,8 +207,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ECleanOriginStep.PushCyl_Up:
                     Log.Debug("Push Cylinder Up");
-                    pushCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return pushCyl.IsBackward; });
+                    PushCyl.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return PushCyl.IsBackward; });
                     Step.OriginStep++;
                     break;
                 case ECleanOriginStep.PushCyl_Up_Wait:
@@ -225,11 +225,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Y Axis Origin Start");
                     Log.Debug("T Axis Origin Start");
                     Log.Debug("Feeding Axis Origin Start");
-                    xAxis.SearchOrigin();
-                    yAxis.SearchOrigin();
-                    tAxis.SearchOrigin();
-                    feedingAxis.SearchOrigin();
-                    Wait(_commonRecipe.MotionOriginTimeout, () => { return xAxis.Status.IsHomeDone && yAxis.Status.IsHomeDone && tAxis.Status.IsHomeDone && feedingAxis.Status.IsHomeDone; });
+                    XAxis.SearchOrigin();
+                    YAxis.SearchOrigin();
+                    TAxis.SearchOrigin();
+                    FeedingAxis.SearchOrigin();
+                    Wait(_commonRecipe.MotionOriginTimeout, () => { return XAxis.Status.IsHomeDone && YAxis.Status.IsHomeDone && TAxis.Status.IsHomeDone && FeedingAxis.Status.IsHomeDone; });
                     Step.OriginStep++;
                     break;
                 case ECleanOriginStep.AxisOrigin_Wait:
