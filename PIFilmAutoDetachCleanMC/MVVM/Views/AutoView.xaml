@@ -33,7 +33,8 @@
         <UniformGrid Rows="9"
                      Grid.Column="1">
             <Button Content="{Binding MachineStatus.MachineRunModeString}" 
-                    Background="LightBlue"/>
+                    Background="LightBlue"
+                    Command="{Binding SelectRunModeCommand}"/>
             <Button Content="IO Monitoring"
                     Command="{Binding IOMonitoringNavigate}"
                     Background="LightBlue" />
