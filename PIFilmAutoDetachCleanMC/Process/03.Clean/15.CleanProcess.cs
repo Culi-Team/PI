@@ -260,7 +260,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ECleanOriginStep.End:
-                    Log.Debug("Origin done");
+                    Log.Debug("Origin End");
                     ProcessStatus = EProcessStatus.OriginDone;
                     Step.OriginStep++;
                     break;
