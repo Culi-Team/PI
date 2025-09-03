@@ -48,6 +48,15 @@ namespace PIFilmAutoDetachCleanMC.Process
             _machineStatus = machineStatus;
 
             this.ProcessModeUpdated += ProcessModeUpdatedHandler;
+
+            this.AlarmRaised += (alarmId, alarmSource) =>
+            {
+                RootProcess_AlarmRaised(alarmId, alarmSource);
+            };
+            this.WarningRaised += (warningId, warningSource) =>
+            {
+                RootProcess_WarningRaised(warningId, warningSource);
+            };
         }
 
         #endregion
@@ -119,6 +128,50 @@ namespace PIFilmAutoDetachCleanMC.Process
             // 3. HANDLE USER OPERATION COMMAND
             HandleOPCommand(command);
             return base.PreProcess();
+        }
+
+        public override bool ProcessToAlarm()
+        {
+            if (Childs!.Count(child => child.ProcessStatus != EProcessStatus.ToAlarmDone) == 0)
+            {
+                foreach (var motion in _devices.MotionsInovance.All!) { motion.Stop(); }
+                foreach (var motion in _devices.MotionsAjin.All!) { motion.Stop(); }
+
+                _machineStatus.OriginDone = false;
+
+
+                ProcessMode = EProcessMode.Alarm;
+                Log.Info("ToAlarm Done, Alarm");
+                //AlertNotifyView.ShowDialog(_alarmService.GetById(raisedAlarmCode));
+                raisedAlarmCode = -1;
+            }
+            else
+            {
+                Thread.Sleep(10);
+            }
+
+            return true;
+        }
+
+        public override bool ProcessToWarning()
+        {
+            if (Childs!.Count(child => child.ProcessStatus != EProcessStatus.ToWarningDone) == 0)
+            {
+                foreach (var motion in _devices.MotionsInovance.All!) { motion.Stop(); }
+                foreach (var motion in _devices.MotionsAjin.All!) { motion.Stop(); }
+
+
+                ProcessMode = EProcessMode.Warning;
+                Log.Info("ToWarning Done, Warning");
+                //AlertNotifyView.ShowDialog(_warningService.GetById(raisedWarningCode), true);
+                raisedWarningCode = -1;
+            }
+            else
+            {
+                Thread.Sleep(10);
+            }
+
+            return true;
         }
 
         public override bool ProcessOrigin()

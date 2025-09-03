@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIFilmAutoDetachCleanMC.Defines.Process.Step._09.TransferFixtureProcess
+namespace PIFilmAutoDetachCleanMC.Defines
 {
     public enum ETransferFixtureOriginStep
     {

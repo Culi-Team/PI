@@ -12,6 +12,7 @@ using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
 using log4net;
 using System.Runtime.CompilerServices;
+using PIFilmAutoDetachCleanMC.Defines.VirtualIO;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -73,7 +74,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             INavigationService navigationService,
             [FromKeyedServices("RollerModbusCommunication")]IModbusCommunication rollerModbusCommunication,
             [FromKeyedServices("TorqueControllerModbusCommunication")]IModbusCommunication torqueModbusCommnication,
-            RecipeSelector recipeSelector)
+            RecipeSelector recipeSelector,
+            VirtualIO<EFlags> virtualIO)
         {
             _devices = devices;
             _processes = processes;
@@ -81,6 +83,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _rollerModbusCommunication = rollerModbusCommunication;
             _torqueModbusCommnication = torqueModbusCommnication;
             _recipeSelector = recipeSelector;
+            _virtualIO = virtualIO;
             _task = new Task(() => { });
             ErrorMessages = new List<string>();
 
@@ -211,6 +214,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Log.Debug("Init processes");
 
                         _processes.Initialize();
+
+                        _virtualIO.Initialize();
                         _step++;
                         break;
                     case EHandleStep.End:
@@ -311,6 +316,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly IModbusCommunication _rollerModbusCommunication;
         private readonly IModbusCommunication _torqueModbusCommnication;
         private readonly RecipeSelector _recipeSelector;
+        private readonly VirtualIO<EFlags> _virtualIO;
         private readonly Devices _devices;
         private readonly Processes _processes;
 

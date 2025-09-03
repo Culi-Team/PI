@@ -4,6 +4,7 @@ using EQX.Core.Sequence;
 using EQX.Process;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
+using PIFilmAutoDetachCleanMC.Defines.VirtualIO;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Privates
         private readonly Devices _devices;
         private readonly CommonRecipe _commonRecipe;
+        private readonly VirtualIO<EFlags> _virtualIO;
 
         private IMotion DetachGlassZAxis => _devices.MotionsInovance.DetachGlassZAxis;
         private IMotion ShuttleTransferXAxis => _devices.MotionsInovance.ShuttleTransferXAxis;
@@ -40,6 +42,15 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDOutput glassShuttleVac3 => _devices.Outputs.DetachGlassShtVac3OnOff;
         #endregion
 
+        #region Flags
+        private bool FlagOriginDone
+        {
+            set
+            {
+                _virtualIO.SetFlag(EFlags.DetachProcessOriginDone, value);
+            }
+        }
+        #endregion
         #region Private Methods
         private void GlassShuttleVacOnOff(bool onOff)
         {
@@ -50,10 +61,12 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Constructor
-        public DetachProcess(Devices devices, CommonRecipe commonRecipe)
+        public DetachProcess(Devices devices, CommonRecipe commonRecipe,
+                            VirtualIO<EFlags> virtualIO)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
+            _virtualIO = virtualIO;
         }
         #endregion
 
@@ -117,6 +130,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EDetachProcessOriginStep.End:
                     Log.Debug("Origin End");
+                    FlagOriginDone = true;
                     ProcessStatus = EProcessStatus.OriginDone;
                     Step.OriginStep++;
                     return true;
