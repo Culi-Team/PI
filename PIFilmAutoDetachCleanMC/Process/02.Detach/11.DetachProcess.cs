@@ -20,6 +20,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly Devices _devices;
         private readonly CommonRecipe _commonRecipe;
         private readonly VirtualIO<EFlags> _virtualIO;
+        private readonly DetachRecipe _detachRecipe;
 
         private IMotion DetachGlassZAxis => _devices.MotionsInovance.DetachGlassZAxis;
         private IMotion ShuttleTransferXAxis => _devices.MotionsInovance.ShuttleTransferXAxis;
@@ -31,15 +32,16 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder DetachCyl1 => _devices.Cylinders.DetachCyl1UpDown;
         private ICylinder DetachCyl2 => _devices.Cylinders.DetachCyl2UpDown;
 
-        private bool isFixtureDetect => _devices.Inputs.DetachFixtureDetect.Value;
-        
-        private bool isGlassShuttleVac1 => _devices.Inputs.DetachGlassShtVac1.Value;
-        private bool isGlassShuttleVac2 => _devices.Inputs.DetachGlassShtVac2.Value;
-        private bool isGlassShuttleVac3 => _devices.Inputs.DetachGlassShtVac3.Value;
+        private bool IsFixtureDetect => _devices.Inputs.DetachFixtureDetect.Value;
 
-        private IDOutput glassShuttleVac1 => _devices.Outputs.DetachGlassShtVac1OnOff;
-        private IDOutput glassShuttleVac2 => _devices.Outputs.DetachGlassShtVac2OnOff;
-        private IDOutput glassShuttleVac3 => _devices.Outputs.DetachGlassShtVac3OnOff;
+        private bool IsGlassShuttleVac1 => _devices.Inputs.DetachGlassShtVac1.Value;
+        private bool IsGlassShuttleVac2 => _devices.Inputs.DetachGlassShtVac2.Value;
+        private bool IsGlassShuttleVac3 => _devices.Inputs.DetachGlassShtVac3.Value;
+        private bool IsGlassShuttleVacAll => IsGlassShuttleVac1 && IsGlassShuttleVac2 && IsGlassShuttleVac3;
+
+        private IDOutput GlassShuttleVac1 => _devices.Outputs.DetachGlassShtVac1OnOff;
+        private IDOutput GlassShuttleVac2 => _devices.Outputs.DetachGlassShtVac2OnOff;
+        private IDOutput GlassShuttleVac3 => _devices.Outputs.DetachGlassShtVac3OnOff;
         #endregion
 
         #region Flags
@@ -50,31 +52,58 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _virtualIO.SetFlag(EFlags.DetachProcessOriginDone, value);
             }
         }
+
+        private bool FlagDetachRequestUnload
+        {
+            set
+            {
+                _virtualIO.SetFlag(EFlags.DetachRequestUnload, value);
+            }
+        }
+
+        private bool FlagDetachDone
+        {
+            set
+            {
+                _virtualIO.SetFlag(EFlags.DetachDone, value);
+            }
+        }
+
+        private bool FlagFixtureTransferDone
+        {
+            get
+            {
+                return _virtualIO.GetFlag(EFlags.FixtureTransferDone);
+            }
+        }
         #endregion
 
         #region Private Methods
         private void GlassShuttleVacOnOff(bool onOff)
         {
-            glassShuttleVac1.Value = onOff;
-            glassShuttleVac2.Value = onOff;
-            glassShuttleVac3.Value = onOff;
+            GlassShuttleVac1.Value = onOff;
+            GlassShuttleVac2.Value = onOff;
+            GlassShuttleVac3.Value = onOff;
         }
         #endregion
 
         #region Constructor
-        public DetachProcess(Devices devices, CommonRecipe commonRecipe,
-                            VirtualIO<EFlags> virtualIO)
+        public DetachProcess(Devices devices,
+                            CommonRecipe commonRecipe,
+                            VirtualIO<EFlags> virtualIO,
+                            DetachRecipe detachRecipe)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
             _virtualIO = virtualIO;
+            _detachRecipe = detachRecipe;
         }
         #endregion
 
         #region Override Methods
         public override bool ProcessOrigin()
         {
-            switch((EDetachProcessOriginStep)Step.OriginStep)
+            switch ((EDetachProcessOriginStep)Step.OriginStep)
             {
                 case EDetachProcessOriginStep.Start:
                     Log.Debug("Origin Start");
@@ -89,7 +118,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case EDetachProcessOriginStep.ZAxis_Origin_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         //Timeout ALARM
                         break;
@@ -149,6 +178,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.Stop:
                     break;
                 case ESequence.AutoRun:
+                    Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
                     break;
@@ -175,10 +205,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
                     break;
                 case ESequence.FixtureTransfer:
+                    Sequence_FixtureTransfer();
                     break;
                 case ESequence.Detach:
+                    Sequence_Detach();
                     break;
                 case ESequence.DetachUnload:
+                    Sequence_DetachUnload();
                     break;
                 case ESequence.RemoveFilm:
                     break;
@@ -231,12 +264,442 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EDetachAutoRunStep)Step.RunStep)
             {
                 case EDetachAutoRunStep.Start:
+                    Log.Debug("AutoRun Start");
+                    Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.ShuttleTransfer_Vac_Check:
+                    if (IsGlassShuttleVacAll)
+                    {
+                        Log.Info("Sequence Detach Unload");
+                        Sequence = ESequence.DetachUnload;
+                        break;
+                    }
+                    Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.Fixture_Detect_Check:
+                    if (IsFixtureDetect)
+                    {
+                        Log.Info("Sequence Detach");
+                        Sequence = ESequence.Detach;
+                        break;
+                    }
+                    Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.End:
+                    Log.Info("Sequence Fixture Transfer");
+                    Sequence = ESequence.FixtureTransfer;
+                    break;
+            }
+        }
+
+        private void Sequence_DetachUnload()
+        {
+            switch ((EDetachUnloadStep)Step.RunStep)
+            {
+                case EDetachUnloadStep.Start:
+                    Log.Debug("Detach Unload Start");
+                    Step.RunStep++;
+                    break;
+                case EDetachUnloadStep.ShuttleZAxis_Move_ReadyPosition:
+                    Log.Debug("Shuttle Transfer Z Axis Move to Ready Position");
+                    ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisReadyPositon);
+                    Wait(_commonRecipe.MotionMoveTimeOut,
+                        () => { return ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisReadyPositon); });
+                    Step.RunStep++;
+                    break;
+                case EDetachUnloadStep.ShuttleZAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Shuttle Transfer Z Axis Move to Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachUnloadStep.XAxis_Move_DetachCheck_Position:
+                    Log.Debug("Shuttle Transfer X Axis Move to Detach Check Position");
+                    ShuttleTransferXAxis.MoveAbs(_detachRecipe.ShuttleTransferXAxisDetachCheckPositon,
+                        ShuttleTransferXAxis.Parameter.Velocity * 0.1);
+                    Wait(_commonRecipe.MotionMoveTimeOut,
+                        () => { return ShuttleTransferXAxis.IsOnPosition(_detachRecipe.ShuttleTransferXAxisDetachCheckPositon); });
+                    Step.RunStep++;
+                    break;
+                case EDetachUnloadStep.XAxis_Move_DetachCheck_Position_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Shuttle Transfer X Axis Move to Detach Check Position Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachUnloadStep.Vacuum_Check:
+                    if (!IsGlassShuttleVacAll)
+                    {
+                        RaiseWarning((int)EWarning.DetachFail);
+                        break;
+                    }
+                    Log.Debug("Glass Shuttle Vacuum Check Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachUnloadStep.XAxis_Move_UnloadPosition:
+                    Log.Debug("Shuttle Transfer X Axis Move to Unload Position");
+                    ShuttleTransferXAxis.MoveAbs(_detachRecipe.ShuttleTransferXAxisUnloadPositon);
+                    Wait(_commonRecipe.MotionMoveTimeOut,
+                        () => { return ShuttleTransferXAxis.IsOnPosition(_detachRecipe.ShuttleTransferXAxisUnloadPositon); });
+                    Step.RunStep++;
+                    break;
+                case EDetachUnloadStep.XAxis_Move_UnloadPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Shuttle Transfer X Axis Move to Unload Position Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachUnloadStep.ShuttleZAxis_Move_UnloadPosition:
+                    Log.Debug("Shuttle Transfer Z Axis Move to Unload Position");
+                    ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisUnloadPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,
+                        () => { return ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisUnloadPosition); });
+                    Step.RunStep++;
+                    break;
+                case EDetachUnloadStep.ShuttleZAxis_Move_UnloadPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Shuttle Transfer Z Axis Move to Unload Position Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachUnloadStep.Vacuum_Off:
+                    Log.Debug("Glass Shuttle Vacuum Off");
+                    GlassShuttleVacOnOff(false);
+                    Wait(_commonRecipe.VacDelay);
+                    Step.RunStep++;
+                    break;
+                case EDetachUnloadStep.SetFlagDetachRequestUnload:
+                    Log.Debug("Set Flag Detach Request Unload");
+                    FlagDetachRequestUnload = true;
+                    Step.RunStep++;
+                    break;
+                case EDetachUnloadStep.End:
+                    Log.Info("Sequence Glass Transfer Pick");
+                    Sequence = ESequence.GlassTransferPick;
+                    break;
+            }
+        }
+
+        private void Sequence_Detach()
+        {
+            switch ((EDetachStep)Step.RunStep)
+            {
+                case EDetachStep.Start:
+                    Log.Debug("Detach Start");
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.Cyl_Fix_Forward:
+                    Log.Debug("Detach Fix Cylinder 1 Forward");
+                    Log.Debug("Detach Fix Cylinder 2 Forward");
+                    DetachFixFixtureCyl1.Forward();
+                    DetachFixFixtureCyl2.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () =>
+                    {
+                        return DetachFixFixtureCyl1.IsForward && DetachFixFixtureCyl2.IsForward;
+                    });
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.Cyl_Fix_Forward_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Detach Fix Cylinder 1 Forward Done");
+                    Log.Debug("Detach Fix Cylinder 2 Forward Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.ShuttleZAxis_Move_ReadyPosition:
+                    Log.Debug("Shuttle Transfer Z Axis Move to Ready Position");
+                    ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisReadyPositon);
+                    Wait(_commonRecipe.MotionMoveTimeOut,
+                        () => { return ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisReadyPositon); });
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.ShuttleZAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Shuttle Transfer Z Axis Move to Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.XAxis_Move_DetachPosition:
+                    Log.Debug("Shuttle Transfer X Axis Move to Detach Position");
+                    ShuttleTransferXAxis.MoveAbs(_detachRecipe.ShuttleTransferXAxisDetachPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,
+                        () => { return ShuttleTransferXAxis.IsOnPosition(_detachRecipe.ShuttleTransferXAxisDetachPosition); });
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.XAxis_Move_DetachPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Shuttle Transfer X Axis Move to Detach Position Done");
+                    Step.RunStep++;
+                    Log.Debug("Wait Fixture Transfer Done");
+                    break;
+                case EDetachStep.Wait_FixtureTransferDone:
+                    if(FlagFixtureTransferDone == false)
+                    {
+                        Wait(10);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.ZAxis_Move_ReadyDetachPosition_1st:
+                    Log.Debug("Detach Glass Z Axis Move to Ready Detach Position 1st");
+                    DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisDetachReadyPosition);
+                    ShuttleTransferXAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisDetachReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,
+                        () =>
+                        {
+                            return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetachReadyPosition) &&
+                                         ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetachReadyPosition);
+                        });
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.ZAxis_Move_ReadyDetachPosition_Wait_1st:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Detach Glass Z Axis Move to Ready Detach Position 1st Done");
+                    Log.Debug("Shuttle Transfer Z Axis Move to Ready Detach Position 1st Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.Cyl_Detach1_Down:
+                    Log.Debug("Detach Cylinder 1 Down");
+                    DetachCyl1.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return DetachCyl1.IsForward; });
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.Cyl_Detach1_Down_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Detach Cylinder 1 Down Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.ZAxis_Move_Detach1Position:
+                    Log.Debug("Detach Glass Z Axis Move to Detach 1 Position");
+                    Log.Debug("Shuttle Transfer Z Axis Move to Detach 1 Position");
+
+                    DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisDetach1Position);
+                    ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisDetach1Position);
+                    Wait(_commonRecipe.MotionMoveTimeOut,
+                        () =>
+                        {
+                            return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetach1Position) &&
+                                         ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetach1Position);
+                        });
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.ZAxis_Move_Detach1Position_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Detach Glass Z Axis Move to Detach 1 Position Done");
+                    Log.Debug("Shuttle Transfer Z Axis Move to Detach 1 Position Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.Vacuum_On:
+                    Log.Debug("Glass Shuttle Vacuum On");
+                    GlassShuttleVacOnOff(true);
+                    Wait(_commonRecipe.VacDelay);
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.ZAxis_Move_ReadyDetachPosition_2nd:
+                    Log.Debug("Detach Glass Z Axis Move to Ready Detach Position 2nd");
+                    DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisDetachReadyPosition);
+                    ShuttleTransferXAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisDetachReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,
+                        () =>
+                        {
+                            return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetachReadyPosition) &&
+                                         ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetachReadyPosition);
+                        });
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.ZAxis_Move_ReadyDetachPosition_Wait_2nd:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Detach Glass Z Axis Move to Ready Detach Position 2nd Done");
+                    Log.Debug("Shuttle Transfer Z Axis Move to Ready Detach Position 2nd Done");
+                    break;
+                case EDetachStep.Cyl_Detach2_Down:
+                    Log.Debug("Detach Cylinder 2 Down");
+                    DetachCyl2.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return DetachCyl2.IsForward; });
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.Cyl_Detach2_Down_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Detach Cylinder 2 Down Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.ZAxis_Move_Detach2Position:
+                    Log.Debug("Detach Glass Z Axis Move to Detach 2 Position");
+                    Log.Debug("Shuttle Transfer Z Axis Move to Detach 2 Position");
+
+                    DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisDetach2Positon);
+                    ShuttleTransferXAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisDetach2Positon);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () =>
+                    {
+                        return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetach2Positon) &&
+                        ShuttleTransferXAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetach2Positon);
+                    });
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.ZAxis_Move_Detach2Position_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Detach Glass Z Axis Move to Detach 2 Position Done");
+                    Log.Debug("Shuttle Transfer Z Axis Move to Detach 2 Position Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.ZAxis_Move_ReadyPosition:
+                    Log.Debug("Detach Glass Z Axis Move Ready Position");
+                    Log.Debug("Shuttle Transfer Z Axis Move Ready Position");
+                    DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisReadyPosition);
+                    ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisReadyPositon);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () =>
+                    {
+                        return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisReadyPosition) &&
+                        ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisReadyPositon);
+                    });
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.ZAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        break;
+                    }
+                    Log.Debug("Detach Glass Z Axis Move Ready Position Done");
+                    Log.Debug("Shuttle Transfer Z Axis Move Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.Cyl_Fix_Backward:
+                    Log.Debug("Detach Fix Cylinder 1 Backward");
+                    Log.Debug("Detach Fix Cylinder 2 Backward");
+                    DetachFixFixtureCyl1.Backward();
+                    DetachFixFixtureCyl2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () =>
+                    {
+                        return DetachFixFixtureCyl1.IsBackward && DetachFixFixtureCyl2.IsBackward;
+                    });
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.Cyl_Fix_Backward_Wait:
+                    if(WaitTimeOutOccurred) 
+                    {
+                        //Timeout ALARM
+                        break; 
+                    }
+                    Log.Debug("Detach Fix Cylinder 1 Backward Done");
+                    Log.Debug("Detach Fix Cylinder 2 Backward Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.SetFlagDetachDone:
+                    FlagDetachDone = true;
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.End:
+                    Log.Info("Sequence Fixture Transfer");
+                    Sequence = ESequence.DetachUnload;
+                    break;
+            }
+        }
+
+        private void Sequence_FixtureTransfer()
+        {
+            switch ((EDetachProcessFixtureTransferStep)Step.RunStep)
+            {
+                case EDetachProcessFixtureTransferStep.Start:
+                    Log.Debug("Fixture Transfer Start");
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessFixtureTransferStep.DetachZAxis_Move_ReadyPosition:
+                    Log.Debug("Detach Glass Z Axis Move Ready Position");
+                    DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () =>
+                    {
+                        return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisReadyPosition);
+                    });
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessFixtureTransferStep.DetachedZAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Detach Glass Z Axis Move Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessFixtureTransferStep.Cyl_Fix_Backward:
+                    Log.Debug("Detach Fix Cylinder 1 Backward");
+                    Log.Debug("Detach Fix Cylinder 2 Backward");
+                    DetachFixFixtureCyl1.Backward();
+                    DetachFixFixtureCyl2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return DetachFixFixtureCyl1.IsBackward && DetachFixFixtureCyl2.IsBackward; });
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessFixtureTransferStep.Cyl_Fix_Backward_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Detach Fix Cylinder 1 Backward Done");
+                    Log.Debug("Detach Fix Cylinder 2 Backward Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessFixtureTransferStep.SetFlagDetachDone:
+                    FlagDetachDone = true;
+                    Log.Debug("Wait Fixture Transfer Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessFixtureTransferStep.Wait_FixtureTransferDone:
+                    if(FlagFixtureTransferDone == false)
+                    {
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessFixtureTransferStep.End:
+                    Log.Info("Sequence Detach");
+                    Sequence = ESequence.Detach;
                     break;
             }
         }

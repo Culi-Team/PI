@@ -11,9 +11,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
     public class DetachRecipe : RecipeBase
     {
         private double detachZAxisReadyPosition;
+        private double detachZAxisDetachReadyPosition;
         private double detachZAxisDetach1Position;
         private double detachZAxisDetach2Position;
         private double shuttleTransferZAxisReadyPosition;
+        private double shuttleTransferZAxisDetachReadyPosition;
         private double shuttleTransferZAxisDetach1Position;
         private double shuttleTransferZAxisDetach2Postion;
         private double shuttleTransferXAxisDetachPosition;
@@ -26,6 +28,13 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         {
             get { return detachZAxisReadyPosition; }
             set { detachZAxisReadyPosition = value; }
+        }
+
+        [SingleRecipeDescription(Description = "Detach Z Axis Detach Ready Position", Unit = Unit.mm)]
+        public double DetachZAxisDetachReadyPosition
+        {
+            get { return detachZAxisDetachReadyPosition; }
+            set { detachZAxisDetachReadyPosition = value; }
         }
 
         [SingleRecipeDescription(Description = "Detach Z Axis Detach 1 Position", Unit = Unit.mm)]
@@ -47,6 +56,13 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         {
             get { return shuttleTransferZAxisReadyPosition; }
             set { shuttleTransferZAxisReadyPosition = value; }
+        }
+
+        [SingleRecipeDescription(Description = "Sht Tr Z Axis Detach Ready Position", Unit = Unit.mm)]
+        public double ShuttleTransferZAxisDetachReadyPosition
+        {
+            get { return shuttleTransferZAxisDetachReadyPosition; }
+            set { shuttleTransferZAxisDetachReadyPosition = value; }
         }
 
         [SingleRecipeDescription(Description = "Sht Tr Z Axis Detach 1 Position", Unit = Unit.mm)]

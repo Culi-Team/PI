@@ -47,6 +47,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         //Detach
         Detach = 10000,
+        DetachFail = 10001,
 
         //Remove Film
         RemoveFilm = 11000,
