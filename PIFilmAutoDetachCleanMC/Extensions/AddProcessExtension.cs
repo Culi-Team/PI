@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
+using PIFilmAutoDetachCleanMC.Defines.VirtualIO;
 using PIFilmAutoDetachCleanMC.Process;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,8 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     }
                     return new Processes(processList);
                 });
+
+                services.AddSingleton<VirtualIO<EFlags>>();
             });
             return hostBuilder;
         }
