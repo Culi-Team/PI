@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              Loaded="UserControl_Loaded"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -28,7 +29,7 @@
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
+                <RowDefinition Height="60" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <GroupBox Margin="5 0 5 0"
@@ -37,45 +38,33 @@
                     <TextBlock Text="Filter" />
                 </GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox x:Name="DebugCheckBox"
-                              Content="DEBUG"
-                              Style="{x:Null}"
-                              IsChecked="True"
+                    <TextBlock Text="Filter Type:" 
+                               VerticalAlignment="Center"
+                               Margin="5" />
+                    <ComboBox x:Name="FilterTypeComboBox"
+                              Width="120"
                               Margin="5"
-                              Checked="FilterCheckBox_Changed"
-                              Unchecked="FilterCheckBox_Changed" />
-                    <CheckBox x:Name="InfoCheckBox"
-                              Content="INFO"
-                              Style="{x:Null}"
-                              Background="#90CAF9"
-                              IsChecked="True"
+                              SelectionChanged="FilterTypeComboBox_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" Foreground="{Binding Color}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    
+                    <TextBlock Text="Filter Source:" 
+                               VerticalAlignment="Center"
+                               Margin="10,5,5,5" />
+                    <ComboBox x:Name="SourceComboBox"
+                              Width="150"
                               Margin="5"
-                              Checked="FilterCheckBox_Changed"
-                              Unchecked="FilterCheckBox_Changed" />
-                    <CheckBox x:Name="WarnCheckBox"
-                              Content="WARN"
-                              Style="{x:Null}"
-                              Background="#FFF4CE"
-                              IsChecked="True"
-                              Margin="5"
-                              Checked="FilterCheckBox_Changed"
-                              Unchecked="FilterCheckBox_Changed" />
-                    <CheckBox x:Name="ErrorCheckBox"
-                              Content="ERROR"
-                              Style="{x:Null}"
-                              Background="#FFAB91"
-                              IsChecked="True"
-                              Margin="5"
-                              Checked="FilterCheckBox_Changed"
-                              Unchecked="FilterCheckBox_Changed" />
-                    <CheckBox x:Name="FatalCheckBox"
-                              Content="FATAL"
-                              Style="{x:Null}"
-                              Background="#FF7043"
-                              IsChecked="True"
-                              Margin="5"
-                              Checked="FilterCheckBox_Changed"
-                              Unchecked="FilterCheckBox_Changed" />
+                              SelectionChanged="FilterSourceComboBox_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" Foreground="{Binding Color}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </StackPanel>
             </GroupBox>
             <DataGrid x:Name="LogDataGrid"
