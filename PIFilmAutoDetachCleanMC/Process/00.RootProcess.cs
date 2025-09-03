@@ -38,6 +38,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                        _devices.Inputs.DoorLock7R.Value;
             }
         }
+
+        private bool IsLightCurtainLeftDetect => _devices.Inputs.OutCstLightCurtainSafetyDetect.Value;
+        private bool IsLightCurtainRightDetect => _devices.Inputs.InCstLightCurtainSafetyDetect.Value;
         #endregion
 
         #region Constructor
@@ -205,11 +208,27 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (DoorSensor == false)
                     {
                         //WARNING
-                        RaiseWarning(0);
+                        RaiseWarning((int)EWarning.DoorOpen);
                         break;
                     }
                     Step.OriginStep++;
                     break;
+                case ERootProcessToOriginStep.LightCurtainCheck:
+                    Log.Info("Light Curtain Sensor Check");
+                    if (!IsLightCurtainLeftDetect)
+                    {
+                        //WARNING
+                        RaiseWarning((int)EWarning.LightCurtainLeftDetected);
+                        break;
+                    }
+                    if (!IsLightCurtainRightDetect)
+                    {
+                        //WARNING
+                        RaiseWarning((int)EWarning.LightCurtainRightDetected);
+                        break;
+                    }
+                    Step.OriginStep++;
+                    break;  
                 case ERootProcessToOriginStep.ChildsToOriginDoneWait:
                     if (Childs!.Count(child => child.ProcessStatus != EProcessStatus.ToOriginDone) != 0)
                     {
