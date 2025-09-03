@@ -51,6 +51,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
         #endregion
+
         #region Private Methods
         private void GlassShuttleVacOnOff(bool onOff)
         {
@@ -139,6 +140,105 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
             }
             return true;
+        }
+
+        public override bool ProcessRun()
+        {
+            switch (Sequence)
+            {
+                case ESequence.Stop:
+                    break;
+                case ESequence.AutoRun:
+                    break;
+                case ESequence.Ready:
+                    break;
+                case ESequence.InWorkCSTLoad:
+                    break;
+                case ESequence.InWorkCSTUnLoad:
+                    break;
+                case ESequence.OutWorkCSTLoad:
+                    break;
+                case ESequence.OutWorkCSTUnLoad:
+                    break;
+                case ESequence.RobotPickFixtureFromCST:
+                    break;
+                case ESequence.RobotPlaceFixtureToVinylClean:
+                    break;
+                case ESequence.RobotPickFixtureFromVinylClean:
+                    break;
+                case ESequence.RobotPlaceFixtureToAlign:
+                    break;
+                case ESequence.FixtureAlign:
+                    break;
+                case ESequence.RobotPickFixtureFromRemoveZone:
+                    break;
+                case ESequence.RobotPlaceFixtureToOutWorkCST:
+                    break;
+                case ESequence.FixtureTransfer:
+                    break;
+                case ESequence.Detach:
+                    break;
+                case ESequence.DetachUnload:
+                    break;
+                case ESequence.RemoveFilm:
+                    break;
+                case ESequence.GlassTransferPick:
+                    break;
+                case ESequence.GlassTransferPlace:
+                    break;
+                case ESequence.AlignGlass:
+                    break;
+                case ESequence.TransferInShuttlePick:
+                    break;
+                case ESequence.TransferInShuttlePlace:
+                    break;
+                case ESequence.WETCleanLoad:
+                    break;
+                case ESequence.WETClean:
+                    break;
+                case ESequence.WETCleanUnload:
+                    break;
+                case ESequence.TransferRotationPick:
+                    break;
+                case ESequence.TransferRotationPlace:
+                    break;
+                case ESequence.AFCleanLoad:
+                    break;
+                case ESequence.AFClean:
+                    break;
+                case ESequence.AFCleanUnload:
+                    break;
+                case ESequence.UnloadTransferPick:
+                    break;
+                case ESequence.UnloadTransferPlace:
+                    break;
+                case ESequence.UnloadAlignGlass:
+                    break;
+                case ESequence.UnloadRobotPick:
+                    break;
+                case ESequence.UnloadRobotPlasma:
+                    break;
+                case ESequence.UnloadRobotPlace:
+                    break;
+            }
+            return true;
+        }
+        #endregion
+
+        #region Private Methods
+        private void Sequence_AutoRun()
+        {
+            switch ((EDetachAutoRunStep)Step.RunStep)
+            {
+                case EDetachAutoRunStep.Start:
+                    break;
+                case EDetachAutoRunStep.ShuttleTransfer_Vac_Check:
+                    break;
+                case EDetachAutoRunStep.Fixture_Detect_Check:
+                    break;
+                case EDetachAutoRunStep.End:
+                    break;
+            }
         }
         #endregion
     }

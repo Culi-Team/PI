@@ -8,6 +8,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.VirtualIO
 {
     public enum EFlags
     {
-        DetachProcessOriginDone
+        DetachProcessOriginDone,
+
+        FixtureAlignRequestFixture,
+        FixtureAlignLoadDone,
+        FixtureAlignDone,
+
+        FixtureTransferDone,
     }
 }

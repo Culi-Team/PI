@@ -20,6 +20,7 @@
         RobotPlaceFixtureToVinylClean,
         RobotPickFixtureFromVinylClean,
         RobotPlaceFixtureToAlign,
+        FixtureAlign,
         RobotPickFixtureFromRemoveZone,
         RobotPlaceFixtureToOutWorkCST,
 

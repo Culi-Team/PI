@@ -35,8 +35,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
         //Robot Load
         RobotLoad = 7000,
 
-        //Align Fixture
-        AlignFixture = 8000,
+        //Fixture Align
+        FixtureAlign = 8000,
+        FixtureAlignTiltDetect = 8001,
+        FixtureAlignReverseDetect = 8002,
+        FixtureAlignLoadFail = 8003,
 
         //Transfer Fixture
         TransferFixture = 9000,
