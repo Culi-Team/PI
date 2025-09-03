@@ -203,7 +203,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             RobotFixtureClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
 
             AlignFixtureBwFw = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.AlignFixture1FW, _inputs.AlignFixture2FW }, new List<IDInput> { _inputs.AlignFixture1BW, _inputs.AlignFixture2FW }, _outputs.AlignFixtureFW, _outputs.AlignFixtureBW)
+                .Create(new List<IDInput> { _inputs.AlignFixture1FW, _inputs.AlignFixture2FW }, new List<IDInput> { _inputs.AlignFixture1BW, _inputs.AlignFixture2BW }, _outputs.AlignFixtureFW, _outputs.AlignFixtureBW)
                 .SetIdentity((int)ECylinder.FixtureAlignCylFwBw, ECylinder.FixtureAlignCylFwBw.ToString());
 
             VinylCleanFixture1ClampUnclamp = _cylinderFactory

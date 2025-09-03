@@ -95,12 +95,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case EUnloadAlignOriginStep.Cyl_Unalign_Wait:
-                    Log.Debug("Cylinder Unalign Wait");
                     if (!IsUnalign)
                     {
                         //Timeout ALARM
                         break;
                     }
+                    Log.Debug("Cylinder Unalign Done");
                     Step.OriginStep++;
                     break;
                 case EUnloadAlignOriginStep.End:
