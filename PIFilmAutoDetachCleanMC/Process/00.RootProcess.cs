@@ -273,6 +273,22 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void CheckRealTimeAlarmStatus()
         {
+
+            if (DoorSensor == false)
+            {
+                RaiseAlarm(alarmId: (int)EAlarm.DoorOpen);
+                return;
+            }
+            if (!IsLightCurtainLeftDetect)
+            {
+                RaiseAlarm((int)EAlarm.LightCurtainLeftDetected);
+                return;
+            }
+            if (!IsLightCurtainRightDetect)
+            {
+                RaiseAlarm(alarmId: (int)EAlarm.LightCurtainRightDetected);
+                return;
+            }
         }
 
         //private EOperationCommand GetUserCommand()
