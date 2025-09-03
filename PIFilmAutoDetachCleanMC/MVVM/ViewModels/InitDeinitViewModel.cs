@@ -158,9 +158,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _step++;
                         break;
                     case EHandleStep.MotionDeviceHandle:
-                        Log.Debug("Connect Motion Deivices");
+                        Log.Debug("Connect Motion Devices");
 
-                        MessageText = "Connect Motion Deivices";
+                        MessageText = "Connect Motion Devices";
 
                         _devices.MotionsInovance.MotionControllerInovance.Connect();
 
@@ -199,7 +199,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         if (_isSuccess == false)
                         {
-                            ErrorMessages.Add("IO Deivices init failed.");
+                            ErrorMessages.Add("IO Devices init failed.");
                         }
 
                         _step++;
@@ -266,7 +266,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _step++;
                         break;
                     case EHandleStep.MotionDeviceHandle:
-                        MessageText = "Connect Motion Deivices";
+                        MessageText = "Connect Motion Devices";
 
                         _devices.MotionsInovance.MotionControllerInovance.Disconnect();
 
@@ -276,7 +276,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _step++;
                         break;
                     case EHandleStep.IODeviceHandle:
-                        MessageText = "Connect IO Deivices";
+                        MessageText = "Connect IO Devices";
                         _devices.Inputs.Disconnect();
                         _devices.Outputs.Disconnect();
                         _step++;
