@@ -1,5 +1,6 @@
 ﻿using EQX.Core.Device.SpeedController;
 using EQX.Core.InOut;
+using EQX.Core.Sequence;
 using EQX.Process;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
@@ -18,13 +19,15 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Private
         private readonly Devices _devices;
         private readonly CSTLoadUnloadRecipe _cstLoadUnloadRecipe;
+        private readonly CommonRecipe _commonRecipe;
         #endregion
 
         #region Constructor
-        public BufferConveyorProcess(Devices devices, CSTLoadUnloadRecipe cstLoadUnloadRecipe)
+        public BufferConveyorProcess(Devices devices, CSTLoadUnloadRecipe cstLoadUnloadRecipe, CommonRecipe commonRecipe)
         {
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
+            _commonRecipe = commonRecipe;
         }
         #endregion
 
@@ -44,9 +47,49 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Rollers
         private ISpeedController BufferRoller1 => _devices.SpeedControllerList.BufferConveyorRoller1;
         private ISpeedController BufferRoller2 => _devices.SpeedControllerList.BufferConveyorRoller2;
-        private ISpeedController InSupRoller => _devices.SpeedControllerList.SupportConveyor2Roller;
-        private ISpeedController OutSupRoller => _devices.SpeedControllerList.SupportConveyor3Roller;
         #endregion
 
+        #region Override Method
+        public override bool ProcessOrigin()
+        {
+            switch ((EBufferConveyorOriginStep)Step.OriginStep)
+            {
+                case EBufferConveyorOriginStep.Start:
+                    Log.Debug("Orign start");
+                    Step.OriginStep++;
+                    break;
+                case EBufferConveyorOriginStep.Stopper_Cylinder_Down:
+                    Log.Debug("Stopper_Cylinder_Down");
+                    BufferStopper1.Backward();
+                    BufferStopper2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => BufferStopper1.IsBackward && BufferStopper2.IsBackward);
+                    Step.OriginStep++;
+                    break;
+                case EBufferConveyorOriginStep.Stopper_Cylinder_Down_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Stopper Cylinder down done");
+                    Step.OriginStep++;
+                    break;
+                case EBufferConveyorOriginStep.Roller_Stop:
+                    BufferRoller1.Stop();
+                    BufferRoller2.Stop();
+                    Log.Debug("Roller Stop");
+                    Step.OriginStep++;
+                    break;
+                case EBufferConveyorOriginStep.End:
+                    Log.Debug("Origin End");
+                    ProcessStatus = EProcessStatus.OriginDone;
+                    Step.OriginStep++;
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        }
+        #endregion
     }
 }

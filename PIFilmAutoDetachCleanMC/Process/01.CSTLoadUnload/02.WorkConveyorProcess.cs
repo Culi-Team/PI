@@ -145,6 +145,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder UnAlign Done");
                     Step.OriginStep++;
                     break;
+                case EWorkConveyorOriginStep.Roller_Stop:
+                    Roller1.Stop();
+                    Roller2.Stop();
+                    RollerSupport1.Stop();
+                    RollerSupport2.Stop();
+                    Log.Debug("Roller Stop");
+                    Step.OriginStep++;
+                    break;
                 case EWorkConveyorOriginStep.End:
                     Log.Debug("Origin End");
                     ProcessStatus = EProcessStatus.OriginDone;

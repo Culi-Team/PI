@@ -17,6 +17,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         TAxis_Origin_Wait,
         Cyl_UnAlign,
         Cyl_UnAlign_Wait,
+        Roller_Stop,
         End
     }
 }
