@@ -11,11 +11,162 @@
              mc:Ignorable="d"
              x:Name="root"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="AutoWidthTabItemStyle"
+               TargetType="{x:Type TabItem}"
+               BasedOn="{StaticResource {x:Type TabItem}}">
+            <Setter Property="Width" Value="Auto" />
+        </Style>
+        <Style TargetType="{x:Type TabControl}">
+            <Setter Property="ItemContainerStyle" Value="{StaticResource AutoWidthTabItemStyle}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid ClipToBounds="True" KeyboardNavigation.TabNavigation="Local">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <UniformGrid Rows="1" IsItemsHost="True"/>
+                            <Border Grid.Row="1"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    KeyboardNavigation.DirectionalNavigation="Contained">
+                                <ContentPresenter x:Name="PART_SelectedContentHost"
+                                                  ContentSource="SelectedContent"
+                                                  Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="8*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
+
+        <TabControl Grid.Column="0">
+            <TabItem Header="CSTLoadUnload">
+                <TabControl>
+                    <TabItem Header="In Conveyor">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="In Work Conveyor">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Buffer Conveyor">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Out Work Conveyor">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Out Conveyor">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            <TabItem Header="Detach">
+                <TabControl>
+                    <TabItem Header="Vinyl Clean">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Robot Load">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Fixture Align">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Transfer Fixture">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Remove Film">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Detach">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            <TabItem Header="Clean">
+                <TabControl>
+                    <TabItem Header="Glass Transfer">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Glass Align">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Transfer In Shuttle">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Wet Clean">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="AF Clean">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Transfer Rotation">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            <TabItem Header="Unload">
+                <TabControl>
+                    <TabItem Header="Unload Transfer">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Unload Align">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Robot Unload">
+                        <StackPanel Margin="10" Orientation="Horizontal">
+
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+        </TabControl>
 
         <DockPanel Grid.Column="1">
             <GroupBox Header="MOTION"
