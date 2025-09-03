@@ -18,7 +18,7 @@ namespace PIFilmAutoDetachCleanMC.Process
     public class WorkConveyorProcess : ProcessBase<ESequence>
     {
         #region Private
-        private EPort port => Name == EProcess.InWorkConveyor.ToString() ? EPort.Left : EPort.Right;
+        private EPort port => Name == EProcess.InWorkConveyor.ToString() ? EPort.Right : EPort.Left;
         private readonly Devices _devices;
         private readonly CSTLoadUnloadRecipe _cstLoadUnloadRecipe;
         private readonly CommonRecipe _commonRecipe;
@@ -34,11 +34,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Inputs
-        private IDInput Detect1 => port == EPort.Left ?  _devices.Inputs.InCstWorkDetect1 :
+        private IDInput Detect1 => port == EPort.Right ?  _devices.Inputs.InCstWorkDetect1 :
                                                          _devices.Inputs.OutCstWorkDetect1;
-        private IDInput Detect2 => port == EPort.Left ?  _devices.Inputs.InCstWorkDetect2 :
+        private IDInput Detect2 => port == EPort.Right ?  _devices.Inputs.InCstWorkDetect2 :
                                                          _devices.Inputs.OutCstWorkDetect2;
-        private IDInput Detect3 => port == EPort.Left ? _devices.Inputs.InCstWorkDetect3 :
+        private IDInput Detect3 => port == EPort.Right ? _devices.Inputs.InCstWorkDetect3 :
                                                         _devices.Inputs.OutCstWorkDetect3;
         private IDInput Detect4 => _devices.Inputs.InCstWorkDetect4;
         #endregion
@@ -47,31 +47,31 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Cylinders
-        private ICylinder FixCylinder => port == EPort.Left ? _devices.Cylinders.InCstFixCylFwBw :
+        private ICylinder FixCylinder => port == EPort.Right ? _devices.Cylinders.InCstFixCylFwBw :
                                                               _devices.Cylinders.OutCstFixCylFwBw;
-        private ICylinder TiltCylinder => port == EPort.Left ? _devices.Cylinders.InCstTiltCylUpDown :
+        private ICylinder TiltCylinder => port == EPort.Right ? _devices.Cylinders.InCstTiltCylUpDown :
                                                                _devices.Cylinders.OutCstTiltCylUpDown;
-        private ICylinder CVSupportCyl1 => port == EPort.Left ? _devices.Cylinders.InCvSupportUpDown :
+        private ICylinder CVSupportCyl1 => port == EPort.Right ? _devices.Cylinders.InCvSupportUpDown :
                                                                 _devices.Cylinders.OutCvSupportBufferUpDown;
-        private ICylinder CVSupportCyl2 => port == EPort.Left ? _devices.Cylinders.InCvSupportBufferUpDown :
+        private ICylinder CVSupportCyl2 => port == EPort.Right ? _devices.Cylinders.InCvSupportBufferUpDown :
                                                                 _devices.Cylinders.OutCvSupportUpDown;
         #endregion
 
         #region Motions
-        private IMotion InCSTTAxis => port == EPort.Left ? _devices.MotionsInovance.InCassetteTAxis :
+        private IMotion InCSTTAxis => port == EPort.Right ? _devices.MotionsInovance.InCassetteTAxis :
                                                            _devices.MotionsInovance.OutCassetteTAxis;
         #endregion
 
         #region Rollers
-        private ISpeedController RollerSupport1 => port == EPort.Left ? _devices.SpeedControllerList.SupportConveyor1Roller : 
+        private ISpeedController RollerSupport1 => port == EPort.Right ? _devices.SpeedControllerList.SupportConveyor1Roller : 
                                                                         _devices.SpeedControllerList.SupportConveyor3Roller;
 
-        private ISpeedController RollerSupport2 => port == EPort.Left ? _devices.SpeedControllerList.SupportConveyor2Roller :
+        private ISpeedController RollerSupport2 => port == EPort.Right ? _devices.SpeedControllerList.SupportConveyor2Roller :
                                                                         _devices.SpeedControllerList.SupportConveyor4Roller;
 
-        private ISpeedController Roller1 => port == EPort.Left ? _devices.SpeedControllerList.InWorkConveyorRoller1 : 
+        private ISpeedController Roller1 => port == EPort.Right ? _devices.SpeedControllerList.InWorkConveyorRoller1 : 
                                                                  _devices.SpeedControllerList.OutWorkConveyorRoller1;
-        private ISpeedController Roller2 => port == EPort.Left ? _devices.SpeedControllerList.InWorkConveyorRoller2 : 
+        private ISpeedController Roller2 => port == EPort.Right ? _devices.SpeedControllerList.InWorkConveyorRoller2 : 
                                                                  _devices.SpeedControllerList.OutWorkConveyorRoller2;
         #endregion
 
