@@ -197,7 +197,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         public override bool ProcessToOrigin()
         {
-            switch((ERootProcessToOriginStep)Step.OriginStep)
+            switch ((ERootProcessToOriginStep)Step.OriginStep)
             {
                 case ERootProcessToOriginStep.Start:
                     Log.Info("To Origin started");
@@ -228,7 +228,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Step.OriginStep++;
-                    break;  
+                    break;
                 case ERootProcessToOriginStep.ChildsToOriginDoneWait:
                     if (Childs!.Count(child => child.ProcessStatus != EProcessStatus.ToOriginDone) != 0)
                     {
@@ -258,6 +258,43 @@ namespace PIFilmAutoDetachCleanMC.Process
             else
             {
                 Thread.Sleep(10);
+            }
+
+            return true;
+        }
+
+        public override bool ProcessToRun()
+        {
+            switch ((ERootProcessToRunStep)Step.ToRunStep)
+            {
+                case ERootProcessToRunStep.Start:
+                    Log.Debug("ToRun Start");
+                    Step.ToRunStep++;
+                    break;
+                case ERootProcessToRunStep.DoorSensor_Check:
+                    if (DoorSensor == false)
+                    {
+                        RaiseWarning((int)EWarning.DoorOpen);
+                        break;
+                    }
+                    Log.Debug("Doors closed.");
+                    Step.ToRunStep++;
+                    break;
+                case ERootProcessToRunStep.ChildsToRunDone_Wait:
+                    if (Childs!.Count(child => child.ProcessStatus != EProcessStatus.ToRunDone) != 0)
+                    {
+                        Wait(10);
+                        break;
+                    }
+                    Step.ToRunStep++;
+                    break;
+                case ERootProcessToRunStep.End:
+                    ProcessMode = EProcessMode.Run;
+                    Log.Info("ToRun Done, Running");
+                    break;
+                default:
+                    Thread.Sleep(10);
+                    break;
             }
 
             return true;

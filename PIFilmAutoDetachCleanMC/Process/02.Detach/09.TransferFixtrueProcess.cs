@@ -449,6 +449,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Transfer Fixture Cylinder Down");
                     CylUpDown.Backward();
                     Wait(_commonRecipe.CylinderMoveTimeout, () => CylUpDown.IsBackward);
+                    Step.RunStep++;
                     break;
                 case ETransferFixtureProcessUnloadStep.Cyl_Down_Wait:
                     if (WaitTimeOutOccurred)

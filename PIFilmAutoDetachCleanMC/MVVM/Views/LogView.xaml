@@ -64,6 +64,9 @@
             <DataGrid x:Name="LogDataGrid"
                       Grid.Row="1"
                       AutoGenerateColumns="False"
+                      SelectionUnit="CellOrRowHeader"
+                      SelectionMode="Extended"
+                      ClipboardCopyMode="ExcludeHeader"
                       CanUserAddRows="False"
                       Margin="5">
                 <DataGrid.RowStyle>
