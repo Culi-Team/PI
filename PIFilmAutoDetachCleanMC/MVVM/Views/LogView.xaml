@@ -48,10 +48,14 @@
                     </ComboBox>
                     
                     <TextBlock Text="Filter Source:" VerticalAlignment="Center" Margin="10,5,5,5" />
-                    <ComboBox x:Name="FilterSourceComboBox" Width="200" Margin="5" SelectionChanged="FilterSourceComboBox_SelectionChanged">
+                    <ComboBox x:Name="FilterSourceComboBox" Width="200" Margin="5" 
+                              SelectionChanged="FilterSourceComboBox_SelectionChanged">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
+                                <CheckBox Content="{Binding Name}" 
+                                          IsChecked="{Binding IsSelected}"
+                                          Checked="FilterSourceCheckBox_Changed"
+                                          Unchecked="FilterSourceCheckBox_Changed"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
