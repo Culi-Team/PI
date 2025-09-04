@@ -234,5 +234,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput UnloadAlignCyl3Down => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ALIGN_CYL_3_DOWN);
         public IDOutput UnloadAlignCyl4Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ALIGN_CYL_4_UP);
         public IDOutput UnloadAlignCyl4Down => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ALIGN_CYL_4_DOWN);
+        public IDOutput DoorOpen => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DOOR_OPEN);
     }
 }

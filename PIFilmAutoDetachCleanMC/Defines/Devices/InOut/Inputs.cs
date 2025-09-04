@@ -359,5 +359,19 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput WetCleanLeftDoorLock => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_LEFT_DOOR_LOCK);
         public IDInput AFCleanRightDoorLock => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_RIGHT_DOOR_LOCK);
         public IDInput AFCleanLeftDoorLock => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_LEFT_DOOR_LOCK);
+        public IDInput DoorLatch1L => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LATCH_1_L);
+        public IDInput DoorLatch1R => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LATCH_1_R);
+        public IDInput DoorLatch2R => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LATCH_2_R);
+        public IDInput DoorLatch2L => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LATCH_2_L);
+        public IDInput DoorLatch3R => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LATCH_3_R);
+        public IDInput DoorLatch3L => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LATCH_3_L);
+        public IDInput DoorLatch4R => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LATCH_4_R);
+        public IDInput DoorLatch4L => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LATCH_4_L);
+        public IDInput DoorLatch5R => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LATCH_5_R);
+        public IDInput DoorLatch5L => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LATCH_5_L);
+        public IDInput DoorLatch6R => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LATCH_6_R);
+        public IDInput DoorLatch6L => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LATCH_6_L);
+        public IDInput DoorLatch7R => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LATCH_7_R);
+        public IDInput DoorLatch7L => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_LATCH_7_L);
     }
 }
