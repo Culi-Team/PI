@@ -20,16 +20,17 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly Devices _devices;
         private readonly CommonRecipe _commonRecipe;
         private readonly VirtualIO<EFlags> _virtualIO;
+        private readonly TransferFixtureRecipe _transferFixtureRecipe;
 
         private IMotion TransferFixtureYAxis => _devices.MotionsInovance.FixtureTransferYAxis;
         private Inputs Inputs => _devices.Inputs;
         private Outputs Outputs => _devices.Outputs;
-        private ICylinder TransferFixtureUpDown => _devices.Cylinders.TransferFixtureUpDown;
-        private ICylinder TransferFixtureClamp1 => _devices.Cylinders.TransferFixture1ClampUnclamp;
-        private ICylinder TransferFixtureClamp2 => _devices.Cylinders.TransferFixture2ClampUnclamp;
+        private ICylinder CylUpDown => _devices.Cylinders.TransferFixtureUpDown;
+        private ICylinder CylClamp1 => _devices.Cylinders.TransferFixture1ClampUnclamp;
+        private ICylinder CylClamp2 => _devices.Cylinders.TransferFixture2ClampUnclamp;
 
-        private bool IsFixtureDetect1 => !TransferFixtureClamp1.IsBackward && !TransferFixtureClamp1.IsForward;
-        private bool IsFixtureDetect2 => !TransferFixtureClamp2.IsBackward && !TransferFixtureClamp2.IsForward;
+        private bool IsFixtureDetect1 => !CylClamp1.IsBackward && !CylClamp1.IsForward;
+        private bool IsFixtureDetect2 => !CylClamp2.IsBackward && !CylClamp2.IsForward;
         #endregion
 
         #region Flags
@@ -44,18 +45,62 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _virtualIO.SetFlag(EFlags.DetachProcessOriginDone, value);
             }
         }
+
+        private bool FlagFixtureAlignDone
+        {
+            get
+            {
+                return _virtualIO.GetFlag(EFlags.FixtureAlignDone);
+            }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.FixtureAlignDone, value);
+            }
+        }
+
+        private bool FlagDetachDone
+        {
+            get
+            {
+                return _virtualIO.GetFlag(EFlags.DetachDone);
+            }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.DetachDone, value);
+            }
+        }
+
+        private bool FlagFixtureTransferAlignDone
+        {
+            set
+            {
+                _virtualIO.SetFlag(EFlags.FixtureTransferAlignDone, value);
+            }
+        }
+
+        private bool FlagFixtureTransferDetachDone
+        {
+            set
+            {
+                _virtualIO.SetFlag(EFlags.FixtureTransferDetachDone, value);
+            }
+        }
         #endregion
-        public TransferFixtrueProcess(Devices devices, CommonRecipe commonRecipe, VirtualIO<EFlags> virtualIO)
+        public TransferFixtrueProcess(Devices devices,
+            CommonRecipe commonRecipe,
+            VirtualIO<EFlags> virtualIO,
+            TransferFixtureRecipe transferFixtureRecipe)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
             _virtualIO = virtualIO;
+            _transferFixtureRecipe = transferFixtureRecipe;
         }
 
         #region Override Methods
         public override bool ProcessOrigin()
         {
-            switch((ETransferFixtureOriginStep)Step.OriginStep)
+            switch ((ETransferFixtureOriginStep)Step.OriginStep)
             {
                 case ETransferFixtureOriginStep.Start:
                     Log.Debug("Origin Start");
@@ -72,9 +117,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferFixtureOriginStep.Unclamp:
                     Log.Debug("Unclamp");
-                    TransferFixtureClamp1.Backward();
-                    TransferFixtureClamp2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return TransferFixtureClamp1.IsBackward && TransferFixtureClamp2.IsBackward; });
+                    CylClamp1.Backward();
+                    CylClamp2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return CylClamp1.IsBackward && CylClamp2.IsBackward; });
                     Step.OriginStep++;
                     break;
                 case ETransferFixtureOriginStep.Unclamp_Wait:
@@ -89,7 +134,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Detach Origin");
                     break;
                 case ETransferFixtureOriginStep.Wait_Detach_Origin:
-                    if(!FlagDetachProcessOriginDone)
+                    if (!FlagDetachProcessOriginDone)
                     {
                         //Wait Detach Process Origin Done
                         break;
@@ -100,8 +145,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferFixtureOriginStep.CylUp:
                     Log.Debug("Cylinder Up");
-                    TransferFixtureUpDown.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return TransferFixtureUpDown.IsBackward; });
+                    CylUpDown.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return CylUpDown.IsBackward; });
                     Step.OriginStep++;
                     break;
                 case ETransferFixtureOriginStep.CylUp_Wait:
@@ -137,6 +182,287 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
             return true;
         }
+
+        public override bool ProcessRun()
+        {
+            switch (Sequence)
+            {
+                case ESequence.Stop:
+                    break;
+                case ESequence.AutoRun:
+                    Sequence_AutoRun();
+                    break;
+                case ESequence.Ready:
+                    break;
+                case ESequence.InWorkCSTLoad:
+                    break;
+                case ESequence.InWorkCSTUnLoad:
+                    break;
+                case ESequence.OutWorkCSTLoad:
+                    break;
+                case ESequence.OutWorkCSTUnLoad:
+                    break;
+                case ESequence.RobotPickFixtureFromCST:
+                    break;
+                case ESequence.RobotPlaceFixtureToVinylClean:
+                    break;
+                case ESequence.RobotPickFixtureFromVinylClean:
+                    break;
+                case ESequence.RobotPlaceFixtureToAlign:
+                    break;
+                case ESequence.FixtureAlign:
+                    break;
+                case ESequence.RobotPickFixtureFromRemoveZone:
+                    break;
+                case ESequence.RobotPlaceFixtureToOutWorkCST:
+                    break;
+                case ESequence.TransferFixtureLoad:
+                    Sequence_TransferFixtureLoad();
+                    break;
+                case ESequence.Detach:
+                    break;
+                case ESequence.TransferFixtureUnload:
+                    break;
+                case ESequence.DetachUnload:
+                    break;
+                case ESequence.RemoveFilm:
+                    break;
+                case ESequence.GlassTransferPick:
+                    break;
+                case ESequence.GlassTransferPlace:
+                    break;
+                case ESequence.AlignGlass:
+                    break;
+                case ESequence.TransferInShuttlePick:
+                    break;
+                case ESequence.TransferInShuttlePlace:
+                    break;
+                case ESequence.WETCleanLoad:
+                    break;
+                case ESequence.WETClean:
+                    break;
+                case ESequence.WETCleanUnload:
+                    break;
+                case ESequence.TransferRotationPick:
+                    break;
+                case ESequence.TransferRotationPlace:
+                    break;
+                case ESequence.AFCleanLoad:
+                    break;
+                case ESequence.AFClean:
+                    break;
+                case ESequence.AFCleanUnload:
+                    break;
+                case ESequence.UnloadTransferPick:
+                    break;
+                case ESequence.UnloadTransferPlace:
+                    break;
+                case ESequence.UnloadAlignGlass:
+                    break;
+                case ESequence.UnloadRobotPick:
+                    break;
+                case ESequence.UnloadRobotPlasma:
+                    break;
+                case ESequence.UnloadRobotPlace:
+                    break;
+            }
+
+            return true;
+        }
         #endregion
+
+        #region Private Methods
+        private void Sequence_AutoRun()
+        {
+            Log.Info("Sequence Transfer Fixture Load");
+            Sequence = ESequence.TransferFixtureLoad;
+        }
+
+        private void Sequence_TransferFixtureLoad()
+        {
+            switch ((ETransferFixtureProcessLoadStep)Step.RunStep)
+            {
+                case ETransferFixtureProcessLoadStep.Start:
+                    Log.Debug("Fixture Transfer Load Start");
+                    Step.RunStep++;
+                    Log.Debug("Wait Align and Detach Done");
+                    break;
+                case ETransferFixtureProcessLoadStep.Wait_Align_And_Detach_Done:
+                    if (!FlagDetachDone && !FlagFixtureAlignDone)
+                    {
+                        //Wait Align Fixture and Detach Ready
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessLoadStep.Check_Y_Position:
+                    if (TransferFixtureYAxis.IsOnPosition(_transferFixtureRecipe.TransferFixtureYAxisLoadPosition))
+                    {
+                        Step.RunStep = (int)ETransferFixtureProcessLoadStep.Cyl_Down;
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessLoadStep.Cyl_Up:
+                    Log.Debug("Transfer Fixture Cylinder Up");
+                    CylUpDown.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return CylUpDown.IsForward; });
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessLoadStep.Cyl_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Transfer Fixture Cylinder Up Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessLoadStep.YAxis_Move_LoadPosition:
+                    Log.Debug("Transfer Fixture Y Axis move Load Position");
+                    TransferFixtureYAxis.MoveAbs(_transferFixtureRecipe.TransferFixtureYAxisLoadPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => { return TransferFixtureYAxis.IsOnPosition(_transferFixtureRecipe.TransferFixtureYAxisLoadPosition); });
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessLoadStep.YAxis_Move_LoadPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Transfer Fixture Y Axis move Load Position Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessLoadStep.Cyl_Down:
+                    Log.Debug("Transfer Fixture Cylinder Up");
+                    CylUpDown.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return CylUpDown.IsBackward; });
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessLoadStep.Cyl_Down_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Transfer Fixture Cylinder Up Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessLoadStep.Cyl_Clamp:
+                    Log.Debug("Transfer Fixture Cylinder Clamp");
+                    CylClamp1.Forward();
+                    CylClamp2.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return CylClamp1.IsForward && CylClamp2.IsForward; });
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessLoadStep.Cyl_Clamp_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Transfer Fixture Cylinder Clamp Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessLoadStep.End:
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence Transfer Fixture Unload");
+                    Sequence = ESequence.TransferFixtureUnload;
+                    break;
+            }
+        }
+
+        private void Sequence_TransferFixtureUnload()
+        {
+            switch ((ETransferFixtureProcessUnloadStep)Step.RunStep)
+            {
+                case ETransferFixtureProcessUnloadStep.Start:
+                    Log.Debug("Transfer Fixture Unload Start");
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessUnloadStep.Cyl_Up:
+                    Log.Debug("Transfer Fixture Cylinder Up");
+                    CylUpDown.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => CylClamp1.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessUnloadStep.Cyl_Up_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Transfer Fixture Cylinder Up Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessUnloadStep.YAxis_Move_UnloadPosition:
+                    Log.Debug("Transfer Fixture Y Axis Move Unload Position");
+                    TransferFixtureYAxis.MoveAbs(_transferFixtureRecipe.TransferFixtureYAxisUnloadPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => TransferFixtureYAxis.IsOnPosition(_transferFixtureRecipe.TransferFixtureYAxisUnloadPosition));
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessUnloadStep.YAxis_Move_UnloadPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Transfer Fixture Y Axis Move Unload Position Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessUnloadStep.Cyl_Down:
+                    Log.Debug("Transfer Fixture Cylinder Down");
+                    CylUpDown.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => CylUpDown.IsBackward);
+                    break;
+                case ETransferFixtureProcessUnloadStep.Cyl_Down_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Transfer Fixture Cylinder Down Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessUnloadStep.Cyl_UnClamp:
+                    Log.Debug("Transfer Fixture Cylinder UnClamp");
+                    CylClamp1.Backward();
+                    CylClamp2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => CylClamp1.IsBackward && CylClamp2.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessUnloadStep.Cyl_UnClamp_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Transfer Fixture Cylinder UnClamp Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessUnloadStep.SetFlagTransferDone:
+                    Log.Debug("Set Flag Transfer Done");
+                    FlagFixtureTransferAlignDone = true;
+                    FlagFixtureTransferDetachDone = true;
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessUnloadStep.End:
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence Transfer Fixture Load");
+                    Sequence = ESequence.TransferFixtureLoad;
+                    break;
+            }
+            #endregion
+        }
     }
 }

@@ -61,7 +61,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _virtualIO.GetFlag(EFlags.FixtureTransferDone);
+                return _virtualIO.GetFlag(EFlags.FixtureTransferAlignDone);
+            }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.FixtureTransferAlignDone, value);
             }
         }
         #endregion
@@ -151,10 +155,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
                     break;
-                case ESequence.FixtureTransfer:
-                    Sequence_FixtureTransfer();
+                case ESequence.TransferFixtureLoad:
+                    Sequence_TransferFixtureLoad();
                     break;
                 case ESequence.Detach:
+                    break;
+                case ESequence.TransferFixtureUnload:
                     break;
                 case ESequence.DetachUnload:
                     break;
@@ -250,7 +256,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EFixtureAlignRobotPlaceFixtureToAlignStep.WaitFixtureAlignLoadDone:
-                    if(FlagFixtureAlignLoadDone == false)
+                    if (FlagFixtureAlignLoadDone == false)
                     {
                         Wait(20);
                         break;
@@ -298,7 +304,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.TiltCheck:
-                    if(IsFixtureTiltDetect)
+                    if (IsFixtureTiltDetect)
                     {
                         RaiseWarning((int)EWarning.FixtureAlignTiltDetect);
                         break;
@@ -338,12 +344,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.End:
-                    Sequence = ESequence.FixtureTransfer;
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence Transfer Fixture");
+                    Sequence = ESequence.TransferFixtureLoad;
                     break;
             }
         }
 
-        private void Sequence_FixtureTransfer()
+        private void Sequence_TransferFixtureLoad()
         {
             switch ((EFixtureAlignTransferStep)Step.RunStep)
             {
@@ -353,15 +366,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Fixture Transfer Done");
                     break;
                 case EFixtureAlignTransferStep.Wait_TransferDone:
-                    if(FlagFixtureTransferDone == false)
+                    if (FlagFixtureTransferDone == false)
                     {
                         Wait(20);
                         break;
                     }
+                    FlagFixtureTransferDone = false;
                     Step.RunStep++;
                     break;
                 case EFixtureAlignTransferStep.End:
-                    Log.Debug("Fixture Transfer End");
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Debug("Sequence Robot Pick Fixture From Remove Zone");
                     Sequence = ESequence.RobotPickFixtureFromRemoveZone;
                     break;
             }

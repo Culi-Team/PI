@@ -24,8 +24,9 @@
         RobotPickFixtureFromRemoveZone,
         RobotPlaceFixtureToOutWorkCST,
 
-        FixtureTransfer,
+        TransferFixtureLoad,
         Detach,
+        TransferFixtureUnload,
         DetachUnload,
         RemoveFilm,
 
