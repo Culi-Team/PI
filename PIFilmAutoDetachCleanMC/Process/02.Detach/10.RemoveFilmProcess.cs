@@ -3,6 +3,7 @@ using EQX.Core.Sequence;
 using EQX.Process;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
+using PIFilmAutoDetachCleanMC.Defines.VirtualIO;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Privates
         private readonly Devices _devices;
         private readonly CommonRecipe _commonRecipe;
+        private readonly VirtualIO<EFlags> _virtualIO;
 
         private ICylinder FixCyl1 => _devices.Cylinders.RemoveZoneFixCyl1FwBw;
         private ICylinder FixCyl2 => _devices.Cylinders.RemoveZoneFixCyl2FwBw;
@@ -32,10 +34,54 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         #region Contructor
         public RemoveFilmProcess(Devices devices,
-            CommonRecipe commonRecipe)
+            CommonRecipe commonRecipe,
+            VirtualIO<EFlags> virtualIO)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
+            _virtualIO = virtualIO;
+        }
+        #endregion
+
+        #region Flags
+        private bool FlagFixtureTransferRemoveFilmDone
+        {
+            get
+            {
+                return _virtualIO.GetFlag(EFlags.FixtureTransferRemoveFilmDone);
+            }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.FixtureTransferRemoveFilmDone, value);
+            }
+        }
+
+        private bool FlagRemoveFilmDone
+        {
+            set
+            {
+                _virtualIO.SetFlag(EFlags.RemoveFilmDone, value);
+            }
+        }
+
+        private bool FlagRemoveFilmRequestUnload
+        {
+            set
+            {
+                _virtualIO.SetFlag(EFlags.RemoveFilmRequestUnload, value);
+            }
+        }
+
+        private bool FlagRemoveFilmUnloadDone
+        {
+            get
+            {
+                return _virtualIO.GetFlag(EFlags.RemoveFilmUnloadDone);
+            }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.RemoveFilmUnloadDone, value);
+            }
         }
         #endregion
 
@@ -135,7 +181,414 @@ namespace PIFilmAutoDetachCleanMC.Process
 
             return true;
         }
+
+        public override bool ProcessRun()
+        {
+            switch (Sequence)
+            {
+                case ESequence.Stop:
+                    break;
+                case ESequence.AutoRun:
+                    Sequence_AutoRun();
+                    break;
+                case ESequence.Ready:
+                    break;
+                case ESequence.InWorkCSTLoad:
+                    break;
+                case ESequence.InWorkCSTUnLoad:
+                    break;
+                case ESequence.OutWorkCSTLoad:
+                    break;
+                case ESequence.OutWorkCSTUnLoad:
+                    break;
+                case ESequence.RobotPickFixtureFromCST:
+                    break;
+                case ESequence.RobotPlaceFixtureToVinylClean:
+                    break;
+                case ESequence.RobotPickFixtureFromVinylClean:
+                    break;
+                case ESequence.RobotPlaceFixtureToAlign:
+                    break;
+                case ESequence.FixtureAlign:
+                    break;
+                case ESequence.RobotPickFixtureFromRemoveZone:
+                    Sequence_RobotPickFromRemoveZone();
+                    break;
+                case ESequence.RobotPlaceFixtureToOutWorkCST:
+                    break;
+                case ESequence.TransferFixtureLoad:
+                    break;
+                case ESequence.Detach:
+                    break;
+                case ESequence.TransferFixtureUnload:
+                    Sequence_TransferFixtureUnload();
+                    break;
+                case ESequence.DetachUnload:
+                    break;
+                case ESequence.RemoveFilm:
+                    Sequence_RemoveFilm();
+                    break;
+                case ESequence.GlassTransferPick:
+                    break;
+                case ESequence.GlassTransferPlace:
+                    break;
+                case ESequence.AlignGlass:
+                    break;
+                case ESequence.TransferInShuttlePick:
+                    break;
+                case ESequence.TransferInShuttlePlace:
+                    break;
+                case ESequence.WETCleanLoad:
+                    break;
+                case ESequence.WETClean:
+                    break;
+                case ESequence.WETCleanUnload:
+                    break;
+                case ESequence.TransferRotationPick:
+                    break;
+                case ESequence.TransferRotationPlace:
+                    break;
+                case ESequence.AFCleanLoad:
+                    break;
+                case ESequence.AFClean:
+                    break;
+                case ESequence.AFCleanUnload:
+                    break;
+                case ESequence.UnloadTransferPick:
+                    break;
+                case ESequence.UnloadTransferPlace:
+                    break;
+                case ESequence.UnloadAlignGlass:
+                    break;
+                case ESequence.UnloadRobotPick:
+                    break;
+                case ESequence.UnloadRobotPlasma:
+                    break;
+                case ESequence.UnloadRobotPlace:
+                    break;
+            }
+
+            return true;
+        }
         #endregion
 
+        #region Private Methods
+        private void Sequence_AutoRun()
+        {
+            Log.Info("SequenceTransfer Fixture Unload");
+            Sequence = ESequence.TransferFixtureUnload;
+        }
+
+        private void Sequence_TransferFixtureUnload()
+        {
+            switch ((ERemoveFilmProcessTransferFixtureUnloadStep)Step.RunStep)
+            {
+                case ERemoveFilmProcessTransferFixtureUnloadStep.Start:
+                    Log.Debug("Remove Film Process Transfer Fixture Unload Start");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessTransferFixtureUnloadStep.Set_Flag_RemoveFilmDone:
+                    Log.Debug("Set Flag Remove Film Done");
+                    FlagRemoveFilmDone = true;
+                    Step.RunStep++;
+                    Log.Debug("Wait Transfer Fixture Done");
+                    break;
+                case ERemoveFilmProcessTransferFixtureUnloadStep.Wait_TransferFixtureDone:
+                    if (FlagFixtureTransferRemoveFilmDone == false)
+                    {
+                        break;
+                    }
+                    FlagFixtureTransferRemoveFilmDone = false;
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessTransferFixtureUnloadStep.End:
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence Remove Film");
+                    Sequence = ESequence.RemoveFilm;
+                    break;
+            }
+        }
+
+        private void Sequence_RemoveFilm()
+        {
+            switch ((ERemoveFilmProcessRemoveStep)Step.RunStep)
+            {
+                case ERemoveFilmProcessRemoveStep.Start:
+                    Log.Debug("Remove Start");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRemoveStep.Align_Fixture:
+                    Log.Debug("Align Fixture");
+                    FixCyl1.Forward();
+                    FixCyl2.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => FixCyl1.IsForward && FixCyl2.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRemoveStep.Align_Fixture_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Align Fixture Done");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRemoveStep.Cyl_Transfer_Forward:
+                    Log.Debug("Cylinder Transfer Forward");
+                    TransferCyl.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => TransferCyl.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRemoveStep.Cyl_Transfer_Forward_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder Transfer Forward Done");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRemoveStep.Pusher_Cyl_1_Up:
+                    Log.Debug("Pusher Cylinder 1 Up");
+                    PusherCyl1.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => PusherCyl1.IsForward);
+                    break;
+                case ERemoveFilmProcessRemoveStep.Pusher_Cyl_1_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Pusher Cylinder 1 Up Done");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRemoveStep.Cyl_UpDown1_Down:
+                    Log.Debug("Cylinder UpDown1 Down");
+                    UpDownCyl1.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl1.IsForward);
+                    break;
+                case ERemoveFilmProcessRemoveStep.Cyl_UpDown1_Down_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder UpDown1 Down Done");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRemoveStep.Cyl_Clamp:
+                    Log.Debug("Cylinder Clamp");
+                    ClampCyl.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => ClampCyl.IsForward);
+                    break;
+                case ERemoveFilmProcessRemoveStep.Cyl_Clamp_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder Clamp Done");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRemoveStep.Pusher_Cyl_2_Up:
+                    Log.Debug("Pusher Cylinder 2 Up");
+                    PusherCyl2.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => PusherCyl2.IsForward);
+                    break;
+                case ERemoveFilmProcessRemoveStep.Pusher_Cyl_2_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Pusher Cylinder 2 Up Done");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRemoveStep.Cyl_UpDown1_Up:
+                    Log.Debug("Cylinder UpDown1 Up");
+                    UpDownCyl1.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl1.IsBackward);
+                    break;
+                case ERemoveFilmProcessRemoveStep.Cyl_UpDown1_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder UpDown1 Up Done");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRemoveStep.Cyl_Transfer_Backward:
+                    Log.Debug("Cylinder Transfer Backward");
+                    TransferCyl.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => TransferCyl.IsBackward);
+                    break;
+                case ERemoveFilmProcessRemoveStep.Cyl_Transfer_Backward_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder Transfer Backward Done");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRemoveStep.Set_Flag_RemoveFilmRequestUnload:
+                    Log.Debug("Set Flag Remove Film Request Unload");
+                    FlagRemoveFilmRequestUnload = true;
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRemoveStep.End:
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence Robot Pick From Remove Zone");
+                    Sequence = ESequence.RobotPickFixtureFromRemoveZone;
+                    break;
+            }
+        }
+
+        private void Sequence_RobotPickFromRemoveZone()
+        {
+            switch ((ERemoveFilmProcessRobotPickStep)Step.RunStep)
+            {
+                case ERemoveFilmProcessRobotPickStep.Start:
+                    Log.Debug("Robot Pick From Remove Zone Start");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown1_Down:
+                    Log.Debug("Cylinder UpDown1 Down");
+                    UpDownCyl1.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl1.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown1_Down_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder UpDown1 Down Done");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRobotPickStep.Cyl_UnClamp:
+                    Log.Debug("Cylinder UnClamp");
+                    ClampCyl.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => ClampCyl.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRobotPickStep.Cyl_UnClamp_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder UnClamp Done");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Down_1st:
+                    Log.Debug("Cylinder UpDown2 Down 1st");
+                    UpDownCyl2.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl2.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Down_1st_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder UpDown2 Down 1st Done");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Up_1st:
+                    Log.Debug("Cylinder UpDown2 Up 1st");
+                    UpDownCyl2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl2.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Up_1st_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder UpDown2 Up 1st Done");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Down_2nd:
+                    Log.Debug("Cylinder UpDown2 Down 2nd");
+                    UpDownCyl2.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl2.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Down_2nd_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder UpDown2 Down 2nd Done");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Up_2nd:
+                    Log.Debug("Cylinder UpDown2 Up 2nd");
+                    UpDownCyl2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl2.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Up_2nd_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder UpDown2 Up 2nd Done");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown1_Up:
+                    Log.Debug("Cylinder UpDown1 Up");
+                    UpDownCyl1.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl1.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown1_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder UpDown1 Up Done");
+                    Step.RunStep++;
+                    Log.Debug("Wait Remove Film Unload Done");
+                    break;
+                case ERemoveFilmProcessRobotPickStep.Wait_RemoveFilmUnloadDone:
+                    if(FlagRemoveFilmUnloadDone == false)
+                    {
+                        break;
+                    }
+                    FlagRemoveFilmUnloadDone = false;
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessRobotPickStep.End:
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence Transfer Fixture Unload");
+                    Sequence = ESequence.TransferFixtureUnload;
+                    break;
+            }
+        }
+        #endregion
     }
 }

@@ -18,7 +18,14 @@ namespace PIFilmAutoDetachCleanMC.Defines.VirtualIO
 
         FixtureTransferDetachDone,
 
+        FixtureTransferRemoveFilmDone,
+
         DetachDone,
+
+        RemoveFilmDone,
+        RemoveFilmRequestUnload,
+
+        RemoveFilmUnloadDone,
 
         GlassTransferPickDone,
     }

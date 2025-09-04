@@ -85,6 +85,26 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _virtualIO.SetFlag(EFlags.FixtureTransferDetachDone, value);
             }
         }
+
+        private bool FlagFixtureTransferRemoveFilmDone
+        {
+            set
+            {
+                _virtualIO.SetFlag(EFlags.FixtureTransferRemoveFilmDone, value);
+            }
+        }
+
+        private bool FlagRemoveFilmDone
+        {
+            get
+            {
+                return _virtualIO.GetFlag(EFlags.RemoveFilmDone);
+            }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.RemoveFilmDone,value);
+            }
+        }
         #endregion
         public TransferFixtrueProcess(Devices devices,
             CommonRecipe commonRecipe,
@@ -222,6 +242,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.Detach:
                     break;
                 case ESequence.TransferFixtureUnload:
+                    Sequence_TransferFixtureUnload();
                     break;
                 case ESequence.DetachUnload:
                     break;
@@ -399,6 +420,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Transfer Fixture Cylinder Up Done");
                     Step.RunStep++;
+                    Log.Debug("Wait Remove Film Done");
+                    break;
+                case ETransferFixtureProcessUnloadStep.Wait_RemoveFilm_Done:
+                    if(FlagRemoveFilmDone == false)
+                    {
+                        break;
+                    }
+                    FlagRemoveFilmDone = false;
+                    Step.RunStep++;
                     break;
                 case ETransferFixtureProcessUnloadStep.YAxis_Move_UnloadPosition:
                     Log.Debug("Transfer Fixture Y Axis Move Unload Position");
@@ -449,6 +479,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Set Flag Transfer Done");
                     FlagFixtureTransferAlignDone = true;
                     FlagFixtureTransferDetachDone = true;
+                    FlagFixtureTransferRemoveFilmDone = true;
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessUnloadStep.End:
