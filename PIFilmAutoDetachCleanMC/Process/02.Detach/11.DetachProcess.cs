@@ -72,6 +72,26 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _virtualIO.SetFlag(EFlags.FixtureTransferDetachDone, value);
             }
         }
+
+        private bool FlagGlassTransferPickDone
+        {
+            get
+            {
+                return _virtualIO.GetFlag(EFlags.GlassTransferPickDone);
+            }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.GlassTransferPickDone, value);
+            }
+        }
+
+        private bool FlagDetachRequestUnloadGlass
+        {
+            set
+            {
+                _virtualIO.GetFlag(EFlags.DetachRequestUnloadGlass);
+            }
+        }
         #endregion
 
         #region Private Methods
@@ -214,6 +234,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.RemoveFilm:
                     break;
                 case ESequence.GlassTransferPick:
+                    Sequence_GlassTransferPick();
                     break;
                 case ESequence.GlassTransferPlace:
                     break;
@@ -378,17 +399,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Shuttle Transfer Z Axis Move to Unload Position Done");
                     Step.RunStep++;
                     break;
-                case EDetachUnloadStep.Vacuum_Off:
-                    Log.Debug("Glass Shuttle Vacuum Off");
-                    GlassShuttleVacOnOff(false);
-                    Wait(_commonRecipe.VacDelay);
-                    Step.RunStep++;
-                    break;
-                case EDetachUnloadStep.SetFlagDetachRequestUnload:
-                    Log.Debug("Set Flag Detach Request Unload");
-                    FlagDetachDone = true;
-                    Step.RunStep++;
-                    break;
+
                 case EDetachUnloadStep.End:
                     if (Parent!.Sequence != ESequence.AutoRun)
                     {
@@ -717,6 +728,46 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachProcessFixtureTransferStep.End:
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence Detach");
+                    Sequence = ESequence.Detach;
+                    break;
+            }
+        }
+
+        private void Sequence_GlassTransferPick()
+        {
+            switch ((EDetachProcessGlassTransferPickStep)Step.RunStep)
+            {
+                case EDetachProcessGlassTransferPickStep.Start:
+                    Log.Debug("Glass Transfer Pick Start");
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessGlassTransferPickStep.Vacuum_Off:
+                    Log.Debug("Glass Shuttle Vacuum Off");
+                    GlassShuttleVacOnOff(false);
+                    Wait(_commonRecipe.VacDelay);
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessGlassTransferPickStep.Set_FlagDetachRequestUnload:
+                    Log.Debug("Set Flag Detach Request Unload");
+                    FlagDetachRequestUnloadGlass = true;
+                    Step.RunStep++;
+                    Log.Debug("Wait Glass Transfer Pick Done");
+                    break;
+                case EDetachProcessGlassTransferPickStep.Wait_GlassTransferPickDone:
+                    if(FlagGlassTransferPickDone == false)
+                    {
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessGlassTransferPickStep.End:
                     if (Parent!.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;

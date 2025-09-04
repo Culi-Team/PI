@@ -18,8 +18,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         XAxis_Move_UnloadPosition_Wait,
         ShuttleZAxis_Move_UnloadPosition,
         ShuttleZAxis_Move_UnloadPosition_Wait,
-        Vacuum_Off,
-        SetFlagDetachRequestUnload,
         End
     }
 }
