@@ -13,6 +13,9 @@
         InWorkCSTLoad,
         InWorkCSTUnLoad,
 
+        CSTTilt,
+        CSTUnTilt,
+
         OutWorkCSTLoad,
         OutWorkCSTUnLoad,
 

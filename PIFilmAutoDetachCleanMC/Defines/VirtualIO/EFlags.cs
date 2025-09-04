@@ -10,6 +10,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.VirtualIO
     {
         DetachProcessOriginDone,
 
+        InCSTReady,
+        OutCSTReady,
+
+        RobotPickInCSTDone,
+        RobotPlaceOutCSTDone,
+
         FixtureAlignRequestFixture,
         FixtureAlignLoadDone,
         FixtureAlignDone,

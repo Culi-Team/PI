@@ -19,12 +19,14 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         //InWorkConveyor
         InWorkConveyor = 2000,
+        InWorkConveyorCSTNotDetect,
 
         //BufferConveyor
         BufferConveyor = 3000,
 
         //OutWorkConveyor
         OutWorkConveyor = 4000,
+        OutWorkConveyorCSTNotDetect,
 
         //OutConveyor
         OutConveyor = 5000,

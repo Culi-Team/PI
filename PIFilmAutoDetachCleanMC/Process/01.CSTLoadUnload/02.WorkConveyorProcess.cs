@@ -6,6 +6,7 @@ using EQX.Process;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
+using PIFilmAutoDetachCleanMC.Defines.VirtualIO;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System;
 using System.Collections.Generic;
@@ -22,25 +23,45 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly Devices _devices;
         private readonly CSTLoadUnloadRecipe _cstLoadUnloadRecipe;
         private readonly CommonRecipe _commonRecipe;
+        private readonly VirtualIO<EFlags> _virtualIO;
         #endregion
 
         #region Constructor
-        public WorkConveyorProcess(Devices devices, CSTLoadUnloadRecipe cstLoadUnloadRecipe,CommonRecipe commonRecipe)
+        public WorkConveyorProcess(Devices devices,
+            CSTLoadUnloadRecipe cstLoadUnloadRecipe,
+            CommonRecipe commonRecipe,
+            VirtualIO<EFlags> virtualIO)
         {
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
             _commonRecipe = commonRecipe;
+            _virtualIO = virtualIO;
         }
         #endregion
 
         #region Inputs
-        private IDInput Detect1 => port == EPort.Right ?  _devices.Inputs.InCstWorkDetect1 :
+        private IDInput Detect1 => port == EPort.Right ? _devices.Inputs.InCstWorkDetect1 :
                                                          _devices.Inputs.OutCstWorkDetect1;
-        private IDInput Detect2 => port == EPort.Right ?  _devices.Inputs.InCstWorkDetect2 :
+        private IDInput Detect2 => port == EPort.Right ? _devices.Inputs.InCstWorkDetect2 :
                                                          _devices.Inputs.OutCstWorkDetect2;
         private IDInput Detect3 => port == EPort.Right ? _devices.Inputs.InCstWorkDetect3 :
                                                         _devices.Inputs.OutCstWorkDetect3;
         private IDInput Detect4 => _devices.Inputs.InCstWorkDetect4;
+
+        private bool IsCassetteDetect
+        {
+            get
+            {
+                if (port == EPort.Right) // InWorkConveyor
+                {
+                    return Detect1.Value && Detect2.Value && Detect3.Value && Detect4.Value;
+                }
+                else // OutWorkConveyor
+                {
+                    return Detect1.Value && Detect2.Value && Detect3.Value;
+                }
+            }
+        }
         #endregion
 
         #region Outputs
@@ -57,28 +78,68 @@ namespace PIFilmAutoDetachCleanMC.Process
                                                                 _devices.Cylinders.OutCvSupportUpDown;
         #endregion
 
+        #region Flags
+        private bool FlagCSTReady
+        {
+            set
+            {
+                if (port == EPort.Right)
+                {
+                    _virtualIO.SetFlag(EFlags.InCSTReady, value);
+                }
+                else
+                {
+                    _virtualIO.SetFlag(EFlags.OutCSTReady, value);
+                }
+            }
+        }
+
+        private bool FlagRobotPickPlaceDone
+        {
+            get
+            {
+                if (port == EPort.Right)
+                {
+                    return _virtualIO.GetFlag(EFlags.RobotPickInCSTDone);
+                }
+                return _virtualIO.GetFlag(EFlags.RobotPlaceOutCSTDone);
+            }
+            set
+            {
+                if (port == EPort.Right)
+                {
+                    _virtualIO.SetFlag(EFlags.RobotPickInCSTDone, value);
+                }
+                else
+                {
+                    _virtualIO.SetFlag(EFlags.RobotPlaceOutCSTDone, value);
+                }
+            }
+        }
+        #endregion
+
         #region Motions
-        private IMotion InCSTTAxis => port == EPort.Right ? _devices.MotionsInovance.InCassetteTAxis :
+        private IMotion TAxis => port == EPort.Right ? _devices.MotionsInovance.InCassetteTAxis :
                                                            _devices.MotionsInovance.OutCassetteTAxis;
         #endregion
 
         #region Rollers
-        private ISpeedController RollerSupport1 => port == EPort.Right ? _devices.SpeedControllerList.SupportConveyor1Roller : 
+        private ISpeedController RollerSupport1 => port == EPort.Right ? _devices.SpeedControllerList.SupportConveyor1Roller :
                                                                         _devices.SpeedControllerList.SupportConveyor3Roller;
 
         private ISpeedController RollerSupport2 => port == EPort.Right ? _devices.SpeedControllerList.SupportConveyor2Roller :
                                                                         _devices.SpeedControllerList.SupportConveyor4Roller;
 
-        private ISpeedController Roller1 => port == EPort.Right ? _devices.SpeedControllerList.InWorkConveyorRoller1 : 
+        private ISpeedController Roller1 => port == EPort.Right ? _devices.SpeedControllerList.InWorkConveyorRoller1 :
                                                                  _devices.SpeedControllerList.OutWorkConveyorRoller1;
-        private ISpeedController Roller2 => port == EPort.Right ? _devices.SpeedControllerList.InWorkConveyorRoller2 : 
+        private ISpeedController Roller2 => port == EPort.Right ? _devices.SpeedControllerList.InWorkConveyorRoller2 :
                                                                  _devices.SpeedControllerList.OutWorkConveyorRoller2;
         #endregion
 
         #region Override Methods
         public override bool ProcessOrigin()
         {
-            switch((EWorkConveyorOriginStep)Step.OriginStep)
+            switch ((EWorkConveyorOriginStep)Step.OriginStep)
             {
                 case EWorkConveyorOriginStep.Start:
                     Log.Debug("Start");
@@ -117,8 +178,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EWorkConveyorOriginStep.TAxis_Origin:
                     Log.Debug("T Axis Origin");
-                    InCSTTAxis.SearchOrigin();
-                    Wait(_commonRecipe.MotionOriginTimeout, () => InCSTTAxis.Status.IsHomeDone);
+                    TAxis.SearchOrigin();
+                    Wait(_commonRecipe.MotionOriginTimeout, () => TAxis.Status.IsHomeDone);
                     Step.OriginStep++;
                     break;
                 case EWorkConveyorOriginStep.TAxis_Origin_Wait:
@@ -164,6 +225,261 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
 
             return true;
+        }
+
+        public override bool ProcessRun()
+        {
+            switch (Sequence)
+            {
+                case ESequence.Stop:
+                    break;
+                case ESequence.AutoRun:
+                    Sequence_AutoRun();
+                    break;
+                case ESequence.Ready:
+                    break;
+                case ESequence.InWorkCSTLoad:
+                    break;
+                case ESequence.InWorkCSTUnLoad:
+                    break;
+                case ESequence.CSTTilt:
+                    Sequence_Tilt();
+                    break;
+                case ESequence.CSTUnTilt:
+                    break;
+                case ESequence.OutWorkCSTLoad:
+                    break;
+                case ESequence.OutWorkCSTUnLoad:
+                    break;
+                case ESequence.RobotPickFixtureFromCST:
+                    Sequence_PickPlace();
+                    break;
+                case ESequence.RobotPlaceFixtureToVinylClean:
+                    break;
+                case ESequence.RobotPickFixtureFromVinylClean:
+                    break;
+                case ESequence.RobotPlaceFixtureToAlign:
+                    break;
+                case ESequence.FixtureAlign:
+                    break;
+                case ESequence.RobotPickFixtureFromRemoveZone:
+                    break;
+                case ESequence.RobotPlaceFixtureToOutWorkCST:
+                    Sequence_PickPlace();
+                    break;
+                case ESequence.TransferFixtureLoad:
+                    break;
+                case ESequence.Detach:
+                    break;
+                case ESequence.TransferFixtureUnload:
+                    break;
+                case ESequence.DetachUnload:
+                    break;
+                case ESequence.RemoveFilm:
+                    break;
+                case ESequence.GlassTransferPick:
+                    break;
+                case ESequence.GlassTransferPlace:
+                    break;
+                case ESequence.AlignGlass:
+                    break;
+                case ESequence.TransferInShuttlePick:
+                    break;
+                case ESequence.TransferInShuttlePlace:
+                    break;
+                case ESequence.WETCleanLoad:
+                    break;
+                case ESequence.WETClean:
+                    break;
+                case ESequence.WETCleanUnload:
+                    break;
+                case ESequence.TransferRotationPick:
+                    break;
+                case ESequence.TransferRotationPlace:
+                    break;
+                case ESequence.AFCleanLoad:
+                    break;
+                case ESequence.AFClean:
+                    break;
+                case ESequence.AFCleanUnload:
+                    break;
+                case ESequence.UnloadTransferPick:
+                    break;
+                case ESequence.UnloadTransferPlace:
+                    break;
+                case ESequence.UnloadAlignGlass:
+                    break;
+                case ESequence.UnloadRobotPick:
+                    break;
+                case ESequence.UnloadRobotPlasma:
+                    break;
+                case ESequence.UnloadRobotPlace:
+                    break;
+
+            }
+            return true;
+        }
+
+        private void Sequence_AutoRun()
+        {
+            switch ((EWorkConveyorAutoRunStep)Step.RunStep)
+            {
+                case EWorkConveyorAutoRunStep.Start:
+                    Log.Debug("Auto Run Start");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorAutoRunStep.Cassette_Check:
+                    if (IsCassetteDetect)
+                    {
+                        Sequence_Tilt();
+                    }
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorAutoRunStep.End:
+                    Log.Info("Sequence Cassette Load");
+                    if (port == EPort.Right)
+                    {
+                        Sequence = ESequence.InWorkCSTLoad;
+                        break;
+                    }
+                    Sequence = ESequence.OutWorkCSTLoad;
+                    break;
+            }
+        }
+
+        private void Sequence_Tilt()
+        {
+            switch ((EWorkConveyorTiltStep)Step.RunStep)
+            {
+                case EWorkConveyorTiltStep.Start:
+                    Log.Debug((port == EPort.Right ? "Pick" : "Place") + "Start");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorTiltStep.Cyl_SupportCV_Down:
+                    Log.Debug("Cylinder Support Conveyor Down");
+                    CVSupportCyl1.Backward();
+                    CVSupportCyl2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => CVSupportCyl1.IsBackward && CVSupportCyl2.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorTiltStep.Cyl_SupportCV_Down_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder Support Conveyor Down Done");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorTiltStep.Cyl_Fix_Forward:
+                    Log.Debug("Cylinder Fix Forward");
+                    FixCylinder.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => FixCylinder.IsForward);
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorTiltStep.Cyl_Fix_Forward_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder Fix Forward Done");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorTiltStep.TAxis_Move_WorkPosition:
+                    Log.Debug("T Axis Move Work Position");
+                    TAxis.MoveAbs(port == EPort.Right ? _cstLoadUnloadRecipe.InCstTAxisWorkPosition : _cstLoadUnloadRecipe.OutCstTAxisWorkPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => TAxis.MoveAbs(port == EPort.Right ? _cstLoadUnloadRecipe.InCstTAxisWorkPosition : _cstLoadUnloadRecipe.OutCstTAxisWorkPosition));
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorTiltStep.TAxis_Move_WorkPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("T Axis Move Work Position Done");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorTiltStep.Cyl_Tilt_Up:
+                    Log.Debug("Cylinder Tilt Up");
+                    TiltCylinder.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => TiltCylinder.IsForward);
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorTiltStep.Cyl_Tilt_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder Tilt Up Done");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorTiltStep.End:
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    if (port == EPort.Right)
+                    {
+                        Log.Info("Robot Pick Fixture From In CST");
+                        Sequence = ESequence.RobotPickFixtureFromCST;
+                        break;
+                    }
+                    Log.Info("Robot Place Fixture To Out CST");
+                    Sequence = ESequence.RobotPlaceFixtureToOutWorkCST;
+                    break;
+            }
+        }
+
+        private void Sequence_PickPlace()
+        {
+            switch ((EWorkConveyorPickPlaceStep)Step.RunStep)
+            {
+                case EWorkConveyorPickPlaceStep.Start:
+                    Log.Debug((port == EPort.Right ? "Pick" : "Place") + "Start");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorPickPlaceStep.Cassette_Detect_Check:
+                    if (IsCassetteDetect == false)
+                    {
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyorCSTNotDetect :
+                                                                 EWarning.OutWorkConveyorCSTNotDetect));
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorPickPlaceStep.Cassette_WorkCondition_Check:
+                    Log.Debug("Cassette Work Condition Check");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorPickPlaceStep.Set_FlagReady:
+                    Log.Debug("Set Flag Ready");
+                    FlagCSTReady = true;
+                    Step.RunStep++;
+                    Log.Debug("Wait Robot" + (port == EPort.Right ? "Pick" : "Place") + " Done");
+                    break;
+                case EWorkConveyorPickPlaceStep.Wait_Robot_PickPlace_Done:
+                    if (FlagRobotPickPlaceDone == false)
+                    {
+                        break;
+                    }
+                    FlagRobotPickPlaceDone = true;
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorPickPlaceStep.End:
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Step.RunStep = (int)EWorkConveyorPickPlaceStep.Cassette_WorkCondition_Check;
+                    break;
+            }
         }
         #endregion
     }
