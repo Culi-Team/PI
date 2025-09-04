@@ -123,13 +123,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             var sourceItems = new List<SourceItem> { new SourceItem { Name = "All", Value = "All", IsSelected = true } };
             
             sourceItems.AddRange(Enum.GetValues<EProcess>()
-                .OrderBy(p => p.ToString())
                 .Select(process => new SourceItem { Name = process.ToString(), Value = process.ToString(), IsSelected = false }));
 
             FilterSourceComboBox.ItemsSource = sourceItems;
         }
 
         private void FilterTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => ApplyFilter();
+
         private void FilterSourceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => ApplyFilter();
 
         private void FilterSourceCheckBox_Changed(object sender, RoutedEventArgs e)
