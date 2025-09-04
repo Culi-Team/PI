@@ -12,22 +12,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
 {
     public class TorqueControllerList
     {
-        private readonly IModbusCommunication _modbusCommunication;
-
         public List<ITorqueController> All { get; }
-        public TorqueControllerList([FromKeyedServices("TorqueControllerModbusCommunication")] IModbusCommunication modbusCommunication)
+        public TorqueControllerList(List<ITorqueController> torqueControllerList)
         {
-            _modbusCommunication = modbusCommunication;
-
-            var torqueCtlList = Enum.GetNames(typeof(ETorqueController)).ToList();
-            var torqueCtlIndex = (int[])Enum.GetValues(typeof(ETorqueController));
-
-            All = new List<ITorqueController>();
-
-            for (int i = 0; i < torqueCtlList.Count; i++)
-            {
-                All.Add(new DX3000TorqueController(torqueCtlIndex[i], torqueCtlList[i]) { ModbusCommunication = _modbusCommunication });
-            }
+            All = torqueControllerList;
         }
 
         public ITorqueController VinylCleanWinder => All.First(m => m.Id == (int)ETorqueController.VinylClean_Winder);

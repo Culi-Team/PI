@@ -13,21 +13,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
 {
     public class SpeedControllerList
     {
-        private readonly IModbusCommunication _modbusCommunication;
-
         public List<ISpeedController> All { get; }
-        public SpeedControllerList([FromKeyedServices("RollerModbusCommunication")] IModbusCommunication modbusCommunication)
+        public SpeedControllerList(List<ISpeedController> speedControllers)
         {
-            _modbusCommunication = modbusCommunication;
-            var speedCtlList = Enum.GetNames(typeof(ESpeedController)).ToList();
-            var speedCtlIndex = (int[])Enum.GetValues(typeof(ESpeedController));
-
-            All = new List<ISpeedController>();
-
-            for (int i = 0; i < speedCtlList.Count; i++)
-            {
-                All.Add(new SD201SSpeedController(speedCtlIndex[i], speedCtlList[i]) { ModbusCommunication = _modbusCommunication });
-            }
+            All = speedControllers;
         }
 
         public ISpeedController InConveyorRoller1 => All.First(m => m.Id == (int)ESpeedController.IN_CV_ROLLER1);

@@ -20,6 +20,8 @@ using EQX.Core.Device.Regulator;
 using EQX.Device.Regulator;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
 using EQX.InOut.InOut;
+using EQX.Core.TorqueController;
+using EQX.Motion.Torque;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -157,7 +159,22 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     return new ModbusRTUCommunication("COM2", 9600);
                 });
 
-                services.AddSingleton<TorqueControllerList>();
+                services.AddSingleton<TorqueControllerList>((ser) =>
+                {
+                    IModbusCommunication modbusCommunication = ser.GetRequiredKeyedService<IModbusCommunication>("TorqueControllerModbusCommunication");
+
+                    var torqueCtlList = Enum.GetNames(typeof(ETorqueController)).ToList();
+                    var torqueCtlIndex = (int[])Enum.GetValues(typeof(ETorqueController));
+
+                    var list  = new List<ITorqueController>();
+
+                    for (int i = 0; i < torqueCtlList.Count; i++)
+                    {
+                        list.Add(new DX3000TorqueController(torqueCtlIndex[i], torqueCtlList[i]) { ModbusCommunication = modbusCommunication });
+                    }
+
+                    return new TorqueControllerList(list);
+                });
             });
 
             return hostBuilder;
@@ -172,7 +189,25 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     return new ModbusRTUCommunication("COM3", 9600);
                 });
 
-                services.AddSingleton<SpeedControllerList>();
+                services.AddSingleton<SpeedControllerList>((ser) =>
+                {
+                    IModbusCommunication modbusCommunication = ser.GetRequiredKeyedService<IModbusCommunication>("RollerModbusCommunication");
+
+                    var speedCtlList = Enum.GetNames(typeof(ESpeedController)).ToList();
+                    var speedCtlIndex = (int[])Enum.GetValues(typeof(ESpeedController));
+
+                    var speedcontrollerList = new List<ISpeedController>();
+
+                    for (int i = 0; i < speedCtlList.Count; i++)
+                    {
+#if SIMULATION
+                        speedcontrollerList.Add(new SimulationSpeedController(speedCtlIndex[i], speedCtlList[i]));
+#else
+                        speedcontrollerList.Add(new SD201SSpeedController(speedCtlIndex[i], speedCtlList[i]) { ModbusCommunication = modbusCommunication });
+#endif
+                    }
+                    return new SpeedControllerList(speedcontrollerList);
+                });
             });
 
             return hostBuilder;

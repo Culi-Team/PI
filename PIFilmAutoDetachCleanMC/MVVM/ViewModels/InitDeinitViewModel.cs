@@ -153,8 +153,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         break;
                     case EHandleStep.CommunicationHandle:
                         Log.Debug("Connect Modbus Communication");
-                        _rollerModbusCommunication.Connect();
-                        _torqueModbusCommnication.Connect();
+                        if(_rollerModbusCommunication.Connect() == false)
+                        {
+                            ErrorMessages.Add("Speed Controller Connect Fail");
+                        }
+                        if(_torqueModbusCommnication.Connect() == false)
+                        {
+                            ErrorMessages.Add("Torque Controller Connect Fail");
+                        }
                         _step++;
                         break;
                     case EHandleStep.MotionDeviceHandle:
