@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EQX.Core.InOut;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
@@ -119,6 +120,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput AlignFixture1BW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_FIXTURE_1_BW);
         public IDInput AlignFixture2FW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_FIXTURE_2_FW);
         public IDInput AlignFixture2BW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_FIXTURE_2_BW);
+        public IDInput VinylCleanFixtureDetect => _dInputDevice.Inputs.First(i => i.Id == (int) EInput.VINYL_CLEAN_FIXTURE_DETECT);
+        public IDInput VinylCleanRollerBW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.VINYL_CLEAN_ROLLER_BW);
+        public IDInput VinylCleanRollerFW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.VINYL_CLEAN_ROLLER_FW);
         public IDInput VinylCleanFullDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.VINYL_CLEAN_FULL_DETECT);
         public IDInput VinylCleanRunoffDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.VINYL_CLEAN_RUNOFF_DETECT);
         public IDInput VinylCleanFixture1Clamp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.VINYL_CLEAN_FIXTURE_1_CLAMP);

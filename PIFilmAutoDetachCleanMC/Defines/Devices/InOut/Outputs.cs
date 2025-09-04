@@ -83,6 +83,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput LoadRobExtStart => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.LOAD_ROB_EXT_START);
         public IDOutput AlignFixtureFW => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_FIXTURE_FW);
         public IDOutput AlignFixtureBW => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_FIXTURE_BW);
+        public IDOutput VinylCleanMotorOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_MOTOR_ON_OFF);
+        public IDOutput VinylCleanRollerBW => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_ROLLER_BW);
+        public IDOutput VinylCleanRollerFW => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_ROLLER_FW);
         public IDOutput VinylCleanFixture1Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_FIXTURE_1_CLAMP);
         public IDOutput VinylCleanFixture1Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_FIXTURE_1_UNCLAMP);
         public IDOutput VinylCleanFixture2Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_FIXTURE_2_CLAMP);
