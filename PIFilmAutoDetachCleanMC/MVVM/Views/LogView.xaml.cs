@@ -1,6 +1,7 @@
 ﻿using PIFilmAutoDetachCleanMC.Defines.LogHistory;
 using PIFilmAutoDetachCleanMC.Defines.Logs;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
+using PIFilmAutoDetachCleanMC.Process;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -63,6 +64,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
 
             viewModel.LoadLogFiles();
             InitializeFilterTypeComboBox();
+            InitializeFilterSourceComboBox();
         }
 
         private void InitializeFilterTypeComboBox()
@@ -95,7 +97,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                 else
                 {
                     LogDataGrid.ItemsSource = null;
-                    SourceComboBox.ItemsSource = null;
+                    FilterSourceComboBox.ItemsSource = null;
                 }
             }
             catch (Exception ex)
@@ -106,48 +108,28 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
 
         private void InitializeFilterSourceComboBox()
         {
-            if (currentLogEntries == null) return;
-
-            var sources = currentLogEntries
-                .Select(entry => entry.Source)
-                .Where(source => !string.IsNullOrEmpty(source))
-                .Distinct()
-                .OrderBy(source => source)
-                .ToList();
-
             var sourceItems = new List<SourceItem>
             {
-                new SourceItem { Name = "All", Value = "All", Color = Brushes.Black }
+                new SourceItem { Name = "All", Value = "All" }
             };
 
-            // Màu sắc cho các source khác nhau
-            var colors = new List<Brush>
-            {
-                new SolidColorBrush(Color.FromRgb(76, 175, 80)),   // Xanh lá
-                new SolidColorBrush(Color.FromRgb(33, 150, 243)),  // Xanh dương
-                new SolidColorBrush(Color.FromRgb(255, 152, 0)),   // Cam
-                new SolidColorBrush(Color.FromRgb(156, 39, 176)),  // Tím
-                new SolidColorBrush(Color.FromRgb(244, 67, 54)),   // Đỏ
-                new SolidColorBrush(Color.FromRgb(0, 150, 136)),   // Teal
-                new SolidColorBrush(Color.FromRgb(255, 193, 7)),   // Vàng
-                new SolidColorBrush(Color.FromRgb(96, 125, 139)),  // Xám xanh
-                new SolidColorBrush(Color.FromRgb(121, 85, 72)),   // Nâu
-                new SolidColorBrush(Color.FromRgb(233, 30, 99))    // Hồng
-            };
+            // Lấy tất cả các giá trị từ enum EProcess
+            var processValues = Enum.GetValues<EProcess>()
+                .Where(p => p != EProcess.Root) // Loại bỏ Root nếu không cần
+                .OrderBy(p => p.ToString())
+                .ToList();
 
-            for (int i = 0; i < sources.Count; i++)
+            foreach (var process in processValues)
             {
-                var colorIndex = i % colors.Count;
                 sourceItems.Add(new SourceItem 
                 { 
-                    Name = sources[i], 
-                    Value = sources[i], 
-                    Color = colors[colorIndex]
+                    Name = process.ToString(), 
+                    Value = process.ToString()
                 });
             }
 
-            SourceComboBox.ItemsSource = sourceItems;
-            SourceComboBox.SelectedIndex = 0; // Chọn "All" mặc định
+            FilterSourceComboBox.ItemsSource = sourceItems;
+            FilterSourceComboBox.SelectedIndex = 0; // Chọn "All" mặc định
         }
 
         private void FilterTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -176,7 +158,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                 bool filterTypeMatch = selectedFilterType?.Value == "ALL" || entry.Type == selectedFilterType?.Value;
                 
                 // Filter theo Source
-                var selectedFilterSource = SourceComboBox.SelectedItem as SourceItem;
+                var selectedFilterSource = FilterSourceComboBox.SelectedItem as SourceItem;
                 bool filterSourceMatch = selectedFilterSource?.Value == "All" || entry.Source == selectedFilterSource?.Value;
                 
                 // Kết hợp cả hai filter 
