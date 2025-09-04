@@ -13,8 +13,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         ZAxis_Origin_Wait,
         TransferRotation_Cyl_Backward,
         TransferRotation_Cyl_Backward_Wait,
-        TransferRotation_Cyl_Unclamp,
-        TransferRotation_Cyl_Unclamp_Wait,
         TransferRotation_0Degree,
         TransferRotation_0Degree_Wait,
         End

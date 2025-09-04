@@ -185,15 +185,13 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput OpLButtonYellowLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OP_L_BUTTON_YELLOW_LAMP);
 
         // ========== EOutput ==========
-        public IDOutput TrRotateRightClamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_CLAMP);
-        public IDOutput TrRotateRightUnclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_UNCLAMP);
+        public IDOutput TrRotateRightRotVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_ROT_VAC_ON_OFF);
         public IDOutput TrRotateRight0Degree => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_0_DEGREE);
         public IDOutput TrRotateRight180Degree => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_180_DEGREE);
         public IDOutput TrRotateRightBw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_BW);
         public IDOutput TrRotateRightFw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_FW);
         public IDOutput TrRotateRightVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_VAC_ON_OFF);
-        public IDOutput TrRotateLeftClamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_CLAMP);
-        public IDOutput TrRotateLeftUnclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_UNCLAMP);
+        public IDOutput TrRotateLeftRotVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_ROT_VAC_ON_OFF);
         public IDOutput TrRotateLeft0Degree => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_0_DEGREE);
         public IDOutput TrRotateLeft180Degree => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_180_DEGREE);
         public IDOutput TrRotateLeftBw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_BW);

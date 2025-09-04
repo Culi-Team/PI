@@ -103,10 +103,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
         public ICylinder WetCleanPusherLeftUpDown { get; }
 
         // Transfer Rotate
-        public ICylinder TrRotateRightClampUnclamp { get; }
         public ICylinder TrRotateRightRotate { get; }
         public ICylinder TrRotateRightFwBw { get; }
-        public ICylinder TrRotateLeftClampUnclamp { get; }
         public ICylinder TrRotateLeftRotate { get; }
         public ICylinder TrRotateLeftFwBw { get; }
 
@@ -381,11 +379,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                 .SetIdentity((int)ECylinder.WetCleanPusherLeftUpDown, ECylinder.WetCleanPusherLeftUpDown.ToString());
             WetCleanPusherLeftUpDown.CylinderType = ECylinderType.UpDown;
 
-            TrRotateRightClampUnclamp = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.TrRotateRightClamp }, new List<IDInput> { _inputs.TrRotateRightUnclamp }, _outputs.TrRotateRightClamp, _outputs.TrRotateRightUnclamp)
-                .SetIdentity((int)ECylinder.TrRotateRightClampUnclamp, ECylinder.TrRotateRightClampUnclamp.ToString());
-            TrRotateRightClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
-
             TrRotateRightRotate = _cylinderFactory
                 .Create(new List<IDInput> { _inputs.TrRotateLeft0Degree }, new List<IDInput> { _inputs.TrRotateRight180Degree }, _outputs.TrRotateRight0Degree, _outputs.TrRotateRight180Degree)
                 .SetIdentity((int)ECylinder.TrRotateRightRotate, ECylinder.TrRotateRightRotate.ToString());
@@ -395,11 +388,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                 .Create(new List<IDInput> { _inputs.TrRotateRightFw }, new List<IDInput> { _inputs.TrRotateRightBw }, _outputs.TrRotateRightFw, _outputs.TrRotateRightBw)
                 .SetIdentity((int)ECylinder.TrRotateRightFwBw, ECylinder.TrRotateRightFwBw.ToString());
             TrRotateRightFwBw.CylinderType = ECylinderType.ForwardBackward;
-
-            TrRotateLeftClampUnclamp = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.TrRotateLeftClamp }, new List<IDInput> { _inputs.TrRotateLeftUnclamp }, _outputs.TrRotateLeftClamp, _outputs.TrRotateLeftUnclamp)
-                .SetIdentity((int)ECylinder.TrRotateLeftClampUnclamp, ECylinder.TrRotateLeftClampUnclamp.ToString());
-            TrRotateLeftClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
 
             TrRotateLeftRotate = _cylinderFactory
                 .Create(new List<IDInput> { _inputs.TrRotateLeft0Degree }, new List<IDInput> { _inputs.TrRotateLeft180Degree }, _outputs.TrRotateLeft0Degree, _outputs.TrRotateLeft180Degree)

@@ -23,10 +23,6 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private IMotion ZAxis => port == EPort.Left ? _devices.MotionsInovance.TransferRotationLZAxis :
                                                       _devices.MotionsInovance.TransferRotationRZAxis;
-
-        private ICylinder ClampCyl => port == EPort.Left ? _devices.Cylinders.TrRotateLeftClampUnclamp :
-                                                      _devices.Cylinders.TrRotateRightClampUnclamp;
-
         private ICylinder RotateCyl => port == EPort.Left ? _devices.Cylinders.TrRotateLeftRotate :
                                                       _devices.Cylinders.TrRotateRightRotate;
 
@@ -86,21 +82,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Transfer Rotation Cylinder Backward Done");
-                    Step.OriginStep++;
-                    break;
-                case ETransferRotationOriginStep.TransferRotation_Cyl_Unclamp:
-                    Log.Debug("Transfer Rotation Cylinder Unclamp");
-                    ClampCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return ClampCyl.IsBackward; });
-                    Step.OriginStep++;
-                    break;
-                case ETransferRotationOriginStep.TransferRotation_Cyl_Unclamp_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        //Timeout ALARM
-                        break;
-                    }
-                    Log.Debug("Transfer Rotation Cylinder Unclamp Done");
                     Step.OriginStep++;
                     break;
                 case ETransferRotationOriginStep.TransferRotation_0Degree:
