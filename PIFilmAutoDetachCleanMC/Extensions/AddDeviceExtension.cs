@@ -73,6 +73,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 #if SIMULATION
                 services.AddKeyedScoped<IMotionFactory<IMotion>, SimulationMotionFactory>("InovanceMotionFactory");
                 services.AddKeyedScoped<IMotionFactory<IMotion>, SimulationMotionFactory>("AjinMotionFactory");
+                services.AddKeyedScoped<IMotionFactory<IMotion>, SimulationMotionFactory>("MotionEziPlusEFactory");
 #else
                 services.AddKeyedScoped<IMotionFactory<IMotion>>("InovanceMotionFactory", (ser, obj) =>
                     new MotionInovanceFactoryWithDefaultCardHandler
@@ -82,6 +83,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 );
 
                 services.AddKeyedScoped<IMotionFactory<IMotion>>("AjinMotionFactory", (ser, obj) => new MotionAjinFactory());
+                services.AddKeyedScoped<IMotionFactory<IMotion>>("MotionEziPlusEFactory", (ser, obj) => new MotionEziPlusEFactory());
 #endif
 
                 services.AddSingleton<MotionsInovance>(ser =>
@@ -99,6 +101,18 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                         ser.GetRequiredKeyedService<IMotionFactory<IMotion>>("AjinMotionFactory"),
                         ser.GetRequiredKeyedService<List<IMotionParameter>>("MotionAjinParameters")
                         );
+                });
+
+                services.AddKeyedScoped<IMotion>("VinylCleanEncoder", (ser, obj) =>
+                {
+                    var configuration = ser.GetRequiredService<IConfiguration>();
+
+                    var vinylCleanEncoderPara = JsonConvert.DeserializeObject<MotionParameter>(
+                        File.ReadAllText(configuration["Files:VinylCleanEncoderParaConfigFile"] ?? "")
+                    );
+                    IMotionFactory<IMotion> motionPlusEFactory = ser.GetRequiredKeyedService<IMotionFactory<IMotion>>("MotionEziPlusEFactory");
+
+                    return motionPlusEFactory.Create(10, "VinylCleanEncoder", vinylCleanEncoderPara);
                 });
 
                 services.AddSingleton<Devices>();
@@ -166,7 +180,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     var torqueCtlList = Enum.GetNames(typeof(ETorqueController)).ToList();
                     var torqueCtlIndex = (int[])Enum.GetValues(typeof(ETorqueController));
 
-                    var list  = new List<ITorqueController>();
+                    var list = new List<ITorqueController>();
 
                     for (int i = 0; i < torqueCtlList.Count; i++)
                     {

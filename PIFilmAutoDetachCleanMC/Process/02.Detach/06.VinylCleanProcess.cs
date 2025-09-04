@@ -1,4 +1,6 @@
-﻿using EQX.Process;
+﻿using EQX.Core.Motion;
+using EQX.Process;
+using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using System;
 using System.Collections.Generic;
@@ -10,5 +12,11 @@ namespace PIFilmAutoDetachCleanMC.Process
 {
     public class VinylCleanProcess : ProcessBase<ESequence>
     {
+        private readonly IMotion _vinylCleanEncoder;
+
+        public VinylCleanProcess([FromKeyedServices("VinylCleanEncoder")] IMotion vinylCleanEncoder)
+        {
+            _vinylCleanEncoder = vinylCleanEncoder;
+        }
     }
 }
