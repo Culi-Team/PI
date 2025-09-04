@@ -252,7 +252,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EFixtureAlignRobotPlaceFixtureToAlignStep.SetFlagRequestFixture:
+                    Log.Debug("Set Flag Request Fixture");
                     FlagFixtureAlignReqFixture = true;
+                    Log.Debug("Wait Fixture Align Load Done");
                     Step.RunStep++;
                     break;
                 case EFixtureAlignRobotPlaceFixtureToAlignStep.WaitFixtureAlignLoadDone:
