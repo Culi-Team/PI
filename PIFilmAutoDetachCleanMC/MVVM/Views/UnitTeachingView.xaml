@@ -32,10 +32,10 @@
                           HorizontalAlignment="Center" 
                           Margin="5,5,5,2"/>
                 <ui:JogView Grid.Row="1" 
-                           Width="250" 
-                           MaxWidth="290" 
-                           MinWidth="200"
-                           Margin="5"/>
+                           MaxWidth="320" 
+                           MinWidth="290"
+                           Margin="5"
+                           DataContext="{Binding Motion}"/>
             </Grid>
         </DataTemplate>
 
