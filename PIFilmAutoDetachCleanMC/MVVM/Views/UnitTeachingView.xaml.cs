@@ -1,4 +1,5 @@
 ﻿using EQX.Core.InOut;
+using EQX.Core.Motion;
 using EQX.Core.Process;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
@@ -15,13 +16,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
     /// </summary>
     public partial class UnitTeachingView : UserControl
     {
-        public ObservableCollection<MotionWrapper> Motions
+        public ObservableCollection<IMotion> Motions
         {
-            get { return (ObservableCollection<MotionWrapper>)GetValue(MotionsProperty); }
+            get { return (ObservableCollection<IMotion>)GetValue(MotionsProperty); }
             set { SetValue(MotionsProperty, value); }
         }
         public static readonly DependencyProperty MotionsProperty =
-            DependencyProperty.Register("Motions", typeof(ObservableCollection<MotionWrapper>), typeof(UnitTeachingView), new PropertyMetadata(new ObservableCollection<MotionWrapper> { }));
+            DependencyProperty.Register("Motions", typeof(ObservableCollection<IMotion>), typeof(UnitTeachingView), new PropertyMetadata(new ObservableCollection<IMotion> { }));
 
         public ObservableCollection<ICylinder> Cylinders
         {
@@ -70,7 +71,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         {
             if (DataContext is TeachViewModel viewModel && SelectedProcess != null)
             {
-                ObservableCollection<MotionWrapper> processMotions = GetMotionsForProcess(viewModel, SelectedProcess);
+                ObservableCollection<IMotion> processMotions = GetMotionsForProcess(viewModel, SelectedProcess);
                 if (processMotions != null)
                 {
                     Motions = processMotions;
@@ -78,7 +79,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             }
         }
 
-        private ObservableCollection<MotionWrapper> GetMotionsForProcess(TeachViewModel viewModel, IProcess<ESequence> process)
+        private ObservableCollection<IMotion> GetMotionsForProcess(TeachViewModel viewModel, IProcess<ESequence> process)
         {
             // Get process name to determine which motion property to use
             string processName = process?.GetType().Name ?? "";

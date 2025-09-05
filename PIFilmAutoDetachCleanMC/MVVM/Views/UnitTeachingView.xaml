@@ -15,28 +15,9 @@
         <cvt:BoolToBrushConverter x:Key="BoolToBrushConverter" />
         <cvt:VacuumListConverter x:Key="VacuumListConverter" />
         <DataTemplate DataType="{x:Type motion:MotionBase}">
-            <Grid>
-                <ui:JogView Margin="5"/>
-            </Grid>
-        </DataTemplate>
-        
-        <DataTemplate DataType="{x:Type vm:MotionWrapper}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Text="{Binding Label}" 
-                          FontWeight="Bold" 
-                          FontSize="14" 
-                          HorizontalAlignment="Center" 
-                          Margin="5,5,5,2"/>
-                <ui:JogView Grid.Row="1" 
-                           Width="250" 
-                           MaxWidth="290" 
-                           MinWidth="200"
-                           Margin="5"/>
-            </Grid>
+            <ui:JogView Margin="5" 
+                       MaxWidth="320" 
+                       MinWidth="290"/>
         </DataTemplate>
 
         <!-- Style cho Border với GroupBox -->

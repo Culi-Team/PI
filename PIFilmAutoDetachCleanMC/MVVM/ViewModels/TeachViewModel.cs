@@ -48,8 +48,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             get { return _cylinders; }
             set { _cylinders = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<MotionWrapper> _motions;
-        public ObservableCollection<MotionWrapper> Motions
+        private ObservableCollection<IMotion> _motions;
+        public ObservableCollection<IMotion> Motions
         {
             get { return _motions; }
             set { _motions = value; OnPropertyChanged(); }
@@ -74,32 +74,32 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         }
 
         // CSTLoadUnload Tab Motion Properties
-        public ObservableCollection<MotionWrapper> InConveyorMotions => GetInConveyorMotions();
-        public ObservableCollection<MotionWrapper> InWorkConveyorMotions => GetInWorkConveyorMotions();
-        public ObservableCollection<MotionWrapper> OutWorkConveyorMotions => GetOutWorkConveyorMotions();
-        public ObservableCollection<MotionWrapper> OutConveyorMotions => GetOutConveyorMotions();
+        public ObservableCollection<IMotion> InConveyorMotions => GetInConveyorMotions();
+        public ObservableCollection<IMotion> InWorkConveyorMotions => GetInWorkConveyorMotions();
+        public ObservableCollection<IMotion> OutWorkConveyorMotions => GetOutWorkConveyorMotions();
+        public ObservableCollection<IMotion> OutConveyorMotions => GetOutConveyorMotions();
 
         // Detach Tab Motion Properties
-        public ObservableCollection<MotionWrapper> TransferFixtureMotions => GetTransferFixtureMotions();
-        public ObservableCollection<MotionWrapper> DetachMotions => GetDetachMotions();
+        public ObservableCollection<IMotion> TransferFixtureMotions => GetTransferFixtureMotions();
+        public ObservableCollection<IMotion> DetachMotions => GetDetachMotions();
 
         // Clean Tab Motion Properties
-        public ObservableCollection<MotionWrapper> GlassTransferMotions => GetGlassTransferMotions();
-        public ObservableCollection<MotionWrapper> GlassAlignLeftMotions => GetGlassAlignLeftMotions();
-        public ObservableCollection<MotionWrapper> GlassAlignRightMotions => GetGlassAlignRightMotions();
-        public ObservableCollection<MotionWrapper> TransferInShuttleLeftMotions => GetTransferInShuttleLeftMotions();
-        public ObservableCollection<MotionWrapper> TransferInShuttleRightMotions => GetTransferInShuttleRightMotions();
-        public ObservableCollection<MotionWrapper> WETCleanLeftMotions => GetWETCleanLeftMotions();
-        public ObservableCollection<MotionWrapper> WETCleanRightMotions => GetWETCleanRightMotions();
-        public ObservableCollection<MotionWrapper> AFCleanLeftMotions => GetAFCleanLeftMotions();
-        public ObservableCollection<MotionWrapper> AFCleanRightMotions => GetAFCleanRightMotions();
-        public ObservableCollection<MotionWrapper> TransferRotationLeftMotions => GetTransferRotationLeftMotions();
-        public ObservableCollection<MotionWrapper> TransferRotationRightMotions => GetTransferRotationRightMotions();
+        public ObservableCollection<IMotion> GlassTransferMotions => GetGlassTransferMotions();
+        public ObservableCollection<IMotion> GlassAlignLeftMotions => GetGlassAlignLeftMotions();
+        public ObservableCollection<IMotion> GlassAlignRightMotions => GetGlassAlignRightMotions();
+        public ObservableCollection<IMotion> TransferInShuttleLeftMotions => GetTransferInShuttleLeftMotions();
+        public ObservableCollection<IMotion> TransferInShuttleRightMotions => GetTransferInShuttleRightMotions();
+        public ObservableCollection<IMotion> WETCleanLeftMotions => GetWETCleanLeftMotions();
+        public ObservableCollection<IMotion> WETCleanRightMotions => GetWETCleanRightMotions();
+        public ObservableCollection<IMotion> AFCleanLeftMotions => GetAFCleanLeftMotions();
+        public ObservableCollection<IMotion> AFCleanRightMotions => GetAFCleanRightMotions();
+        public ObservableCollection<IMotion> TransferRotationLeftMotions => GetTransferRotationLeftMotions();
+        public ObservableCollection<IMotion> TransferRotationRightMotions => GetTransferRotationRightMotions();
 
         // Unload Tab Motion Properties
-        public ObservableCollection<MotionWrapper> UnloadTransferLeftMotions => GetUnloadTransferLeftMotions();
-        public ObservableCollection<MotionWrapper> UnloadTransferRightMotions => GetUnloadTransferRightMotions();
-        public ObservableCollection<MotionWrapper> UnloadAlignMotions => GetUnloadAlignMotions();
+        public ObservableCollection<IMotion> UnloadTransferLeftMotions => GetUnloadTransferLeftMotions();
+        public ObservableCollection<IMotion> UnloadTransferRightMotions => GetUnloadTransferRightMotions();
+        public ObservableCollection<IMotion> UnloadAlignMotions => GetUnloadAlignMotions();
 
         #endregion
 
@@ -109,176 +109,171 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         #region GetMotions
         // CSTLoadUnload Tab Motions
-        private ObservableCollection<MotionWrapper> GetInConveyorMotions()
+        private ObservableCollection<IMotion> GetInConveyorMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.InCassetteTAxis, "In Cassette T Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.InCassetteTAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-        private ObservableCollection<MotionWrapper> GetInWorkConveyorMotions()
+        private ObservableCollection<IMotion> GetInWorkConveyorMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.InCassetteTAxis, "In Work Cassette T Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.InCassetteTAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-
-        private ObservableCollection<MotionWrapper> GetOutWorkConveyorMotions()
+        private ObservableCollection<IMotion> GetOutWorkConveyorMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.OutCassetteTAxis, "Out Work Cassette T Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.OutCassetteTAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-        private ObservableCollection<MotionWrapper> GetOutConveyorMotions()
+        private ObservableCollection<IMotion> GetOutConveyorMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.OutCassetteTAxis, "Out Cassette T Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.OutCassetteTAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
         // Detach Tab Motions
-
-        private ObservableCollection<MotionWrapper> GetTransferFixtureMotions()
+        private ObservableCollection<IMotion> GetTransferFixtureMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.FixtureTransferYAxis, "Fixture Transfer Y Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsAjin.ShuttleTransferZAxis, "Shuttle Transfer Z Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.FixtureTransferYAxis);
+                motions.Add(Devices.MotionsAjin.ShuttleTransferZAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-
-        private ObservableCollection<MotionWrapper> GetDetachMotions()
+        private ObservableCollection<IMotion> GetDetachMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.DetachGlassZAxis, "Detach Glass Z Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.ShuttleTransferXAxis, "Shuttle Transfer X Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.DetachGlassZAxis);
+                motions.Add(Devices.MotionsInovance.ShuttleTransferXAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
         // Clean Tab Motions
-        private ObservableCollection<MotionWrapper> GetGlassTransferMotions()
+        private ObservableCollection<IMotion> GetGlassTransferMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.GlassTransferYAxis, "Glass Transfer Y Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.GlassTransferZAxis, "Glass Transfer Z Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.GlassTransferYAxis);
+                motions.Add(Devices.MotionsInovance.GlassTransferZAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-        private ObservableCollection<MotionWrapper> GetGlassAlignLeftMotions()
+        private ObservableCollection<IMotion> GetGlassAlignLeftMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.GlassTransferYAxis, "Glass Align Left Y Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.GlassTransferZAxis, "Glass Align Left Z Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.GlassTransferYAxis);
+                motions.Add(Devices.MotionsInovance.GlassTransferZAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-        private ObservableCollection<MotionWrapper> GetGlassAlignRightMotions()
+        private ObservableCollection<IMotion> GetGlassAlignRightMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.GlassTransferYAxis, "Glass Align Right Y Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.GlassTransferZAxis, "Glass Align Right Z Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.GlassTransferYAxis);
+                motions.Add(Devices.MotionsInovance.GlassTransferZAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-        private ObservableCollection<MotionWrapper> GetTransferInShuttleLeftMotions()
+        private ObservableCollection<IMotion> GetTransferInShuttleLeftMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.TransferInShuttleLYAxis, "Transfer In Shuttle Left Y Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.TransferInShuttleLZAxis, "Transfer In Shuttle Left Z Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsAjin.InShuttleLXAxis, "In Shuttle Left X Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsAjin.InShuttleLYAxis, "In Shuttle Left Y Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.TransferInShuttleLYAxis);
+                motions.Add(Devices.MotionsInovance.TransferInShuttleLZAxis);
+                motions.Add(Devices.MotionsAjin.InShuttleLXAxis);
+                motions.Add(Devices.MotionsAjin.InShuttleLYAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-        private ObservableCollection<MotionWrapper> GetTransferInShuttleRightMotions()
+        private ObservableCollection<IMotion> GetTransferInShuttleRightMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.TransferInShuttleRYAxis, "Transfer In Shuttle Right Y Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.TransferInShuttleRZAxis, "Transfer In Shuttle Right Z Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsAjin.InShuttleRXAxis, "In Shuttle Right X Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsAjin.InShuttleRYAxis, "In Shuttle Right Y Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.TransferInShuttleRYAxis);
+                motions.Add(Devices.MotionsInovance.TransferInShuttleRZAxis);
+                motions.Add(Devices.MotionsAjin.InShuttleRXAxis);
+                motions.Add(Devices.MotionsAjin.InShuttleRYAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-        private ObservableCollection<MotionWrapper> GetWETCleanLeftMotions()
+        private ObservableCollection<IMotion> GetWETCleanLeftMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.WETCleanLFeedingAxis, "WET Clean Left Feeding Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.InShuttleLTAxis, "In Shuttle Left T Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.WETCleanLFeedingAxis);
+                motions.Add(Devices.MotionsInovance.InShuttleLTAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-        private ObservableCollection<MotionWrapper> GetWETCleanRightMotions()
+        private ObservableCollection<IMotion> GetWETCleanRightMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.WETCleanRFeedingAxis, "WET Clean Right Feeding Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.InShuttleRTAxis, "In Shuttle Right T Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.WETCleanRFeedingAxis);
+                motions.Add(Devices.MotionsInovance.InShuttleRTAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-        private ObservableCollection<MotionWrapper> GetAFCleanLeftMotions()
+        private ObservableCollection<IMotion> GetAFCleanLeftMotions()
         {
-            var motions = new List<MotionWrapper>();
-            if (Devices?.MotionsInovance?.AFCleanLFeedingAxis != null)
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.AFCleanLFeedingAxis, "AF Clean Left Feeding Axis"));
-            if (Devices?.MotionsInovance?.InShuttleLTAxis != null)
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.InShuttleLTAxis, "In Shuttle Left T Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.AFCleanLFeedingAxis);
+                motions.Add(Devices.MotionsInovance.InShuttleLTAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-        private ObservableCollection<MotionWrapper> GetAFCleanRightMotions()
+        private ObservableCollection<IMotion> GetAFCleanRightMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.AFCleanRFeedingAxis, "AF Clean Right Feeding Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.InShuttleRTAxis, "In Shuttle Right T Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.AFCleanRFeedingAxis);
+                motions.Add(Devices.MotionsInovance.InShuttleRTAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-        private ObservableCollection<MotionWrapper> GetTransferRotationLeftMotions()
+        private ObservableCollection<IMotion> GetTransferRotationLeftMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.TransferRotationLZAxis, "Transfer Rotation Left Z Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsAjin.OutShuttleLXAxis, "Out Shuttle Left X Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsAjin.OutShuttleLYAxis, "Out Shuttle Left Y Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.TransferRotationLZAxis);
+                motions.Add(Devices.MotionsAjin.OutShuttleLXAxis);
+                motions.Add(Devices.MotionsAjin.OutShuttleLYAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-        private ObservableCollection<MotionWrapper> GetTransferRotationRightMotions()
+        private ObservableCollection<IMotion> GetTransferRotationRightMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.TransferRotationRZAxis, "Transfer Rotation Right Z Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsAjin.OutShuttleRXAxis, "Out Shuttle Right X Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsAjin.OutShuttleRYAxis, "Out Shuttle Right Y Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.TransferRotationRZAxis);
+                motions.Add(Devices.MotionsAjin.OutShuttleRXAxis);
+                motions.Add(Devices.MotionsAjin.OutShuttleRYAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
         // Unload Tab Motions
-        private ObservableCollection<MotionWrapper> GetUnloadTransferLeftMotions()
+        private ObservableCollection<IMotion> GetUnloadTransferLeftMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.GlassUnloadLYAxis, "Glass Unload Left Y Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.GlassUnloadLZAxis, "Glass Unload Left Z Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.GlassUnloadLYAxis);
+                motions.Add(Devices.MotionsInovance.GlassUnloadLZAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-        private ObservableCollection<MotionWrapper> GetUnloadTransferRightMotions()
+        private ObservableCollection<IMotion> GetUnloadTransferRightMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.GlassUnloadRYAxis, "Glass Unload Right Y Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.GlassUnloadRZAxis, "Glass Unload Right Z Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.GlassUnloadRYAxis);
+                motions.Add(Devices.MotionsInovance.GlassUnloadRZAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
-        private ObservableCollection<MotionWrapper> GetUnloadAlignMotions()
+        private ObservableCollection<IMotion> GetUnloadAlignMotions()
         {
-            var motions = new List<MotionWrapper>();
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.GlassUnloadLYAxis, "Glass Unload Align Left Y Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.GlassUnloadLZAxis, "Glass Unload Align Left Z Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.GlassUnloadRYAxis, "Glass Unload Align Right Y Axis"));
-                motions.Add(new MotionWrapper(Devices.MotionsInovance.GlassUnloadRZAxis, "Glass Unload Align Right Z Axis"));
-            return new ObservableCollection<MotionWrapper>(motions);
+            var motions = new List<IMotion>();
+                motions.Add(Devices.MotionsInovance.GlassUnloadLYAxis);
+                motions.Add(Devices.MotionsInovance.GlassUnloadLZAxis);
+                motions.Add(Devices.MotionsInovance.GlassUnloadRYAxis);
+                motions.Add(Devices.MotionsInovance.GlassUnloadRZAxis);
+            return new ObservableCollection<IMotion>(motions);
         }
 
         #endregion
