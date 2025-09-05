@@ -306,12 +306,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.End:
-                    if (Parent!.Sequence != ESequence.AutoRun)
-                    {
-                        Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
-                        break;
-                    }
                     Log.Info("Sequence Transfer Fixture Load");
                     Sequence = ESequence.TransferFixtureLoad;
                     break;
@@ -665,10 +659,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Detach Fix Cylinder 2 Backward Done");
                     Step.RunStep++;
                     break;
-                case EDetachStep.SetFlagDetachDone:
-                    FlagDetachDone = true;
-                    Step.RunStep++;
-                    break;
                 case EDetachStep.End:
                     if (Parent!.Sequence != ESequence.AutoRun)
                     {
@@ -677,7 +667,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    Log.Info("Sequence Fixture Transfer");
+                    Log.Info("Sequence Detach Unload");
                     Sequence = ESequence.DetachUnload;
                     break;
             }

@@ -82,6 +82,14 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private bool FlagVinylCleanUnloadDone
+        {
+            set
+            {
+                _virtualIO.SetFlag(EFlags.VinylCleanUnloadDone, value);
+            }
+        }
+
         private bool FlagFixtureAlignRequestFixture
         {
             get
@@ -474,7 +482,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Wait(1000);
                     Step.RunStep++;
                     break;
-                case ERobotLoadPickPlaceFixtureVinylCleanStep.SetFlag_VinylCleanLoadDone:
+                case ERobotLoadPickPlaceFixtureVinylCleanStep.SetFlag_VinylCleanLoadUnloadDone:
+                    if(bPick)
+                    {
+                        Log.Debug("Set Flag Vinyl Clean Unload Done");
+                        FlagVinylCleanUnloadDone = true;
+                        Step.RunStep++;
+                        break;
+                    }
                     Log.Debug("Set Flag Vinyl Clean Load Done");
                     FlagVinylCleanLoadDone = true;
                     Step.RunStep++;
