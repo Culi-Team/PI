@@ -179,7 +179,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     FlagOriginDone = true;
                     ProcessStatus = EProcessStatus.OriginDone;
                     Step.OriginStep++;
-                    return true;
+                    break;
                 default:
                     Wait(20);
                     break;
