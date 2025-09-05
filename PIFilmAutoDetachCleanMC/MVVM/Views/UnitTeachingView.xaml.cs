@@ -90,24 +90,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                     return viewModel.InConveyorMotions;
                 case "InWorkConveyorProcess":
                     return viewModel.InWorkConveyorMotions;
-                case "BufferConveyorProcess":
-                    return viewModel.BufferConveyorMotions;
                 case "OutWorkConveyorProcess":
                     return viewModel.OutWorkConveyorMotions;
                 case "OutConveyorProcess":
                     return viewModel.OutConveyorMotions;
 
                 // Detach Tab
-                case "VinylCleanProcess":
-                    return viewModel.VinylCleanMotions;
-                case "RobotLoadProcess":
-                    return viewModel.RobotLoadMotions;
-                case "FixtureAlignProcess":
-                    return viewModel.FixtureAlignMotions;
                 case "TransferFixtureProcess":
                     return viewModel.TransferFixtureMotions;
-                case "RemoveFilmProcess":
-                    return viewModel.RemoveFilmMotions;
                 case "DetachProcess":
                     return viewModel.DetachMotions;
 
@@ -142,8 +132,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                     return viewModel.UnloadTransferRightMotions;
                 case "UnloadAlignProcess":
                     return viewModel.UnloadAlignMotions;
-                case "RobotUnloadProcess":
-                    return viewModel.RobotUnloadMotions;
 
                 default:
                     return viewModel.Motions; 
