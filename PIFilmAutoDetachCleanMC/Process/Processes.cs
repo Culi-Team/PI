@@ -7,6 +7,7 @@ namespace PIFilmAutoDetachCleanMC.Process
     {
         private readonly List<IProcess<ESequence>> _processes;
 
+        #region Properties
         public IProcess<ESequence> RootProcess => _processes.First(p => p.Name == EProcess.Root.ToString());
         public IProcess<ESequence> InConveyorProcess => _processes.First(p => p.Name == EProcess.InConveyor.ToString());
         public IProcess<ESequence> InWorkConveyorProcess => _processes.First(p => p.Name == EProcess.InWorkConveyor.ToString());
@@ -38,9 +39,12 @@ namespace PIFilmAutoDetachCleanMC.Process
         public IProcess<ESequence> UnloadAlignProcess => _processes.First(p => p.Name == EProcess.UnloadAlign.ToString());
         public IProcess<ESequence> RobotUnloadProcess => _processes.First(p => p.Name == EProcess.RobotUnload.ToString());
 
+        #endregion
+
         public Processes(List<IProcess<ESequence>> processes)
         {
             _processes = processes;
+            //_machineStatus = machineStatus;
         }
 
         public void Initialize()
@@ -98,5 +102,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             RootProcess.Start();
             RootProcess.Childs?.All(p => p.Start());
         }
+        #region Privates
+        private readonly MachineStatus _machineStatus;
+        #endregion
     }
 }

@@ -1,12 +1,220 @@
 ﻿<UserControl x:Class="PIFilmAutoDetachCleanMC.MVVM.Views.TeachView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:cvt="clr-namespace:PIFilmAutoDetachCleanMC.Converters"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:vm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels"
+             xmlns:slt="clr-namespace:PIFilmAutoDetachCleanMC.RecipeNameSelectors"
+             IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance Type=vm:TeachViewModel}"
+             x:Name="root">
+    <UserControl.Resources>
+        <Style x:Key="AutoWidthTabItemStyle"
+               TargetType="{x:Type TabItem}"
+               BasedOn="{StaticResource {x:Type TabItem}}">
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="Background" Value="#F5F5F5"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Grid>
+                            <Border Name="Border" 
+                                    Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}" 
+                                    CornerRadius="4,4,0,0" 
+                                    Margin="{TemplateBinding Margin}">
+                                <ContentPresenter x:Name="ContentSite" 
+                                                VerticalAlignment="Center" 
+                                                HorizontalAlignment="Center" 
+                                                ContentSource="Header" 
+                                                Margin="{TemplateBinding Padding}" 
+                                                RecognizesAccessKey="True"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <!-- Trạng thái đã chọn (Selected) - Tab chính -->
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#2196F3"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#1976D2"/>
+                            </Trigger>
+                            
+                            <!-- Trạng thái hover (IsMouseOver) - Tab chính -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#64B5F6"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#2196F3"/>
+                            </Trigger>
+                            
+                            <!-- Trạng thái bình thường - Tab chính -->
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="#F5F5F5"/>
+                                <Setter Property="Foreground" Value="#666666"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#E0E0E0"/>
+                            </Trigger>
+                            
+                            <!-- Hiệu ứng khi focus - Tab chính -->
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#42A5F5"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type TabControl}">
+            <Setter Property="ItemContainerStyle" Value="{StaticResource AutoWidthTabItemStyle}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid ClipToBounds="True" KeyboardNavigation.TabNavigation="Local">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <UniformGrid Rows="1" IsItemsHost="True"/>
+                            <Border Grid.Row="1"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    KeyboardNavigation.DirectionalNavigation="Contained">
+                                <ContentPresenter x:Name="PART_SelectedContentHost"
+                                                  ContentSource="SelectedContent"
+                                                  Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Template cho UnitTeachingView  -->
+        <DataTemplate x:Key="UnitTeachingTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.Motions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"/>
+        </DataTemplate>
+
+        <!-- Style cho TabItem với UnitTeachingView -->
+        <Style x:Key="UnitTeachingTabItemStyle" TargetType="TabItem">
+            <Setter Property="ContentTemplate" Value="{StaticResource UnitTeachingTemplate}"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="DarkGray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Grid>
+                            <Border Name="Border" 
+                                    Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}" 
+                                    CornerRadius="3,3,0,0" 
+                                    Margin="{TemplateBinding Margin}">
+                                <ContentPresenter x:Name="ContentSite" 
+                                                VerticalAlignment="Center" 
+                                                HorizontalAlignment="Center" 
+                                                ContentSource="Header" 
+                                                Margin="{TemplateBinding Padding}" 
+                                                RecognizesAccessKey="True"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <!-- Trạng thái đã chọn (Selected) -->
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#4CAF50"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#2E7D32"/>
+                            </Trigger>
+                            
+                            <!-- Trạng thái đang chọn (IsMouseOver) -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#81C784"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#4CAF50"/>
+                            </Trigger>
+                            
+                            <!-- Trạng thái bình thường khi không được chọn -->
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="#E0E0E0"/>
+                                <Setter Property="Foreground" Value="#424242"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#BDBDBD"/>
+                            </Trigger>
+                            
+                            <!-- Hiệu ứng khi focus -->
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#66BB6A"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
     <Grid>
-        <Label Content="Teach"/>
+        <TabControl Grid.Column="0">
+            <TabItem Header="CSTLoadUnload">
+                <TabControl>
+                    <TabItem Header="In Conveyor" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="In Work Conveyor" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Buffer Conveyor" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Out Work Conveyor" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Out Conveyor" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                </TabControl>
+            </TabItem>
+            <TabItem Header="Detach">
+                <TabControl>
+                    <TabItem Header="Vinyl Clean" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Robot Load" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Fixture Align" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Transfer Fixture" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Remove Film" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Detach" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                </TabControl>
+            </TabItem>
+            <TabItem Header="Clean">
+                <TabControl>
+                    <TabItem Header="Glass Transfer" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Glass Align" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Transfer In Shuttle" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Wet Clean" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="AF Clean" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Transfer Rotation" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                </TabControl>
+            </TabItem>
+            <TabItem Header="Unload">
+                <TabControl>
+                    <TabItem Header="Unload Transfer" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Unload Align" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Robot Unload" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                </TabControl>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>
