@@ -21,6 +21,7 @@
 
         RobotPickFixtureFromCST,
         RobotPlaceFixtureToVinylClean,
+        VinylClean,
         RobotPickFixtureFromVinylClean,
         RobotPlaceFixtureToAlign,
         FixtureAlign,

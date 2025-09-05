@@ -16,6 +16,11 @@ namespace PIFilmAutoDetachCleanMC.Defines.VirtualIO
         RobotPickInCSTDone,
         RobotPlaceOutCSTDone,
 
+        VinylCleanRequestFixture,
+        VinylCleanLoadDone,
+        VinylCleanRequestUnload,
+        VinylCleanUnloadDone,
+
         FixtureAlignRequestFixture,
         FixtureAlignLoadDone,
         FixtureAlignDone,

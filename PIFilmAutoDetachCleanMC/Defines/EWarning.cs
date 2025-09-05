@@ -33,6 +33,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         //VinylClean
         VinylClean = 6000,
+        VinylCleanFixtureNotDetect,
 
         //Robot Load
         RobotLoad = 7000,
