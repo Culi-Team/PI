@@ -16,8 +16,7 @@
         <cvt:VacuumListConverter x:Key="VacuumListConverter" />
         <DataTemplate DataType="{x:Type motion:MotionBase}">
             <ui:JogView Margin="5" 
-                       MaxWidth="320" 
-                       MinWidth="290"/>
+                       MaxWidth="290"/>
         </DataTemplate>
 
         <!-- Style cho Border với GroupBox -->
@@ -126,80 +125,144 @@
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
+        
         <!-- Image Section -->
-        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="0">
+        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="0" Grid.Column="0">
             <TextBlock Text="Image" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Border>
 
-                 <!-- Motion Section -->
-         <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="1" Grid.ColumnSpan="2">
-             <GroupBox Header="Motion" Style="{StaticResource ScrollableGroupBoxStyle}">
-                 <ScrollViewer VerticalScrollBarVisibility="Auto" 
+        <!-- Motion Section -->
+        <Border Grid.Row="1" Grid.Column="0">
+            <Border.Style>
+                <Style TargetType="Border" BasedOn="{StaticResource GroupBoxBorderStyle}">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Motions.Count, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" Value="0">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <GroupBox Header="Motion" Style="{StaticResource ScrollableGroupBoxStyle}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" 
                               HorizontalScrollBarVisibility="Auto"
                               Margin="0 5 0 0">
-                     <ItemsControl x:Name="MotionItemsControl" 
-                                 ItemsSource="{Binding Motions, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
-                                 Style="{StaticResource HorizontalItemsControlStyle}"
-                                 HorizontalAlignment="Stretch"
-                                 VerticalAlignment="Stretch"/>
-                 </ScrollViewer>
-             </GroupBox>
-         </Border>
+                    <ItemsControl x:Name="MotionItemsControl" 
+                                ItemsSource="{Binding Motions, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                Style="{StaticResource HorizontalItemsControlStyle}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"/>
+                </ScrollViewer>
+            </GroupBox>
+        </Border>
 
-        <!-- Cột 2: Position Data -->
-        <Grid Grid.Column="1">
-            <Border Style="{StaticResource GroupBoxBorderStyle}">
-                <GroupBox Header="Position Teaching" Style="{StaticResource ScrollableGroupBoxStyle}">
+        <!-- Position Teaching Section -->
+        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
+            <GroupBox Header="Position Teaching" Style="{StaticResource ScrollableGroupBoxStyle}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 5 0 0">
                     <StackPanel>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 5 0 0">
-                            <!-- Position Data content -->
-                        </ScrollViewer>
+                        <!-- Debug info -->
+                        <TextBlock Text="{Binding SelectedProcess.Name, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, StringFormat='Selected Process: {0}'}" 
+                                   Foreground="Blue" FontWeight="Bold" Margin="5"/>
+                        
+                        <ItemsControl ItemsSource="{Binding PositionTeachings, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                      Margin="5 10 0 0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0 0 0 10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="8*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal"
+                                                VerticalAlignment="Center"
+                                                Height="50">
+                                        <Border Width="20"
+                                                BorderThickness="1"
+                                                CornerRadius="5 0 0 5"
+                                                BorderBrush="Black"
+                                                Background="{Binding IsActive, Converter={StaticResource BoolToBrushConverter}}">
+                                        </Border>
+                                        <Button Content="{Binding Name}"
+                                                Width="280"
+                                                Background="White"
+                                                Command="{Binding PositionTeachingCommand}"
+                                                Cursor="Hand">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border BorderThickness="1"
+                                                            BorderBrush="Black"
+                                                            CornerRadius="0 5 5 0"
+                                                            Background="{TemplateBinding Background}">
+                                                        <ContentPresenter HorizontalAlignment="Center"
+                                                                          VerticalAlignment="Center"
+                                                                          IsHitTestVisible="True" />
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                            <Button.Effect>
+                                                <DropShadowEffect Color="Silver"
+                                                                  Opacity="0.5"
+                                                                  BlurRadius="3" />
+                                            </Button.Effect>
+                                        </Button>
+                                    </StackPanel>
+                                    <UniformGrid Grid.Column="1"
+                                                 HorizontalAlignment="Right">
+                                        <ui:ImageButton Content="{DynamicResource str_Save}"
+                                                        Command="{Binding SaveRecipeCommand}"
+                                                        Image="{StaticResource image_save_all_selected}"
+                                                        Margin="2"
+                                                        Height="50"
+                                                        Width="110" />
+                                    </UniformGrid>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </StackPanel>
-                </GroupBox>
-            </Border>
-        </Grid>
+                </ScrollViewer>
+            </GroupBox>
+        </Border>
+
         <!-- In Out Section -->
         <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="0" Grid.Column="2">
             <GroupBox Header="In Out" Style="{StaticResource ScrollableGroupBoxStyle}">
-                <StackPanel>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 5 0 0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 5 0 0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
-                            <!-- Input Section -->
-                            <StackPanel>
-                                <TextBlock Text="Input" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-                                <ItemsControl ItemsSource="{Binding Inputs, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
-                                    Style="{StaticResource InputOutputItemsControlStyle}"/>
-                            </StackPanel>
+                        <!-- Input Section -->
+                        <StackPanel>
+                            <TextBlock Text="Input" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                            <ItemsControl ItemsSource="{Binding Inputs, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
+                                Style="{StaticResource InputOutputItemsControlStyle}"/>
+                        </StackPanel>
 
-                            <!-- Output Section -->
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Text="Output" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-                                <ItemsControl ItemsSource="{Binding Outputs, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
-                                    Style="{StaticResource InputOutputItemsControlStyle}"/>
-                            </StackPanel>
-                        </Grid>
-                    </ScrollViewer>
-                </StackPanel>
+                        <!-- Output Section -->
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Output" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                            <ItemsControl ItemsSource="{Binding Outputs, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
+                                Style="{StaticResource InputOutputItemsControlStyle}"/>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
             </GroupBox>
         </Border>
 
         <!-- Cylinder Section -->
         <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="1" Grid.Column="2">
             <GroupBox Header="Cylinder" Style="{StaticResource ScrollableGroupBoxStyle}">
-                <StackPanel>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 5 0 0">
-                        <ItemsControl ItemsSource="{Binding Cylinders, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
-                            Style="{StaticResource ThreeColumnItemsControlStyle}"/>
-                    </ScrollViewer>
-                </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 5 0 0">
+                    <ItemsControl ItemsSource="{Binding Cylinders, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
+                        Style="{StaticResource ThreeColumnItemsControlStyle}"/>
+                </ScrollViewer>
             </GroupBox>
         </Border>
     </Grid>

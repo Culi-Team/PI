@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
+using EQX.Core.Process;
+using PIFilmAutoDetachCleanMC.Process;
+using PIFilmAutoDetachCleanMC.Defines;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.Views
 {
@@ -23,6 +27,51 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         public TeachView()
         {
             InitializeComponent();
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataContext is TeachViewModel viewModel)
+            {
+                // Lấy TabItem được chọn
+                if (sender is TabControl tabControl && tabControl.SelectedItem is TabItem selectedTabItem)
+                {
+                    // Xác định process tương ứng với tab được chọn
+                    IProcess<ESequence> selectedProcess = GetProcessFromTabItem(selectedTabItem);
+                    if (selectedProcess != null)
+                    {
+                        viewModel.SelectedProcess = selectedProcess;
+                    }
+                }
+            }
+        }
+
+        private IProcess<ESequence> GetProcessFromTabItem(TabItem tabItem)
+        {
+            string header = tabItem.Header?.ToString();
+            
+            if (DataContext is TeachViewModel viewModel)
+            {
+                switch (header)
+                {
+                    case "In Conveyor":
+                        return viewModel.Processes?.InConveyorProcess;
+                    case "In Work Conveyor":
+                        return viewModel.Processes?.InWorkConveyorProcess;
+                    case "Out Work Conveyor":
+                        return viewModel.Processes?.OutWorkConveyorProcess;
+                    case "Out Conveyor":
+                        return viewModel.Processes?.OutConveyorProcess;
+                    case "Transfer Fixture":
+                        return viewModel.Processes?.TransferFixtureProcess;
+                    case "Detach":
+                        return viewModel.Processes?.DetachProcess;
+                    default:
+                        return null;
+                }
+            }
+            
+            return null;
         }
     }
 }

@@ -20,6 +20,13 @@
             <Setter Property="Cursor"
                     Value="Hand"/>
         </Style>
+        <Style TargetType="{x:Type ui:InterlockButton}"
+               BasedOn="{StaticResource {x:Type ui:InterlockButton}}">
+            <Setter Property="Margin" Value="2 2 0 2" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
         <cvt:InputOutputStopConverter x:Key="InputOutputStopConverter"/>
     </UserControl.Resources>
     <Grid>
@@ -40,9 +47,10 @@
                     Background="LightBlue" />
             <Button Content="Initialize"
                     Background="LightBlue" />
-            <Button Content="Origin"
-                    Command="{Binding OriginCommand}"
-                    Background="LightBlue" />
+            <ui:InterlockButton Content="Origin"
+                                Background="LightBlue"
+                                Command="{Binding OriginCommand}"
+                                InterlockKey="OriginDoorLock"/>
             <Button Content="Production Info" 
                     Background="LightGreen"/>
             <UniformGrid Columns="2">

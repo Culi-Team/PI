@@ -17,7 +17,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private uint pitch;
         private double inCstTAxisLoadPosition;
         private double inCstTAxisWorkPosition;
-        private double outCstTAxisLoadPositon;
+        private double outCstTAxisLoadPosition;
         private double outCstTAxisWorkPosition;
 
         [SingleRecipeDescription(Description = "Conveyor Speed", Unit = Unit.RevolutionsPerMinute)]
@@ -77,8 +77,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         [SingleRecipeDescription(Description = "Out Cassette T Axis Load Position", Unit = Unit.mm)]
         public double OutCstTAxisLoadPosition
 		{
-			get { return outCstTAxisLoadPositon; }
-			set { outCstTAxisLoadPositon = value; }
+			get { return outCstTAxisLoadPosition; }
+			set { outCstTAxisLoadPosition = value; }
 		}
 
         [SingleRecipeDescription(Description = "Out Cassette T Axis Work Position", Unit = Unit.mm)]
