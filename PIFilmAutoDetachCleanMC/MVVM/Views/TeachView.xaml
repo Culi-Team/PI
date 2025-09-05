@@ -247,9 +247,9 @@
 
     </UserControl.Resources>
     <Grid>
-        <TabControl Grid.Column="0">
+        <TabControl Grid.Column="0" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Header="CSTLoadUnload">
-                <TabControl>
+                <TabControl SelectionChanged="TabControl_SelectionChanged">
                     <TabItem Header="In Conveyor" ContentTemplate="{StaticResource InConveyorTemplate}"/>
                     <TabItem Header="In Work Conveyor" ContentTemplate="{StaticResource InWorkConveyorTemplate}"/>
                     <TabItem Header="Out Work Conveyor" ContentTemplate="{StaticResource OutWorkConveyorTemplate}"/>
@@ -257,7 +257,7 @@
                 </TabControl>
             </TabItem>
             <TabItem Header="Detach">
-                <TabControl>
+                <TabControl SelectionChanged="TabControl_SelectionChanged">
                     <TabItem Header="Transfer Fixture" ContentTemplate="{StaticResource TransferFixtureTemplate}"/>
                     <TabItem Header="Detach" ContentTemplate="{StaticResource DetachTemplate}"/>
                 </TabControl>

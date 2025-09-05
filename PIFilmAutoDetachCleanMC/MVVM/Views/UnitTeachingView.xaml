@@ -16,8 +16,7 @@
         <cvt:VacuumListConverter x:Key="VacuumListConverter" />
         <DataTemplate DataType="{x:Type motion:MotionBase}">
             <ui:JogView Margin="5" 
-                       MaxWidth="320" 
-                       MinWidth="290"/>
+                       MaxWidth="290"/>
         </DataTemplate>
 
         <!-- Style cho Border với GroupBox -->
@@ -164,8 +163,13 @@
         <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
             <GroupBox Header="Position Teaching" Style="{StaticResource ScrollableGroupBoxStyle}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 5 0 0">
-                    <ItemsControl ItemsSource="{Binding PositionTeachings}"
-                                  Margin="5 10 0 0">
+                    <StackPanel>
+                        <!-- Debug info -->
+                        <TextBlock Text="{Binding SelectedProcess.Name, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, StringFormat='Selected Process: {0}'}" 
+                                   Foreground="Blue" FontWeight="Bold" Margin="5"/>
+                        
+                        <ItemsControl ItemsSource="{Binding PositionTeachings, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                      Margin="5 10 0 0">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="0 0 0 10">
@@ -218,7 +222,8 @@
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                        </ItemsControl>
+                    </StackPanel>
                 </ScrollViewer>
             </GroupBox>
         </Border>

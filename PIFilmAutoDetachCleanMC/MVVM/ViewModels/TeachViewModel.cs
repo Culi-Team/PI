@@ -90,22 +90,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         // CSTLoadUnload Tab PositionTeachings
         private ObservableCollection<PositionTeaching> GetInConveyorPositionTeachings()
         {
-            if (RecipeSelector?.CurrentRecipe?.CstLoadUnloadRecipe == null || Devices?.MotionsInovance?.InCassetteTAxis == null)
+            if (RecipeSelector?.CurrentRecipe?.CstLoadUnloadRecipe == null)
                 return new ObservableCollection<PositionTeaching>();
 
             return new ObservableCollection<PositionTeaching>()
             {
                 new PositionTeaching(RecipeSelector) 
                 { 
-                    Name = Application.Current.Resources["str_InCstTAxisLoadPosition"]?.ToString() ?? "In Cassette T Axis Load Position", 
-                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.InCstTAxisLoadPosition, 
-                    Motion = Devices.MotionsInovance.InCassetteTAxis 
+                    Name = Application.Current.Resources["str_InConveyorPosition"]?.ToString() ?? "In Conveyor Position", 
+                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.InCstTAxisLoadPosition,
+                    Motion = Devices?.MotionsInovance?.InCassetteTAxis
                 },
                 new PositionTeaching(RecipeSelector) 
                 { 
-                    Name = Application.Current.Resources["str_InCstTAxisWorkPosition"]?.ToString() ?? "In Cassette T Axis Work Position", 
-                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.InCstTAxisWorkPosition, 
-                    Motion = Devices.MotionsInovance.InCassetteTAxis 
+                    Name = Application.Current.Resources["str_InConveyorWorkPosition"]?.ToString() ?? "In Conveyor Work Position", 
+                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.InCstTAxisWorkPosition,
+                    Motion = Devices?.MotionsInovance?.InCassetteTAxis
                 }
             };
         }
@@ -156,22 +156,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         private ObservableCollection<PositionTeaching> GetOutConveyorPositionTeachings()
         {
-            if (RecipeSelector?.CurrentRecipe?.CstLoadUnloadRecipe == null || Devices?.MotionsInovance?.OutCassetteTAxis == null)
+            if (RecipeSelector?.CurrentRecipe?.CstLoadUnloadRecipe == null)
                 return new ObservableCollection<PositionTeaching>();
 
             return new ObservableCollection<PositionTeaching>()
             {
                 new PositionTeaching(RecipeSelector) 
                 { 
-                    Name = Application.Current.Resources["str_OutCstTAxisLoadPosition"]?.ToString() ?? "Out Cassette T Axis Load Position", 
-                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.OutCstTAxisLoadPosition, 
-                    Motion = Devices.MotionsInovance.OutCassetteTAxis 
+                    Name = Application.Current.Resources["str_OutConveyorPosition"]?.ToString() ?? "Out Conveyor Position", 
+                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.OutCstTAxisLoadPosition,
+                    Motion = Devices?.MotionsInovance?.OutCassetteTAxis
                 },
                 new PositionTeaching(RecipeSelector) 
                 { 
-                    Name = Application.Current.Resources["str_OutCstTAxisWorkPosition"]?.ToString() ?? "Out Cassette T Axis Work Position", 
-                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.OutCstTAxisWorkPosition, 
-                    Motion = Devices.MotionsInovance.OutCassetteTAxis 
+                    Name = Application.Current.Resources["str_OutConveyorWorkPosition"]?.ToString() ?? "Out Conveyor Work Position", 
+                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.OutCstTAxisWorkPosition,
+                    Motion = Devices?.MotionsInovance?.OutCassetteTAxis
                 }
             };
         }
@@ -231,14 +231,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 new PositionTeaching(RecipeSelector)
                 {
                     Name = Application.Current.Resources["str_DetachZAxisDetach2Position"]?.ToString() ?? "Detach Z Axis Detach 2 Position",
-                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetach2Positon,
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetach2Position,
                     Motion = Devices.MotionsInovance.DetachGlassZAxis
                 },
                 // Shuttle Transfer Z Axis positions
                 new PositionTeaching(RecipeSelector)
                 {
                     Name = Application.Current.Resources["str_ShuttleTransferZAxisReadyPosition"]?.ToString() ?? "Shuttle Transfer Z Axis Ready Position",
-                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisReadyPositon,
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisReadyPosition,
                     Motion = Devices.MotionsAjin.ShuttleTransferZAxis
                 },
                 new PositionTeaching(RecipeSelector)
@@ -256,7 +256,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 new PositionTeaching(RecipeSelector)
                 {
                     Name = Application.Current.Resources["str_ShuttleTransferZAxisDetach2Position"]?.ToString() ?? "Shuttle Transfer Z Axis Detach 2 Position",
-                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisDetach2Positon,
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisDetach2Position,
                     Motion = Devices.MotionsAjin.ShuttleTransferZAxis
                 },
                 new PositionTeaching(RecipeSelector)
@@ -275,13 +275,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 new PositionTeaching(RecipeSelector)
                 {
                     Name = Application.Current.Resources["str_ShuttleTransferXAxisDetachCheckPosition"]?.ToString() ?? "Shuttle Transfer X Axis Detach Check Position",
-                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisDetachCheckPositon,
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisDetachCheckPosition,
                     Motion = Devices.MotionsInovance.ShuttleTransferXAxis
                 },
                 new PositionTeaching(RecipeSelector)
                 {
                     Name = Application.Current.Resources["str_ShuttleTransferXAxisUnloadPosition"]?.ToString() ?? "Shuttle Transfer X Axis Unload Position",
-                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisUnloadPositon,
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisUnloadPosition,
                     Motion = Devices.MotionsInovance.ShuttleTransferXAxis
                 }
             };
@@ -293,8 +293,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         // CSTLoadUnload Tab Motions
         private ObservableCollection<IMotion> GetInConveyorMotions()
         {
-            // InConveyorProcess không có motion, chỉ có Inputs, Outputs, Cylinders và Rollers
-            return new ObservableCollection<IMotion>();
+            var motions = new List<IMotion>();
+            if (Devices?.MotionsInovance?.InCassetteTAxis != null)
+            {
+                motions.Add(Devices.MotionsInovance.InCassetteTAxis);
+            }
+            return new ObservableCollection<IMotion>(motions);
         }
 
         private ObservableCollection<IMotion> GetInWorkConveyorMotions()
@@ -313,8 +317,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         private ObservableCollection<IMotion> GetOutConveyorMotions()
         {
-            // OutConveyorProcess không có motion, chỉ có Inputs, Outputs, Cylinders và Rollers
-            return new ObservableCollection<IMotion>();
+            var motions = new List<IMotion>();
+            if (Devices?.MotionsInovance?.OutCassetteTAxis != null)
+            {
+                motions.Add(Devices.MotionsInovance.OutCassetteTAxis);
+            }
+            return new ObservableCollection<IMotion>(motions);
         }
 
         // Detach Tab Motions
@@ -588,7 +596,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
             private void CheckPosition(object sender, ElapsedEventArgs e)
             {
-                IsActive = Motion.IsOnPosition(Position);
+                IsActive = Motion?.IsOnPosition(Position) ?? false;
             }
             public RecipeSelector RecipeSelector { get; set; }
             public double PositionRecipe { get; set; }
@@ -606,17 +614,67 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 switch (id)
                 {
-                    case 1:
-
+                    case 1: // InCassetteTAxis
+                        if (name.Contains("Load") || name.Contains("Position"))
+                        {
+                            _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.InCstTAxisLoadPosition = Position;
+                        }
+                        else if (name.Contains("Work"))
+                        {
+                            _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.InCstTAxisWorkPosition = Position;
+                        }
                         break;
-                    case 2:
-
+                    case 2: // OutCassetteTAxis
+                        if (name.Contains("Load") || name.Contains("Position"))
+                        {
+                            _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.OutCstTAxisLoadPosition = Position;
+                        }
+                        else if (name.Contains("Work"))
+                        {
+                            _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.OutCstTAxisWorkPosition = Position;
+                        }
                         break;
-                    case 3:
-
+                    case 3: // FixtureTransferYAxis
+                        if (name.Contains("Load"))
+                        {
+                            _recipeSelector.CurrentRecipe.TransferFixtureRecipe.TransferFixtureYAxisLoadPosition = Position;
+                        }
+                        else if (name.Contains("Unload"))
+                        {
+                            _recipeSelector.CurrentRecipe.TransferFixtureRecipe.TransferFixtureYAxisUnloadPosition = Position;
+                        }
                         break;
-                    case 4:
-
+                    case 4: // DetachGlassZAxis
+                        if (name.Contains("Ready"))
+                        {
+                            _recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisReadyPosition = Position;
+                        }
+                        else if (name.Contains("Detach Ready"))
+                        {
+                            _recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetachReadyPosition = Position;
+                        }
+                        else if (name.Contains("Detach1"))
+                        {
+                            _recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetach1Position = Position;
+                        }
+                        else if (name.Contains("Detach2"))
+                        {
+                            _recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetach2Position = Position;
+                        }
+                        break;
+                    case 5: // ShuttleTransferXAxis
+                        if (name.Contains("Detach Position"))
+                        {
+                            _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisDetachPosition = Position;
+                        }
+                        else if (name.Contains("Detach Check"))
+                        {
+                            _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisDetachCheckPosition = Position;
+                        }
+                        else if (name.Contains("Unload"))
+                        {
+                            _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisUnloadPosition = Position;
+                        }
                         break;
                     default:
                         break;
