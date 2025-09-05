@@ -11,6 +11,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
     {
         public RecipeList(CommonRecipe commonRecipe,
                           CSTLoadUnloadRecipe cstLoadUnloadRecipe,
+                          VinylCleanRecipe vinylCleanRecipe,
                           TransferFixtureRecipe transferFixtureRecipe,
                           DetachRecipe detachRecipe,
                           [FromKeyedServices("WETCleanLeftRecipe")] CleanRecipe wetCleanLeftRecipe,
@@ -20,6 +21,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         {
             CommonRecipe = commonRecipe;
             CstLoadUnloadRecipe = cstLoadUnloadRecipe;
+            VinylCleanRecipe = vinylCleanRecipe;
             TransferFixtureRecipe = transferFixtureRecipe;
             DetachRecipe = detachRecipe;
             WetCleanLeftRecipe = wetCleanLeftRecipe;
@@ -29,6 +31,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 
             CommonRecipe.Name = "Common";
             CstLoadUnloadRecipe.Name = "CST Load/Unload";
+            VinylCleanRecipe.Name = "Vinyl Clean";
             TransferFixtureRecipe.Name = "Transfer Fixture";
             DetachRecipe.Name = "Detach";
             WetCleanLeftRecipe.Name = "Wet Clean Left";
@@ -39,6 +42,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 
         public CommonRecipe CommonRecipe { get; }
         public CSTLoadUnloadRecipe CstLoadUnloadRecipe { get; }
+        public VinylCleanRecipe VinylCleanRecipe { get; }
         public TransferFixtureRecipe TransferFixtureRecipe { get; }
         public DetachRecipe DetachRecipe { get; }
         public CleanRecipe WetCleanLeftRecipe { get; }
