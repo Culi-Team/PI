@@ -211,12 +211,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             VinylCleanRollerBwFw.CylinderType = ECylinderType.ForwardBackward;
 
             VinylCleanFixture1ClampUnclamp = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.VinylCleanFixture1Clamp }, new List<IDInput> { _inputs.VinylCleanFixture1Unclamp }, _outputs.VinylCleanFixture1Clamp, _outputs.VinylCleanFixture1Unclamp)
+                .Create(new List<IDInput> { _inputs.VinylCleanFixture1Clamp }, new List<IDInput> { _inputs.VinylCleanFixture1Unclamp }, _outputs.VinylCleanFixtureClamp, _outputs.VinylCleanFixtureUnclamp)
                 .SetIdentity((int)ECylinder.VinylCleanFixture1ClampUnclamp, ECylinder.VinylCleanFixture1ClampUnclamp.ToString());
             VinylCleanFixture1ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
 
             VinylCleanFixture2ClampUnclamp = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.VinylCleanFixture2Clamp }, new List<IDInput> { _inputs.VinylCleanFixture2Unclamp }, _outputs.VinylCleanFixture2Clamp, _outputs.VinylCleanFixture2Unclamp)
+                .Create(new List<IDInput> { _inputs.VinylCleanFixture2Clamp }, new List<IDInput> { _inputs.VinylCleanFixture2Unclamp }, _outputs.VinylCleanFixtureClamp, _outputs.VinylCleanFixtureUnclamp)
                 .SetIdentity((int)ECylinder.VinylCleanFixture2ClampUnclamp, ECylinder.VinylCleanFixture2ClampUnclamp.ToString());
             VinylCleanFixture2ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
 

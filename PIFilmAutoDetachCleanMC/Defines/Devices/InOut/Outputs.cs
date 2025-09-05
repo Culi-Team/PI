@@ -86,10 +86,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput VinylCleanMotorOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_MOTOR_ON_OFF);
         public IDOutput VinylCleanRollerBW => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_ROLLER_BW);
         public IDOutput VinylCleanRollerFW => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_ROLLER_FW);
-        public IDOutput VinylCleanFixture1Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_FIXTURE_1_CLAMP);
-        public IDOutput VinylCleanFixture1Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_FIXTURE_1_UNCLAMP);
-        public IDOutput VinylCleanFixture2Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_FIXTURE_2_CLAMP);
-        public IDOutput VinylCleanFixture2Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_FIXTURE_2_UNCLAMP);
+        public IDOutput VinylCleanFixtureClamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_FIXTURE_CLAMP);
+        public IDOutput VinylCleanFixtureUnclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_FIXTURE_UNCLAMP);
         public IDOutput VinylCleanPusherRollerUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_PUSHER_ROLLER_UP);
         public IDOutput VinylCleanPusherRollerDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.VINYL_CLEAN_PUSHER_ROLLER_DOWN);
         public IDOutput TransferFixtureUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_UP);

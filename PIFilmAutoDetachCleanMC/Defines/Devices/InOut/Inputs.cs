@@ -313,7 +313,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput OpLButtonReset => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_L_BUTTON_RESET);
         public IDInput OpLEmo => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_L_EMO);
         public IDInput PowerServoOn => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.POWER_SERVO_ON);
-        public IDInput DoorOk => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOOR_OK);
         public IDInput UnloadGlassAlignVac1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_GLASS_ALIGN_VAC_1);
         public IDInput UnloadGlassAlignVac2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_GLASS_ALIGN_VAC_2);
         public IDInput UnloadGlassAlignVac3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_GLASS_ALIGN_VAC_3);
