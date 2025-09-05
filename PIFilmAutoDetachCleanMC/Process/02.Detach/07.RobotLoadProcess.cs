@@ -294,6 +294,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ERobotLoadAutoRunStep.Start:
                     Log.Debug("Auto Run Start");
+                    Step.RunStep++;
                     break;
                 case ERobotLoadAutoRunStep.Check_Flag_VinylCleanRequestFixture:
                     if (FlagVinylCleanRequestFixture)

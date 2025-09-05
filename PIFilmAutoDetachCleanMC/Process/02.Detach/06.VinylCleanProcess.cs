@@ -1,6 +1,7 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
+using EQX.InOut;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -265,6 +266,9 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EVinylCleanProcessVinylCleanStep)Step.RunStep)
             {
                 case EVinylCleanProcessVinylCleanStep.Start:
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.VinylCleanFixtureDetect,true);
+#endif
                     Log.Debug("Vinyl Clean Start");
                     Step.RunStep++;
                     break;
@@ -274,6 +278,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.VinylCleanFixtureNotDetect);
                         break;
                     }
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.VinylCleanFixtureDetect, false);
+#endif
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessVinylCleanStep.Cyl_Clamp:

@@ -1,6 +1,7 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
+using EQX.InOut;
 using EQX.Process;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
@@ -364,6 +365,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.DetachFail);
                         break;
                     }
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.DetachGlassShtVac1, false);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.DetachGlassShtVac2, false);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.DetachGlassShtVac3, false);
+#endif
                     Log.Debug("Glass Shuttle Vacuum Check Done");
                     Step.RunStep++;
                     break;
@@ -548,6 +554,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachStep.Vacuum_On:
                     Log.Debug("Glass Shuttle Vacuum On");
                     GlassShuttleVacOnOff(true);
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.DetachGlassShtVac1, true);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.DetachGlassShtVac2, true);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.DetachGlassShtVac3, true);
+
+#endif
                     Wait(_commonRecipe.VacDelay);
                     Step.RunStep++;
                     break;
@@ -571,6 +583,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Detach Glass Z Axis Move to Ready Detach Position 2nd Done");
                     Log.Debug("Shuttle Transfer Z Axis Move to Ready Detach Position 2nd Done");
+                    Step.RunStep++;
                     break;
                 case EDetachStep.Cyl_Detach2_Down:
                     Log.Debug("Detach Cylinder 2 Down");

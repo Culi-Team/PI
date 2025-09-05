@@ -314,6 +314,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                         //Wait Align Fixture and Detach Ready
                         break;
                     }
+                    FlagDetachDone = false;
+                    FlagFixtureAlignDone = false;
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessLoadStep.Check_Y_Position:

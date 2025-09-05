@@ -331,7 +331,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorAutoRunStep.Cassette_Check:
                     if (IsCassetteDetect)
                     {
-                        Sequence_Tilt();
+                        Log.Info("Sequence Tilt");
+                        Sequence = ESequence.CSTTilt;
+                        break;
                     }
                     Step.RunStep++;
                     break;
@@ -467,7 +469,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         break;
                     }
-                    FlagRobotPickPlaceDone = true;
+                    FlagRobotPickPlaceDone = false;
                     Step.RunStep++;
                     break;
                 case EWorkConveyorPickPlaceStep.End:
