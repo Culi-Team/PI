@@ -16,16 +16,14 @@
         <cvt:VacuumListConverter x:Key="VacuumListConverter" />
         <DataTemplate DataType="{x:Type motion:MotionBase}">
             <Grid>
-                <ui:MotionView HorizontalAlignment="Stretch" 
-                              VerticalAlignment="Stretch" 
-                              Margin="5"/>
+                <ui:JogView Margin="5"/>
             </Grid>
         </DataTemplate>
         
         <DataTemplate DataType="{x:Type vm:MotionWrapper}">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="{Binding Label}" 
@@ -33,10 +31,11 @@
                           FontSize="14" 
                           HorizontalAlignment="Center" 
                           Margin="5,5,5,2"/>
-                <ui:MotionView Grid.Row="1"
-                              HorizontalAlignment="Stretch" 
-                              VerticalAlignment="Stretch" 
-                              Margin="5"/>
+                <ui:JogView Grid.Row="1" 
+                           Width="250" 
+                           MaxWidth="290" 
+                           MinWidth="200"
+                           Margin="5"/>
             </Grid>
         </DataTemplate>
 
@@ -94,7 +93,8 @@
                                       HorizontalAlignment="Stretch" 
                                       VerticalAlignment="Stretch"
                                       Margin="5"
-                                      MinWidth="250"
+                                      MinWidth="200"
+                                      MaxWidth="300"
                                       MinHeight="200"/>
                     </DataTemplate>
                 </Setter.Value>
