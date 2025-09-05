@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum ERobotLoadPlaceFixtureToVinylCleanStep
+    public enum ERobotLoadPickPlaceFixtureVinylCleanStep
     {
         Start,
         Move_VinylClean_PickPlacePosition,

@@ -64,6 +64,8 @@
             <DataGrid x:Name="LogDataGrid"
                       Grid.Row="1"
                       AutoGenerateColumns="False"
+                      CanUserResizeColumns="False"
+                      CanUserSortColumns="False"
                       SelectionUnit="CellOrRowHeader"
                       SelectionMode="Extended"
                       ClipboardCopyMode="ExcludeHeader"
@@ -111,7 +113,14 @@
                     <DataGridTextColumn Header="Description"
                                         IsReadOnly="True"
                                         Binding="{Binding Description}"
-                                        Width="*" />
+                                        Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextWrapping"
+                                        Value="Wrap" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
