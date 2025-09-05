@@ -102,38 +102,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                 case "DetachProcess":
                     return viewModel.DetachMotions;
 
-                // Clean Tab
-                case "GlassTransferProcess":
-                    return viewModel.GlassTransferMotions;
-                case "GlassAlignLeftProcess":
-                    return viewModel.GlassAlignLeftMotions;
-                case "GlassAlignRightProcess":
-                    return viewModel.GlassAlignRightMotions;
-                case "TransferInShuttleLeftProcess":
-                    return viewModel.TransferInShuttleLeftMotions;
-                case "TransferInShuttleRightProcess":
-                    return viewModel.TransferInShuttleRightMotions;
-                case "WETCleanLeftProcess":
-                    return viewModel.WETCleanLeftMotions;
-                case "WETCleanRightProcess":
-                    return viewModel.WETCleanRightMotions;
-                case "AFCleanLeftProcess":
-                    return viewModel.AFCleanLeftMotions;
-                case "AFCleanRightProcess":
-                    return viewModel.AFCleanRightMotions;
-                case "TransferRotationLeftProcess":
-                    return viewModel.TransferRotationLeftMotions;
-                case "TransferRotationRightProcess":
-                    return viewModel.TransferRotationRightMotions;
-
-                // Unload Tab
-                case "UnloadTransferLeftProcess":
-                    return viewModel.UnloadTransferLeftMotions;
-                case "UnloadTransferRightProcess":
-                    return viewModel.UnloadTransferRightMotions;
-                case "UnloadAlignProcess":
-                    return viewModel.UnloadAlignMotions;
-
                 default:
                     return viewModel.Motions; 
             }

@@ -83,27 +83,209 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public ObservableCollection<IMotion> TransferFixtureMotions => GetTransferFixtureMotions();
         public ObservableCollection<IMotion> DetachMotions => GetDetachMotions();
 
-        // Clean Tab Motion Properties
-        public ObservableCollection<IMotion> GlassTransferMotions => GetGlassTransferMotions();
-        public ObservableCollection<IMotion> GlassAlignLeftMotions => GetGlassAlignLeftMotions();
-        public ObservableCollection<IMotion> GlassAlignRightMotions => GetGlassAlignRightMotions();
-        public ObservableCollection<IMotion> TransferInShuttleLeftMotions => GetTransferInShuttleLeftMotions();
-        public ObservableCollection<IMotion> TransferInShuttleRightMotions => GetTransferInShuttleRightMotions();
-        public ObservableCollection<IMotion> WETCleanLeftMotions => GetWETCleanLeftMotions();
-        public ObservableCollection<IMotion> WETCleanRightMotions => GetWETCleanRightMotions();
-        public ObservableCollection<IMotion> AFCleanLeftMotions => GetAFCleanLeftMotions();
-        public ObservableCollection<IMotion> AFCleanRightMotions => GetAFCleanRightMotions();
-        public ObservableCollection<IMotion> TransferRotationLeftMotions => GetTransferRotationLeftMotions();
-        public ObservableCollection<IMotion> TransferRotationRightMotions => GetTransferRotationRightMotions();
-
-        // Unload Tab Motion Properties
-        public ObservableCollection<IMotion> UnloadTransferLeftMotions => GetUnloadTransferLeftMotions();
-        public ObservableCollection<IMotion> UnloadTransferRightMotions => GetUnloadTransferRightMotions();
-        public ObservableCollection<IMotion> UnloadAlignMotions => GetUnloadAlignMotions();
 
         #endregion
 
-        #region GetCylinder
+        #region GetPositionTeaching
+        // CSTLoadUnload Tab PositionTeachings
+        private ObservableCollection<PositionTeaching> GetInConveyorPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.CstLoadUnloadRecipe == null || Devices?.MotionsInovance?.InCassetteTAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                new PositionTeaching(RecipeSelector) 
+                { 
+                    Name = Application.Current.Resources["str_InCstTAxisLoadPosition"]?.ToString() ?? "In Cassette T Axis Load Position", 
+                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.InCstTAxisLoadPosition, 
+                    Motion = Devices.MotionsInovance.InCassetteTAxis 
+                },
+                new PositionTeaching(RecipeSelector) 
+                { 
+                    Name = Application.Current.Resources["str_InCstTAxisWorkPosition"]?.ToString() ?? "In Cassette T Axis Work Position", 
+                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.InCstTAxisWorkPosition, 
+                    Motion = Devices.MotionsInovance.InCassetteTAxis 
+                }
+            };
+        }
+
+        private ObservableCollection<PositionTeaching> GetInWorkConveyorPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.CstLoadUnloadRecipe == null || Devices?.MotionsInovance?.InCassetteTAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                new PositionTeaching(RecipeSelector) 
+                { 
+                    Name = Application.Current.Resources["str_InCstTAxisLoadPosition"]?.ToString() ?? "In Cassette T Axis Load Position", 
+                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.InCstTAxisLoadPosition, 
+                    Motion = Devices.MotionsInovance.InCassetteTAxis 
+                },
+                new PositionTeaching(RecipeSelector) 
+                { 
+                    Name = Application.Current.Resources["str_InCstTAxisWorkPosition"]?.ToString() ?? "In Cassette T Axis Work Position", 
+                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.InCstTAxisWorkPosition, 
+                    Motion = Devices.MotionsInovance.InCassetteTAxis 
+                }
+            };
+        }
+
+        private ObservableCollection<PositionTeaching> GetOutWorkConveyorPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.CstLoadUnloadRecipe == null || Devices?.MotionsInovance?.OutCassetteTAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                new PositionTeaching(RecipeSelector) 
+                { 
+                    Name = Application.Current.Resources["str_OutCstTAxisLoadPosition"]?.ToString() ?? "Out Cassette T Axis Load Position", 
+                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.OutCstTAxisLoadPosition, 
+                    Motion = Devices.MotionsInovance.OutCassetteTAxis 
+                },
+                new PositionTeaching(RecipeSelector) 
+                { 
+                    Name = Application.Current.Resources["str_OutCstTAxisWorkPosition"]?.ToString() ?? "Out Cassette T Axis Work Position", 
+                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.OutCstTAxisWorkPosition, 
+                    Motion = Devices.MotionsInovance.OutCassetteTAxis 
+                }
+            };
+        }
+
+        private ObservableCollection<PositionTeaching> GetOutConveyorPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.CstLoadUnloadRecipe == null || Devices?.MotionsInovance?.OutCassetteTAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                new PositionTeaching(RecipeSelector) 
+                { 
+                    Name = Application.Current.Resources["str_OutCstTAxisLoadPosition"]?.ToString() ?? "Out Cassette T Axis Load Position", 
+                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.OutCstTAxisLoadPosition, 
+                    Motion = Devices.MotionsInovance.OutCassetteTAxis 
+                },
+                new PositionTeaching(RecipeSelector) 
+                { 
+                    Name = Application.Current.Resources["str_OutCstTAxisWorkPosition"]?.ToString() ?? "Out Cassette T Axis Work Position", 
+                    Position = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.OutCstTAxisWorkPosition, 
+                    Motion = Devices.MotionsInovance.OutCassetteTAxis 
+                }
+            };
+        }
+        // 
+        private ObservableCollection<PositionTeaching> GetTransferFixturePositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.TransferFixtureRecipe == null || Devices?.MotionsInovance?.FixtureTransferYAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferFixtureYAxisLoadPosition"]?.ToString() ?? "Transfer Fixture Y Axis Load Position",
+                    Position = RecipeSelector.CurrentRecipe.TransferFixtureRecipe.TransferFixtureYAxisLoadPosition,
+                    Motion = Devices.MotionsInovance.FixtureTransferYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferFixtureYAxisUnloadPosition"]?.ToString() ?? "Transfer Fixture Y Axis Unload Position",
+                    Position = RecipeSelector.CurrentRecipe.TransferFixtureRecipe.TransferFixtureYAxisUnloadPosition,
+                    Motion = Devices.MotionsInovance.FixtureTransferYAxis
+                }
+            };
+        }
+
+        // Detach Tab PositionTeachings
+        private ObservableCollection<PositionTeaching> GetDetachPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.DetachRecipe == null ||
+                Devices?.MotionsInovance?.DetachGlassZAxis == null ||
+                Devices?.MotionsAjin?.ShuttleTransferZAxis == null ||
+                Devices?.MotionsInovance?.ShuttleTransferXAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                // Detach Z Axis positions
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_DetachZAxisReadyPosition"]?.ToString() ?? "Detach Z Axis Ready Position",
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisReadyPosition,
+                    Motion = Devices.MotionsInovance.DetachGlassZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_DetachZAxisDetachReadyPosition"]?.ToString() ?? "Detach Z Axis Detach Ready Position",
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetachReadyPosition,
+                    Motion = Devices.MotionsInovance.DetachGlassZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_DetachZAxisDetach1Position"]?.ToString() ?? "Detach Z Axis Detach 1 Position",
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetach1Position,
+                    Motion = Devices.MotionsInovance.DetachGlassZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_DetachZAxisDetach2Position"]?.ToString() ?? "Detach Z Axis Detach 2 Position",
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetach2Positon,
+                    Motion = Devices.MotionsInovance.DetachGlassZAxis
+                },
+                // Shuttle Transfer Z Axis positions
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_ShuttleTransferZAxisReadyPosition"]?.ToString() ?? "Shuttle Transfer Z Axis Ready Position",
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisReadyPositon,
+                    Motion = Devices.MotionsAjin.ShuttleTransferZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_ShuttleTransferZAxisDetachReadyPosition"]?.ToString() ?? "Shuttle Transfer Z Axis Detach Ready Position",
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisDetachReadyPosition,
+                    Motion = Devices.MotionsAjin.ShuttleTransferZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_ShuttleTransferZAxisDetach1Position"]?.ToString() ?? "Shuttle Transfer Z Axis Detach 1 Position",
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisDetach1Position,
+                    Motion = Devices.MotionsAjin.ShuttleTransferZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_ShuttleTransferZAxisDetach2Position"]?.ToString() ?? "Shuttle Transfer Z Axis Detach 2 Position",
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisDetach2Positon,
+                    Motion = Devices.MotionsAjin.ShuttleTransferZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_ShuttleTransferZAxisUnloadPosition"]?.ToString() ?? "Shuttle Transfer Z Axis Unload Position",
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisUnloadPosition,
+                    Motion = Devices.MotionsAjin.ShuttleTransferZAxis
+                },
+                // Shuttle Transfer X Axis positions
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_ShuttleTransferXAxisDetachPosition"]?.ToString() ?? "Shuttle Transfer X Axis Detach Position",
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisDetachPosition,
+                    Motion = Devices.MotionsInovance.ShuttleTransferXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_ShuttleTransferXAxisDetachCheckPosition"]?.ToString() ?? "Shuttle Transfer X Axis Detach Check Position",
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisDetachCheckPositon,
+                    Motion = Devices.MotionsInovance.ShuttleTransferXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_ShuttleTransferXAxisUnloadPosition"]?.ToString() ?? "Shuttle Transfer X Axis Unload Position",
+                    Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisUnloadPositon,
+                    Motion = Devices.MotionsInovance.ShuttleTransferXAxis
+                }
+            };
+        }
 
         #endregion
 
@@ -111,9 +293,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         // CSTLoadUnload Tab Motions
         private ObservableCollection<IMotion> GetInConveyorMotions()
         {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.InCassetteTAxis);
-            return new ObservableCollection<IMotion>(motions);
+            // InConveyorProcess không có motion, chỉ có Inputs, Outputs, Cylinders và Rollers
+            return new ObservableCollection<IMotion>();
         }
 
         private ObservableCollection<IMotion> GetInWorkConveyorMotions()
@@ -132,9 +313,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         private ObservableCollection<IMotion> GetOutConveyorMotions()
         {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.OutCassetteTAxis);
-            return new ObservableCollection<IMotion>(motions);
+            // OutConveyorProcess không có motion, chỉ có Inputs, Outputs, Cylinders và Rollers
+            return new ObservableCollection<IMotion>();
         }
 
         // Detach Tab Motions
@@ -154,127 +334,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return new ObservableCollection<IMotion>(motions);
         }
 
-        // Clean Tab Motions
-        private ObservableCollection<IMotion> GetGlassTransferMotions()
-        {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.GlassTransferYAxis);
-                motions.Add(Devices.MotionsInovance.GlassTransferZAxis);
-            return new ObservableCollection<IMotion>(motions);
-        }
-
-        private ObservableCollection<IMotion> GetGlassAlignLeftMotions()
-        {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.GlassTransferYAxis);
-                motions.Add(Devices.MotionsInovance.GlassTransferZAxis);
-            return new ObservableCollection<IMotion>(motions);
-        }
-
-        private ObservableCollection<IMotion> GetGlassAlignRightMotions()
-        {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.GlassTransferYAxis);
-                motions.Add(Devices.MotionsInovance.GlassTransferZAxis);
-            return new ObservableCollection<IMotion>(motions);
-        }
-
-        private ObservableCollection<IMotion> GetTransferInShuttleLeftMotions()
-        {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.TransferInShuttleLYAxis);
-                motions.Add(Devices.MotionsInovance.TransferInShuttleLZAxis);
-                motions.Add(Devices.MotionsAjin.InShuttleLXAxis);
-                motions.Add(Devices.MotionsAjin.InShuttleLYAxis);
-            return new ObservableCollection<IMotion>(motions);
-        }
-
-        private ObservableCollection<IMotion> GetTransferInShuttleRightMotions()
-        {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.TransferInShuttleRYAxis);
-                motions.Add(Devices.MotionsInovance.TransferInShuttleRZAxis);
-                motions.Add(Devices.MotionsAjin.InShuttleRXAxis);
-                motions.Add(Devices.MotionsAjin.InShuttleRYAxis);
-            return new ObservableCollection<IMotion>(motions);
-        }
-
-        private ObservableCollection<IMotion> GetWETCleanLeftMotions()
-        {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.WETCleanLFeedingAxis);
-                motions.Add(Devices.MotionsInovance.InShuttleLTAxis);
-            return new ObservableCollection<IMotion>(motions);
-        }
-
-        private ObservableCollection<IMotion> GetWETCleanRightMotions()
-        {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.WETCleanRFeedingAxis);
-                motions.Add(Devices.MotionsInovance.InShuttleRTAxis);
-            return new ObservableCollection<IMotion>(motions);
-        }
-
-        private ObservableCollection<IMotion> GetAFCleanLeftMotions()
-        {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.AFCleanLFeedingAxis);
-                motions.Add(Devices.MotionsInovance.InShuttleLTAxis);
-            return new ObservableCollection<IMotion>(motions);
-        }
-
-        private ObservableCollection<IMotion> GetAFCleanRightMotions()
-        {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.AFCleanRFeedingAxis);
-                motions.Add(Devices.MotionsInovance.InShuttleRTAxis);
-            return new ObservableCollection<IMotion>(motions);
-        }
-
-        private ObservableCollection<IMotion> GetTransferRotationLeftMotions()
-        {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.TransferRotationLZAxis);
-                motions.Add(Devices.MotionsAjin.OutShuttleLXAxis);
-                motions.Add(Devices.MotionsAjin.OutShuttleLYAxis);
-            return new ObservableCollection<IMotion>(motions);
-        }
-
-        private ObservableCollection<IMotion> GetTransferRotationRightMotions()
-        {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.TransferRotationRZAxis);
-                motions.Add(Devices.MotionsAjin.OutShuttleRXAxis);
-                motions.Add(Devices.MotionsAjin.OutShuttleRYAxis);
-            return new ObservableCollection<IMotion>(motions);
-        }
-
-        // Unload Tab Motions
-        private ObservableCollection<IMotion> GetUnloadTransferLeftMotions()
-        {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.GlassUnloadLYAxis);
-                motions.Add(Devices.MotionsInovance.GlassUnloadLZAxis);
-            return new ObservableCollection<IMotion>(motions);
-        }
-
-        private ObservableCollection<IMotion> GetUnloadTransferRightMotions()
-        {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.GlassUnloadRYAxis);
-                motions.Add(Devices.MotionsInovance.GlassUnloadRZAxis);
-            return new ObservableCollection<IMotion>(motions);
-        }
-
-        private ObservableCollection<IMotion> GetUnloadAlignMotions()
-        {
-            var motions = new List<IMotion>();
-                motions.Add(Devices.MotionsInovance.GlassUnloadLYAxis);
-                motions.Add(Devices.MotionsInovance.GlassUnloadLZAxis);
-                motions.Add(Devices.MotionsInovance.GlassUnloadRYAxis);
-                motions.Add(Devices.MotionsInovance.GlassUnloadRZAxis);
-            return new ObservableCollection<IMotion>(motions);
-        }
 
         #endregion
 
@@ -386,36 +445,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDOutput> GetRobotUnloadOutputs() => new ObservableCollection<IDOutput>();
         #endregion
 
-        #region GetPositionTeachings
-        // CSTLoadUnload Tab PositionTeachings
-        private ObservableCollection<PositionTeaching> GetInConveyorPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetInWorkConveyorPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetOutWorkConveyorPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetOutConveyorPositionTeachings() => new ObservableCollection<PositionTeaching>();
-
-        // Detach Tab PositionTeachings
-        private ObservableCollection<PositionTeaching> GetTransferFixturePositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetDetachPositionTeachings() => new ObservableCollection<PositionTeaching>();
-
-        // Clean Tab PositionTeachings
-        private ObservableCollection<PositionTeaching> GetGlassTransferPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetGlassAlignLeftPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetGlassAlignRightPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetTransferInShuttleLeftPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetTransferInShuttleRightPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetWETCleanLeftPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetWETCleanRightPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetAFCleanLeftPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetAFCleanRightPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetTransferRotationLeftPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetTransferRotationRightPositionTeachings() => new ObservableCollection<PositionTeaching>();
-
-        // Unload Tab PositionTeachings
-        private ObservableCollection<PositionTeaching> GetUnloadTransferLeftPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetUnloadTransferRightPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        private ObservableCollection<PositionTeaching> GetUnloadAlignPositionTeachings() => new ObservableCollection<PositionTeaching>();
-        #endregion
-
         #region GetProcess
         private ObservableCollection<IProcess<ESequence>> GetProcessList()
         {
@@ -430,24 +459,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 // Detach Tab (2 units)
                 Processes.TransferFixtureProcess,
                 Processes.DetachProcess,
-                
-                // Clean Tab (10 units)
-                Processes.GlassTransferProcess,
-                Processes.GlassAlignLeftProcess,
-                Processes.GlassAlignRightProcess,
-                Processes.TransferInShuttleLeftProcess,
-                Processes.TransferInShuttleRightProcess,
-                Processes.WETCleanLeftProcess,
-                Processes.WETCleanRightProcess,
-                Processes.AFCleanLeftProcess,
-                Processes.AFCleanRightProcess,
-                Processes.TransferRotationLeftProcess,
-                Processes.TransferRotationRightProcess,
-                
-                // Unload Tab (3 units)
-                Processes.UnloadTransferLeftProcess,
-                Processes.UnloadTransferRightProcess,
-                Processes.UnloadAlignProcess,
             };
             return processes;
         }
@@ -516,120 +527,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 Outputs = GetDetachOutputs();
                 PositionTeachings = GetDetachPositionTeachings();
             }
-            // Clean Tab
-            else if (SelectedProcess == Processes.GlassTransferProcess)
-            {
-                Motions = GetGlassTransferMotions();
-                Cylinders = GetGlassTransferCylinders();
-                Inputs = GetGlassTransferInputs();
-                Outputs = GetGlassTransferOutputs();
-                PositionTeachings = GetGlassTransferPositionTeachings();
-            }
-            else if (SelectedProcess == Processes.GlassAlignLeftProcess)
-            {
-                Motions = GetGlassAlignLeftMotions();
-                Cylinders = GetGlassAlignLeftCylinders();
-                Inputs = GetGlassAlignLeftInputs();
-                Outputs = GetGlassAlignLeftOutputs();
-                PositionTeachings = GetGlassAlignLeftPositionTeachings();
-            }
-            else if (SelectedProcess == Processes.GlassAlignRightProcess)
-            {
-                Motions = GetGlassAlignRightMotions();
-                Cylinders = GetGlassAlignRightCylinders();
-                Inputs = GetGlassAlignRightInputs();
-                Outputs = GetGlassAlignRightOutputs();
-                PositionTeachings = GetGlassAlignRightPositionTeachings();
-            }
-            else if (SelectedProcess == Processes.TransferInShuttleLeftProcess)
-            {
-                Motions = GetTransferInShuttleLeftMotions();
-                Cylinders = GetTransferInShuttleLeftCylinders();
-                Inputs = GetTransferInShuttleLeftInputs();
-                Outputs = GetTransferInShuttleLeftOutputs();
-                PositionTeachings = GetTransferInShuttleLeftPositionTeachings();
-            }
-            else if (SelectedProcess == Processes.TransferInShuttleRightProcess)
-            {
-                Motions = GetTransferInShuttleRightMotions();
-                Cylinders = GetTransferInShuttleRightCylinders();
-                Inputs = GetTransferInShuttleRightInputs();
-                Outputs = GetTransferInShuttleRightOutputs();
-                PositionTeachings = GetTransferInShuttleRightPositionTeachings();
-            }
-            else if (SelectedProcess == Processes.WETCleanLeftProcess)
-            {
-                Motions = GetWETCleanLeftMotions();
-                Cylinders = GetWETCleanLeftCylinders();
-                Inputs = GetWETCleanLeftInputs();
-                Outputs = GetWETCleanLeftOutputs();
-                PositionTeachings = GetWETCleanLeftPositionTeachings();
-            }
-            else if (SelectedProcess == Processes.WETCleanRightProcess)
-            {
-                Motions = GetWETCleanRightMotions();
-                Cylinders = GetWETCleanRightCylinders();
-                Inputs = GetWETCleanRightInputs();
-                Outputs = GetWETCleanRightOutputs();
-                PositionTeachings = GetWETCleanRightPositionTeachings();
-            }
-            else if (SelectedProcess == Processes.AFCleanLeftProcess)
-            {
-                Motions = GetAFCleanLeftMotions();
-                Cylinders = GetAFCleanLeftCylinders();
-                Inputs = GetAFCleanLeftInputs();
-                Outputs = GetAFCleanLeftOutputs();
-                PositionTeachings = GetAFCleanLeftPositionTeachings();
-            }
-            else if (SelectedProcess == Processes.AFCleanRightProcess)
-            {
-                Motions = GetAFCleanRightMotions();
-                Cylinders = GetAFCleanRightCylinders();
-                Inputs = GetAFCleanRightInputs();
-                Outputs = GetAFCleanRightOutputs();
-                PositionTeachings = GetAFCleanRightPositionTeachings();
-            }
-            else if (SelectedProcess == Processes.TransferRotationLeftProcess)
-            {
-                Motions = GetTransferRotationLeftMotions();
-                Cylinders = GetTransferRotationLeftCylinders();
-                Inputs = GetTransferRotationLeftInputs();
-                Outputs = GetTransferRotationLeftOutputs();
-                PositionTeachings = GetTransferRotationLeftPositionTeachings();
-            }
-            else if (SelectedProcess == Processes.TransferRotationRightProcess)
-            {
-                Motions = GetTransferRotationRightMotions();
-                Cylinders = GetTransferRotationRightCylinders();
-                Inputs = GetTransferRotationRightInputs();
-                Outputs = GetTransferRotationRightOutputs();
-                PositionTeachings = GetTransferRotationRightPositionTeachings();
-            }
-            // Unload Tab
-            else if (SelectedProcess == Processes.UnloadTransferLeftProcess)
-            {
-                Motions = GetUnloadTransferLeftMotions();
-                Cylinders = GetUnloadTransferLeftCylinders();
-                Inputs = GetUnloadTransferLeftInputs();
-                Outputs = GetUnloadTransferLeftOutputs();
-                PositionTeachings = GetUnloadTransferLeftPositionTeachings();
-            }
-            else if (SelectedProcess == Processes.UnloadTransferRightProcess)
-            {
-                Motions = GetUnloadTransferRightMotions();
-                Cylinders = GetUnloadTransferRightCylinders();
-                Inputs = GetUnloadTransferRightInputs();
-                Outputs = GetUnloadTransferRightOutputs();
-                PositionTeachings = GetUnloadTransferRightPositionTeachings();
-            }
-            else if (SelectedProcess == Processes.UnloadAlignProcess)
-            {
-                Motions = GetUnloadAlignMotions();
-                Cylinders = GetUnloadAlignCylinders();
-                Inputs = GetUnloadAlignInputs();
-                Outputs = GetUnloadAlignOutputs();
-                PositionTeachings = GetUnloadAlignPositionTeachings();
-            }
+            
         }
         #endregion
 
