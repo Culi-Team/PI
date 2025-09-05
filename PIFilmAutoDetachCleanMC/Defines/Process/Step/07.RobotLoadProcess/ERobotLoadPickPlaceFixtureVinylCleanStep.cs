@@ -21,7 +21,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Move_VinylClean_ReadyPosition,
         Move_VinylClean_ReadyPosition_Wait,
 
-        SetFlag_VinylCleanLoadDone,
+        SetFlag_VinylCleanLoadUnloadDone,
 
         End
     }

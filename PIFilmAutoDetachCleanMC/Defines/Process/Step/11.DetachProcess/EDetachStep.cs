@@ -44,7 +44,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_Fix_Backward,
         Cyl_Fix_Backward_Wait,
 
-        SetFlagDetachDone,
         End
     }
 }
