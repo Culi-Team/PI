@@ -112,7 +112,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetInConveyorMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.InCassetteTAxis != null)
                 motions.Add(Devices.MotionsInovance.InCassetteTAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -120,7 +119,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetInWorkConveyorMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.InCassetteTAxis != null)
                 motions.Add(Devices.MotionsInovance.InCassetteTAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -128,7 +126,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetOutWorkConveyorMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.OutCassetteTAxis != null)
                 motions.Add(Devices.MotionsInovance.OutCassetteTAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -136,7 +133,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetOutConveyorMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.OutCassetteTAxis != null)
                 motions.Add(Devices.MotionsInovance.OutCassetteTAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -145,9 +141,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetTransferFixtureMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.FixtureTransferYAxis != null)
                 motions.Add(Devices.MotionsInovance.FixtureTransferYAxis);
-            if (Devices?.MotionsAjin?.ShuttleTransferZAxis != null)
                 motions.Add(Devices.MotionsAjin.ShuttleTransferZAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -155,9 +149,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetDetachMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.DetachGlassZAxis != null)
                 motions.Add(Devices.MotionsInovance.DetachGlassZAxis);
-            if (Devices?.MotionsInovance?.ShuttleTransferXAxis != null)
                 motions.Add(Devices.MotionsInovance.ShuttleTransferXAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -166,9 +158,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetGlassTransferMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.GlassTransferYAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassTransferYAxis);
-            if (Devices?.MotionsInovance?.GlassTransferZAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassTransferZAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -176,9 +166,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetGlassAlignLeftMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.GlassTransferYAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassTransferYAxis);
-            if (Devices?.MotionsInovance?.GlassTransferZAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassTransferZAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -186,9 +174,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetGlassAlignRightMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.GlassTransferYAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassTransferYAxis);
-            if (Devices?.MotionsInovance?.GlassTransferZAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassTransferZAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -196,13 +182,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetTransferInShuttleLeftMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.TransferInShuttleLYAxis != null)
                 motions.Add(Devices.MotionsInovance.TransferInShuttleLYAxis);
-            if (Devices?.MotionsInovance?.TransferInShuttleLZAxis != null)
                 motions.Add(Devices.MotionsInovance.TransferInShuttleLZAxis);
-            if (Devices?.MotionsAjin?.InShuttleLXAxis != null)
                 motions.Add(Devices.MotionsAjin.InShuttleLXAxis);
-            if (Devices?.MotionsAjin?.InShuttleLYAxis != null)
                 motions.Add(Devices.MotionsAjin.InShuttleLYAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -210,13 +192,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetTransferInShuttleRightMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.TransferInShuttleRYAxis != null)
                 motions.Add(Devices.MotionsInovance.TransferInShuttleRYAxis);
-            if (Devices?.MotionsInovance?.TransferInShuttleRZAxis != null)
                 motions.Add(Devices.MotionsInovance.TransferInShuttleRZAxis);
-            if (Devices?.MotionsAjin?.InShuttleRXAxis != null)
                 motions.Add(Devices.MotionsAjin.InShuttleRXAxis);
-            if (Devices?.MotionsAjin?.InShuttleRYAxis != null)
                 motions.Add(Devices.MotionsAjin.InShuttleRYAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -224,9 +202,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetWETCleanLeftMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.WETCleanLFeedingAxis != null)
                 motions.Add(Devices.MotionsInovance.WETCleanLFeedingAxis);
-            if (Devices?.MotionsInovance?.InShuttleLTAxis != null)
                 motions.Add(Devices.MotionsInovance.InShuttleLTAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -234,9 +210,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetWETCleanRightMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.WETCleanRFeedingAxis != null)
                 motions.Add(Devices.MotionsInovance.WETCleanRFeedingAxis);
-            if (Devices?.MotionsInovance?.InShuttleRTAxis != null)
                 motions.Add(Devices.MotionsInovance.InShuttleRTAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -244,9 +218,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetAFCleanLeftMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.AFCleanLFeedingAxis != null)
                 motions.Add(Devices.MotionsInovance.AFCleanLFeedingAxis);
-            if (Devices?.MotionsInovance?.InShuttleLTAxis != null)
                 motions.Add(Devices.MotionsInovance.InShuttleLTAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -254,9 +226,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetAFCleanRightMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.AFCleanRFeedingAxis != null)
                 motions.Add(Devices.MotionsInovance.AFCleanRFeedingAxis);
-            if (Devices?.MotionsInovance?.InShuttleRTAxis != null)
                 motions.Add(Devices.MotionsInovance.InShuttleRTAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -264,11 +234,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetTransferRotationLeftMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.TransferRotationLZAxis != null)
                 motions.Add(Devices.MotionsInovance.TransferRotationLZAxis);
-            if (Devices?.MotionsAjin?.OutShuttleLXAxis != null)
                 motions.Add(Devices.MotionsAjin.OutShuttleLXAxis);
-            if (Devices?.MotionsAjin?.OutShuttleLYAxis != null)
                 motions.Add(Devices.MotionsAjin.OutShuttleLYAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -276,11 +243,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetTransferRotationRightMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.TransferRotationRZAxis != null)
                 motions.Add(Devices.MotionsInovance.TransferRotationRZAxis);
-            if (Devices?.MotionsAjin?.OutShuttleRXAxis != null)
                 motions.Add(Devices.MotionsAjin.OutShuttleRXAxis);
-            if (Devices?.MotionsAjin?.OutShuttleRYAxis != null)
                 motions.Add(Devices.MotionsAjin.OutShuttleRYAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -289,9 +253,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetUnloadTransferLeftMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.GlassUnloadLYAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassUnloadLYAxis);
-            if (Devices?.MotionsInovance?.GlassUnloadLZAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassUnloadLZAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -299,9 +261,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetUnloadTransferRightMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.GlassUnloadRYAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassUnloadRYAxis);
-            if (Devices?.MotionsInovance?.GlassUnloadRZAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassUnloadRZAxis);
             return new ObservableCollection<IMotion>(motions);
         }
@@ -309,13 +269,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetUnloadAlignMotions()
         {
             var motions = new List<IMotion>();
-            if (Devices?.MotionsInovance?.GlassUnloadLYAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassUnloadLYAxis);
-            if (Devices?.MotionsInovance?.GlassUnloadLZAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassUnloadLZAxis);
-            if (Devices?.MotionsInovance?.GlassUnloadRYAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassUnloadRYAxis);
-            if (Devices?.MotionsInovance?.GlassUnloadRZAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassUnloadRZAxis);
             return new ObservableCollection<IMotion>(motions);
         }
