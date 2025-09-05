@@ -16,6 +16,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             Inputs = devices.Inputs;
             Outputs = devices.Outputs;
             MotionsInovance = devices.MotionsInovance;
+            MotionsAjin = devices.MotionsAjin;
         }
 
         private int _speed = 1000;
@@ -29,6 +30,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public Inputs Inputs { get; }
         public Outputs Outputs { get; }
         public MotionsInovance MotionsInovance { get; }
+        public MotionsAjin MotionsAjin { get; }
 
         public ICommand ConnectMotionCommand
         {
@@ -36,9 +38,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    MotionsAjin.All.ForEach(m => m.Connect());
                     MotionsInovance.MotionControllerInovance.Connect();
                 });
             }
         }
+
     }
 }

@@ -87,14 +87,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             switch (processName)
             {
                 // CSTLoadUnload Tab
-                case "InConveyorProcess":
-                    return viewModel.InConveyorMotions;
                 case "InWorkConveyorProcess":
                     return viewModel.InWorkConveyorMotions;
                 case "OutWorkConveyorProcess":
                     return viewModel.OutWorkConveyorMotions;
-                case "OutConveyorProcess":
-                    return viewModel.OutConveyorMotions;
 
                 // Detach Tab
                 case "TransferFixtureProcess":

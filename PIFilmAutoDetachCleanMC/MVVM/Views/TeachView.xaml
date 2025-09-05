@@ -118,16 +118,6 @@
         </DataTemplate>
 
         <!-- CSTLoadUnload Tab Templates -->
-        <DataTemplate x:Key="InConveyorTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
-                Motions="{Binding DataContext.InConveyorMotions, ElementName=root}"
-                Outputs="{Binding DataContext.Outputs, ElementName=root}"
-                Inputs="{Binding DataContext.Inputs, ElementName=root}"
-                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
-        </DataTemplate>
-
         <DataTemplate x:Key="InWorkConveyorTemplate">
             <local:UnitTeachingView 
                 Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
@@ -148,15 +138,6 @@
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
         </DataTemplate>
 
-        <DataTemplate x:Key="OutConveyorTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
-                Motions="{Binding DataContext.OutConveyorMotions, ElementName=root}"
-                Outputs="{Binding DataContext.Outputs, ElementName=root}"
-                Inputs="{Binding DataContext.Inputs, ElementName=root}"
-                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
-        </DataTemplate>
 
         <!-- Detach Tab Templates -->
 
@@ -166,7 +147,7 @@
                 Motions="{Binding DataContext.TransferFixtureMotions, ElementName=root}"
                 Outputs="{Binding DataContext.Outputs, ElementName=root}"
                 Inputs="{Binding DataContext.Inputs, ElementName=root}"
-                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                PositionTeachings="{Binding DataContext.TransferFixturePositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
         </DataTemplate>
 
@@ -177,7 +158,7 @@
                 Motions="{Binding DataContext.DetachMotions, ElementName=root}"
                 Outputs="{Binding DataContext.Outputs, ElementName=root}"
                 Inputs="{Binding DataContext.Inputs, ElementName=root}"
-                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                PositionTeachings="{Binding DataContext.DetachPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
         </DataTemplate>
 
@@ -248,18 +229,16 @@
     </UserControl.Resources>
     <Grid>
         <TabControl Grid.Column="0" SelectionChanged="TabControl_SelectionChanged">
-            <TabItem Header="CSTLoadUnload">
+            <TabItem Header="CSTLoadUnload Unit">
                 <TabControl SelectionChanged="TabControl_SelectionChanged">
-                    <TabItem Header="In Conveyor" ContentTemplate="{StaticResource InConveyorTemplate}"/>
-                    <TabItem Header="In Work Conveyor" ContentTemplate="{StaticResource InWorkConveyorTemplate}"/>
-                    <TabItem Header="Out Work Conveyor" ContentTemplate="{StaticResource OutWorkConveyorTemplate}"/>
-                    <TabItem Header="Out Conveyor" ContentTemplate="{StaticResource OutConveyorTemplate}"/>
+                    <TabItem Header="In Cassette Position" ContentTemplate="{StaticResource InWorkConveyorTemplate}"/>
+                    <TabItem Header="Out Cassette Position" ContentTemplate="{StaticResource OutWorkConveyorTemplate}"/>
                 </TabControl>
             </TabItem>
-            <TabItem Header="Detach">
+            <TabItem Header="Detach Unit">
                 <TabControl SelectionChanged="TabControl_SelectionChanged">
-                    <TabItem Header="Transfer Fixture" ContentTemplate="{StaticResource TransferFixtureTemplate}"/>
-                    <TabItem Header="Detach" ContentTemplate="{StaticResource DetachTemplate}"/>
+                    <TabItem Header="Transfer Fixture Position" ContentTemplate="{StaticResource TransferFixtureTemplate}"/>
+                    <TabItem Header="Detach Position" ContentTemplate="{StaticResource DetachTemplate}"/>
                 </TabControl>
             </TabItem>
         </TabControl>

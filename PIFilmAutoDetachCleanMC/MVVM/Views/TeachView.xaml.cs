@@ -54,14 +54,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             {
                 switch (header)
                 {
-                    case "In Conveyor":
-                        return viewModel.Processes?.InConveyorProcess;
-                    case "In Work Conveyor":
+                    case "In Cassette":
                         return viewModel.Processes?.InWorkConveyorProcess;
-                    case "Out Work Conveyor":
+                    case "Out Cassette":
                         return viewModel.Processes?.OutWorkConveyorProcess;
-                    case "Out Conveyor":
-                        return viewModel.Processes?.OutConveyorProcess;
                     case "Transfer Fixture":
                         return viewModel.Processes?.TransferFixtureProcess;
                     case "Detach":
