@@ -11,6 +11,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
     {
         public RecipeList(CommonRecipe commonRecipe,
                           CSTLoadUnloadRecipe cstLoadUnloadRecipe,
+                          RobotLoadRecipe robotLoadRecipe,
                           VinylCleanRecipe vinylCleanRecipe,
                           TransferFixtureRecipe transferFixtureRecipe,
                           DetachRecipe detachRecipe,
@@ -21,6 +22,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         {
             CommonRecipe = commonRecipe;
             CstLoadUnloadRecipe = cstLoadUnloadRecipe;
+            RobotLoadRecipe = robotLoadRecipe;
             VinylCleanRecipe = vinylCleanRecipe;
             TransferFixtureRecipe = transferFixtureRecipe;
             DetachRecipe = detachRecipe;
@@ -31,6 +33,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 
             CommonRecipe.Name = "Common";
             CstLoadUnloadRecipe.Name = "CST Load/Unload";
+            RobotLoadRecipe.Name = "Robot Load";
             VinylCleanRecipe.Name = "Vinyl Clean";
             TransferFixtureRecipe.Name = "Transfer Fixture";
             DetachRecipe.Name = "Detach";
@@ -42,6 +45,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 
         public CommonRecipe CommonRecipe { get; }
         public CSTLoadUnloadRecipe CstLoadUnloadRecipe { get; }
+        public RobotLoadRecipe RobotLoadRecipe { get; }
         public VinylCleanRecipe VinylCleanRecipe { get; }
         public TransferFixtureRecipe TransferFixtureRecipe { get; }
         public DetachRecipe DetachRecipe { get; }

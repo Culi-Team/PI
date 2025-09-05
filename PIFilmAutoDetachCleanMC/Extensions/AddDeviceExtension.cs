@@ -22,6 +22,8 @@ using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
 using EQX.InOut.InOut;
 using EQX.Core.TorqueController;
 using EQX.Motion.Torque;
+using EQX.Core.Robot;
+using EQX.Motion.Robot;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -269,5 +271,34 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
             return hostBuilder;
         }
+
+        public static IHostBuilder AddRobotDevices(this IHostBuilder hostBuilder)
+        {
+            hostBuilder.ConfigureServices((hostContext, services) =>
+            {
+#if SIMULATION
+                services.AddKeyedSingleton<IRobot, RobotSimulation>("RobotLoad",(services,obj) =>
+                {
+                    return new RobotSimulation(1, "Kuka Robot Load");
+                });
+                services.AddKeyedSingleton<IRobot, RobotSimulation>("RobotUnload", (services, obj) =>
+                {
+                    return new RobotSimulation(2, "Kuka Robot Unload");
+                });
+#else
+                services.AddKeyedSingleton<IRobot, RobotKukaTcp>("RobotLoad",(services,obj) =>
+                {
+                    return new RobotKukaTcp(1, "Kuka Robot","192.168.1.100");
+                });
+                services.AddKeyedSingleton<IRobot, RobotKukaTcp>("RobotUnload",(services,obj) =>
+                {
+                    return new RobotKukaTcp(2, "Kuka Robot","192.168.1.200");
+                });
+#endif
+            });
+
+            return hostBuilder;
+        }
+
     }
 }
