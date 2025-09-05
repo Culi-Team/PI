@@ -10,5 +10,9 @@ namespace PIFilmAutoDetachCleanMC.Process
 {
     public class RobotLoadProcess : ProcessBase<ESequence>
     {
+        public RobotLoadProcess() 
+        {
+
+        }
     }
 }

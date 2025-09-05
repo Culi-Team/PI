@@ -52,7 +52,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
         // Vinyl Clean
         public ICylinder VinylCleanRollerBwFw { get; }
         public ICylinder VinylCleanFixture1ClampUnclamp { get; }
-        public ICylinder VinylCleanFixture2ClampUnclamp { get; }
         public ICylinder VinylCleanPusherRollerUpDown { get; }
 
         // Transfer Y Fixture
@@ -211,14 +210,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             VinylCleanRollerBwFw.CylinderType = ECylinderType.ForwardBackward;
 
             VinylCleanFixture1ClampUnclamp = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.VinylCleanFixture1Clamp }, new List<IDInput> { _inputs.VinylCleanFixture1Unclamp }, _outputs.VinylCleanFixtureClamp, _outputs.VinylCleanFixtureUnclamp)
+                .Create(new List<IDInput> { _inputs.VinylCleanFixture1Clamp,_inputs.VinylCleanFixture2Clamp }, new List<IDInput> { _inputs.VinylCleanFixture1Unclamp,_inputs.VinylCleanFixture2Unclamp }, _outputs.VinylCleanFixtureClamp, _outputs.VinylCleanFixtureUnclamp)
                 .SetIdentity((int)ECylinder.VinylCleanFixture1ClampUnclamp, ECylinder.VinylCleanFixture1ClampUnclamp.ToString());
             VinylCleanFixture1ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
-
-            VinylCleanFixture2ClampUnclamp = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.VinylCleanFixture2Clamp }, new List<IDInput> { _inputs.VinylCleanFixture2Unclamp }, _outputs.VinylCleanFixtureClamp, _outputs.VinylCleanFixtureUnclamp)
-                .SetIdentity((int)ECylinder.VinylCleanFixture2ClampUnclamp, ECylinder.VinylCleanFixture2ClampUnclamp.ToString());
-            VinylCleanFixture2ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
 
             VinylCleanPusherRollerUpDown = _cylinderFactory
                 .Create(new List<IDInput> { _inputs.VinylCleanPusherRollerUp }, new List<IDInput> { _inputs.VinylCleanPusherRollerDown }, _outputs.VinylCleanPusherRollerUp, _outputs.VinylCleanPusherRollerDown)

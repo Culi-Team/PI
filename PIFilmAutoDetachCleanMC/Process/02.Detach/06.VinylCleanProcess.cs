@@ -25,8 +25,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly VirtualIO<EFlags> _virtualIO;
 
         private bool IsFixtureDetect => _devices.Inputs.VinylCleanFixtureDetect.Value;
-        private ICylinder FixtureClampCyl1 => _devices.Cylinders.VinylCleanFixture1ClampUnclamp;
-        private ICylinder FixtureClampCyl2 => _devices.Cylinders.VinylCleanFixture2ClampUnclamp;
+        private ICylinder FixtureClampCyl => _devices.Cylinders.VinylCleanFixture1ClampUnclamp;
 
         private ICylinder RollerBwFwCyl => _devices.Cylinders.VinylCleanRollerBwFw;
         private ICylinder PusherCyl => _devices.Cylinders.VinylCleanPusherRollerUpDown;
@@ -279,9 +278,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EVinylCleanProcessVinylCleanStep.Cyl_Clamp:
                     Log.Debug("Vinyl Clean Cylinder Clamp");
-                    FixtureClampCyl1.Forward();
-                    FixtureClampCyl2.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout,() => FixtureClampCyl1.IsForward && FixtureClampCyl2.IsForward);
+                    FixtureClampCyl.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout,() => FixtureClampCyl.IsForward);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessVinylCleanStep.Cyl_Clamp_Wait:
@@ -377,9 +375,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EVinylCleanProcessRobotPickFixtureFromVinylClean.Cyl_UnClamp:
                     Log.Debug("Vinyl Clean Cylinder UnClamp");
-                    FixtureClampCyl1.Backward();
-                    FixtureClampCyl2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout,() => FixtureClampCyl1.IsBackward && FixtureClampCyl2.IsBackward);
+                    FixtureClampCyl.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout,() => FixtureClampCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPickFixtureFromVinylClean.Cyl_UnClamp_Wait:
@@ -428,9 +425,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_UnClamp:
                     Log.Debug("Vinyl Clean Cylinder UnClamp");
-                    FixtureClampCyl1.Backward();
-                    FixtureClampCyl2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout,() => FixtureClampCyl1.IsBackward && FixtureClampCyl2.IsBackward);
+                    FixtureClampCyl.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout,() => FixtureClampCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_UnClamp_Wait:
