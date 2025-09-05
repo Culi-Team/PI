@@ -397,9 +397,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EVinylCleanProcessRobotPickFixtureFromVinylClean.SetFlag_VinylCleanRequestUnload:
                     Log.Debug("Set Flag Vinyl Clean Request Unload");
+                    FlagVinylCleanRequestUnload = true;
                     Step.RunStep++;
                     Log.Debug("Wait Vinyl Clean Unload Done");
-                    Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPickFixtureFromVinylClean.Wait_VinylCleanUnloadDone:
                     if(FlagVinylCleanUnloadDone == false)
@@ -504,7 +504,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Set_Flag_RequestFixture:
-                    Log.Debug("Vinyl Clean Request Fixture");
+                    Log.Debug("Set Flag Vinyl Clean Request Fixture");
                     FlagVinylCleanRequestFixture = true;
                     Step.RunStep++;
                     Log.Debug("Wait Fixture Load Done");

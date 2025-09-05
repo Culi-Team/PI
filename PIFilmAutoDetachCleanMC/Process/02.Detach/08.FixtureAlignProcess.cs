@@ -1,6 +1,7 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
+using EQX.InOut;
 using EQX.Process;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
@@ -227,15 +228,17 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Fixture Detect Check");
                     if (_machineStatus.MachineRunMode == EMachineRunMode.DryRun)
                     {
+                        Log.Info("Sequence Fixture Align");
                         Sequence = ESequence.FixtureAlign;
                         break;
                     }
                     if (IsFixtureDetect)
                     {
+                        Log.Info("Sequence Fixture Align");
                         Sequence = ESequence.FixtureAlign;
                         break;
                     }
-
+                    Log.Info("Sequence Robot Place Fixture To Align");
                     Sequence = ESequence.RobotPlaceFixtureToAlign;
                     break;
                 case EFixtureAlignAutoRunStep.End:
@@ -263,6 +266,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.AlignFixtureDetect, true);
+#endif
                     FlagFixtureAlignLoadDone = false;
                     Step.RunStep++;
                     break;
@@ -273,6 +279,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.FixtureAlignLoadFail);
                         break;
                     }
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.AlignFixtureDetect, false);
+#endif
                     Step.RunStep++;
                     break;
                 case EFixtureAlignRobotPlaceFixtureToAlignStep.End:
@@ -383,8 +392,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Parent.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
-                    Log.Debug("Sequence Robot Pick Fixture From Remove Zone");
-                    Sequence = ESequence.RobotPickFixtureFromRemoveZone;
+                    Log.Debug("Sequence Robot Place Fixture To Align");
+                    Sequence = ESequence.RobotPlaceFixtureToAlign;
                     break;
             }
         }

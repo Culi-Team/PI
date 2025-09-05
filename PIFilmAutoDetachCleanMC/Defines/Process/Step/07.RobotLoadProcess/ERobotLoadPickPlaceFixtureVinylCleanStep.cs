@@ -23,6 +23,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         SetFlag_VinylCleanLoadUnloadDone,
 
-        End
+        End,
+        Wait_NextSequence,
     }
 }

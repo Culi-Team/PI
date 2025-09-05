@@ -309,7 +309,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Align and Detach Done");
                     break;
                 case ETransferFixtureProcessLoadStep.Wait_Align_And_Detach_Done:
-                    if (!FlagDetachDone && !FlagFixtureAlignDone)
+                    if (!FlagDetachDone || !FlagFixtureAlignDone)
                     {
                         //Wait Align Fixture and Detach Ready
                         break;
