@@ -1,23 +1,12 @@
 ﻿using EQX.Core.InOut;
-using EQX.Core.Motion;
-using EQX.UI.Controls;
-using System;
-using System.Collections.Generic;
+using EQX.Core.Process;
+using PIFilmAutoDetachCleanMC.Defines;
+using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
+using static PIFilmAutoDetachCleanMC.MVVM.ViewModels.TeachViewModel;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using PIFilmAutoDetachCleanMC.Defines.Devices;
-using static PIFilmAutoDetachCleanMC.MVVM.ViewModels.TeachViewModel;
+
 
 namespace PIFilmAutoDetachCleanMC.MVVM.Views
 {
@@ -26,13 +15,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
     /// </summary>
     public partial class UnitTeachingView : UserControl
     {
-        public ObservableCollection<IMotion> Motions
+        public ObservableCollection<MotionWrapper> Motions
         {
-            get { return (ObservableCollection<IMotion>)GetValue(MotionsProperty); }
+            get { return (ObservableCollection<MotionWrapper>)GetValue(MotionsProperty); }
             set { SetValue(MotionsProperty, value); }
         }
         public static readonly DependencyProperty MotionsProperty =
-            DependencyProperty.Register("Motions", typeof(ObservableCollection<IMotion>), typeof(UnitTeachingView), new PropertyMetadata(new ObservableCollection<IMotion> { }));
+            DependencyProperty.Register("Motions", typeof(ObservableCollection<MotionWrapper>), typeof(UnitTeachingView), new PropertyMetadata(new ObservableCollection<MotionWrapper> { }));
+
         public ObservableCollection<ICylinder> Cylinders
         {
             get { return (ObservableCollection<ICylinder>)GetValue(CylindersProperty); }
@@ -62,10 +52,103 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         public static readonly DependencyProperty InputsProperty =
             DependencyProperty.Register("Inputs", typeof(ObservableCollection<IDInput>), typeof(UnitTeachingView), new PropertyMetadata(new ObservableCollection<IDInput> { }));
 
+        public IProcess<ESequence> SelectedProcess
+        {
+            get { return (IProcess<ESequence>)GetValue(SelectedProcessProperty); }
+            set { SetValue(SelectedProcessProperty, value); }
+        }
+        public static readonly DependencyProperty SelectedProcessProperty =
+            DependencyProperty.Register("SelectedProcess", typeof(IProcess<ESequence>), typeof(UnitTeachingView), new PropertyMetadata(null));
+
         public UnitTeachingView()
         {
             InitializeComponent();
-            this.DataContext = this;
         }
+
+
+        private void UpdateMotionsBasedOnProcess()
+        {
+            if (DataContext is TeachViewModel viewModel && SelectedProcess != null)
+            {
+                ObservableCollection<MotionWrapper> processMotions = GetMotionsForProcess(viewModel, SelectedProcess);
+                if (processMotions != null)
+                {
+                    Motions = processMotions;
+                }
+            }
+        }
+
+        private ObservableCollection<MotionWrapper> GetMotionsForProcess(TeachViewModel viewModel, IProcess<ESequence> process)
+        {
+            // Get process name to determine which motion property to use
+            string processName = process?.GetType().Name ?? "";
+            
+            switch (processName)
+            {
+                // CSTLoadUnload Tab
+                case "InConveyorProcess":
+                    return viewModel.InConveyorMotions;
+                case "InWorkConveyorProcess":
+                    return viewModel.InWorkConveyorMotions;
+                case "BufferConveyorProcess":
+                    return viewModel.BufferConveyorMotions;
+                case "OutWorkConveyorProcess":
+                    return viewModel.OutWorkConveyorMotions;
+                case "OutConveyorProcess":
+                    return viewModel.OutConveyorMotions;
+
+                // Detach Tab
+                case "VinylCleanProcess":
+                    return viewModel.VinylCleanMotions;
+                case "RobotLoadProcess":
+                    return viewModel.RobotLoadMotions;
+                case "FixtureAlignProcess":
+                    return viewModel.FixtureAlignMotions;
+                case "TransferFixtureProcess":
+                    return viewModel.TransferFixtureMotions;
+                case "RemoveFilmProcess":
+                    return viewModel.RemoveFilmMotions;
+                case "DetachProcess":
+                    return viewModel.DetachMotions;
+
+                // Clean Tab
+                case "GlassTransferProcess":
+                    return viewModel.GlassTransferMotions;
+                case "GlassAlignLeftProcess":
+                    return viewModel.GlassAlignLeftMotions;
+                case "GlassAlignRightProcess":
+                    return viewModel.GlassAlignRightMotions;
+                case "TransferInShuttleLeftProcess":
+                    return viewModel.TransferInShuttleLeftMotions;
+                case "TransferInShuttleRightProcess":
+                    return viewModel.TransferInShuttleRightMotions;
+                case "WETCleanLeftProcess":
+                    return viewModel.WETCleanLeftMotions;
+                case "WETCleanRightProcess":
+                    return viewModel.WETCleanRightMotions;
+                case "AFCleanLeftProcess":
+                    return viewModel.AFCleanLeftMotions;
+                case "AFCleanRightProcess":
+                    return viewModel.AFCleanRightMotions;
+                case "TransferRotationLeftProcess":
+                    return viewModel.TransferRotationLeftMotions;
+                case "TransferRotationRightProcess":
+                    return viewModel.TransferRotationRightMotions;
+
+                // Unload Tab
+                case "UnloadTransferLeftProcess":
+                    return viewModel.UnloadTransferLeftMotions;
+                case "UnloadTransferRightProcess":
+                    return viewModel.UnloadTransferRightMotions;
+                case "UnloadAlignProcess":
+                    return viewModel.UnloadAlignMotions;
+                case "RobotUnloadProcess":
+                    return viewModel.RobotUnloadMotions;
+
+                default:
+                    return viewModel.Motions; 
+            }
+        }
+
     }
 }

@@ -17,6 +17,8 @@
              d:DataContext="{d:DesignInstance Type=vm:TeachViewModel}"
              x:Name="root">
     <UserControl.Resources>
+        <cvt:BoolToBrushConverter x:Key="BoolToBrushConverter" />
+
         <Style x:Key="AutoWidthTabItemStyle"
                TargetType="{x:Type TabItem}"
                BasedOn="{StaticResource {x:Type TabItem}}">
@@ -111,7 +113,212 @@
                 Motions="{Binding DataContext.Motions, ElementName=root}"
                 Outputs="{Binding DataContext.Outputs, ElementName=root}"
                 Inputs="{Binding DataContext.Inputs, ElementName=root}"
-                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"/>
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <!-- CSTLoadUnload Tab Templates -->
+        <DataTemplate x:Key="InConveyorTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.InConveyorMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="InWorkConveyorTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.InWorkConveyorMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="BufferConveyorTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.BufferConveyorMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="OutWorkConveyorTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.OutWorkConveyorMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="OutConveyorTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.OutConveyorMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <!-- Detach Tab Templates -->
+        <DataTemplate x:Key="VinylCleanTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.VinylCleanMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="RobotLoadTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.RobotLoadMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="FixtureAlignTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.FixtureAlignMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TransferFixtureTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.TransferFixtureMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="RemoveFilmTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.RemoveFilmMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DetachTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.DetachMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <!-- Clean Tab Templates -->
+        <DataTemplate x:Key="GlassTransferTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.GlassTransferMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="GlassAlignTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.GlassAlignLeftMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TransferInShuttleTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.TransferInShuttleLeftMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="WETCleanTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.WETCleanLeftMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="AFCleanTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.AFCleanLeftMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TransferRotationTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.TransferRotationLeftMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <!-- Unload Tab Templates -->
+        <DataTemplate x:Key="UnloadTransferTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.UnloadTransferLeftMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="UnloadAlignTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.UnloadAlignMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="RobotUnloadTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.RobotUnloadMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
         </DataTemplate>
 
         <!-- Style cho TabItem với UnitTeachingView -->
@@ -181,38 +388,38 @@
         <TabControl Grid.Column="0">
             <TabItem Header="CSTLoadUnload">
                 <TabControl>
-                    <TabItem Header="In Conveyor" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="In Work Conveyor" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="Buffer Conveyor" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="Out Work Conveyor" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="Out Conveyor" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="In Conveyor" ContentTemplate="{StaticResource InConveyorTemplate}"/>
+                    <TabItem Header="In Work Conveyor" ContentTemplate="{StaticResource InWorkConveyorTemplate}"/>
+                    <TabItem Header="Buffer Conveyor" ContentTemplate="{StaticResource BufferConveyorTemplate}"/>
+                    <TabItem Header="Out Work Conveyor" ContentTemplate="{StaticResource OutWorkConveyorTemplate}"/>
+                    <TabItem Header="Out Conveyor" ContentTemplate="{StaticResource OutConveyorTemplate}"/>
                 </TabControl>
             </TabItem>
             <TabItem Header="Detach">
                 <TabControl>
-                    <TabItem Header="Vinyl Clean" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="Robot Load" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="Fixture Align" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="Transfer Fixture" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="Remove Film" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="Detach" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Vinyl Clean" ContentTemplate="{StaticResource VinylCleanTemplate}"/>
+                    <TabItem Header="Robot Load" ContentTemplate="{StaticResource RobotLoadTemplate}"/>
+                    <TabItem Header="Fixture Align" ContentTemplate="{StaticResource FixtureAlignTemplate}"/>
+                    <TabItem Header="Transfer Fixture" ContentTemplate="{StaticResource TransferFixtureTemplate}"/>
+                    <TabItem Header="Remove Film" ContentTemplate="{StaticResource RemoveFilmTemplate}"/>
+                    <TabItem Header="Detach" ContentTemplate="{StaticResource DetachTemplate}"/>
                 </TabControl>
             </TabItem>
             <TabItem Header="Clean">
                 <TabControl>
-                    <TabItem Header="Glass Transfer" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="Glass Align" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="Transfer In Shuttle" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="Wet Clean" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="AF Clean" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="Transfer Rotation" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Glass Transfer" ContentTemplate="{StaticResource GlassTransferTemplate}"/>
+                    <TabItem Header="Glass Align" ContentTemplate="{StaticResource GlassAlignTemplate}"/>
+                    <TabItem Header="Transfer In Shuttle" ContentTemplate="{StaticResource TransferInShuttleTemplate}"/>
+                    <TabItem Header="Wet Clean" ContentTemplate="{StaticResource WETCleanTemplate}"/>
+                    <TabItem Header="AF Clean" ContentTemplate="{StaticResource AFCleanTemplate}"/>
+                    <TabItem Header="Transfer Rotation" ContentTemplate="{StaticResource TransferRotationTemplate}"/>
                 </TabControl>
             </TabItem>
             <TabItem Header="Unload">
                 <TabControl>
-                    <TabItem Header="Unload Transfer" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="Unload Align" Style="{StaticResource UnitTeachingTabItemStyle}"/>
-                    <TabItem Header="Robot Unload" Style="{StaticResource UnitTeachingTabItemStyle}"/>
+                    <TabItem Header="Unload Transfer" ContentTemplate="{StaticResource UnloadTransferTemplate}"/>
+                    <TabItem Header="Unload Align" ContentTemplate="{StaticResource UnloadAlignTemplate}"/>
+                    <TabItem Header="Robot Unload" ContentTemplate="{StaticResource RobotUnloadTemplate}"/>
                 </TabControl>
             </TabItem>
         </TabControl>
