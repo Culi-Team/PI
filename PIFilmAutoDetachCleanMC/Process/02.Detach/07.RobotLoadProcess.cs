@@ -72,6 +72,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 return _virtualIO.GetFlag(EFlags.InCSTReady);
             }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.InCSTReady, value);
+            }
         }
 
         private bool FlagVinylCleanLoadDone
@@ -124,6 +128,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 return _virtualIO.GetFlag(EFlags.OutCSTReady);
             }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.OutCSTReady, value);
+            }
         }
 
         private bool FlagPlaceOutCSTDone
@@ -131,6 +139,14 @@ namespace PIFilmAutoDetachCleanMC.Process
             set
             {
                 _virtualIO.SetFlag(EFlags.RobotPlaceOutCSTDone, value);
+            }
+        }
+
+        private bool FlagPickFromInCSTDone
+        {
+            set
+            {
+                _virtualIO.SetFlag(EFlags.RobotPickInCSTDone, value);
             }
         }
         #endregion
@@ -353,6 +369,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         break;
                     }
+                    FlagInCSTReady = false;
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Move_InCST_PickPositon:
@@ -401,6 +418,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPickFixtureFromCSTStep.Move_InCST_ReadyPositon_Wait:
                     Log.Debug("Move In Cassette Ready Position Wait");
                     Wait(1000);
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPickFixtureFromCSTStep.Set_Flag_RobotPickInCSTDone:
+                    Log.Debug("Set Flag Robot Pick In CST Done");
+                    FlagPickFromInCSTDone = true;
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.End:
@@ -682,6 +704,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         break;
                     }
+                    FlagOutCSTReady = false;
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Move_OutCSTPlacePosition:
