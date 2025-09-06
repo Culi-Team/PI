@@ -192,10 +192,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftPumpLeakDetect.Value || _devices.Inputs.WetCleanleftAlcoholLeakDectect.Value,
-                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightPumpLeakDetect.Value || _devices.Inputs.WetCleanRightAlcoholLeakDectect.Value,
-                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftPumpLeakDetect.Value || _devices.Inputs.AFCleanLefttAlcoholLeakDectect.Value,
-                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightPumpLeakDetect.Value || _devices.Inputs.AFCleanRightAlcoholLeakDectect.Value,
+                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftPumpLeakDetect.Value || _devices.Inputs.WetCleanLeftAlcoholLeakDetect.Value,
+                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightPumpLeakDetect.Value || _devices.Inputs.WetCleanRightAlcoholLeakDetect.Value,
+                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftPumpLeakDetect.Value || _devices.Inputs.AfCleanLeftAlcoholLeakDetect.Value,
+                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightPumpLeakDetect.Value || _devices.Inputs.AfCleanRightAlcoholLeakDetect.Value,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
