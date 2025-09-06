@@ -22,7 +22,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             _viewModelProvider = viewModelProvider;
 
             InitializeComponent();
-            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
