@@ -24,7 +24,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly VirtualIO<EFlags> _virtualIO;
 
         private ICylinder AlignFixtureCyl => _devices.Cylinders.AlignFixtureBwFw;
-        private bool IsFixtureDetect => _devices.Inputs.AlignFixtureDetect.Value;
+        private bool IsFixtureDetect => _devices.Inputs.FixtureAlignDetect.Value;
         private bool IsFixtureTiltDetect => _devices.Inputs.AlignFixtureTiltDetect.Value;
         private bool IsFixtureReverseDetect => _devices.Inputs.AlignFixtureReverseDetect.Value;
         #endregion
@@ -267,7 +267,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.AlignFixtureDetect, true);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.FixtureAlignDetect, true);
 #endif
                     FlagFixtureAlignLoadDone = false;
                     Step.RunStep++;
@@ -280,7 +280,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.AlignFixtureDetect, false);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.FixtureAlignDetect, false);
 #endif
                     Step.RunStep++;
                     break;

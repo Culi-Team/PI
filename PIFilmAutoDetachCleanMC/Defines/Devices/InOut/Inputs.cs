@@ -141,7 +141,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput TransferFixture2_1Unclamp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TRANSFER_FIXTURE_2_1_UNCLAMP);
         public IDInput TransferFixture2_2Clamp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TRANSFER_FIXTURE_2_2_CLAMP);
         public IDInput TransferFixture2_2Unclamp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TRANSFER_FIXTURE_2_2_UNCLAMP);
-        public IDInput AlignFixtureDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_FIXTURE_DETECT);
         public IDInput AlignFixtureTiltDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_FIXTURE_TILT_DETECT);
         public IDInput AlignFixtureReverseDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_FIXTURE_REVERSE_DETECT);
         public IDInput DetachFixtureDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DETACH_FIXTURE_DETECT);
