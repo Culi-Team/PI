@@ -6,7 +6,6 @@ using EQX.Core.Motion;
 using EQX.Core.Process;
 using EQX.Core.Sequence;
 using EQX.UI.Controls;
-using EQX.UI.Interlock;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
@@ -31,45 +30,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public RecipeSelector RecipeSelector;
         public Processes Processes;
         public DataViewModel DataViewModel { get; }
-        
-        // Interlock properties
-        private readonly InterlockService _interlockService;
-        private bool _isSafetyDoorClosed = true;
-        private bool _isAxisMoving = false;
-        private bool _isCylinderOk = true;
-        
-        public bool IsSafetyDoorClosed
-        {
-            get => _isSafetyDoorClosed;
-            set
-            {
-                _isSafetyDoorClosed = value;
-                OnPropertyChanged();
-                UpdateInterlockContext();
-            }
-        }
-        
-        public bool IsAxisMoving
-        {
-            get => _isAxisMoving;
-            set
-            {
-                _isAxisMoving = value;
-                OnPropertyChanged();
-                UpdateInterlockContext();
-            }
-        }
-        
-        public bool IsCylinderOk
-        {
-            get => _isCylinderOk;
-            set
-            {
-                _isCylinderOk = value;
-                OnPropertyChanged();
-                UpdateInterlockContext();
-            }
-        }
         public ObservableCollection<IProcess<ESequence>> ProcessListTeaching => GetProcessList();
         private IProcess<ESequence> _selectedProcess;
         public IProcess<ESequence> SelectedProcess
@@ -354,103 +314,45 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         #region GetCylinders
         // CSTLoadUnload Tab Cylinders
         private ObservableCollection<ICylinder> GetInWorkConveyorCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetBufferConveyorCylinders() => new ObservableCollection<ICylinder>();
         private ObservableCollection<ICylinder> GetOutWorkConveyorCylinders() => new ObservableCollection<ICylinder>();
 
         // Detach Tab Cylinders
-        private ObservableCollection<ICylinder> GetVinylCleanCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetRobotLoadCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetFixtureAlignCylinders() => new ObservableCollection<ICylinder>();
         private ObservableCollection<ICylinder> GetTransferFixtureCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetRemoveFilmCylinders() => new ObservableCollection<ICylinder>();
         private ObservableCollection<ICylinder> GetDetachCylinders() => new ObservableCollection<ICylinder>();
 
         // Clean Tab Cylinders
-        private ObservableCollection<ICylinder> GetGlassTransferCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetGlassAlignLeftCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetGlassAlignRightCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetTransferInShuttleLeftCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetTransferInShuttleRightCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetWETCleanLeftCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetWETCleanRightCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetAFCleanLeftCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetAFCleanRightCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetTransferRotationLeftCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetTransferRotationRightCylinders() => new ObservableCollection<ICylinder>();
 
         // Unload Tab Cylinders
-        private ObservableCollection<ICylinder> GetUnloadTransferLeftCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetUnloadTransferRightCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetUnloadAlignCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetRobotUnloadCylinders() => new ObservableCollection<ICylinder>();
+
         #endregion
 
         #region GetInputs
         // CSTLoadUnload Tab Inputs
         private ObservableCollection<IDInput> GetInWorkConveyorInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetBufferConveyorInputs() => new ObservableCollection<IDInput>();
         private ObservableCollection<IDInput> GetOutWorkConveyorInputs() => new ObservableCollection<IDInput>();
 
         // Detach Tab Inputs
-        private ObservableCollection<IDInput> GetVinylCleanInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetRobotLoadInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetFixtureAlignInputs() => new ObservableCollection<IDInput>();
         private ObservableCollection<IDInput> GetTransferFixtureInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetRemoveFilmInputs() => new ObservableCollection<IDInput>();
         private ObservableCollection<IDInput> GetDetachInputs() => new ObservableCollection<IDInput>();
 
         // Clean Tab Inputs
-        private ObservableCollection<IDInput> GetGlassTransferInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetGlassAlignLeftInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetGlassAlignRightInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetTransferInShuttleLeftInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetTransferInShuttleRightInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetWETCleanLeftInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetWETCleanRightInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetAFCleanLeftInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetAFCleanRightInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetTransferRotationLeftInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetTransferRotationRightInputs() => new ObservableCollection<IDInput>();
 
         // Unload Tab Inputs
-        private ObservableCollection<IDInput> GetUnloadTransferLeftInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetUnloadTransferRightInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetUnloadAlignInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetRobotUnloadInputs() => new ObservableCollection<IDInput>();
+
         #endregion
 
         #region GetOutputs
         // CSTLoadUnload Tab Outputs
         private ObservableCollection<IDOutput> GetInWorkConveyorOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetBufferConveyorOutputs() => new ObservableCollection<IDOutput>();
         private ObservableCollection<IDOutput> GetOutWorkConveyorOutputs() => new ObservableCollection<IDOutput>();
 
         // Detach Tab Outputs
-        private ObservableCollection<IDOutput> GetVinylCleanOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetRobotLoadOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetFixtureAlignOutputs() => new ObservableCollection<IDOutput>();
         private ObservableCollection<IDOutput> GetTransferFixtureOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetRemoveFilmOutputs() => new ObservableCollection<IDOutput>();
         private ObservableCollection<IDOutput> GetDetachOutputs() => new ObservableCollection<IDOutput>();
 
         // Clean Tab Outputs
-        private ObservableCollection<IDOutput> GetGlassTransferOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetGlassAlignLeftOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetGlassAlignRightOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetTransferInShuttleLeftOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetTransferInShuttleRightOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetWETCleanLeftOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetWETCleanRightOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetAFCleanLeftOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetAFCleanRightOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetTransferRotationLeftOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetTransferRotationRightOutputs() => new ObservableCollection<IDOutput>();
 
         // Unload Tab Outputs
-        private ObservableCollection<IDOutput> GetUnloadTransferLeftOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetUnloadTransferRightOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetUnloadAlignOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetRobotUnloadOutputs() => new ObservableCollection<IDOutput>();
         #endregion
 
         #region GetProcess
@@ -532,101 +434,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             RecipeSelector = recipeSelector;
             DataViewModel = dataViewModel;
             SelectedProcess = ProcessListTeaching.FirstOrDefault();
-            
-            // Initialize InterlockService
-            _interlockService = InterlockService.Default;
-            InitializeInterlockRules();
-        }
-        
-        private void InitializeInterlockRules()
-        {
-            // Rule 1: Safety door must be closed
-            _interlockService.RegisterRule(new LambdaInterlockRule(
-                "SafetyDoorClosed",
-                ctx => ctx.IsSafetyDoorClosed
-            ));
-            
-            // Rule 2: No axis should be moving
-            _interlockService.RegisterRule(new LambdaInterlockRule(
-                "NoAxisMoving",
-                ctx => !ctx.IsAxisMoving
-            ));
-            
-            // Rule 3: Cylinder status must be OK
-            _interlockService.RegisterRule(new LambdaInterlockRule(
-                "CylinderOk",
-                ctx => ctx.IsCylinderOk
-            ));
-            
-            // Subscribe to interlock changes
-            _interlockService.InterlockChanged += OnInterlockChanged;
-        }
-        
-        private void UpdateInterlockContext()
-        {
-            _interlockService.UpdateContext(ctx =>
-            {
-                ctx.IsSafetyDoorClosed = IsSafetyDoorClosed;
-                ctx.IsAxisMoving = IsAxisMoving;
-                ctx.IsCylinderOk = IsCylinderOk;
-            });
-        }
-        
-        private void OnInterlockChanged(string key, bool isSatisfied)
-        {
-
-        }
-        
-        /// <summary>
-        /// Updates interlock status based on actual device states
-        /// Call this method periodically to keep interlock status current
-        /// </summary>
-        public void UpdateInterlockStatus()
-        {
-            // Update safety door status from inputs
-            IsSafetyDoorClosed = Devices?.Inputs?.DoorLock1L?.Value == true &&
-                                Devices?.Inputs?.DoorLock1R?.Value == true &&
-                                Devices?.Inputs?.DoorLock2L?.Value == true &&
-                                Devices?.Inputs?.DoorLock2R?.Value == true &&
-                                Devices?.Inputs?.DoorLock3L?.Value == true &&
-                                Devices?.Inputs?.DoorLock3R?.Value == true &&
-                                Devices?.Inputs?.DoorLock4L?.Value == true &&
-                                Devices?.Inputs?.DoorLock4R?.Value == true &&
-                                Devices?.Inputs?.DoorLock5L?.Value == true &&
-                                Devices?.Inputs?.DoorLock5R?.Value == true &&
-                                Devices?.Inputs?.DoorLock6L?.Value == true &&
-                                Devices?.Inputs?.DoorLock6R?.Value == true &&
-                                Devices?.Inputs?.DoorLock7L?.Value == true &&
-                                Devices?.Inputs?.DoorLock7R?.Value == true;
-            
-            // Update axis moving status
-            bool anyAxisMoving = false;
-            if (Devices?.MotionsInovance?.All != null)
-            {
-                anyAxisMoving |= Devices.MotionsInovance.All.Any(m => m.Status.IsMotioning);
-            }
-            if (Devices?.MotionsAjin?.All != null)
-            {
-                anyAxisMoving |= Devices.MotionsAjin.All.Any(m => m.Status.IsMotioning);
-            }
-            IsAxisMoving = anyAxisMoving;
-            
-            // Update cylinder status (assuming all cylinders should be in proper state)
-            bool allCylindersOk = true;
-            if (Devices?.Cylinders != null)
-            {
-                // Check some critical cylinders for safety
-                // You can add more cylinder checks as needed
-                var criticalCylinders = new[]
-                {
-                    Devices.Cylinders.InCstStopperUpDown,
-                    Devices.Cylinders.OutCstStopperUpDown,
-                    Devices.Cylinders.RobotFixtureClampUnclamp,
-                    Devices.Cylinders.TransferFixtureUpDown
-                };
-                allCylindersOk = criticalCylinders.All(c => c != null);
-            }
-            IsCylinderOk = allCylindersOk;
         }
         public class PositionTeaching : ObservableObject
         {
@@ -654,60 +461,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 get => new RelayCommand<object>((p) =>
                 {
-                    // Check interlock conditions before moving
-                    if (!CheckInterlockConditions())
-                    {
-                        return;
-                    }
-                    
                     string MoveTo = (string)Application.Current.Resources["str_MoveTo"];
                     if (MessageBoxEx.ShowDialog($"{MoveTo} {Name} ?") == true)
                     {
                         Motion.MoveAbs(Position);
                     }
                 });
-            }
-            
-            private bool CheckInterlockConditions()
-            {
-                // Get the parent TeachViewModel to access interlock service
-                var teachViewModel = Application.Current.MainWindow?.DataContext as MainWindowViewModel;
-                if (teachViewModel?.CurrentFrameVM is TeachViewModel parentTeachVM)
-                {
-                    // Check if all interlock conditions are satisfied
-                    var context = new InterlockContext
-                    {
-                        IsSafetyDoorClosed = parentTeachVM.IsSafetyDoorClosed,
-                        IsAxisMoving = parentTeachVM.IsAxisMoving,
-                        IsCylinderOk = parentTeachVM.IsCylinderOk
-                    };
-                    
-                    // Check safety door
-                    if (!context.IsSafetyDoorClosed)
-                    {
-                        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_SafetyDoorOpen"], 
-                                              (string)Application.Current.Resources["str_Warning"]);
-                        return false;
-                    }
-                    
-                    // Check if any axis is moving
-                    if (context.IsAxisMoving)
-                    {
-                        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_AxisMoving"], 
-                                              (string)Application.Current.Resources["str_Warning"]);
-                        return false;
-                    }
-                    
-                    // Check cylinder status
-                    if (!context.IsCylinderOk)
-                    {
-                        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_CylinderNotOk"], 
-                                              (string)Application.Current.Resources["str_Warning"]);
-                        return false;
-                    }
-                }
-                
-                return true;
             }
             private System.Timers.Timer _timer;
             private readonly RecipeSelector _recipeSelector;
