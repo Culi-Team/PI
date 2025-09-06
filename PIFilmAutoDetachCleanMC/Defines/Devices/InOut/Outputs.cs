@@ -184,12 +184,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput OutShuttleVac2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_SHUTTLE_VAC_2_ON_OFF);
         public IDOutput UnloadTransferLVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_TRANSFER_L_VAC_ON_OFF);
         public IDOutput UnloadTransferRVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_TRANSFER_R_VAC_ON_OFF);
-        public IDOutput OpRButtonRedLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OP_R_BUTTON_RED_LAMP);
-        public IDOutput OpRButtonGreenLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OP_R_BUTTON_GREEN_LAMP);
-        public IDOutput OpRButtonYellowLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OP_R_BUTTON_YELLOW_LAMP);
-        public IDOutput OpLButtonRedLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OP_L_BUTTON_RED_LAMP);
-        public IDOutput OpLButtonGreenLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OP_L_BUTTON_GREEN_LAMP);
-        public IDOutput OpLButtonYellowLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OP_L_BUTTON_YELLOW_LAMP);
+        public IDOutput OpRButtonStopLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OP_R_BUTTON_STOP_LAMP);
+        public IDOutput OpRButtonStartLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OP_R_BUTTON_START_LAMP);
+        public IDOutput OpRButtonResetLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OP_R_BUTTON_RESET_LAMP);
+        public IDOutput OpLButtonStopLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OP_L_BUTTON_STOP_LAMP);
+        public IDOutput OpLButtonStartLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OP_L_BUTTON_START_LAMP);
+        public IDOutput OpLButtonResetLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OP_L_BUTTON_RESET_LAMP);
         public IDOutput DoorOpen => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DOOR_OPEN);
         public IDOutput UnloadGlassAlignVac1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_GLASS_ALIGN_VAC_1_ON_OFF);
         public IDOutput UnloadGlassAlignVac2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_GLASS_ALIGN_VAC_2_ON_OFF);
