@@ -124,7 +124,7 @@
                 Motions="{Binding DataContext.InWorkConveyorMotions, ElementName=root}"
                 Outputs="{Binding DataContext.Outputs, ElementName=root}"
                 Inputs="{Binding DataContext.Inputs, ElementName=root}"
-                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                PositionTeachings="{Binding DataContext.InWorkConveyorPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
         </DataTemplate>
 
@@ -134,7 +134,7 @@
                 Motions="{Binding DataContext.OutWorkConveyorMotions, ElementName=root}"
                 Outputs="{Binding DataContext.Outputs, ElementName=root}"
                 Inputs="{Binding DataContext.Inputs, ElementName=root}"
-                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
+                PositionTeachings="{Binding DataContext.OutWorkConveyorPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
         </DataTemplate>
 
