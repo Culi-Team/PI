@@ -5,11 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
              xmlns:cvt="clr-namespace:PIFilmAutoDetachCleanMC.Converters"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
-             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:vm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels"
-             xmlns:slt="clr-namespace:PIFilmAutoDetachCleanMC.RecipeNameSelectors"
              IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
              mc:Ignorable="d"
              d:DesignHeight="450"
@@ -23,12 +19,13 @@
                TargetType="{x:Type TabItem}"
                BasedOn="{StaticResource {x:Type TabItem}}">
             <Setter Property="Width" Value="Auto" />
+            <Setter Property="Height" Value="Auto" />
             <Setter Property="Background" Value="#F5F5F5"/>
             <Setter Property="Foreground" Value="#333333"/>
             <Setter Property="BorderBrush" Value="#CCCCCC"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Margin" Value="1"/>
-            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Padding" Value="8,15"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -38,7 +35,7 @@
                                     Background="{TemplateBinding Background}" 
                                     BorderBrush="{TemplateBinding BorderBrush}" 
                                     BorderThickness="{TemplateBinding BorderThickness}" 
-                                    CornerRadius="4,4,0,0" 
+                                    CornerRadius="4,0,0,4" 
                                     Margin="{TemplateBinding Margin}">
                                 <ContentPresenter x:Name="ContentSite" 
                                                 VerticalAlignment="Center" 
@@ -87,12 +84,29 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="TabControl">
                         <Grid ClipToBounds="True" KeyboardNavigation.TabNavigation="Local">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.7*"/>
+                                <ColumnDefinition Width="9.3*"/>
+                            </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <UniformGrid Rows="1" IsItemsHost="True"/>
-                            <Border Grid.Row="1"
+                            
+                            <!-- Header trong cột tab -->
+                            <Border Grid.Column="0" Grid.Row="0" Background="Transparent" Padding="10,8" Margin="0,0,0,5">
+                                <TextBlock Text="Unit" 
+                                           FontSize="16" 
+                                           FontWeight="Bold" 
+                                           Foreground="Black" 
+                                           HorizontalAlignment="Center"/>
+                            </Border>
+                            
+                            <!-- Tab items -->
+                            <UniformGrid Columns="1" Rows="15" IsItemsHost="True" Grid.Column="0" Grid.Row="1"/>
+                            
+                            <!-- Content area -->
+                            <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     KeyboardNavigation.DirectionalNavigation="Contained">
@@ -105,17 +119,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <!-- Template cho UnitTeachingView  -->
-        <DataTemplate x:Key="UnitTeachingTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
-                Motions="{Binding DataContext.Motions, ElementName=root}"
-                Outputs="{Binding DataContext.Outputs, ElementName=root}"
-                Inputs="{Binding DataContext.Inputs, ElementName=root}"
-                PositionTeachings="{Binding DataContext.PositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
-        </DataTemplate>
 
         <!-- CSTLoadUnload Tab Templates -->
         <DataTemplate x:Key="InWorkConveyorTemplate">
@@ -138,9 +141,6 @@
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
         </DataTemplate>
 
-
-        <!-- Detach Tab Templates -->
-
         <DataTemplate x:Key="TransferFixtureTemplate">
             <local:UnitTeachingView 
                 Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
@@ -150,7 +150,6 @@
                 PositionTeachings="{Binding DataContext.TransferFixturePositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
         </DataTemplate>
-
 
         <DataTemplate x:Key="DetachTemplate">
             <local:UnitTeachingView 
@@ -162,85 +161,13 @@
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
         </DataTemplate>
 
-
-
-        <!-- Style cho TabItem với UnitTeachingView -->
-        <Style x:Key="UnitTeachingTabItemStyle" TargetType="TabItem">
-            <Setter Property="ContentTemplate" Value="{StaticResource UnitTeachingTemplate}"/>
-            <Setter Property="Background" Value="LightGray"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="BorderBrush" Value="DarkGray"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Margin" Value="1"/>
-            <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="FontWeight" Value="Normal"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TabItem">
-                        <Grid>
-                            <Border Name="Border" 
-                                    Background="{TemplateBinding Background}" 
-                                    BorderBrush="{TemplateBinding BorderBrush}" 
-                                    BorderThickness="{TemplateBinding BorderThickness}" 
-                                    CornerRadius="3,3,0,0" 
-                                    Margin="{TemplateBinding Margin}">
-                                <ContentPresenter x:Name="ContentSite" 
-                                                VerticalAlignment="Center" 
-                                                HorizontalAlignment="Center" 
-                                                ContentSource="Header" 
-                                                Margin="{TemplateBinding Padding}" 
-                                                RecognizesAccessKey="True"/>
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <!-- Trạng thái đã chọn (Selected) -->
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#4CAF50"/>
-                                <Setter Property="Foreground" Value="White"/>
-                                <Setter Property="FontWeight" Value="Bold"/>
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#2E7D32"/>
-                            </Trigger>
-                            
-                            <!-- Trạng thái đang chọn (IsMouseOver) -->
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#81C784"/>
-                                <Setter Property="Foreground" Value="White"/>
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#4CAF50"/>
-                            </Trigger>
-                            
-                            <!-- Trạng thái bình thường khi không được chọn -->
-                            <Trigger Property="IsSelected" Value="False">
-                                <Setter TargetName="Border" Property="Background" Value="#E0E0E0"/>
-                                <Setter Property="Foreground" Value="#424242"/>
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#BDBDBD"/>
-                            </Trigger>
-                            
-                            <!-- Hiệu ứng khi focus -->
-                            <Trigger Property="IsKeyboardFocused" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#66BB6A"/>
-                                <Setter Property="Foreground" Value="White"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
     </UserControl.Resources>
     <Grid>
-        <TabControl Grid.Column="0" SelectionChanged="TabControl_SelectionChanged">
-            <TabItem Header="CSTLoadUnload Unit">
-                <TabControl SelectionChanged="TabControl_SelectionChanged">
-                    <TabItem Header="In Cassette Position" ContentTemplate="{StaticResource InWorkConveyorTemplate}"/>
-                    <TabItem Header="Out Cassette Position" ContentTemplate="{StaticResource OutWorkConveyorTemplate}"/>
-                </TabControl>
-            </TabItem>
-            <TabItem Header="Detach Unit">
-                <TabControl SelectionChanged="TabControl_SelectionChanged">
-                    <TabItem Header="Transfer Fixture Position" ContentTemplate="{StaticResource TransferFixtureTemplate}"/>
-                    <TabItem Header="Detach Position" ContentTemplate="{StaticResource DetachTemplate}"/>
-                </TabControl>
-            </TabItem>
+        <TabControl SelectionChanged="TabControl_SelectionChanged" TabStripPlacement="Left">
+            <TabItem Header="In Cassette" ContentTemplate="{StaticResource InWorkConveyorTemplate}"/>
+            <TabItem Header="Out Cassette" ContentTemplate="{StaticResource OutWorkConveyorTemplate}"/>
+            <TabItem Header="Transfer Fixture" ContentTemplate="{StaticResource TransferFixtureTemplate}"/>
+            <TabItem Header="Detach " ContentTemplate="{StaticResource DetachTemplate}"/>
         </TabControl>
     </Grid>
 </UserControl>

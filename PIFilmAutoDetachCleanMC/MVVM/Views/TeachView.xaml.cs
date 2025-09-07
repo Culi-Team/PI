@@ -54,13 +54,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             {
                 switch (header)
                 {
-                    case "In Cassette Position":
+                    case "In Cassette":
                         return viewModel.Processes?.InWorkConveyorProcess;
-                    case "Out Cassette Position":
+                    case "Out Cassette":
                         return viewModel.Processes?.OutWorkConveyorProcess;
-                    case "Transfer Fixture Position":
+                    case "Transfer Fixture":
                         return viewModel.Processes?.TransferFixtureProcess;
-                    case "Detach Position":
+                    case "Detach":
                         return viewModel.Processes?.DetachProcess;
                     default:
                         return null;
