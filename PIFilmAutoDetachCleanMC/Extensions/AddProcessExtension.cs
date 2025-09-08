@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
-using PIFilmAutoDetachCleanMC.Defines.VirtualIO;
 using PIFilmAutoDetachCleanMC.Process;
 using System;
 using System.Collections.Generic;
@@ -52,7 +51,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddKeyedScoped<IProcess<ESequence>, RobotUnloadProcess>(EProcess.RobotUnload.ToString());
 
 
-                services.AddSingleton<Processes>((ser) =>
+                services.AddSingleton((ser) =>
                 {
                     List<IProcess<ESequence>> processList = new List<IProcess<ESequence>>();
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIFilmAutoDetachCleanMC.Defines.VirtualIO
+namespace PIFilmAutoDetachCleanMC.Defines
 {
     public class VirtualIO<TEnum> where TEnum : Enum
     {

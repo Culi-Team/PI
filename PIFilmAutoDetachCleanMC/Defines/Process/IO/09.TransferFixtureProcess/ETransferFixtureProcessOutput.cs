@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum EVinylCleanProcessOutput
+    public enum ETransferFixtureProcessOutput
     {
-        VINYL_CLEAN_REQ_LOAD,
-        VINYL_CLEAN_REQ_UNLOAD
+        FIXTURE_ALIGN_TRANSFER_DONE,
+        FIXTURE_DETACH_TRANSFER_DONE,
+        FIXTURE_REMOVE_FILM_TRANSFER_DONE,
     }
 }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
-    public static class AddProcessIOExtension 
+    public static class AddVirtualIOExtension 
     {
         public static IHostBuilder AddProcessIO(this IHostBuilder hostBuilder)
         {
@@ -29,8 +29,19 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EVinylCleanProcessInput>>("VinylCleanInput");
                 services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EVinylCleanProcessOutput>>("VinylCleanOutput");
 
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EFixtureAlignProcessInput>>("FixtureAlignInput");
+                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EFixtureAlignProcessOutput>>("FixtureAlignOutput");
 
-                services.AddSingleton<ProcessIO>();
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ERemoveFilmProcessInput>>("RemoveFilmInput");
+                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ERemoveFilmProcessOutput>>("RemoveFilmOutput");
+
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ETransferFixtureProcessInput>>("TransferFixtureInput");
+                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ETransferFixtureProcessOutput>>("TransferFixtureOutput");
+
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EDetachProcessInput>>("DetachInput");
+                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EDetachProcessOutput>>("DetachOutput");
+
+                services.AddSingleton<VirtualIO>();
 
             });
 
