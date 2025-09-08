@@ -166,5 +166,21 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             };
 
         }
+
+        private void ListBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is not ListBox listBox) return;
+
+            if (listBox.Items.Count > 0)
+            {
+                listBox.SelectedIndex = 0;
+
+                var item = listBox.ItemContainerGenerator.ContainerFromIndex(0) as ListBoxItem;
+                if (item != null)
+                {
+                    item.Focus(); 
+                }
+            }
+        }
     }
 }

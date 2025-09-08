@@ -14,10 +14,11 @@
              d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="1*" />
             <RowDefinition Height="15*" />
         </Grid.RowDefinitions>
         <ListBox ItemsSource="{Binding Recipes}"
+                 Loaded="ListBox_Loaded"
                  SelectedItem="{Binding SelectedRecipe}"
                  SelectionChanged="RecipeChanged"
                  SelectedIndex="0">

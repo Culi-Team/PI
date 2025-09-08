@@ -19,8 +19,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public DataViewModel(RecipeSelector recipeSelector)
         {
             RecipeSelector = recipeSelector;
-            var firstRecipe = Recipes.FirstOrDefault();
-                _selectedRecipe = firstRecipe;
         }
 
         public RecipeSelector RecipeSelector { get; }
@@ -28,7 +26,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public string SelectedModel
         {
             get { return selectedModel; }
-            set { selectedModel = value; OnPropertyChanged(); }
+            set 
+            {
+                selectedModel = value;
+                OnPropertyChanged(); 
+            }
         }
 
         public event Action LoadRecipeEvent;
@@ -53,8 +55,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         public RecipeBase SelectedRecipe
         {
-            get { return _selectedRecipe; }
-            set { _selectedRecipe = value; OnPropertyChanged(); }
+            get 
+            {
+                return _selectedRecipe; 
+            }
+            set 
+            {
+                _selectedRecipe = value;
+                OnPropertyChanged(); 
+            }
         }
 
         public RecipeBase CurrentRecipe
