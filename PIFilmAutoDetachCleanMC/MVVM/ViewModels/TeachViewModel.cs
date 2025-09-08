@@ -559,6 +559,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 PositionChecker();
                 _recipeSelector = recipeSelector;
+                _position = 0.0; // Khởi tạo giá trị mặc định
             }
             private bool isActive;
 
@@ -569,11 +570,23 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 get => isActive;
                 set
                 {
-                    isActive = value;
-                    OnPropertyChanged("IsActive");
+                    if (isActive != value)
+                    {
+                        isActive = value;
+                        OnPropertyChanged(nameof(IsActive));
+                    }
                 }
             }
-            public double Position { get; set; }
+            private double _position;
+            public double Position 
+            { 
+                get => _position; 
+                set 
+                { 
+                    _position = value; 
+                    OnPropertyChanged(nameof(Position));
+                } 
+            }
             public IMotion Motion { get; set; }
             public ICommand PositionTeachingCommand
             {
@@ -586,20 +599,42 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     }
                 });
             }
-            private System.Timers.Timer _timer;
+            private System.Windows.Threading.DispatcherTimer _timer;
             private readonly RecipeSelector _recipeSelector;
 
             public void PositionChecker()
             {
-                _timer = new System.Timers.Timer(1000);
-                _timer.Elapsed += CheckPosition;
-                _timer.AutoReset = true;
-                _timer.Enabled = true;
+                _timer = new System.Windows.Threading.DispatcherTimer();
+                _timer.Interval = System.TimeSpan.FromMilliseconds(16); // ~60 FPS
+                _timer.Tick += CheckPosition;
+                _timer.Start();
             }
 
-            private void CheckPosition(object sender, ElapsedEventArgs e)
+            private void CheckPosition(object sender, EventArgs e)
             {
-                IsActive = Motion?.IsOnPosition(Position) ?? false;
+                try
+                {
+                    // Kiểm tra nhanh trước khi gọi IsOnPosition
+                    if (Motion == null) return;
+                    
+                    bool newIsActive = Motion.IsOnPosition(Position);
+                    
+                    // Chỉ update UI khi có thay đổi
+                    if (isActive != newIsActive)
+                    {
+                        isActive = newIsActive;
+                        OnPropertyChanged(nameof(IsActive));
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                }
+            }
+
+            public void StopPositionChecker()
+            {
+                _timer?.Stop();
+                _timer = null;
             }
             public RecipeSelector RecipeSelector { get; set; }
             public double PositionRecipe { get; set; }
@@ -618,7 +653,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 // Sử dụng PropertyName để mapping chính xác - đơn giản và rõ ràng nhất
                 if (string.IsNullOrEmpty(PropertyName))
                 {
-                    System.Diagnostics.Debug.WriteLine($"Error: PropertyName is null or empty for position '{name}'");
                     return;
                 }
 
@@ -686,7 +720,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         break;
                     
                     default:
-                        System.Diagnostics.Debug.WriteLine($"Warning: PropertyName '{PropertyName}' not mapped in SavePosition method");
                         break;
                 }
                 _recipeSelector.Save();
