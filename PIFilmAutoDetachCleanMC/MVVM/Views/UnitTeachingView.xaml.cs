@@ -1,13 +1,13 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Process;
+using EQX.Core.Recipe;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
 using static PIFilmAutoDetachCleanMC.MVVM.ViewModels.TeachViewModel;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-
 
 namespace PIFilmAutoDetachCleanMC.MVVM.Views
 {
@@ -31,20 +31,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         }
         public static readonly DependencyProperty CylindersProperty =
             DependencyProperty.Register("Cylinders", typeof(ObservableCollection<ICylinder>), typeof(UnitTeachingView), new PropertyMetadata(new ObservableCollection<ICylinder> { }));
-        public ObservableCollection<PositionTeaching> PositionTeachings
-        {
-            get { return (ObservableCollection<PositionTeaching>)GetValue(PositionTeachingsProperty); }
-            set { SetValue(PositionTeachingsProperty, value); }
-        }
-        public static readonly DependencyProperty PositionTeachingsProperty =
-            DependencyProperty.Register("PositionTeachings", typeof(ObservableCollection<PositionTeaching>), typeof(UnitTeachingView), new PropertyMetadata(new ObservableCollection<PositionTeaching> { }));
-        public ObservableCollection<IDOutput> Outputs
-        {
-            get { return (ObservableCollection<IDOutput>)GetValue(OutputsProperty); }
-            set { SetValue(OutputsProperty, value); }
-        }
-        public static readonly DependencyProperty OutputsProperty =
-            DependencyProperty.Register("Outputs", typeof(ObservableCollection<IDOutput>), typeof(UnitTeachingView), new PropertyMetadata(new ObservableCollection<IDOutput> { }));
+
         public ObservableCollection<IDInput> Inputs
         {
             get { return (ObservableCollection<IDInput>)GetValue(InputsProperty); }
@@ -52,6 +39,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         }
         public static readonly DependencyProperty InputsProperty =
             DependencyProperty.Register("Inputs", typeof(ObservableCollection<IDInput>), typeof(UnitTeachingView), new PropertyMetadata(new ObservableCollection<IDInput> { }));
+
+        public ObservableCollection<IDOutput> Outputs
+        {
+            get { return (ObservableCollection<IDOutput>)GetValue(OutputsProperty); }
+            set { SetValue(OutputsProperty, value); }
+        }
+        public static readonly DependencyProperty OutputsProperty =
+            DependencyProperty.Register("Outputs", typeof(ObservableCollection<IDOutput>), typeof(UnitTeachingView), new PropertyMetadata(new ObservableCollection<IDOutput> { }));
+
+        public ObservableCollection<PositionTeaching> PositionTeachings
+        {
+            get { return (ObservableCollection<PositionTeaching>)GetValue(PositionTeachingsProperty); }
+            set { SetValue(PositionTeachingsProperty, value); }
+        }
+        public static readonly DependencyProperty PositionTeachingsProperty =
+            DependencyProperty.Register("PositionTeachings", typeof(ObservableCollection<PositionTeaching>), typeof(UnitTeachingView), new PropertyMetadata(new ObservableCollection<PositionTeaching> { }));
 
         public IProcess<ESequence> SelectedProcess
         {
@@ -65,43 +68,5 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         {
             InitializeComponent();
         }
-
-
-        private void UpdateMotionsBasedOnProcess()
-        {
-            if (DataContext is TeachViewModel viewModel && SelectedProcess != null)
-            {
-                ObservableCollection<IMotion> processMotions = GetMotionsForProcess(viewModel, SelectedProcess);
-                if (processMotions != null)
-                {
-                    Motions = processMotions;
-                }
-            }
-        }
-
-        private ObservableCollection<IMotion> GetMotionsForProcess(TeachViewModel viewModel, IProcess<ESequence> process)
-        {
-            // Get process name to determine which motion property to use
-            string processName = process?.GetType().Name ?? "";
-            
-            switch (processName)
-            {
-                // CSTLoadUnload Tab
-                case "InWorkConveyorProcess":
-                    return viewModel.InWorkConveyorMotions;
-                case "OutWorkConveyorProcess":
-                    return viewModel.OutWorkConveyorMotions;
-
-                // Detach Tab
-                case "TransferFixtureProcess":
-                    return viewModel.TransferFixtureMotions;
-                case "DetachProcess":
-                    return viewModel.DetachMotions;
-
-                default:
-                    return viewModel.Motions; 
-            }
-        }
-
     }
 }

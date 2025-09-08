@@ -13,57 +13,26 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
     <UserControl.Resources>
+        <!-- Converters -->
         <cvt:BoolToBrushConverter x:Key="BoolToBrushConverter" />
         <cvt:VacuumListConverter x:Key="VacuumListConverter" />
+        
+        <!-- DataTemplates -->
         <DataTemplate DataType="{x:Type motion:MotionBase}">
-            <ui:MovingView Margin="5" 
-                       MaxWidth="290"/>
+            <ui:MovingView Margin="5" MaxWidth="290"/>
         </DataTemplate>
-
-        <!-- DataTemplate cho Cylinder sử dụng CylinderView gốc -->
         <DataTemplate DataType="{x:Type inout:CylinderBase}">
             <ui:CylinderView/>
         </DataTemplate>
 
-        <!-- Style cho Border với GroupBox -->
+        <!-- Common Styles -->
         <Style x:Key="GroupBoxBorderStyle" TargetType="Border">
             <Setter Property="BorderBrush" Value="Gray"/>
             <Setter Property="BorderThickness" Value="1"/>
         </Style>
-
-        <!-- Style cho GroupBox với ScrollViewer -->
         <Style x:Key="ScrollableGroupBoxStyle" TargetType="GroupBox">
             <Setter Property="Margin" Value="1 0 1 0"/>
         </Style>
-
-        <!-- Style cho ItemsControl với Grid 1 cột -->
-        <Style x:Key="UniformItemsControlStyle" TargetType="ItemsControl">
-            <Setter Property="ItemsPanel">
-                <Setter.Value>
-                    <ItemsPanelTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                        </Grid>
-                    </ItemsPanelTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ItemTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <Grid Grid.Row="0">
-                            <ContentControl Content="{Binding .}" 
-                                          HorizontalAlignment="Stretch" 
-                                          VerticalAlignment="Stretch"
-                                          Margin="5"/>
-                        </Grid>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Style cho ItemsControl hiển thị horizontal -->
         <Style x:Key="HorizontalItemsControlStyle" TargetType="ItemsControl">
             <Setter Property="ItemsPanel">
                 <Setter.Value>
@@ -75,55 +44,11 @@
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <ContentControl Content="{Binding .}" 
-                                      HorizontalAlignment="Stretch" 
-                                      VerticalAlignment="Stretch"
-                                      Margin="5"
-                                      MinWidth="200"
-                                      MaxWidth="300"
-                                      MinHeight="200"/>
+                        <ContentControl Content="{Binding}" Margin="5" MinWidth="200" MaxWidth="300" MinHeight="200"/>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <!-- Style tùy chỉnh cho CylinderView để giảm kích thước -->
-        <Style x:Key="CompactCylinderViewStyle" TargetType="ContentControl">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ContentControl">
-                        <Border Width="160" Height="200" Margin="1">
-                            <ContentPresenter Content="{TemplateBinding Content}"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Style cho ItemsControl với UniformGrid 3 cột -->
-        <Style x:Key="ColumnItemsControlStyle" TargetType="ItemsControl">
-            <Setter Property="ItemsPanel">
-                <Setter.Value>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="4" 
-                                   HorizontalAlignment="Stretch" 
-                                   VerticalAlignment="Top"/>
-                    </ItemsPanelTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ItemTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <ContentControl Content="{Binding .}" 
-                                      Style="{StaticResource CompactCylinderViewStyle}"
-                                      HorizontalAlignment="Stretch"
-                                      VerticalAlignment="Top"/>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Style cho ItemsControl Input/Output -->
         <Style x:Key="InputOutputItemsControlStyle" TargetType="ItemsControl">
             <Setter Property="ItemsPanel">
                 <Setter.Value>
@@ -135,17 +60,15 @@
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <ContentControl Content="{Binding .}" Margin="5 0 5 10"/>
+                        <ContentControl Content="{Binding}" Margin="5 0 5 10"/>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="0.7*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -161,7 +84,7 @@
         </Border>
 
         <!-- Motion Section -->
-        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+        <Border Grid.Row="1" Grid.Column="0">
             <Border.Style>
                 <Style TargetType="Border" BasedOn="{StaticResource GroupBoxBorderStyle}">
                     <Setter Property="Visibility" Value="Visible"/>
@@ -188,94 +111,168 @@
         <!-- Position Teaching Section -->
         <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="0" Grid.Column="0" >
             <GroupBox Header="Position Teaching" Style="{StaticResource ScrollableGroupBoxStyle}" >
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 5 0 0">
-                    <StackPanel>
-                        <!-- Debug info -->
-                        <TextBlock Text="{Binding SelectedProcess.Name, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, StringFormat='Selected Process: {0}'}" 
-                                   Foreground="Blue" FontWeight="Bold" Margin="5"/>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <DataGrid x:Name="PositionTeachingDataGrid"
+                              ItemsSource="{Binding PositionTeachings, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserReorderColumns="False"
+                              CanUserResizeColumns="True"
+                              CanUserSortColumns="False"
+                              IsReadOnly="False"
+                              GridLinesVisibility="Horizontal"
+                              HeadersVisibility="Column"
+                              AlternatingRowBackground="#F5F5F5"
+                              RowHeaderWidth="0"
+                              Margin="5">
                         
-                        <ItemsControl ItemsSource="{Binding PositionTeachings, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
-                                      Margin="5 10 0 0">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="0 0 0 10">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="8*" />
-                                        <ColumnDefinition Width="3*" />
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Orientation="Horizontal"
-                                                VerticalAlignment="Center"
-                                                Height="50">
-                                        <Border Width="20"
-                                                BorderThickness="1"
-                                                CornerRadius="5 0 0 5"
-                                                BorderBrush="Black"
-                                                Background="{Binding IsActive, Converter={StaticResource BoolToBrushConverter}}">
-                                        </Border>
-                                        <Button Content="{Binding Name}"
-                                                Width="280"
-                                                Background="White"
-                                                Command="{Binding PositionTeachingCommand}"
-                                                Cursor="Hand">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border BorderThickness="1"
-                                                            BorderBrush="Black"
-                                                            CornerRadius="0 5 5 0"
-                                                            Background="{TemplateBinding Background}">
-                                                        <ContentPresenter HorizontalAlignment="Center"
-                                                                          VerticalAlignment="Center"
-                                                                          IsHitTestVisible="True" />
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                            <Button.Effect>
-                                                <DropShadowEffect Color="Silver"
-                                                                  Opacity="0.5"
-                                                                  BlurRadius="3" />
-                                            </Button.Effect>
-                                        </Button>
-                                    </StackPanel>
-                                    <UniformGrid Grid.Column="1"
-                                                 HorizontalAlignment="Right">
-                                        <ui:ImageButton Content="{DynamicResource str_Save}"
-                                                        Command="{Binding SaveRecipeCommand}"
-                                                        Image="{StaticResource image_save_all_selected}"
-                                                        Margin="2"
-                                                        Height="50"
-                                                        Width="110" />
-                                    </UniformGrid>
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
+                        <!-- Remove row selection highlighting -->
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#F0F0F0"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.CellStyle>
+                        
+                        <DataGrid.Columns>
+                            <!-- Position Name -->
+                            <DataGridTextColumn Header="Position Name" Binding="{Binding Name}" Width="250" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Margin" Value="5,0"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Motion Name -->
+                            <DataGridTextColumn Header="Motion" Binding="{Binding Motion.Name}" Width="200" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="FontFamily" Value="Consolas"/>
+                                        <Setter Property="Background" Value="#E8F4FD"/>
+                                        <Setter Property="Padding" Value="5,2"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Current Position -->
+                            <DataGridTextColumn Header="Current Position" Binding="{Binding Motion.Status.ActualPosition, StringFormat=F3}" Width="100" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="FontFamily" Value="Consolas"/>
+                                        <Setter Property="Background" Value="#E8F4FD"/>
+                                        <Setter Property="Padding" Value="5,2"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Target Position (Editable) -->
+                            <DataGridTextColumn Header="Target Position" Binding="{Binding Position, StringFormat=F3}" Width="100" IsReadOnly="False">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="FontFamily" Value="Consolas"/>
+                                        <Setter Property="Background" Value="#FFF2CC"/>
+                                        <Setter Property="Padding" Value="5,2"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <!-- Status Indicator -->
+                            <DataGridTemplateColumn Header="Status" Width="50">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Ellipse Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Ellipse.Style>
+                                                <Style TargetType="Ellipse">
+                                                    <Setter Property="Fill" Value="LightGray"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                                            <Setter Property="Fill" Value="LimeGreen"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Ellipse.Style>
+                                        </Ellipse>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- Move To Button -->
+                            <DataGridTemplateColumn Header="Move To" Width="70">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Move" Command="{Binding PositionTeachingCommand}"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                Padding="8,4" Margin="2" Background="#4CAF50" Foreground="White"
+                                                BorderThickness="0" FontWeight="SemiBold"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- Save Button -->
+                            <DataGridTemplateColumn Header="Save" Width="70">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Save" Command="{Binding SaveRecipeCommand}"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                Padding="8,4" Margin="2" Background="#2196F3" Foreground="White"
+                                                BorderThickness="0" FontWeight="SemiBold"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </ScrollViewer>
             </GroupBox>
         </Border>
 
         <!-- In Out Section -->
         <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="1" Grid.Column="2">
-            <GroupBox Header="In Out" Style="{StaticResource ScrollableGroupBoxStyle}"  >
+            <GroupBox Header="In Out" Style="{StaticResource ScrollableGroupBoxStyle}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 5 0 0">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-
                         <!-- Input Section -->
                         <StackPanel>
                             <TextBlock Text="Input" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
                             <ItemsControl ItemsSource="{Binding Inputs, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
-                                Style="{StaticResource InputOutputItemsControlStyle}"/>
+                                          Style="{StaticResource InputOutputItemsControlStyle}"/>
                         </StackPanel>
-
                         <!-- Output Section -->
                         <StackPanel Grid.Column="1">
                             <TextBlock Text="Output" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
                             <ItemsControl ItemsSource="{Binding Outputs, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
-                                Style="{StaticResource InputOutputItemsControlStyle}"/>
+                                          Style="{StaticResource InputOutputItemsControlStyle}"/>
                         </StackPanel>
                     </Grid>
                 </ScrollViewer>
@@ -283,13 +280,13 @@
         </Border>
 
         <!-- Cylinder Section -->
-        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="0" Grid.Column="1">
+        <!--<Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="1" Grid.Column="1">
             <GroupBox Header="Cylinder" Style="{StaticResource ScrollableGroupBoxStyle}" >
                     <UniformGrid  Rows="1">
                         <ItemsControl ItemsSource="{Binding Cylinders, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
                         Style="{StaticResource ColumnItemsControlStyle}"/>
                     </UniformGrid>
             </GroupBox>
-        </Border>
+        </Border>-->
     </Grid>
 </UserControl>
