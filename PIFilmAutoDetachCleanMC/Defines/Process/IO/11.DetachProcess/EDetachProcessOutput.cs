@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum EVinylCleanProcessOutput
+    public enum EDetachProcessOutput
     {
-        VINYL_CLEAN_REQ_LOAD,
-        VINYL_CLEAN_REQ_UNLOAD
+        DETACH_ORIGIN_DONE,
+        DETACH_DONE,
+        DETACH_REQ_UNLOAD_GLASS
     }
 }

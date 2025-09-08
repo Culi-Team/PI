@@ -5,7 +5,6 @@ using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
-using PIFilmAutoDetachCleanMC.Defines.VirtualIO;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System;
 using System.Collections.Generic;
