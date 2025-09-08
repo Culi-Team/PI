@@ -11,6 +11,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         REQUEST_CST_IN,
 
         OUT_CST_READY,
+        OUT_CST_PLACE_DONE,
 
         REQUEST_CST_OUT,
     }

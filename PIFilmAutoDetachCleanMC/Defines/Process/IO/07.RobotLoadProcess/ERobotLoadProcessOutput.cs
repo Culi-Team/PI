@@ -10,6 +10,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         ROBOT_PICK_IN_CST_DONE,
         VINYL_CLEAN_LOAD_DONE,
+
         VINYL_CLEAN_UNLOAD_DONE,
 
         FIXTURE_ALIGN_LOAD_DONE,
