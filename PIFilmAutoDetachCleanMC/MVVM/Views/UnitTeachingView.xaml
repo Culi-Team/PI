@@ -373,17 +373,17 @@
                                     <DataTemplate>
                                         <Button Content="Move" Command="{Binding PositionTeachingCommand}"
                                                 HorizontalAlignment="Left" VerticalAlignment="Center"
-                                                Padding="15,4" Margin="2" Background="YellowGreen" Foreground="White"
+                                                Padding="17,4" Margin="2" Background="YellowGreen" Foreground="White"
                                                 BorderThickness="0" FontWeight="SemiBold"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
 
                             <!-- Get from Motion Button -->
-                            <DataGridTemplateColumn Header="Get Motion" Width="80">
+                            <DataGridTemplateColumn Header="GetCurentPos" Width="80">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="Get Motion" Click="GetMotionPosition_Click"
+                                        <Button Content="GetCurentPos" Click="GetMotionPosition_Click"
                                                 HorizontalAlignment="Left" VerticalAlignment="Center"
                                                 FontSize="9" FontWeight="SemiBold" Background="#FF9800" Foreground="White"
                                                 Padding="10,6" Margin="2" BorderThickness="0" Cursor="Hand"
@@ -398,7 +398,7 @@
                                     <DataTemplate>
                                         <Button Content="Save" Command="{Binding SaveRecipeCommand}"
                                                 HorizontalAlignment="Left" VerticalAlignment="Center"
-                                                Padding="20,4" Margin="2" Background="#4CAF50" Foreground="White"
+                                                Padding="21,4" Margin="2" Background="#4CAF50" Foreground="White"
                                                 BorderThickness="0" FontWeight="SemiBold" Cursor="Hand"
                                                 ToolTip="Save position to recipe"/>
                                     </DataTemplate>
