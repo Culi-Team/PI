@@ -27,7 +27,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool IsFixtureDetect => _devices.Inputs.VinylCleanFixtureDetect.Value;
         private ICylinder FixtureClampCyl => _devices.Cylinders.VinylCleanFixture1ClampUnclamp;
 
-        private ICylinder RollerBwFwCyl => _devices.Cylinders.VinylCleanRollerBwFw;
+        private ICylinder RollerFwBwCyl => _devices.Cylinders.VinylCleanRollerFwBw;
         private ICylinder PusherCyl => _devices.Cylinders.VinylCleanPusherRollerUpDown;
 
         private IDOutput MotorOnOff => _devices.Outputs.VinylCleanMotorOnOff;
@@ -118,8 +118,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EVinylCleanOriginStep.Cyl_Roller_Backward:
                     Log.Debug("Vinyl Clean Cylinder Roller Backward");
-                    RollerBwFwCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => RollerBwFwCyl.IsBackward);
+                    RollerFwBwCyl.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => RollerFwBwCyl.IsBackward);
                     Step.OriginStep++;
                     break;
                 case EVinylCleanOriginStep.Cyl_Roller_Backward_Wait:
@@ -314,8 +314,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EVinylCleanProcessVinylCleanStep.Cyl_Forward:
                     Log.Debug("Vinyl Clean Cylinder Forward");
-                    RollerBwFwCyl.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout,() => RollerBwFwCyl.IsForward);
+                    RollerFwBwCyl.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout,() => RollerFwBwCyl.IsForward);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessVinylCleanStep.Cyl_Forward_Wait:
@@ -344,8 +344,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EVinylCleanProcessVinylCleanStep.Cyl_Backward:
                     Log.Debug("Vinyl Clean Cylinder Backward");
-                    RollerBwFwCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout,() => RollerBwFwCyl.IsBackward);
+                    RollerFwBwCyl.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout,() => RollerFwBwCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessVinylCleanStep.Cyl_Backward_Wait:
@@ -461,8 +461,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_Backward:
                     Log.Debug("Vinyl Clean Cylinder Backward");
-                    RollerBwFwCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout,() => RollerBwFwCyl.IsBackward);
+                    RollerFwBwCyl.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout,() => RollerFwBwCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_Backward_Wait:
