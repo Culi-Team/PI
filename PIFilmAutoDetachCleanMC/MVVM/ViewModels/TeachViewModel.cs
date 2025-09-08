@@ -495,6 +495,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         #region GetDetailProcess
         public void Dispose()
         {
+            // Stop tất cả timers trước khi dispose
+            if (PositionTeachings != null)
+            {
+                foreach (var positionTeaching in PositionTeachings)
+                {
+                    positionTeaching?.StopPositionChecker();
+                }
+            }
+            
             Cylinders = null;
             Inputs = null;
             Outputs = null;
@@ -506,7 +515,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             Dispose();
 
             // CSTLoadUnload Tab
-
             if (SelectedProcess == Processes.InWorkConveyorProcess)
             {
                 Motions = GetInWorkConveyorMotions();
@@ -542,6 +550,26 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 PositionTeachings = GetDetachPositionTeachings();
             }
             
+            // Start timers sau khi tất cả PositionTeaching objects được tạo
+            StartPositionCheckers();
+        }
+        
+        private void StartPositionCheckers()
+        {
+            // Delay start timers để tránh block UI khi mở chương trình
+            System.Threading.Tasks.Task.Delay(2000).ContinueWith(_ =>
+            {
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (PositionTeachings != null)
+                    {
+                        foreach (var positionTeaching in PositionTeachings)
+                        {
+                            positionTeaching?.PositionChecker();
+                        }
+                    }
+                });
+            });
         }
         #endregion
 
@@ -559,7 +587,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             public PositionTeaching(RecipeSelector recipeSelector)
             {
-                PositionChecker();
                 _recipeSelector = recipeSelector;
                 _position = 0.0; // Khởi tạo giá trị mặc định
             }
@@ -589,7 +616,17 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     OnPropertyChanged(nameof(Position));
                 } 
             }
-            public IMotion Motion { get; set; }
+            private IMotion _motion;
+            public IMotion Motion 
+            { 
+                get => _motion; 
+                set 
+                { 
+                    _motion = value; 
+                    OnPropertyChanged(nameof(Motion));
+                    // Không start timer ngay lập tức để tránh chậm khi mở chương trình
+                } 
+            }
             public ICommand PositionTeachingCommand
             {
                 get => new RelayCommand<object>((p) =>
@@ -606,10 +643,20 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
             public void PositionChecker()
             {
-                _timer = new System.Windows.Threading.DispatcherTimer();
-                _timer.Interval = System.TimeSpan.FromMilliseconds(16); // ~60 FPS
-                _timer.Tick += CheckPosition;
-                _timer.Start();
+                // Chỉ tạo timer nếu chưa có và Motion không null
+                if (_timer == null && Motion != null)
+                {
+                    // Kiểm tra xem Motion có sẵn sàng không trước khi start timer
+                    if (Motion.Status == null)
+                    {
+                        return; // Skip nếu Status chưa sẵn sàng
+                    }
+                    
+                    _timer = new System.Windows.Threading.DispatcherTimer();
+                    _timer.Interval = System.TimeSpan.FromMilliseconds(10); 
+                    _timer.Tick += CheckPosition;
+                    _timer.Start();
+                }
             }
 
             private void CheckPosition(object sender, EventArgs e)
@@ -617,7 +664,23 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 try
                 {
                     // Kiểm tra nhanh trước khi gọi IsOnPosition
-                    if (Motion == null) return;
+                    if (Motion == null) 
+                    {
+                        StopPositionChecker();
+                        return;
+                    }
+                    
+                    // Kiểm tra xem Motion có sẵn sàng không
+                    if (Motion.Status == null)
+                    {
+                        return; // Skip nếu Status chưa sẵn sàng
+                    }
+                    
+                    // Kiểm tra thêm xem Motion có đang hoạt động không
+                    if (Motion.Status.ActualPosition == 0 && Position == 0)
+                    {
+                        return; // Skip nếu cả hai đều = 0 (chưa initialize)
+                    }
                     
                     bool newIsActive = Motion.IsOnPosition(Position);
                     
@@ -630,6 +693,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 }
                 catch (System.Exception ex)
                 {
+                    // Stop timer nếu có lỗi
+                    StopPositionChecker();
                 }
             }
 
@@ -646,7 +711,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 if (MessageBoxEx.ShowDialog($"{(string)Application.Current.Resources["str_Save"]}?") == true)
                 {
-                    Position = Math.Round(Motion.Status.ActualPosition, 3);
+                    // Sử dụng giá trị Position hiện tại (có thể từ DataEditor hoặc Get Motion)
+                    // Không ghi đè Position với Motion.Status.ActualPosition
                     SavePosition(Motion.Id, Name);
                 }
             }
@@ -725,6 +791,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         break;
                 }
                 _recipeSelector.Save();
+            }
+
+            /// <summary>
+            /// Cập nhật vị trí từ motion axis hiện tại
+            /// </summary>
+            public void UpdatePositionFromMotion()
+            {
+                if (Motion != null)
+                {
+                    Position = Math.Round(Motion.Status.ActualPosition, 3);
+                    OnPropertyChanged(nameof(Position));
+                }
             }
 
         }

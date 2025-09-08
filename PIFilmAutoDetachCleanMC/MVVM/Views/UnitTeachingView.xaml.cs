@@ -8,6 +8,9 @@ using static PIFilmAutoDetachCleanMC.MVVM.ViewModels.TeachViewModel;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System;
+using EQX.UI.Controls;
+using EQX.Core.Recipe;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.Views
 {
@@ -67,6 +70,93 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         public UnitTeachingView()
         {
             InitializeComponent();
+        }
+
+        private void EditPosition_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var positionTeaching = button?.DataContext as PositionTeaching;
+            
+            if (positionTeaching == null) return;
+
+            // Tạo SingleRecipeMinMaxAttribute với giới hạn phù hợp
+            var minMaxAttribute = new SingleRecipeMinMaxAttribute
+            {
+                Min = -999.999,
+                Max = 999.999
+            };
+            
+            // Sử dụng giá trị hiện tại hoặc motion position
+            double currentValue = positionTeaching.Position;
+            if (currentValue == 0 && positionTeaching.Motion?.Status?.ActualPosition != null)
+            {
+                currentValue = positionTeaching.Motion.Status.ActualPosition;
+            }
+            if (currentValue == 0)
+            {
+                currentValue = 0; // Giá trị mặc định
+            }
+            
+            // Sử dụng DataEditor giống như SingleRecipe
+            var dataEditor = new DataEditor(currentValue, minMaxAttribute);
+            dataEditor.Title = $"Edit Position - {positionTeaching.Name}";
+
+            // Show dialog và kiểm tra DialogResult
+            if (dataEditor.ShowDialog() == true)
+            {
+                // Cập nhật giá trị giống như SingleRecipe
+                positionTeaching.Position = dataEditor.NewValue;
+                
+                // Force refresh DataGrid để hiển thị giá trị mới
+                PositionTeachingDataGrid.Items.Refresh();
+            }
+        }
+
+        private void GetMotionPosition_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var positionTeaching = button?.DataContext as PositionTeaching;
+            
+            if (positionTeaching == null) return;
+
+            // Lấy giá trị từ motion và cập nhật Position
+            positionTeaching.UpdatePositionFromMotion();
+            
+            // Force refresh DataGrid để hiển thị giá trị mới
+            PositionTeachingDataGrid.Items.Refresh();
+            
+        }
+
+        private void CylinderForward_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var cylinder = button?.DataContext as ICylinder;
+            
+            if (cylinder == null) return;
+
+            try
+            {
+                cylinder.Forward();
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        private void CylinderBackward_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var cylinder = button?.DataContext as ICylinder;
+            
+            if (cylinder == null) return;
+
+            try
+            {
+                cylinder.Backward();
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }
