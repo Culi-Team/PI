@@ -12,6 +12,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Vacuum_Off,
         Set_FlagDetachRequestUnload,
         Wait_GlassTransferPickDone,
+        Set_FlagDetachDone,
         End
     }
 }

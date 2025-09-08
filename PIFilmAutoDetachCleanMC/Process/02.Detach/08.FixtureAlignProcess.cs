@@ -269,6 +269,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
+                    Log.Debug("Clear Flag Request Load");
+                    FlagFixtureAlignReqLoad = false;
 #if SIMULATION
                     SimulationInputSetter.SetSimModbusInput(_devices.Inputs.AlignFixtureDetect, true);
 #endif
@@ -377,11 +379,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EFixtureAlignTransferStep.Start:
                     Log.Debug("Fixture Transfer Start");
                     Step.RunStep++;
-                    Log.Debug("Wait Fixture Transfer Done");
                     break;
                 case EFixtureAlignTransferStep.Clear_Flag:
                     Log.Debug("Clear Flag Transfer Fixture Done Received");
                     FlagTransferFixtureDoneReceive = true;
+                    Log.Debug("Wait Fixture Transfer Done");
                     Step.RunStep++;
                     break;
                 case EFixtureAlignTransferStep.Wait_TransferDone:

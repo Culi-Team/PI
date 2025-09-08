@@ -472,7 +472,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ERobotLoadPickPlaceFixtureVinylCleanStep)Step.RunStep)
             {
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.Start:
-                    Log.Debug("Robot" + (bPick? "Pick" : "Place") + "Fixture Vinyl Clean Start");
+                    Log.Debug("Robot" + (bPick? " Pick" : " Place") + " Fixture Vinyl Clean Start");
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.Move_VinylClean_PickPlacePosition:

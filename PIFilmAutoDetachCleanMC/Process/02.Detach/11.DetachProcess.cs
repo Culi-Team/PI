@@ -226,12 +226,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
                     break;
                 case ESequence.TransferFixtureLoad:
-                    Sequence_TransferFixtureUnload();
                     break;
                 case ESequence.Detach:
                     Sequence_Detach();
                     break;
                 case ESequence.TransferFixtureUnload:
+                    Sequence_TransferFixtureUnload();
                     break;
                 case ESequence.DetachUnload:
                     Sequence_DetachUnload();
@@ -477,15 +477,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Shuttle Transfer X Axis Move to Detach Position Done");
                     Step.RunStep++;
-                    Log.Debug("Wait Fixture Transfer Done");
-                    break;
-                case EDetachStep.Wait_FixtureTransferDone:
-                    if (FlagFixtureTransferDone == false)
-                    {
-                        Wait(10);
-                        break;
-                    }
-                    Step.RunStep++;
                     break;
                 case EDetachStep.ZAxis_Move_ReadyDetachPosition_1st:
                     Log.Debug("Detach Glass Z Axis Move to Ready Detach Position 1st");
@@ -663,6 +654,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachStep.End:
+                    Log.Debug("Detach End");
                     if (Parent!.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
@@ -780,8 +772,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachProcessGlassTransferPickStep.Wait_GlassTransferPickDone:
                     if(FlagGlassTransferPickDone == false)
                     {
+                        Wait(20);
                         break;
                     }
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessGlassTransferPickStep.Set_FlagDetachDone:
+                    Log.Debug("Set Flag Detach Done");
+                    FlagDetachDone = true;
                     Step.RunStep++;
                     break;
                 case EDetachProcessGlassTransferPickStep.End:
@@ -791,8 +789,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Parent.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
-                    Log.Info("Sequence Detach");
-                    Sequence = ESequence.Detach;
+                    Log.Info("Sequence Transfer Fixture Unload");
+                    Sequence = ESequence.TransferFixtureUnload;
                     break;
             }
         }

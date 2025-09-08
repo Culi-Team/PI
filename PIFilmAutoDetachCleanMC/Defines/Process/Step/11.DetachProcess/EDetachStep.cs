@@ -18,7 +18,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         XAxis_Move_DetachPosition,
         XAxis_Move_DetachPosition_Wait,
 
-        Wait_FixtureTransferDone,
 
         ZAxis_Move_ReadyDetachPosition_1st,
         ZAxis_Move_ReadyDetachPosition_Wait_1st,
@@ -43,6 +42,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         Cyl_Fix_Backward,
         Cyl_Fix_Backward_Wait,
+
 
         End
     }
