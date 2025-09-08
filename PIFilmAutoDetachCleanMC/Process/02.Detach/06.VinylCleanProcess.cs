@@ -22,7 +22,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly Devices _devices;
         private readonly CommonRecipe _commonRecipe;
         private readonly VinylCleanRecipe _vinylCleanRecipe;
-        private readonly VirtualIO<EFlags> _virtualIO;
+        private readonly IDInputDevice _vinylCleanInput;
+        private readonly IDOutputDevice _vinylCleanOutput;
 
         private bool IsFixtureDetect => _devices.Inputs.VinylCleanFixtureDetect.Value;
         private ICylinder FixtureClampCyl => _devices.Cylinders.VinylCleanFixture1ClampUnclamp;
@@ -40,7 +41,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                _virtualIO.SetFlag(EFlags.VinylCleanRequestUnload, value);
+                _vinylCleanOutput[(int)EVinylCleanProcessOutput.VINYL_CLEAN_REQ_UNLOAD] = value;
             }
         }
 
@@ -48,19 +49,23 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _virtualIO.GetFlag(EFlags.VinylCleanUnloadDone);
-            }
-            set
-            {
-                _virtualIO.SetFlag(EFlags.VinylCleanUnloadDone, value);
+                return _vinylCleanInput[(int)EVinylCleanProcessInput.VINYL_CLEAN_UNLOAD_DONE];
             }
         }
 
-        private bool FlagVinylCleanRequestFixture
+        private bool FlagVinylCleanReceiveUnloadDone
         {
             set
             {
-                _virtualIO.SetFlag(EFlags.VinylCleanRequestFixture, value);
+                _vinylCleanOutput[(int)EVinylCleanProcessOutput.VINYL_CLEAN_RECEIVE_UNLOAD_DONE] = value;
+            }
+        }
+
+        private bool FlagVinylCleanRequestLoad
+        {
+            set
+            {
+                _vinylCleanOutput[(int)EVinylCleanProcessOutput.VINYL_CLEAN_REQ_LOAD] = value;
             }
         }
 
@@ -68,11 +73,15 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _virtualIO.GetFlag(EFlags.VinylCleanLoadDone);
+                return _vinylCleanInput[(int)EVinylCleanProcessInput.VINYL_CLEAN_LOAD_DONE];
             }
+        }
+
+        private bool FlagVinylCleanReceiveLoadDone
+        {
             set
             {
-                _virtualIO.SetFlag(EFlags.VinylCleanLoadDone, value);
+                _vinylCleanOutput[(int)EVinylCleanProcessOutput.VINYL_CLEAN_RECEIVE_LOAD_DONE] = value;
             }
         }
         #endregion
@@ -82,13 +91,15 @@ namespace PIFilmAutoDetachCleanMC.Process
             Devices devices,
             CommonRecipe commonRecipe,
             VinylCleanRecipe vinylCleanRecipe,
-            VirtualIO<EFlags> virtualIO)
+            [FromKeyedServices("VinylCleanInput")] IDInputDevice vinylCleanInput,
+            [FromKeyedServices("VinylCleanOutput")] IDOutputDevice vinylCleanOutput)
         {
             _vinylCleanEncoder = vinylCleanEncoder;
             _devices = devices;
             _commonRecipe = commonRecipe;
             _vinylCleanRecipe = vinylCleanRecipe;
-            _virtualIO = virtualIO;
+            _vinylCleanInput = vinylCleanInput;
+            _vinylCleanOutput = vinylCleanOutput;
         }
         #endregion
 
@@ -379,6 +390,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Robot Pick Fixture From Vinyl Clean Start");
                     Step.RunStep++;
                     break;
+                case EVinylCleanProcessRobotPickFixtureFromVinylClean.Clear_Flag:
+                    Log.Debug("Clear Flag Vinyl Clean Receive Unload Done");
+                    FlagVinylCleanReceiveUnloadDone = false;
+                    Step.RunStep++;
+                    break;
                 case EVinylCleanProcessRobotPickFixtureFromVinylClean.Cyl_UnClamp:
                     Log.Debug("Vinyl Clean Cylinder UnClamp");
                     FixtureClampCyl.Backward();
@@ -403,9 +419,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessRobotPickFixtureFromVinylClean.Wait_VinylCleanUnloadDone:
                     if(FlagVinylCleanUnloadDone == false)
                     {
+                        Wait(20);
                         break;
                     }
-                    FlagVinylCleanUnloadDone = false;
+                    Log.Debug("Clear Flag Vinyl Clean Request Unload");
+                    FlagVinylCleanRequestUnload = false;
+
+                    Log.Debug("Set Flag Vinyl Clean Receive Unload Done");
+                    FlagVinylCleanReceiveUnloadDone = true;
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPickFixtureFromVinylClean.End:
@@ -427,6 +448,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Start:
                     Log.Debug("Robot Place Fixture To Vinyl Clean Start");
+                    Step.RunStep++;
+                    break;
+                case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Clear_Flag:
+                    Log.Debug("Clear Flag Vinyl Clean Receive Load Done");
+                    FlagVinylCleanReceiveLoadDone = false;
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_UnClamp:
@@ -503,17 +529,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Set_Flag_RequestFixture:
-                    Log.Debug("Set Flag Vinyl Clean Request Fixture");
-                    FlagVinylCleanRequestFixture = true;
+                    Log.Debug("Set Flag Vinyl Clean Request Load");
+                    FlagVinylCleanRequestLoad = true;
                     Step.RunStep++;
                     Log.Debug("Wait Fixture Load Done");
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Wait_FixtureLoadDone:
                     if(FlagVinylCleanLoadDone == false)
                     {
+                        Wait(20);
                         break;
                     }
-                    FlagVinylCleanLoadDone = false;
+                    Log.Debug("Clear Flag Vinyl Clean Request Load");
+                    FlagVinylCleanRequestLoad = false;
+
+                    Log.Debug("Set Flag Vinyl Clean Receive Load Done");
+                    FlagVinylCleanReceiveLoadDone = true;
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.End:

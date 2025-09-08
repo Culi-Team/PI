@@ -1,6 +1,7 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Sequence;
 using EQX.Process;
+using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
@@ -17,7 +18,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Privates
         private readonly Devices _devices;
         private readonly CommonRecipe _commonRecipe;
-        private readonly VirtualIO<EFlags> _virtualIO;
+        private readonly IDInputDevice _removeFilmInput;
+        private readonly IDOutputDevice _removeFilmOutput;
 
         private ICylinder FixCyl1 => _devices.Cylinders.RemoveZoneFixCyl1FwBw;
         private ICylinder FixCyl2 => _devices.Cylinders.RemoveZoneFixCyl2FwBw;
@@ -34,24 +36,22 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Contructor
         public RemoveFilmProcess(Devices devices,
             CommonRecipe commonRecipe,
-            VirtualIO<EFlags> virtualIO)
+            [FromKeyedServices("RemoveFilmInput")] IDInputDevice removeFilmInput,
+            [FromKeyedServices("RemoveFilmOutput")] IDOutputDevice removeFilmOutput)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
-            _virtualIO = virtualIO;
+            _removeFilmInput = removeFilmInput;
+            _removeFilmOutput = removeFilmOutput;
         }
         #endregion
 
         #region Flags
-        private bool FlagFixtureTransferRemoveFilmDone
+        private bool FlagFixtureRemoveFilmTransferDone
         {
             get
             {
-                return _virtualIO.GetFlag(EFlags.FixtureTransferRemoveFilmDone);
-            }
-            set
-            {
-                _virtualIO.SetFlag(EFlags.FixtureTransferRemoveFilmDone, value);
+                return _removeFilmInput[(int)ERemoveFilmProcessInput.FIXTURE_REMOVE_FILM_TRANSFER_DONE];
             }
         }
 
@@ -59,7 +59,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                _virtualIO.SetFlag(EFlags.RemoveFilmDone, value);
+                _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_DONE] = value;
             }
         }
 
@@ -67,7 +67,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                _virtualIO.SetFlag(EFlags.RemoveFilmRequestUnload, value);
+                _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_REQ_UNLOAD] = value;
             }
         }
 
@@ -75,11 +75,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _virtualIO.GetFlag(EFlags.RemoveFilmUnloadDone);
-            }
-            set
-            {
-                _virtualIO.SetFlag(EFlags.RemoveFilmUnloadDone, value);
+                return _removeFilmInput[(int)ERemoveFilmProcessInput.REMOVE_FILM_UNLOAD_DONE];
             }
         }
         #endregion
@@ -293,11 +289,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Transfer Fixture Done");
                     break;
                 case ERemoveFilmProcessTransferFixtureUnloadStep.Wait_TransferFixtureDone:
-                    if (FlagFixtureTransferRemoveFilmDone == false)
+                    if (FlagFixtureRemoveFilmTransferDone == false)
                     {
                         break;
                     }
-                    FlagFixtureTransferRemoveFilmDone = false;
+                    Log.Debug("Clear Flag Remove Film Done");
+                    FlagRemoveFilmDone = false;
                     Step.RunStep++;
                     break;
                 case ERemoveFilmProcessTransferFixtureUnloadStep.End:
@@ -579,7 +576,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         break;
                     }
-                    FlagRemoveFilmUnloadDone = false;
+                    Log.Debug("Clear Flag Request Unload");
+                    FlagRemoveFilmRequestUnload = false;
                     Step.RunStep++;
                     break;
                 case ERemoveFilmProcessRobotPickStep.End:
