@@ -169,13 +169,13 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput TrRotateRight180Degree => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_180_DEGREE);
         public IDOutput TrRotateRightBw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_BW);
         public IDOutput TrRotateRightFw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_FW);
-        public IDOutput TrRotateRightVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_VAC_ON_OFF);
+        public IDOutput TrRotateRight1VacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_1_VAC_ON_OFF);
         public IDOutput TrRotateLeftRotVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_ROT_VAC_ON_OFF);
         public IDOutput TrRotateLeft0Degree => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_0_DEGREE);
         public IDOutput TrRotateLeft180Degree => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_180_DEGREE);
         public IDOutput TrRotateLeftBw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_BW);
         public IDOutput TrRotateLeftFw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_FW);
-        public IDOutput TrRotateLeftVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_VAC_ON_OFF);
+        public IDOutput TrRotateLeft1VacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_1_VAC_ON_OFF);
         public IDOutput AfCleanPusherRightUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_PUSHER_RIGHT_UP);
         public IDOutput AfCleanPusherRightDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_PUSHER_RIGHT_DOWN);
         public IDOutput AfCleanPusherLeftUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_PUSHER_LEFT_UP);
@@ -220,5 +220,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput UnloadRobDrivesOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ROB_DRIVES_OFF);
         public IDOutput UnloadRobConfMess => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ROB_CONF_MESS);
         public IDOutput UnloadRobExtStart => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ROB_EXT_START);
+        public IDOutput TrRotateRightUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_UP);
+        public IDOutput TrRotateRightDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_DOWN);
+        public IDOutput TrRotateLeftUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_UP);
+        public IDOutput TrRotateLeftDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_DOWN);
+        public IDOutput TrRotateRight2VacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_2_VAC_ON_OFF);
+        public IDOutput TrRotateLeft2VacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_2_VAC_ON_OFF);
     }
 }
