@@ -373,7 +373,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             inputs.Add(Devices.Inputs.InButton1);
             inputs.Add(Devices.Inputs.InButton2);
             // Add In Cassette light curtain safety input
-            inputs.Add(Devices.Inputs.InCstLightCurtainSafetyDetect);
+            inputs.Add(Devices.Inputs.InCstLightCurtainAlarmDetect);
             
             return inputs;
         }
@@ -392,7 +392,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             inputs.Add(Devices.Inputs.OutButton1);
             inputs.Add(Devices.Inputs.OutButton2);
             // Add Out Cassette light curtain safety input
-            inputs.Add(Devices.Inputs.OutCstLightCurtainSafetyDetect);
+            inputs.Add(Devices.Inputs.OutCstLightCurtainAlarmDetect);
             
             return inputs;
         }
@@ -434,8 +434,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             outputs.Add(Devices.Outputs.InButtonLamp1);
             outputs.Add(Devices.Outputs.InButtonLamp2);
             // Add In Cassette light curtain muting output
-            outputs.Add(Devices.Outputs.InCstLightCurtainMuting);
-            
+            outputs.Add(Devices.Outputs.InCstLightCurtainMuting1);
+            outputs.Add(Devices.Outputs.InCstLightCurtainMuting2);
+
             return outputs;
         }
         
@@ -446,7 +447,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             outputs.Add(Devices.Outputs.OutButtonLamp1);
             outputs.Add(Devices.Outputs.OutButtonLamp2);
             // Add Out Cassette light curtain muting output
-            outputs.Add(Devices.Outputs.OutCstLightCurtainMuting);
+            outputs.Add(Devices.Outputs.OutCstLightCurtainMuting1);
+            outputs.Add(Devices.Outputs.OutCstLightCurtainMuting2);
             return outputs;
         }
 

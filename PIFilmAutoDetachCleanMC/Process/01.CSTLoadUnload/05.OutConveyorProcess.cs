@@ -33,13 +33,14 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDInput CST_Det2 => _devices.Inputs.OutCstDetect2;
         private IDInput OutButton1 => _devices.Inputs.OutButton1;
         private IDInput OutButton2 => _devices.Inputs.OutButton2;
-        private IDInput OutCSTLightCurtain => _devices.Inputs.OutCstLightCurtainSafetyDetect;
+        private IDInput OutCSTLightCurtain => _devices.Inputs.OutCstLightCurtainAlarmDetect;
         #endregion
 
         #region Outputs
         private IDOutput OutButton1Lamp => _devices.Outputs.OutButtonLamp1;
         private IDOutput OutButton2Lamp => _devices.Outputs.OutButtonLamp2;
-        private IDOutput OutCstMutingLightCurtain => _devices.Outputs.OutCstLightCurtainMuting;
+        private IDOutput OutCstMutingLightCurtain1 => _devices.Outputs.OutCstLightCurtainMuting1;
+        private IDOutput OutCstMutingLightCurtain2 => _devices.Outputs.OutCstLightCurtainMuting2;
         #endregion
 
         #region Cylinders

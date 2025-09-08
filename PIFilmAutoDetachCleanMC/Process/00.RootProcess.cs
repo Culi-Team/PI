@@ -39,8 +39,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool IsLightCurtainLeftDetect => _devices.Inputs.OutCstLightCurtainSafetyDetect.Value;
-        private bool IsLightCurtainRightDetect => _devices.Inputs.InCstLightCurtainSafetyDetect.Value;
+        private bool IsLightCurtainLeftDetect => _devices.Inputs.OutCstLightCurtainAlarmDetect.Value;
+        private bool IsLightCurtainRightDetect => _devices.Inputs.InCstLightCurtainAlarmDetect.Value;
         #endregion
 
         #region Constructor

@@ -94,8 +94,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput InButton2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_BUTTON_2);
         public IDInput OutButton1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_BUTTON_1);
         public IDInput OutButton2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_BUTTON_2);
-        public IDInput InCstLightCurtainSafetyDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_CST_LIGHT_CURTAIN_SAFETY_DETECT);
-        public IDInput OutCstLightCurtainSafetyDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_CST_LIGHT_CURTAIN_SAFETY_DETECT);
+        public IDInput InCstLightCurtainAlarmDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_CST_LIGHT_CURTAIN_ALARM_DETECT);
+        public IDInput OutCstLightCurtainAlarmDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_CST_LIGHT_CURTAIN_ALARM_DETECT);
         public IDInput LoadRobStopmess => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.LOAD_ROB_STOPMESS);
         public IDInput LoadRobPeriRdy => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.LOAD_ROB_PERI_RDY);
         public IDInput LoadRobAlarmStop => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.LOAD_ROB_ALARM_STOP);
@@ -112,6 +112,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput RobotFixture1Unclamp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_FIXTURE_1_UNCLAMP);
         public IDInput RobotFixture2Clamp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_FIXTURE_2_CLAMP);
         public IDInput RobotFixture2Unclamp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_FIXTURE_2_UNCLAMP);
+        public IDInput PowerMCOn1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.POWER_MC_ON_1);
+        public IDInput PowerMCOn2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.POWER_MC_ON_2);
         public IDInput VinylCleanFixtureDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.VINYL_CLEAN_FIXTURE_DETECT);
         public IDInput VinylCleanFullDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.VINYL_CLEAN_FULL_DETECT);
         public IDInput VinylCleanRunoffDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.VINYL_CLEAN_RUNOFF_DETECT);
@@ -319,7 +321,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput OpLButtonStart => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_L_BUTTON_START);
         public IDInput OpLButtonReset => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_L_BUTTON_RESET);
         public IDInput OpLEmo => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_L_EMO);
-        public IDInput PowerServoOn => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.POWER_SERVO_ON);
         public IDInput UnloadGlassAlignVac1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_GLASS_ALIGN_VAC_1);
         public IDInput UnloadGlassAlignVac2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_GLASS_ALIGN_VAC_2);
         public IDInput UnloadGlassAlignVac3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_GLASS_ALIGN_VAC_3);
