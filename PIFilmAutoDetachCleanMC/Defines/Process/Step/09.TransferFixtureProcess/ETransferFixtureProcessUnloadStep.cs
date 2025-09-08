@@ -19,6 +19,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_UnClamp, 
         Cyl_UnClamp_Wait,
         SetFlagTransferDone,
+        WaitProcesses_ReceiveTransferDone,
         End
     }
 }

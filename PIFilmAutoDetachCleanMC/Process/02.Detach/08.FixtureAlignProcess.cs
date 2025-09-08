@@ -61,11 +61,16 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _virtualIO.GetFlag(EFlags.FixtureTransferAlignDone);
+
+                return _fixtureAlignInput[(int)EFixtureAlignProcessInput.FIXTURE_TRANSFER_DONE];
             }
+        }
+
+        private bool FlagTransferFixtureDoneReceive
+        {
             set
             {
-                _virtualIO.SetFlag(EFlags.FixtureTransferAlignDone, value);
+                _fixtureAlignOutput[(int)EFixtureAlignProcessOutput.TRANSFER_FIXTURE_DONE_RECEIVED] = value;
             }
         }
         #endregion
@@ -375,13 +380,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     Log.Debug("Wait Fixture Transfer Done");
                     break;
+                case EFixtureAlignTransferStep.Clear_Flag:
+                    Log.Debug("Clear Flag Transfer Fixture Done Received");
+                    FlagTransferFixtureDoneReceive = true;
+                    Step.RunStep++;
+                    break;
                 case EFixtureAlignTransferStep.Wait_TransferDone:
                     if (FlagFixtureTransferDone == false)
                     {
                         Wait(20);
                         break;
                     }
-                    FlagFixtureTransferDone = false;
+                    Log.Debug("Set Flag Transfer Fixture Done Received");
+                    FlagTransferFixtureDoneReceive = true;
                     Step.RunStep++;
                     break;
                 case EFixtureAlignTransferStep.End:

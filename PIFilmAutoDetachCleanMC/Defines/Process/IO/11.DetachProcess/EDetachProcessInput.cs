@@ -8,7 +8,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 {
     public enum EDetachProcessInput
     {
-        FIXTURE_DETACH_TRANSFER_DONE,
+        FIXTURE_TRANSFER_DONE,
         GLASS_TRANSFER_PICK_DONE
     }
 }

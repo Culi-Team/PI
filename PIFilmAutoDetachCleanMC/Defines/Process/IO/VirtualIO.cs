@@ -116,14 +116,14 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //Fixture Align Input Mapping
             ((VirtualInputDevice<EFixtureAlignProcessInput>)_fixtureAlignInput).Mapping((int)EFixtureAlignProcessInput.FIXTURE_ALIGN_LOAD_DONE,
                 _robotLoadOutput, (int)ERobotLoadProcessOutput.FIXTURE_ALIGN_LOAD_DONE);
-            ((VirtualInputDevice<EFixtureAlignProcessInput>)_fixtureAlignInput).Mapping((int)EFixtureAlignProcessInput.FIXTURE_ALIGN_TRANSFER_DONE,
-                _transferFixtureOutput, (int)ETransferFixtureProcessOutput.FIXTURE_ALIGN_TRANSFER_DONE);
+            ((VirtualInputDevice<EFixtureAlignProcessInput>)_fixtureAlignInput).Mapping((int)EFixtureAlignProcessInput.FIXTURE_TRANSFER_DONE,
+                _transferFixtureOutput, (int)ETransferFixtureProcessOutput.FIXTURE_TRANSFER_DONE);
 
             //Remove Film Input Mapping
             ((VirtualInputDevice<ERemoveFilmProcessInput>)_removeFilmInput).Mapping((int)ERemoveFilmProcessInput.REMOVE_FILM_UNLOAD_DONE,
                 _robotLoadOutput, (int)ERobotLoadProcessOutput.REMOVE_FILM_UNLOAD_DONE);
-            ((VirtualInputDevice<ERemoveFilmProcessInput>)_removeFilmInput).Mapping((int)ERemoveFilmProcessInput.FIXTURE_REMOVE_FILM_TRANSFER_DONE,
-                _transferFixtureOutput, (int)ETransferFixtureProcessOutput.FIXTURE_REMOVE_FILM_TRANSFER_DONE);
+            ((VirtualInputDevice<ERemoveFilmProcessInput>)_removeFilmInput).Mapping((int)ERemoveFilmProcessInput.FIXTURE_TRANSFER_DONE,
+                _transferFixtureOutput, (int)ETransferFixtureProcessOutput.FIXTURE_TRANSFER_DONE);
 
             //Transfer Fixture Input Mapping
             ((VirtualInputDevice<ETransferFixtureProcessInput>)_transferFixtureInput).Mapping((int)ETransferFixtureProcessInput.DETACH_ORIGIN_DONE,
@@ -134,10 +134,16 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 _fixtureAlignOutput, (int)EFixtureAlignProcessOutput.FIXTURE_ALIGN_DONE);
             ((VirtualInputDevice<ETransferFixtureProcessInput>)_transferFixtureInput).Mapping((int)ETransferFixtureProcessInput.REMOVE_FILM_DONE,
                 _removeFilmOutput, (int)ERemoveFilmProcessOutput.REMOVE_FILM_DONE);
+            ((VirtualInputDevice<ETransferFixtureProcessInput>)_transferFixtureInput).Mapping((int)ETransferFixtureProcessInput.ALIGN_TRANSFER_FIXTURE_DONE_RECEIVED,
+                _fixtureAlignOutput, (int)EFixtureAlignProcessOutput.TRANSFER_FIXTURE_DONE_RECEIVED);
+            ((VirtualInputDevice<ETransferFixtureProcessInput>)_transferFixtureInput).Mapping((int)ETransferFixtureProcessInput.DETACH_TRANSFER_FIXTURE_DONE_RECEIVED,
+                _detachOutput, (int)EDetachProcessOutput.TRANSFER_FIXTURE_DONE_RECEIVED);
+            ((VirtualInputDevice<ETransferFixtureProcessInput>)_transferFixtureInput).Mapping((int)ETransferFixtureProcessInput.REMOVE_FILM_TRANSFER_FIXTURE_DONE_RECEIVED,
+                _removeFilmOutput, (int)ERemoveFilmProcessOutput.TRANSFER_FIXTURE_DONE_RECEIVED);
 
             //Detach Input Mapping
-            ((VirtualInputDevice<EDetachProcessInput>)_detachInput).Mapping((int)EDetachProcessInput.FIXTURE_DETACH_TRANSFER_DONE,
-                _transferFixtureOutput, (int)ETransferFixtureProcessOutput.FIXTURE_DETACH_TRANSFER_DONE);
+            ((VirtualInputDevice<EDetachProcessInput>)_detachInput).Mapping((int)EDetachProcessInput.FIXTURE_TRANSFER_DONE,
+                _transferFixtureOutput, (int)ETransferFixtureProcessOutput.FIXTURE_TRANSFER_DONE);
         }
     }
 }

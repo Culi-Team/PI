@@ -69,27 +69,12 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagFixtureTransferAlignDone
-        {
-            set
-            {
-                _virtualIO.SetFlag(EFlags.FixtureTransferAlignDone, value);
-            }
-        }
 
-        private bool FlagFixtureTransferDetachDone
+        private bool FlagFixtureTransferDone
         {
             set
             {
-                _virtualIO.SetFlag(EFlags.FixtureTransferDetachDone, value);
-            }
-        }
-
-        private bool FlagFixtureTransferRemoveFilmDone
-        {
-            set
-            {
-                _virtualIO.SetFlag(EFlags.FixtureTransferRemoveFilmDone, value);
+                _transferFixtureOutput[(int)ETransferFixtureProcessOutput.FIXTURE_TRANSFER_DONE] = value;
             }
         }
 
@@ -102,6 +87,30 @@ namespace PIFilmAutoDetachCleanMC.Process
             set
             {
                 _virtualIO.SetFlag(EFlags.RemoveFilmDone,value);
+            }
+        }
+
+        private bool FlagAlignTransferFixtureDoneReceived
+        {
+            get
+            {
+                return _transferFixtureInput[(int)ETransferFixtureProcessInput.ALIGN_TRANSFER_FIXTURE_DONE_RECEIVED];
+            }
+        }
+
+        private bool FlagDetachTransferFixtureDoneReceived
+        {
+            get
+            {
+                return _transferFixtureInput[(int)ETransferFixtureProcessInput.DETACH_TRANSFER_FIXTURE_DONE_RECEIVED];
+            }
+        }
+
+        private bool FlagRemoveFilmTransferFixtureDoneReceived
+        {
+            get
+            {
+                return _transferFixtureInput[(int)ETransferFixtureProcessInput.REMOVE_FILM_TRANSFER_FIXTURE_DONE_RECEIVED];
             }
         }
         #endregion
@@ -479,9 +488,21 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferFixtureProcessUnloadStep.SetFlagTransferDone:
                     Log.Debug("Set Flag Transfer Done");
-                    FlagFixtureTransferAlignDone = true;
-                    FlagFixtureTransferDetachDone = true;
-                    FlagFixtureTransferRemoveFilmDone = true;
+
+                    FlagFixtureTransferDone = true;
+                    Log.Debug("Wait Align , Detach , Remove Film Receive Transfer Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcessUnloadStep.WaitProcesses_ReceiveTransferDone:
+                    if(FlagAlignTransferFixtureDoneReceived == false ||
+                       FlagDetachTransferFixtureDoneReceived == false ||
+                       FlagRemoveFilmTransferFixtureDoneReceived == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Log.Debug("Clear Flag Transfer Done");
+                    FlagFixtureTransferDone = false;
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessUnloadStep.End:

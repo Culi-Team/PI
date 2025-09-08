@@ -9,6 +9,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EDetachProcessFixtureTransferStep
     {
         Start,
+        Clear_Flag,
         DetachZAxis_Move_ReadyPosition,
         DetachedZAxis_Move_ReadyPosition_Wait,
         Cyl_Fix_Backward,
