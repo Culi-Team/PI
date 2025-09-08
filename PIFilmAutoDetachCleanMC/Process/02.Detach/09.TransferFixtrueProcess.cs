@@ -2,6 +2,7 @@
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
 using EQX.Process;
+using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
@@ -18,8 +19,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Privates
         private readonly Devices _devices;
         private readonly CommonRecipe _commonRecipe;
-        private readonly VirtualIO<EFlags> _virtualIO;
         private readonly TransferFixtureRecipe _transferFixtureRecipe;
+        private readonly IDInputDevice _transferFixtureInput;
+        private readonly IDOutputDevice _transferFixtureOutput;
 
         private IMotion TransferFixtureYAxis => _devices.MotionsInovance.FixtureTransferYAxis;
         private Inputs Inputs => _devices.Inputs;
@@ -37,11 +39,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _virtualIO.GetFlag(EFlags.DetachProcessOriginDone);
-            }
-            set
-            {
-                _virtualIO.SetFlag(EFlags.DetachProcessOriginDone, value);
+                return _transferFixtureInput[(int)ETransferFixtureProcessInput.DETACH_ORIGIN_DONE];
             }
         }
 
@@ -49,11 +47,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _virtualIO.GetFlag(EFlags.FixtureAlignDone);
-            }
-            set
-            {
-                _virtualIO.SetFlag(EFlags.FixtureAlignDone, value);
+                return _transferFixtureInput[(int)ETransferFixtureProcessInput.FIXTURE_ALIGN_DONE];
             }
         }
 
@@ -61,11 +55,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _virtualIO.GetFlag(EFlags.DetachDone);
-            }
-            set
-            {
-                _virtualIO.SetFlag(EFlags.DetachDone, value);
+                return _transferFixtureInput[(int)ETransferFixtureProcessInput.DETACH_DONE];
             }
         }
 
@@ -111,13 +101,15 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
         public TransferFixtrueProcess(Devices devices,
             CommonRecipe commonRecipe,
-            VirtualIO<EFlags> virtualIO,
-            TransferFixtureRecipe transferFixtureRecipe)
+            TransferFixtureRecipe transferFixtureRecipe,
+            [FromKeyedServices("TransferFixtureInput")] IDInputDevice transferFixtureInput,
+            [FromKeyedServices("TransferFixtureOutput")] IDOutputDevice transferFixtureOutput)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
-            _virtualIO = virtualIO;
             _transferFixtureRecipe = transferFixtureRecipe;
+            _transferFixtureInput = transferFixtureInput;
+            _transferFixtureOutput = transferFixtureOutput;
         }
 
         #region Override Methods
@@ -159,10 +151,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureOriginStep.Wait_Detach_Origin:
                     if (!FlagDetachProcessOriginDone)
                     {
-                        //Wait Detach Process Origin Done
+                        Wait(20);
                         break;
                     }
-                    FlagDetachProcessOriginDone = false;
 
                     Step.OriginStep++;
                     break;
@@ -314,11 +305,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessLoadStep.Wait_Align_And_Detach_Done:
                     if (!FlagDetachDone || !FlagFixtureAlignDone)
                     {
+                        Wait(20);
                         //Wait Align Fixture and Detach Ready
                         break;
                     }
-                    FlagDetachDone = false;
-                    FlagFixtureAlignDone = false;
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessLoadStep.Check_Y_Position:
@@ -430,9 +420,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessUnloadStep.Wait_RemoveFilm_Done:
                     if(FlagRemoveFilmDone == false)
                     {
+                        Wait(20);
                         break;
                     }
-                    FlagRemoveFilmDone = false;
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessUnloadStep.YAxis_Move_UnloadPosition:
