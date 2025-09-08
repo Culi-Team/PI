@@ -4,6 +4,7 @@ using EQX.Core.Recipe;
 using EQX.UI.Controls;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
@@ -18,6 +19,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public DataViewModel(RecipeSelector recipeSelector)
         {
             RecipeSelector = recipeSelector;
+            var firstRecipe = Recipes.FirstOrDefault();
+                _selectedRecipe = firstRecipe;
         }
 
         public RecipeSelector RecipeSelector { get; }
