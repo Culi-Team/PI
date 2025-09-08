@@ -198,6 +198,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput RemoveZoneFixCyl21Bw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.REMOVE_ZONE_FIX_CYL_2_1_BW);
         public IDInput RemoveZoneFixCyl22Fw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.REMOVE_ZONE_FIX_CYL_2_2_FW);
         public IDInput RemoveZoneFixCyl22Bw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.REMOVE_ZONE_FIX_CYL_2_2_BW);
+        public IDInput RemoveZoneFullTapeDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.REMOVE_ZONE_FULL_TAPE_DETECT);
         public IDInput DetachGlassShtVac1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DETACH_GLASS_SHT_VAC_1);
         public IDInput DetachGlassShtVac2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DETACH_GLASS_SHT_VAC_2);
         public IDInput DetachGlassShtVac3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DETACH_GLASS_SHT_VAC_3);
