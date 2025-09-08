@@ -9,6 +9,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EVinylCleanProcessRobotPlaceFixtureToVinylClean
     {
         Start,
+        Clear_Flag,
         Cyl_UnClamp,
         Cyl_UnClamp_Wait,
         Cyl_Pusher_Down,
