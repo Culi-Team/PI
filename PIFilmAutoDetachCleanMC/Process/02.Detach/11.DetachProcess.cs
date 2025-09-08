@@ -3,7 +3,6 @@ using EQX.Core.Motion;
 using EQX.Core.Sequence;
 using EQX.InOut;
 using EQX.Process;
-using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
@@ -20,9 +19,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Privates
         private readonly Devices _devices;
         private readonly CommonRecipe _commonRecipe;
+        private readonly VirtualIO<EFlags> _virtualIO;
         private readonly DetachRecipe _detachRecipe;
-        private readonly IDInputDevice _detachInput;
-        private readonly IDOutputDevice _detachOutput;
 
         private IMotion DetachGlassZAxis => _devices.MotionsInovance.DetachGlassZAxis;
         private IMotion ShuttleTransferXAxis => _devices.MotionsInovance.ShuttleTransferXAxis;
@@ -51,7 +49,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                _detachOutput[(int)EDetachProcessOutput.DETACH_ORIGIN_DONE] = value;
+                _virtualIO.SetFlag(EFlags.DetachProcessOriginDone, value);
             }
         }
 
@@ -59,7 +57,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                _detachOutput[(int)EDetachProcessOutput.DETACH_DONE] = value;
+                _virtualIO.SetFlag(EFlags.DetachDone, value);
             }
         }
 
@@ -67,7 +65,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _detachInput[(int)EDetachProcessInput.FIXTURE_DETACH_TRANSFER_DONE];
+                return _virtualIO.GetFlag(EFlags.FixtureTransferDetachDone);
+            }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.FixtureTransferDetachDone, value);
             }
         }
 
@@ -75,7 +77,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _detachInput[(int)EDetachProcessInput.GLASS_TRANSFER_PICK_DONE];
+                return _virtualIO.GetFlag(EFlags.GlassTransferPickDone);
+            }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.GlassTransferPickDone, value);
             }
         }
 
@@ -83,7 +89,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                _detachOutput[(int)EDetachProcessOutput.DETACH_REQ_UNLOAD_GLASS] = value;
+                _virtualIO.GetFlag(EFlags.DetachRequestUnloadGlass);
             }
         }
         #endregion
@@ -100,15 +106,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Constructor
         public DetachProcess(Devices devices,
                             CommonRecipe commonRecipe,
-                            DetachRecipe detachRecipe,
-                            [FromKeyedServices("DetachInput")] IDInputDevice detachInput,
-                            [FromKeyedServices("DetachOutput")] IDOutputDevice detachOutput)
+                            VirtualIO<EFlags> virtualIO,
+                            DetachRecipe detachRecipe)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
+            _virtualIO = virtualIO;
             _detachRecipe = detachRecipe;
-            _detachInput = detachInput;
-            _detachOutput = detachOutput;
         }
         #endregion
 
@@ -476,6 +480,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(10);
                         break;
                     }
+                    FlagFixtureTransferDone = false;
                     Step.RunStep++;
                     break;
                 case EDetachStep.ZAxis_Move_ReadyDetachPosition_1st:
@@ -721,8 +726,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         break;
                     }
-                    Log.Debug("Clear Flag Detach Done");
-                    FlagDetachDone = false;
+                    FlagFixtureTransferDone = false;
                     Step.RunStep++;
                     break;
                 case EDetachProcessFixtureTransferStep.End:

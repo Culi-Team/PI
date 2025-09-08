@@ -3,7 +3,6 @@ using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
 using EQX.Process;
-using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
@@ -23,28 +22,19 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly Devices _devices;
         private readonly CSTLoadUnloadRecipe _cstLoadUnloadRecipe;
         private readonly CommonRecipe _commonRecipe;
-        private readonly IDInputDevice _inWorkConveyorInput;
-        private readonly IDOutputDevice _inWorkConveyorOutput;
-        private readonly IDInputDevice _outWorkConveyorInput;
-        private readonly IDOutputDevice _outWorkConveyorOutput;
+        private readonly VirtualIO<EFlags> _virtualIO;
         #endregion
 
         #region Constructor
         public WorkConveyorProcess(Devices devices,
             CSTLoadUnloadRecipe cstLoadUnloadRecipe,
             CommonRecipe commonRecipe,
-            [FromKeyedServices("InWorkConveyorInput")] IDInputDevice inWorkConveyorInput,
-            [FromKeyedServices("InWorkConveyorOutput")] IDOutputDevice inWorkConveyorOutput,
-            [FromKeyedServices("OutWorkConveyorInput")] IDInputDevice outWorkConveyorInput,
-            [FromKeyedServices("OutWorkConveyorOutput")] IDOutputDevice outWorkConveyorOutput)
+            VirtualIO<EFlags> virtualIO)
         {
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
             _commonRecipe = commonRecipe;
-            _inWorkConveyorInput = inWorkConveyorInput;
-            _inWorkConveyorOutput = inWorkConveyorOutput;
-            _outWorkConveyorInput = outWorkConveyorInput;
-            _outWorkConveyorOutput = outWorkConveyorOutput;
+            _virtualIO = virtualIO;
         }
         #endregion
 
@@ -94,11 +84,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 if (port == EPort.Right)
                 {
-                    _inWorkConveyorOutput[(int)EInWorkConveyorProcessOutput.IN_CST_READY] = value;
+                    _virtualIO.SetFlag(EFlags.InCSTReady, value);
                 }
                 else
                 {
-                    _outWorkConveyorOutput[(int)EOutWorkConveyorProcessOutput.OUT_CST_READY] = value;
+                    _virtualIO.SetFlag(EFlags.OutCSTReady, value);
                 }
             }
         }
@@ -109,23 +99,19 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 if (port == EPort.Right)
                 {
-                    return _inWorkConveyorInput[(int)EInWorkConveyorProcessInput.ROBOT_PICK_IN_CST_DONE];
+                    return _virtualIO.GetFlag(EFlags.RobotPickInCSTDone);
                 }
-                return _outWorkConveyorInput[(int)EOutWorkConveyorProcessInput.ROBOT_PLACE_OUT_CST_DONE];
+                return _virtualIO.GetFlag(EFlags.RobotPlaceOutCSTDone);
             }
-        }
-
-        private bool FlagInOutCSTPickPlaceDone
-        {
             set
             {
                 if (port == EPort.Right)
                 {
-                    _inWorkConveyorOutput[(int)EInWorkConveyorProcessOutput.IN_CST_PICK_DONE] = value;
+                    _virtualIO.SetFlag(EFlags.RobotPickInCSTDone, value);
                 }
                 else
                 {
-                    _outWorkConveyorOutput[(int)EOutWorkConveyorProcessOutput.OUT_CST_PLACE_DONE] = value;
+                    _virtualIO.SetFlag(EFlags.RobotPlaceOutCSTDone, value);
                 }
             }
         }
@@ -474,7 +460,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorPickPlaceStep.Set_FlagReady:
                     Log.Debug("Set Flag Ready");
                     FlagCSTReady = true;
-                    FlagInOutCSTPickPlaceDone = false;
                     Step.RunStep++;
                     Log.Debug("Wait Robot" + (port == EPort.Right ? "Pick" : "Place") + " Done");
                     break;
@@ -483,8 +468,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         break;
                     }
-                    FlagInOutCSTPickPlaceDone = true;
-                    FlagCSTReady = false;
+                    FlagRobotPickPlaceDone = false;
                     Step.RunStep++;
                     break;
                 case EWorkConveyorPickPlaceStep.End:

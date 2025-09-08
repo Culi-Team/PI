@@ -2,7 +2,6 @@
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
 using EQX.Process;
-using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
@@ -19,9 +18,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Privates
         private readonly Devices _devices;
         private readonly CommonRecipe _commonRecipe;
+        private readonly VirtualIO<EFlags> _virtualIO;
         private readonly TransferFixtureRecipe _transferFixtureRecipe;
-        private readonly IDInputDevice _transferFixtureInput;
-        private readonly IDOutputDevice _transferFixtureOutput;
 
         private IMotion TransferFixtureYAxis => _devices.MotionsInovance.FixtureTransferYAxis;
         private Inputs Inputs => _devices.Inputs;
@@ -39,7 +37,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _transferFixtureInput[(int)ETransferFixtureProcessInput.DETACH_ORIGIN_DONE];
+                return _virtualIO.GetFlag(EFlags.DetachProcessOriginDone);
+            }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.DetachProcessOriginDone, value);
             }
         }
 
@@ -47,7 +49,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _transferFixtureInput[(int)ETransferFixtureProcessInput.FIXTURE_ALIGN_DONE];
+                return _virtualIO.GetFlag(EFlags.FixtureAlignDone);
+            }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.FixtureAlignDone, value);
             }
         }
 
@@ -55,31 +61,35 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _transferFixtureInput[(int)ETransferFixtureProcessInput.DETACH_DONE];
+                return _virtualIO.GetFlag(EFlags.DetachDone);
+            }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.DetachDone, value);
             }
         }
 
-        private bool FlagFixtureAlignTransferDone
+        private bool FlagFixtureTransferAlignDone
         {
             set
             {
-                _transferFixtureOutput[(int)ETransferFixtureProcessOutput.FIXTURE_ALIGN_TRANSFER_DONE] = value;
+                _virtualIO.SetFlag(EFlags.FixtureTransferAlignDone, value);
             }
         }
 
-        private bool FlagFixtureDetachTransferDone
+        private bool FlagFixtureTransferDetachDone
         {
             set
             {
-                _transferFixtureOutput[(int)ETransferFixtureProcessOutput.FIXTURE_DETACH_TRANSFER_DONE] = value;
+                _virtualIO.SetFlag(EFlags.FixtureTransferDetachDone, value);
             }
         }
 
-        private bool FlagFixtureRemoveFilmTransferDone
+        private bool FlagFixtureTransferRemoveFilmDone
         {
             set
             {
-                _transferFixtureOutput[(int)ETransferFixtureProcessOutput.FIXTURE_REMOVE_FILM_TRANSFER_DONE] = value;
+                _virtualIO.SetFlag(EFlags.FixtureTransferRemoveFilmDone, value);
             }
         }
 
@@ -87,21 +97,23 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _transferFixtureInput[(int)ETransferFixtureProcessInput.REMOVE_FILM_DONE];
+                return _virtualIO.GetFlag(EFlags.RemoveFilmDone);
+            }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.RemoveFilmDone,value);
             }
         }
         #endregion
         public TransferFixtrueProcess(Devices devices,
             CommonRecipe commonRecipe,
-            TransferFixtureRecipe transferFixtureRecipe,
-            [FromKeyedServices("TransferFixtureInput")] IDInputDevice transferFixtureInput,
-            [FromKeyedServices("TransferFixtureOutput")] IDOutputDevice transferFixtureOutput)
+            VirtualIO<EFlags> virtualIO,
+            TransferFixtureRecipe transferFixtureRecipe)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
+            _virtualIO = virtualIO;
             _transferFixtureRecipe = transferFixtureRecipe;
-            _transferFixtureInput = transferFixtureInput;
-            _transferFixtureOutput = transferFixtureOutput;
         }
 
         #region Override Methods
@@ -146,6 +158,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         //Wait Detach Process Origin Done
                         break;
                     }
+                    FlagDetachProcessOriginDone = false;
 
                     Step.OriginStep++;
                     break;
@@ -300,6 +313,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                         //Wait Align Fixture and Detach Ready
                         break;
                     }
+                    FlagDetachDone = false;
+                    FlagFixtureAlignDone = false;
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessLoadStep.Check_Y_Position:
@@ -413,6 +428,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         break;
                     }
+                    FlagRemoveFilmDone = false;
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessUnloadStep.YAxis_Move_UnloadPosition:
@@ -463,9 +479,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferFixtureProcessUnloadStep.SetFlagTransferDone:
                     Log.Debug("Set Flag Transfer Done");
-                    FlagFixtureAlignTransferDone = true;
-                    FlagFixtureDetachTransferDone = true;
-                    FlagFixtureRemoveFilmTransferDone = true;
+                    FlagFixtureTransferAlignDone = true;
+                    FlagFixtureTransferDetachDone = true;
+                    FlagFixtureTransferRemoveFilmDone = true;
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessUnloadStep.End:
