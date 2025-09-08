@@ -61,7 +61,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-
                 return _fixtureAlignInput[(int)EFixtureAlignProcessInput.FIXTURE_TRANSFER_DONE];
             }
         }

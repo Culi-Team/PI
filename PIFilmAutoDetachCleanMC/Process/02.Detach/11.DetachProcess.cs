@@ -65,7 +65,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-
                 return _detachInput[(int)EDetachProcessInput.FIXTURE_TRANSFER_DONE];
             }
         }
@@ -87,6 +86,14 @@ namespace PIFilmAutoDetachCleanMC.Process
             set
             {
                 _virtualIO.GetFlag(EFlags.DetachRequestUnloadGlass);
+            }
+        }
+
+        private bool FlagTransferFixtureDoneReceived
+        {
+            set
+            {
+                _detachOutput[(int)EDetachProcessOutput.TRANSFER_FIXTURE_DONE_RECEIVED] = value;
             }
         }
 

@@ -69,7 +69,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-
         private bool FlagFixtureTransferDone
         {
             set
@@ -82,11 +81,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _virtualIO.GetFlag(EFlags.RemoveFilmDone);
-            }
-            set
-            {
-                _virtualIO.SetFlag(EFlags.RemoveFilmDone,value);
+                return _transferFixtureInput[(int)ETransferFixtureProcessInput.REMOVE_FILM_DONE];
             }
         }
 
@@ -488,7 +483,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferFixtureProcessUnloadStep.SetFlagTransferDone:
                     Log.Debug("Set Flag Transfer Done");
-
                     FlagFixtureTransferDone = true;
                     Log.Debug("Wait Align , Detach , Remove Film Receive Transfer Done");
                     Step.RunStep++;

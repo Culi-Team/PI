@@ -43,7 +43,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Flags
-
         private bool FlagFixtureTransferDone
         {
             get
@@ -297,7 +296,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Transfer Fixture Done");
                     break;
                 case ERemoveFilmProcessTransferFixtureUnloadStep.Wait_TransferFixtureDone:
-
                     if (FlagFixtureTransferDone == false)
                     {
                         Wait(20);
