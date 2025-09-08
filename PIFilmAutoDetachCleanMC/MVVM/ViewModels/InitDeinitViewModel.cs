@@ -174,6 +174,21 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         _devices.MotionsInovance.All.ForEach(m => m.Connect());
 
+                        _devices.SpeedControllerList.All.ForEach(s => s.Connect());
+                        _devices.TorqueControllers.All.ForEach(t => t.Connect());
+
+                        if (_devices.SpeedControllerList.All.Any(m => m.IsConnected == false))
+                        {
+                            ErrorMessages.Add($"Speed Controller is not connected: " +
+                                $"{string.Join(", ", _devices.SpeedControllerList.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
+                        }
+
+                        if (_devices.TorqueControllers.All.Any(m => m.IsConnected == false))
+                        {
+                            ErrorMessages.Add($"Torque controller is not connected: " +
+                                $"{string.Join(", ", _devices.TorqueControllers.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
+                        }
+
                         if (_devices.MotionsInovance.All.Any(m => m.IsConnected == false))
                         {
                             ErrorMessages.Add($"Motion device is not connected: " +
@@ -202,6 +217,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         _isSuccess &= _devices.Inputs.Connect();
                         _isSuccess &= _devices.Outputs.Connect();
+
+                        _isSuccess &= _devices.Regulators.WetCleanLRegulator.Connect();
+                        _isSuccess &= _devices.Regulators.WetCleanRRegulator.Connect();
+                        _isSuccess &= _devices.Regulators.AfCleanLRegulator.Connect();
+                        _isSuccess &= _devices.Regulators.AfCleanRRegulator.Connect();
 
                         if (_isSuccess == false)
                         {
@@ -272,17 +292,20 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _step++;
                         break;
                     case EHandleStep.MotionDeviceHandle:
-                        MessageText = "Connect Motion Devices";
+                        MessageText = "Disconnect Motion Devices";
 
                         _devices.MotionsInovance.MotionControllerInovance.Disconnect();
 
                         _devices.MotionsInovance.All.ForEach(m => m.Disconnect());
 
+                        _devices.SpeedControllerList.All.ForEach(s => s.Disconnect());
+                        _devices.MotionsAjin.All.ForEach(m => m.Disconnect());
+                        _devices.TorqueControllers.All.ForEach(t => t.Disconnect());
                         _rollerModbusCommunication.Disconnect();
                         _step++;
                         break;
                     case EHandleStep.IODeviceHandle:
-                        MessageText = "Connect IO Devices";
+                        MessageText = "Disconnect IO Devices";
                         _devices.Inputs.Disconnect();
                         _devices.Outputs.Disconnect();
                         _step++;

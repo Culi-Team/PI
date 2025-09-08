@@ -255,17 +255,16 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 });
                 services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("WETCleanRight", (ser, obj) =>
                 {
-                    return new ITVRegulatorRC(2, "WETCleanLeft", 0.9, "COM5", 9600);
+                    return new ITVRegulatorRC(2, "WETCleanRight", 0.9, "COM5", 9600);
                 });
                 services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("AFCleanLeft", (ser, obj) =>
                 {
-                    return new ITVRegulatorRC(3, "WETCleanLeft", 0.9, "COM6", 9600);
+                    return new ITVRegulatorRC(3, "AFCleanLeft", 0.9, "COM6", 9600);
                 });
                 services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("AFCleanRight", (ser, obj) =>
                 {
-                    return new ITVRegulatorRC(4, "WETCleanLeft", 0.9, "COM7", 9600);
+                    return new ITVRegulatorRC(4, "AFCleanRight", 0.9, "COM7", 9600);
                 });
-
                 services.AddSingleton<Regulators>();
             });
 

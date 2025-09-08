@@ -103,13 +103,26 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 });
             }
         }
+
+        public ICommand ApplicationCloseCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _viewModelProvider.GetViewModel<HeaderViewModel>().ApplicationCloseCommand.Execute(null);
+                });
+            }
+        }
         #endregion
 
         public NavigateMenuViewModel(INavigationService navigationService,
-            UserStore userStore)
+            UserStore userStore,
+            ViewModelProvider viewModelProvider)
         {
             _navigationService = navigationService;
             _userStore = userStore;
+            _viewModelProvider = viewModelProvider;
 
             // TODO: Remove this
             _userStore.Permission = EPermission.Admin;
@@ -153,6 +166,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         #region Privates
         private readonly INavigationService _navigationService;
         private readonly UserStore _userStore;
+        private readonly ViewModelProvider _viewModelProvider;
         #endregion
     }
 }

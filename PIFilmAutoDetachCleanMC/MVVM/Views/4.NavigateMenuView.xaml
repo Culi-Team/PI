@@ -74,8 +74,8 @@
             <ui:ImageRadioButton GroupName="VMNavigateButton"
                                  Content="Exit"
                                  Image="{StaticResource image_exit_normal}"
-                                 DisabledImage="{StaticResource image_exit_selected}" />
-
+                                 DisabledImage="{StaticResource image_exit_selected}"
+                                 Command="{Binding ApplicationCloseCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>
