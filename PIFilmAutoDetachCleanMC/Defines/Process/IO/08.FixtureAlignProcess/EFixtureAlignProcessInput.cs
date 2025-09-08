@@ -9,6 +9,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EFixtureAlignProcessInput
     {
         FIXTURE_ALIGN_LOAD_DONE,
-        FIXTURE_ALIGN_TRANSFER_DONE,
+        FIXTURE_TRANSFER_DONE,
     }
 }

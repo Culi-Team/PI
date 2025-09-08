@@ -67,6 +67,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     return new Processes(processList);
                 });
 
+                services.AddSingleton<VirtualIO<EFlags>>();
             });
             return hostBuilder;
         }

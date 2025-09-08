@@ -10,6 +10,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         DETACH_ORIGIN_DONE,
         DETACH_DONE,
-        DETACH_REQ_UNLOAD_GLASS
+        DETACH_REQ_UNLOAD_GLASS,
+        TRANSFER_FIXTURE_DONE_RECEIVED,
     }
 }

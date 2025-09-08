@@ -20,8 +20,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IRobot _robotLoad;
         private readonly CommonRecipe _commonRecipe;
         private readonly Devices _devices;
-        private readonly IDInputDevice _robotLoadInput;
-        private readonly IDOutputDevice _robotLoadOutput;
+        private readonly VirtualIO<EFlags> _virtualIO;
 
         private ICylinder ClampCyl => _devices.Cylinders.RobotFixtureClampUnclamp;
         private ICylinder AlignCyl => _devices.Cylinders.RobotFixtureAlignFwBw;
@@ -30,19 +29,15 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Flags
-        private bool FlagVinylCleanRequestLoad
+        private bool FlagVinylCleanRequestFixture
         {
             get
             {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.VINYL_CLEAN_REQ_LOAD];
+                return _virtualIO.GetFlag(EFlags.VinylCleanRequestFixture);
             }
-        }
-
-        private bool FlagVinylCleanRequestUnload
-        {
-            get
+            set
             {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.VINYL_CLEAN_REQ_UNLOAD];
+                _virtualIO.SetFlag(EFlags.VinylCleanRequestFixture, value);
             }
         }
 
@@ -50,7 +45,23 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.REMOVE_FILM_REQ_UNLOAD];
+                return _virtualIO.GetFlag(EFlags.RemoveFilmRequestUnload);
+            }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.RemoveFilmRequestUnload, value);
+            }
+        }
+
+        private bool FlagVinylCleanRequestUnload
+        {
+            get
+            {
+                return _virtualIO.GetFlag(EFlags.VinylCleanRequestUnload);
+            }
+            set
+            {
+                _virtualIO.SetFlag(EFlags.VinylCleanRequestUnload, value);
             }
         }
 
@@ -58,15 +69,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.IN_CST_READY];
+                return _virtualIO.GetFlag(EFlags.InCSTReady);
             }
-        }
-
-        private bool FlagInCSTPickDone
-        {
-            get
+            set
             {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.IN_CST_PICK_DONE];
+                _virtualIO.SetFlag(EFlags.InCSTReady, value);
             }
         }
 
@@ -74,15 +81,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                _robotLoadOutput[(int)ERobotLoadProcessOutput.VINYL_CLEAN_LOAD_DONE] = value;
-            }
-        }
-
-        private bool FlagVinylCleanReceiveLoadDone
-        {
-            get
-            {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.VINYL_CLEAN_RECEIVE_LOAD_DONE];
+                _virtualIO.SetFlag(EFlags.VinylCleanLoadDone, value);
             }
         }
 
@@ -90,23 +89,19 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                _robotLoadOutput[(int)ERobotLoadProcessOutput.VINYL_CLEAN_UNLOAD_DONE] = value;
+                _virtualIO.SetFlag(EFlags.VinylCleanUnloadDone, value);
             }
         }
 
-        private bool FlagVinylCleanReceiveUnloadDone
+        private bool FlagFixtureAlignRequestFixture
         {
             get
             {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.VINYL_CLEAN_RECEIVE_UNLOAD_DONE];
+                return _virtualIO.GetFlag(EFlags.FixtureAlignRequestFixture);
             }
-        }
-
-        private bool FlagFixtureAlignRequestLoad
-        {
-            get
+            set
             {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.FIXTURE_ALIGN_REQ_LOAD];
+                _virtualIO.SetFlag(EFlags.FixtureAlignRequestFixture, value);
             }
         }
 
@@ -114,7 +109,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                _robotLoadOutput[(int)ERobotLoadProcessOutput.FIXTURE_ALIGN_LOAD_DONE] = value;
+                _virtualIO.SetFlag(EFlags.FixtureAlignLoadDone, value);
             }
         }
 
@@ -122,7 +117,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                _robotLoadOutput[(int)ERobotLoadProcessOutput.REMOVE_FILM_UNLOAD_DONE] = value;
+                _virtualIO.SetFlag(EFlags.RemoveFilmUnloadDone, value);
             }
         }
 
@@ -130,23 +125,19 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.OUT_CST_READY];
+                return _virtualIO.GetFlag(EFlags.OutCSTReady);
             }
-        }
-
-        private bool FlagOutCSTPlaceDone
-        {
-            get
+            set
             {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.OUT_CST_PLACE_DONE];
+                _virtualIO.SetFlag(EFlags.OutCSTReady, value);
             }
         }
 
-        private bool FlagRobotPlaceOutCSTDone
+        private bool FlagPlaceOutCSTDone
         {
             set
             {
-                _robotLoadOutput[(int)ERobotLoadProcessOutput.ROBOT_PLACE_OUT_CST_DONE] = value;
+                _virtualIO.SetFlag(EFlags.RobotPlaceOutCSTDone, value);
             }
         }
 
@@ -154,7 +145,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                _robotLoadOutput[(int)ERobotLoadProcessOutput.ROBOT_PICK_IN_CST_DONE] = value;
+                _virtualIO.SetFlag(EFlags.RobotPickInCSTDone, value);
             }
         }
         #endregion
@@ -163,14 +154,12 @@ namespace PIFilmAutoDetachCleanMC.Process
         public RobotLoadProcess([FromKeyedServices("RobotLoad")] IRobot robotLoad,
             CommonRecipe commonRecipe,
             Devices devices,
-            [FromKeyedServices("RobotLoadInput")] IDInputDevice robotLoadInput,
-            [FromKeyedServices("RobotLoadOutput")] IDOutputDevice robotLoadOutput)
+            VirtualIO<EFlags> virtualIO)
         {
             _robotLoad = robotLoad;
             _commonRecipe = commonRecipe;
             _devices = devices;
-            _robotLoadInput = robotLoadInput;
-            _robotLoadOutput = robotLoadOutput;
+            _virtualIO = virtualIO;
         }
         #endregion
 
@@ -331,11 +320,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadAutoRunStep.Check_Flag_VinylCleanRequestFixture:
-                    if (FlagVinylCleanRequestLoad)
+                    if (FlagVinylCleanRequestFixture)
                     {
-                        Log.Debug("Clear Flag Vinyl Clean Load Done");
-                        FlagVinylCleanLoadDone = false;
-
+                        FlagVinylCleanRequestFixture = false;
                         Log.Info("Sequence Robot Pick Fixture From CST");
                         Sequence = ESequence.RobotPickFixtureFromCST;
                         break;
@@ -345,9 +332,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadAutoRunStep.Check_Flag_RemoveFilm:
                     if (FlagRemoveFilmRequestUnload)
                     {
-                        Log.Debug("Clear Flag Remove Film Unload Done");
-                        FlagRemoveFilmUnloadDone = false;
-
+                        FlagRemoveFilmRequestUnload = false;
                         Log.Info("Sequence Robot Pick Fixture From Remove Zone");
                         Sequence = ESequence.RobotPickFixtureFromRemoveZone;
                         break;
@@ -357,9 +342,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadAutoRunStep.Check_Flag_VinylCleanRequestUnload:
                     if (FlagVinylCleanRequestUnload)
                     {
-                        Log.Debug("Clear Flag Vinyl Clean Unload Done");
-                        FlagVinylCleanUnloadDone = false;
-
+                        FlagVinylCleanRequestUnload = false;
                         Log.Info("Sequence Robot Pick Fixture From Vinyl Clean");
                         Sequence = ESequence.RobotPickFixtureFromVinylClean;
                         break;
@@ -385,7 +368,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         break;
                     }
-                    
+                    FlagInCSTReady = false;
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Move_InCST_PickPositon:
@@ -439,17 +422,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPickFixtureFromCSTStep.Set_Flag_RobotPickInCSTDone:
                     Log.Debug("Set Flag Robot Pick In CST Done");
                     FlagPickFromInCSTDone = true;
-                    Log.Debug("Wait In CST Pick Done");
-                    Step.RunStep++;
-                    break;
-                case ERobotLoadPickFixtureFromCSTStep.Wait_InCST_PickDone:
-                    if(FlagInCSTPickDone == false)
-                    {
-                        Wait(20);
-                        break;
-                    }
-                    Log.Debug("Clear Flag Robot Pick In CST Done");
-                    FlagPickFromInCSTDone = false;
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.End:
@@ -536,35 +508,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         Log.Debug("Set Flag Vinyl Clean Unload Done");
                         FlagVinylCleanUnloadDone = true;
-                        Log.Debug("Wait Vinyl Clean Receive Unload Done");
                         Step.RunStep++;
                         break;
                     }
                     Log.Debug("Set Flag Vinyl Clean Load Done");
                     FlagVinylCleanLoadDone = true;
-                    Log.Debug("Wait Vinyl Clean Receive Load Done");
-                    Step.RunStep++;
-                    break;
-                case ERobotLoadPickPlaceFixtureVinylCleanStep.Wait_VinylCleanReceiveLoadUnloadDone:
-                    if(bPick)
-                    {
-                        if(FlagVinylCleanReceiveUnloadDone == false)
-                        {
-                            Wait(20);
-                            break;
-                        }
-                        Log.Debug("Clear Flag Vinyl Clean Unload Done");
-                        FlagVinylCleanUnloadDone = false;
-                        Step.RunStep++;
-                        break;
-                    }
-                    if(FlagVinylCleanReceiveLoadDone == false)
-                    {
-                        Wait(20);
-                        break;
-                    }
-                    Log.Debug("Clear Flag Vinyl Clean Load Done");
-                    FlagVinylCleanLoadDone = false;
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.End:
@@ -588,12 +536,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         if(FlagRemoveFilmRequestUnload)
                         {
+                            FlagRemoveFilmRequestUnload = false;
                             Log.Info("Sequence Robot Pick Fixture From Remove Zone");
                             Sequence = ESequence.RobotPickFixtureFromRemoveZone;
                             break;
                         }
                         if(FlagVinylCleanRequestUnload)
                         {
+                            FlagVinylCleanRequestUnload = false;
                             Log.Info("Sequence Robot Pick Fixture From Vinyl Clean");
                             Sequence = ESequence.RobotPickFixtureFromVinylClean;
                             break;
@@ -611,16 +561,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPlaceFixtureToAlignStep.Start:
                     Log.Debug("Place Fixture To Align Start");
                     Step.RunStep++;
-                    Log.Debug("Wait Fixture Align Request Load");
+                    Log.Debug("Wait Fixture Align Request Fixture");
                     break;
                 case ERobotLoadPlaceFixtureToAlignStep.Wait_FixtureAlignRequestFixture:
-                    if(FlagFixtureAlignRequestLoad == false)
+                    if(FlagFixtureAlignRequestFixture == false)
                     {
-                        Wait(20);
                         break;
                     }
-                    Log.Debug("Clear Flag Fixture Align Load Done");
-                    FlagFixtureAlignLoadDone = false;
+                    FlagFixtureAlignRequestFixture = false;
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToAlignStep.Move_FixtureAlignPlacePosition:
@@ -755,7 +703,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         break;
                     }
-                    
+                    FlagOutCSTReady = false;
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Move_OutCSTPlacePosition:
@@ -796,17 +744,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Set_FlagPlaceOutCSTDone:
                     Log.Debug("Set Flag Place Out Cassette Done");
-                    FlagRobotPlaceOutCSTDone = true;
-                    Step.RunStep++;
-                    break;
-                case ERobotLoadPlaceFixtureToOutCSTStep.Wait_OutCST_Place_Done:
-                    if(FlagOutCSTPlaceDone == false)
-                    {
-                        Wait(20);
-                        break;
-                    }
-                    Log.Debug("Clear Flag Robot Place Out CST Done");
-                    FlagRobotPlaceOutCSTDone = false;
+                    FlagPlaceOutCSTDone = true;
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.End:
@@ -822,18 +760,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPlaceFixtureToOutCSTStep.Wait_NextSequence:
                     if(FlagVinylCleanRequestUnload)
                     {
-                        Log.Debug("Clear Flag Vinyl Clean Unload Done");
-                        FlagVinylCleanUnloadDone = false;
-
+                        FlagVinylCleanRequestUnload = false;
                         Log.Info("Sequence Robot Pick Fixture From Vinyl Clean");
                         Sequence = ESequence.RobotPickFixtureFromVinylClean;
                         break;
                     }
-                    if(FlagVinylCleanRequestLoad)
+                    if(FlagVinylCleanRequestFixture)
                     {
-                        Log.Debug("Clear Flag Vinyl Clean Load Done");
-                        FlagVinylCleanLoadDone = false;
-
+                        FlagVinylCleanRequestFixture = false;
                         Log.Info("Sequence Robot Pick Fixture From In Cassette");
                         Sequence = ESequence.RobotPickFixtureFromCST;
                         break;

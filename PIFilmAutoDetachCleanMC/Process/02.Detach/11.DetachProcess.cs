@@ -67,7 +67,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _detachInput[(int)EDetachProcessInput.FIXTURE_DETACH_TRANSFER_DONE];
+                return _detachInput[(int)EDetachProcessInput.FIXTURE_TRANSFER_DONE];
             }
         }
 
@@ -86,6 +86,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _detachOutput[(int)EDetachProcessOutput.DETACH_REQ_UNLOAD_GLASS] = value;
             }
         }
+
+        private bool FlagTransferFixtureDoneReceived
+        {
+            set
+            {
+                _detachOutput[(int)EDetachProcessOutput.TRANSFER_FIXTURE_DONE_RECEIVED] = value;
+            }
+        }
+       
         #endregion
 
         #region Private Methods
@@ -217,7 +226,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
                     break;
                 case ESequence.TransferFixtureLoad:
-                    Sequence_TransferFixtureLoad();
+                    Sequence_TransferFixtureUnload();
                     break;
                 case ESequence.Detach:
                     Sequence_Detach();
@@ -301,8 +310,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.End:
-                    Log.Info("Sequence Transfer Fixture Load");
-                    Sequence = ESequence.TransferFixtureLoad;
+                    Log.Info("Sequence Transfer Fixture Unload");
+                    Sequence = ESequence.TransferFixtureUnload;
                     break;
             }
         }
@@ -667,12 +676,17 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private void Sequence_TransferFixtureLoad()
+        private void Sequence_TransferFixtureUnload()
         {
             switch ((EDetachProcessFixtureTransferStep)Step.RunStep)
             {
                 case EDetachProcessFixtureTransferStep.Start:
                     Log.Debug("Transfer Fixture Start");
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessFixtureTransferStep.Clear_Flag:
+                    Log.Debug("Clear Flag Transfer Fixture Done Received");
+                    FlagTransferFixtureDoneReceived = false;
                     Step.RunStep++;
                     break;
                 case EDetachProcessFixtureTransferStep.DetachZAxis_Move_ReadyPosition:
@@ -719,10 +733,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachProcessFixtureTransferStep.Wait_FixtureTransferDone:
                     if (FlagFixtureTransferDone == false)
                     {
+                        Wait(20);
                         break;
                     }
+
                     Log.Debug("Clear Flag Detach Done");
                     FlagDetachDone = false;
+
+                    Log.Debug("Set Flag Transfer Fixture Done Received");
+                    FlagTransferFixtureDoneReceived = true;
                     Step.RunStep++;
                     break;
                 case EDetachProcessFixtureTransferStep.End:

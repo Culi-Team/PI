@@ -50,7 +50,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         FixtureAlignCylFwBw,
 
         // Vinyl Clean
-        VinylCleanRollerBwFw,
+        VinylCleanRollerFwBw,
         VinylCleanFixture1ClampUnclamp,
         VinylCleanFixture2ClampUnclamp,
         VinylCleanPusherRollerUpDown,
