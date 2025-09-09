@@ -3,16 +3,11 @@ using EQX.Core.Motion;
 using EQX.Core.Process;
 using EQX.Core.Recipe;
 using PIFilmAutoDetachCleanMC.Defines;
-using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
-using static PIFilmAutoDetachCleanMC.MVVM.ViewModels.TeachViewModel;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System;
 using EQX.UI.Controls;
-using EQX.Core.Recipe;
-using System.Threading.Tasks;
-using System.Threading;
+using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.Views
 {

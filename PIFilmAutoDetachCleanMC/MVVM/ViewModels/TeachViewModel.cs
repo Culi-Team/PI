@@ -691,173 +691,173 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             DataViewModel = dataViewModel;
             SelectedProcess = ProcessListTeaching.FirstOrDefault();
         }
-        public class PositionTeaching : ObservableObject
+    }
+    public class PositionTeaching : ObservableObject
+    {
+        public PositionTeaching(RecipeSelector recipeSelector)
         {
-            public PositionTeaching(RecipeSelector recipeSelector)
+            _recipeSelector = recipeSelector;
+            _position = 0.0;
+        }
+        public string Name { get; set; }
+        public string PropertyName { get; set; }
+        private double _position;
+        public double Position
+        {
+            get => _position;
+            set
             {
-                _recipeSelector = recipeSelector;
-                _position = 0.0; 
+                _position = value;
+                OnPropertyChanged(nameof(Position));
             }
-            public string Name { get; set; }
-            public string PropertyName { get; set; }
-            private double _position;
-            public double Position 
-            { 
-                get => _position; 
-                set 
-                { 
-                    _position = value; 
-                    OnPropertyChanged(nameof(Position));
-                } 
-            }
-            private IMotion _motion;
-            public IMotion Motion 
-            { 
-                get => _motion; 
-                set 
-                { 
-                    _motion = value; 
-                    OnPropertyChanged(nameof(Motion));
-                } 
-            }
-            public ICommand PositionTeachingCommand
+        }
+        private IMotion _motion;
+        public IMotion Motion
+        {
+            get => _motion;
+            set
             {
-                get => new RelayCommand<object>((p) =>
+                _motion = value;
+                OnPropertyChanged(nameof(Motion));
+            }
+        }
+        public ICommand PositionTeachingCommand
+        {
+            get => new RelayCommand<object>((p) =>
+            {
+                string MoveTo = (string)Application.Current.Resources["str_MoveTo"];
+                if (MessageBoxEx.ShowDialog($"{MoveTo} {Name} ?") == true)
                 {
-                    string MoveTo = (string)Application.Current.Resources["str_MoveTo"];
-                    if (MessageBoxEx.ShowDialog($"{MoveTo} {Name} ?") == true)
-                    {
-                        Motion.MoveAbs(Position);
-                    }
-                });
-            }
-            private readonly RecipeSelector _recipeSelector;
-            public RecipeSelector RecipeSelector { get; set; }
-            public double PositionRecipe { get; set; }
-            public ICommand SaveRecipeCommand => new RelayCommand(SaveRecipe);
+                    Motion.MoveAbs(Position);
+                }
+            });
+        }
+        private readonly RecipeSelector _recipeSelector;
+        public RecipeSelector RecipeSelector { get; set; }
+        public double PositionRecipe { get; set; }
+        public ICommand SaveRecipeCommand => new RelayCommand(SaveRecipe);
 
-            private void SaveRecipe()
+        private void SaveRecipe()
+        {
+            if (MessageBoxEx.ShowDialog($"{(string)Application.Current.Resources["str_Save"]}?") == true)
             {
-                if (MessageBoxEx.ShowDialog($"{(string)Application.Current.Resources["str_Save"]}?") == true)
-                {
-                    // Sử dụng giá trị Position hiện tại (có thể từ DataEditor hoặc Get Motion)
-                    // Không ghi đè Position với Motion.Status.ActualPosition
-                    SavePosition(Motion.Id, Name);
-                }
+                // Sử dụng giá trị Position hiện tại (có thể từ DataEditor hoặc Get Motion)
+                // Không ghi đè Position với Motion.Status.ActualPosition
+                SavePosition(Motion.Id, Name);
             }
-            public void SavePosition(int id, string name)
+        }
+        public void SavePosition(int id, string name)
+        {
+            // Sử dụng PropertyName để mapping chính xác - đơn giản và rõ ràng nhất
+            if (string.IsNullOrEmpty(PropertyName))
             {
-                // Sử dụng PropertyName để mapping chính xác - đơn giản và rõ ràng nhất
-                if (string.IsNullOrEmpty(PropertyName))
-                {
-                    return;
-                }
-
-                // Mapping trực tiếp từ PropertyName đến recipe property
-                switch (PropertyName)
-                {
-                    // CSTLoadUnloadRecipe properties
-                    case "InCstTAxisLoadPosition":
-                        _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.InCstTAxisLoadPosition = Position;
-                        break;
-                    case "InCstTAxisWorkPosition":
-                        _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.InCstTAxisWorkPosition = Position;
-                        break;
-                    case "OutCstTAxisLoadPosition":
-                        _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.OutCstTAxisLoadPosition = Position;
-                        break;
-                    case "OutCstTAxisWorkPosition":
-                        _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.OutCstTAxisWorkPosition = Position;
-                        break;
-                    
-                    // TransferFixtureRecipe properties
-                    case "TransferFixtureYAxisLoadPosition":
-                        _recipeSelector.CurrentRecipe.TransferFixtureRecipe.TransferFixtureYAxisLoadPosition = Position;
-                        break;
-                    case "TransferFixtureYAxisUnloadPosition":
-                        _recipeSelector.CurrentRecipe.TransferFixtureRecipe.TransferFixtureYAxisUnloadPosition = Position;
-                        break;
-                    
-                    // DetachRecipe properties
-                    case "DetachZAxisReadyPosition":
-                        _recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisReadyPosition = Position;
-                        break;
-                    case "DetachZAxisDetachReadyPosition":
-                        _recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetachReadyPosition = Position;
-                        break;
-                    case "DetachZAxisDetach1Position":
-                        _recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetach1Position = Position;
-                        break;
-                    case "DetachZAxisDetach2Position":
-                        _recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetach2Position = Position;
-                        break;
-                    case "ShuttleTransferZAxisReadyPosition":
-                        _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisReadyPosition = Position;
-                        break;
-                    case "ShuttleTransferZAxisDetachReadyPosition":
-                        _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisDetachReadyPosition = Position;
-                        break;
-                    case "ShuttleTransferZAxisDetach1Position":
-                        _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisDetach1Position = Position;
-                        break;
-                    case "ShuttleTransferZAxisDetach2Position":
-                        _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisDetach2Position = Position;
-                        break;
-                    case "ShuttleTransferZAxisUnloadPosition":
-                        _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisUnloadPosition = Position;
-                        break;
-                    case "ShuttleTransferXAxisDetachPosition":
-                        _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisDetachPosition = Position;
-                        break;
-                    case "ShuttleTransferXAxisDetachCheckPosition":
-                        _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisDetachCheckPosition = Position;
-                        break;
-                    case "ShuttleTransferXAxisUnloadPosition":
-                        _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisUnloadPosition = Position;
-                        break;
-                    
-                    // GlassTransferRecipe properties
-                    case "YAxisReadyPosition":
-                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisReadyPosition = Position;
-                        break;
-                    case "YAxisPickPosition":
-                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisPickPosition = Position;
-                        break;
-                    case "ZAxisReadyPosition":
-                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisReadyPosition = Position;
-                        break;
-                    case "ZAxisPickPosition":
-                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisPickPosition = Position;
-                        break;
-                    case "YAxisLeftPlacePosition":
-                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisLeftPlacePosition = Position;
-                        break;
-                    case "ZAxisLeftPlacePosition":
-                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisLeftPlacePosition = Position;
-                        break;
-                    case "YAxisRightPlacePosition":
-                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisRightPlacePosition = Position;
-                        break;
-                    case "ZAxisRightPlacePosition":
-                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisRightPlacePosition = Position;
-                        break;
-                    
-                    default:
-                        break;
-                }
-                _recipeSelector.Save();
+                return;
             }
 
-            public void UpdatePositionFromMotion()
+            // Mapping trực tiếp từ PropertyName đến recipe property
+            switch (PropertyName)
             {
-                if (Motion != null)
-                {
-                    Position = Math.Round(Motion.Status.ActualPosition, 3);
-                    OnPropertyChanged(nameof(Position));
-                }
-            }
+                // CSTLoadUnloadRecipe properties
+                case "InCstTAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.InCstTAxisLoadPosition = Position;
+                    break;
+                case "InCstTAxisWorkPosition":
+                    _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.InCstTAxisWorkPosition = Position;
+                    break;
+                case "OutCstTAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.OutCstTAxisLoadPosition = Position;
+                    break;
+                case "OutCstTAxisWorkPosition":
+                    _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.OutCstTAxisWorkPosition = Position;
+                    break;
 
+                // TransferFixtureRecipe properties
+                case "TransferFixtureYAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.TransferFixtureRecipe.TransferFixtureYAxisLoadPosition = Position;
+                    break;
+                case "TransferFixtureYAxisUnloadPosition":
+                    _recipeSelector.CurrentRecipe.TransferFixtureRecipe.TransferFixtureYAxisUnloadPosition = Position;
+                    break;
+
+                // DetachRecipe properties
+                case "DetachZAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisReadyPosition = Position;
+                    break;
+                case "DetachZAxisDetachReadyPosition":
+                    _recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetachReadyPosition = Position;
+                    break;
+                case "DetachZAxisDetach1Position":
+                    _recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetach1Position = Position;
+                    break;
+                case "DetachZAxisDetach2Position":
+                    _recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetach2Position = Position;
+                    break;
+                case "ShuttleTransferZAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisReadyPosition = Position;
+                    break;
+                case "ShuttleTransferZAxisDetachReadyPosition":
+                    _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisDetachReadyPosition = Position;
+                    break;
+                case "ShuttleTransferZAxisDetach1Position":
+                    _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisDetach1Position = Position;
+                    break;
+                case "ShuttleTransferZAxisDetach2Position":
+                    _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisDetach2Position = Position;
+                    break;
+                case "ShuttleTransferZAxisUnloadPosition":
+                    _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisUnloadPosition = Position;
+                    break;
+                case "ShuttleTransferXAxisDetachPosition":
+                    _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisDetachPosition = Position;
+                    break;
+                case "ShuttleTransferXAxisDetachCheckPosition":
+                    _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisDetachCheckPosition = Position;
+                    break;
+                case "ShuttleTransferXAxisUnloadPosition":
+                    _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisUnloadPosition = Position;
+                    break;
+
+                // GlassTransferRecipe properties
+                case "YAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisReadyPosition = Position;
+                    break;
+                case "YAxisPickPosition":
+                    _recipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisPickPosition = Position;
+                    break;
+                case "ZAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisReadyPosition = Position;
+                    break;
+                case "ZAxisPickPosition":
+                    _recipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisPickPosition = Position;
+                    break;
+                case "YAxisLeftPlacePosition":
+                    _recipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisLeftPlacePosition = Position;
+                    break;
+                case "ZAxisLeftPlacePosition":
+                    _recipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisLeftPlacePosition = Position;
+                    break;
+                case "YAxisRightPlacePosition":
+                    _recipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisRightPlacePosition = Position;
+                    break;
+                case "ZAxisRightPlacePosition":
+                    _recipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisRightPlacePosition = Position;
+                    break;
+
+                default:
+                    break;
+            }
+            _recipeSelector.Save();
+        }
+
+        public void UpdatePositionFromMotion()
+        {
+            if (Motion != null)
+            {
+                Position = Math.Round(Motion.Status.ActualPosition, 3);
+                OnPropertyChanged(nameof(Position));
+            }
         }
 
     }
+
 }

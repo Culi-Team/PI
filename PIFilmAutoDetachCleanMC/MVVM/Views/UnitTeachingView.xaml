@@ -34,16 +34,6 @@
         </Style>
         
         <!-- DataTemplates -->
-        <DataTemplate DataType="{x:Type motion:MotionBase}">
-            <Border Style="{StaticResource ControlModuleStyle}">
-                <ui:MovingView/>
-            </Border>
-        </DataTemplate>
-        <DataTemplate x:Key="MotionTemplate" DataType="{x:Type motion:MotionBase}">
-            <Border Style="{StaticResource ControlModuleStyle}">
-                <ui:MovingView/>
-            </Border>
-        </DataTemplate>
         <DataTemplate DataType="{x:Type inout:CylinderBase}">
             <ui:CylinderView/>
         </DataTemplate>
@@ -203,8 +193,14 @@
                     <StackPanel>
                         <!-- Moving View Section -->
                         <ItemsControl x:Name="MotionItemsControl" 
-                                    ItemsSource="{Binding Motions, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
-                                    ItemTemplate="{StaticResource MotionTemplate}">
+                                    ItemsSource="{Binding Motions, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource ControlModuleStyle}">
+                                        <ui:MovingView Motion="{Binding .}" />
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <UniformGrid Columns="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
