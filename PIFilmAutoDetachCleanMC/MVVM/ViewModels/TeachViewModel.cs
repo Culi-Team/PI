@@ -180,7 +180,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
             return new ObservableCollection<PositionTeaching>()
             {
-                // Detach Z Axis positions
+                // Detach Z Axis positions - Ready → Detach Ready → Detach 1 → Detach 2
                 new PositionTeaching(RecipeSelector)
                 {
                     Name = Application.Current.Resources["str_DetachZAxisReadyPosition"]?.ToString() ?? "Detach Z Axis Ready Position",
@@ -209,7 +209,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     Position = RecipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetach2Position,
                     Motion = Devices.MotionsInovance.DetachGlassZAxis
                 },
-                // Shuttle Transfer Z Axis positions
+                // Shuttle Transfer Z Axis positions - Ready → Detach Ready → Detach 1 → Detach 2 → Unload
                 new PositionTeaching(RecipeSelector)
                 {
                     Name = Application.Current.Resources["str_ShuttleTransferZAxisReadyPosition"]?.ToString() ?? "Shuttle Transfer Z Axis Ready Position",
@@ -245,7 +245,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     Position = RecipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisUnloadPosition,
                     Motion = Devices.MotionsAjin.ShuttleTransferZAxis
                 },
-                // Shuttle Transfer X Axis positions
+                // Shuttle Transfer X Axis positions - Detach → Detach Check → Unload
                 new PositionTeaching(RecipeSelector)
                 {
                     Name = Application.Current.Resources["str_ShuttleTransferXAxisDetachPosition"]?.ToString() ?? "Shuttle Transfer X Axis Detach Position",
@@ -280,7 +280,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
             return new ObservableCollection<PositionTeaching>()
             {
-                // Y Axis Ready and Place Positions
+                // Ready Positions: Y, Z
                 new PositionTeaching(RecipeSelector)
                 {
                     Name = Application.Current.Resources["str_GlassTransferYAxisReadyPosition"]?.ToString() ?? "Glass Transfer Y Axis Ready Position",
@@ -290,6 +290,29 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 },
                 new PositionTeaching(RecipeSelector)
                 {
+                    Name = Application.Current.Resources["str_GlassTransferZAxisReadyPosition"]?.ToString() ?? "Glass Transfer Z Axis Ready Position",
+                    PropertyName = "ZAxisReadyPosition",
+                    Position = RecipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisReadyPosition,
+                    Motion = Devices.MotionsInovance.GlassTransferZAxis
+                },
+                // Pick Positions: Y, Z
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_GlassTransferYAxisPickPosition"]?.ToString() ?? "Glass Transfer Y Axis Pick Position",
+                    PropertyName = "YAxisPickPosition",
+                    Position = RecipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisPickPosition,
+                    Motion = Devices.MotionsInovance.GlassTransferYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_GlassTransferZAxisPickPosition"]?.ToString() ?? "Glass Transfer Z Axis Pick Position",
+                    PropertyName = "ZAxisPickPosition",
+                    Position = RecipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisPickPosition,
+                    Motion = Devices.MotionsInovance.GlassTransferZAxis
+                },
+                // Left Place Positions: Y, Z
+                new PositionTeaching(RecipeSelector)
+                {
                     Name = Application.Current.Resources["str_GlassTransferYAxisLeftPlacePosition"]?.ToString() ?? "Glass Transfer Y Axis Left Place Position",
                     PropertyName = "YAxisLeftPlacePosition",
                     Position = RecipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisLeftPlacePosition,
@@ -297,25 +320,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 },
                 new PositionTeaching(RecipeSelector)
                 {
-                    Name = Application.Current.Resources["str_GlassTransferYAxisRightPlacePosition"]?.ToString() ?? "Glass Transfer Y Axis Right Place Position",
-                    PropertyName = "YAxisRightPlacePosition",
-                    Position = RecipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisRightPlacePosition,
-                    Motion = Devices.MotionsInovance.GlassTransferYAxis
-                },
-                // Z Axis Ready and Place Positions
-                new PositionTeaching(RecipeSelector)
-                {
-                    Name = Application.Current.Resources["str_GlassTransferZAxisReadyPosition"]?.ToString() ?? "Glass Transfer Z Axis Ready Position",
-                    PropertyName = "ZAxisReadyPosition",
-                    Position = RecipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisReadyPosition,
-                    Motion = Devices.MotionsInovance.GlassTransferZAxis
-                },
-                new PositionTeaching(RecipeSelector)
-                {
                     Name = Application.Current.Resources["str_GlassTransferZAxisLeftPlacePosition"]?.ToString() ?? "Glass Transfer Z Axis Left Place Position",
                     PropertyName = "ZAxisLeftPlacePosition",
                     Position = RecipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisLeftPlacePosition,
                     Motion = Devices.MotionsInovance.GlassTransferZAxis
+                },
+                // Right Place Positions: Y, Z
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_GlassTransferYAxisRightPlacePosition"]?.ToString() ?? "Glass Transfer Y Axis Right Place Position",
+                    PropertyName = "YAxisRightPlacePosition",
+                    Position = RecipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisRightPlacePosition,
+                    Motion = Devices.MotionsInovance.GlassTransferYAxis
                 },
                 new PositionTeaching(RecipeSelector)
                 {
@@ -799,8 +815,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     case "YAxisReadyPosition":
                         _recipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisReadyPosition = Position;
                         break;
+                    case "YAxisPickPosition":
+                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisPickPosition = Position;
+                        break;
                     case "ZAxisReadyPosition":
                         _recipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisReadyPosition = Position;
+                        break;
+                    case "ZAxisPickPosition":
+                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisPickPosition = Position;
                         break;
                     case "YAxisLeftPlacePosition":
                         _recipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisLeftPlacePosition = Position;
