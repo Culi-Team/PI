@@ -122,6 +122,16 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
+        public override bool PreProcess()
+        {
+            if(FlagFixtureTransferDone)
+            {
+                Log.Debug("Clear Flag Detach Done");
+                FlagDetachDone = false;
+            }
+
+            return base.PreProcess();
+        }
         public override bool ProcessOrigin()
         {
             switch ((EDetachProcessOriginStep)Step.OriginStep)
@@ -653,6 +663,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Detach Fix Cylinder 2 Backward Done");
                     Step.RunStep++;
                     break;
+                case EDetachStep.Set_FlagDetachDone:
+                    Log.Debug("Set Flag Detach Done");
+                    FlagDetachDone = true;
+                    Step.RunStep++;
+                    break;
                 case EDetachStep.End:
                     Log.Debug("Detach End");
                     if (Parent!.Sequence != ESequence.AutoRun)
@@ -775,11 +790,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
-                    Step.RunStep++;
-                    break;
-                case EDetachProcessGlassTransferPickStep.Set_FlagDetachDone:
-                    Log.Debug("Set Flag Detach Done");
-                    FlagDetachDone = true;
+                    Log.Debug("Clear Flag Detach Request Unload");
+                    FlagDetachRequestUnloadGlass = false;
                     Step.RunStep++;
                     break;
                 case EDetachProcessGlassTransferPickStep.End:

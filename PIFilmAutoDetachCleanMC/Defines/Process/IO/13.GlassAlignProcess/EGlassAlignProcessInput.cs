@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum EDetachProcessGlassTransferPickStep
+    public enum EGlassAlignProcessInput
     {
-        Start,
-        Vacuum_Off,
-        Set_FlagDetachRequestUnload,
-        Wait_GlassTransferPickDone,
-        End
+        GLASS_TRANSFER_PLACE_DONE,
     }
 }

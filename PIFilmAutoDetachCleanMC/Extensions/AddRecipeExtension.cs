@@ -21,6 +21,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddSingleton<VinylCleanRecipe>();
                 services.AddSingleton<TransferFixtureRecipe>();
                 services.AddSingleton<DetachRecipe>();
+                services.AddSingleton<GlassTransferRecipe>();
                 services.AddKeyedScoped<CleanRecipe>("WETCleanLeftRecipe");
                 services.AddKeyedScoped<CleanRecipe>("WETCleanRightRecipe");
                 services.AddKeyedScoped<CleanRecipe>("AFCleanLeftRecipe");

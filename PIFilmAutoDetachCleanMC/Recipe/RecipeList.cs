@@ -15,6 +15,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
                           VinylCleanRecipe vinylCleanRecipe,
                           TransferFixtureRecipe transferFixtureRecipe,
                           DetachRecipe detachRecipe,
+                          GlassTransferRecipe glassTransferRecipe,
                           [FromKeyedServices("WETCleanLeftRecipe")] CleanRecipe wetCleanLeftRecipe,
                           [FromKeyedServices("WETCleanRightRecipe")] CleanRecipe wetClenaRightRecipe,
                           [FromKeyedServices("AFCleanLeftRecipe")] CleanRecipe afCleanLeftRecipe,
@@ -26,6 +27,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             VinylCleanRecipe = vinylCleanRecipe;
             TransferFixtureRecipe = transferFixtureRecipe;
             DetachRecipe = detachRecipe;
+            GlassTransferRecipe = glassTransferRecipe;
             WetCleanLeftRecipe = wetCleanLeftRecipe;
             WetClenaRightRecipe = wetClenaRightRecipe;
             AfCleanLeftRecipe = afCleanLeftRecipe;
@@ -37,6 +39,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             VinylCleanRecipe.Name = "Vinyl Clean";
             TransferFixtureRecipe.Name = "Transfer Fixture";
             DetachRecipe.Name = "Detach";
+            GlassTransferRecipe.Name = "Glass Transfer";
             WetCleanLeftRecipe.Name = "Wet Clean Left";
             WetClenaRightRecipe.Name = "Wet Clean Right";
             AfCleanLeftRecipe.Name = "AF Clean Left";
@@ -49,6 +52,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public VinylCleanRecipe VinylCleanRecipe { get; }
         public TransferFixtureRecipe TransferFixtureRecipe { get; }
         public DetachRecipe DetachRecipe { get; }
+        public GlassTransferRecipe GlassTransferRecipe { get; }
         public CleanRecipe WetCleanLeftRecipe { get; }
         public CleanRecipe WetClenaRightRecipe { get; }
         public CleanRecipe AfCleanLeftRecipe { get; }

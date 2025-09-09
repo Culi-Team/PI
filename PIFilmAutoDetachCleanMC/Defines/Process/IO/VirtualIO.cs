@@ -27,6 +27,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
         private readonly IDOutputDevice _transferFixtureOutput;
         private readonly IDInputDevice _detachInput;
         private readonly IDOutputDevice _detachOutput;
+        private readonly IDInputDevice _glassTransferInput;
+        private readonly IDOutputDevice _glassTransferOutput;
+        private readonly IDInputDevice _glassAlignLeftInput;
+        private readonly IDOutputDevice _glassAlignLeftOutput;
+        private readonly IDInputDevice _glassAlignRightInput;
+        private readonly IDOutputDevice _glassAlignRightOutput;
 
         public VirtualIO([FromKeyedServices("InWorkConveyorInput")] IDInputDevice inWorkConveyorInput,
                          [FromKeyedServices("InWorkConveyorOutput")] IDOutputDevice inWorkConveyorOutput,
@@ -43,7 +49,13 @@ namespace PIFilmAutoDetachCleanMC.Defines
                          [FromKeyedServices("TransferFixtureInput")] IDInputDevice transferFixtureInput,
                          [FromKeyedServices("TransferFixtureOutput")] IDOutputDevice transferFixtureOutput,
                          [FromKeyedServices("DetachInput")] IDInputDevice detachInput,
-                         [FromKeyedServices("DetachOutput")] IDOutputDevice detachOutput)
+                         [FromKeyedServices("DetachOutput")] IDOutputDevice detachOutput,
+                         [FromKeyedServices("GlassTransferInput")] IDInputDevice glassTransferInput,
+                         [FromKeyedServices("GlassTransferOutput")] IDOutputDevice glassTransferOutput,
+                         [FromKeyedServices("GlassAlignLeftInput")] IDInputDevice glassAlignLeftInput,
+                         [FromKeyedServices("GlassAlignLeftOutput")] IDOutputDevice glassAlignLeftOutput,
+                         [FromKeyedServices("GlassAlignRightInput")] IDInputDevice glassAlignRightInput,
+                         [FromKeyedServices("GlassAlignRightOutput")] IDOutputDevice glassAlignRightOutput)
         {
             _inWorkConveyorInput = inWorkConveyorInput;
             _inWorkConveyorOutput = inWorkConveyorOutput;
@@ -61,6 +73,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
             _transferFixtureOutput = transferFixtureOutput;
             _detachInput = detachInput;
             _detachOutput = detachOutput;
+            _glassTransferInput = glassTransferInput;
+            _glassTransferOutput = glassTransferOutput;
+            _glassAlignLeftInput = glassAlignLeftInput;
+            _glassAlignLeftOutput = glassAlignLeftOutput;
+            _glassAlignRightInput = glassAlignRightInput;
+            _glassAlignRightOutput = glassAlignRightOutput;
         }
 
         public void Initialize()
@@ -81,6 +99,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
             _transferFixtureOutput.Initialize();
             _detachInput.Initialize();
             _detachOutput.Initialize();
+            _glassTransferInput.Initialize();
+            _glassTransferOutput.Initialize();
+            _glassAlignLeftInput.Initialize();
+            _glassAlignLeftOutput.Initialize();
+            _glassAlignRightInput.Initialize();
+            _glassAlignRightOutput.Initialize();
         }
 
         public void Mappings()
@@ -152,6 +176,24 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //Detach Input Mapping
             ((VirtualInputDevice<EDetachProcessInput>)_detachInput).Mapping((int)EDetachProcessInput.FIXTURE_TRANSFER_DONE,
                 _transferFixtureOutput, (int)ETransferFixtureProcessOutput.FIXTURE_TRANSFER_DONE);
+            ((VirtualInputDevice<EDetachProcessInput>)_detachInput).Mapping((int)EDetachProcessInput.GLASS_TRANSFER_PICK_DONE,
+                _glassTransferOutput, (int)EGlassTransferProcessOutput.GLASS_TRANSFER_PICK_DONE);
+
+            //Glass Transfer Input Mapping
+            ((VirtualInputDevice<EGlassTransferProcessInput>)_glassTransferInput).Mapping((int)EGlassTransferProcessInput.DETACH_REQ_UNLOAD_GLASS,
+                _detachOutput, (int)EDetachProcessOutput.DETACH_REQ_UNLOAD_GLASS);
+            ((VirtualInputDevice<EGlassTransferProcessInput>)_glassTransferInput).Mapping((int)EGlassTransferProcessInput.GLASS_ALIGN_LEFT_REQ_GLASS,
+                _glassAlignLeftOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_REQ_GLASS);
+            ((VirtualInputDevice<EGlassTransferProcessInput>)_glassTransferInput).Mapping((int)EGlassTransferProcessInput.GLASS_ALIGN_RIGHT_REQ_GLASS,
+                _glassAlignRightOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_REQ_GLASS);
+
+            //Glass Align Input Mapping
+                //Left
+            ((VirtualInputDevice<EGlassAlignProcessInput>)_glassAlignLeftInput).Mapping((int)EGlassAlignProcessInput.GLASS_TRANSFER_PLACE_DONE,
+                _glassTransferOutput, (int)EGlassTransferProcessOutput.GLASS_TRANSFER_LEFT_PLACE_DONE);
+                //Right
+            ((VirtualInputDevice<EGlassAlignProcessInput>)_glassAlignRightInput).Mapping((int)EGlassAlignProcessInput.GLASS_TRANSFER_PLACE_DONE,
+                _glassTransferOutput, (int)EGlassTransferProcessOutput.GLASS_TRANSFER_RIGHT_PLACE_DONE);
         }
     }
 }
