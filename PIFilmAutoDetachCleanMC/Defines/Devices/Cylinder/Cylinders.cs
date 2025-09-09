@@ -103,6 +103,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
         public ICylinder TrRotateRightFwBw { get; }
         public ICylinder TrRotateLeftRotate { get; }
         public ICylinder TrRotateLeftFwBw { get; }
+        public ICylinder TrRotateRightUpDown { get; }
+        public ICylinder TrRotateLeftUpDown { get; }
 
         // AF Clean
         public ICylinder AFCleanPusherRightUpDown { get; }
@@ -446,6 +448,16 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                 .Create(new List<IDInput> { _inputs.TrRotateLeftFw }, new List<IDInput> { _inputs.TrRotateLeftBw }, _outputs.TrRotateLeftFw, _outputs.TrRotateLeftBw)
                 .SetIdentity((int)ECylinder.TrRotateLeftFwBw, ECylinder.TrRotateLeftFwBw.ToString());
             TrRotateLeftFwBw.CylinderType = ECylinderType.ForwardBackward;
+
+            TrRotateRightUpDown = _cylinderFactory
+                .Create(new List<IDInput> { _inputs.TrRotateRightUp }, new List<IDInput> { _inputs.TrRotateRightDown }, _outputs.TrRotateRightUp, _outputs.TrRotateRightDown)
+                .SetIdentity((int)ECylinder.TrRotateRightUpDown, ECylinder.TrRotateRightUpDown.ToString());
+            TrRotateRightUpDown.CylinderType = ECylinderType.UpDown;
+
+            TrRotateLeftUpDown = _cylinderFactory
+                .Create(new List<IDInput> { _inputs.TrRotateLeftUp }, new List<IDInput> { _inputs.TrRotateLeftDown }, _outputs.TrRotateLeftUp, _outputs.TrRotateLeftDown)
+                .SetIdentity((int)ECylinder.TrRotateLeftUpDown, ECylinder.TrRotateLeftUpDown.ToString());
+            TrRotateLeftUpDown.CylinderType = ECylinderType.UpDown;
 
             // AF Clean
             AFCleanPusherRightUpDown = _cylinderFactory

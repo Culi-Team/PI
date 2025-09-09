@@ -13,28 +13,47 @@ namespace PIFilmAutoDetachCleanMC.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((values[1] is uint) == false) return Binding.DoNothing;
+            if (values[1] is not int index)
+            {
+                return Binding.DoNothing;
+            }
 
             if (values[0] is List<IDInput> inputs)
             {
-                var subList = inputs.GetRange((int)((uint)values[1] * 32), 32);
+                var ordered = inputs
+                    .GroupBy(i => i.Id)
+                    .Select(g => g.FirstOrDefault(i => !i.Name.Contains("SPARE", StringComparison.OrdinalIgnoreCase)) ?? g.First())
+                    .OrderBy(i => i.Id)
+                    .ToList();
+
+                var subList = ordered.Skip(index * 32).Take(32).ToList();
                 IDInput[] newList = new IDInput[subList.Count];
-                for (int i = 0; i < subList.Count / 2; i++)
+                int half = subList.Count / 2;
+                for (int i = 0; i < half; i++)
                 {
                     newList[i * 2] = subList[i];
-                    newList[i * 2 + 1] = subList[i + 16];
+                    if (i + half < subList.Count)
+                        newList[i * 2 + 1] = subList[i + half];
                 }
 
                 return newList.ToList();
             }
             else if (values[0] is List<IDOutput> outputs)
             {
-                var subList = outputs.GetRange((int)((uint)values[1] * 32), 32);
+                var ordered = outputs
+                    .GroupBy(o => o.Id)
+                    .Select(g => g.FirstOrDefault(o => !o.Name.Contains("SPARE", StringComparison.OrdinalIgnoreCase)) ?? g.First())
+                    .OrderBy(o => o.Id)
+                    .ToList();
+
+                var subList = ordered.Skip(index * 32).Take(32).ToList();
                 IDOutput[] newList = new IDOutput[subList.Count];
-                for (int i = 0; i < subList.Count / 2; i++)
+                int half = subList.Count / 2;
+                for (int i = 0; i < half; i++)
                 {
                     newList[i * 2] = subList[i];
-                    newList[i * 2 + 1] = subList[i + 16];
+                    if (i + half < subList.Count)
+                        newList[i * 2 + 1] = subList[i + half];
                 }
 
                 return newList.ToList();

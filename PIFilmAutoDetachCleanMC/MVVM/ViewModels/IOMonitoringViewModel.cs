@@ -18,8 +18,39 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             OutputList = outputList;
         }
 
-        public uint SelectedInputDeviceIndex { get; set; }
-        public uint SelectedOutputDeviceIndex { get; set; }
+        private int _selectedInputDeviceIndex;
+        public int SelectedInputDeviceIndex
+        {
+            get => _selectedInputDeviceIndex;
+            set
+            {
+                if (_selectedInputDeviceIndex != value)
+                {
+                    _selectedInputDeviceIndex = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SelectedInputBoardNumber));
+                }
+            }
+        }
+
+        public int SelectedInputBoardNumber => SelectedInputDeviceIndex + 1;
+
+        private int _selectedOutputDeviceIndex;
+        public int SelectedOutputDeviceIndex
+        {
+            get => _selectedOutputDeviceIndex;
+            set
+            {
+                if (_selectedOutputDeviceIndex != value)
+                {
+                    _selectedOutputDeviceIndex = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SelectedOutputBoardNumber));
+                }
+            }
+        }
+
+        public int SelectedOutputBoardNumber => SelectedOutputDeviceIndex + 1;
 
         public ICommand InputDeviceIndexDecrease
         {
@@ -30,7 +61,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     if (SelectedInputDeviceIndex > 0)
                     {
                         SelectedInputDeviceIndex--;
-                        OnPropertyChanged(nameof(SelectedInputDeviceIndex));
                     }
                 });
             }
@@ -41,10 +71,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (SelectedInputDeviceIndex < InputList.All.Count / 32 - 1)
+                    if (SelectedInputDeviceIndex < MaxInputDeviceIndex)
                     {
                         SelectedInputDeviceIndex++;
-                        OnPropertyChanged(nameof(SelectedInputDeviceIndex));
                     }
                 });
             }
@@ -59,7 +88,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     if (SelectedOutputDeviceIndex > 0)
                     {
                         SelectedOutputDeviceIndex--;
-                        OnPropertyChanged(nameof(SelectedOutputDeviceIndex));
                     }
                 });
             }
@@ -70,10 +98,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (SelectedOutputDeviceIndex < OutputList.All.Count / 32 - 1)
+                    if (SelectedOutputDeviceIndex < MaxOutputDeviceIndex)
                     {
                         SelectedOutputDeviceIndex++;
-                        OnPropertyChanged(nameof(SelectedOutputDeviceIndex));
                     }
                 });
             }
@@ -81,5 +108,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         public Inputs InputList { get; }
         public Outputs OutputList { get; }
+        private int MaxInputDeviceIndex => InputList.All
+            .GroupBy(i => i.Id / 32)
+            .Count() - 1;
+
+        private int MaxOutputDeviceIndex => OutputList.All
+            .GroupBy(o => o.Id / 32)
+            .Count() - 1;
     }
 }

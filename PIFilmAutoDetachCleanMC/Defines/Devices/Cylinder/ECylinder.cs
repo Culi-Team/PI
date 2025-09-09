@@ -106,6 +106,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         TrRotateRightFwBw,
         TrRotateLeftRotate,
         TrRotateLeftFwBw,
+        TrRotateRightUpDown,
+        TrRotateLeftUpDown,
 
         // AF Clean
         AFCleanPusherRightUpDown,

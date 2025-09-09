@@ -27,7 +27,7 @@
 
                     <Button Content="←"
                             Command="{Binding InputDeviceIndexDecrease}" />
-                    <TextBlock Text="{Binding SelectedInputDeviceIndex, StringFormat='{}Input Board #{0}'}"
+                    <TextBlock Text="{Binding SelectedInputBoardNumber, StringFormat='{}Input Board #{0}'}"
                                Grid.Column="1"
                                TextAlignment="Center"
                                FontWeight="Bold"
@@ -74,7 +74,7 @@
 
                     <Button Content="←"
                             Command="{Binding OutputDeviceIndexDecrease}" />
-                    <TextBlock Text="{Binding SelectedOutputDeviceIndex, StringFormat='{}Output Board #{0}'}"
+                    <TextBlock Text="{Binding SelectedOutputBoardNumber, StringFormat='{}Output Board #{0}'}"
                                Grid.Column="1"
                                TextAlignment="Center"
                                FontWeight="Bold"
