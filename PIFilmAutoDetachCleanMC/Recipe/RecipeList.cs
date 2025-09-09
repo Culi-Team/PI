@@ -17,7 +17,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
                           DetachRecipe detachRecipe,
                           GlassTransferRecipe glassTransferRecipe,
                           [FromKeyedServices("WETCleanLeftRecipe")] CleanRecipe wetCleanLeftRecipe,
-                          [FromKeyedServices("WETCleanRightRecipe")] CleanRecipe wetClenaRightRecipe,
+                          [FromKeyedServices("WETCleanRightRecipe")] CleanRecipe wetCleanRightRecipe,
                           [FromKeyedServices("AFCleanLeftRecipe")] CleanRecipe afCleanLeftRecipe,
                           [FromKeyedServices("AFCleanRightRecipe")] CleanRecipe afCleanRightRecipe)
         {
@@ -29,7 +29,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             DetachRecipe = detachRecipe;
             GlassTransferRecipe = glassTransferRecipe;
             WetCleanLeftRecipe = wetCleanLeftRecipe;
-            WetClenaRightRecipe = wetClenaRightRecipe;
+            WetCleanRightRecipe = wetCleanRightRecipe;
             AfCleanLeftRecipe = afCleanLeftRecipe;
             AfCleanRightRecipe = afCleanRightRecipe;
 
@@ -41,7 +41,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             DetachRecipe.Name = "Detach";
             GlassTransferRecipe.Name = "Glass Transfer";
             WetCleanLeftRecipe.Name = "Wet Clean Left";
-            WetClenaRightRecipe.Name = "Wet Clean Right";
+            WetCleanRightRecipe.Name = "Wet Clean Right";
             AfCleanLeftRecipe.Name = "AF Clean Left";
             AfCleanRightRecipe.Name = "AF Clean Right";
         }
@@ -54,7 +54,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public DetachRecipe DetachRecipe { get; }
         public GlassTransferRecipe GlassTransferRecipe { get; }
         public CleanRecipe WetCleanLeftRecipe { get; }
-        public CleanRecipe WetClenaRightRecipe { get; }
+        public CleanRecipe WetCleanRightRecipe { get; }
         public CleanRecipe AfCleanLeftRecipe { get; }
         public CleanRecipe AfCleanRightRecipe { get; }
     }

@@ -309,6 +309,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         MessageText = "Disconnect IO Devices";
                         _devices.Inputs.Disconnect();
                         _devices.Outputs.Disconnect();
+                        _devices.Regulators.WetCleanLRegulator.SetPressure(0);
+                        _devices.Regulators.WetCleanRRegulator.SetPressure(0);
+                        _devices.Regulators.AfCleanLRegulator.SetPressure(0);
+                        _devices.Regulators.AfCleanRRegulator.SetPressure(0);
                         _step++;
                         break;
                     case EHandleStep.RecipeHandle:

@@ -249,6 +249,24 @@ namespace PIFilmAutoDetachCleanMC.Extensions
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
+#if SIMULATION
+                services.AddKeyedScoped<IRegulator, SimulationRegulator>("WETCleanLeft", (ser, obj) =>
+                {
+                    return new SimulationRegulator(1, "WETCleanLeft");
+                });
+                services.AddKeyedScoped<IRegulator, SimulationRegulator>("WETCleanRight", (ser, obj) =>
+                {
+                    return new SimulationRegulator(2, "WETCleanRight");
+                });
+                services.AddKeyedScoped<IRegulator, SimulationRegulator>("AFCleanLeft", (ser, obj) =>
+                {
+                    return new SimulationRegulator(3, "AFCleanLeft");
+                });
+                services.AddKeyedScoped<IRegulator, SimulationRegulator>("AFCleanRight", (ser, obj) =>
+                {
+                    return new SimulationRegulator(4, "AFCleanRight");
+                });
+#else
                 services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("WETCleanLeft", (ser, obj) =>
                 {
                     return new ITVRegulatorRC(1, "WETCleanLeft", 0.9, "COM4", 9600);
@@ -265,6 +283,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 {
                     return new ITVRegulatorRC(4, "AFCleanRight", 0.9, "COM7", 9600);
                 });
+#endif
                 services.AddSingleton<Regulators>();
             });
 
