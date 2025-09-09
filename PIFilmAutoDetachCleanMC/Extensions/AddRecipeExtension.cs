@@ -22,10 +22,22 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddSingleton<TransferFixtureRecipe>();
                 services.AddSingleton<DetachRecipe>();
                 services.AddSingleton<GlassTransferRecipe>();
-                services.AddKeyedScoped<CleanRecipe>("WETCleanLeftRecipe");
-                services.AddKeyedScoped<CleanRecipe>("WETCleanRightRecipe");
-                services.AddKeyedScoped<CleanRecipe>("AFCleanLeftRecipe");
-                services.AddKeyedScoped<CleanRecipe>("AFCleanRightRecipe");
+                services.AddKeyedSingleton<TransferInShuttleRecipe>("TransferInShuttleLeftRecipe");
+                services.AddKeyedSingleton<TransferInShuttleRecipe>("TransferInShuttleRightRecipe");
+
+                services.AddKeyedSingleton<CleanRecipe>("WETCleanLeftRecipe");
+                services.AddKeyedSingleton<CleanRecipe>("WETCleanRightRecipe");
+
+                services.AddKeyedSingleton<TransferRotationRecipe>("TransferRotationLeftRecipe");
+                services.AddKeyedSingleton<TransferRotationRecipe>("TransferRotationRightRecipe");
+
+                services.AddKeyedSingleton<CleanRecipe>("AFCleanLeftRecipe");
+                services.AddKeyedSingleton<CleanRecipe>("AFCleanRightRecipe");
+
+                services.AddKeyedSingleton<UnloadTransferRecipe>("UnloadTransferLeftRecipe");
+                services.AddKeyedSingleton<UnloadTransferRecipe>("UnloadTransferRightRecipe");
+
+                services.AddSingleton<RobotUnloadRecipe>();
 
                 services.AddSingleton<RecipeList>();
                 services.AddSingleton<RecipeSelector>();

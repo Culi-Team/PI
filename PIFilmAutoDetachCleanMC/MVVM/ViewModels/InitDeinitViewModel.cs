@@ -232,8 +232,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     case EHandleStep.RecipeHandle:
                         Log.Debug("Load Recipes");
                         MessageText = "Load Recipes";
-
-                        _recipeSelector.Load();
+                        if(_recipeSelector.Load() == false)
+                        {
+                            ErrorMessages.Add("Recipes Load Fail.");
+                            Log.Debug("Recipe Load Fail");
+                        }
                         _step++;
                         break;
                     case EHandleStep.ProcessHandle:
