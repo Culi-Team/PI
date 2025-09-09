@@ -152,7 +152,6 @@
                  Loaded="ListBox_Loaded"
                  SelectedItem="{Binding SelectedRecipe}"
                  SelectionChanged="RecipeChanged"
-                 SelectedIndex="0"
                  Style="{StaticResource MainListBoxStyle}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -201,7 +200,7 @@
                     <ScrollViewer HorizontalScrollBarVisibility="Auto"
                                   VerticalScrollBarVisibility="Auto">
                         <ListBox ItemsSource="{Binding RecipeSelector.ValidRecipes}"
-                                 SelectedIndex="0"
+                                 Loaded="ModelsListBox_Loaded"
                                  SelectedItem="{Binding SelectedModel,Mode=OneWayToSource}"
                                  Style="{StaticResource ModelsListBoxStyle}">
                             <ListBox.ItemContainerStyle>
