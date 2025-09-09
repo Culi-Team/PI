@@ -149,7 +149,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Detach Origin");
                     break;
                 case ETransferFixtureOriginStep.Wait_Detach_Origin:
-                    if (!FlagDetachProcessOriginDone)
+                    if (FlagDetachProcessOriginDone == false)
                     {
                         Wait(20);
                         break;

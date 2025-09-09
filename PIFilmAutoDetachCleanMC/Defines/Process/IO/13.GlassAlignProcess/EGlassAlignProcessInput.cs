@@ -9,5 +9,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EGlassAlignProcessInput
     {
         GLASS_TRANSFER_PLACE_DONE,
+        TRANSFER_IN_SHUTTLE_PICK_DONE,
     }
 }

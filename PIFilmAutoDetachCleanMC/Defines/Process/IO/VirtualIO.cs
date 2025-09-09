@@ -188,13 +188,16 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 _glassAlignLeftOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_REQ_GLASS);
             ((VirtualInputDevice<EGlassTransferProcessInput>)_glassTransferInput).Mapping((int)EGlassTransferProcessInput.GLASS_ALIGN_RIGHT_REQ_GLASS,
                 _glassAlignRightOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_REQ_GLASS);
-
+            ((VirtualInputDevice<EGlassTransferProcessInput>)_glassTransferInput).Mapping((int)EGlassTransferProcessInput.GLASS_ALIGN_LEFT_PLACE_DONE_RECEIVED,
+                _glassAlignLeftOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_PLACE_DONE_RECEIVED);
+            ((VirtualInputDevice<EGlassTransferProcessInput>)_glassTransferInput).Mapping((int)EGlassTransferProcessInput.GLASS_ALIGN_RIGHT_PLACE_DONE_RECEIVED,
+                _glassAlignRightOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_PLACE_DONE_RECEIVED);
 
             //Glass Align Input Mapping
-                //Left
+            //Left
             ((VirtualInputDevice<EGlassAlignProcessInput>)_glassAlignLeftInput).Mapping((int)EGlassAlignProcessInput.GLASS_TRANSFER_PLACE_DONE,
                 _glassTransferOutput, (int)EGlassTransferProcessOutput.GLASS_TRANSFER_LEFT_PLACE_DONE);
-                //Right
+            //Right
             ((VirtualInputDevice<EGlassAlignProcessInput>)_glassAlignRightInput).Mapping((int)EGlassAlignProcessInput.GLASS_TRANSFER_PLACE_DONE,
                 _glassTransferOutput, (int)EGlassTransferProcessOutput.GLASS_TRANSFER_RIGHT_PLACE_DONE);
         }

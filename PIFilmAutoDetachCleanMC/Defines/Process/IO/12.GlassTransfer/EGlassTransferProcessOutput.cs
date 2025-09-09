@@ -11,5 +11,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         GLASS_TRANSFER_PICK_DONE,
         GLASS_TRANSFER_LEFT_PLACE_DONE,
         GLASS_TRANSFER_RIGHT_PLACE_DONE,
+
     }
 }

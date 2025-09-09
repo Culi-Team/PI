@@ -140,6 +140,18 @@ namespace PIFilmAutoDetachCleanMC.Process
                 return _glassTransferInput[(int)EGlassTransferProcessInput.GLASS_TRANSFER_PICK_DONE_RECEIVED];
             }
         }
+
+        private bool FlagGlassAlignPlaceDoneReceived
+        {
+            get
+            {
+                if(currentPlacePort == EPort.Left)
+                {
+                    return _glassTransferInput[(int)EGlassTransferProcessInput.GLASS_ALIGN_LEFT_PLACE_DONE_RECEIVED];
+                }
+                return _glassTransferInput[(int)EGlassTransferProcessInput.GLASS_ALIGN_RIGHT_PLACE_DONE_RECEIVED];
+            }
+        }
         #endregion
 
         #region Constructor
@@ -466,6 +478,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EGlassTransferPickStep.Cyl_Up:
                     Log.Debug("Cylinder Up");
+                    CylUpDown(true);
                     Wait(_commonRecipe.CylinderMoveTimeout, () => IsCylinderUp);
                     Step.RunStep++;
                     break;
@@ -514,6 +527,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPlaceStep.Start:
                     Log.Debug("Glass Transfer Place Start");
                     Step.RunStep++;
+
                     Log.Debug("Wait Glass Align Request Glass");
                     break;
                 case EGlassTransferPlaceStep.Wait_Glass_AlignRequestGlass:
@@ -632,6 +646,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPlaceStep.Set_Flag_PlaceDone:
                     Log.Debug("Set Flag Place Done");
                     FlagPlaceDone = true;
+                    Log.Debug("Wait Glass Align Place Done Received");
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPlaceStep.Wait_GlassAlignPlaceDoneReceived:
+                    if(FlagGlassAlignPlaceDoneReceived == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Log.Debug("Clear Flag Place Done");
                     Step.RunStep++;
                     break;
                 case EGlassTransferPlaceStep.End:
