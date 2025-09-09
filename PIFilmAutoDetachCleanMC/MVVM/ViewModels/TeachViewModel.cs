@@ -89,6 +89,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public ObservableCollection<PositionTeaching> TransferFixturePositionTeachings => GetTransferFixturePositionTeachings();
         public ObservableCollection<PositionTeaching> DetachPositionTeachings => GetDetachPositionTeachings();
 
+        // Glass Transfer Tab Motion Properties
+        public ObservableCollection<IMotion> GlassTransferMotions => GetGlassTransferMotions();
+        public ObservableCollection<PositionTeaching> GlassTransferPositionTeachings => GetGlassTransferPositionTeachings();
 
         #endregion
 
@@ -267,6 +270,63 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             };
         }
 
+        // Glass Transfer Tab PositionTeachings
+        private ObservableCollection<PositionTeaching> GetGlassTransferPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.GlassTransferRecipe == null || 
+                Devices?.MotionsInovance?.GlassTransferYAxis == null || 
+                Devices?.MotionsInovance?.GlassTransferZAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                // Y Axis Ready and Place Positions
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_GlassTransferYAxisReadyPosition"]?.ToString() ?? "Glass Transfer Y Axis Ready Position",
+                    PropertyName = "YAxisReadyPosition",
+                    Position = RecipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisReadyPosition,
+                    Motion = Devices.MotionsInovance.GlassTransferYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_GlassTransferYAxisLeftPlacePosition"]?.ToString() ?? "Glass Transfer Y Axis Left Place Position",
+                    PropertyName = "YAxisLeftPlacePosition",
+                    Position = RecipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisLeftPlacePosition,
+                    Motion = Devices.MotionsInovance.GlassTransferYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_GlassTransferYAxisRightPlacePosition"]?.ToString() ?? "Glass Transfer Y Axis Right Place Position",
+                    PropertyName = "YAxisRightPlacePosition",
+                    Position = RecipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisRightPlacePosition,
+                    Motion = Devices.MotionsInovance.GlassTransferYAxis
+                },
+                // Z Axis Ready and Place Positions
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_GlassTransferZAxisReadyPosition"]?.ToString() ?? "Glass Transfer Z Axis Ready Position",
+                    PropertyName = "ZAxisReadyPosition",
+                    Position = RecipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisReadyPosition,
+                    Motion = Devices.MotionsInovance.GlassTransferZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_GlassTransferZAxisLeftPlacePosition"]?.ToString() ?? "Glass Transfer Z Axis Left Place Position",
+                    PropertyName = "ZAxisLeftPlacePosition",
+                    Position = RecipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisLeftPlacePosition,
+                    Motion = Devices.MotionsInovance.GlassTransferZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_GlassTransferZAxisRightPlacePosition"]?.ToString() ?? "Glass Transfer Z Axis Right Place Position",
+                    PropertyName = "ZAxisRightPlacePosition",
+                    Position = RecipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisRightPlacePosition,
+                    Motion = Devices.MotionsInovance.GlassTransferZAxis
+                }
+            };
+        }
+
         #endregion
 
         #region GetMotions
@@ -290,7 +350,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetTransferFixtureMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            if (Devices?.MotionsInovance?.FixtureTransferYAxis != null)
                 motions.Add(Devices.MotionsInovance.FixtureTransferYAxis);
             // TransferFixtureProcess chỉ sử dụng FixtureTransferYAxis, không sử dụng ShuttleTransferZAxis
             return motions;
@@ -299,15 +358,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetDetachMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            if (Devices?.MotionsInovance?.DetachGlassZAxis != null)
                 motions.Add(Devices.MotionsInovance.DetachGlassZAxis);
-            if (Devices?.MotionsAjin?.ShuttleTransferZAxis != null)
                 motions.Add(Devices.MotionsAjin.ShuttleTransferZAxis);
-            if (Devices?.MotionsInovance?.ShuttleTransferXAxis != null)
                 motions.Add(Devices.MotionsInovance.ShuttleTransferXAxis);
             return motions;
         }
 
+        // Glass Transfer Tab Motions
+        private ObservableCollection<IMotion> GetGlassTransferMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            if (Devices?.MotionsInovance?.GlassTransferYAxis != null)
+                motions.Add(Devices.MotionsInovance.GlassTransferYAxis);
+            if (Devices?.MotionsInovance?.GlassTransferZAxis != null)
+                motions.Add(Devices.MotionsInovance.GlassTransferZAxis);
+            return motions;
+        }
 
         #endregion
 
@@ -352,6 +418,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.DetachCyl1UpDown);
             cylinders.Add(Devices.Cylinders.DetachCyl2UpDown);
             
+            return cylinders;
+        }
+
+        // Glass Transfer Tab Cylinders
+        private ObservableCollection<ICylinder> GetGlassTransferCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Glass Transfer không sử dụng cylinders, chỉ sử dụng vacuum
             return cylinders;
         }
 
@@ -421,6 +495,17 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         // Clean Tab Inputs
 
+        // Glass Transfer Tab Inputs
+        private ObservableCollection<IDInput> GetGlassTransferInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add Glass Transfer vacuum detection inputs
+            inputs.Add(Devices.Inputs.GlassTransferVac1);
+            inputs.Add(Devices.Inputs.GlassTransferVac2);
+            inputs.Add(Devices.Inputs.GlassTransferVac3);
+            return inputs;
+        }
+
         // Unload Tab Inputs
 
         #endregion
@@ -470,6 +555,17 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return outputs;
         }
 
+        // Glass Transfer Tab Outputs
+        private ObservableCollection<IDOutput> GetGlassTransferOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add Glass Transfer vacuum outputs
+            outputs.Add(Devices.Outputs.GlassTransferVac1OnOff);
+            outputs.Add(Devices.Outputs.GlassTransferVac2OnOff);
+            outputs.Add(Devices.Outputs.GlassTransferVac3OnOff);
+            return outputs;
+        }
+
         // Clean Tab Outputs
 
         // Unload Tab Outputs
@@ -487,6 +583,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 // Detach Tab (2 units)
                 Processes.TransferFixtureProcess,
                 Processes.DetachProcess,
+                
+                // Glass Transfer Tab
+                Processes.GlassTransferProcess,
             };
             return processes;
         }
@@ -531,6 +630,24 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 Inputs = GetTransferFixtureInputs();
                 Outputs = GetTransferFixtureOutputs();
                 PositionTeachings = GetTransferFixturePositionTeachings();
+            }
+            else if (SelectedProcess == Processes.DetachProcess)
+            {
+                Motions = GetDetachMotions();
+                Cylinders = GetDetachCylinders();
+                Inputs = GetDetachInputs();
+                Outputs = GetDetachOutputs();
+                PositionTeachings = GetDetachPositionTeachings();
+            }
+
+            // Glass Transfer Tab
+            else if (SelectedProcess == Processes.GlassTransferProcess)
+            {
+                Motions = GetGlassTransferMotions();
+                Cylinders = GetGlassTransferCylinders();
+                Inputs = GetGlassTransferInputs();
+                Outputs = GetGlassTransferOutputs();
+                PositionTeachings = GetGlassTransferPositionTeachings();
             }
             else if (SelectedProcess == Processes.DetachProcess)
             {
@@ -676,6 +793,26 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         break;
                     case "ShuttleTransferXAxisUnloadPosition":
                         _recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferXAxisUnloadPosition = Position;
+                        break;
+                    
+                    // GlassTransferRecipe properties
+                    case "YAxisReadyPosition":
+                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisReadyPosition = Position;
+                        break;
+                    case "ZAxisReadyPosition":
+                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisReadyPosition = Position;
+                        break;
+                    case "YAxisLeftPlacePosition":
+                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisLeftPlacePosition = Position;
+                        break;
+                    case "ZAxisLeftPlacePosition":
+                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisLeftPlacePosition = Position;
+                        break;
+                    case "YAxisRightPlacePosition":
+                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.YAxisRightPlacePosition = Position;
+                        break;
+                    case "ZAxisRightPlacePosition":
+                        _recipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisRightPlacePosition = Position;
                         break;
                     
                     default:

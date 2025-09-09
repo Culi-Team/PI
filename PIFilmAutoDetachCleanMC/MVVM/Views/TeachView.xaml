@@ -155,6 +155,16 @@
                 PositionTeachings="{Binding DataContext.DetachPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
         </DataTemplate>
+        
+        <DataTemplate x:Key="GlassTransferTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Motions="{Binding DataContext.GlassTransferMotions, ElementName=root}"
+                Outputs="{Binding DataContext.Outputs, ElementName=root}"
+                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                PositionTeachings="{Binding DataContext.GlassTransferPositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
 
     </UserControl.Resources>
     <Grid>
@@ -162,7 +172,8 @@
             <TabItem Header="In Cassette" ContentTemplate="{StaticResource InWorkConveyorTemplate}"/>
             <TabItem Header="Out Cassette" ContentTemplate="{StaticResource OutWorkConveyorTemplate}"/>
             <TabItem Header="Transfer Fixture" ContentTemplate="{StaticResource TransferFixtureTemplate}"/>
-            <TabItem Header="Detach " ContentTemplate="{StaticResource DetachTemplate}"/>
+            <TabItem Header="Detach" ContentTemplate="{StaticResource DetachTemplate}"/>
+            <TabItem Header="Glass Transfer" ContentTemplate="{StaticResource GlassTransferTemplate}"/>
         </TabControl>
     </Grid>
 </UserControl>

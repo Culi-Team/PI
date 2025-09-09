@@ -62,6 +62,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                         return viewModel.Processes?.TransferFixtureProcess;
                     case "Detach":
                         return viewModel.Processes?.DetachProcess;
+                    case "Glass Transfer":
+                        return viewModel.Processes?.GlassTransferProcess;
                     default:
                         return null;
                 }
