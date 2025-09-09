@@ -19,11 +19,14 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Privates
         private readonly Devices _devices;
         private readonly CommonRecipe _commonRecipe;
+        private readonly GlassTransferRecipe _glassTransferRecipe;
         private readonly IDInputDevice _glassTransferInput;
         private readonly IDOutputDevice _glassTransferOutput;
 
-        private IMotion GlassTransferYAxis => _devices.MotionsInovance.GlassTransferYAxis;
-        private IMotion GlassTransferZAxis => _devices.MotionsInovance.GlassTransferZAxis;
+        private EPort currentPlacePort;
+
+        private IMotion YAxis => _devices.MotionsInovance.GlassTransferYAxis;
+        private IMotion ZAxis => _devices.MotionsInovance.GlassTransferZAxis;
 
         private IDOutput GlassVac1 => _devices.Outputs.GlassTransferVac1OnOff;
         private IDOutput GlassVac2 => _devices.Outputs.GlassTransferVac2OnOff;
@@ -34,6 +37,30 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool IsVac3Detect => _devices.Inputs.GlassTransferVac3.Value;
 
         private bool IsVacDetect => IsVac1Detect && IsVac2Detect && IsVac3Detect;
+
+        private double YAxisPlacePosition
+        {
+            get
+            {
+                if (currentPlacePort == EPort.Left)
+                {
+                    return _glassTransferRecipe.YAxisLeftPlacePosition;
+                }
+                return _glassTransferRecipe.YAxisRightPlacePosition;
+            }
+        }
+
+        private double ZAxisPlacePosition
+        {
+            get
+            {
+                if (currentPlacePort == EPort.Left)
+                {
+                    return _glassTransferRecipe.ZAxisLeftPlacePosition;
+                }
+                return _glassTransferRecipe.ZAxisRightPlacePosition;
+            }
+        }
         #endregion
 
         #region Flags
@@ -84,16 +111,33 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _glassTransferOutput[(int)EGlassTransferProcessOutput.GLASS_TRANSFER_RIGHT_PLACE_DONE] = value;
             }
         }
+
+        private bool FlagPlaceDone
+        {
+            set
+            {
+                if(currentPlacePort == EPort.Left)
+                {
+                    FlagGlassTransferLeftPlaceDone = value;
+                }
+                else
+                {
+                    FlagGlassTransferRightPlaceDone = value;
+                }
+            }
+        }
         #endregion
 
         #region Constructor
         public GlassTransferProcess(Devices devices,
             CommonRecipe commonRecipe,
+            GlassTransferRecipe glassTransferRecipe,
             [FromKeyedServices("GlassTransferInput")] IDInputDevice glassTransferInput,
             [FromKeyedServices("GlassTransferOutput")] IDOutputDevice glassTransferOutput)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
+            _glassTransferRecipe = glassTransferRecipe;
             _glassTransferInput = glassTransferInput;
             _glassTransferOutput = glassTransferOutput;
         }
@@ -110,8 +154,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EGlassTransferOriginStep.ZAxis_Origin:
                     Log.Debug("Glass Transfer Z Axis Origin Start");
-                    GlassTransferZAxis.SearchOrigin();
-                    Wait(_commonRecipe.MotionOriginTimeout, () => { return GlassTransferZAxis.Status.IsHomeDone; });
+                    ZAxis.SearchOrigin();
+                    Wait(_commonRecipe.MotionOriginTimeout, () => { return ZAxis.Status.IsHomeDone; });
                     Step.OriginStep++;
                     break;
                 case EGlassTransferOriginStep.ZAxis_Origin_Wait:
@@ -125,8 +169,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EGlassTransferOriginStep.YAxis_Origin:
                     Log.Debug("Glass Transfer Y Axis Origin Start");
-                    GlassTransferYAxis.SearchOrigin();
-                    Wait(_commonRecipe.MotionOriginTimeout, () => { return GlassTransferYAxis.Status.IsHomeDone; });
+                    YAxis.SearchOrigin();
+                    Wait(_commonRecipe.MotionOriginTimeout, () => { return YAxis.Status.IsHomeDone; });
                     Step.OriginStep++;
                     break;
                 case EGlassTransferOriginStep.YAxis_Origin_Wait:
@@ -201,8 +245,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.RemoveFilm:
                     break;
                 case ESequence.GlassTransferPick:
+                    Sequence_GlassTransferPick();
                     break;
                 case ESequence.GlassTransferPlace:
+                    Sequence_GlassTransferPlace();
                     break;
                 case ESequence.AlignGlass:
                     Sequence_AlignGlass();
@@ -287,16 +333,255 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EGlassTransferAlignGlassStep.ZAxis_Move_ReadyPosition:
+                    Log.Debug("Z Axis Move Ready Position");
+                    ZAxis.MoveAbs(_glassTransferRecipe.ZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => ZAxis.IsOnPosition(_glassTransferRecipe.ZAxisReadyPosition));
+                    Step.RunStep++;
                     break;
                 case EGlassTransferAlignGlassStep.ZAxis_Move_ReadyPosition_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Ready Position Done");
+                    Step.RunStep++;
                     break;
                 case EGlassTransferAlignGlassStep.YAxis_Move_ReadyPosition:
+                    Log.Debug("Y Axis Move Ready Position");
+                    YAxis.MoveAbs((_glassTransferRecipe.YAxisReadyPosition));
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => YAxis.IsOnPosition(_glassTransferRecipe.YAxisReadyPosition));
+                    Step.RunStep++;
                     break;
                 case EGlassTransferAlignGlassStep.YAxis_Move_ReadyPosition_Wait:
-                    break;
-                case EGlassTransferAlignGlassStep.Wait_GlassAlign_Req_Glass:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Ready Position Done");
+                    Step.RunStep++;
+                    Log.Debug("Wait Glass Align Request Glass");
                     break;
                 case EGlassTransferAlignGlassStep.End:
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence Glass Transfer Place");
+                    Sequence = ESequence.GlassTransferPlace;
+                    break;
+            }
+        }
+
+        private void Sequence_GlassTransferPlace()
+        {
+            switch ((EGlassTransferPlaceStep)Step.RunStep)
+            {
+                case EGlassTransferPlaceStep.Start:
+                    Log.Debug("Glass Transfer Place Start");
+                    Step.RunStep++;
+                    Log.Debug("Wait Glass Align Request Glass");
+                    break;
+                case EGlassTransferPlaceStep.Wait_Glass_AlignRequestGlass:
+                    if(FlagGlassAlignLeftRequestGlass)
+                    {
+                        Log.Debug("Place To Glass Align Left");
+                        currentPlacePort = EPort.Left;
+                        Step.RunStep++;
+                        break;
+                    }
+                    if(FlagGlassAlignRightRequestGlass)
+                    {
+                        Log.Debug("Place To Glass Align Right");
+                        currentPlacePort = EPort.Right;
+                        Step.RunStep++;
+                        break;
+                    }
+                    Wait(20);
+                    break;
+                case EGlassTransferPlaceStep.YAxis_Move_PlacePosition:
+                    Log.Debug("Y Axis Move Place Position");
+                    YAxis.MoveAbs(YAxisPlacePosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => YAxis.IsOnPosition(YAxisPlacePosition));
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPlaceStep.YAxis_Move_PlacePosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Place Position Done");
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPlaceStep.ZAxis_Move_PlacePosition:
+                    Log.Debug("Z Axis Move Place Position");
+                    ZAxis.MoveAbs(ZAxisPlacePosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(ZAxisPlacePosition));
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPlaceStep.ZAxis_Move_PlacePosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Place Position Done");
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPlaceStep.Vacuum_Off:
+                    Log.Debug("Vacuum Off");
+                    VacOnOff(false);
+                    Wait(_commonRecipe.VacDelay, () => IsVacDetect == false);
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPlaceStep.ZAxis_Move_ReadyPosition:
+                    Log.Debug("Z Axis Move Ready Position");
+                    ZAxis.MoveAbs(_glassTransferRecipe.ZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => ZAxis.IsOnPosition(_glassTransferRecipe.ZAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPlaceStep.ZAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPlaceStep.YAxis_Move_ReadyPosition:
+                    Log.Debug("Y Axis Move Ready Position");
+                    YAxis.MoveAbs(_glassTransferRecipe.YAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => YAxis.IsOnPosition((_glassTransferRecipe.YAxisReadyPosition)));
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPlaceStep.YAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPlaceStep.Set_Flag_PlaceDone:
+                    Log.Debug("Set Flag Place Done");
+                    FlagPlaceDone = true;
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPlaceStep.End:
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence Glass Transfer Pick");
+                    Sequence = ESequence.GlassTransferPick;
+                    break;
+            }
+        }
+
+        private void Sequence_GlassTransferPick()
+        {
+            switch ((EGlassTransferPickStep)Step.RunStep)
+            {
+                case EGlassTransferPickStep.Start:
+                    Log.Debug("Glass Transfer Pick Start");
+                    Step.RunStep++;
+                    Log.Debug("Wait Detach Request Unload");
+                    break;
+                case EGlassTransferPickStep.Wait_DetachRequestUnload:
+                    if(FlagDetachRequestUnloadGlass == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPickStep.YAxis_MovePickPosition:
+                    Log.Debug("Y Axis Move Pick Position");
+                    YAxis.MoveAbs(_glassTransferRecipe.YAxisPickPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(_glassTransferRecipe.YAxisPickPosition));
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPickStep.YAxis_MovePickPosition_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Pick Position Done");
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPickStep.ZAxis_MovePickPosition:
+                    Log.Debug("Z Axis Move Pick Position");
+                    ZAxis.MoveAbs(_glassTransferRecipe.ZAxisPickPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(_glassTransferRecipe.ZAxisPickPosition));
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPickStep.ZAxis_MovePickPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Pick Position Done");
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPickStep.Vacuum_On:
+                    Log.Debug("Vacuum On");
+                    VacOnOff(true);
+                    Wait(_commonRecipe.VacDelay,() => IsVacDetect);
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPickStep.ZAxis_Move_ReadyPosition:
+                    Log.Debug("Z Axis Move Ready Position");
+                    ZAxis.MoveAbs(_glassTransferRecipe.ZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(_glassTransferRecipe.ZAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPickStep.ZAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPickStep.YAxis_Move_ReadyPosition:
+                    Log.Debug("Y Axis Move Ready Position");
+                    YAxis.MoveAbs((_glassTransferRecipe.YAxisReadyPosition));
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(_glassTransferRecipe.YAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPickStep.YAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPickStep.Set_FlagPickDone:
+                    Log.Debug("Set Flag Pick Done");
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPickStep.End:
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence Align Glass");
+                    Sequence = ESequence.AlignGlass;
                     break;
             }
         }
