@@ -16,18 +16,111 @@
                TargetType="{x:Type TabItem}"
                BasedOn="{StaticResource {x:Type TabItem}}">
             <Setter Property="Width" Value="Auto" />
+            <Setter Property="Height" Value="Auto" />
+            <Setter Property="Background" Value="#F5F5F5"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Grid>
+                            <Border Name="Border" 
+                                    Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}" 
+                                    CornerRadius="4,0,0,4" 
+                                    Margin="{TemplateBinding Margin}">
+                                <ContentPresenter x:Name="ContentSite" 
+                                                VerticalAlignment="Center" 
+                                                HorizontalAlignment="Center" 
+                                                ContentSource="Header" 
+                                                Margin="{TemplateBinding Padding}" 
+                                                RecognizesAccessKey="True"/>
+                            </Border>
+                        </Grid>
+                        
+                        <!-- Main Tab-->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#2196F3"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#1976D2"/>
+                            </Trigger>
+                            
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#64B5F6"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#2196F3"/>
+                            </Trigger>
+                            
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="#F5F5F5"/>
+                                <Setter Property="Foreground" Value="#666666"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#E0E0E0"/>
+                            </Trigger>
+                            
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#42A5F5"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
-        <Style TargetType="{x:Type TabControl}">
-            <Setter Property="ItemContainerStyle"
-                    Value="{StaticResource AutoWidthTabItemStyle}" />
+        <!-- Style Main TabControl (Left) -->
+        <Style x:Key="MainTabControlStyle" TargetType="{x:Type TabControl}">
+            <Setter Property="ItemContainerStyle" Value="{StaticResource AutoWidthTabItemStyle}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TabControl">
-                        <Grid ClipToBounds="True"
-                              KeyboardNavigation.TabNavigation="Local">
+                        <Grid ClipToBounds="True" KeyboardNavigation.TabNavigation="Local">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Header tab -->
+                            <Border Grid.Column="0" Grid.Row="0" Background="Transparent" Padding="10,8" Margin="0,0,0,5">
+                                <TextBlock Text="Unit" 
+                                           FontSize="16" 
+                                           FontWeight="Bold" 
+                                           Foreground="Black" 
+                                           HorizontalAlignment="Center"/>
+                            </Border>
+                            
+                            <!-- Tab items -->
+                            <UniformGrid Columns="1" Rows="20" IsItemsHost="True" Grid.Column="0" Grid.Row="1"/>
+                            
+                            <!-- Content area -->
+                            <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    KeyboardNavigation.DirectionalNavigation="Contained">
+                                <ContentPresenter x:Name="PART_SelectedContentHost"
+                                                  ContentSource="SelectedContent"
+                                                  Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style Sub TabControl (TOP) -->
+        <Style x:Key="SubTabControlStyle" TargetType="{x:Type TabControl}">
+            <Setter Property="ItemContainerStyle" Value="{StaticResource AutoWidthTabItemStyle}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid ClipToBounds="True" KeyboardNavigation.TabNavigation="Local">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="5*" />
+                                <RowDefinition Height="90*" />
                             </Grid.RowDefinitions>
 
                             <!-- Tabs -->
@@ -66,8 +159,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -77,9 +168,9 @@
 
         <TabControl Grid.Column="0"
                     TabStripPlacement="Left"
-                    Style="{x:Null}">
+                    Style="{StaticResource MainTabControlStyle}">
             <TabItem Header="CSTLoadUnload" Width="200">
-                <TabControl>
+                <TabControl Style="{StaticResource SubTabControlStyle}">
                     <TabItem Header="In Conveyor">
                         <StackPanel Margin="10" Orientation="Horizontal">
 
@@ -109,7 +200,7 @@
             </TabItem>
             <TabItem Header="Detach"
                      Width="200">
-                <TabControl>
+                <TabControl Style="{StaticResource SubTabControlStyle}">
                     <TabItem Header="Vinyl Clean">
                         <StackPanel Margin="10" Orientation="Horizontal">
 
@@ -144,7 +235,7 @@
             </TabItem>
             <TabItem Header="Clean"
                      Width="200">
-                <TabControl>
+                <TabControl Style="{StaticResource SubTabControlStyle}">
                     <TabItem Header="Glass Transfer">
                         <StackPanel Margin="10" Orientation="Horizontal">
 
@@ -179,7 +270,7 @@
             </TabItem>
             <TabItem Header="Unload"
                      Width="200">
-                <TabControl>
+                <TabControl Style="{StaticResource SubTabControlStyle}">
                     <TabItem Header="Unload Transfer">
                         <StackPanel Margin="10" Orientation="Horizontal">
 

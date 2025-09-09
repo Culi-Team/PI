@@ -292,7 +292,7 @@
                             </DataGridTextColumn>
 
                             <!-- Motion Name -->
-                            <DataGridTextColumn Header="Motion" Binding="{Binding Motion.Name}" Width="170" IsReadOnly="True">
+                            <DataGridTextColumn Header="Motion" Binding="{Binding Motion.Name}" Width="145" IsReadOnly="True">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Left"/>

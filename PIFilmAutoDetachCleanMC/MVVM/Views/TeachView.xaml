@@ -25,7 +25,6 @@
             <Setter Property="BorderBrush" Value="#CCCCCC"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Margin" Value="1"/>
-            <Setter Property="Padding" Value="8,15"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -85,13 +84,9 @@
                     <ControlTemplate TargetType="TabControl">
                         <Grid ClipToBounds="True" KeyboardNavigation.TabNavigation="Local">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.7*"/>
-                                <ColumnDefinition Width="9.3*"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
                             
                             <!-- Header trong cột tab -->
                             <Border Grid.Column="0" Grid.Row="0" Background="Transparent" Padding="10,8" Margin="0,0,0,5">
@@ -103,7 +98,7 @@
                             </Border>
                             
                             <!-- Tab items -->
-                            <UniformGrid Columns="1" Rows="15" IsItemsHost="True" Grid.Column="0" Grid.Row="1"/>
+                            <UniformGrid Columns="1" Rows="20" IsItemsHost="True" Grid.Column="0" Grid.Row="1"/>
                             
                             <!-- Content area -->
                             <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
