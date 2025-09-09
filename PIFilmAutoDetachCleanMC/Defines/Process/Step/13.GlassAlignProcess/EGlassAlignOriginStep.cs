@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum EGlassTransferOriginStep
+    public enum EGlassAlignOriginStep
     {
         Start,
-        Cyl_Up,
-        Cyl_Up_Wait,
-        ZAxis_Origin,
-        ZAxis_Origin_Wait,
-        YAxis_Origin,
-        YAxis_Origin_Wait,
+        Cyl_UnAlign,
+        Cyl_UnAlign_Wait,
         End
     }
 }
