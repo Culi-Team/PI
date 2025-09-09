@@ -29,7 +29,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             set 
             {
                 selectedModel = value;
-                OnPropertyChanged(); 
+                OnPropertyChanged();
+                InitializeDefaultSelections();
             }
         }
 
@@ -119,6 +120,31 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         LoadRecipeEvent?.Invoke();
                     }
                 });
+            }
+        }
+
+        public void InitializeDefaultSelections()
+        {
+            // Set default model from RecipeSetting
+            if (!string.IsNullOrEmpty(RecipeSelector.RecipeSetting?.CurrentRecipe))
+            {
+                if (RecipeSelector.ValidRecipes.Contains(RecipeSelector.RecipeSetting.CurrentRecipe))
+                {
+                    selectedModel = RecipeSelector.RecipeSetting.CurrentRecipe;
+                    OnPropertyChanged(nameof(SelectedModel));
+                }
+            }
+            else if (RecipeSelector.ValidRecipes.Count > 0)
+            {
+                selectedModel = RecipeSelector.ValidRecipes[0];
+                OnPropertyChanged(nameof(SelectedModel));
+            }
+
+            // Set default recipe (first available recipe)
+            if (Recipes.Count > 0)
+            {
+                _selectedRecipe = Recipes[0];
+                OnPropertyChanged(nameof(SelectedRecipe));
             }
         }
     }

@@ -165,20 +165,58 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                 }
             };
 
+            // Initialize default selections after DataView is loaded
+            viewModel.InitializeDefaultSelections();
         }
 
         private void ListBox_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is not ListBox listBox) return;
+            if (this.DataContext is not DataViewModel viewModel) return;
 
-            if (listBox.Items.Count > 0)
+            // Set selected recipe based on binding
+            if (viewModel.SelectedRecipe != null)
+            {
+                listBox.SelectedItem = viewModel.SelectedRecipe;
+            }
+            else if (listBox.Items.Count > 0)
             {
                 listBox.SelectedIndex = 0;
+            }
 
-                var item = listBox.ItemContainerGenerator.ContainerFromIndex(0) as ListBoxItem;
+            // Focus on selected item
+            if (listBox.SelectedItem != null)
+            {
+                var item = listBox.ItemContainerGenerator.ContainerFromItem(listBox.SelectedItem) as ListBoxItem;
                 if (item != null)
                 {
-                    item.Focus(); 
+                    item.Focus();
+                }
+            }
+        }
+
+        private void ModelsListBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is not ListBox listBox) return;
+            if (this.DataContext is not DataViewModel viewModel) return;
+
+            // Set selected model based on binding
+            if (!string.IsNullOrEmpty(viewModel.SelectedModel))
+            {
+                listBox.SelectedItem = viewModel.SelectedModel;
+            }
+            else if (listBox.Items.Count > 0)
+            {
+                listBox.SelectedIndex = 0;
+            }
+
+            // Focus on selected item
+            if (listBox.SelectedItem != null)
+            {
+                var item = listBox.ItemContainerGenerator.ContainerFromItem(listBox.SelectedItem) as ListBoxItem;
+                if (item != null)
+                {
+                    item.Focus();
                 }
             }
         }
