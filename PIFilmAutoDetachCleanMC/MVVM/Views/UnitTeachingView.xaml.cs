@@ -11,6 +11,8 @@ using System.Windows.Controls;
 using System;
 using EQX.UI.Controls;
 using EQX.Core.Recipe;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.Views
 {
@@ -79,14 +81,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             
             if (positionTeaching == null) return;
 
-            // Tạo SingleRecipeMinMaxAttribute với giới hạn phù hợp
             var minMaxAttribute = new SingleRecipeMinMaxAttribute
             {
-                Min = -999.999,
+                Min = 0,
                 Max = 999.999
             };
-            
-            // Sử dụng giá trị hiện tại hoặc motion position
             double currentValue = positionTeaching.Position;
             if (currentValue == 0 && positionTeaching.Motion?.Status?.ActualPosition != null)
             {
@@ -97,17 +96,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                 currentValue = 0; // Giá trị mặc định
             }
             
-            // Sử dụng DataEditor giống như SingleRecipe
             var dataEditor = new DataEditor(currentValue, minMaxAttribute);
             dataEditor.Title = $"Edit Position - {positionTeaching.Name}";
-
-            // Show dialog và kiểm tra DialogResult
             if (dataEditor.ShowDialog() == true)
             {
-                // Cập nhật giá trị giống như SingleRecipe
                 positionTeaching.Position = dataEditor.NewValue;
-                
-                // Force refresh DataGrid để hiển thị giá trị mới
                 PositionTeachingDataGrid.Items.Refresh();
             }
         }
@@ -118,44 +111,64 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             var positionTeaching = button?.DataContext as PositionTeaching;
             
             if (positionTeaching == null) return;
-
-            // Lấy giá trị từ motion và cập nhật Position
             positionTeaching.UpdatePositionFromMotion();
-            
-            // Force refresh DataGrid để hiển thị giá trị mới
             PositionTeachingDataGrid.Items.Refresh();
             
         }
 
-        private void CylinderForward_Click(object sender, RoutedEventArgs e)
+        private async void CylinderForward_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var cylinder = button?.DataContext as ICylinder;
-            
             if (cylinder == null) return;
-
+            button.IsEnabled = false;
+            
             try
             {
-                cylinder.Forward();
+                using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5)))
+                {
+                    await Task.Run(() => cylinder.Forward(), cts.Token);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                MessageBoxEx.ShowDialog($"Cylinder {cylinder.Name} operation timeout (5s)");
             }
             catch (Exception ex)
             {
+                MessageBoxEx.ShowDialog($"Cylinder {cylinder.Name} Forward Error: {ex.Message}");
+            }
+            finally
+            {
+                button.IsEnabled = true;
             }
         }
 
-        private void CylinderBackward_Click(object sender, RoutedEventArgs e)
+        private async void CylinderBackward_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var cylinder = button?.DataContext as ICylinder;
-            
             if (cylinder == null) return;
-
+            button.IsEnabled = false;
+            
             try
             {
-                cylinder.Backward();
+                using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10)))
+                {
+                    await Task.Run(() => cylinder.Backward(), cts.Token);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                MessageBoxEx.ShowDialog($"Cylinder {cylinder.Name} operation timeout (10s)");
             }
             catch (Exception ex)
             {
+                MessageBoxEx.ShowDialog($"Cylinder {cylinder.Name} Backward Error: {ex.Message}");
+            }
+            finally
+            {
+                button.IsEnabled = true;
             }
         }
     }
