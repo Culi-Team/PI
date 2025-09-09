@@ -441,7 +441,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<ICylinder> GetGlassTransferCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            // Glass Transfer không sử dụng cylinders, chỉ sử dụng vacuum
+            
+            // Add Glass Transfer cylinders
+            cylinders.Add(Devices.Cylinders.GlassTransferCyl1UpDown);
+            cylinders.Add(Devices.Cylinders.GlassTransferCyl2UpDown);
+            cylinders.Add(Devices.Cylinders.GlassTransferCyl3UpDown);
+            
             return cylinders;
         }
 
