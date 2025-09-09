@@ -24,6 +24,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         YAxis_Move_ReadyPosition_Wait,
 
         Set_FlagPickDone,
+        Wait_DetachGlassTransferPickDone_Received,
         End
     }
 }

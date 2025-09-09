@@ -126,6 +126,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                 }
             }
         }
+
+        private bool FlagDetachGlassTransferPickDoneReceived
+        {
+            get
+            {
+                return _glassTransferInput[(int)EGlassTransferProcessInput.GLASS_TRANSFER_PICK_DONE_RECEIVED];
+            }
+        }
         #endregion
 
         #region Constructor
@@ -314,7 +322,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.AlignGlass;
                         break;
                     }
-
                     Step.RunStep++;
                     break;
                 case EGlassTransferAutoRunStep.End:
@@ -570,7 +577,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EGlassTransferPickStep.Set_FlagPickDone:
-                    Log.Debug("Set Flag Pick Done");
+                    Log.Debug("Set Flag Glass Transfer Pick Done");
+                    FlagGlassTransferPickDone = true;
+                    Log.Debug("Wait Detach Glass Transfer Pick Done Received");
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPickStep.Wait_DetachGlassTransferPickDone_Received:
+                    if(FlagDetachGlassTransferPickDoneReceived == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Log.Debug("Clear Flag Glass Transfer Pick Done");
+                    FlagGlassTransferPickDone = false;
                     Step.RunStep++;
                     break;
                 case EGlassTransferPickStep.End:

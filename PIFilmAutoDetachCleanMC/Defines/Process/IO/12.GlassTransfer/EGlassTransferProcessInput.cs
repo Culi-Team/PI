@@ -11,5 +11,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         DETACH_REQ_UNLOAD_GLASS,
         GLASS_ALIGN_LEFT_REQ_GLASS,
         GLASS_ALIGN_RIGHT_REQ_GLASS,
+        GLASS_TRANSFER_PICK_DONE_RECEIVED
     }
 }

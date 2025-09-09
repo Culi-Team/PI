@@ -94,7 +94,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _detachOutput[(int)EDetachProcessOutput.TRANSFER_FIXTURE_DONE_RECEIVED] = value;
             }
         }
-       
+
+        private bool FlagDetachGlassTransferPickDoneReceived
+        {
+            set
+            {
+                _detachOutput[(int)EDetachProcessOutput.GLASS_TRANSFER_PICK_DONE_RECEIVED] = value;
+            }
+        }
+
         #endregion
 
         #region Private Methods
@@ -770,6 +778,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EDetachProcessGlassTransferPickStep.Start:
                     Log.Debug("Glass Transfer Pick Start");
+                    Log.Debug("Clear Flag Detach Glass Transfer Pick Done Received");
+                    FlagDetachGlassTransferPickDoneReceived = false;
                     Step.RunStep++;
                     break;
                 case EDetachProcessGlassTransferPickStep.Vacuum_Off:
@@ -792,6 +802,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Clear Flag Detach Request Unload");
                     FlagDetachRequestUnloadGlass = false;
+
+                    Log.Debug("Set Flag Detach Glass Transfer Pick Done Received");
+                    FlagDetachGlassTransferPickDoneReceived = true;
                     Step.RunStep++;
                     break;
                 case EDetachProcessGlassTransferPickStep.End:
