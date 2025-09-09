@@ -12,6 +12,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
     {
         private double yAxisReadyPosition;
         private double zAxisReadyPosition;
+        private double yAxisPickPosition;
+        private double zAxisPickPosition;
         private double yAxisLeftPlacePosition;
         private double zAxisLeftPlacePosition;
         private double yAxisRightPlacePosition;
@@ -30,6 +32,20 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 			get { return zAxisReadyPosition; }
 			set { zAxisReadyPosition = value; }
 		}
+
+        [SingleRecipeDescription(Description = "Glass Transfer Y Axis Pick Position", Unit = Unit.mm)]
+        public double YAxisPickPosition
+        {
+            get { return yAxisPickPosition; }
+            set { yAxisPickPosition = value; }
+        }
+
+        [SingleRecipeDescription(Description = "Glass Transfer Z Axis Pick Position", Unit = Unit.mm)]
+        public double ZAxisPickPosition
+        {
+            get { return zAxisPickPosition; }
+            set { zAxisPickPosition = value; }
+        }
 
         [SingleRecipeDescription(Description = "Glass Transfer Y Axis Left Place Position", Unit = Unit.mm)]
         public double YAxisLeftPlacePosition
