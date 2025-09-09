@@ -172,29 +172,34 @@
             <TabItem Header="CSTLoadUnload" Width="200">
                 <TabControl Style="{StaticResource SubTabControlStyle}">
                     <TabItem Header="In Conveyor">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding InConveyorMotions}" 
+                                             Cylinders="{Binding InConveyorCylinders}" 
+                                             Inputs="{Binding InConveyorInputs}" 
+                                             Outputs="{Binding InConveyorOutputs}"/>
                     </TabItem>
                     <TabItem Header="In Work Conveyor">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding InWorkConveyorMotions}" 
+                                             Cylinders="{Binding InWorkConveyorCylinders}" 
+                                             Inputs="{Binding InWorkConveyorInputs}" 
+                                             Outputs="{Binding InWorkConveyorOutputs}"/>
                     </TabItem>
                     <TabItem Header="Buffer Conveyor">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding BufferConveyorMotions}" 
+                                             Cylinders="{Binding BufferConveyorCylinders}" 
+                                             Inputs="{Binding BufferConveyorInputs}" 
+                                             Outputs="{Binding BufferConveyorOutputs}"/>
                     </TabItem>
                     <TabItem Header="Out Work Conveyor">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding OutWorkConveyorMotions}" 
+                                             Cylinders="{Binding OutWorkConveyorCylinders}" 
+                                             Inputs="{Binding OutWorkConveyorInputs}" 
+                                             Outputs="{Binding OutWorkConveyorOutputs}"/>
                     </TabItem>
                     <TabItem Header="Out Conveyor">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding OutConveyorMotions}" 
+                                             Cylinders="{Binding OutConveyorCylinders}" 
+                                             Inputs="{Binding OutConveyorInputs}" 
+                                             Outputs="{Binding OutConveyorOutputs}"/>
                     </TabItem>
                 </TabControl>
             </TabItem>
@@ -202,34 +207,40 @@
                      Width="200">
                 <TabControl Style="{StaticResource SubTabControlStyle}">
                     <TabItem Header="Vinyl Clean">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding VinylCleanMotions}" 
+                                             Cylinders="{Binding VinylCleanCylinders}" 
+                                             Inputs="{Binding VinylCleanInputs}" 
+                                             Outputs="{Binding VinylCleanOutputs}"/>
                     </TabItem>
                     <TabItem Header="Robot Load">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding RobotLoadMotions}" 
+                                             Cylinders="{Binding RobotLoadCylinders}" 
+                                             Inputs="{Binding RobotLoadInputs}" 
+                                             Outputs="{Binding RobotLoadOutputs}"/>
                     </TabItem>
                     <TabItem Header="Fixture Align">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding FixtureAlignMotions}" 
+                                             Cylinders="{Binding FixtureAlignCylinders}" 
+                                             Inputs="{Binding FixtureAlignInputs}" 
+                                             Outputs="{Binding FixtureAlignOutputs}"/>
                     </TabItem>
                     <TabItem Header="Transfer Fixture">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding TransferFixtureMotions}" 
+                                             Cylinders="{Binding TransferFixtureCylinders}" 
+                                             Inputs="{Binding TransferFixtureInputs}" 
+                                             Outputs="{Binding TransferFixtureOutputs}"/>
                     </TabItem>
                     <TabItem Header="Remove Film">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding RemoveFilmMotions}" 
+                                             Cylinders="{Binding RemoveFilmCylinders}" 
+                                             Inputs="{Binding RemoveFilmInputs}" 
+                                             Outputs="{Binding RemoveFilmOutputs}"/>
                     </TabItem>
                     <TabItem Header="Detach">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding DetachMotions}" 
+                                             Cylinders="{Binding DetachCylinders}" 
+                                             Inputs="{Binding DetachInputs}" 
+                                             Outputs="{Binding DetachOutputs}"/>
                     </TabItem>
                 </TabControl>
             </TabItem>
@@ -237,19 +248,22 @@
                      Width="200">
                 <TabControl Style="{StaticResource SubTabControlStyle}">
                     <TabItem Header="Glass Transfer">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding GlassTransferMotions}" 
+                                             Cylinders="{Binding GlassTransferCylinders}" 
+                                             Inputs="{Binding GlassTransferInputs}" 
+                                             Outputs="{Binding GlassTransferOutputs}"/>
                     </TabItem>
                     <TabItem Header="Glass Align">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding GlassAlignMotions}" 
+                                             Cylinders="{Binding GlassAlignCylinders}" 
+                                             Inputs="{Binding GlassAlignInputs}" 
+                                             Outputs="{Binding GlassAlignOutputs}"/>
                     </TabItem>
                     <TabItem Header="Transfer In Shuttle">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding TransferInShuttleMotions}" 
+                                             Cylinders="{Binding TransferInShuttleCylinders}" 
+                                             Inputs="{Binding TransferInShuttleInputs}" 
+                                             Outputs="{Binding TransferInShuttleOutputs}"/>
                     </TabItem>
                     <TabItem Header="Wet Clean">
                         <StackPanel Margin="10" Orientation="Vertical">
@@ -292,9 +306,10 @@
                         </StackPanel>
                     </TabItem>
                     <TabItem Header="Transfer Rotation">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding TransferRotationMotions}" 
+                                             Cylinders="{Binding TransferRotationCylinders}" 
+                                             Inputs="{Binding TransferRotationInputs}" 
+                                             Outputs="{Binding TransferRotationOutputs}"/>
                     </TabItem>
                 </TabControl>
             </TabItem>
@@ -302,19 +317,22 @@
                      Width="200">
                 <TabControl Style="{StaticResource SubTabControlStyle}">
                     <TabItem Header="Unload Transfer">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding UnloadTransferMotions}" 
+                                             Cylinders="{Binding UnloadTransferCylinders}" 
+                                             Inputs="{Binding UnloadTransferInputs}" 
+                                             Outputs="{Binding UnloadTransferOutputs}"/>
                     </TabItem>
                     <TabItem Header="Unload Align">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding UnloadAlignMotions}" 
+                                             Cylinders="{Binding UnloadAlignCylinders}" 
+                                             Inputs="{Binding UnloadAlignInputs}" 
+                                             Outputs="{Binding UnloadAlignOutputs}"/>
                     </TabItem>
                     <TabItem Header="Robot Unload">
-                        <StackPanel Margin="10" Orientation="Horizontal">
-
-                        </StackPanel>
+                        <local:ManualUnitView Motions="{Binding RobotUnloadMotions}" 
+                                             Cylinders="{Binding RobotUnloadCylinders}" 
+                                             Inputs="{Binding RobotUnloadInputs}" 
+                                             Outputs="{Binding RobotUnloadOutputs}"/>
                     </TabItem>
                 </TabControl>
             </TabItem>
