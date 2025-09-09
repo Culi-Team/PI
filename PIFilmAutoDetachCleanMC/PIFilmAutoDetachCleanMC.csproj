@@ -27,6 +27,35 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resource\Image\01.CSTLoadUnload\BufferCV.png" />
+    <None Remove="Resource\Image\01.CSTLoadUnload\InCassetteCV.png" />
+    <None Remove="Resource\Image\01.CSTLoadUnload\InputCassetteStage.png" />
+    <None Remove="Resource\Image\01.CSTLoadUnload\OutCassetteCV.png" />
+    <None Remove="Resource\Image\01.CSTLoadUnload\OutputCassetteStage.png" />
+    <None Remove="Resource\Image\01.CSTLoadUnload\RollerCVSupport1.png" />
+    <None Remove="Resource\Image\01.CSTLoadUnload\RollerCVSupport2.png" />
+    <None Remove="Resource\Image\01.CSTLoadUnload\RollerCVSupport3.png" />
+    <None Remove="Resource\Image\01.CSTLoadUnload\RollerCVSupport4.png" />
+    <None Remove="Resource\Image\02.Detach\AlignFixture.png" />
+    <None Remove="Resource\Image\02.Detach\Detach.png" />
+    <None Remove="Resource\Image\02.Detach\LoadRobot.png" />
+    <None Remove="Resource\Image\02.Detach\RemoveZone.png" />
+    <None Remove="Resource\Image\02.Detach\TransferFixture.png" />
+    <None Remove="Resource\Image\02.Detach\VinylClean.png" />
+    <None Remove="Resource\Image\03.Clean\AFClean.png" />
+    <None Remove="Resource\Image\03.Clean\AlignStage.png" />
+    <None Remove="Resource\Image\03.Clean\GlassShuttleUnit.png" />
+    <None Remove="Resource\Image\03.Clean\GlassTransfer.png" />
+    <None Remove="Resource\Image\03.Clean\InShuttle.png" />
+    <None Remove="Resource\Image\03.Clean\ShuttleUnit.png" />
+    <None Remove="Resource\Image\03.Clean\TransferRotation.png" />
+    <None Remove="Resource\Image\03.Clean\WetClean.png" />
+    <None Remove="Resource\Image\04.Unload\OutShuttle.png" />
+    <None Remove="Resource\Image\04.Unload\UnloadRobot.png" />
+    <None Remove="Resource\Image\04.Unload\UnloadStage.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
@@ -72,6 +101,35 @@
     <Folder Include="Defines\Process\Step\03.BufferConveyorProcess\" />
     <Folder Include="Defines\Process\Step\04.OutWorkConveyorProcess\" />
     <Folder Include="Defines\Process\Step\05.OutConveyorProcess\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resource\Image\01.CSTLoadUnload\BufferCV.png" />
+    <Resource Include="Resource\Image\01.CSTLoadUnload\InCassetteCV.png" />
+    <Resource Include="Resource\Image\01.CSTLoadUnload\InputCassetteStage.png" />
+    <Resource Include="Resource\Image\01.CSTLoadUnload\OutCassetteCV.png" />
+    <Resource Include="Resource\Image\01.CSTLoadUnload\OutputCassetteStage.png" />
+    <Resource Include="Resource\Image\01.CSTLoadUnload\RollerCVSupport1.png" />
+    <Resource Include="Resource\Image\01.CSTLoadUnload\RollerCVSupport2.png" />
+    <Resource Include="Resource\Image\01.CSTLoadUnload\RollerCVSupport3.png" />
+    <Resource Include="Resource\Image\01.CSTLoadUnload\RollerCVSupport4.png" />
+    <Resource Include="Resource\Image\02.Detach\AlignFixture.png" />
+    <Resource Include="Resource\Image\02.Detach\Detach.png" />
+    <Resource Include="Resource\Image\02.Detach\LoadRobot.png" />
+    <Resource Include="Resource\Image\02.Detach\RemoveZone.png" />
+    <Resource Include="Resource\Image\02.Detach\TransferFixture.png" />
+    <Resource Include="Resource\Image\02.Detach\VinylClean.png" />
+    <Resource Include="Resource\Image\03.Clean\AFClean.png" />
+    <Resource Include="Resource\Image\03.Clean\AlignStage.png" />
+    <Resource Include="Resource\Image\03.Clean\GlassShuttleUnit.png" />
+    <Resource Include="Resource\Image\03.Clean\GlassTransfer.png" />
+    <Resource Include="Resource\Image\03.Clean\InShuttle.png" />
+    <Resource Include="Resource\Image\03.Clean\ShuttleUnit.png" />
+    <Resource Include="Resource\Image\03.Clean\TransferRotation.png" />
+    <Resource Include="Resource\Image\03.Clean\WetClean.png" />
+    <Resource Include="Resource\Image\04.Unload\OutShuttle.png" />
+    <Resource Include="Resource\Image\04.Unload\UnloadRobot.png" />
+    <Resource Include="Resource\Image\04.Unload\UnloadStage.png" />
   </ItemGroup>
 
 </Project>
