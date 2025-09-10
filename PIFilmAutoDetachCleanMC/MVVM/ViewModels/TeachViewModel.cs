@@ -4,20 +4,14 @@ using EQX.Core.Common;
 using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Process;
-using EQX.Core.Sequence;
 using EQX.UI.Controls;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
-using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Recipe;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Timers;
 using System.Windows;
 using System.Windows.Input;
-using System.Xml.Linq;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -384,9 +378,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IMotion> GetGlassTransferMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            if (Devices?.MotionsInovance?.GlassTransferYAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassTransferYAxis);
-            if (Devices?.MotionsInovance?.GlassTransferZAxis != null)
                 motions.Add(Devices.MotionsInovance.GlassTransferZAxis);
             return motions;
         }

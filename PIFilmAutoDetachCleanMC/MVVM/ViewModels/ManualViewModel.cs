@@ -1,72 +1,189 @@
-﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Common;
-using EQX.Core.Device.SpeedController;
-using Microsoft.Extensions.DependencyInjection;
+using EQX.Core.InOut;
+using EQX.Core.Motion;
+using EQX.Core.Process;
+using EQX.Core.Sequence;
+using EQX.UI.Controls;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
-using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
+using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Recipe;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
+using System.Linq;
 using System.Timers;
+using System.Windows;
 using System.Windows.Input;
-using EQX.Core.Motion;
-using EQX.Core.InOut;
+using System.Xml.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
     public class ManualViewModel : ViewModelBase
-    {
+    {        
         private readonly System.Timers.Timer pressureUpdateTimer;
 
-        public ManualViewModel(Devices devices,
-            [FromKeyedServices("WETCleanLeftRecipe")] CleanRecipe wetCleanLeftRecipe,
-            [FromKeyedServices("WETCleanRightRecipe")] CleanRecipe wetCleanRightRecipe,
-            [FromKeyedServices("AFCleanLeftRecipe")] CleanRecipe afCleanLeftRecipe,
-            [FromKeyedServices("AFCleanRightRecipe")] CleanRecipe afCleanRightRecipe)
+        #region Properties
+        public Devices Devices { get; }
+        public MachineStatus MachineStatus { get; }
+        public RecipeList RecipeList;
+        public RecipeSelector RecipeSelector;
+        public Processes Processes;
+        public DataViewModel DataViewModel { get; }
+        public ObservableCollection<IProcess<ESequence>> ProcessListTeaching => GetProcessList();
+        private IProcess<ESequence> _selectedProcess;
+        public IProcess<ESequence> SelectedProcess
         {
-            Inputs = devices.Inputs;
-            Outputs = devices.Outputs;
-            Regulators = devices.Regulators;
-            MotionsInovance = devices.MotionsInovance;
-            MotionsAjin = devices.MotionsAjin;
-            WetCleanLeftRecipe = wetCleanLeftRecipe;
-            WetCleanRightRecipe = wetCleanRightRecipe;
-            AfCleanLeftRecipe = afCleanLeftRecipe;
-            AfCleanRightRecipe = afCleanRightRecipe;
-
-            WetCleanLeftPressure = Regulators.WetCleanLRegulator.GetPressure();
-            WetCleanRightPressure = Regulators.WetCleanRRegulator.GetPressure();
-            AfCleanLeftPressure = Regulators.AfCleanLRegulator.GetPressure();
-            AfCleanRightPressure = Regulators.AfCleanRRegulator.GetPressure();
-
-            pressureUpdateTimer = new System.Timers.Timer(500);
-            pressureUpdateTimer.Elapsed += PressureUpdateTimer_Elapsed;
-            pressureUpdateTimer.Start();
+            get { return _selectedProcess; }
+            set
+            {
+                _selectedProcess = value;
+                OnPropertyChanged();
+                SelectedPropertyProcess();
+            }
+        }
+        private ObservableCollection<ICylinder> _cylinders;
+        public ObservableCollection<ICylinder> Cylinders
+        {
+            get { return _cylinders; }
+            set { _cylinders = value; OnPropertyChanged(); }
+        }
+        private ObservableCollection<IMotion> _motions;
+        public ObservableCollection<IMotion> Motions
+        {
+            get { return _motions; }
+            set { _motions = value; OnPropertyChanged(); }
+        }
+        private ObservableCollection<IDOutput> _outputs;
+        public ObservableCollection<IDOutput> Outputs
+        {
+            get { return _outputs; }
+            set { _outputs = value; OnPropertyChanged(); }
+        }
+        private ObservableCollection<IDInput> _inputs;
+        public ObservableCollection<IDInput> Inputs
+        {
+            get { return _inputs; }
+            set { _inputs = value; OnPropertyChanged(); }
         }
 
-        private void PressureUpdateTimer_Elapsed(object? sender, ElapsedEventArgs e)
-        {
-            WetCleanLeftPressure = Regulators.WetCleanLRegulator.GetPressure();
-            WetCleanRightPressure = Regulators.WetCleanRRegulator.GetPressure();
-            AfCleanLeftPressure = Regulators.AfCleanLRegulator.GetPressure();
-            AfCleanRightPressure = Regulators.AfCleanRRegulator.GetPressure();
-        }
-        private int _speed = 1000;
+        // CSTLoadUnload Tab Motion Properties
+        public ObservableCollection<IMotion> InWorkConveyorMotions => GetInWorkConveyorMotions();
+        public ObservableCollection<IMotion> OutWorkConveyorMotions => GetOutWorkConveyorMotions();
 
-        public int Speed
-        {
-            get { return _speed; }
-            set { _speed = value; OnPropertyChanged(); }
-        }
+        // CSTLoadUnload Tab Cylinder Properties
+        public ObservableCollection<ICylinder> InWorkConveyorCylinders => GetInWorkConveyorCylinders();
+        public ObservableCollection<ICylinder> OutWorkConveyorCylinders => GetOutWorkConveyorCylinders();
 
+        // CSTLoadUnload Tab Input Properties
+        public ObservableCollection<IDInput> InWorkConveyorInputs => GetInWorkConveyorInputs();
+        public ObservableCollection<IDInput> OutWorkConveyorInputs => GetOutWorkConveyorInputs();
+
+        // CSTLoadUnload Tab Output Properties
+        public ObservableCollection<IDOutput> InWorkConveyorOutputs => GetInWorkConveyorOutputs();
+        public ObservableCollection<IDOutput> OutWorkConveyorOutputs => GetOutWorkConveyorOutputs();
+
+        // Buffer Conveyor Properties
+        public ObservableCollection<IMotion> BufferConveyorMotions => GetBufferConveyorMotions();
+        public ObservableCollection<ICylinder> BufferConveyorCylinders => GetBufferConveyorCylinders();
+        public ObservableCollection<IDInput> BufferConveyorInputs => GetBufferConveyorInputs();
+        public ObservableCollection<IDOutput> BufferConveyorOutputs => GetBufferConveyorOutputs();
+
+        // Out Conveyor Properties
+        public ObservableCollection<IMotion> OutConveyorMotions => GetOutConveyorMotions();
+        public ObservableCollection<ICylinder> OutConveyorCylinders => GetOutConveyorCylinders();
+        public ObservableCollection<IDInput> OutConveyorInputs => GetOutConveyorInputs();
+        public ObservableCollection<IDOutput> OutConveyorOutputs => GetOutConveyorOutputs();
+
+        // Vinyl Clean Properties
+        public ObservableCollection<IMotion> VinylCleanMotions => GetVinylCleanMotions();
+        public ObservableCollection<ICylinder> VinylCleanCylinders => GetVinylCleanCylinders();
+        public ObservableCollection<IDInput> VinylCleanInputs => GetVinylCleanInputs();
+        public ObservableCollection<IDOutput> VinylCleanOutputs => GetVinylCleanOutputs();
+
+        // Robot Load Properties
+        public ObservableCollection<IMotion> RobotLoadMotions => GetRobotLoadMotions();
+        public ObservableCollection<ICylinder> RobotLoadCylinders => GetRobotLoadCylinders();
+        public ObservableCollection<IDInput> RobotLoadInputs => GetRobotLoadInputs();
+        public ObservableCollection<IDOutput> RobotLoadOutputs => GetRobotLoadOutputs();
+
+        // Fixture Align Properties
+        public ObservableCollection<IMotion> FixtureAlignMotions => GetFixtureAlignMotions();
+        public ObservableCollection<ICylinder> FixtureAlignCylinders => GetFixtureAlignCylinders();
+        public ObservableCollection<IDInput> FixtureAlignInputs => GetFixtureAlignInputs();
+        public ObservableCollection<IDOutput> FixtureAlignOutputs => GetFixtureAlignOutputs();
+
+        // Detach Tab Motion Properties
+        public ObservableCollection<IMotion> TransferFixtureMotions => GetTransferFixtureMotions();
+        public ObservableCollection<ICylinder> TransferFixtureCylinders => GetTransferFixtureCylinders();
+        public ObservableCollection<IDInput> TransferFixtureInputs => GetTransferFixtureInputs();
+        public ObservableCollection<IDOutput> TransferFixtureOutputs => GetTransferFixtureOutputs();
+        
+        public ObservableCollection<IMotion> DetachMotions => GetDetachMotions();
+        public ObservableCollection<ICylinder> DetachCylinders => GetDetachCylinders();
+        public ObservableCollection<IDInput> DetachInputs => GetDetachInputs();
+        public ObservableCollection<IDOutput> DetachOutputs => GetDetachOutputs();
+
+        // Remove Film Properties
+        public ObservableCollection<IMotion> RemoveFilmMotions => GetRemoveFilmMotions();
+        public ObservableCollection<ICylinder> RemoveFilmCylinders => GetRemoveFilmCylinders();
+        public ObservableCollection<IDInput> RemoveFilmInputs => GetRemoveFilmInputs();
+        public ObservableCollection<IDOutput> RemoveFilmOutputs => GetRemoveFilmOutputs();
+
+        // Glass Transfer Tab Motion Properties
+        public ObservableCollection<IMotion> GlassTransferMotions => GetGlassTransferMotions();
+        public ObservableCollection<ICylinder> GlassTransferCylinders => GetGlassTransferCylinders();
+        public ObservableCollection<IDInput> GlassTransferInputs => GetGlassTransferInputs();
+        public ObservableCollection<IDOutput> GlassTransferOutputs => GetGlassTransferOutputs();
+
+        // Glass Align Properties
+        public ObservableCollection<IMotion> GlassAlignMotions => GetGlassAlignMotions();
+        public ObservableCollection<ICylinder> GlassAlignCylinders => GetGlassAlignCylinders();
+        public ObservableCollection<IDInput> GlassAlignInputs => GetGlassAlignInputs();
+        public ObservableCollection<IDOutput> GlassAlignOutputs => GetGlassAlignOutputs();
+
+        // Transfer In Shuttle Properties
+        public ObservableCollection<IMotion> TransferInShuttleMotions => GetTransferInShuttleMotions();
+        public ObservableCollection<ICylinder> TransferInShuttleCylinders => GetTransferInShuttleCylinders();
+        public ObservableCollection<IDInput> TransferInShuttleInputs => GetTransferInShuttleInputs();
+        public ObservableCollection<IDOutput> TransferInShuttleOutputs => GetTransferInShuttleOutputs();
+
+        // Transfer Rotation Properties
+        public ObservableCollection<IMotion> TransferRotationMotions => GetTransferRotationMotions();
+        public ObservableCollection<ICylinder> TransferRotationCylinders => GetTransferRotationCylinders();
+        public ObservableCollection<IDInput> TransferRotationInputs => GetTransferRotationInputs();
+        public ObservableCollection<IDOutput> TransferRotationOutputs => GetTransferRotationOutputs();
+
+        // Unload Transfer Properties
+        public ObservableCollection<IMotion> UnloadTransferMotions => GetUnloadTransferMotions();
+        public ObservableCollection<ICylinder> UnloadTransferCylinders => GetUnloadTransferCylinders();
+        public ObservableCollection<IDInput> UnloadTransferInputs => GetUnloadTransferInputs();
+        public ObservableCollection<IDOutput> UnloadTransferOutputs => GetUnloadTransferOutputs();
+
+        // Unload Align Properties
+        public ObservableCollection<IMotion> UnloadAlignMotions => GetUnloadAlignMotions();
+        public ObservableCollection<ICylinder> UnloadAlignCylinders => GetUnloadAlignCylinders();
+        public ObservableCollection<IDInput> UnloadAlignInputs => GetUnloadAlignInputs();
+        public ObservableCollection<IDOutput> UnloadAlignOutputs => GetUnloadAlignOutputs();
+
+        // Robot Unload Properties
+        public ObservableCollection<IMotion> RobotUnloadMotions => GetRobotUnloadMotions();
+        public ObservableCollection<ICylinder> RobotUnloadCylinders => GetRobotUnloadCylinders();
+        public ObservableCollection<IDInput> RobotUnloadInputs => GetRobotUnloadInputs();
+        public ObservableCollection<IDOutput> RobotUnloadOutputs => GetRobotUnloadOutputs();
+
+        // ManualViewModel specific properties
         public CleanRecipe WetCleanLeftRecipe { get; }
         public CleanRecipe WetCleanRightRecipe { get; }
         public CleanRecipe AfCleanLeftRecipe { get; }
         public CleanRecipe AfCleanRightRecipe { get; }
         public Regulators Regulators { get; set; }
-        public Inputs Inputs { get; }
-        public Outputs Outputs { get; }
+        public Inputs DeviceInputs { get; }
+        public Outputs DeviceOutputs { get; }
         public MotionsInovance MotionsInovance { get; }
         public MotionsAjin MotionsAjin { get; }
 
@@ -75,8 +192,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public bool MotionAjinIsConnected => MotionsAjin.All.All(m => m.IsConnected);
         
         // Robot properties - dựa trên input status
-        public bool RobotLoadIsConnected => Inputs.LoadRobPeriRdy.Value && Inputs.LoadRobIoActconf.Value;
-        public bool RobotUnloadIsConnected => Inputs.LoadRobPeriRdy.Value && Inputs.LoadRobIoActconf.Value; // Giả định cùng robot
+        public bool RobotLoadIsConnected => DeviceInputs.LoadRobPeriRdy.Value && DeviceInputs.LoadRobIoActconf.Value;
+        public bool RobotUnloadIsConnected => DeviceInputs.LoadRobPeriRdy.Value && DeviceInputs.LoadRobIoActconf.Value; 
+
+        private int _speed = 1000;
+        public int Speed
+        {
+            get { return _speed; }
+            set { _speed = value; OnPropertyChanged(); }
+        }
 
         private double _wetCleanLeftPressure;
         public double WetCleanLeftPressure
@@ -106,6 +230,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             set { _afCleanRightPressure = value; OnPropertyChanged(); }
         }
 
+        #endregion
+
+        #region Commands
         public ICommand SetWetCleanLeftPressureCommand => new RelayCommand(() =>
         {
             Regulators.WetCleanLRegulator.SetPressure(WetCleanLeftRecipe.CylinderPushPressure);
@@ -159,8 +286,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 return new RelayCommand(() =>
                 {
                     // Kích hoạt robot load - set các output cần thiết
-                    Outputs.LoadRobMoveEnable.Value = true;
-                    Outputs.LoadRobDrivesOn.Value = true;
+                    DeviceOutputs.LoadRobMoveEnable.Value = true;
+                    DeviceOutputs.LoadRobDrivesOn.Value = true;
                     OnPropertyChanged(nameof(RobotLoadIsConnected));
                 });
             }
@@ -173,204 +300,1075 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 return new RelayCommand(() =>
                 {
                     // Kích hoạt robot unload - set các output cần thiết
-                    Outputs.LoadRobMoveEnable.Value = true;
-                    Outputs.LoadRobDrivesOn.Value = true;
+                    DeviceOutputs.LoadRobMoveEnable.Value = true;
+                    DeviceOutputs.LoadRobDrivesOn.Value = true;
                     OnPropertyChanged(nameof(RobotUnloadIsConnected));
                 });
             }
         }
+        #endregion
 
-        #region Unit Tab Properties
+        #region GetMotions
+        // CSTLoadUnload Tab Motions
+        private ObservableCollection<IMotion> GetInWorkConveyorMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            motions.Add(Devices.MotionsInovance.InCassetteTAxis);
+            return motions;
+        }
 
-        // CSTLoadUnload Tab Properties
-        public ObservableCollection<IMotion> InConveyorMotions => GetInConveyorMotions();
-        public ObservableCollection<IMotion> InWorkConveyorMotions => GetInWorkConveyorMotions();
-        public ObservableCollection<IMotion> BufferConveyorMotions => GetBufferConveyorMotions();
-        public ObservableCollection<IMotion> OutWorkConveyorMotions => GetOutWorkConveyorMotions();
-        public ObservableCollection<IMotion> OutConveyorMotions => GetOutConveyorMotions();
+        private ObservableCollection<IMotion> GetOutWorkConveyorMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            motions.Add(Devices.MotionsInovance.OutCassetteTAxis);
+            return motions;
+        }
 
-        public ObservableCollection<ICylinder> InConveyorCylinders => GetInConveyorCylinders();
-        public ObservableCollection<ICylinder> InWorkConveyorCylinders => GetInWorkConveyorCylinders();
-        public ObservableCollection<ICylinder> BufferConveyorCylinders => GetBufferConveyorCylinders();
-        public ObservableCollection<ICylinder> OutWorkConveyorCylinders => GetOutWorkConveyorCylinders();
-        public ObservableCollection<ICylinder> OutConveyorCylinders => GetOutConveyorCylinders();
+        private ObservableCollection<IMotion> GetBufferConveyorMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // Buffer Conveyor không có motion, chỉ có speed controller
+            return motions;
+        }
 
-        public ObservableCollection<IDInput> InConveyorInputs => GetInConveyorInputs();
-        public ObservableCollection<IDInput> InWorkConveyorInputs => GetInWorkConveyorInputs();
-        public ObservableCollection<IDInput> BufferConveyorInputs => GetBufferConveyorInputs();
-        public ObservableCollection<IDInput> OutWorkConveyorInputs => GetOutWorkConveyorInputs();
-        public ObservableCollection<IDInput> OutConveyorInputs => GetOutConveyorInputs();
+        private ObservableCollection<IMotion> GetOutConveyorMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // Out Conveyor không có motion, chỉ có speed controller
+            return motions;
+        }
 
-        public ObservableCollection<IDOutput> InConveyorOutputs => GetInConveyorOutputs();
-        public ObservableCollection<IDOutput> InWorkConveyorOutputs => GetInWorkConveyorOutputs();
-        public ObservableCollection<IDOutput> BufferConveyorOutputs => GetBufferConveyorOutputs();
-        public ObservableCollection<IDOutput> OutWorkConveyorOutputs => GetOutWorkConveyorOutputs();
-        public ObservableCollection<IDOutput> OutConveyorOutputs => GetOutConveyorOutputs();
+        private ObservableCollection<IMotion> GetVinylCleanMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // Vinyl Clean không có motion trong manual view, chỉ sử dụng cylinders
+            return motions;
+        }
 
-        // Detach Tab Properties
-        public ObservableCollection<IMotion> VinylCleanMotions => GetVinylCleanMotions();
-        public ObservableCollection<IMotion> RobotLoadMotions => GetRobotLoadMotions();
-        public ObservableCollection<IMotion> FixtureAlignMotions => GetFixtureAlignMotions();
-        public ObservableCollection<IMotion> TransferFixtureMotions => GetTransferFixtureMotions();
-        public ObservableCollection<IMotion> RemoveFilmMotions => GetRemoveFilmMotions();
-        public ObservableCollection<IMotion> DetachMotions => GetDetachMotions();
+        private ObservableCollection<IMotion> GetRobotLoadMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // Robot Load không có motion riêng, sử dụng robot
+            return motions;
+        }
 
-        public ObservableCollection<ICylinder> VinylCleanCylinders => GetVinylCleanCylinders();
-        public ObservableCollection<ICylinder> RobotLoadCylinders => GetRobotLoadCylinders();
-        public ObservableCollection<ICylinder> FixtureAlignCylinders => GetFixtureAlignCylinders();
-        public ObservableCollection<ICylinder> TransferFixtureCylinders => GetTransferFixtureCylinders();
-        public ObservableCollection<ICylinder> RemoveFilmCylinders => GetRemoveFilmCylinders();
-        public ObservableCollection<ICylinder> DetachCylinders => GetDetachCylinders();
+        private ObservableCollection<IMotion> GetFixtureAlignMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // Fixture Align không có motion riêng
+            return motions;
+        }
 
-        public ObservableCollection<IDInput> VinylCleanInputs => GetVinylCleanInputs();
-        public ObservableCollection<IDInput> RobotLoadInputs => GetRobotLoadInputs();
-        public ObservableCollection<IDInput> FixtureAlignInputs => GetFixtureAlignInputs();
-        public ObservableCollection<IDInput> TransferFixtureInputs => GetTransferFixtureInputs();
-        public ObservableCollection<IDInput> RemoveFilmInputs => GetRemoveFilmInputs();
-        public ObservableCollection<IDInput> DetachInputs => GetDetachInputs();
+        // Detach Tab Motions
+        private ObservableCollection<IMotion> GetTransferFixtureMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+                motions.Add(Devices.MotionsInovance.FixtureTransferYAxis);
+            // TransferFixtureProcess chỉ sử dụng FixtureTransferYAxis, không sử dụng ShuttleTransferZAxis
+            return motions;
+        }
 
-        public ObservableCollection<IDOutput> VinylCleanOutputs => GetVinylCleanOutputs();
-        public ObservableCollection<IDOutput> RobotLoadOutputs => GetRobotLoadOutputs();
-        public ObservableCollection<IDOutput> FixtureAlignOutputs => GetFixtureAlignOutputs();
-        public ObservableCollection<IDOutput> TransferFixtureOutputs => GetTransferFixtureOutputs();
-        public ObservableCollection<IDOutput> RemoveFilmOutputs => GetRemoveFilmOutputs();
-        public ObservableCollection<IDOutput> DetachOutputs => GetDetachOutputs();
+        private ObservableCollection<IMotion> GetDetachMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+                motions.Add(Devices.MotionsInovance.DetachGlassZAxis);
+                motions.Add(Devices.MotionsAjin.ShuttleTransferZAxis);
+                motions.Add(Devices.MotionsInovance.ShuttleTransferXAxis);
+            return motions;
+        }
 
-        // Clean Tab Properties
-        public ObservableCollection<IMotion> GlassTransferMotions => GetGlassTransferMotions();
-        public ObservableCollection<IMotion> GlassAlignMotions => GetGlassAlignMotions();
-        public ObservableCollection<IMotion> TransferInShuttleMotions => GetTransferInShuttleMotions();
-        public ObservableCollection<IMotion> TransferRotationMotions => GetTransferRotationMotions();
+        private ObservableCollection<IMotion> GetRemoveFilmMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // Remove Film không có motion riêng
+            return motions;
+        }
 
-        public ObservableCollection<ICylinder> GlassTransferCylinders => GetGlassTransferCylinders();
-        public ObservableCollection<ICylinder> GlassAlignCylinders => GetGlassAlignCylinders();
-        public ObservableCollection<ICylinder> TransferInShuttleCylinders => GetTransferInShuttleCylinders();
-        public ObservableCollection<ICylinder> TransferRotationCylinders => GetTransferRotationCylinders();
+        // Glass Transfer Tab Motions
+        private ObservableCollection<IMotion> GetGlassTransferMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+                motions.Add(Devices.MotionsInovance.GlassTransferYAxis);
+                motions.Add(Devices.MotionsInovance.GlassTransferZAxis);
+            return motions;
+        }
 
-        public ObservableCollection<IDInput> GlassTransferInputs => GetGlassTransferInputs();
-        public ObservableCollection<IDInput> GlassAlignInputs => GetGlassAlignInputs();
-        public ObservableCollection<IDInput> TransferInShuttleInputs => GetTransferInShuttleInputs();
-        public ObservableCollection<IDInput> TransferRotationInputs => GetTransferRotationInputs();
+        private ObservableCollection<IMotion> GetGlassAlignMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // Glass Align không có motion riêng
+            return motions;
+        }
 
-        public ObservableCollection<IDOutput> GlassTransferOutputs => GetGlassTransferOutputs();
-        public ObservableCollection<IDOutput> GlassAlignOutputs => GetGlassAlignOutputs();
-        public ObservableCollection<IDOutput> TransferInShuttleOutputs => GetTransferInShuttleOutputs();
-        public ObservableCollection<IDOutput> TransferRotationOutputs => GetTransferRotationOutputs();
+        private ObservableCollection<IMotion> GetTransferInShuttleMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // Add Transfer In Shuttle Left motions
+            motions.Add(Devices.MotionsInovance.TransferInShuttleLYAxis);
+            motions.Add(Devices.MotionsInovance.TransferInShuttleLZAxis);
+            
+            // Add Transfer In Shuttle Right motions
+            motions.Add(Devices.MotionsInovance.TransferInShuttleRYAxis);
+            motions.Add(Devices.MotionsInovance.TransferInShuttleRZAxis);
+            
+            return motions;
+        }
 
-        // Unload Tab Properties
-        public ObservableCollection<IMotion> UnloadTransferMotions => GetUnloadTransferMotions();
-        public ObservableCollection<IMotion> UnloadAlignMotions => GetUnloadAlignMotions();
-        public ObservableCollection<IMotion> RobotUnloadMotions => GetRobotUnloadMotions();
+        private ObservableCollection<IMotion> GetTransferRotationMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // Add Transfer Rotation motions
+            motions.Add(Devices.MotionsInovance.TransferRotationLZAxis);
+            motions.Add(Devices.MotionsInovance.TransferRotationRZAxis);
+            
+            return motions;
+        }
 
-        public ObservableCollection<ICylinder> UnloadTransferCylinders => GetUnloadTransferCylinders();
-        public ObservableCollection<ICylinder> UnloadAlignCylinders => GetUnloadAlignCylinders();
-        public ObservableCollection<ICylinder> RobotUnloadCylinders => GetRobotUnloadCylinders();
+        private ObservableCollection<IMotion> GetUnloadTransferMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // Add Unload Transfer Left motions
+            motions.Add(Devices.MotionsInovance.GlassUnloadLYAxis);
+            motions.Add(Devices.MotionsInovance.GlassUnloadLZAxis);
+            
+            // Add Unload Transfer Right motions
+            motions.Add(Devices.MotionsInovance.GlassUnloadRYAxis);
+            motions.Add(Devices.MotionsInovance.GlassUnloadRZAxis);
+            
+            return motions;
+        }
 
-        public ObservableCollection<IDInput> UnloadTransferInputs => GetUnloadTransferInputs();
-        public ObservableCollection<IDInput> UnloadAlignInputs => GetUnloadAlignInputs();
-        public ObservableCollection<IDInput> RobotUnloadInputs => GetRobotUnloadInputs();
+        private ObservableCollection<IMotion> GetUnloadAlignMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // Unload Align không có motion riêng
+            return motions;
+        }
 
-        public ObservableCollection<IDOutput> UnloadTransferOutputs => GetUnloadTransferOutputs();
-        public ObservableCollection<IDOutput> UnloadAlignOutputs => GetUnloadAlignOutputs();
-        public ObservableCollection<IDOutput> RobotUnloadOutputs => GetRobotUnloadOutputs();
+        private ObservableCollection<IMotion> GetRobotUnloadMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // Robot Unload sử dụng robot, không có motion riêng
+            return motions;
+        }
+
+        private ObservableCollection<IMotion> GetWetCleanMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // Wet Clean không có motion riêng, chỉ sử dụng pressure regulators
+            return motions;
+        }
+
+        private ObservableCollection<IMotion> GetAfCleanMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // AF Clean không có motion riêng, chỉ sử dụng pressure regulators
+            return motions;
+        }
 
         #endregion
 
-        #region Get Methods
+        #region GetCylinders
+        // CSTLoadUnload Tab Cylinders
+        private ObservableCollection<ICylinder> GetInWorkConveyorCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Devices.Cylinders.InCstStopperUpDown);
+            return cylinders;
+        }
+        
+        private ObservableCollection<ICylinder> GetOutWorkConveyorCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Devices.Cylinders.OutCstStopperUpDown);
+            return cylinders;
+        }
 
-        // CSTLoadUnload Tab Get Methods
-        private ObservableCollection<IMotion> GetInConveyorMotions() => new ObservableCollection<IMotion>();
-        private ObservableCollection<IMotion> GetInWorkConveyorMotions() => new ObservableCollection<IMotion>();
-        private ObservableCollection<IMotion> GetBufferConveyorMotions() => new ObservableCollection<IMotion>();
-        private ObservableCollection<IMotion> GetOutWorkConveyorMotions() => new ObservableCollection<IMotion>();
-        private ObservableCollection<IMotion> GetOutConveyorMotions() => new ObservableCollection<IMotion>();
+        private ObservableCollection<ICylinder> GetBufferConveyorCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Devices.Cylinders.BufferCvStopper1UpDown);
+            cylinders.Add(Devices.Cylinders.BufferCvStopper2UpDown);
+            cylinders.Add(Devices.Cylinders.InCvSupportBufferUpDown);
+            cylinders.Add(Devices.Cylinders.OutCvSupportBufferUpDown);
+            return cylinders;
+        }
 
-        private ObservableCollection<ICylinder> GetInConveyorCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetInWorkConveyorCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetBufferConveyorCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetOutWorkConveyorCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetOutConveyorCylinders() => new ObservableCollection<ICylinder>();
+        private ObservableCollection<ICylinder> GetOutConveyorCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Devices.Cylinders.OutCstStopperUpDown);
+            return cylinders;
+        }
 
-        private ObservableCollection<IDInput> GetInConveyorInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetInWorkConveyorInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetBufferConveyorInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetOutWorkConveyorInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetOutConveyorInputs() => new ObservableCollection<IDInput>();
+        private ObservableCollection<ICylinder> GetVinylCleanCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Devices.Cylinders.VinylCleanFixture1ClampUnclamp);
+            cylinders.Add(Devices.Cylinders.VinylCleanRollerFwBw);
+            cylinders.Add(Devices.Cylinders.VinylCleanPusherRollerUpDown);
+            return cylinders;
+        }
 
-        private ObservableCollection<IDOutput> GetInConveyorOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetInWorkConveyorOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetBufferConveyorOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetOutWorkConveyorOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetOutConveyorOutputs() => new ObservableCollection<IDOutput>();
+        private ObservableCollection<ICylinder> GetRobotLoadCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Devices.Cylinders.RobotFixtureClampUnclamp);
+            cylinders.Add(Devices.Cylinders.RobotFixtureAlignFwBw);
+            return cylinders;
+        }
 
-        // Detach Tab Get Methods
-        private ObservableCollection<IMotion> GetVinylCleanMotions() => new ObservableCollection<IMotion>();
-        private ObservableCollection<IMotion> GetRobotLoadMotions() => new ObservableCollection<IMotion>();
-        private ObservableCollection<IMotion> GetFixtureAlignMotions() => new ObservableCollection<IMotion>();
-        private ObservableCollection<IMotion> GetTransferFixtureMotions() => new ObservableCollection<IMotion>();
-        private ObservableCollection<IMotion> GetRemoveFilmMotions() => new ObservableCollection<IMotion>();
-        private ObservableCollection<IMotion> GetDetachMotions() => new ObservableCollection<IMotion>();
+        private ObservableCollection<ICylinder> GetFixtureAlignCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Devices.Cylinders.AlignFixtureCylFwBw);
+            return cylinders;
+        }
 
-        private ObservableCollection<ICylinder> GetVinylCleanCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetRobotLoadCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetFixtureAlignCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetTransferFixtureCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetRemoveFilmCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetDetachCylinders() => new ObservableCollection<ICylinder>();
+        // Detach Tab Cylinders
+        private ObservableCollection<ICylinder> GetTransferFixtureCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            
+            // Add Transfer Fixture cylinders
+            cylinders.Add(Devices.Cylinders.TransferFixtureUpDown);
+            cylinders.Add(Devices.Cylinders.TransferFixture1ClampUnclamp);
+            cylinders.Add(Devices.Cylinders.TransferFixture2ClampUnclamp);
+            
+            return cylinders;
+        }
+        
+        private ObservableCollection<ICylinder> GetDetachCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            
+            // Add Detach fix fixture cylinders
+            cylinders.Add(Devices.Cylinders.DetachFixFixtureCyl1FwBw);
+            cylinders.Add(Devices.Cylinders.DetachFixFixtureCyl2FwBw);
+            
+            // Add Detach cylinders
+            cylinders.Add(Devices.Cylinders.DetachCyl1UpDown);
+            cylinders.Add(Devices.Cylinders.DetachCyl2UpDown);
+            
+            return cylinders;
+        }
 
-        private ObservableCollection<IDInput> GetVinylCleanInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetRobotLoadInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetFixtureAlignInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetTransferFixtureInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetRemoveFilmInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetDetachInputs() => new ObservableCollection<IDInput>();
+        private ObservableCollection<ICylinder> GetRemoveFilmCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            
+            // Add Remove Film fix cylinders
+            cylinders.Add(Devices.Cylinders.RemoveZoneFixCyl1FwBw);
+            cylinders.Add(Devices.Cylinders.RemoveZoneFixCyl2FwBw);
+            
+            // Add Remove Film transfer cylinder
+            cylinders.Add(Devices.Cylinders.RemoveZoneTrCylFwBw);
+            
+            // Add Remove Film up/down cylinders
+            cylinders.Add(Devices.Cylinders.RemoveZoneZCyl1UpDown);
+            cylinders.Add(Devices.Cylinders.RemoveZoneZCyl2UpDown);
+            
+            // Add Remove Film clamp cylinder
+            cylinders.Add(Devices.Cylinders.RemoveZoneCylClampUnclamp);
+            
+            // Add Remove Film pusher cylinders
+            cylinders.Add(Devices.Cylinders.RemoveZonePusherCyl1UpDown);
+            cylinders.Add(Devices.Cylinders.RemoveZonePusherCyl2UpDown);
+            
+            return cylinders;
+        }
 
-        private ObservableCollection<IDOutput> GetVinylCleanOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetRobotLoadOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetFixtureAlignOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetTransferFixtureOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetRemoveFilmOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetDetachOutputs() => new ObservableCollection<IDOutput>();
+        // Glass Transfer Tab Cylinders
+        private ObservableCollection<ICylinder> GetGlassTransferCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            
+            // Add Glass Transfer cylinders
+            cylinders.Add(Devices.Cylinders.GlassTransferCyl1UpDown);
+            cylinders.Add(Devices.Cylinders.GlassTransferCyl2UpDown);
+            cylinders.Add(Devices.Cylinders.GlassTransferCyl3UpDown);
+            
+            return cylinders;
+        }
 
-        // Clean Tab Get Methods
-        private ObservableCollection<IMotion> GetGlassTransferMotions() => new ObservableCollection<IMotion>();
-        private ObservableCollection<IMotion> GetGlassAlignMotions() => new ObservableCollection<IMotion>();
-        private ObservableCollection<IMotion> GetTransferInShuttleMotions() => new ObservableCollection<IMotion>();
-        private ObservableCollection<IMotion> GetTransferRotationMotions() => new ObservableCollection<IMotion>();
+        private ObservableCollection<ICylinder> GetGlassAlignCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            
+            // Add Glass Align Left cylinders
+            cylinders.Add(Devices.Cylinders.AlignStageL1AlignUnalign);
+            cylinders.Add(Devices.Cylinders.AlignStageL2AlignUnalign);
+            cylinders.Add(Devices.Cylinders.AlignStageL3AlignUnalign);
+            
+            // Add Glass Align Right cylinders
+            cylinders.Add(Devices.Cylinders.AlignStageR1AlignUnalign);
+            cylinders.Add(Devices.Cylinders.AlignStageR2AlignUnalign);
+            cylinders.Add(Devices.Cylinders.AlignStageR3AlignUnalign);
+            
+            return cylinders;
+        }
 
-        private ObservableCollection<ICylinder> GetGlassTransferCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetGlassAlignCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetTransferInShuttleCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetTransferRotationCylinders() => new ObservableCollection<ICylinder>();
+        private ObservableCollection<ICylinder> GetTransferInShuttleCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Transfer In Shuttle không có cylinder riêng
+            return cylinders;
+        }
 
-        private ObservableCollection<IDInput> GetGlassTransferInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetGlassAlignInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetTransferInShuttleInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetTransferRotationInputs() => new ObservableCollection<IDInput>();
+        private ObservableCollection<ICylinder> GetTransferRotationCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            
+            // Add Transfer Rotation Left cylinders
+            cylinders.Add(Devices.Cylinders.TrRotateLeftRotate);
+            cylinders.Add(Devices.Cylinders.TrRotateLeftFwBw);
+            
+            // Add Transfer Rotation Right cylinders
+            cylinders.Add(Devices.Cylinders.TrRotateRightRotate);
+            cylinders.Add(Devices.Cylinders.TrRotateRightFwBw);
+            
+            return cylinders;
+        }
 
-        private ObservableCollection<IDOutput> GetGlassTransferOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetGlassAlignOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetTransferInShuttleOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetTransferRotationOutputs() => new ObservableCollection<IDOutput>();
+        private ObservableCollection<ICylinder> GetUnloadTransferCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Unload Transfer không có cylinder riêng
+            return cylinders;
+        }
 
-        // Unload Tab Get Methods
-        private ObservableCollection<IMotion> GetUnloadTransferMotions() => new ObservableCollection<IMotion>();
-        private ObservableCollection<IMotion> GetUnloadAlignMotions() => new ObservableCollection<IMotion>();
-        private ObservableCollection<IMotion> GetRobotUnloadMotions() => new ObservableCollection<IMotion>();
+        private ObservableCollection<ICylinder> GetUnloadAlignCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            
+            // Add Unload Align cylinders
+            cylinders.Add(Devices.Cylinders.UnloadAlignCyl1UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadAlignCyl2UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadAlignCyl3UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadAlignCyl4UpDown);
+            
+            return cylinders;
+        }
 
-        private ObservableCollection<ICylinder> GetUnloadTransferCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetUnloadAlignCylinders() => new ObservableCollection<ICylinder>();
-        private ObservableCollection<ICylinder> GetRobotUnloadCylinders() => new ObservableCollection<ICylinder>();
+        private ObservableCollection<ICylinder> GetRobotUnloadCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            
+            // Add Robot Unload cylinders
+            cylinders.Add(Devices.Cylinders.UnloadRobotCyl1UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadRobotCyl2UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadRobotCyl3UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadRobotCyl4UpDown);
+            
+            return cylinders;
+        }
 
-        private ObservableCollection<IDInput> GetUnloadTransferInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetUnloadAlignInputs() => new ObservableCollection<IDInput>();
-        private ObservableCollection<IDInput> GetRobotUnloadInputs() => new ObservableCollection<IDInput>();
+        // Clean Tab Cylinders
+        private ObservableCollection<ICylinder> GetWetCleanCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Wet Clean không có cylinder riêng, sử dụng pressure regulators
+            return cylinders;
+        }
 
-        private ObservableCollection<IDOutput> GetUnloadTransferOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetUnloadAlignOutputs() => new ObservableCollection<IDOutput>();
-        private ObservableCollection<IDOutput> GetRobotUnloadOutputs() => new ObservableCollection<IDOutput>();
+        private ObservableCollection<ICylinder> GetAfCleanCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // AF Clean không có cylinder riêng, sử dụng pressure regulators
+            return cylinders;
+        }
+
+        // Unload Tab Cylinders
 
         #endregion
 
+        #region GetInputs
+        // CSTLoadUnload Tab Inputs
+        private ObservableCollection<IDInput> GetInWorkConveyorInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add In Cassette detection inputs
+            inputs.Add(Devices.Inputs.InCstDetect1);
+            inputs.Add(Devices.Inputs.InCstDetect2);
+            // Add In Cassette button inputs
+            inputs.Add(Devices.Inputs.InButton1);
+            inputs.Add(Devices.Inputs.InButton2);
+            // Add In Cassette light curtain safety input
+            inputs.Add(Devices.Inputs.InCstLightCurtainAlarmDetect);
+            
+            return inputs;
+        }
+        
+        private ObservableCollection<IDInput> GetOutWorkConveyorInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add Out Cassette work detection inputs
+            inputs.Add(Devices.Inputs.OutCstWorkDetect1);
+            inputs.Add(Devices.Inputs.OutCstWorkDetect2);
+            inputs.Add(Devices.Inputs.OutCstWorkDetect3);
+            // Add Out Cassette detection inputs
+            inputs.Add(Devices.Inputs.OutCstDetect1);
+            inputs.Add(Devices.Inputs.OutCstDetect2);
+            // Add Out Cassette button inputs
+            inputs.Add(Devices.Inputs.OutButton1);
+            inputs.Add(Devices.Inputs.OutButton2);
+            // Add Out Cassette light curtain safety input
+            inputs.Add(Devices.Inputs.OutCstLightCurtainAlarmDetect);
+            
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetBufferConveyorInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add Buffer Cassette detection inputs
+            inputs.Add(Devices.Inputs.BufferCstDetect1);
+            inputs.Add(Devices.Inputs.BufferCstDetect2);
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetOutConveyorInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add Out Cassette detection inputs
+            inputs.Add(Devices.Inputs.OutCstDetect1);
+            inputs.Add(Devices.Inputs.OutCstDetect2);
+            // Add Out Cassette button inputs
+            inputs.Add(Devices.Inputs.OutButton1);
+            inputs.Add(Devices.Inputs.OutButton2);
+            // Add Out Cassette light curtain safety input
+            inputs.Add(Devices.Inputs.OutCstLightCurtainAlarmDetect);
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetVinylCleanInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add Vinyl Clean detection inputs
+            inputs.Add(Devices.Inputs.VinylCleanFixtureDetect);
+            inputs.Add(Devices.Inputs.VinylCleanFullDetect);
+            inputs.Add(Devices.Inputs.VinylCleanRunoffDetect);
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetRobotLoadInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Robot Load sử dụng virtual I/O, không có physical inputs riêng
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetFixtureAlignInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add Fixture Align detection inputs
+            inputs.Add(Devices.Inputs.AlignFixtureDetect);
+            inputs.Add(Devices.Inputs.AlignFixtureTiltDetect);
+            inputs.Add(Devices.Inputs.AlignFixtureReverseDetect);
+            return inputs;
+        }
+
+        // Detach Tab Inputs
+        private ObservableCollection<IDInput> GetTransferFixtureInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // TransferFixtureProcess doesn't have specific inputs defined
+            // Return empty collection for now
+            return inputs;
+        }
+        
+        private ObservableCollection<IDInput> GetDetachInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add Detach fixture detection input
+            inputs.Add(Devices.Inputs.DetachFixtureDetect);
+            // Add Detach glass shuttle vacuum inputs
+            inputs.Add(Devices.Inputs.DetachGlassShtVac1);
+            inputs.Add(Devices.Inputs.DetachGlassShtVac2);
+            inputs.Add(Devices.Inputs.DetachGlassShtVac3);
+            
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetRemoveFilmInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Remove Film sử dụng virtual I/O, không có physical inputs riêng
+            return inputs;
+        }
+
+        // Clean Tab Inputs
+        private ObservableCollection<IDInput> GetWetCleanInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Wet Clean không có physical inputs riêng, sử dụng pressure monitoring
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetAfCleanInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // AF Clean không có physical inputs riêng, sử dụng pressure monitoring
+            return inputs;
+        }
+
+        // Glass Transfer Tab Inputs
+        private ObservableCollection<IDInput> GetGlassTransferInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add Glass Transfer vacuum detection inputs
+            inputs.Add(Devices.Inputs.GlassTransferVac1);
+            inputs.Add(Devices.Inputs.GlassTransferVac2);
+            inputs.Add(Devices.Inputs.GlassTransferVac3);
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetGlassAlignInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            
+            // Add Glass Align Left vacuum detection inputs
+            inputs.Add(Devices.Inputs.AlignStageLVac1);
+            inputs.Add(Devices.Inputs.AlignStageLVac2);
+            inputs.Add(Devices.Inputs.AlignStageLVac3);
+            
+            // Add Glass Align Left glass detection inputs
+            inputs.Add(Devices.Inputs.AlignStageLGlassDettect1);
+            inputs.Add(Devices.Inputs.AlignStageLGlassDettect2);
+            inputs.Add(Devices.Inputs.AlignStageLGlassDettect3);
+            
+            // Add Glass Align Right vacuum detection inputs
+            inputs.Add(Devices.Inputs.AlignStageRVac1);
+            inputs.Add(Devices.Inputs.AlignStageRVac2);
+            inputs.Add(Devices.Inputs.AlignStageRVac3);
+            
+            // Add Glass Align Right glass detection inputs
+            inputs.Add(Devices.Inputs.AlignStageRGlassDetect1);
+            inputs.Add(Devices.Inputs.AlignStageRGlassDetect2);
+            inputs.Add(Devices.Inputs.AlignStageRGlassDetect3);
+            
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetTransferInShuttleInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            
+            // Add Transfer In Shuttle vacuum detection inputs
+            inputs.Add(Devices.Inputs.TransferInShuttleLVac);
+            inputs.Add(Devices.Inputs.TransferInShuttleRVac);
+            
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetTransferRotationInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            
+            // Add Transfer Rotation vacuum detection inputs
+            inputs.Add(Devices.Inputs.TrRotateLeft1Vac);
+            inputs.Add(Devices.Inputs.TrRotateRight1Vac);
+            
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetUnloadTransferInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            
+            // Add Unload Transfer vacuum detection inputs
+            inputs.Add(Devices.Inputs.UnloadTransferLVac);
+            inputs.Add(Devices.Inputs.UnloadTransferRVac);
+            
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetUnloadAlignInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            
+            // Add Unload Align vacuum detection inputs
+            inputs.Add(Devices.Inputs.UnloadGlassAlignVac1);
+            inputs.Add(Devices.Inputs.UnloadGlassAlignVac2);
+            inputs.Add(Devices.Inputs.UnloadGlassAlignVac3);
+            inputs.Add(Devices.Inputs.UnloadGlassAlignVac4);
+            
+            // Add Unload Align glass detection inputs
+            inputs.Add(Devices.Inputs.UnloadGlassDetect1);
+            inputs.Add(Devices.Inputs.UnloadGlassDetect2);
+            inputs.Add(Devices.Inputs.UnloadGlassDetect3);
+            inputs.Add(Devices.Inputs.UnloadGlassDetect4);
+            
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetRobotUnloadInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            
+            // Add Robot Unload glass detection inputs
+            inputs.Add(Devices.Inputs.UnloadRobotDetect1);
+            inputs.Add(Devices.Inputs.UnloadRobotDetect2);
+            inputs.Add(Devices.Inputs.UnloadRobotDetect3);
+            inputs.Add(Devices.Inputs.UnloadRobotDetect4);
+            
+            return inputs;
+        }
+
+        // Unload Tab Inputs
+
+        #endregion
+
+        #region GetOutputs
+        // CSTLoadUnload Tab Outputs
+        private ObservableCollection<IDOutput> GetInWorkConveyorOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add In Cassette button lamp outputs
+            outputs.Add(Devices.Outputs.InButtonLamp1);
+            outputs.Add(Devices.Outputs.InButtonLamp2);
+            // Add In Cassette light curtain muting output
+            outputs.Add(Devices.Outputs.InCstLightCurtainMuting1);
+            outputs.Add(Devices.Outputs.InCstLightCurtainMuting2);
+
+            return outputs;
+        }
+        
+        private ObservableCollection<IDOutput> GetOutWorkConveyorOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add Out Cassette button lamp outputs
+            outputs.Add(Devices.Outputs.OutButtonLamp1);
+            outputs.Add(Devices.Outputs.OutButtonLamp2);
+            // Add Out Cassette light curtain muting output
+            outputs.Add(Devices.Outputs.OutCstLightCurtainMuting1);
+            outputs.Add(Devices.Outputs.OutCstLightCurtainMuting2);
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetBufferConveyorOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Buffer Conveyor không có output riêng
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetOutConveyorOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add Out Cassette button lamp outputs
+            outputs.Add(Devices.Outputs.OutButtonLamp1);
+            outputs.Add(Devices.Outputs.OutButtonLamp2);
+            // Add Out Cassette light curtain muting output
+            outputs.Add(Devices.Outputs.OutCstLightCurtainMuting1);
+            outputs.Add(Devices.Outputs.OutCstLightCurtainMuting2);
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetVinylCleanOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add Vinyl Clean motor output
+            outputs.Add(Devices.Outputs.VinylCleanMotorOnOff);
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetRobotLoadOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Robot Load sử dụng virtual I/O, không có physical outputs riêng
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetFixtureAlignOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Fixture Align sử dụng virtual I/O, không có physical outputs riêng
+            return outputs;
+        }
+
+        // Detach Tab Outputs
+        private ObservableCollection<IDOutput> GetTransferFixtureOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // TransferFixtureProcess doesn't have specific outputs defined
+            return outputs;
+        }
+        
+        private ObservableCollection<IDOutput> GetDetachOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add Detach glass shuttle vacuum outputs
+            outputs.Add(Devices.Outputs.DetachGlassShtVac1OnOff);
+            outputs.Add(Devices.Outputs.DetachGlassShtVac2OnOff);
+            outputs.Add(Devices.Outputs.DetachGlassShtVac3OnOff);
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetRemoveFilmOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Remove Film sử dụng virtual I/O, không có physical outputs riêng
+            return outputs;
+        }
+
+        // Glass Transfer Tab Outputs
+        private ObservableCollection<IDOutput> GetGlassTransferOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add Glass Transfer vacuum outputs
+            outputs.Add(Devices.Outputs.GlassTransferVac1OnOff);
+            outputs.Add(Devices.Outputs.GlassTransferVac2OnOff);
+            outputs.Add(Devices.Outputs.GlassTransferVac3OnOff);
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetGlassAlignOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            
+            // Add Glass Align Left vacuum outputs
+            outputs.Add(Devices.Outputs.AlignStageLVac1OnOff);
+            outputs.Add(Devices.Outputs.AlignStageLVac2OnOff);
+            outputs.Add(Devices.Outputs.AlignStageLVac3OnOff);
+            
+            // Add Glass Align Right vacuum outputs
+            outputs.Add(Devices.Outputs.AlignStageRVac1OnOff);
+            outputs.Add(Devices.Outputs.AlignStageRVac2OnOff);
+            outputs.Add(Devices.Outputs.AlignStageRVac3OnOff);
+            
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetTransferInShuttleOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            
+            // Add Transfer In Shuttle vacuum control outputs
+            outputs.Add(Devices.Outputs.TransferInShuttleLVacOnOff);
+            outputs.Add(Devices.Outputs.TransferInShuttleRVacOnOff);
+            
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetTransferRotationOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            
+            // Add Transfer Rotation vacuum control outputs
+            outputs.Add(Devices.Outputs.TrRotateLeft1VacOnOff);
+            outputs.Add(Devices.Outputs.TrRotateRight1VacOnOff);
+            
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetUnloadTransferOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            
+            // Add Unload Transfer vacuum control outputs
+            outputs.Add(Devices.Outputs.UnloadTransferLVacOnOff);
+            outputs.Add(Devices.Outputs.UnloadTransferRVacOnOff);
+            
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetUnloadAlignOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            
+            // Add Unload Align vacuum control outputs
+            outputs.Add(Devices.Outputs.UnloadGlassAlignVac1OnOff);
+            outputs.Add(Devices.Outputs.UnloadGlassAlignVac2OnOff);
+            outputs.Add(Devices.Outputs.UnloadGlassAlignVac3OnOff);
+            outputs.Add(Devices.Outputs.UnloadGlassAlignVac4OnOff);
+            
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetRobotUnloadOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            
+            // Add Robot Unload vacuum control outputs
+            outputs.Add(Devices.Outputs.UnloadRobotVac1OnOff);
+            outputs.Add(Devices.Outputs.UnloadRobotVac2OnOff);
+            outputs.Add(Devices.Outputs.UnloadRobotVac3OnOff);
+            outputs.Add(Devices.Outputs.UnloadRobotVac4OnOff);
+            
+            return outputs;
+        }
+
+        // Clean Tab Outputs
+        private ObservableCollection<IDOutput> GetWetCleanOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Wet Clean không có physical outputs riêng, sử dụng pressure regulators
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetAfCleanOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // AF Clean không có physical outputs riêng, sử dụng pressure regulators
+            return outputs;
+        }
+
+        // Unload Tab Outputs
+        #endregion
+
+        #region Wet Clean Properties
+        public ObservableCollection<IMotion> WetCleanMotions => GetWetCleanMotions();
+        public ObservableCollection<ICylinder> WetCleanCylinders => GetWetCleanCylinders();
+        public ObservableCollection<IDInput> WetCleanInputs => GetWetCleanInputs();
+        public ObservableCollection<IDOutput> WetCleanOutputs => GetWetCleanOutputs();
+        #endregion
+
+        #region AF Clean Properties
+        public ObservableCollection<IMotion> AfCleanMotions => GetAfCleanMotions();
+        public ObservableCollection<ICylinder> AfCleanCylinders => GetAfCleanCylinders();
+        public ObservableCollection<IDInput> AfCleanInputs => GetAfCleanInputs();
+        public ObservableCollection<IDOutput> AfCleanOutputs => GetAfCleanOutputs();
+        #endregion
+
+        #region GetProcess
+        private ObservableCollection<IProcess<ESequence>> GetProcessList()
+        {
+            ObservableCollection<IProcess<ESequence>> processes = new ObservableCollection<IProcess<ESequence>>
+            {
+                // CSTLoadUnload Tab (4 units)
+                Processes.InWorkConveyorProcess,
+                Processes.BufferConveyorProcess,
+                Processes.OutWorkConveyorProcess,
+                Processes.OutConveyorProcess,
+                
+                // Detach Tab (6 units)
+                Processes.RobotLoadProcess,
+                Processes.VinylCleanProcess,
+                Processes.FixtureAlignProcess,
+                Processes.TransferFixtureProcess,
+                Processes.DetachProcess,
+                Processes.RemoveFilmProcess,
+                
+                // Clean Tab (9 units)
+                Processes.GlassTransferProcess,
+                Processes.GlassAlignLeftProcess,
+                Processes.GlassAlignRightProcess,
+                Processes.TransferInShuttleLeftProcess,
+                Processes.TransferInShuttleRightProcess,
+                Processes.WETCleanLeftProcess,
+                Processes.WETCleanRightProcess,
+                Processes.AFCleanLeftProcess,
+                Processes.AFCleanRightProcess,
+                Processes.TransferRotationLeftProcess,
+                Processes.TransferRotationRightProcess,
+                
+                // Unload Tab (4 units)
+                Processes.UnloadTransferLeftProcess,
+                Processes.UnloadTransferRightProcess,
+                Processes.UnloadAlignProcess,
+                Processes.RobotUnloadProcess,
+            };
+            return processes;
+        }
+        #endregion
+
+        #region GetDetailProcess
+        public void Dispose()
+        {
+            Cylinders = null;
+            Inputs = null;
+            Outputs = null;
+            Motions = null;
+        }
+        private void SelectedPropertyProcess()
+        {
+            Dispose();
+
+            // CSTLoadUnload Tab
+            if (SelectedProcess == Processes.InWorkConveyorProcess)
+            {
+                Motions = GetInWorkConveyorMotions();
+                Cylinders = GetInWorkConveyorCylinders();
+                Inputs = GetInWorkConveyorInputs();
+                Outputs = GetInWorkConveyorOutputs();
+            }
+            else if (SelectedProcess == Processes.BufferConveyorProcess)
+            {
+                Motions = GetBufferConveyorMotions();
+                Cylinders = GetBufferConveyorCylinders();
+                Inputs = GetBufferConveyorInputs();
+                Outputs = GetBufferConveyorOutputs();
+            }
+            else if (SelectedProcess == Processes.OutWorkConveyorProcess)
+            {
+                Motions = GetOutWorkConveyorMotions();
+                Cylinders = GetOutWorkConveyorCylinders();
+                Inputs = GetOutWorkConveyorInputs();
+                Outputs = GetOutWorkConveyorOutputs();
+            }
+            else if (SelectedProcess == Processes.OutConveyorProcess)
+            {
+                Motions = GetOutConveyorMotions();
+                Cylinders = GetOutConveyorCylinders();
+                Inputs = GetOutConveyorInputs();
+                Outputs = GetOutConveyorOutputs();
+            }
+
+            // Detach Tab
+            else if (SelectedProcess == Processes.RobotLoadProcess)
+            {
+                Motions = GetRobotLoadMotions();
+                Cylinders = GetRobotLoadCylinders();
+                Inputs = GetRobotLoadInputs();
+                Outputs = GetRobotLoadOutputs();
+            }
+            else if (SelectedProcess == Processes.VinylCleanProcess)
+            {
+                Motions = GetVinylCleanMotions();
+                Cylinders = GetVinylCleanCylinders();
+                Inputs = GetVinylCleanInputs();
+                Outputs = GetVinylCleanOutputs();
+            }
+            else if (SelectedProcess == Processes.FixtureAlignProcess)
+            {
+                Motions = GetFixtureAlignMotions();
+                Cylinders = GetFixtureAlignCylinders();
+                Inputs = GetFixtureAlignInputs();
+                Outputs = GetFixtureAlignOutputs();
+            }
+            else if (SelectedProcess == Processes.TransferFixtureProcess)
+            {
+                Motions = GetTransferFixtureMotions();
+                Cylinders = GetTransferFixtureCylinders();
+                Inputs = GetTransferFixtureInputs();
+                Outputs = GetTransferFixtureOutputs();
+            }
+            else if (SelectedProcess == Processes.DetachProcess)
+            {
+                Motions = GetDetachMotions();
+                Cylinders = GetDetachCylinders();
+                Inputs = GetDetachInputs();
+                Outputs = GetDetachOutputs();
+            }
+            else if (SelectedProcess == Processes.RemoveFilmProcess)
+            {
+                Motions = GetRemoveFilmMotions();
+                Cylinders = GetRemoveFilmCylinders();
+                Inputs = GetRemoveFilmInputs();
+                Outputs = GetRemoveFilmOutputs();
+            }
+
+            // Clean Tab
+            else if (SelectedProcess == Processes.GlassTransferProcess)
+            {
+                Motions = GetGlassTransferMotions();
+                Cylinders = GetGlassTransferCylinders();
+                Inputs = GetGlassTransferInputs();
+                Outputs = GetGlassTransferOutputs();
+            }
+            else if (SelectedProcess == Processes.GlassAlignLeftProcess || SelectedProcess == Processes.GlassAlignRightProcess)
+            {
+                Motions = GetGlassAlignMotions();
+                Cylinders = GetGlassAlignCylinders();
+                Inputs = GetGlassAlignInputs();
+                Outputs = GetGlassAlignOutputs();
+            }
+            else if (SelectedProcess == Processes.TransferInShuttleLeftProcess || SelectedProcess == Processes.TransferInShuttleRightProcess)
+            {
+                Motions = GetTransferInShuttleMotions();
+                Cylinders = GetTransferInShuttleCylinders();
+                Inputs = GetTransferInShuttleInputs();
+                Outputs = GetTransferInShuttleOutputs();
+            }
+            else if (SelectedProcess == Processes.TransferRotationLeftProcess || SelectedProcess == Processes.TransferRotationRightProcess)
+            {
+                Motions = GetTransferRotationMotions();
+                Cylinders = GetTransferRotationCylinders();
+                Inputs = GetTransferRotationInputs();
+                Outputs = GetTransferRotationOutputs();
+            }
+            else if (SelectedProcess == Processes.WETCleanLeftProcess || SelectedProcess == Processes.WETCleanRightProcess)
+            {
+                Motions = GetWetCleanMotions();
+                Cylinders = GetWetCleanCylinders();
+                Inputs = GetWetCleanInputs();
+                Outputs = GetWetCleanOutputs();
+            }
+            else if (SelectedProcess == Processes.AFCleanLeftProcess || SelectedProcess == Processes.AFCleanRightProcess)
+            {
+                Motions = GetAfCleanMotions();
+                Cylinders = GetAfCleanCylinders();
+                Inputs = GetAfCleanInputs();
+                Outputs = GetAfCleanOutputs();
+            }
+            else if (SelectedProcess == Processes.UnloadTransferLeftProcess || SelectedProcess == Processes.UnloadTransferRightProcess)
+            {
+                Motions = GetUnloadTransferMotions();
+                Cylinders = GetUnloadTransferCylinders();
+                Inputs = GetUnloadTransferInputs();
+                Outputs = GetUnloadTransferOutputs();
+            }
+            else if (SelectedProcess == Processes.UnloadAlignProcess)
+            {
+                Motions = GetUnloadAlignMotions();
+                Cylinders = GetUnloadAlignCylinders();
+                Inputs = GetUnloadAlignInputs();
+                Outputs = GetUnloadAlignOutputs();
+            }
+            else if (SelectedProcess == Processes.RobotUnloadProcess)
+            {
+                Motions = GetRobotUnloadMotions();
+                Cylinders = GetRobotUnloadCylinders();
+                Inputs = GetRobotUnloadInputs();
+                Outputs = GetRobotUnloadOutputs();
+            }
+        }
+        #endregion
+
+        #region Pressure Timer
+        private void PressureUpdateTimer_Elapsed(object? sender, ElapsedEventArgs e)
+        {
+            WetCleanLeftPressure = Regulators.WetCleanLRegulator.GetPressure();
+            WetCleanRightPressure = Regulators.WetCleanRRegulator.GetPressure();
+            AfCleanLeftPressure = Regulators.AfCleanLRegulator.GetPressure();
+            AfCleanRightPressure = Regulators.AfCleanRRegulator.GetPressure();
+        }
+        #endregion
+
+        public ManualViewModel(Devices devices, MachineStatus machineStatus, RecipeList recipeList, RecipeSelector recipeSelector, Processes processes, DataViewModel dataViewModel,
+            [FromKeyedServices("WETCleanLeftRecipe")] CleanRecipe wetCleanLeftRecipe,
+            [FromKeyedServices("WETCleanRightRecipe")] CleanRecipe wetCleanRightRecipe,
+            [FromKeyedServices("AFCleanLeftRecipe")] CleanRecipe afCleanLeftRecipe,
+            [FromKeyedServices("AFCleanRightRecipe")] CleanRecipe afCleanRightRecipe)
+        {
+            Devices = devices;
+            MachineStatus = machineStatus;
+            RecipeList = recipeList;
+            RecipeSelector = recipeSelector;
+            Processes = processes;
+            DataViewModel = dataViewModel;
+            
+            DeviceInputs = devices.Inputs;
+            DeviceOutputs = devices.Outputs;
+            Regulators = devices.Regulators;
+            MotionsInovance = devices.MotionsInovance;
+            MotionsAjin = devices.MotionsAjin;
+            WetCleanLeftRecipe = wetCleanLeftRecipe;
+            WetCleanRightRecipe = wetCleanRightRecipe;
+            AfCleanLeftRecipe = afCleanLeftRecipe;
+            AfCleanRightRecipe = afCleanRightRecipe;
+
+            WetCleanLeftPressure = Regulators.WetCleanLRegulator.GetPressure();
+            WetCleanRightPressure = Regulators.WetCleanRRegulator.GetPressure();
+            AfCleanLeftPressure = Regulators.AfCleanLRegulator.GetPressure();
+            AfCleanRightPressure = Regulators.AfCleanRRegulator.GetPressure();
+
+            pressureUpdateTimer = new System.Timers.Timer(500);
+            pressureUpdateTimer.Elapsed += PressureUpdateTimer_Elapsed;
+            pressureUpdateTimer.Start();
+            
+            SelectedProcess = ProcessListTeaching.FirstOrDefault();
+        }
     }
 }
