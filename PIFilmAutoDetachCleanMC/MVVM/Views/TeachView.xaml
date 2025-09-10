@@ -133,7 +133,7 @@
                 Motions="{Binding DataContext.OutWorkConveyorMotions, ElementName=root}"
                 Outputs="{Binding DataContext.Outputs, ElementName=root}"
                 Inputs="{Binding DataContext.Inputs, ElementName=root}"
-                TeachingImage="{StaticResource OutputCassetteStageImage}"
+                TeachingImage="{StaticResource InputCassetteStageImage}"
                 PositionTeachings="{Binding DataContext.OutWorkConveyorPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
         </DataTemplate>
