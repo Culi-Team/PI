@@ -16,6 +16,7 @@
     <UserControl.Resources>
         <!-- Converters -->
         <converter:CylinderTypeToButtonNameConverter x:Key="CylinderTypeToButtonNameConverter" />
+        <converter:BooleanToOnOffBrushConverter x:Key="BooleanToOnOffBrushConverter" />
         
         <!-- Common Styles -->
         <!-- Control Module Style - Common for Motion and Cylinder -->
@@ -151,14 +152,14 @@
                     <UniformGrid Rows="1" Columns="2" HorizontalAlignment="Center">
                         <Button Content="{Binding CylinderType, Converter={StaticResource CylinderTypeToButtonNameConverter}, ConverterParameter=true}" 
                                 Style="{StaticResource CylinderButtonStyle}"
-                                Background="LightGray" 
-                                BorderBrush="LightGray"
+                                Background="{Binding IsForward, Converter={StaticResource BooleanToOnOffBrushConverter}}" 
+                                BorderBrush="{Binding IsForward, Converter={StaticResource BooleanToOnOffBrushConverter}}"
                                 Foreground="White"
                                 Click="CylinderForward_Click"/>
                         <Button Content="{Binding CylinderType, Converter={StaticResource CylinderTypeToButtonNameConverter}, ConverterParameter=false}" 
                                 Style="{StaticResource CylinderButtonStyle}"
-                                Background="LightGray" 
-                                BorderBrush="LightGray"
+                                Background="{Binding IsBackward, Converter={StaticResource BooleanToOnOffBrushConverter}}" 
+                                BorderBrush="{Binding IsBackward, Converter={StaticResource BooleanToOnOffBrushConverter}}"
                                 Foreground="White"
                                 Click="CylinderBackward_Click"/>
                     </UniformGrid>

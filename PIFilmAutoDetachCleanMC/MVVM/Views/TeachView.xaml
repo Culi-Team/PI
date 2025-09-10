@@ -63,7 +63,7 @@
                             <!-- Trạng thái bình thường - Tab chính -->
                             <Trigger Property="IsSelected" Value="False">
                                 <Setter TargetName="Border" Property="Background" Value="#F5F5F5"/>
-                                <Setter Property="Foreground" Value="#666666"/>
+                                <Setter Property="Foreground" Value="Black"/>
                                 <Setter TargetName="Border" Property="BorderBrush" Value="#E0E0E0"/>
                             </Trigger>
                             

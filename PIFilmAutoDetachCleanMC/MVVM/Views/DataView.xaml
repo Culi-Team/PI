@@ -42,7 +42,7 @@
         <!-- Style ListBoxItem -->
         <Style x:Key="MainListBoxItemStyle" TargetType="ListBoxItem">
             <Setter Property="Background" Value="#eeeeee"/>
-            <Setter Property="Foreground" Value="Gray"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="10,4"/>
             <Setter Property="Margin" Value="0 0 1 0"/>
