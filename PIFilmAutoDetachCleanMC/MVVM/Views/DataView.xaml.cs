@@ -165,8 +165,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                 }
             };
 
-            // Initialize default selections after DataView is loaded
-            viewModel.InitializeDefaultSelections();
         }
 
         private void ListBox_Loaded(object sender, RoutedEventArgs e)
