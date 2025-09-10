@@ -395,9 +395,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput OutAGVSensorGo => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_AGV_SENSOR_GO);
 
         //Plasma
-        public IDInput PlasmaReady => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_READY);
-        public IDInput PlasmaRun => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_RUN);
-        public IDInput PlasmaInterLockError => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_INTERLOCK_ERROR);
-        public IDInput PlasmaAlarmError => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_ALARM_ERROR);
+        public IDInput PlasmaStatus1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_STATUS_1);
+        public IDInput PlasmaStatus2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_STATUS_2);
+        public IDInput PlasmaStatus3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_STATUS_3);
+        public IDInput PlasmaStatus4 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_STATUS_4);
     }
 }
