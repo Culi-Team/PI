@@ -593,6 +593,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Clear Flag Transfer In Shuttle Pick Done");
+                    FlagTransferInShuttlePickDone = false;
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.End:

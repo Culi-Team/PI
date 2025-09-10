@@ -22,20 +22,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         public List<LogEntry> LoadLogEntries(string filePath)
         {
-            // Load file XML
-            XDocument doc = XDocument.Load(filePath);
-
-            // Lấy tất cả node <entry> trong <activity>
-            var entries = doc.Element("activity")?.Elements("entry") ?? Enumerable.Empty<XElement>();
-
-            // Chuyển các node <entry> thành danh sách LogEntry
-            return entries.Select(entry => new LogEntry
+            using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                Time = entry.Element("time")?.Value,
-                Type = entry.Element("type")?.Value,
-                Source = entry.Element("source")?.Value,
-                Description = entry.Element("description")?.Value,
-            }).ToList();
+                XDocument doc = XDocument.Load(stream);
+                // xử lý doc
+                // Lấy tất cả node <entry> trong <activity>
+                var entries = doc.Element("activity")?.Elements("entry") ?? Enumerable.Empty<XElement>();
+
+                // Chuyển các node <entry> thành danh sách LogEntry
+                return entries.Select(entry => new LogEntry
+                {
+                    Time = entry.Element("time")?.Value,
+                    Type = entry.Element("type")?.Value,
+                    Source = entry.Element("source")?.Value,
+                    Description = entry.Element("description")?.Value,
+                }).ToList();
+            }
         }
 
         public void LoadLogFiles()
