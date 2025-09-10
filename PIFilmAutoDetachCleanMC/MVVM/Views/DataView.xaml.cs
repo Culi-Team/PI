@@ -198,10 +198,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             if (sender is not ListBox listBox) return;
             if (this.DataContext is not DataViewModel viewModel) return;
 
-            // Set selected model based on binding
-            if (!string.IsNullOrEmpty(viewModel.SelectedModel))
+            // Load from current recipe and set back to SelectedModel
+            if (viewModel.RecipeSelector?.RecipeSetting?.CurrentRecipe != null)
             {
-                listBox.SelectedItem = viewModel.SelectedModel;
+                string currentRecipeName = viewModel.RecipeSelector.RecipeSetting.CurrentRecipe;
+                viewModel.SelectedModel = currentRecipeName;
+                listBox.SelectedItem = currentRecipeName;
             }
             else if (listBox.Items.Count > 0)
             {
