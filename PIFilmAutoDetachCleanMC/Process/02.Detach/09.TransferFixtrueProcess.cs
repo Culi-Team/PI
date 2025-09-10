@@ -478,7 +478,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                        FlagDetachTransferFixtureDoneReceived == false ||
                        FlagRemoveFilmTransferFixtureDoneReceived == false)
                     {
-                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag Transfer Done");

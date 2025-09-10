@@ -419,9 +419,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePlaceStep.Wait_WETCleanPlaceDoneReceived:
                     if(FlagWETCleanPlaceDoneReceived == false)
                     {
-                        Wait(20);
                         break;
                     }
+                    Log.Debug("Clear Flag Transfer In Shuttle Place Done");
+                    FlagTransferInShuttlePlaceDone = false;
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePlaceStep.End:
@@ -589,7 +590,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.Wait_GlassAlignPickDoneReceived:
                     if(FlagGlassAlignPickDoneReceived == false)
                     {
-                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag Transfer In Shuttle Pick Done");

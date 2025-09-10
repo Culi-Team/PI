@@ -496,7 +496,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPickStep.Wait_DetachGlassTransferPickDone_Received:
                     if (FlagDetachGlassTransferPickDoneReceived == false)
                     {
-                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag Glass Transfer Pick Done");
@@ -648,10 +647,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPlaceStep.Wait_GlassAlignPlaceDoneReceived:
                     if(FlagGlassAlignPlaceDoneReceived == false)
                     {
-                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag Place Done");
+                    FlagPlaceDone = false;
                     Step.RunStep++;
                     break;
                 case EGlassTransferPlaceStep.End:
