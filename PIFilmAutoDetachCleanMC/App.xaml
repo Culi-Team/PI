@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="/EQX.UI;component/Resources/Language/VietnameseLanguage.xaml" />
                 <ResourceDictionary Source="/EQX.UI;component/Resources/Language/ChineseLanguage.xaml" />
                 <ResourceDictionary Source="/EQX.UI;component/Resources/Language/EnglishLanguage.xaml" />
+                <ResourceDictionary Source="/Resource/Resource.xaml"/>
 
                 <ResourceDictionary>
                     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
