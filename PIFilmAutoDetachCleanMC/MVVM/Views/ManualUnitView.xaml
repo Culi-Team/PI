@@ -35,13 +35,13 @@
             <Setter Property="Padding" Value="5"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Width" Value="270"/>
-            <Setter Property="Height" Value="140"/>
+            <Setter Property="Height" Value="180"/>
         </Style>
         
         <!-- DataTemplates -->
         <DataTemplate DataType="{x:Type motion:MotionBase}">
             <Border Style="{StaticResource ControlModuleStyle}">
-                <ui:MovingView Motion="{Binding}"/>
+                <ui:MovingView2 Motion="{Binding}"/>
             </Border>
         </DataTemplate>
         <DataTemplate DataType="{x:Type inout:CylinderBase}">
@@ -187,8 +187,7 @@
                                FontWeight="Bold" 
                                FontSize="14" 
                                HorizontalAlignment="Center" 
-                               Foreground="Black"
-                               Margin="0,0,0,5"/>
+                               Foreground="Black"/>
                     <!-- Modern Cylinder Buttons -->
                     <UniformGrid Rows="1" Columns="2" HorizontalAlignment="Center">
                         <Button Content="{Binding CylinderType, Converter={StaticResource CylinderTypeToButtonNameConverter}, ConverterParameter=true}" 
@@ -214,8 +213,8 @@
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="500"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="450"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         
@@ -228,7 +227,7 @@
 
         <!-- Cylinder Section -->
         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                Style="{StaticResource GroupBoxBorderStyle}" Margin="0,10,0,0">
+                Style="{StaticResource GroupBoxBorderStyle}">
             <GroupBox Header="Cylinder" Style="{StaticResource ScrollableGroupBoxStyle}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding Cylinders, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
@@ -245,12 +244,10 @@
         
         <!-- Moving View Section -->
         <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                Style="{StaticResource GroupBoxBorderStyle}" 
-                Margin="0,10,0,0">
+                Style="{StaticResource GroupBoxBorderStyle}" >
             <GroupBox Header="Motion" Style="{StaticResource ScrollableGroupBoxStyle}" >
                 <ScrollViewer VerticalScrollBarVisibility="Auto" 
-                              HorizontalScrollBarVisibility="Auto"
-                              Margin="0 5 0 0">
+                              HorizontalScrollBarVisibility="Auto">
                     <StackPanel>
                         <!-- Speed Controller Controls (for Conveyors) - Hiển thị trước -->
                         <ItemsControl x:Name="SpeedControllerItemsControl" 
