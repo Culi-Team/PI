@@ -176,7 +176,7 @@
 
         <!-- Motion Section -->
 
-        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
             <GroupBox Header="Motion" Style="{StaticResource ScrollableGroupBoxStyle}" >
                 <ScrollViewer VerticalScrollBarVisibility="Auto" 
                               HorizontalScrollBarVisibility="Auto"
@@ -201,7 +201,7 @@
             </GroupBox>
         </Border>
         <!-- Cylinder Section -->
-        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
+        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
             <GroupBox Header="Cylinder" Style="{StaticResource ScrollableGroupBoxStyle}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding Cylinders, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
@@ -267,7 +267,7 @@
                         
                         <DataGrid.Columns>
                             <!-- Position Name -->
-                            <DataGridTextColumn Header="Position Name" Binding="{Binding Name}" Width="290" IsReadOnly="True">
+                            <DataGridTextColumn Header="Position Name" Binding="{Binding Name}" Width="270" IsReadOnly="True">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="FontWeight" Value="SemiBold"/>
@@ -278,7 +278,7 @@
                             </DataGridTextColumn>
 
                             <!-- Motion Name -->
-                            <DataGridTextColumn Header="Motion" Binding="{Binding Motion.Name}" Width="145" IsReadOnly="True">
+                            <DataGridTextColumn Header="Motion" Binding="{Binding Motion.Name}" Width="165" IsReadOnly="True">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Left"/>
