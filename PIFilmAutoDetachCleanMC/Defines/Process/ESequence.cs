@@ -40,13 +40,11 @@
         AlignGlass,
 
         TransferInShuttlePick,
-        TransferInShuttlePlace,
 
         WETCleanLoad,
         WETClean,
         WETCleanUnload,
 
-        TransferRotationPick,
         TransferRotationPlace,
 
         AFCleanLoad,

@@ -33,6 +33,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         private readonly IDOutputDevice _glassAlignLeftOutput;
         private readonly IDInputDevice _glassAlignRightInput;
         private readonly IDOutputDevice _glassAlignRightOutput;
+        private readonly IDInputDevice _transferInShuttleLeftInput;
+        private readonly IDOutputDevice _transferInShuttleLeftOutput;
+        private readonly IDInputDevice _transferInShuttleRightInput;
+        private readonly IDOutputDevice _transferInShuttleRightOutput;
 
         public VirtualIO([FromKeyedServices("InWorkConveyorInput")] IDInputDevice inWorkConveyorInput,
                          [FromKeyedServices("InWorkConveyorOutput")] IDOutputDevice inWorkConveyorOutput,
@@ -55,7 +59,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
                          [FromKeyedServices("GlassAlignLeftInput")] IDInputDevice glassAlignLeftInput,
                          [FromKeyedServices("GlassAlignLeftOutput")] IDOutputDevice glassAlignLeftOutput,
                          [FromKeyedServices("GlassAlignRightInput")] IDInputDevice glassAlignRightInput,
-                         [FromKeyedServices("GlassAlignRightOutput")] IDOutputDevice glassAlignRightOutput)
+                         [FromKeyedServices("GlassAlignRightOutput")] IDOutputDevice glassAlignRightOutput,
+                         [FromKeyedServices("TransferInShuttleLeftInput")] IDInputDevice transferInShuttleLeftInput,
+                         [FromKeyedServices("TransferInShuttleLeftOutput")] IDOutputDevice transferInShuttleLeftOutput,
+                         [FromKeyedServices("TransferInShuttleRightInput")] IDInputDevice transferInShuttleRightInput,
+                         [FromKeyedServices("TransferInShuttleRightOutput")] IDOutputDevice transferInShuttleRightOutput)
         {
             _inWorkConveyorInput = inWorkConveyorInput;
             _inWorkConveyorOutput = inWorkConveyorOutput;
@@ -79,6 +87,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
             _glassAlignLeftOutput = glassAlignLeftOutput;
             _glassAlignRightInput = glassAlignRightInput;
             _glassAlignRightOutput = glassAlignRightOutput;
+            _transferInShuttleLeftInput = transferInShuttleLeftInput;
+            _transferInShuttleLeftOutput = transferInShuttleLeftOutput;
+            _transferInShuttleRightInput = transferInShuttleRightInput;
+            _transferInShuttleRightOutput = transferInShuttleRightOutput;
         }
 
         public void Initialize()
@@ -105,6 +117,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
             _glassAlignLeftOutput.Initialize();
             _glassAlignRightInput.Initialize();
             _glassAlignRightOutput.Initialize();
+            _transferInShuttleLeftInput.Initialize();
+            _transferInShuttleRightInput.Initialize();
+            _transferInShuttleLeftOutput.Initialize();
+            _transferInShuttleRightOutput.Initialize();
         }
 
         public void Mappings()
@@ -200,6 +216,18 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //Right
             ((VirtualInputDevice<EGlassAlignProcessInput>)_glassAlignRightInput).Mapping((int)EGlassAlignProcessInput.GLASS_TRANSFER_PLACE_DONE,
                 _glassTransferOutput, (int)EGlassTransferProcessOutput.GLASS_TRANSFER_RIGHT_PLACE_DONE);
+
+            //TransferInShuttle Input Mapping
+            //Left
+            ((VirtualInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleLeftInput).Mapping((int)ETransferInShuttleProcessInput.GLASS_ALIGN_REQ_PICK,
+                _glassAlignLeftOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_REQ_PICK);
+            ((VirtualInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleLeftInput).Mapping((int)ETransferInShuttleProcessInput.GLASS_ALIGN_PICK_DONE_RECEIVED,
+                _glassAlignLeftOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_PICK_DONE_RECEIVED);
+            //Right
+            ((VirtualInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleRightInput).Mapping((int)ETransferInShuttleProcessInput.GLASS_ALIGN_REQ_PICK,
+                _glassAlignRightOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_REQ_PICK);
+            ((VirtualInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleRightInput).Mapping((int)ETransferInShuttleProcessInput.GLASS_ALIGN_PICK_DONE_RECEIVED,
+                _glassAlignRightOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_PICK_DONE_RECEIVED);
         }
     }
 }

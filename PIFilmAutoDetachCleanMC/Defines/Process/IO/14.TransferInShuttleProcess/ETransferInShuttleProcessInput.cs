@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum EGlassAlignProcessOutput
+    public enum ETransferInShuttleProcessInput
     {
-        GLASS_ALIGN_REQ_GLASS,
-        GLASS_ALIGN_PLACE_DONE_RECEIVED,
         GLASS_ALIGN_REQ_PICK,
         GLASS_ALIGN_PICK_DONE_RECEIVED,
+        WET_CLEAN_REQ_LOAD,
+        WET_CLEAN_PLACE_DONE_RECEIVED
     }
 }

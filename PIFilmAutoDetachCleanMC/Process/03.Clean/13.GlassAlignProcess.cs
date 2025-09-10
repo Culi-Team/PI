@@ -77,6 +77,21 @@ namespace PIFilmAutoDetachCleanMC.Process
                 }
             }
         }
+
+        private bool FlagGlassAlignPickDoneReceived
+        {
+            set
+            {
+                if(port == EPort.Left)
+                {
+                    _glassAlignLeftOutput[(int)EGlassAlignProcessOutput.GLASS_ALIGN_PICK_DONE_RECEIVED] = value;
+                }
+                else
+                {
+                    _glassAlignRightOutput[(int)EGlassAlignProcessOutput.GLASS_ALIGN_PICK_DONE_RECEIVED] = value;
+                }
+            }
+        }
         private bool FlagGlassTransferPlaceDone
         {
             get
@@ -230,15 +245,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.TransferInShuttlePick:
                     Sequence_TransferInShuttlePick();
                     break;
-                case ESequence.TransferInShuttlePlace:
-                    break;
                 case ESequence.WETCleanLoad:
                     break;
                 case ESequence.WETClean:
                     break;
                 case ESequence.WETCleanUnload:
-                    break;
-                case ESequence.TransferRotationPick:
                     break;
                 case ESequence.TransferRotationPlace:
                     break;
@@ -489,7 +500,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EGlassAlignTransferInShuttlePickStep.Glass_Detect_Check:
                     Log.Debug("Glass Detect Check");
-                    if(IsGlassDetect)
+
+                    Log.Debug("Clear Flag Glass Align Pick Done Received");
+                    FlagGlassAlignPickDoneReceived = false;
+
+                    if (IsGlassDetect)
                     {
                         Step.RunStep++;
                         break;
@@ -508,12 +523,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
-#if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect1 : _devices.Inputs.AlignStageRGlassDetect1, false);
-                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect2 : _devices.Inputs.AlignStageRGlassDetect2, false);
-                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect3 : _devices.Inputs.AlignStageRGlassDetect3, false);
-#endif
+
                     Log.Debug("Clear Flag Glass Align Request Pick");
+                    FlagGlassAlignRequestPick = false;
+
+                    Log.Debug("Set Flag Glass Align Pick Done Received");
+                    FlagGlassAlignPickDoneReceived = true;
                     Step.RunStep = (int)EGlassAlignTransferInShuttlePickStep.Glass_Detect_Check;
                     break;
                 case EGlassAlignTransferInShuttlePickStep.End:
