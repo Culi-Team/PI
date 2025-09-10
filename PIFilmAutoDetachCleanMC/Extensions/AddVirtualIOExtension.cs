@@ -56,6 +56,18 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ETransferInShuttleProcessInput>>("TransferInShuttleRightInput");
                 services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ETransferInShuttleProcessOutput>>("TransferInShuttleRightOutput");
 
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ECleanProcessInput>>("WETCleanLeftInput");
+                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ECleanProcessOutput>>("WETCleanLeftOutput");
+
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ECleanProcessInput>>("WETCleanRightInput");
+                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ECleanProcessOutput>>("WETCleanRightOutput");
+
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ECleanProcessInput>>("AFCleanLeftInput");
+                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ECleanProcessOutput>>("AFCleanLeftOutput");
+
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ECleanProcessInput>>("AFCleanRightInput");
+                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ECleanProcessOutput>>("AFCleanRightOutput");
+
                 services.AddSingleton<VirtualIO>();
 
             });

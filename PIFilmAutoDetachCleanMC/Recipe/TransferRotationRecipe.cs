@@ -15,6 +15,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private double zAxisTransferPositionUp;
         private double zAxisTransferPositionDown;
         private double zAxisPlacePosition;
+        private bool isUseRotation;
+
 
         [SingleRecipeDescription(Description = "Z Axis Ready Position", Unit = Unit.mm)]
         public double ZAxisReadyPosition
@@ -49,6 +51,13 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 		{
 			get { return zAxisPlacePosition; }
 			set { zAxisPlacePosition = value; }
+		}
+
+        [SingleRecipeDescription(Description = "Rotation", Unit = Unit.ETC)]
+        public bool IsUseRotation
+		{
+			get { return isUseRotation; }
+			set { isUseRotation = value; }
 		}
 	}
 }

@@ -11,6 +11,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         GLASS_ALIGN_REQ_PICK,
         GLASS_ALIGN_PICK_DONE_RECEIVED,
         WET_CLEAN_REQ_LOAD,
-        WET_CLEAN_PLACE_DONE_RECEIVED
+        WET_CLEAN_LOAD_DONE_RECEIVED
     }
 }
