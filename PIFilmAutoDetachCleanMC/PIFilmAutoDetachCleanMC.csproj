@@ -53,6 +53,7 @@
     <None Remove="Resource\Image\04.Unload\OutShuttle.png" />
     <None Remove="Resource\Image\04.Unload\UnloadRobot.png" />
     <None Remove="Resource\Image\04.Unload\UnloadStage.png" />
+    <None Remove="Resource\Image\Machine.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -130,6 +131,7 @@
     <Resource Include="Resource\Image\04.Unload\OutShuttle.png" />
     <Resource Include="Resource\Image\04.Unload\UnloadRobot.png" />
     <Resource Include="Resource\Image\04.Unload\UnloadStage.png" />
+    <Resource Include="Resource\Image\Machine.png" />
   </ItemGroup>
 
 </Project>
