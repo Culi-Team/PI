@@ -190,7 +190,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     FixCyl1.Backward();
                     FixCyl2.Backward();
                     Wait(_commonRecipe.CylinderMoveTimeout, () => FixCyl1.IsBackward && FixCyl2.IsBackward);
-                    Step.RunStep++;
+                    Step.OriginStep++;
                     break;
                 case EDetachProcessOriginStep.Cyl_Fix_Backward_Wait:
                     if (WaitTimeOutOccurred)
@@ -199,7 +199,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Cylinder Fix Fixture Backward Done");
-                    Step.RunStep++;
+                    Step.OriginStep++;
                     break;
                 case EDetachProcessOriginStep.ShtTransferXAxis_Origin:
                     Log.Debug("Shuttle Transfer X Axis Origin Start");

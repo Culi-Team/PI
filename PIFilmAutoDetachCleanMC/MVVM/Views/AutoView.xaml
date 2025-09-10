@@ -14,20 +14,24 @@
             <Setter Property="Margin"
                     Value="2 2 0 2" />
             <Setter Property="FontWeight"
-                    Value="SemiBold"/>
+                    Value="SemiBold" />
             <Setter Property="FontSize"
-                    Value="14"/>
+                    Value="14" />
             <Setter Property="Cursor"
-                    Value="Hand"/>
+                    Value="Hand" />
         </Style>
         <Style TargetType="{x:Type ui:InterlockButton}"
                BasedOn="{StaticResource {x:Type ui:InterlockButton}}">
-            <Setter Property="Margin" Value="2 2 0 2" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Margin"
+                    Value="2 2 0 2" />
+            <Setter Property="FontWeight"
+                    Value="SemiBold" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="Cursor"
+                    Value="Hand" />
         </Style>
-        <cvt:InputOutputStopConverter x:Key="InputOutputStopConverter"/>
+        <cvt:InputOutputStopConverter x:Key="InputOutputStopConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -47,12 +51,11 @@
                     Background="LightBlue" />
             <Button Content="Initialize"
                     Background="LightBlue" />
-            <ui:InterlockButton Content="Origin"
-                                Background="LightBlue"
-                                Command="{Binding OriginCommand}"
-                                InterlockKey="OriginDoorLock"/>
-            <Button Content="Production Info" 
-                    Background="LightGreen"/>
+            <Button Content="Origin"
+                    Background="LightBlue"
+                    Command="{Binding OriginCommand}" />
+            <Button Content="Production Info"
+                    Background="LightGreen" />
             <UniformGrid Columns="2">
                 <Button Content="Input Stop"
                         Command="{Binding InputStopCommand}"
@@ -83,9 +86,9 @@
                 </Border>
 
             </UniformGrid>
-            <Button Content="Start" 
+            <Button Content="Start"
                     Command="{Binding StartCommand}"
-                    Background="LightGray"/>
+                    Background="LightGray" />
             <Button Content="Stop"
                     Command="{Binding StopCommand}"
                     Background="OrangeRed" />

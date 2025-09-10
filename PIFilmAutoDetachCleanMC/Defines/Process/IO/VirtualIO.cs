@@ -213,9 +213,13 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //Left
             ((VirtualInputDevice<EGlassAlignProcessInput>)_glassAlignLeftInput).Mapping((int)EGlassAlignProcessInput.GLASS_TRANSFER_PLACE_DONE,
                 _glassTransferOutput, (int)EGlassTransferProcessOutput.GLASS_TRANSFER_LEFT_PLACE_DONE);
+            ((VirtualInputDevice<EGlassAlignProcessInput>)_glassAlignLeftInput).Mapping((int)EGlassAlignProcessInput.TRANSFER_IN_SHUTTLE_PICK_DONE,
+                _transferInShuttleLeftOutput, (int)ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_PICK_DONE);
             //Right
             ((VirtualInputDevice<EGlassAlignProcessInput>)_glassAlignRightInput).Mapping((int)EGlassAlignProcessInput.GLASS_TRANSFER_PLACE_DONE,
                 _glassTransferOutput, (int)EGlassTransferProcessOutput.GLASS_TRANSFER_RIGHT_PLACE_DONE);
+            ((VirtualInputDevice<EGlassAlignProcessInput>)_glassAlignLeftInput).Mapping((int)EGlassAlignProcessInput.TRANSFER_IN_SHUTTLE_PICK_DONE,
+                _transferInShuttleRightOutput, (int)ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_PICK_DONE);
 
             //TransferInShuttle Input Mapping
             //Left
