@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using EQX.UI.Controls;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
+using System.Windows.Media;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.Views
 {
@@ -64,6 +65,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         public static readonly DependencyProperty SelectedProcessProperty =
             DependencyProperty.Register("SelectedProcess", typeof(IProcess<ESequence>), typeof(UnitTeachingView), new PropertyMetadata(null));
 
+        public ImageSource TeachingImage
+        {
+            get { return (ImageSource)GetValue(TeachingImageProperty); }
+            set { SetValue(TeachingImageProperty, value); }
+        }
+        public static readonly DependencyProperty TeachingImageProperty =
+            DependencyProperty.Register(nameof(TeachingImage), typeof(ImageSource), typeof(UnitTeachingView), new PropertyMetadata(null));
         public UnitTeachingView()
         {
             InitializeComponent();

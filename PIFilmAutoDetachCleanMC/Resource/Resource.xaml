@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <BitmapImage x:Key="InputCassetteStageImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/InputCassetteStage.png"/>
+    <BitmapImage x:Key="OutputCassetteStageImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/OutputCassetteStage.png"/>
+    <BitmapImage x:Key="TransferFixtureImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/TransferFixture.png"/>
+    <BitmapImage x:Key="DetachImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/Detach.png"/>
+    <BitmapImage x:Key="GlassTransferImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/GlassTransfer.png"/>
+</ResourceDictionary>

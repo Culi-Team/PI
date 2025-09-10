@@ -169,7 +169,8 @@
         <!-- Image Section -->
         <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <GroupBox Header="Image" Style="{StaticResource ScrollableGroupBoxStyle}" >
-                <TextBlock Text="Image" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Image Source="{Binding TeachingImage, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       Stretch="Uniform"/>
             </GroupBox>
         </Border>
 
