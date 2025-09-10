@@ -33,16 +33,17 @@
         <!-- DataTemplates -->
         <DataTemplate DataType="{x:Type motion:MotionBase}">
             <Border Style="{StaticResource ControlModuleStyle}">
-                <ui:MovingView/>
-            </Border>
-        </DataTemplate>
-        <DataTemplate x:Key="MotionTemplate" DataType="{x:Type motion:MotionBase}">
-            <Border Style="{StaticResource ControlModuleStyle}">
-                <ui:MovingView/>
+                <ui:MovingView Motion="{Binding}"/>
             </Border>
         </DataTemplate>
         <DataTemplate DataType="{x:Type inout:CylinderBase}">
             <ui:CylinderView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type inout:DInput}">
+            <ui:DInputView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type inout:DOutput}">
+            <ui:DOutputView/>
         </DataTemplate>
 
         <!-- Common Styles -->
@@ -215,8 +216,7 @@
                               HorizontalScrollBarVisibility="Auto"
                               Margin="0 5 0 0">
                     <ItemsControl x:Name="MotionItemsControl" 
-                                    ItemsSource="{Binding Motions, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
-                                    ItemTemplate="{StaticResource MotionTemplate}">
+                                    ItemsSource="{Binding Motions, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid Columns="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>

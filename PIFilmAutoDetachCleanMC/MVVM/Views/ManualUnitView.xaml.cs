@@ -62,25 +62,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         {
             InitializeComponent();
         }
-
-
-        private async void CylinderForward_Click(object sender, RoutedEventArgs e)
+        private void CylinderForward_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var cylinder = button?.DataContext as ICylinder;
             if (cylinder == null) return;
             button.IsEnabled = false;
-            
             try
             {
-                using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5)))
-                {
-                    await Task.Run(() => cylinder.Forward(), cts.Token);
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                MessageBoxEx.ShowDialog($"Cylinder {cylinder.Name} operation timeout (5s)");
+               cylinder.Forward();
             }
             catch (Exception ex)
             {
@@ -91,24 +81,16 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                 button.IsEnabled = true;
             }
         }
-
-        private async void CylinderBackward_Click(object sender, RoutedEventArgs e)
+        private void CylinderBackward_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var cylinder = button?.DataContext as ICylinder;
             if (cylinder == null) return;
             button.IsEnabled = false;
-            
             try
             {
-                using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10)))
-                {
-                    await Task.Run(() => cylinder.Backward(), cts.Token);
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                MessageBoxEx.ShowDialog($"Cylinder {cylinder.Name} operation timeout (10s)");
+
+               cylinder.Backward();
             }
             catch (Exception ex)
             {
