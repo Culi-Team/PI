@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Threading;
 using PIFilmAutoDetachCleanMC.Defines;
 using EQX.UI.Controls;
+using EQX.Core.Device.Regulator;
+using PIFilmAutoDetachCleanMC.Recipe;
+using System.Windows.Threading;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.Views
 {
@@ -49,6 +52,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         public static readonly DependencyProperty OutputsProperty =
             DependencyProperty.Register("Outputs", typeof(ObservableCollection<IDOutput>), typeof(ManualUnitView), new PropertyMetadata(new ObservableCollection<IDOutput> { }));
 
+        public ObservableCollection<KeyValuePair<IRegulator, CleanRecipe>> Regulators
+        {
+            get { return (ObservableCollection<KeyValuePair<IRegulator, CleanRecipe>>)GetValue(RegulatorsProperty); }
+            set { SetValue(RegulatorsProperty, value); }
+        }
+
+        public static readonly DependencyProperty RegulatorsProperty =
+            DependencyProperty.Register("Regulators", typeof(ObservableCollection<KeyValuePair<IRegulator, CleanRecipe>>), typeof(ManualUnitView), new PropertyMetadata(new ObservableCollection<KeyValuePair<IRegulator, CleanRecipe>> { }));
 
         public IProcess<ESequence> SelectedProcess
         {
@@ -61,7 +72,23 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         public ManualUnitView()
         {
             InitializeComponent();
+            var timer = new DispatcherTimer()
+            {
+                Interval = TimeSpan.FromMilliseconds(500)
+            };
+            timer.Tick += (_, _) => RegulatorItemsControl?.Items.Refresh();
+            timer.Start();
         }
+
+        private void SetPressureFromRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is KeyValuePair<IRegulator, CleanRecipe> pair)
+            {
+                pair.Key.SetPressure(pair.Value.CylinderPushPressure);
+                RegulatorItemsControl.Items.Refresh();
+            }
+        }
+
         private void CylinderForward_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
