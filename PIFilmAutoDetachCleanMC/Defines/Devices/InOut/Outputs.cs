@@ -48,10 +48,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput BufferCvStopper1Down => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.BUFFER_CV_STOPPER_1_DOWN);
         public IDOutput BufferCvStopper2Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.BUFFER_CV_STOPPER_2_UP);
         public IDOutput BufferCvStopper2Down => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.BUFFER_CV_STOPPER_2_DOWN);
-        public IDOutput TowelLampRed => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TOWEL_LAMP_RED);
-        public IDOutput TowelLampYellow => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TOWEL_LAMP_YELLOW);
-        public IDOutput TowelLampGreen => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TOWEL_LAMP_GREEN);
-        public IDOutput TowelBuzzer => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TOWEL_BUZZER);
+        public IDOutput TowerLampRed => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TOWER_LAMP_RED);
+        public IDOutput TowerLampYellow => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TOWER_LAMP_YELLOW);
+        public IDOutput TowerLampGreen => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TOWER_LAMP_GREEN);
+        public IDOutput TowerBuzzer => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TOWER_BUZZER);
         public IDOutput InCvSupportUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CV_SUPPORT_UP);
         public IDOutput InCvSupportDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CV_SUPPORT_DOWN);
         public IDOutput InCvSupportBufferUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CV_SUPPORT_BUFFER_UP);
@@ -230,5 +230,13 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput TrRotateLeftDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_DOWN);
         public IDOutput TrRotateRight2VacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_2_VAC_ON_OFF);
         public IDOutput TrRotateLeft2VacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_2_VAC_ON_OFF);
+
+        //Plasma
+        public IDOutput PlasmaRun => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_RUN);
+        public IDOutput PlasmaInterfaceError => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_INTERFACE_ERROR);
+        public IDOutput PlasmaN2SolOpen => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_N2_SOL_OPEN);
+        public IDOutput PlasmaCDASolOpen => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_CDA_SOL_OPEN);
+        public IDOutput PlasmaPowerReset => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_POWER_RESET);
+        public IDOutput PlasmaIdleMode => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_IDLE_MODE);
     }
 }

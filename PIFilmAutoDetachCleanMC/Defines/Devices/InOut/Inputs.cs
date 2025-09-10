@@ -201,6 +201,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput RemoveZoneFixCyl22Fw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.REMOVE_ZONE_FIX_CYL_2_2_FW);
         public IDInput RemoveZoneFixCyl22Bw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.REMOVE_ZONE_FIX_CYL_2_2_BW);
         public IDInput RemoveZoneFullTapeDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.REMOVE_ZONE_FULL_TAPE_DETECT);
+        public IDInput RemoveZoneFixtureDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.REMOVE_ZONE_FIXTURE_DETECT);
         public IDInput DetachGlassShtVac1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DETACH_GLASS_SHT_VAC_1);
         public IDInput DetachGlassShtVac2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DETACH_GLASS_SHT_VAC_2);
         public IDInput DetachGlassShtVac3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DETACH_GLASS_SHT_VAC_3);
@@ -312,10 +313,13 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput OutShuttleVac2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_VAC_2);
         public IDInput UnloadTransferLVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_TRANSFER_L_VAC);
         public IDInput UnloadTransferRVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_TRANSFER_R_VAC);
-        public IDInput ManualModeSwitch => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.MANUAL_MODE_SWITCH);
         public IDInput OpRButtonStop => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_R_BUTTON_STOP);
         public IDInput OpRButtonStart => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_R_BUTTON_START);
         public IDInput OpRButtonReset => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_R_BUTTON_RESET);
+        public IDInput AutoModeSwitchR => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AUTO_MODE_SWITCH_R);
+        public IDInput TeachModeSwitchR => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TEACH_MODE_SWITCH_R);
+        public IDInput AutoModeSwitchL => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AUTO_MODE_SWITCH_L);
+        public IDInput TeachModeSwitchL => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TEACH_MODE_SWITCH_L);
         public IDInput OpREmo => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_R_EMO);
         public IDInput OpLButtonStop => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_L_BUTTON_STOP);
         public IDInput OpLButtonStart => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_L_BUTTON_START);
@@ -369,5 +373,31 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput TrRotateLeftDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_LEFT_DOWN);
         public IDInput TrRotateRight2Vac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_RIGHT_2_VAC);
         public IDInput TrRotateLeft2Vac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_LEFT_2_VAC);
+
+        //AGV
+        public IDInput InAGVSensorOut1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_AGV_SENSOR_OUT_1);
+        public IDInput InAGVSensorOut2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_AGV_SENSOR_OUT_2);
+        public IDInput InAGVSensorOut3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_AGV_SENSOR_OUT_3);
+        public IDInput InAGVSensorOut4 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_AGV_SENSOR_OUT_4);
+        public IDInput InAGVSensorOut5 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_AGV_SENSOR_OUT_5);
+        public IDInput InAGVSensorOut6 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_AGV_SENSOR_OUT_6);
+        public IDInput InAGVSensorOut7 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_AGV_SENSOR_OUT_7);
+        public IDInput InAGVSensorOut8 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_AGV_SENSOR_OUT_8);
+        public IDInput InAGVSensorGo => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_AGV_SENSOR_GO);
+        public IDInput OutAGVSensorOut1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_AGV_SENSOR_OUT_1);
+        public IDInput OutAGVSensorOut2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_AGV_SENSOR_OUT_2);
+        public IDInput OutAGVSensorOut3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_AGV_SENSOR_OUT_3);
+        public IDInput OutAGVSensorOut4 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_AGV_SENSOR_OUT_4);
+        public IDInput OutAGVSensorOut5 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_AGV_SENSOR_OUT_5);
+        public IDInput OutAGVSensorOut6 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_AGV_SENSOR_OUT_6);
+        public IDInput OutAGVSensorOut7 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_AGV_SENSOR_OUT_7);
+        public IDInput OutAGVSensorOut8 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_AGV_SENSOR_OUT_8);
+        public IDInput OutAGVSensorGo => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_AGV_SENSOR_GO);
+
+        //Plasma
+        public IDInput PlasmaReady => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_READY);
+        public IDInput PlasmaRun => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_RUN);
+        public IDInput PlasmaInterLockError => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_INTERLOCK_ERROR);
+        public IDInput PlasmaAlarmError => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_ALARM_ERROR);
     }
 }
