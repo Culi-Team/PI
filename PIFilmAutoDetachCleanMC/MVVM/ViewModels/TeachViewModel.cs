@@ -87,6 +87,30 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public ObservableCollection<IMotion> GlassTransferMotions => GetGlassTransferMotions();
         public ObservableCollection<PositionTeaching> GlassTransferPositionTeachings => GetGlassTransferPositionTeachings();
 
+        // Transfer Shutter Tab Motion Properties
+        public ObservableCollection<IMotion> TransferShutterLeftMotions => GetTransferShutterLeftMotions();
+        public ObservableCollection<IMotion> TransferShutterRightMotions => GetTransferShutterRightMotions();
+
+        // Transfer Shutter Tab PositionTeaching Properties
+        public ObservableCollection<PositionTeaching> TransferShutterLeftPositionTeachings => GetTransferShutterLeftPositionTeachings();
+        public ObservableCollection<PositionTeaching> TransferShutterRightPositionTeachings => GetTransferShutterRightPositionTeachings();
+
+        // Transfer Rotation Tab Motion Properties
+        public ObservableCollection<IMotion> TransferRotationLeftMotions => GetTransferRotationLeftMotions();
+        public ObservableCollection<IMotion> TransferRotationRightMotions => GetTransferRotationRightMotions();
+
+        // Transfer Rotation Tab PositionTeaching Properties
+        public ObservableCollection<PositionTeaching> TransferRotationLeftPositionTeachings => GetTransferRotationLeftPositionTeachings();
+        public ObservableCollection<PositionTeaching> TransferRotationRightPositionTeachings => GetTransferRotationRightPositionTeachings();
+
+        // Unload Transfer Tab Motion Properties
+        public ObservableCollection<IMotion> UnloadTransferLeftMotions => GetUnloadTransferLeftMotions();
+        public ObservableCollection<IMotion> UnloadTransferRightMotions => GetUnloadTransferRightMotions();
+
+        // Unload Transfer Tab PositionTeaching Properties
+        public ObservableCollection<PositionTeaching> UnloadTransferLeftPositionTeachings => GetUnloadTransferLeftPositionTeachings();
+        public ObservableCollection<PositionTeaching> UnloadTransferRightPositionTeachings => GetUnloadTransferRightPositionTeachings();
+
         #endregion
 
         #region GetPositionTeaching
@@ -337,6 +361,387 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             };
         }
 
+        // Transfer Shutter Tab PositionTeachings
+        private ObservableCollection<PositionTeaching> GetTransferShutterLeftPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.TransferInShuttleLeftRecipe == null || 
+                Devices?.MotionsInovance?.TransferInShuttleLYAxis == null || 
+                Devices?.MotionsInovance?.TransferInShuttleLZAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleYAxisReadyPosition"]?.ToString() ?? "Transfer In Shuttle Y Axis Ready Position",
+                    PropertyName = "TransferInShuttleLeftYAxisReadyPosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.YAxisReadyPosition,
+                    Motion = Devices.MotionsInovance.TransferInShuttleLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleZAxisReadyPosition"]?.ToString() ?? "Transfer In Shuttle Z Axis Ready Position",
+                    PropertyName = "TransferInShuttleLeftZAxisReadyPosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition,
+                    Motion = Devices.MotionsInovance.TransferInShuttleLZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleYAxisPickPosition1"]?.ToString() ?? "Transfer In Shuttle Y Axis Pick Position 1",
+                    PropertyName = "TransferInShuttleLeftYAxisPickPosition1",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.YAxisPickPosition1,
+                    Motion = Devices.MotionsInovance.TransferInShuttleLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleYAxisPickPosition2"]?.ToString() ?? "Transfer In Shuttle Y Axis Pick Position 2",
+                    PropertyName = "TransferInShuttleLeftYAxisPickPosition2",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.YAxisPickPosition2,
+                    Motion = Devices.MotionsInovance.TransferInShuttleLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleYAxisPickPosition3"]?.ToString() ?? "Transfer In Shuttle Y Axis Pick Position 3",
+                    PropertyName = "TransferInShuttleLeftYAxisPickPosition3",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.YAxisPickPosition3,
+                    Motion = Devices.MotionsInovance.TransferInShuttleLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleZAxisPickPosition"]?.ToString() ?? "Transfer In Shuttle Z Axis Pick Position",
+                    PropertyName = "TransferInShuttleLeftZAxisPickPosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisPickPosition,
+                    Motion = Devices.MotionsInovance.TransferInShuttleLZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleYAxisPlacePosition"]?.ToString() ?? "Transfer In Shuttle Y Axis Place Position",
+                    PropertyName = "TransferInShuttleLeftYAxisPlacePosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.YAxisPlacePosition,
+                    Motion = Devices.MotionsInovance.TransferInShuttleLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleZAxisPlacePosition"]?.ToString() ?? "Transfer In Shuttle Z Axis Place Position",
+                    PropertyName = "TransferInShuttleLeftZAxisPlacePosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisPlacePosition,
+                    Motion = Devices.MotionsInovance.TransferInShuttleLZAxis
+                }
+            };
+        }
+
+        private ObservableCollection<PositionTeaching> GetTransferShutterRightPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.TransferInShuttleRightRecipe == null || 
+                Devices?.MotionsInovance?.TransferInShuttleRYAxis == null || 
+                Devices?.MotionsInovance?.TransferInShuttleRZAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleYAxisReadyPosition"]?.ToString() ?? "Transfer In Shuttle Y Axis Ready Position",
+                    PropertyName = "TransferInShuttleRightYAxisReadyPosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.YAxisReadyPosition,
+                    Motion = Devices.MotionsInovance.TransferInShuttleRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleZAxisReadyPosition"]?.ToString() ?? "Transfer In Shuttle Z Axis Ready Position",
+                    PropertyName = "TransferInShuttleRightZAxisReadyPosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisReadyPosition,
+                    Motion = Devices.MotionsInovance.TransferInShuttleRZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleYAxisPickPosition1"]?.ToString() ?? "Transfer In Shuttle Y Axis Pick Position 1",
+                    PropertyName = "TransferInShuttleRightYAxisPickPosition1",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.YAxisPickPosition1,
+                    Motion = Devices.MotionsInovance.TransferInShuttleRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleYAxisPickPosition2"]?.ToString() ?? "Transfer In Shuttle Y Axis Pick Position 2",
+                    PropertyName = "TransferInShuttleRightYAxisPickPosition2",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.YAxisPickPosition2,
+                    Motion = Devices.MotionsInovance.TransferInShuttleRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleYAxisPickPosition3"]?.ToString() ?? "Transfer In Shuttle Y Axis Pick Position 3",
+                    PropertyName = "TransferInShuttleRightYAxisPickPosition3",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.YAxisPickPosition3,
+                    Motion = Devices.MotionsInovance.TransferInShuttleRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleZAxisPickPosition"]?.ToString() ?? "Transfer In Shuttle Z Axis Pick Position",
+                    PropertyName = "TransferInShuttleRightZAxisPickPosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisPickPosition,
+                    Motion = Devices.MotionsInovance.TransferInShuttleRZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleYAxisPlacePosition"]?.ToString() ?? "Transfer In Shuttle Y Axis Place Position",
+                    PropertyName = "TransferInShuttleRightYAxisPlacePosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.YAxisPlacePosition,
+                    Motion = Devices.MotionsInovance.TransferInShuttleRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferInShuttleZAxisPlacePosition"]?.ToString() ?? "Transfer In Shuttle Z Axis Place Position",
+                    PropertyName = "TransferInShuttleRightZAxisPlacePosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisPlacePosition,
+                    Motion = Devices.MotionsInovance.TransferInShuttleRZAxis
+                }
+            };
+        }
+
+        // Transfer Rotation Tab PositionTeachings
+        private ObservableCollection<PositionTeaching> GetTransferRotationLeftPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.TransferRotationLeftRecipe == null || 
+                Devices?.MotionsInovance?.TransferRotationLZAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferRotationZAxisReadyPosition"]?.ToString() ?? "Transfer Rotation Z Axis Ready Position",
+                    PropertyName = "TransferRotationLeftZAxisReadyPosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition,
+                    Motion = Devices.MotionsInovance.TransferRotationLZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferRotationZAxisPickPosition"]?.ToString() ?? "Transfer Rotation Z Axis Pick Position",
+                    PropertyName = "TransferRotationLeftZAxisPickPosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisPickPosition,
+                    Motion = Devices.MotionsInovance.TransferRotationLZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferRotationZAxisTransferPositionUp"]?.ToString() ?? "Transfer Rotation Z Axis Transfer Position Up",
+                    PropertyName = "TransferRotationLeftZAxisTransferPositionUp",
+                    Position = RecipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisTransferPositionUp,
+                    Motion = Devices.MotionsInovance.TransferRotationLZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferRotationZAxisTransferPositionDown"]?.ToString() ?? "Transfer Rotation Z Axis Transfer Position Down",
+                    PropertyName = "TransferRotationLeftZAxisTransferPositionDown",
+                    Position = RecipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisTransferPositionDown,
+                    Motion = Devices.MotionsInovance.TransferRotationLZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferRotationZAxisPlacePosition"]?.ToString() ?? "Transfer Rotation Z Axis Place Position",
+                    PropertyName = "TransferRotationLeftZAxisPlacePosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisPlacePosition,
+                    Motion = Devices.MotionsInovance.TransferRotationLZAxis
+                }
+            };
+        }
+
+        private ObservableCollection<PositionTeaching> GetTransferRotationRightPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.TransferRotationRightRecipe == null || 
+                Devices?.MotionsInovance?.TransferRotationRZAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferRotationZAxisReadyPosition"]?.ToString() ?? "Transfer Rotation Z Axis Ready Position",
+                    PropertyName = "TransferRotationRightZAxisReadyPosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisReadyPosition,
+                    Motion = Devices.MotionsInovance.TransferRotationRZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferRotationZAxisPickPosition"]?.ToString() ?? "Transfer Rotation Z Axis Pick Position",
+                    PropertyName = "TransferRotationRightZAxisPickPosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisPickPosition,
+                    Motion = Devices.MotionsInovance.TransferRotationRZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferRotationZAxisTransferPositionUp"]?.ToString() ?? "Transfer Rotation Z Axis Transfer Position Up",
+                    PropertyName = "TransferRotationRightZAxisTransferPositionUp",
+                    Position = RecipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisTransferPositionUp,
+                    Motion = Devices.MotionsInovance.TransferRotationRZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferRotationZAxisTransferPositionDown"]?.ToString() ?? "Transfer Rotation Z Axis Transfer Position Down",
+                    PropertyName = "TransferRotationRightZAxisTransferPositionDown",
+                    Position = RecipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisTransferPositionDown,
+                    Motion = Devices.MotionsInovance.TransferRotationRZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_TransferRotationZAxisPlacePosition"]?.ToString() ?? "Transfer Rotation Z Axis Place Position",
+                    PropertyName = "TransferRotationRightZAxisPlacePosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisPlacePosition,
+                    Motion = Devices.MotionsInovance.TransferRotationRZAxis
+                }
+            };
+        }
+
+        // Unload Transfer Tab PositionTeachings
+        private ObservableCollection<PositionTeaching> GetUnloadTransferLeftPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.UnloadTransferLeftRecipe == null || 
+                Devices?.MotionsInovance?.GlassUnloadLYAxis == null || 
+                Devices?.MotionsInovance?.GlassUnloadLZAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferYAxisReadyPosition"]?.ToString() ?? "Unload Transfer Y Axis Ready Position",
+                    PropertyName = "UnloadTransferLeftYAxisReadyPosition",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisReadyPosition,
+                    Motion = Devices.MotionsInovance.GlassUnloadLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferZAxisReadyPosition"]?.ToString() ?? "Unload Transfer Z Axis Ready Position",
+                    PropertyName = "UnloadTransferLeftZAxisReadyPosition",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisReadyPosition,
+                    Motion = Devices.MotionsInovance.GlassUnloadLZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferYAxisPickPosition"]?.ToString() ?? "Unload Transfer Y Axis Pick Position",
+                    PropertyName = "UnloadTransferLeftYAxisPickPosition",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPickPosition,
+                    Motion = Devices.MotionsInovance.GlassUnloadLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferZAxisPickPosition"]?.ToString() ?? "Unload Transfer Z Axis Pick Position",
+                    PropertyName = "UnloadTransferLeftZAxisPickPosition",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisPickPosition,
+                    Motion = Devices.MotionsInovance.GlassUnloadLZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferYAxisPlacePosition1"]?.ToString() ?? "Unload Transfer Y Axis Place Position 1",
+                    PropertyName = "UnloadTransferLeftYAxisPlacePosition1",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition1,
+                    Motion = Devices.MotionsInovance.GlassUnloadLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferYAxisPlacePosition2"]?.ToString() ?? "Unload Transfer Y Axis Place Position 2",
+                    PropertyName = "UnloadTransferLeftYAxisPlacePosition2",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition2,
+                    Motion = Devices.MotionsInovance.GlassUnloadLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferYAxisPlacePosition3"]?.ToString() ?? "Unload Transfer Y Axis Place Position 3",
+                    PropertyName = "UnloadTransferLeftYAxisPlacePosition3",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition3,
+                    Motion = Devices.MotionsInovance.GlassUnloadLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferYAxisPlacePosition4"]?.ToString() ?? "Unload Transfer Y Axis Place Position 4",
+                    PropertyName = "UnloadTransferLeftYAxisPlacePosition4",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition4,
+                    Motion = Devices.MotionsInovance.GlassUnloadLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferZAxisPlacePosition"]?.ToString() ?? "Unload Transfer Z Axis Place Position",
+                    PropertyName = "UnloadTransferLeftZAxisPlacePosition",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisPlacePosition,
+                    Motion = Devices.MotionsInovance.GlassUnloadLZAxis
+                }
+            };
+        }
+
+        private ObservableCollection<PositionTeaching> GetUnloadTransferRightPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.UnloadTransferRightRecipe == null || 
+                Devices?.MotionsInovance?.GlassUnloadRYAxis == null || 
+                Devices?.MotionsInovance?.GlassUnloadRZAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferYAxisReadyPosition"]?.ToString() ?? "Unload Transfer Y Axis Ready Position",
+                    PropertyName = "UnloadTransferRightYAxisReadyPosition",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisReadyPosition,
+                    Motion = Devices.MotionsInovance.GlassUnloadRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferZAxisReadyPosition"]?.ToString() ?? "Unload Transfer Z Axis Ready Position",
+                    PropertyName = "UnloadTransferRightZAxisReadyPosition",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisReadyPosition,
+                    Motion = Devices.MotionsInovance.GlassUnloadRZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferYAxisPickPosition"]?.ToString() ?? "Unload Transfer Y Axis Pick Position",
+                    PropertyName = "UnloadTransferRightYAxisPickPosition",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPickPosition,
+                    Motion = Devices.MotionsInovance.GlassUnloadRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferZAxisPickPosition"]?.ToString() ?? "Unload Transfer Z Axis Pick Position",
+                    PropertyName = "UnloadTransferRightZAxisPickPosition",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisPickPosition,
+                    Motion = Devices.MotionsInovance.GlassUnloadRZAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferYAxisPlacePosition1"]?.ToString() ?? "Unload Transfer Y Axis Place Position 1",
+                    PropertyName = "UnloadTransferRightYAxisPlacePosition1",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition1,
+                    Motion = Devices.MotionsInovance.GlassUnloadRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferYAxisPlacePosition2"]?.ToString() ?? "Unload Transfer Y Axis Place Position 2",
+                    PropertyName = "UnloadTransferRightYAxisPlacePosition2",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition2,
+                    Motion = Devices.MotionsInovance.GlassUnloadRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferYAxisPlacePosition3"]?.ToString() ?? "Unload Transfer Y Axis Place Position 3",
+                    PropertyName = "UnloadTransferRightYAxisPlacePosition3",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition3,
+                    Motion = Devices.MotionsInovance.GlassUnloadRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferYAxisPlacePosition4"]?.ToString() ?? "Unload Transfer Y Axis Place Position 4",
+                    PropertyName = "UnloadTransferRightYAxisPlacePosition4",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition4,
+                    Motion = Devices.MotionsInovance.GlassUnloadRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_UnloadTransferZAxisPlacePosition"]?.ToString() ?? "Unload Transfer Z Axis Place Position",
+                    PropertyName = "UnloadTransferRightZAxisPlacePosition",
+                    Position = RecipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisPlacePosition,
+                    Motion = Devices.MotionsInovance.GlassUnloadRZAxis
+                }
+            };
+        }
+
         #endregion
 
         #region GetMotions
@@ -380,6 +785,55 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
                 motions.Add(Devices.MotionsInovance.GlassTransferYAxis);
                 motions.Add(Devices.MotionsInovance.GlassTransferZAxis);
+            return motions;
+        }
+
+        // Transfer Shutter Tab Motions
+        private ObservableCollection<IMotion> GetTransferShutterLeftMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            motions.Add(Devices.MotionsInovance.TransferInShuttleLYAxis);
+            motions.Add(Devices.MotionsInovance.TransferInShuttleLZAxis);
+            return motions;
+        }
+
+        private ObservableCollection<IMotion> GetTransferShutterRightMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            motions.Add(Devices.MotionsInovance.TransferInShuttleRYAxis);
+            motions.Add(Devices.MotionsInovance.TransferInShuttleRZAxis);
+            return motions;
+        }
+
+        // Transfer Rotation Tab Motions
+        private ObservableCollection<IMotion> GetTransferRotationLeftMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            motions.Add(Devices.MotionsInovance.TransferRotationLZAxis);
+            return motions;
+        }
+
+        private ObservableCollection<IMotion> GetTransferRotationRightMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            motions.Add(Devices.MotionsInovance.TransferRotationRZAxis);
+            return motions;
+        }
+
+        // Unload Transfer Tab Motions
+        private ObservableCollection<IMotion> GetUnloadTransferLeftMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            motions.Add(Devices.MotionsInovance.GlassUnloadLYAxis);
+            motions.Add(Devices.MotionsInovance.GlassUnloadLZAxis);
+            return motions;
+        }
+
+        private ObservableCollection<IMotion> GetUnloadTransferRightMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            motions.Add(Devices.MotionsInovance.GlassUnloadRYAxis);
+            motions.Add(Devices.MotionsInovance.GlassUnloadRZAxis);
             return motions;
         }
 
@@ -440,6 +894,45 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.GlassTransferCyl3UpDown);
             
             return cylinders;
+        }
+
+        // Transfer Shutter Tab Cylinders (No cylinders used in TransferInShuttle process)
+        private ObservableCollection<ICylinder> GetTransferShutterLeftCylinders()
+        {
+            return new ObservableCollection<ICylinder>();
+        }
+
+        private ObservableCollection<ICylinder> GetTransferShutterRightCylinders()
+        {
+            return new ObservableCollection<ICylinder>();
+        }
+
+        // Transfer Rotation Tab Cylinders
+        private ObservableCollection<ICylinder> GetTransferRotationLeftCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Devices.Cylinders.TrRotateLeftRotate);
+            cylinders.Add(Devices.Cylinders.TrRotateLeftFwBw);
+            return cylinders;
+        }
+
+        private ObservableCollection<ICylinder> GetTransferRotationRightCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Devices.Cylinders.TrRotateRightRotate);
+            cylinders.Add(Devices.Cylinders.TrRotateRightFwBw);
+            return cylinders;
+        }
+
+        // Unload Transfer Tab Cylinders (No cylinders used in UnloadTransfer process)
+        private ObservableCollection<ICylinder> GetUnloadTransferLeftCylinders()
+        {
+            return new ObservableCollection<ICylinder>();
+        }
+
+        private ObservableCollection<ICylinder> GetUnloadTransferRightCylinders()
+        {
+            return new ObservableCollection<ICylinder>();
         }
 
         // Clean Tab Cylinders
@@ -503,6 +996,57 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             inputs.Add(Devices.Inputs.DetachGlassShtVac2);
             inputs.Add(Devices.Inputs.DetachGlassShtVac3);
             
+            return inputs;
+        }
+
+        // Transfer Shutter Tab Inputs
+        private ObservableCollection<IDInput> GetTransferShutterLeftInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Devices.Inputs.AlignStageLGlassDettect1);
+            inputs.Add(Devices.Inputs.AlignStageLGlassDettect2);
+            inputs.Add(Devices.Inputs.AlignStageLGlassDettect3);
+            inputs.Add(Devices.Inputs.TransferInShuttleLVac);
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetTransferShutterRightInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Devices.Inputs.AlignStageRGlassDetect1);
+            inputs.Add(Devices.Inputs.AlignStageRGlassDetect2);
+            inputs.Add(Devices.Inputs.AlignStageRGlassDetect3);
+            inputs.Add(Devices.Inputs.TransferInShuttleRVac);
+            return inputs;
+        }
+
+        // Transfer Rotation Tab Inputs
+        private ObservableCollection<IDInput> GetTransferRotationLeftInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Devices.Inputs.TrRotateLeft1Vac);
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetTransferRotationRightInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Devices.Inputs.TrRotateRight1Vac);
+            return inputs;
+        }
+
+        // Unload Transfer Tab Inputs
+        private ObservableCollection<IDInput> GetUnloadTransferLeftInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Devices.Inputs.UnloadTransferLVac);
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetUnloadTransferRightInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Devices.Inputs.UnloadTransferRVac);
             return inputs;
         }
 
@@ -579,9 +1123,51 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return outputs;
         }
 
-        // Clean Tab Outputs
+        // Transfer Shutter Tab Outputs
+        private ObservableCollection<IDOutput> GetTransferShutterLeftOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            outputs.Add(Devices.Outputs.TransferInShuttleLVacOnOff);
+            return outputs;
+        }
 
-        // Unload Tab Outputs
+        private ObservableCollection<IDOutput> GetTransferShutterRightOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            outputs.Add(Devices.Outputs.TransferInShuttleRVacOnOff);
+            return outputs;
+        }
+
+        // Transfer Rotation Tab Outputs
+        private ObservableCollection<IDOutput> GetTransferRotationLeftOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            outputs.Add(Devices.Outputs.TrRotateLeft1VacOnOff);
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetTransferRotationRightOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            outputs.Add(Devices.Outputs.TrRotateRight1VacOnOff);
+            return outputs;
+        }
+
+        // Unload Transfer Tab Outputs
+        private ObservableCollection<IDOutput> GetUnloadTransferLeftOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            outputs.Add(Devices.Outputs.UnloadTransferLVacOnOff);
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetUnloadTransferRightOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            outputs.Add(Devices.Outputs.UnloadTransferRVacOnOff);
+            return outputs;
+        }
+
         #endregion
 
         #region GetProcess
@@ -599,6 +1185,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 
                 // Glass Transfer Tab
                 Processes.GlassTransferProcess,
+                
+                // Transfer Shutter Tab (2 units)
+                Processes.TransferInShuttleLeftProcess,
+                Processes.TransferInShuttleRightProcess,
+                
+                // Transfer Rotation Tab (2 units)
+                Processes.TransferRotationLeftProcess,
+                Processes.TransferRotationRightProcess,
+                
+                // Unload Transfer Tab (2 units)
+                Processes.UnloadTransferLeftProcess,
+                Processes.UnloadTransferRightProcess,
             };
             return processes;
         }
@@ -662,13 +1260,59 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 Outputs = GetGlassTransferOutputs();
                 PositionTeachings = GetGlassTransferPositionTeachings();
             }
-            else if (SelectedProcess == Processes.DetachProcess)
+
+            // Transfer Shutter Tab
+            else if (SelectedProcess == Processes.TransferInShuttleLeftProcess)
             {
-                Motions = GetDetachMotions();
-                Cylinders = GetDetachCylinders();
-                Inputs = GetDetachInputs();
-                Outputs = GetDetachOutputs();
-                PositionTeachings = GetDetachPositionTeachings();
+                Motions = GetTransferShutterLeftMotions();
+                Cylinders = GetTransferShutterLeftCylinders();
+                Inputs = GetTransferShutterLeftInputs();
+                Outputs = GetTransferShutterLeftOutputs();
+                PositionTeachings = GetTransferShutterLeftPositionTeachings();
+            }
+            else if (SelectedProcess == Processes.TransferInShuttleRightProcess)
+            {
+                Motions = GetTransferShutterRightMotions();
+                Cylinders = GetTransferShutterRightCylinders();
+                Inputs = GetTransferShutterRightInputs();
+                Outputs = GetTransferShutterRightOutputs();
+                PositionTeachings = GetTransferShutterRightPositionTeachings();
+            }
+
+            // Transfer Rotation Tab
+            else if (SelectedProcess == Processes.TransferRotationLeftProcess)
+            {
+                Motions = GetTransferRotationLeftMotions();
+                Cylinders = GetTransferRotationLeftCylinders();
+                Inputs = GetTransferRotationLeftInputs();
+                Outputs = GetTransferRotationLeftOutputs();
+                PositionTeachings = GetTransferRotationLeftPositionTeachings();
+            }
+            else if (SelectedProcess == Processes.TransferRotationRightProcess)
+            {
+                Motions = GetTransferRotationRightMotions();
+                Cylinders = GetTransferRotationRightCylinders();
+                Inputs = GetTransferRotationRightInputs();
+                Outputs = GetTransferRotationRightOutputs();
+                PositionTeachings = GetTransferRotationRightPositionTeachings();
+            }
+
+            // Unload Transfer Tab
+            else if (SelectedProcess == Processes.UnloadTransferLeftProcess)
+            {
+                Motions = GetUnloadTransferLeftMotions();
+                Cylinders = GetUnloadTransferLeftCylinders();
+                Inputs = GetUnloadTransferLeftInputs();
+                Outputs = GetUnloadTransferLeftOutputs();
+                PositionTeachings = GetUnloadTransferLeftPositionTeachings();
+            }
+            else if (SelectedProcess == Processes.UnloadTransferRightProcess)
+            {
+                Motions = GetUnloadTransferRightMotions();
+                Cylinders = GetUnloadTransferRightCylinders();
+                Inputs = GetUnloadTransferRightInputs();
+                Outputs = GetUnloadTransferRightOutputs();
+                PositionTeachings = GetUnloadTransferRightPositionTeachings();
             }
         }
         #endregion
@@ -833,6 +1477,144 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     break;
                 case "ZAxisRightPlacePosition":
                     _recipeSelector.CurrentRecipe.GlassTransferRecipe.ZAxisRightPlacePosition = Position;
+                    break;
+
+                // TransferInShuttleRecipe properties (Left & Right)
+                case "TransferInShuttleLeftYAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.YAxisReadyPosition = Position;
+                    break;
+                case "TransferInShuttleLeftZAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition = Position;
+                    break;
+                case "TransferInShuttleLeftYAxisPickPosition1":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.YAxisPickPosition1 = Position;
+                    break;
+                case "TransferInShuttleLeftYAxisPickPosition2":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.YAxisPickPosition2 = Position;
+                    break;
+                case "TransferInShuttleLeftYAxisPickPosition3":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.YAxisPickPosition3 = Position;
+                    break;
+                case "TransferInShuttleLeftZAxisPickPosition":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisPickPosition = Position;
+                    break;
+                case "TransferInShuttleLeftYAxisPlacePosition":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.YAxisPlacePosition = Position;
+                    break;
+                case "TransferInShuttleLeftZAxisPlacePosition":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisPlacePosition = Position;
+                    break;
+                case "TransferInShuttleRightYAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.YAxisReadyPosition = Position;
+                    break;
+                case "TransferInShuttleRightZAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisReadyPosition = Position;
+                    break;
+                case "TransferInShuttleRightYAxisPickPosition1":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.YAxisPickPosition1 = Position;
+                    break;
+                case "TransferInShuttleRightYAxisPickPosition2":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.YAxisPickPosition2 = Position;
+                    break;
+                case "TransferInShuttleRightYAxisPickPosition3":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.YAxisPickPosition3 = Position;
+                    break;
+                case "TransferInShuttleRightZAxisPickPosition":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisPickPosition = Position;
+                    break;
+                case "TransferInShuttleRightYAxisPlacePosition":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.YAxisPlacePosition = Position;
+                    break;
+                case "TransferInShuttleRightZAxisPlacePosition":
+                    _recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisPlacePosition = Position;
+                    break;
+
+                // TransferRotationRecipe properties (Left & Right)
+                case "TransferRotationLeftZAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition = Position;
+                    break;
+                case "TransferRotationLeftZAxisPickPosition":
+                    _recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisPickPosition = Position;
+                    break;
+                case "TransferRotationLeftZAxisTransferPositionUp":
+                    _recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisTransferPositionUp = Position;
+                    break;
+                case "TransferRotationLeftZAxisTransferPositionDown":
+                    _recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisTransferPositionDown = Position;
+                    break;
+                case "TransferRotationLeftZAxisPlacePosition":
+                    _recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisPlacePosition = Position;
+                    break;
+                case "TransferRotationRightZAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisReadyPosition = Position;
+                    break;
+                case "TransferRotationRightZAxisPickPosition":
+                    _recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisPickPosition = Position;
+                    break;
+                case "TransferRotationRightZAxisTransferPositionUp":
+                    _recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisTransferPositionUp = Position;
+                    break;
+                case "TransferRotationRightZAxisTransferPositionDown":
+                    _recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisTransferPositionDown = Position;
+                    break;
+                case "TransferRotationRightZAxisPlacePosition":
+                    _recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisPlacePosition = Position;
+                    break;
+
+                // UnloadTransferRecipe properties (Left & Right)
+                case "UnloadTransferLeftYAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisReadyPosition = Position;
+                    break;
+                case "UnloadTransferLeftZAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisReadyPosition = Position;
+                    break;
+                case "UnloadTransferLeftYAxisPickPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPickPosition = Position;
+                    break;
+                case "UnloadTransferLeftZAxisPickPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisPickPosition = Position;
+                    break;
+                case "UnloadTransferLeftYAxisPlacePosition1":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition1 = Position;
+                    break;
+                case "UnloadTransferLeftYAxisPlacePosition2":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition2 = Position;
+                    break;
+                case "UnloadTransferLeftYAxisPlacePosition3":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition3 = Position;
+                    break;
+                case "UnloadTransferLeftYAxisPlacePosition4":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition4 = Position;
+                    break;
+                case "UnloadTransferLeftZAxisPlacePosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisPlacePosition = Position;
+                    break;
+                case "UnloadTransferRightYAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisReadyPosition = Position;
+                    break;
+                case "UnloadTransferRightZAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisReadyPosition = Position;
+                    break;
+                case "UnloadTransferRightYAxisPickPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPickPosition = Position;
+                    break;
+                case "UnloadTransferRightZAxisPickPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisPickPosition = Position;
+                    break;
+                case "UnloadTransferRightYAxisPlacePosition1":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition1 = Position;
+                    break;
+                case "UnloadTransferRightYAxisPlacePosition2":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition2 = Position;
+                    break;
+                case "UnloadTransferRightYAxisPlacePosition3":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition3 = Position;
+                    break;
+                case "UnloadTransferRightYAxisPlacePosition4":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition4 = Position;
+                    break;
+                case "UnloadTransferRightZAxisPlacePosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisPlacePosition = Position;
                     break;
 
                 default:

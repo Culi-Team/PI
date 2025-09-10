@@ -10,4 +10,10 @@
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/Detach.png"/>
     <BitmapImage x:Key="GlassTransferImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/GlassTransfer.png"/>
+    <BitmapImage x:Key="TransferShutterImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/InShuttle.png"/>
+    <BitmapImage x:Key="TransferRotationImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png"/>
+    <BitmapImage x:Key="UnloadTransferImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/OutShuttle.png"/>
 </ResourceDictionary>

@@ -267,7 +267,7 @@
                         
                         <DataGrid.Columns>
                             <!-- Position Name -->
-                            <DataGridTextColumn Header="Position Name" Binding="{Binding Name}" Width="290" IsReadOnly="True">
+                            <DataGridTextColumn Header="Position Name" Binding="{Binding Name}" Width="270" IsReadOnly="True">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="FontWeight" Value="SemiBold"/>
@@ -278,7 +278,7 @@
                             </DataGridTextColumn>
 
                             <!-- Motion Name -->
-                            <DataGridTextColumn Header="Motion" Binding="{Binding Motion.Name}" Width="145" IsReadOnly="True">
+                            <DataGridTextColumn Header="Motion" Binding="{Binding Motion.Name}" Width="165" IsReadOnly="True">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Left"/>
