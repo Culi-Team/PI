@@ -4,6 +4,7 @@ using EQX.Core.Motion;
 using EQX.Core.Sequence;
 using EQX.Core.TorqueController;
 using EQX.Process;
+using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
@@ -20,6 +21,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Privates
         private readonly Devices _devices;
         private readonly CommonRecipe _commonRecipe;
+        private readonly CleanRecipe _wetCleanLeftRecipe;
+        private readonly CleanRecipe _wetCleanRightRecipe;
+        private readonly CleanRecipe _afCleanLeftRecipe;
+        private readonly CleanRecipe _afCleanRightRecipe;
 
         private EClean cleanType
         {
@@ -201,13 +206,45 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private CleanRecipe cleanRecipe
+        {
+            get
+            {
+                return cleanType switch
+                {
+                    EClean.WETCleanLeft => _wetCleanLeftRecipe,
+                    EClean.WETCleanRight => _wetCleanRightRecipe,
+                    EClean.AFCleanLeft => _afCleanLeftRecipe,
+                    EClean.AFCleanRight => _afCleanRightRecipe,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+        }
+
+        private double XAxisLoadPosition => cleanRecipe.XAxisLoadPosition;
+        private double YAxisLoadPosition => cleanRecipe.YAxisLoadPosition;
+        private double TAxisLoadPosition => cleanRecipe.TAxisLoadPosition;
+
+        private double XAxisUnloadPosition => cleanRecipe.XAxisUnloadPosition;
+        private double YAxisUnloadPosition => cleanRecipe.YAxisUnloadPosition;
+        private double TAxisUnloadPosition => cleanRecipe.TAxisUnloadPosition;
+
         #endregion
 
         #region Constructor
-        public CleanProcess(Devices devices, CommonRecipe commonRecipe)
+        public CleanProcess(Devices devices,
+            CommonRecipe commonRecipe,
+            [FromKeyedServices("WETCleanLeftRecipe")] CleanRecipe wetCleanLeftRecipe,
+            [FromKeyedServices("WETCleanRightRecipe")] CleanRecipe wetCleanRightRecipe,
+            [FromKeyedServices("AFCleanLeftRecipe")] CleanRecipe afCleanLeftRecipe,
+            [FromKeyedServices("AFCleanRightRecipe")] CleanRecipe afCleanRightRecipe)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
+            _wetCleanLeftRecipe = wetCleanLeftRecipe;
+            _wetCleanRightRecipe = wetCleanRightRecipe;
+            _afCleanLeftRecipe = afCleanLeftRecipe;
+            _afCleanRightRecipe = afCleanRightRecipe;
         }
         #endregion
 
@@ -267,6 +304,172 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
 
             return true;
+        }
+
+        public override bool ProcessRun()
+        {
+            switch (Sequence)
+            {
+                case ESequence.Stop:
+                    break;
+                case ESequence.AutoRun:
+                    Sequence_AutoRun();
+                    break;
+                case ESequence.Ready:
+                    break;
+                case ESequence.InWorkCSTLoad:
+                    break;
+                case ESequence.InWorkCSTUnLoad:
+                    break;
+                case ESequence.CSTTilt:
+                    break;
+                case ESequence.CSTUnTilt:
+                    break;
+                case ESequence.OutWorkCSTLoad:
+                    break;
+                case ESequence.OutWorkCSTUnLoad:
+                    break;
+                case ESequence.RobotPickFixtureFromCST:
+                    break;
+                case ESequence.RobotPlaceFixtureToVinylClean:
+                    break;
+                case ESequence.VinylClean:
+                    break;
+                case ESequence.RobotPickFixtureFromVinylClean:
+                    break;
+                case ESequence.RobotPlaceFixtureToAlign:
+                    break;
+                case ESequence.FixtureAlign:
+                    break;
+                case ESequence.RobotPickFixtureFromRemoveZone:
+                    break;
+                case ESequence.RobotPlaceFixtureToOutWorkCST:
+                    break;
+                case ESequence.TransferFixtureLoad:
+                    break;
+                case ESequence.Detach:
+                    break;
+                case ESequence.TransferFixtureUnload:
+                    break;
+                case ESequence.DetachUnload:
+                    break;
+                case ESequence.RemoveFilm:
+                    break;
+                case ESequence.GlassTransferPick:
+                    break;
+                case ESequence.GlassTransferPlace:
+                    break;
+                case ESequence.AlignGlass:
+                    break;
+                case ESequence.TransferInShuttlePick:
+                    break;
+                case ESequence.WETCleanLoad:
+                    Sequence_Load();
+                    break;
+                case ESequence.WETClean:
+                    break;
+                case ESequence.WETCleanUnload:
+                    break;
+                case ESequence.TransferRotationPlace:
+                    break;
+                case ESequence.AFCleanLoad:
+                    Sequence_Load();
+                    break;
+                case ESequence.AFClean:
+                    break;
+                case ESequence.AFCleanUnload:
+                    break;
+                case ESequence.UnloadTransferPick:
+                    break;
+                case ESequence.UnloadTransferPlace:
+                    break;
+                case ESequence.UnloadAlignGlass:
+                    break;
+                case ESequence.UnloadRobotPick:
+                    break;
+                case ESequence.UnloadRobotPlasma:
+                    break;
+                case ESequence.UnloadRobotPlace:
+                    break;
+            }
+
+            return true;
+        }
+        #endregion
+
+        #region Private Methods
+        private void Sequence_AutoRun()
+        {
+            switch ((ECleanProcessAutoRunStep)Step.RunStep)
+            {
+                case ECleanProcessAutoRunStep.Start:
+                    Log.Debug("Auto Run Start");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessAutoRunStep.VacDetect_Check:
+                    if (IsVacDetect)
+                    {
+                        if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                        {
+                            Log.Info("Sequence WET Clean");
+                            Sequence = ESequence.WETClean;
+                            break;
+                        }
+
+                        Log.Info("Sequence AF Clean");
+                        Sequence = ESequence.AFClean;
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessAutoRunStep.End:
+                    if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                    {
+                        Log.Info("Sequence WET Clean Load");
+                        Sequence = ESequence.WETCleanLoad;
+                        break;
+                    }
+                    Log.Info("Sequence AF Clean Load");
+                    Sequence = ESequence.AFCleanLoad;
+                    break;
+            }
+        }
+
+        private void Sequence_Load()
+        {
+            switch ((ECleanProcessLoadStep)Step.RunStep)
+            {
+                case ECleanProcessLoadStep.Start:
+                    Log.Debug("Clean Load Start");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessLoadStep.AxisMoveLoadPosition:
+                    Log.Debug("X Y T Axis Move Load Position");
+                    XAxis.MoveAbs(XAxisLoadPosition);
+                    YAxis.MoveAbs(YAxisLoadPosition);
+                    TAxis.MoveAbs(TAxisLoadPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => XAxis.IsOnPosition(XAxisLoadPosition) && YAxis.IsOnPosition(YAxisLoadPosition) && TAxis.IsOnPosition(TAxisLoadPosition));
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessLoadStep.AxisMoveLoadPosition_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("X Y T Axis Move Load Position Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessLoadStep.Set_FlagCleanRequestLoad:
+
+                    break;
+                case ECleanProcessLoadStep.Wait_CleanLoadDone:
+                    break;
+                case ECleanProcessLoadStep.Set_FlagCleanLoadDoneReceived:
+                    break;
+                case ECleanProcessLoadStep.End:
+                    break;
+            }
         }
         #endregion
     }

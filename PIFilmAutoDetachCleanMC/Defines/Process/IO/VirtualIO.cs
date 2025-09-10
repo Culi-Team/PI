@@ -37,6 +37,14 @@ namespace PIFilmAutoDetachCleanMC.Defines
         private readonly IDOutputDevice _transferInShuttleLeftOutput;
         private readonly IDInputDevice _transferInShuttleRightInput;
         private readonly IDOutputDevice _transferInShuttleRightOutput;
+        private readonly IDInputDevice _wetCleanLeftInput;
+        private readonly IDOutputDevice _wetCleanLeftOutput;
+        private readonly IDInputDevice _wetCleanRightInput;
+        private readonly IDOutputDevice _wetCleanRightOutput;
+        private readonly IDInputDevice _afCleanLeftInput;
+        private readonly IDOutputDevice _afCleanLeftOutput;
+        private readonly IDInputDevice _afCleanRightInput;
+        private readonly IDOutputDevice _afCleanRightOutput;
 
         public VirtualIO([FromKeyedServices("InWorkConveyorInput")] IDInputDevice inWorkConveyorInput,
                          [FromKeyedServices("InWorkConveyorOutput")] IDOutputDevice inWorkConveyorOutput,
@@ -63,7 +71,15 @@ namespace PIFilmAutoDetachCleanMC.Defines
                          [FromKeyedServices("TransferInShuttleLeftInput")] IDInputDevice transferInShuttleLeftInput,
                          [FromKeyedServices("TransferInShuttleLeftOutput")] IDOutputDevice transferInShuttleLeftOutput,
                          [FromKeyedServices("TransferInShuttleRightInput")] IDInputDevice transferInShuttleRightInput,
-                         [FromKeyedServices("TransferInShuttleRightOutput")] IDOutputDevice transferInShuttleRightOutput)
+                         [FromKeyedServices("TransferInShuttleRightOutput")] IDOutputDevice transferInShuttleRightOutput,
+                         [FromKeyedServices("WETCleanLeftInput")] IDInputDevice wetCleanLeftInput,
+                         [FromKeyedServices("WETCleanLeftOutput")] IDOutputDevice wetCleanLeftOutput,
+                         [FromKeyedServices("WETCleanRightInput")] IDInputDevice wetCleanRightInput,
+                         [FromKeyedServices("WETCleanRightOutput")] IDOutputDevice wetCleanRightOutput,
+                         [FromKeyedServices("AFCleanLeftInput")] IDInputDevice afCleanLeftInput,
+                         [FromKeyedServices("AFCleanLeftOutput")] IDOutputDevice afCleanLeftOutput,
+                         [FromKeyedServices("AFCleanRightInput")] IDInputDevice afCleanRightInput,
+                         [FromKeyedServices("AFCleanRightOutput")] IDOutputDevice afCleanRightOutput)
         {
             _inWorkConveyorInput = inWorkConveyorInput;
             _inWorkConveyorOutput = inWorkConveyorOutput;
@@ -91,36 +107,65 @@ namespace PIFilmAutoDetachCleanMC.Defines
             _transferInShuttleLeftOutput = transferInShuttleLeftOutput;
             _transferInShuttleRightInput = transferInShuttleRightInput;
             _transferInShuttleRightOutput = transferInShuttleRightOutput;
+            _wetCleanLeftInput = wetCleanLeftInput;
+            _wetCleanLeftOutput = wetCleanLeftOutput;
+            _wetCleanRightInput = wetCleanRightInput;
+            _wetCleanRightOutput = wetCleanRightOutput;
+            _afCleanLeftInput = afCleanLeftInput;
+            _afCleanLeftOutput = afCleanLeftOutput;
+            _afCleanRightInput = afCleanRightInput;
+            _afCleanRightOutput = afCleanRightOutput;
         }
 
         public void Initialize()
         {
             _inWorkConveyorInput.Initialize();
             _inWorkConveyorOutput.Initialize();
+
             _outWorkConveyorInput.Initialize();
             _outWorkConveyorOutput.Initialize();
+
             _robotLoadInput.Initialize();
             _robotLoadOutput.Initialize();
+
             _vinylCleanInput.Initialize();
             _vinylCleanOutput.Initialize();
+
             _fixtureAlignInput.Initialize();
             _fixtureAlignOutput.Initialize();
+
             _removeFilmInput.Initialize();
             _removeFilmOutput.Initialize();
+
             _transferFixtureInput.Initialize();
             _transferFixtureOutput.Initialize();
+
             _detachInput.Initialize();
             _detachOutput.Initialize();
+
             _glassTransferInput.Initialize();
             _glassTransferOutput.Initialize();
+
             _glassAlignLeftInput.Initialize();
             _glassAlignLeftOutput.Initialize();
             _glassAlignRightInput.Initialize();
             _glassAlignRightOutput.Initialize();
+
             _transferInShuttleLeftInput.Initialize();
             _transferInShuttleRightInput.Initialize();
             _transferInShuttleLeftOutput.Initialize();
             _transferInShuttleRightOutput.Initialize();
+
+            _wetCleanLeftInput.Initialize();
+            _wetCleanLeftOutput.Initialize();
+            _wetCleanRightInput.Initialize();
+            _wetCleanRightOutput.Initialize();
+
+            _afCleanLeftInput.Initialize();
+            _afCleanLeftOutput.Initialize();
+            _afCleanRightInput.Initialize();
+            _afCleanRightOutput.Initialize();
+
         }
 
         public void Mappings()
@@ -227,11 +272,30 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 _glassAlignLeftOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_REQ_PICK);
             ((VirtualInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleLeftInput).Mapping((int)ETransferInShuttleProcessInput.GLASS_ALIGN_PICK_DONE_RECEIVED,
                 _glassAlignLeftOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_PICK_DONE_RECEIVED);
+            ((VirtualInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleLeftInput).Mapping((int)ETransferInShuttleProcessInput.WET_CLEAN_REQ_LOAD,
+                _wetCleanLeftOutput, (int)ECleanProcessOutput.REQ_LOAD);
+            ((VirtualInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleLeftInput).Mapping((int)ETransferInShuttleProcessInput.WET_CLEAN_LOAD_DONE_RECEIVED,
+                _wetCleanLeftOutput, (int)ECleanProcessOutput.LOAD_DONE_RECEIVED);
             //Right
             ((VirtualInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleRightInput).Mapping((int)ETransferInShuttleProcessInput.GLASS_ALIGN_REQ_PICK,
                 _glassAlignRightOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_REQ_PICK);
             ((VirtualInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleRightInput).Mapping((int)ETransferInShuttleProcessInput.GLASS_ALIGN_PICK_DONE_RECEIVED,
                 _glassAlignRightOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_PICK_DONE_RECEIVED);
+            ((VirtualInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleRightInput).Mapping((int)ETransferInShuttleProcessInput.WET_CLEAN_REQ_LOAD,
+                _wetCleanRightOutput, (int)ECleanProcessOutput.REQ_LOAD);
+            ((VirtualInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleRightInput).Mapping((int)ETransferInShuttleProcessInput.WET_CLEAN_LOAD_DONE_RECEIVED,
+                _wetCleanRightOutput, (int)ECleanProcessOutput.LOAD_DONE_RECEIVED);
+
+
+            //Clean Input Mapping
+            //WET Clean
+            //Left
+            ((VirtualInputDevice<ECleanProcessInput>)_wetCleanLeftInput).Mapping((int)ECleanProcessInput.LOAD_DONE,
+                _transferInShuttleLeftOutput, (int)ETransferInShuttleProcessOutput.WET_CLEAN_LOAD_DONE);
+
+            //Right 
+            ((VirtualInputDevice<ECleanProcessInput>)_wetCleanRightInput).Mapping((int)ECleanProcessInput.LOAD_DONE,
+                _transferInShuttleRightOutput, (int)ETransferInShuttleProcessOutput.WET_CLEAN_LOAD_DONE);
         }
     }
 }

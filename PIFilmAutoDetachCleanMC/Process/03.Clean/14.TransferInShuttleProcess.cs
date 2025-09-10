@@ -110,15 +110,15 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagWETCleanPlaceDoneReceived
+        private bool FlagWETCleanLoadDoneReceived
         {
             get
             {
                 if (port == EPort.Left)
                 {
-                    return _transferInShuttleLeftInput[(int)ETransferInShuttleProcessInput.WET_CLEAN_PLACE_DONE_RECEIVED];
+                    return _transferInShuttleLeftInput[(int)ETransferInShuttleProcessInput.WET_CLEAN_LOAD_DONE_RECEIVED];
                 }
-                return _transferInShuttleRightInput[(int)ETransferInShuttleProcessInput.WET_CLEAN_PLACE_DONE_RECEIVED];
+                return _transferInShuttleRightInput[(int)ETransferInShuttleProcessInput.WET_CLEAN_LOAD_DONE_RECEIVED];
             }
         }
 
@@ -137,17 +137,17 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagTransferInShuttlePlaceDone
+        private bool FlagWetCleanLoadDone
         {
             set
             {
                 if (port == EPort.Left)
                 {
-                    _transferInShuttleLeftOutput[(int)ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_PLACE_DONE] = value;
+                    _transferInShuttleLeftOutput[(int)ETransferInShuttleProcessOutput.WET_CLEAN_LOAD_DONE] = value;
                 }
                 else
                 {
-                    _transferInShuttleRightOutput[(int)ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_PLACE_DONE] = value;
+                    _transferInShuttleRightOutput[(int)ETransferInShuttleProcessOutput.WET_CLEAN_LOAD_DONE] = value;
                 }
             }
         }
@@ -411,18 +411,18 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePlaceStep.Set_Flag_TransferInShuttlePlaceDone:
-                    Log.Debug("Set Flag Transfer In Shuttle Place Done");
-                    FlagTransferInShuttlePlaceDone = true;
+                    Log.Debug("Set Flag WET Clean Load Done");
+                    FlagWetCleanLoadDone = true;
                     Step.RunStep++;
-                    Log.Debug("Wait WET Clean Place Done Received");
+                    Log.Debug("Wait WET Clean Load Done Received");
                     break;
                 case ETransferInShuttlePlaceStep.Wait_WETCleanPlaceDoneReceived:
-                    if(FlagWETCleanPlaceDoneReceived == false)
+                    if(FlagWETCleanLoadDoneReceived == false)
                     {
                         break;
                     }
-                    Log.Debug("Clear Flag Transfer In Shuttle Place Done");
-                    FlagTransferInShuttlePlaceDone = false;
+                    Log.Debug("Clear Flag WET Clean Load Done");
+                    FlagWetCleanLoadDone = false;
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePlaceStep.End:

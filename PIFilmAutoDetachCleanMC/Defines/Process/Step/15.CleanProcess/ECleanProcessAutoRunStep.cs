@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum ETransferInShuttleProcessOutput
+    public enum ECleanProcessAutoRunStep
     {
-        TRANSFER_IN_SHUTTLE_PICK_DONE,
-        WET_CLEAN_LOAD_DONE
+        Start,
+        VacDetect_Check,
+        End
     }
 }
