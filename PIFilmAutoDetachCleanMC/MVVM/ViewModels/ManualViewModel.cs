@@ -247,21 +247,25 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public ICommand SetWetCleanLeftPressureCommand => new RelayCommand(() =>
         {
             Regulators.WetCleanLRegulator.SetPressure(WetCleanLeftRecipe.CylinderPushPressure);
+            WetCleanLeftPressure = Regulators.WetCleanLRegulator.GetPressure();
         });
 
         public ICommand SetWetCleanRightPressureCommand => new RelayCommand(() =>
         {
             Regulators.WetCleanRRegulator.SetPressure(WetCleanRightRecipe.CylinderPushPressure);
+            WetCleanRightPressure = Regulators.WetCleanRRegulator.GetPressure();
         });
 
         public ICommand SetAfCleanLeftPressureCommand => new RelayCommand(() =>
         {
             Regulators.AfCleanLRegulator.SetPressure(AfCleanLeftRecipe.CylinderPushPressure);
+            AfCleanLeftPressure = Regulators.AfCleanLRegulator.GetPressure();
         });
 
         public ICommand SetAfCleanRightPressureCommand => new RelayCommand(() =>
         {
             Regulators.AfCleanRRegulator.SetPressure(AfCleanRightRecipe.CylinderPushPressure);
+            AfCleanRightPressure = Regulators.AfCleanRRegulator.GetPressure();
         });
 
         public ICommand ConnectMotionCommand
@@ -1421,10 +1425,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         #region Pressure Timer
         private void PressureUpdateTimer_Elapsed(object? sender, ElapsedEventArgs e)
         {
-            WetCleanLeftPressure = Regulators.WetCleanLRegulator.GetPressure();
-            WetCleanRightPressure = Regulators.WetCleanRRegulator.GetPressure();
-            AfCleanLeftPressure = Regulators.AfCleanLRegulator.GetPressure();
-            AfCleanRightPressure = Regulators.AfCleanRRegulator.GetPressure();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                WetCleanLeftPressure = Regulators.WetCleanLRegulator.GetPressure();
+                WetCleanRightPressure = Regulators.WetCleanRRegulator.GetPressure();
+                AfCleanLeftPressure = Regulators.AfCleanLRegulator.GetPressure();
+                AfCleanRightPressure = Regulators.AfCleanRRegulator.GetPressure();
+            });
         }
         #endregion
 

@@ -409,6 +409,174 @@
                     </Grid>
                 </StackPanel>
             </GroupBox>
+            <GroupBox Header="REGULATOR"
+                      DockPanel.Dock="Top">
+                <StackPanel Orientation="Vertical">
+                    <!-- Wet Clean Left -->
+                    <Grid Margin="0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{Binding Regulators.WetCleanLRegulator.Name}"
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,10,0"/>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock Text="Current pressure"
+                                       Opacity="0.8"
+                                       Margin="0,0,0,2"/>
+                            <Border BorderBrush="Black"
+                                    BorderThickness="1"
+                                    CornerRadius="3"
+                                    Padding="8,4"
+                                    MinWidth="70"
+                                    HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding WetCleanLeftPressure, StringFormat={}{0:F3}}"
+                                           FontFamily="Consolas"
+                                           FontSize="14"
+                                           FontWeight="Bold"
+                                           TextAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
+
+                        <Button Grid.Column="3"
+                                Content="Set from Recipe"
+                                Padding="14,6"
+                                Command="{Binding SetWetCleanLeftPressureCommand}"
+                                Background="#4CAF50"
+                                Foreground="White"
+                                BorderBrush="#449D48"/>
+                    </Grid>
+
+                    <!-- Wet Clean Right -->
+                    <Grid Margin="0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{Binding Regulators.WetCleanRRegulator.Name}"
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,10,0"/>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock Text="Current pressure"
+                                       Opacity="0.8"
+                                       Margin="0,0,0,2"/>
+                            <Border BorderBrush="Black"
+                                    BorderThickness="1"
+                                    CornerRadius="3"
+                                    Padding="8,4"
+                                    MinWidth="70"
+                                    HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding WetCleanRightPressure, StringFormat={}{0:F3}}"
+                                           FontFamily="Consolas"
+                                           FontSize="14"
+                                           FontWeight="Bold"
+                                           TextAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
+
+                        <Button Grid.Column="3"
+                                Content="Set from Recipe"
+                                Padding="14,6"
+                                Command="{Binding SetWetCleanRightPressureCommand}"
+                                Background="#4CAF50"
+                                Foreground="White"
+                                BorderBrush="#449D48"/>
+                    </Grid>
+
+                    <!-- AF Clean Left -->
+                    <Grid Margin="0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{Binding Regulators.AfCleanLRegulator.Name}"
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,10,0"/>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock Text="Current pressure"
+                                       Opacity="0.8"
+                                       Margin="0,0,0,2"/>
+                            <Border BorderBrush="Black"
+                                    BorderThickness="1"
+                                    CornerRadius="3"
+                                    Padding="8,4"
+                                    MinWidth="70"
+                                    HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding AfCleanLeftPressure, StringFormat={}{0:F3}}"
+                                           FontFamily="Consolas"
+                                           FontSize="14"
+                                           FontWeight="Bold"
+                                           TextAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
+
+                        <Button Grid.Column="3"
+                                Content="Set from Recipe"
+                                Padding="14,6"
+                                Command="{Binding SetAfCleanLeftPressureCommand}"
+                                Background="#4CAF50"
+                                Foreground="White"
+                                BorderBrush="#449D48"/>
+                    </Grid>
+
+                    <!-- AF Clean Right -->
+                    <Grid Margin="0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{Binding Regulators.AfCleanRRegulator.Name}"
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,10,0"/>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock Text="Current pressure"
+                                       Opacity="0.8"
+                                       Margin="0,0,0,2"/>
+                            <Border BorderBrush="Black"
+                                    BorderThickness="1"
+                                    CornerRadius="3"
+                                    Padding="8,4"
+                                    MinWidth="70"
+                                    HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding AfCleanRightPressure, StringFormat={}{0:F3}}"
+                                           FontFamily="Consolas"
+                                           FontSize="14"
+                                           FontWeight="Bold"
+                                           TextAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
+
+                        <Button Grid.Column="3"
+                                Content="Set from Recipe"
+                                Padding="14,6"
+                                Command="{Binding SetAfCleanRightPressureCommand}"
+                                Background="#4CAF50"
+                                Foreground="White"
+                                BorderBrush="#449D48"/>
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
 
         </DockPanel>
     </Grid>

@@ -62,15 +62,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         public static readonly DependencyProperty SpeedControllersProperty =
             DependencyProperty.Register("SpeedControllers", typeof(ObservableCollection<ISpeedController>), typeof(ManualUnitView), new PropertyMetadata(new ObservableCollection<ISpeedController> { }));
 
-        public ObservableCollection<KeyValuePair<IRegulator, CleanRecipe>> Regulators
-        {
-            get { return (ObservableCollection<KeyValuePair<IRegulator, CleanRecipe>>)GetValue(RegulatorsProperty); }
-            set { SetValue(RegulatorsProperty, value); }
-        }
-
-        public static readonly DependencyProperty RegulatorsProperty =
-            DependencyProperty.Register("Regulators", typeof(ObservableCollection<KeyValuePair<IRegulator, CleanRecipe>>), typeof(ManualUnitView), new PropertyMetadata(new ObservableCollection<KeyValuePair<IRegulator, CleanRecipe>> { }));
-
         public IProcess<ESequence> SelectedProcess
         {
             get { return (IProcess<ESequence>)GetValue(SelectedProcessProperty); }
@@ -82,14 +73,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         public ManualUnitView()
         {
             InitializeComponent();
-        }
-
-        private void SetPressureFromRecipe_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.Tag is KeyValuePair<IRegulator, CleanRecipe> pair)
-            {
-                pair.Key.SetPressure(pair.Value.CylinderPushPressure);
-            }
         }
 
         private void CylinderForward_Click(object sender, RoutedEventArgs e)

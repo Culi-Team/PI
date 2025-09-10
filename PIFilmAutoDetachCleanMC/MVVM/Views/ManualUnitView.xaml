@@ -20,7 +20,6 @@
         <!-- Converters -->
         <converter:CylinderTypeToButtonNameConverter x:Key="CylinderTypeToButtonNameConverter" />
         <converter:BooleanToOnOffBrushConverter x:Key="BooleanToOnOffBrushConverter" />
-        <cvt:RegulatorPressureConverter x:Key="RegulatorPressureConverter"/>
         <cvt:RollerButtonConverter x:Key="RollerButtonConverter"/>
 
         <!-- Brushes -->
@@ -48,57 +47,6 @@
         <DataTemplate DataType="{x:Type inout:CylinderBase}">
             <ui:CylinderView/>
         </DataTemplate>
-        <DataTemplate x:Key="RegulatorTemplate">
-            <Border Background="White"
-                    BorderBrush="#DDDDDD"
-                    BorderThickness="1"
-                    CornerRadius="6"
-                    Padding="10"
-                    Margin="0,4"
-                    HorizontalAlignment="Stretch">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="12" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="{Binding Key.Name}"
-                       FontWeight="SemiBold"
-                       VerticalAlignment="Center"
-                       Margin="0,0,10,0"/>
-
-                    <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
-                        <TextBlock Text="Current pressure"
-                           Opacity="0.8"
-                           Margin="0,0,0,2"/>
-                        <Border BorderBrush="Black"
-                        BorderThickness="1"
-                        CornerRadius="3"
-                        Padding="8,4"
-                        MinWidth="70"
-                        HorizontalAlignment="Right">
-                            <TextBlock Text="{Binding Key, Converter={StaticResource RegulatorPressureConverter}}"
-                               FontFamily="Consolas"
-                               FontSize="14"
-                               FontWeight="Bold"
-                               TextAlignment="Center"/>
-                        </Border>
-                    </StackPanel>
-
-                    <Button Grid.Column="3"
-                    Content="Set from Recipe"
-                    Padding="14,6"
-                    Tag="{Binding}"
-                    Click="SetPressureFromRecipe_Click"
-                    Background="#4CAF50"
-                    Foreground="White"
-                    BorderBrush="#449D48"/>
-                </Grid>
-            </Border>
-        </DataTemplate>
-
         <DataTemplate DataType="{x:Type inout:DInput}">
             <ui:DInputView/>
         </DataTemplate>
