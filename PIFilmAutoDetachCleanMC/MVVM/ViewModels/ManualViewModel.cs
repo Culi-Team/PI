@@ -11,6 +11,7 @@ using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Converters;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -20,6 +21,7 @@ using System.Windows.Input;
 using System.Xml.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
+using EQX.Core.Device.SpeedController;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -72,18 +74,27 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         }
 
         // CSTLoadUnload Tab Motion Properties
+        public ObservableCollection<IMotion> InConveyorMotions => GetInConveyorMotions();
         public ObservableCollection<IMotion> InWorkConveyorMotions => GetInWorkConveyorMotions();
         public ObservableCollection<IMotion> OutWorkConveyorMotions => GetOutWorkConveyorMotions();
 
+        // CSTLoadUnload Tab Speed Controller Properties
+        public ObservableCollection<ISpeedController> InConveyorSpeedControllers => GetInConveyorSpeedControllers();
+        public ObservableCollection<ISpeedController> BufferConveyorSpeedControllers => GetBufferConveyorSpeedControllers();
+        public ObservableCollection<ISpeedController> OutConveyorSpeedControllers => GetOutConveyorSpeedControllers();
+
         // CSTLoadUnload Tab Cylinder Properties
+        public ObservableCollection<ICylinder> InConveyorCylinders => GetInConveyorCylinders();
         public ObservableCollection<ICylinder> InWorkConveyorCylinders => GetInWorkConveyorCylinders();
         public ObservableCollection<ICylinder> OutWorkConveyorCylinders => GetOutWorkConveyorCylinders();
 
         // CSTLoadUnload Tab Input Properties
+        public ObservableCollection<IDInput> InConveyorInputs => GetInConveyorInputs();
         public ObservableCollection<IDInput> InWorkConveyorInputs => GetInWorkConveyorInputs();
         public ObservableCollection<IDInput> OutWorkConveyorInputs => GetOutWorkConveyorInputs();
 
         // CSTLoadUnload Tab Output Properties
+        public ObservableCollection<IDOutput> InConveyorOutputs => GetInConveyorOutputs();
         public ObservableCollection<IDOutput> InWorkConveyorOutputs => GetInWorkConveyorOutputs();
         public ObservableCollection<IDOutput> OutWorkConveyorOutputs => GetOutWorkConveyorOutputs();
 
@@ -310,6 +321,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         #region GetMotions
         // CSTLoadUnload Tab Motions
+        private ObservableCollection<IMotion> GetInConveyorMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // In Conveyor không có motion riêng, chỉ có speed controller
+            return motions;
+        }
+
         private ObservableCollection<IMotion> GetInWorkConveyorMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
@@ -468,8 +486,48 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         #endregion
 
+        #region GetSpeedControllers
+        // CSTLoadUnload Tab Speed Controllers
+        private ObservableCollection<ISpeedController> GetInConveyorSpeedControllers()
+        {
+            ObservableCollection<ISpeedController> speedControllers = new ObservableCollection<ISpeedController>();
+            // Add In Conveyor rollers
+            speedControllers.Add(Devices.SpeedControllerList.InConveyorRoller1);
+            speedControllers.Add(Devices.SpeedControllerList.InConveyorRoller2);
+            speedControllers.Add(Devices.SpeedControllerList.InConveyorRoller3);
+            return speedControllers;
+        }
+
+        private ObservableCollection<ISpeedController> GetBufferConveyorSpeedControllers()
+        {
+            ObservableCollection<ISpeedController> speedControllers = new ObservableCollection<ISpeedController>();
+            // Add Buffer Conveyor rollers
+            speedControllers.Add(Devices.SpeedControllerList.BufferConveyorRoller1);
+            speedControllers.Add(Devices.SpeedControllerList.BufferConveyorRoller2);
+            return speedControllers;
+        }
+
+        private ObservableCollection<ISpeedController> GetOutConveyorSpeedControllers()
+        {
+            ObservableCollection<ISpeedController> speedControllers = new ObservableCollection<ISpeedController>();
+            // Add Out Conveyor rollers
+            speedControllers.Add(Devices.SpeedControllerList.OutConveyorRoller1);
+            speedControllers.Add(Devices.SpeedControllerList.OutConveyorRoller2);
+            speedControllers.Add(Devices.SpeedControllerList.OutConveyorRoller3);
+            return speedControllers;
+        }
+        #endregion
+
         #region GetCylinders
         // CSTLoadUnload Tab Cylinders
+        private ObservableCollection<ICylinder> GetInConveyorCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Add In Conveyor stopper cylinder
+            cylinders.Add(Devices.Cylinders.InCstStopperUpDown);
+            return cylinders;
+        }
+
         private ObservableCollection<ICylinder> GetInWorkConveyorCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
@@ -684,6 +742,20 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         #region GetInputs
         // CSTLoadUnload Tab Inputs
+        private ObservableCollection<IDInput> GetInConveyorInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add In Conveyor detection inputs
+            inputs.Add(Devices.Inputs.InCstDetect1);
+            inputs.Add(Devices.Inputs.InCstDetect2);
+            // Add In Conveyor button inputs
+            inputs.Add(Devices.Inputs.InButton1);
+            inputs.Add(Devices.Inputs.InButton2);
+            // Add In Conveyor light curtain safety input
+            inputs.Add(Devices.Inputs.InCstLightCurtainAlarmDetect);
+            return inputs;
+        }
+
         private ObservableCollection<IDInput> GetInWorkConveyorInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
@@ -921,6 +993,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         #region GetOutputs
         // CSTLoadUnload Tab Outputs
+        private ObservableCollection<IDOutput> GetInConveyorOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add In Conveyor button lamp outputs
+            outputs.Add(Devices.Outputs.InButtonLamp1);
+            outputs.Add(Devices.Outputs.InButtonLamp2);
+            // Add In Conveyor light curtain muting output
+            outputs.Add(Devices.Outputs.InCstLightCurtainMuting1);
+            outputs.Add(Devices.Outputs.InCstLightCurtainMuting2);
+            return outputs;
+        }
+
         private ObservableCollection<IDOutput> GetInWorkConveyorOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
@@ -1136,7 +1220,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             ObservableCollection<IProcess<ESequence>> processes = new ObservableCollection<IProcess<ESequence>>
             {
-                // CSTLoadUnload Tab (4 units)
+                // CSTLoadUnload Tab (5 units)
+                Processes.InConveyorProcess,
                 Processes.InWorkConveyorProcess,
                 Processes.BufferConveyorProcess,
                 Processes.OutWorkConveyorProcess,
@@ -1186,7 +1271,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             Dispose();
 
             // CSTLoadUnload Tab
-            if (SelectedProcess == Processes.InWorkConveyorProcess)
+            if (SelectedProcess == Processes.InConveyorProcess)
+            {
+                Motions = GetInConveyorMotions();
+                Cylinders = GetInConveyorCylinders();
+                Inputs = GetInConveyorInputs();
+                Outputs = GetInConveyorOutputs();
+            }
+            else if (SelectedProcess == Processes.InWorkConveyorProcess)
             {
                 Motions = GetInWorkConveyorMotions();
                 Cylinders = GetInWorkConveyorCylinders();

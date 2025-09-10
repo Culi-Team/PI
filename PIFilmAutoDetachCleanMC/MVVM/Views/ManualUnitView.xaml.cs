@@ -1,6 +1,7 @@
 using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Process;
+using EQX.Core.Device.SpeedController;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +13,7 @@ using EQX.UI.Controls;
 using EQX.Core.Device.Regulator;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System.Windows.Threading;
+using PIFilmAutoDetachCleanMC.Converters;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.Views
 {
@@ -51,6 +53,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         }
         public static readonly DependencyProperty OutputsProperty =
             DependencyProperty.Register("Outputs", typeof(ObservableCollection<IDOutput>), typeof(ManualUnitView), new PropertyMetadata(new ObservableCollection<IDOutput> { }));
+
+        public ObservableCollection<ISpeedController> SpeedControllers
+        {
+            get { return (ObservableCollection<ISpeedController>)GetValue(SpeedControllersProperty); }
+            set { SetValue(SpeedControllersProperty, value); }
+        }
+        public static readonly DependencyProperty SpeedControllersProperty =
+            DependencyProperty.Register("SpeedControllers", typeof(ObservableCollection<ISpeedController>), typeof(ManualUnitView), new PropertyMetadata(new ObservableCollection<ISpeedController> { }));
 
         public ObservableCollection<KeyValuePair<IRegulator, CleanRecipe>> Regulators
         {
@@ -115,6 +125,46 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             catch (Exception ex)
             {
                 MessageBoxEx.ShowDialog($"Cylinder {cylinder.Name} Backward Error: {ex.Message}");
+            }
+            finally
+            {
+                button.IsEnabled = true;
+            }
+        }
+
+        private void SpeedControllerStart_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var speedController = button?.DataContext as ISpeedController;
+            if (speedController == null) return;
+            button.IsEnabled = false;
+            try
+            {
+                speedController.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBoxEx.ShowDialog($"Speed Controller {speedController.Name} Start Error: {ex.Message}");
+            }
+            finally
+            {
+                button.IsEnabled = true;
+            }
+        }
+
+        private void SpeedControllerStop_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var speedController = button?.DataContext as ISpeedController;
+            if (speedController == null) return;
+            button.IsEnabled = false;
+            try
+            {
+                speedController.Stop();
+            }
+            catch (Exception ex)
+            {
+                MessageBoxEx.ShowDialog($"Speed Controller {speedController.Name} Stop Error: {ex.Message}");
             }
             finally
             {

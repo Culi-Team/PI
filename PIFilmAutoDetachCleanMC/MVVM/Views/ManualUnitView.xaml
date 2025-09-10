@@ -12,14 +12,16 @@
              xmlns:converter="clr-namespace:EQX.UI.Converters;assembly=EQX.UI"
              xmlns:reg="clr-namespace:PIFilmAutoDetachCleanMC.Defines.Devices.Regulator"
              xmlns:recipe="clr-namespace:PIFilmAutoDetachCleanMC.Recipe"
+             xmlns:speedController="clr-namespace:EQX.Core.Device.SpeedController;assembly=EQX.Core"
              mc:Ignorable="d"
-             d:DesignHeight="450"
+             d:DesignHeight="600"
              d:DesignWidth="800">
     <UserControl.Resources>
         <!-- Converters -->
         <converter:CylinderTypeToButtonNameConverter x:Key="CylinderTypeToButtonNameConverter" />
         <converter:BooleanToOnOffBrushConverter x:Key="BooleanToOnOffBrushConverter" />
         <cvt:RegulatorPressureConverter x:Key="RegulatorPressureConverter"/>
+        <cvt:RollerButtonConverter x:Key="RollerButtonConverter"/>
 
         <!-- Common Styles -->
         <!-- Control Module Style - Common for Motion and Cylinder -->
@@ -99,6 +101,54 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type inout:DOutput}">
             <ui:DOutputView/>
+        </DataTemplate>
+
+        <!-- Speed Controller Template -->
+        <DataTemplate x:Key="SpeedControllerTemplate" DataType="{x:Type speedController:ISpeedController}">
+            <Border Style="{StaticResource ControlModuleStyle}">
+                <StackPanel>
+                    <!-- Speed Controller Name -->
+                    <TextBlock Text="{Binding Name}" 
+                               FontWeight="Bold" 
+                               FontSize="14" 
+                               HorizontalAlignment="Center" 
+                               Foreground="Black"
+                               Margin="0,0,0,5"/>
+                    
+                    <!-- Speed Controller Status - Circular -->
+                    <Ellipse Width="20"
+                             Height="20"
+                             Fill="{Binding IsConnected, Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                             Stroke="{StaticResource PrimaryBorderBrush}"
+                             StrokeThickness="1"
+                             HorizontalAlignment="Center"
+                             Margin="0,0,0,5"/>
+                    
+                    <!-- Speed Controller Buttons -->
+                    <UniformGrid Rows="1" Columns="2" HorizontalAlignment="Center">
+                        <Button Content="Start" 
+                                Width="80"
+                                Height="35"
+                                FontSize="12"
+                                FontWeight="Bold"
+                                Background="{Binding IsConnected, Converter={StaticResource RollerButtonConverter}, ConverterParameter=Start}" 
+                                BorderBrush="{Binding IsConnected, Converter={StaticResource RollerButtonConverter}, ConverterParameter=Start}"
+                                Foreground="White"
+                                Click="SpeedControllerStart_Click"
+                                Margin="2"/>
+                        <Button Content="Stop" 
+                                Width="80"
+                                Height="35"
+                                FontSize="12"
+                                FontWeight="Bold"
+                                Background="{Binding IsConnected, Converter={StaticResource RollerButtonConverter}, ConverterParameter=Stop}" 
+                                BorderBrush="{Binding IsConnected, Converter={StaticResource RollerButtonConverter}, ConverterParameter=Stop}"
+                                Foreground="White"
+                                Click="SpeedControllerStop_Click"
+                                Margin="2"/>
+                    </UniformGrid>
+                </StackPanel>
+            </Border>
         </DataTemplate>
 
         <!-- Common Styles -->
@@ -258,15 +308,28 @@
                 <ScrollViewer VerticalScrollBarVisibility="Auto" 
                               HorizontalScrollBarVisibility="Auto"
                               Margin="0 5 0 0">
-                    <ItemsControl x:Name="MotionItemsControl" 
-                                    ItemsSource="{Binding Motions, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-
+                    <StackPanel>
+                        <!-- Motion Controls -->
+                        <ItemsControl x:Name="MotionItemsControl" 
+                                        ItemsSource="{Binding Motions, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                        
+                        <!-- Speed Controller Controls (for Conveyors) -->
+                        <ItemsControl x:Name="SpeedControllerItemsControl" 
+                                        ItemsSource="{Binding SpeedControllers, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                        ItemTemplate="{StaticResource SpeedControllerTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </StackPanel>
                 </ScrollViewer>
             </GroupBox>
         </Border>

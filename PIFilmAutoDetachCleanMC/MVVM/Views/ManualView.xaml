@@ -175,7 +175,8 @@
                         <local:ManualUnitView Motions="{Binding InConveyorMotions}" 
                                              Cylinders="{Binding InConveyorCylinders}" 
                                              Inputs="{Binding InConveyorInputs}" 
-                                             Outputs="{Binding InConveyorOutputs}"/>
+                                             Outputs="{Binding InConveyorOutputs}"
+                                             SpeedControllers="{Binding InConveyorSpeedControllers}"/>
                     </TabItem>
                     <TabItem Header="In Work Conveyor">
                         <local:ManualUnitView Motions="{Binding InWorkConveyorMotions}" 
@@ -187,7 +188,8 @@
                         <local:ManualUnitView Motions="{Binding BufferConveyorMotions}" 
                                              Cylinders="{Binding BufferConveyorCylinders}" 
                                              Inputs="{Binding BufferConveyorInputs}" 
-                                             Outputs="{Binding BufferConveyorOutputs}"/>
+                                             Outputs="{Binding BufferConveyorOutputs}"
+                                             SpeedControllers="{Binding BufferConveyorSpeedControllers}"/>
                     </TabItem>
                     <TabItem Header="Out Work Conveyor">
                         <local:ManualUnitView Motions="{Binding OutWorkConveyorMotions}" 
@@ -199,7 +201,8 @@
                         <local:ManualUnitView Motions="{Binding OutConveyorMotions}" 
                                              Cylinders="{Binding OutConveyorCylinders}" 
                                              Inputs="{Binding OutConveyorInputs}" 
-                                             Outputs="{Binding OutConveyorOutputs}"/>
+                                             Outputs="{Binding OutConveyorOutputs}"
+                                             SpeedControllers="{Binding OutConveyorSpeedControllers}"/>
                     </TabItem>
                 </TabControl>
             </TabItem>
