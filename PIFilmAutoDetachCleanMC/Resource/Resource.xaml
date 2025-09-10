@@ -1,19 +1,64 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- 01. CST LOAD/UNLOAD IMAGES  -->
     <BitmapImage x:Key="InputCassetteStageImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/InputCassetteStage.png"/>
     <BitmapImage x:Key="OutputCassetteStageImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/OutputCassetteStage.png"/>
+    <BitmapImage x:Key="BufferCVImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/BufferCV.png"/>
+    <BitmapImage x:Key="InCassetteCVImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/InCassetteCV.png"/>
+    <BitmapImage x:Key="OutCassetteCVImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/OutCassetteCV.png"/>
+    <BitmapImage x:Key="RollerCVSupport1Image" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/RollerCVSupport1.png"/>
+    <BitmapImage x:Key="RollerCVSupport2Image" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/RollerCVSupport2.png"/>
+    <BitmapImage x:Key="RollerCVSupport3Image" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/RollerCVSupport3.png"/>
+    <BitmapImage x:Key="RollerCVSupport4Image" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/RollerCVSupport4.png"/>
+    
+    <!-- 02. DETACH IMAGES  -->
     <BitmapImage x:Key="TransferFixtureImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/TransferFixture.png"/>
     <BitmapImage x:Key="DetachImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/Detach.png"/>
+    <BitmapImage x:Key="AlignFixtureImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/AlignFixture.png"/>
+    <BitmapImage x:Key="LoadRobotImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png"/>
+    <BitmapImage x:Key="RemoveZoneImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png"/>
+    <BitmapImage x:Key="VinylCleanImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/VinylClean.png"/>
+    
+    <!-- 03. CLEAN IMAGES  -->
     <BitmapImage x:Key="GlassTransferImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/GlassTransfer.png"/>
     <BitmapImage x:Key="TransferShutterImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/InShuttle.png"/>
     <BitmapImage x:Key="TransferRotationImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png"/>
+    <BitmapImage x:Key="AFCleanImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png"/>
+    <BitmapImage x:Key="AlignStageImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AlignStage.png"/>
+    <BitmapImage x:Key="GlassShuttleUnitImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/GlassShuttleUnit.png"/>
+    <BitmapImage x:Key="ShuttleUnitImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/ShuttleUnit.png"/>
+    <BitmapImage x:Key="WetCleanImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png"/>
+    
+    <!-- 04. UNLOAD IMAGES  -->
     <BitmapImage x:Key="UnloadTransferImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/OutShuttle.png"/>
+    <BitmapImage x:Key="UnloadRobotImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png"/>
+    <BitmapImage x:Key="UnloadStageImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadStage.png"/>
+    
 </ResourceDictionary>

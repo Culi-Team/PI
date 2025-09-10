@@ -70,6 +70,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         public static readonly DependencyProperty SelectedProcessProperty =
             DependencyProperty.Register("SelectedProcess", typeof(IProcess<ESequence>), typeof(ManualUnitView), new PropertyMetadata(null));
 
+        public object ManualImage
+        {
+            get { return GetValue(ManualImageProperty); }
+            set { SetValue(ManualImageProperty, value); }
+        }
+        public static readonly DependencyProperty ManualImageProperty =
+            DependencyProperty.Register("ManualImage", typeof(object), typeof(ManualUnitView), new PropertyMetadata(null));
+
         public ManualUnitView()
         {
             InitializeComponent();
