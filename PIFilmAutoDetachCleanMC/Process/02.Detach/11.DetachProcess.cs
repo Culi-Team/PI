@@ -34,6 +34,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder DetachCyl1 => _devices.Cylinders.DetachCyl1UpDown;
         private ICylinder DetachCyl2 => _devices.Cylinders.DetachCyl2UpDown;
 
+        private ICylinder FixCyl1 => _devices.Cylinders.DetachFixFixtureCyl1FwBw;
+        private ICylinder FixCyl2 => _devices.Cylinders.DetachFixFixtureCyl2FwBw;
+
         private bool IsFixtureDetect => _devices.Inputs.DetachFixtureDetect.Value;
 
         private bool IsGlassShuttleVac1 => _devices.Inputs.DetachGlassShtVac1.Value;
@@ -181,6 +184,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Detach Cylinder Up Done");
                     Step.OriginStep++;
+                    break;
+                case EDetachProcessOriginStep.Cyl_Fix_Backward:
+                    Log.Debug("Cylinder Fix Fixture Backward");
+                    FixCyl1.Backward();
+                    FixCyl2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => FixCyl1.IsBackward && FixCyl2.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessOriginStep.Cyl_Fix_Backward_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder Fix Fixture Backward Done");
+                    Step.RunStep++;
                     break;
                 case EDetachProcessOriginStep.ShtTransferXAxis_Origin:
                     Log.Debug("Shuttle Transfer X Axis Origin Start");
