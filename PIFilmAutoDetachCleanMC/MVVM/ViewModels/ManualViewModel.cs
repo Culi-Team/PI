@@ -1,9 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Common;
-using EQX.Core.Device.Regulator;
 using EQX.Core.Device.SpeedController;
-using EQX.Core.InOut;
-using EQX.Core.Motion;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
@@ -13,11 +10,14 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Timers;
 using System.Windows.Input;
+using EQX.Core.Motion;
+using EQX.Core.InOut;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
     public class ManualViewModel : ViewModelBase
     {
+        private readonly System.Timers.Timer pressureUpdateTimer;
 
         public ManualViewModel(Devices devices,
             [FromKeyedServices("WETCleanLeftRecipe")] CleanRecipe wetCleanLeftRecipe,
@@ -35,16 +35,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             AfCleanLeftRecipe = afCleanLeftRecipe;
             AfCleanRightRecipe = afCleanRightRecipe;
 
-            WetCleanRegulators = new ObservableCollection<KeyValuePair<IRegulator, CleanRecipe>>
-            {
-                new(Regulators.WetCleanLRegulator, WetCleanLeftRecipe),
-                new(Regulators.WetCleanRRegulator, WetCleanRightRecipe)
-            };
-            AfCleanRegulators = new ObservableCollection<KeyValuePair<IRegulator, CleanRecipe>>
-            {
-                new(Regulators.AfCleanLRegulator, AfCleanLeftRecipe),
-                new(Regulators.AfCleanRRegulator, AfCleanRightRecipe)
-            };
+            WetCleanLeftPressure = Regulators.WetCleanLRegulator.GetPressure();
+            WetCleanRightPressure = Regulators.WetCleanRRegulator.GetPressure();
+            AfCleanLeftPressure = Regulators.AfCleanLRegulator.GetPressure();
+            AfCleanRightPressure = Regulators.AfCleanRRegulator.GetPressure();
+
+            pressureUpdateTimer = new System.Timers.Timer(500);
+            pressureUpdateTimer.Elapsed += PressureUpdateTimer_Elapsed;
+            pressureUpdateTimer.Start();
+        }
+
+        private void PressureUpdateTimer_Elapsed(object? sender, ElapsedEventArgs e)
+        {
+            WetCleanLeftPressure = Regulators.WetCleanLRegulator.GetPressure();
+            WetCleanRightPressure = Regulators.WetCleanRRegulator.GetPressure();
+            AfCleanLeftPressure = Regulators.AfCleanLRegulator.GetPressure();
+            AfCleanRightPressure = Regulators.AfCleanRRegulator.GetPressure();
         }
         private int _speed = 1000;
 
@@ -58,8 +64,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public CleanRecipe WetCleanRightRecipe { get; }
         public CleanRecipe AfCleanLeftRecipe { get; }
         public CleanRecipe AfCleanRightRecipe { get; }
-        public ObservableCollection<KeyValuePair<IRegulator, CleanRecipe>> WetCleanRegulators { get; }
-        public ObservableCollection<KeyValuePair<IRegulator, CleanRecipe>> AfCleanRegulators { get; }
         public Regulators Regulators { get; set; }
         public Inputs Inputs { get; }
         public Outputs Outputs { get; }
@@ -73,6 +77,54 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         // Robot properties - dựa trên input status
         public bool RobotLoadIsConnected => Inputs.LoadRobPeriRdy.Value && Inputs.LoadRobIoActconf.Value;
         public bool RobotUnloadIsConnected => Inputs.LoadRobPeriRdy.Value && Inputs.LoadRobIoActconf.Value; // Giả định cùng robot
+
+        private double _wetCleanLeftPressure;
+        public double WetCleanLeftPressure
+        {
+            get => _wetCleanLeftPressure;
+            set { _wetCleanLeftPressure = value; OnPropertyChanged(); }
+        }
+
+        private double _wetCleanRightPressure;
+        public double WetCleanRightPressure
+        {
+            get => _wetCleanRightPressure;
+            set { _wetCleanRightPressure = value; OnPropertyChanged(); }
+        }
+
+        private double _afCleanLeftPressure;
+        public double AfCleanLeftPressure
+        {
+            get => _afCleanLeftPressure;
+            set { _afCleanLeftPressure = value; OnPropertyChanged(); }
+        }
+
+        private double _afCleanRightPressure;
+        public double AfCleanRightPressure
+        {
+            get => _afCleanRightPressure;
+            set { _afCleanRightPressure = value; OnPropertyChanged(); }
+        }
+
+        public ICommand SetWetCleanLeftPressureCommand => new RelayCommand(() =>
+        {
+            Regulators.WetCleanLRegulator.SetPressure(WetCleanLeftRecipe.CylinderPushPressure);
+        });
+
+        public ICommand SetWetCleanRightPressureCommand => new RelayCommand(() =>
+        {
+            Regulators.WetCleanRRegulator.SetPressure(WetCleanRightRecipe.CylinderPushPressure);
+        });
+
+        public ICommand SetAfCleanLeftPressureCommand => new RelayCommand(() =>
+        {
+            Regulators.AfCleanLRegulator.SetPressure(AfCleanLeftRecipe.CylinderPushPressure);
+        });
+
+        public ICommand SetAfCleanRightPressureCommand => new RelayCommand(() =>
+        {
+            Regulators.AfCleanRRegulator.SetPressure(AfCleanRightRecipe.CylinderPushPressure);
+        });
 
         public ICommand ConnectMotionCommand
         {
