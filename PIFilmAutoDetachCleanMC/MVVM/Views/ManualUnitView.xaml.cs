@@ -1,19 +1,13 @@
+using EQX.Core.Device.SpeedController;
 using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Process;
-using EQX.Core.Device.SpeedController;
+using EQX.UI.Controls;
+using PIFilmAutoDetachCleanMC.Defines;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System;
-using System.Threading.Tasks;
-using System.Threading;
-using PIFilmAutoDetachCleanMC.Defines;
-using EQX.UI.Controls;
-using EQX.Core.Device.Regulator;
-using PIFilmAutoDetachCleanMC.Recipe;
-using System.Windows.Threading;
-using PIFilmAutoDetachCleanMC.Converters;
+using System.Windows.Media;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.Views
 {
@@ -70,13 +64,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         public static readonly DependencyProperty SelectedProcessProperty =
             DependencyProperty.Register("SelectedProcess", typeof(IProcess<ESequence>), typeof(ManualUnitView), new PropertyMetadata(null));
 
-        public object ManualImage
+        public ImageSource ManualImage
         {
-            get { return GetValue(ManualImageProperty); }
+            get { return (ImageSource)GetValue(ManualImageProperty); }
             set { SetValue(ManualImageProperty, value); }
         }
         public static readonly DependencyProperty ManualImageProperty =
-            DependencyProperty.Register("ManualImage", typeof(object), typeof(ManualUnitView), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(ManualImage), typeof(ImageSource), typeof(ManualUnitView), new PropertyMetadata(null));
 
         public ManualUnitView()
         {
