@@ -240,6 +240,51 @@
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
         </DataTemplate>
 
+        <!-- Clean Templates -->
+        <DataTemplate x:Key="WETCleanLeftTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.WETCleanLeftCylinders, ElementName=root}"
+                Motions="{Binding DataContext.WETCleanLeftMotions, ElementName=root}"
+                Outputs="{Binding DataContext.WETCleanLeftOutputs, ElementName=root}"
+                Inputs="{Binding DataContext.WETCleanLeftInputs, ElementName=root}"
+                TeachingImage="{StaticResource WetCleanImage}"
+                PositionTeachings="{Binding DataContext.WETCleanLeftPositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="WETCleanRightTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.WETCleanRightCylinders, ElementName=root}"
+                Motions="{Binding DataContext.WETCleanRightMotions, ElementName=root}"
+                Outputs="{Binding DataContext.WETCleanRightOutputs, ElementName=root}"
+                Inputs="{Binding DataContext.WETCleanRightInputs, ElementName=root}"
+                TeachingImage="{StaticResource WetCleanImage}"
+                PositionTeachings="{Binding DataContext.WETCleanRightPositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="AFCleanLeftTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.AFCleanLeftCylinders, ElementName=root}"
+                Motions="{Binding DataContext.AFCleanLeftMotions, ElementName=root}"
+                Outputs="{Binding DataContext.AFCleanLeftOutputs, ElementName=root}"
+                Inputs="{Binding DataContext.AFCleanLeftInputs, ElementName=root}"
+                TeachingImage="{StaticResource AFCleanImage}"
+                PositionTeachings="{Binding DataContext.AFCleanLeftPositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="AFCleanRightTemplate">
+            <local:UnitTeachingView 
+                Cylinders="{Binding DataContext.AFCleanRightCylinders, ElementName=root}"
+                Motions="{Binding DataContext.AFCleanRightMotions, ElementName=root}"
+                Outputs="{Binding DataContext.AFCleanRightOutputs, ElementName=root}"
+                Inputs="{Binding DataContext.AFCleanRightInputs, ElementName=root}"
+                TeachingImage="{StaticResource AFCleanImage}"
+                PositionTeachings="{Binding DataContext.AFCleanRightPositionTeachings, ElementName=root}"
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+        </DataTemplate>
+
     </UserControl.Resources>
     <Grid>
         <TabControl  TabStripPlacement="Left">
@@ -254,6 +299,10 @@
             <TabItem Header="Transfer Rotation Right" ContentTemplate="{StaticResource TransferRotationRightTemplate}"/>
             <TabItem Header="Unload Transfer Left" ContentTemplate="{StaticResource UnloadTransferLeftTemplate}"/>
             <TabItem Header="Unload Transfer Right" ContentTemplate="{StaticResource UnloadTransferRightTemplate}"/>
+            <TabItem Header="WET Clean Left" ContentTemplate="{StaticResource WETCleanLeftTemplate}"/>
+            <TabItem Header="WET Clean Right" ContentTemplate="{StaticResource WETCleanRightTemplate}"/>
+            <TabItem Header="AF Clean Left" ContentTemplate="{StaticResource AFCleanLeftTemplate}"/>
+            <TabItem Header="AF Clean Right" ContentTemplate="{StaticResource AFCleanRightTemplate}"/>
         </TabControl>
     </Grid>
 </UserControl>

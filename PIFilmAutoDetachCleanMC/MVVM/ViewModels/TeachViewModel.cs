@@ -13,6 +13,7 @@ using PIFilmAutoDetachCleanMC.Recipe;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using System;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -182,6 +183,36 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         // Unload Transfer Tab PositionTeaching Properties
         public ObservableCollection<PositionTeaching> UnloadTransferLeftPositionTeachings => GetUnloadTransferLeftPositionTeachings();
         public ObservableCollection<PositionTeaching> UnloadTransferRightPositionTeachings => GetUnloadTransferRightPositionTeachings();
+
+        // Clean Tab Motion Properties
+        public ObservableCollection<IMotion> WETCleanLeftMotions => GetWETCleanLeftMotions();
+        public ObservableCollection<IMotion> WETCleanRightMotions => GetWETCleanRightMotions();
+        public ObservableCollection<IMotion> AFCleanLeftMotions => GetAFCleanLeftMotions();
+        public ObservableCollection<IMotion> AFCleanRightMotions => GetAFCleanRightMotions();
+
+        // Clean Tab Cylinder Properties
+        public ObservableCollection<ICylinder> WETCleanLeftCylinders => GetWETCleanLeftCylinders();
+        public ObservableCollection<ICylinder> WETCleanRightCylinders => GetWETCleanRightCylinders();
+        public ObservableCollection<ICylinder> AFCleanLeftCylinders => GetAFCleanLeftCylinders();
+        public ObservableCollection<ICylinder> AFCleanRightCylinders => GetAFCleanRightCylinders();
+
+        // Clean Tab Input Properties
+        public ObservableCollection<IDInput> WETCleanLeftInputs => GetWETCleanLeftInputs();
+        public ObservableCollection<IDInput> WETCleanRightInputs => GetWETCleanRightInputs();
+        public ObservableCollection<IDInput> AFCleanLeftInputs => GetAFCleanLeftInputs();
+        public ObservableCollection<IDInput> AFCleanRightInputs => GetAFCleanRightInputs();
+
+        // Clean Tab Output Properties
+        public ObservableCollection<IDOutput> WETCleanLeftOutputs => GetWETCleanLeftOutputs();
+        public ObservableCollection<IDOutput> WETCleanRightOutputs => GetWETCleanRightOutputs();
+        public ObservableCollection<IDOutput> AFCleanLeftOutputs => GetAFCleanLeftOutputs();
+        public ObservableCollection<IDOutput> AFCleanRightOutputs => GetAFCleanRightOutputs();
+
+        // Clean Tab PositionTeaching Properties
+        public ObservableCollection<PositionTeaching> WETCleanLeftPositionTeachings => GetWETCleanLeftPositionTeachings();
+        public ObservableCollection<PositionTeaching> WETCleanRightPositionTeachings => GetWETCleanRightPositionTeachings();
+        public ObservableCollection<PositionTeaching> AFCleanLeftPositionTeachings => GetAFCleanLeftPositionTeachings();
+        public ObservableCollection<PositionTeaching> AFCleanRightPositionTeachings => GetAFCleanRightPositionTeachings();
 
         #endregion
 
@@ -814,6 +845,395 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             };
         }
 
+        // Clean Tab PositionTeachings
+        private ObservableCollection<PositionTeaching> GetWETCleanLeftPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.WetCleanLeftRecipe == null || 
+                Devices?.MotionsAjin?.InShuttleLXAxis == null ||
+                Devices?.MotionsAjin?.InShuttleLYAxis == null ||
+                Devices?.MotionsInovance?.InShuttleLTAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanXAxisLoadPosition"]?.ToString() ?? "WET Clean X Axis Load Position",
+                    PropertyName = "WETCleanLeftXAxisLoadPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanLeftRecipe.XAxisLoadPosition,
+                    Motion = Devices.MotionsAjin.InShuttleLXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanYAxisLoadPosition"]?.ToString() ?? "WET Clean Y Axis Load Position",
+                    PropertyName = "WETCleanLeftYAxisLoadPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanLeftRecipe.YAxisLoadPosition,
+                    Motion = Devices.MotionsAjin.InShuttleLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanTAxisLoadPosition"]?.ToString() ?? "WET Clean T Axis Load Position",
+                    PropertyName = "WETCleanLeftTAxisLoadPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisLoadPosition,
+                    Motion = Devices.MotionsInovance.InShuttleLTAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanXAxisCleanHorizontalPosition"]?.ToString() ?? "WET Clean X Axis Clean Horizontal Position",
+                    PropertyName = "WETCleanLeftXAxisCleanHorizontalPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanLeftRecipe.XAxisCleanHorizontalPosition,
+                    Motion = Devices.MotionsAjin.InShuttleLXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanYAxisCleanHorizontalPosition"]?.ToString() ?? "WET Clean Y Axis Clean Horizontal Position",
+                    PropertyName = "WETCleanLeftYAxisCleanHorizontalPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanLeftRecipe.YAxisCleanHorizontalPosition,
+                    Motion = Devices.MotionsAjin.InShuttleLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanTAxisCleanHorizontalPosition"]?.ToString() ?? "WET Clean T Axis Clean Horizontal Position",
+                    PropertyName = "WETCleanLeftTAxisCleanHorizontalPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanHorizontalPosition,
+                    Motion = Devices.MotionsInovance.InShuttleLTAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanXAxisCleanVerticalPosition"]?.ToString() ?? "WET Clean X Axis Clean Vertical Position",
+                    PropertyName = "WETCleanLeftXAxisCleanVerticalPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanLeftRecipe.XAxisCleanVerticalPosition,
+                    Motion = Devices.MotionsAjin.InShuttleLXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanYAxisCleanVerticalPosition"]?.ToString() ?? "WET Clean Y Axis Clean Vertical Position",
+                    PropertyName = "WETCleanLeftYAxisCleanVerticalPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanLeftRecipe.YAxisCleanVerticalPosition,
+                    Motion = Devices.MotionsAjin.InShuttleLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanTAxisCleanVerticalPosition"]?.ToString() ?? "WET Clean T Axis Clean Vertical Position",
+                    PropertyName = "WETCleanLeftTAxisCleanVerticalPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanVerticalPosition,
+                    Motion = Devices.MotionsInovance.InShuttleLTAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanXAxisUnloadPosition"]?.ToString() ?? "WET Clean X Axis Unload Position",
+                    PropertyName = "WETCleanLeftXAxisUnloadPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanLeftRecipe.XAxisUnloadPosition,
+                    Motion = Devices.MotionsAjin.InShuttleLXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanYAxisUnloadPosition"]?.ToString() ?? "WET Clean Y Axis Unload Position",
+                    PropertyName = "WETCleanLeftYAxisUnloadPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanLeftRecipe.YAxisUnloadPosition,
+                    Motion = Devices.MotionsAjin.InShuttleLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanTAxisUnloadPosition"]?.ToString() ?? "WET Clean T Axis Unload Position",
+                    PropertyName = "WETCleanLeftTAxisUnloadPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisUnloadPosition,
+                    Motion = Devices.MotionsInovance.InShuttleLTAxis
+                }
+            };
+        }
+
+        private ObservableCollection<PositionTeaching> GetWETCleanRightPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.WetCleanRightRecipe == null || 
+                Devices?.MotionsAjin?.InShuttleRXAxis == null ||
+                Devices?.MotionsAjin?.InShuttleRYAxis == null ||
+                Devices?.MotionsInovance?.InShuttleRTAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanXAxisLoadPosition"]?.ToString() ?? "WET Clean X Axis Load Position",
+                    PropertyName = "WETCleanRightXAxisLoadPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanRightRecipe.XAxisLoadPosition,
+                    Motion = Devices.MotionsAjin.InShuttleRXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanYAxisLoadPosition"]?.ToString() ?? "WET Clean Y Axis Load Position",
+                    PropertyName = "WETCleanRightYAxisLoadPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanRightRecipe.YAxisLoadPosition,
+                    Motion = Devices.MotionsAjin.InShuttleRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanTAxisLoadPosition"]?.ToString() ?? "WET Clean T Axis Load Position",
+                    PropertyName = "WETCleanRightTAxisLoadPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanRightRecipe.TAxisLoadPosition,
+                    Motion = Devices.MotionsInovance.InShuttleRTAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanXAxisCleanHorizontalPosition"]?.ToString() ?? "WET Clean X Axis Clean Horizontal Position",
+                    PropertyName = "WETCleanRightXAxisCleanHorizontalPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanRightRecipe.XAxisCleanHorizontalPosition,
+                    Motion = Devices.MotionsAjin.InShuttleRXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanYAxisCleanHorizontalPosition"]?.ToString() ?? "WET Clean Y Axis Clean Horizontal Position",
+                    PropertyName = "WETCleanRightYAxisCleanHorizontalPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanRightRecipe.YAxisCleanHorizontalPosition,
+                    Motion = Devices.MotionsAjin.InShuttleRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanTAxisCleanHorizontalPosition"]?.ToString() ?? "WET Clean T Axis Clean Horizontal Position",
+                    PropertyName = "WETCleanRightTAxisCleanHorizontalPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanRightRecipe.TAxisCleanHorizontalPosition,
+                    Motion = Devices.MotionsInovance.InShuttleRTAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanXAxisCleanVerticalPosition"]?.ToString() ?? "WET Clean X Axis Clean Vertical Position",
+                    PropertyName = "WETCleanRightXAxisCleanVerticalPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanRightRecipe.XAxisCleanVerticalPosition,
+                    Motion = Devices.MotionsAjin.InShuttleRXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanYAxisCleanVerticalPosition"]?.ToString() ?? "WET Clean Y Axis Clean Vertical Position",
+                    PropertyName = "WETCleanRightYAxisCleanVerticalPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanRightRecipe.YAxisCleanVerticalPosition,
+                    Motion = Devices.MotionsAjin.InShuttleRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanTAxisCleanVerticalPosition"]?.ToString() ?? "WET Clean T Axis Clean Vertical Position",
+                    PropertyName = "WETCleanRightTAxisCleanVerticalPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanRightRecipe.TAxisCleanVerticalPosition,
+                    Motion = Devices.MotionsInovance.InShuttleRTAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanXAxisUnloadPosition"]?.ToString() ?? "WET Clean X Axis Unload Position",
+                    PropertyName = "WETCleanRightXAxisUnloadPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanRightRecipe.XAxisUnloadPosition,
+                    Motion = Devices.MotionsAjin.InShuttleRXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanYAxisUnloadPosition"]?.ToString() ?? "WET Clean Y Axis Unload Position",
+                    PropertyName = "WETCleanRightYAxisUnloadPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanRightRecipe.YAxisUnloadPosition,
+                    Motion = Devices.MotionsAjin.InShuttleRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_WETCleanTAxisUnloadPosition"]?.ToString() ?? "WET Clean T Axis Unload Position",
+                    PropertyName = "WETCleanRightTAxisUnloadPosition",
+                    Position = RecipeSelector.CurrentRecipe.WetCleanRightRecipe.TAxisUnloadPosition,
+                    Motion = Devices.MotionsInovance.InShuttleRTAxis
+                }
+            };
+        }
+
+        private ObservableCollection<PositionTeaching> GetAFCleanLeftPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.AfCleanLeftRecipe == null || 
+                Devices?.MotionsAjin?.OutShuttleLXAxis == null ||
+                Devices?.MotionsAjin?.OutShuttleLYAxis == null ||
+                Devices?.MotionsInovance?.OutShuttleLTAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanXAxisLoadPosition"]?.ToString() ?? "AF Clean X Axis Load Position",
+                    PropertyName = "AFCleanLeftXAxisLoadPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisLoadPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleLXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanYAxisLoadPosition"]?.ToString() ?? "AF Clean Y Axis Load Position",
+                    PropertyName = "AFCleanLeftYAxisLoadPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanLeftRecipe.YAxisLoadPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanTAxisLoadPosition"]?.ToString() ?? "AF Clean T Axis Load Position",
+                    PropertyName = "AFCleanLeftTAxisLoadPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanLeftRecipe.TAxisLoadPosition,
+                    Motion = Devices.MotionsInovance.OutShuttleLTAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanXAxisCleanHorizontalPosition"]?.ToString() ?? "AF Clean X Axis Clean Horizontal Position",
+                    PropertyName = "AFCleanLeftXAxisCleanHorizontalPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisCleanHorizontalPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleLXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanYAxisCleanHorizontalPosition"]?.ToString() ?? "AF Clean Y Axis Clean Horizontal Position",
+                    PropertyName = "AFCleanLeftYAxisCleanHorizontalPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanLeftRecipe.YAxisCleanHorizontalPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanTAxisCleanHorizontalPosition"]?.ToString() ?? "AF Clean T Axis Clean Horizontal Position",
+                    PropertyName = "AFCleanLeftTAxisCleanHorizontalPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanLeftRecipe.TAxisCleanHorizontalPosition,
+                    Motion = Devices.MotionsInovance.OutShuttleLTAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanXAxisCleanVerticalPosition"]?.ToString() ?? "AF Clean X Axis Clean Vertical Position",
+                    PropertyName = "AFCleanLeftXAxisCleanVerticalPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisCleanVerticalPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleLXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanYAxisCleanVerticalPosition"]?.ToString() ?? "AF Clean Y Axis Clean Vertical Position",
+                    PropertyName = "AFCleanLeftYAxisCleanVerticalPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanLeftRecipe.YAxisCleanVerticalPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanTAxisCleanVerticalPosition"]?.ToString() ?? "AF Clean T Axis Clean Vertical Position",
+                    PropertyName = "AFCleanLeftTAxisCleanVerticalPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanLeftRecipe.TAxisCleanVerticalPosition,
+                    Motion = Devices.MotionsInovance.OutShuttleLTAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanXAxisUnloadPosition"]?.ToString() ?? "AF Clean X Axis Unload Position",
+                    PropertyName = "AFCleanLeftXAxisUnloadPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisUnloadPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleLXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanYAxisUnloadPosition"]?.ToString() ?? "AF Clean Y Axis Unload Position",
+                    PropertyName = "AFCleanLeftYAxisUnloadPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanLeftRecipe.YAxisUnloadPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleLYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanTAxisUnloadPosition"]?.ToString() ?? "AF Clean T Axis Unload Position",
+                    PropertyName = "AFCleanLeftTAxisUnloadPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanLeftRecipe.TAxisUnloadPosition,
+                    Motion = Devices.MotionsInovance.OutShuttleLTAxis
+                }
+            };
+        }
+
+        private ObservableCollection<PositionTeaching> GetAFCleanRightPositionTeachings()
+        {
+            if (RecipeSelector?.CurrentRecipe?.AfCleanRightRecipe == null || 
+                Devices?.MotionsAjin?.OutShuttleRXAxis == null ||
+                Devices?.MotionsAjin?.OutShuttleRYAxis == null ||
+                Devices?.MotionsInovance?.OutShuttleRTAxis == null)
+                return new ObservableCollection<PositionTeaching>();
+
+            return new ObservableCollection<PositionTeaching>()
+            {
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanXAxisLoadPosition"]?.ToString() ?? "AF Clean X Axis Load Position",
+                    PropertyName = "AFCleanRightXAxisLoadPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanRightRecipe.XAxisLoadPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleRXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanYAxisLoadPosition"]?.ToString() ?? "AF Clean Y Axis Load Position",
+                    PropertyName = "AFCleanRightYAxisLoadPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanRightRecipe.YAxisLoadPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanTAxisLoadPosition"]?.ToString() ?? "AF Clean T Axis Load Position",
+                    PropertyName = "AFCleanRightTAxisLoadPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanRightRecipe.TAxisLoadPosition,
+                    Motion = Devices.MotionsInovance.OutShuttleRTAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanXAxisCleanHorizontalPosition"]?.ToString() ?? "AF Clean X Axis Clean Horizontal Position",
+                    PropertyName = "AFCleanRightXAxisCleanHorizontalPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanRightRecipe.XAxisCleanHorizontalPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleRXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanYAxisCleanHorizontalPosition"]?.ToString() ?? "AF Clean Y Axis Clean Horizontal Position",
+                    PropertyName = "AFCleanRightYAxisCleanHorizontalPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanRightRecipe.YAxisCleanHorizontalPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanTAxisCleanHorizontalPosition"]?.ToString() ?? "AF Clean T Axis Clean Horizontal Position",
+                    PropertyName = "AFCleanRightTAxisCleanHorizontalPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanRightRecipe.TAxisCleanHorizontalPosition,
+                    Motion = Devices.MotionsInovance.OutShuttleRTAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanXAxisCleanVerticalPosition"]?.ToString() ?? "AF Clean X Axis Clean Vertical Position",
+                    PropertyName = "AFCleanRightXAxisCleanVerticalPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanRightRecipe.XAxisCleanVerticalPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleRXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanYAxisCleanVerticalPosition"]?.ToString() ?? "AF Clean Y Axis Clean Vertical Position",
+                    PropertyName = "AFCleanRightYAxisCleanVerticalPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanRightRecipe.YAxisCleanVerticalPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanTAxisCleanVerticalPosition"]?.ToString() ?? "AF Clean T Axis Clean Vertical Position",
+                    PropertyName = "AFCleanRightTAxisCleanVerticalPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanRightRecipe.TAxisCleanVerticalPosition,
+                    Motion = Devices.MotionsInovance.OutShuttleRTAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanXAxisUnloadPosition"]?.ToString() ?? "AF Clean X Axis Unload Position",
+                    PropertyName = "AFCleanRightXAxisUnloadPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanRightRecipe.XAxisUnloadPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleRXAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanYAxisUnloadPosition"]?.ToString() ?? "AF Clean Y Axis Unload Position",
+                    PropertyName = "AFCleanRightYAxisUnloadPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanRightRecipe.YAxisUnloadPosition,
+                    Motion = Devices.MotionsAjin.OutShuttleRYAxis
+                },
+                new PositionTeaching(RecipeSelector)
+                {
+                    Name = Application.Current.Resources["str_AFCleanTAxisUnloadPosition"]?.ToString() ?? "AF Clean T Axis Unload Position",
+                    PropertyName = "AFCleanRightTAxisUnloadPosition",
+                    Position = RecipeSelector.CurrentRecipe.AfCleanRightRecipe.TAxisUnloadPosition,
+                    Motion = Devices.MotionsInovance.OutShuttleRTAxis
+                }
+            };
+        }
+
         #endregion
 
         #region GetMotions
@@ -906,6 +1326,47 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
             motions.Add(Devices.MotionsInovance.GlassUnloadRYAxis);
             motions.Add(Devices.MotionsInovance.GlassUnloadRZAxis);
+            return motions;
+        }
+
+        // Clean Tab Motions
+        private ObservableCollection<IMotion> GetWETCleanLeftMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // WET Clean Left sử dụng InShuttle axes
+            motions.Add(Devices.MotionsAjin.InShuttleLXAxis);
+            motions.Add(Devices.MotionsAjin.InShuttleLYAxis);
+            motions.Add(Devices.MotionsInovance.InShuttleLTAxis);
+            return motions;
+        }
+
+        private ObservableCollection<IMotion> GetWETCleanRightMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // WET Clean Right sử dụng InShuttle axes
+            motions.Add(Devices.MotionsAjin.InShuttleRXAxis);
+            motions.Add(Devices.MotionsAjin.InShuttleRYAxis);
+            motions.Add(Devices.MotionsInovance.InShuttleRTAxis);
+            return motions;
+        }
+
+        private ObservableCollection<IMotion> GetAFCleanLeftMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // AF Clean Left sử dụng OutShuttle axes
+            motions.Add(Devices.MotionsAjin.OutShuttleLXAxis);
+            motions.Add(Devices.MotionsAjin.OutShuttleLYAxis);
+            motions.Add(Devices.MotionsInovance.OutShuttleLTAxis);
+            return motions;
+        }
+
+        private ObservableCollection<IMotion> GetAFCleanRightMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // AF Clean Right sử dụng OutShuttle axes
+            motions.Add(Devices.MotionsAjin.OutShuttleRXAxis);
+            motions.Add(Devices.MotionsAjin.OutShuttleRYAxis);
+            motions.Add(Devices.MotionsInovance.OutShuttleRTAxis);
             return motions;
         }
 
@@ -1008,8 +1469,33 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         }
 
         // Clean Tab Cylinders
+        private ObservableCollection<ICylinder> GetWETCleanLeftCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Devices.Cylinders.WetCleanPusherLeftUpDown);
+            return cylinders;
+        }
 
-        // Unload Tab Cylinders
+        private ObservableCollection<ICylinder> GetWETCleanRightCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Devices.Cylinders.WetCleanPusherRightUpDown);
+            return cylinders;
+        }
+
+        private ObservableCollection<ICylinder> GetAFCleanLeftCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Devices.Cylinders.AFCleanPusherLeftUpDown);
+            return cylinders;
+        }
+
+        private ObservableCollection<ICylinder> GetAFCleanRightCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Devices.Cylinders.AFCleanPusherRightUpDown);
+            return cylinders;
+        }
 
         #endregion
 
@@ -1127,6 +1613,41 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         }
 
         // Clean Tab Inputs
+        private ObservableCollection<IDInput> GetWETCleanLeftInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Devices.Inputs.WetCleanLeftFeedingRollerDetect);
+            inputs.Add(Devices.Inputs.WetCleanPusherLeftUp);
+            inputs.Add(Devices.Inputs.WetCleanPusherLeftDown);
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetWETCleanRightInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Devices.Inputs.WetCleanRightFeedingRollerDetect);
+            inputs.Add(Devices.Inputs.WetCleanPusherRightUp);
+            inputs.Add(Devices.Inputs.WetCleanPusherRightDown);
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetAFCleanLeftInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Devices.Inputs.AfCleanLeftFeedingRollerDetect);
+            inputs.Add(Devices.Inputs.AfCleanPusherLeftUp);
+            inputs.Add(Devices.Inputs.AfCleanPusherLeftDown);
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetAFCleanRightInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Devices.Inputs.AfCleanRightFeedingRollerDetect);
+            inputs.Add(Devices.Inputs.AfCleanPusherRightUp);
+            inputs.Add(Devices.Inputs.AfCleanPusherRightDown);
+            return inputs;
+        }
 
         // Glass Transfer Tab Inputs
         private ObservableCollection<IDInput> GetGlassTransferInputs()
@@ -1248,6 +1769,35 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return outputs;
         }
 
+        // Clean Tab Outputs
+        private ObservableCollection<IDOutput> GetWETCleanLeftOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Clean processes không có specific outputs, sử dụng pressure regulators
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetWETCleanRightOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Clean processes không có specific outputs, sử dụng pressure regulators
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetAFCleanLeftOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Clean processes không có specific outputs, sử dụng pressure regulators
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetAFCleanRightOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Clean processes không có specific outputs, sử dụng pressure regulators
+            return outputs;
+        }
+
         #endregion
 
         #region GetProcess
@@ -1277,6 +1827,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 // Unload Transfer Tab (2 units)
                 Processes.UnloadTransferLeftProcess,
                 Processes.UnloadTransferRightProcess,
+                
+                // Clean Tab (4 units)
+                Processes.WETCleanLeftProcess,
+                Processes.WETCleanRightProcess,
+                Processes.AFCleanLeftProcess,
+                Processes.AFCleanRightProcess,
             };
             return processes;
         }
@@ -1393,6 +1949,40 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 Inputs = GetUnloadTransferRightInputs();
                 Outputs = GetUnloadTransferRightOutputs();
                 PositionTeachings = GetUnloadTransferRightPositionTeachings();
+            }
+
+            // Clean Tab
+            else if (SelectedProcess == Processes.WETCleanLeftProcess)
+            {
+                Motions = GetWETCleanLeftMotions();
+                Cylinders = GetWETCleanLeftCylinders();
+                Inputs = GetWETCleanLeftInputs();
+                Outputs = GetWETCleanLeftOutputs();
+                PositionTeachings = GetWETCleanLeftPositionTeachings();
+            }
+            else if (SelectedProcess == Processes.WETCleanRightProcess)
+            {
+                Motions = GetWETCleanRightMotions();
+                Cylinders = GetWETCleanRightCylinders();
+                Inputs = GetWETCleanRightInputs();
+                Outputs = GetWETCleanRightOutputs();
+                PositionTeachings = GetWETCleanRightPositionTeachings();
+            }
+            else if (SelectedProcess == Processes.AFCleanLeftProcess)
+            {
+                Motions = GetAFCleanLeftMotions();
+                Cylinders = GetAFCleanLeftCylinders();
+                Inputs = GetAFCleanLeftInputs();
+                Outputs = GetAFCleanLeftOutputs();
+                PositionTeachings = GetAFCleanLeftPositionTeachings();
+            }
+            else if (SelectedProcess == Processes.AFCleanRightProcess)
+            {
+                Motions = GetAFCleanRightMotions();
+                Cylinders = GetAFCleanRightCylinders();
+                Inputs = GetAFCleanRightInputs();
+                Outputs = GetAFCleanRightOutputs();
+                PositionTeachings = GetAFCleanRightPositionTeachings();
             }
         }
         #endregion
@@ -1725,6 +2315,170 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     break;
                 case "UnloadTransferRightZAxisPlacePosition":
                     _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisPlacePosition = Position;
+                    break;
+
+                // WETCleanLeftRecipe properties
+                case "WETCleanLeftFeedingAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.FeedingAxisLoadPosition = Position;
+                    break;
+                case "WETCleanLeftXAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.XAxisLoadPosition = Position;
+                    break;
+                case "WETCleanLeftYAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.YAxisLoadPosition = Position;
+                    break;
+                case "WETCleanLeftTAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisLoadPosition = Position;
+                    break;
+                case "WETCleanLeftXAxisCleanHorizontalPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.XAxisCleanHorizontalPosition = Position;
+                    break;
+                case "WETCleanLeftYAxisCleanHorizontalPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.YAxisCleanHorizontalPosition = Position;
+                    break;
+                case "WETCleanLeftTAxisCleanHorizontalPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanHorizontalPosition = Position;
+                    break;
+                case "WETCleanLeftXAxisCleanVerticalPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.XAxisCleanVerticalPosition = Position;
+                    break;
+                case "WETCleanLeftYAxisCleanVerticalPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.YAxisCleanVerticalPosition = Position;
+                    break;
+                case "WETCleanLeftTAxisCleanVerticalPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanVerticalPosition = Position;
+                    break;
+                case "WETCleanLeftXAxisUnloadPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.XAxisUnloadPosition = Position;
+                    break;
+                case "WETCleanLeftYAxisUnloadPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.YAxisUnloadPosition = Position;
+                    break;
+                case "WETCleanLeftTAxisUnloadPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisUnloadPosition = Position;
+                    break;
+
+                // WETCleanRightRecipe properties
+                case "WETCleanRightFeedingAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanRightRecipe.FeedingAxisLoadPosition = Position;
+                    break;
+                case "WETCleanRightXAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanRightRecipe.XAxisLoadPosition = Position;
+                    break;
+                case "WETCleanRightYAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanRightRecipe.YAxisLoadPosition = Position;
+                    break;
+                case "WETCleanRightTAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanRightRecipe.TAxisLoadPosition = Position;
+                    break;
+                case "WETCleanRightXAxisCleanHorizontalPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanRightRecipe.XAxisCleanHorizontalPosition = Position;
+                    break;
+                case "WETCleanRightYAxisCleanHorizontalPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanRightRecipe.YAxisCleanHorizontalPosition = Position;
+                    break;
+                case "WETCleanRightTAxisCleanHorizontalPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanRightRecipe.TAxisCleanHorizontalPosition = Position;
+                    break;
+                case "WETCleanRightXAxisCleanVerticalPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanRightRecipe.XAxisCleanVerticalPosition = Position;
+                    break;
+                case "WETCleanRightYAxisCleanVerticalPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanRightRecipe.YAxisCleanVerticalPosition = Position;
+                    break;
+                case "WETCleanRightTAxisCleanVerticalPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanRightRecipe.TAxisCleanVerticalPosition = Position;
+                    break;
+                case "WETCleanRightXAxisUnloadPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanRightRecipe.XAxisUnloadPosition = Position;
+                    break;
+                case "WETCleanRightYAxisUnloadPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanRightRecipe.YAxisUnloadPosition = Position;
+                    break;
+                case "WETCleanRightTAxisUnloadPosition":
+                    _recipeSelector.CurrentRecipe.WetCleanRightRecipe.TAxisUnloadPosition = Position;
+                    break;
+
+                // AFCleanLeftRecipe properties
+                case "AFCleanLeftFeedingAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.FeedingAxisLoadPosition = Position;
+                    break;
+                case "AFCleanLeftXAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisLoadPosition = Position;
+                    break;
+                case "AFCleanLeftYAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.YAxisLoadPosition = Position;
+                    break;
+                case "AFCleanLeftTAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.TAxisLoadPosition = Position;
+                    break;
+                case "AFCleanLeftXAxisCleanHorizontalPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisCleanHorizontalPosition = Position;
+                    break;
+                case "AFCleanLeftYAxisCleanHorizontalPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.YAxisCleanHorizontalPosition = Position;
+                    break;
+                case "AFCleanLeftTAxisCleanHorizontalPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.TAxisCleanHorizontalPosition = Position;
+                    break;
+                case "AFCleanLeftXAxisCleanVerticalPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisCleanVerticalPosition = Position;
+                    break;
+                case "AFCleanLeftYAxisCleanVerticalPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.YAxisCleanVerticalPosition = Position;
+                    break;
+                case "AFCleanLeftTAxisCleanVerticalPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.TAxisCleanVerticalPosition = Position;
+                    break;
+                case "AFCleanLeftXAxisUnloadPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisUnloadPosition = Position;
+                    break;
+                case "AFCleanLeftYAxisUnloadPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.YAxisUnloadPosition = Position;
+                    break;
+                case "AFCleanLeftTAxisUnloadPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.TAxisUnloadPosition = Position;
+                    break;
+
+                // AFCleanRightRecipe properties
+                case "AFCleanRightFeedingAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanRightRecipe.FeedingAxisLoadPosition = Position;
+                    break;
+                case "AFCleanRightXAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanRightRecipe.XAxisLoadPosition = Position;
+                    break;
+                case "AFCleanRightYAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanRightRecipe.YAxisLoadPosition = Position;
+                    break;
+                case "AFCleanRightTAxisLoadPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanRightRecipe.TAxisLoadPosition = Position;
+                    break;
+                case "AFCleanRightXAxisCleanHorizontalPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanRightRecipe.XAxisCleanHorizontalPosition = Position;
+                    break;
+                case "AFCleanRightYAxisCleanHorizontalPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanRightRecipe.YAxisCleanHorizontalPosition = Position;
+                    break;
+                case "AFCleanRightTAxisCleanHorizontalPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanRightRecipe.TAxisCleanHorizontalPosition = Position;
+                    break;
+                case "AFCleanRightXAxisCleanVerticalPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanRightRecipe.XAxisCleanVerticalPosition = Position;
+                    break;
+                case "AFCleanRightYAxisCleanVerticalPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanRightRecipe.YAxisCleanVerticalPosition = Position;
+                    break;
+                case "AFCleanRightTAxisCleanVerticalPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanRightRecipe.TAxisCleanVerticalPosition = Position;
+                    break;
+                case "AFCleanRightXAxisUnloadPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanRightRecipe.XAxisUnloadPosition = Position;
+                    break;
+                case "AFCleanRightYAxisUnloadPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanRightRecipe.YAxisUnloadPosition = Position;
+                    break;
+                case "AFCleanRightTAxisUnloadPosition":
+                    _recipeSelector.CurrentRecipe.AfCleanRightRecipe.TAxisUnloadPosition = Position;
                     break;
 
                 default:
