@@ -51,5 +51,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         {
             _inputs.DoorLock7R.ValueChanged -= DoorLock7R_ValueChanged;
         }
+
     }
 }

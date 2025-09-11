@@ -11,26 +11,27 @@
              d:DesignWidth="800">
     <UserControl.Resources>
         <Style TargetType="{x:Type Button}">
-            <Setter Property="Margin"
-                    Value="2 2 0 2" />
-            <Setter Property="FontWeight"
-                    Value="SemiBold" />
-            <Setter Property="FontSize"
-                    Value="14" />
-            <Setter Property="Cursor"
-                    Value="Hand" />
+            <Setter Property="Margin" Value="2 2 0 2" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Cursor" Value="Hand" />
         </Style>
-        <Style TargetType="{x:Type ui:InterlockButton}"
-               BasedOn="{StaticResource {x:Type ui:InterlockButton}}">
-            <Setter Property="Margin"
-                    Value="2 2 0 2" />
-            <Setter Property="FontWeight"
-                    Value="SemiBold" />
-            <Setter Property="FontSize"
-                    Value="14" />
-            <Setter Property="Cursor"
-                    Value="Hand" />
+        <Style TargetType="{x:Type ui:InterlockButton}" BasedOn="{StaticResource {x:Type ui:InterlockButton}}">
+            <Setter Property="Margin" Value="2 2 0 2" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Cursor" Value="Hand" />
         </Style>
+        
+        <!-- Signal Ellipse Style -->
+        <Style x:Key="SignalEllipseStyle" TargetType="Ellipse">
+            <Setter Property="Width" Value="20" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="Fill" Value="Red" />
+            <Setter Property="Stroke" Value="White" />
+            <Setter Property="StrokeThickness" Value="2" />
+        </Style>
+        
         <cvt:InputOutputStopConverter x:Key="InputOutputStopConverter" />
     </UserControl.Resources>
     <Grid>
@@ -38,9 +39,30 @@
             <ColumnDefinition Width="6*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Canvas Grid.Column="0">
-
-        </Canvas>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="1" Margin="0 0 0 0">
+                <Viewbox Stretch="UniformToFill">
+                    <Grid>
+                        <Image Source="{StaticResource AutoViewImage}"/>
+                        <Canvas>
+                            <Ellipse Canvas.Left="25" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
+                            <Ellipse Canvas.Left="59" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
+                            <Ellipse Canvas.Left="100" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
+                            <Ellipse Canvas.Left="138" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
+                            <Ellipse Canvas.Left="179" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
+                            <Ellipse Canvas.Left="219" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
+                            <Ellipse Canvas.Left="263" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
+                            <Ellipse Canvas.Left="306" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
+                        </Canvas>
+                    </Grid>
+                </Viewbox>
+            </Border>
+        </Grid>
         <UniformGrid Rows="9"
                      Grid.Column="1">
             <Button Content="{Binding MachineStatus.MachineRunModeDisplay}"

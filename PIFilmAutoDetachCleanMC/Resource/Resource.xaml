@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+    <!-- 00. AUTO VIEW IMAGES  -->
+    <BitmapImage x:Key="AutoViewImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png"/>
     <!-- 01. CST LOAD/UNLOAD IMAGES  -->
     <BitmapImage x:Key="InputCassetteStageImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/InputCassetteStage.png"/>
@@ -60,5 +62,7 @@
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png"/>
     <BitmapImage x:Key="UnloadStageImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadStage.png"/>
+    
+
     
 </ResourceDictionary>
