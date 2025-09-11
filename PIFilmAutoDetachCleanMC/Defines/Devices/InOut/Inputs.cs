@@ -279,22 +279,22 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput WetCleanBrushRightDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_BRUSH_RIGHT_DOWN);
         public IDInput WetCleanBrushLeftUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_BRUSH_LEFT_UP);
         public IDInput WetCleanBrushLeftDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_BRUSH_LEFT_DOWN);
-        public IDInput TrRotateRightRotVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_RIGHT_VAC_1);
+        public IDInput TrRotateRightVac1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_RIGHT_VAC_1);
         public IDInput TrRotateRight0Degree => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_RIGHT_0_DEGREE);
         public IDInput TrRotateRight180Degree => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_RIGHT_180_DEGREE);
         public IDInput TrRotateRightBw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_RIGHT_BW);
         public IDInput TrRotateRightFw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_RIGHT_FW);
-        public IDInput TrRotateRight1Vac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_RIGHT_VAC_2);
+        public IDInput TrRotateRightVac2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_RIGHT_VAC_2);
         public IDInput WetCleanRightFeedingRollerDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_RIGHT_FEEDING_ROLLER_DETECT);
         public IDInput WetCleanLeftFeedingRollerDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_LEFT_FEEDING_ROLLER_DETECT);
         public IDInput AfCleanRightFeedingRollerDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_RIGHT_FEEDING_ROLLER_DETECT);
         public IDInput AfCleanLeftFeedingRollerDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_LEFT_FEEDING_ROLLER_DETECT);
-        public IDInput TrRotateLeftRotVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_LEFT_VAC_1);
+        public IDInput TrRotateLeftVac1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_LEFT_VAC_1);
         public IDInput TrRotateLeft0Degree => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_LEFT_0_DEGREE);
         public IDInput TrRotateLeft180Degree => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_LEFT_180_DEGREE);
         public IDInput TrRotateLeftBw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_LEFT_BW);
         public IDInput TrRotateLeftFw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_LEFT_FW);
-        public IDInput TrRotateLeft1Vac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_LEFT_VAC_2);
+        public IDInput TrRotateLeftVac2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_LEFT_VAC_2);
         public IDInput AfCleanPusherRightUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_PUSHER_RIGHT_UP);
         public IDInput AfCleanPusherRightDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_PUSHER_RIGHT_DOWN);
         public IDInput AfCleanRightPumpLeakDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_RIGHT_PUMP_LEAK_DETECT);
@@ -379,8 +379,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput TrRotateRightDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_RIGHT_DOWN);
         public IDInput TrRotateLeftUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_LEFT_UP);
         public IDInput TrRotateLeftDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_LEFT_DOWN);
-        public IDInput TrRotateRight2Vac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_RIGHT_2_VAC);
-        public IDInput TrRotateLeft2Vac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_LEFT_2_VAC);
+        public IDInput TrRotateRightRotVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_RIGHT_ROTATE_VAC);
+        public IDInput TrRotateLeftRotVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_LEFT_ROTATE_VAC);
 
         //AGV
         public IDInput InAGVSensorOut1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_AGV_SENSOR_OUT_1);

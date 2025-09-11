@@ -236,8 +236,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput TrRotateRightDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_DOWN);
         public IDOutput TrRotateLeftUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_UP);
         public IDOutput TrRotateLeftDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_DOWN);
-        public IDOutput TrRotateRight2VacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_2_VAC_ON_OFF);
-        public IDOutput TrRotateLeft2VacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_2_VAC_ON_OFF);
+        public IDOutput TrRotateRightRotVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_ROT_VAC_ON_OFF);
+        public IDOutput TrRotateLeftRotVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_ROT_VAC_ON_OFF);
 
         //Plasma
         public IDOutput PlasmaRun => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_RUN);
