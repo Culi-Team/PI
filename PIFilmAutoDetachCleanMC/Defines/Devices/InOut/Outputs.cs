@@ -168,6 +168,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput WetCleanPusherRightDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.WET_CLEAN_PUSHER_RIGHT_DOWN);
         public IDOutput WetCleanPusherLeftUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.WET_CLEAN_PUSHER_LEFT_UP);
         public IDOutput WetCleanPusherLeftDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.WET_CLEAN_PUSHER_LEFT_DOWN);
+        public IDOutput WetCleanBrushRightUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.WET_CLEAN_BRUSH_RIGHT_UP);
+        public IDOutput WetCleanBrushRightDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.WET_CLEAN_BRUSH_RIGHT_DOWN);
+        public IDOutput WetCleanBrushLeftUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.WET_CLEAN_BRUSH_LEFT_UP);
+        public IDOutput WetCleanBrushLeftDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.WET_CLEAN_BRUSH_LEFT_DOWN);
         public IDOutput TrRotateRightRotVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_ROT_VAC_ON_OFF);
         public IDOutput TrRotateRight0Degree => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_0_DEGREE);
         public IDOutput TrRotateRight180Degree => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_180_DEGREE);
@@ -184,6 +188,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput AfCleanPusherRightDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_PUSHER_RIGHT_DOWN);
         public IDOutput AfCleanPusherLeftUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_PUSHER_LEFT_UP);
         public IDOutput AfCleanPusherLeftDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_PUSHER_LEFT_DOWN);
+        public IDOutput AfCleanBrushRightUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_BRUSH_RIGHT_UP);
+        public IDOutput AfCleanBrushRightDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_BRUSH_RIGHT_DOWN);
+        public IDOutput AfCleanBrushLeftUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_BRUSH_LEFT_UP);
+        public IDOutput AfCleanBrushLeftDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_BRUSH_LEFT_DOWN);
         public IDOutput OutShuttleVac1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_SHUTTLE_VAC_1_ON_OFF);
         public IDOutput OutShuttleVac2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_SHUTTLE_VAC_2_ON_OFF);
         public IDOutput UnloadTransferLVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_TRANSFER_L_VAC_ON_OFF);

@@ -275,6 +275,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput WetCleanLeftWiperCleanDetect3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_LEFT_WIPER_CLEAN_DETECT_3);
         public IDInput WetCleanLeftDoorLock => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_LEFT_DOOR_LOCK);
         public IDInput WetCleanLeftAlcoholLeakDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_LEFT_ALCOHOL_LEAK_DETECT);
+        public IDInput WetCleanBrushRightUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_BRUSH_RIGHT_UP);
+        public IDInput WetCleanBrushRightDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_BRUSH_RIGHT_DOWN);
+        public IDInput WetCleanBrushLeftUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_BRUSH_LEFT_UP);
+        public IDInput WetCleanBrushLeftDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_BRUSH_LEFT_DOWN);
         public IDInput TrRotateRightRotVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_RIGHT_ROT_VAC);
         public IDInput TrRotateRight0Degree => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_RIGHT_0_DEGREE);
         public IDInput TrRotateRight180Degree => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TR_ROTATE_RIGHT_180_DEGREE);
@@ -307,6 +311,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput AfCleanLeftWiperCleanDetect3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_LEFT_WIPER_CLEAN_DETECT_3);
         public IDInput AfCleanLeftDoorLock => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_LEFT_DOOR_LOCK);
         public IDInput AfCleanLeftAlcoholLeakDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_LEFT_ALCOHOL_LEAK_DETECT);
+        public IDInput AfCleanBrushRightUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_BRUSH_RIGHT_UP);
+        public IDInput AfCleanBrushRightDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_BRUSH_RIGHT_DOWN);
+        public IDInput AfCleanBrushLeftUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_BRUSH_LEFT_UP);
+        public IDInput AfCleanBrushLeftDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_BRUSH_LEFT_DOWN);
         public IDInput OutShuttleGlassCoatingDetect1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_GLASS_COATING_DETECT_1);
         public IDInput OutShuttleGlassCoatingDetect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_GLASS_COATING_DETECT_2);
         public IDInput OutShuttleVac1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_VAC_1);
