@@ -118,10 +118,10 @@
         <!-- CSTLoadUnload Tab Templates -->
         <DataTemplate x:Key="InWorkConveyorTemplate">
             <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Cylinders="{Binding DataContext.InWorkConveyorCylinders, ElementName=root}"
                 Motions="{Binding DataContext.InWorkConveyorMotions, ElementName=root}"
-                Outputs="{Binding DataContext.Outputs, ElementName=root}"
-                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                Outputs="{Binding DataContext.InWorkConveyorOutputs, ElementName=root}"
+                Inputs="{Binding DataContext.InWorkConveyorInputs, ElementName=root}"
                 TeachingImage="{StaticResource InputCassetteStageImage}"
                 PositionTeachings="{Binding DataContext.InWorkConveyorPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
@@ -129,10 +129,10 @@
 
         <DataTemplate x:Key="OutWorkConveyorTemplate">
             <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Cylinders="{Binding DataContext.OutWorkConveyorCylinders, ElementName=root}"
                 Motions="{Binding DataContext.OutWorkConveyorMotions, ElementName=root}"
-                Outputs="{Binding DataContext.Outputs, ElementName=root}"
-                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                Outputs="{Binding DataContext.OutWorkConveyorOutputs, ElementName=root}"
+                Inputs="{Binding DataContext.OutWorkConveyorInputs, ElementName=root}"
                 TeachingImage="{StaticResource InputCassetteStageImage}"
                 PositionTeachings="{Binding DataContext.OutWorkConveyorPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
@@ -140,10 +140,10 @@
 
         <DataTemplate x:Key="TransferFixtureTemplate">
             <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Cylinders="{Binding DataContext.TransferFixtureCylinders, ElementName=root}"
                 Motions="{Binding DataContext.TransferFixtureMotions, ElementName=root}"
-                Outputs="{Binding DataContext.Outputs, ElementName=root}"
-                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                Outputs="{Binding DataContext.TransferFixtureOutputs, ElementName=root}"
+                Inputs="{Binding DataContext.TransferFixtureInputs, ElementName=root}"
                 TeachingImage="{StaticResource TransferFixtureImage}"
                 PositionTeachings="{Binding DataContext.TransferFixturePositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
@@ -151,10 +151,10 @@
 
         <DataTemplate x:Key="DetachTemplate">
             <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Cylinders="{Binding DataContext.DetachCylinders, ElementName=root}"
                 Motions="{Binding DataContext.DetachMotions, ElementName=root}"
-                Outputs="{Binding DataContext.Outputs, ElementName=root}"
-                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                Outputs="{Binding DataContext.DetachOutputs, ElementName=root}"
+                Inputs="{Binding DataContext.DetachInputs, ElementName=root}"
                 TeachingImage="{StaticResource DetachImage}"
                 PositionTeachings="{Binding DataContext.DetachPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
@@ -162,10 +162,10 @@
         
         <DataTemplate x:Key="GlassTransferTemplate">
             <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Cylinders="{Binding DataContext.GlassTransferCylinders, ElementName=root}"
                 Motions="{Binding DataContext.GlassTransferMotions, ElementName=root}"
-                Outputs="{Binding DataContext.Outputs, ElementName=root}"
-                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                Outputs="{Binding DataContext.GlassTransferOutputs, ElementName=root}"
+                Inputs="{Binding DataContext.GlassTransferInputs, ElementName=root}"
                 TeachingImage="{StaticResource GlassTransferImage}"
                 PositionTeachings="{Binding DataContext.GlassTransferPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
@@ -174,10 +174,10 @@
         <!-- Transfer Shutter Templates -->
         <DataTemplate x:Key="TransferShutterLeftTemplate">
             <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Cylinders="{Binding DataContext.TransferShutterLeftCylinders, ElementName=root}"
                 Motions="{Binding DataContext.TransferShutterLeftMotions, ElementName=root}"
-                Outputs="{Binding DataContext.Outputs, ElementName=root}"
-                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                Outputs="{Binding DataContext.TransferShutterLeftOutputs, ElementName=root}"
+                Inputs="{Binding DataContext.TransferShutterLeftInputs, ElementName=root}"
                 TeachingImage="{StaticResource TransferShutterImage}"
                 PositionTeachings="{Binding DataContext.TransferShutterLeftPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
@@ -185,10 +185,10 @@
 
         <DataTemplate x:Key="TransferShutterRightTemplate">
             <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Cylinders="{Binding DataContext.TransferShutterRightCylinders, ElementName=root}"
                 Motions="{Binding DataContext.TransferShutterRightMotions, ElementName=root}"
-                Outputs="{Binding DataContext.Outputs, ElementName=root}"
-                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                Outputs="{Binding DataContext.TransferShutterRightOutputs, ElementName=root}"
+                Inputs="{Binding DataContext.TransferShutterRightInputs, ElementName=root}"
                 TeachingImage="{StaticResource TransferShutterImage}"
                 PositionTeachings="{Binding DataContext.TransferShutterRightPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
@@ -197,10 +197,10 @@
         <!-- Transfer Rotation Templates -->
         <DataTemplate x:Key="TransferRotationLeftTemplate">
             <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Cylinders="{Binding DataContext.TransferRotationLeftCylinders, ElementName=root}"
                 Motions="{Binding DataContext.TransferRotationLeftMotions, ElementName=root}"
-                Outputs="{Binding DataContext.Outputs, ElementName=root}"
-                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                Outputs="{Binding DataContext.TransferRotationLeftOutputs, ElementName=root}"
+                Inputs="{Binding DataContext.TransferRotationLeftInputs, ElementName=root}"
                 TeachingImage="{StaticResource TransferRotationImage}"
                 PositionTeachings="{Binding DataContext.TransferRotationLeftPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
@@ -208,10 +208,10 @@
 
         <DataTemplate x:Key="TransferRotationRightTemplate">
             <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Cylinders="{Binding DataContext.TransferRotationRightCylinders, ElementName=root}"
                 Motions="{Binding DataContext.TransferRotationRightMotions, ElementName=root}"
-                Outputs="{Binding DataContext.Outputs, ElementName=root}"
-                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                Outputs="{Binding DataContext.TransferRotationRightOutputs, ElementName=root}"
+                Inputs="{Binding DataContext.TransferRotationRightInputs, ElementName=root}"
                 TeachingImage="{StaticResource TransferRotationImage}"
                 PositionTeachings="{Binding DataContext.TransferRotationRightPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
@@ -220,10 +220,10 @@
         <!-- Unload Transfer Templates -->
         <DataTemplate x:Key="UnloadTransferLeftTemplate">
             <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Cylinders="{Binding DataContext.UnloadTransferLeftCylinders, ElementName=root}"
                 Motions="{Binding DataContext.UnloadTransferLeftMotions, ElementName=root}"
-                Outputs="{Binding DataContext.Outputs, ElementName=root}"
-                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                Outputs="{Binding DataContext.UnloadTransferLeftOutputs, ElementName=root}"
+                Inputs="{Binding DataContext.UnloadTransferLeftInputs, ElementName=root}"
                 TeachingImage="{StaticResource UnloadTransferImage}"
                 PositionTeachings="{Binding DataContext.UnloadTransferLeftPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
@@ -231,10 +231,10 @@
 
         <DataTemplate x:Key="UnloadTransferRightTemplate">
             <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.Cylinders, ElementName=root}"
+                Cylinders="{Binding DataContext.UnloadTransferRightCylinders, ElementName=root}"
                 Motions="{Binding DataContext.UnloadTransferRightMotions, ElementName=root}"
-                Outputs="{Binding DataContext.Outputs, ElementName=root}"
-                Inputs="{Binding DataContext.Inputs, ElementName=root}"
+                Outputs="{Binding DataContext.UnloadTransferRightOutputs, ElementName=root}"
+                Inputs="{Binding DataContext.UnloadTransferRightInputs, ElementName=root}"
                 TeachingImage="{StaticResource UnloadTransferImage}"
                 PositionTeachings="{Binding DataContext.UnloadTransferRightPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
@@ -242,7 +242,7 @@
 
     </UserControl.Resources>
     <Grid>
-        <TabControl SelectionChanged="TabControl_SelectionChanged" TabStripPlacement="Left">
+        <TabControl  TabStripPlacement="Left">
             <TabItem Header="In Cassette" ContentTemplate="{StaticResource InWorkConveyorTemplate}"/>
             <TabItem Header="Out Cassette" ContentTemplate="{StaticResource OutWorkConveyorTemplate}"/>
             <TabItem Header="Transfer Fixture" ContentTemplate="{StaticResource TransferFixtureTemplate}"/>

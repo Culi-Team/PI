@@ -18,12 +18,13 @@
         <cvt:BoolToBrushConverter x:Key="BoolToBrushConverter" />
         <cvt:VacuumListConverter x:Key="VacuumListConverter" />
         <cvt:PositionComparisonConverter x:Key="PositionComparisonConverter" />
+        <cvt:CylinderButtonBrushConverter x:Key="CylinderButtonBrushConverter" />
         <converter:CylinderTypeToButtonNameConverter x:Key="CylinderTypeToButtonNameConverter" />
         <converter:BooleanToOnOffBrushConverter x:Key="BooleanToOnOffBrushConverter" />
         
         <!-- Common Styles -->
-        <!-- Control Module Style - Common for Motion and Cylinder -->
-        <Style x:Key="ControlModuleStyle" TargetType="Border">
+        <!-- MotionStyle-->
+        <Style x:Key="MontionControlStyle" TargetType="Border">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -33,7 +34,17 @@
             <Setter Property="Width" Value="270"/>
             <Setter Property="Height" Value="180"/>
         </Style>
-        
+        <!-- CylinderStyle-->
+        <Style x:Key="CylinderControlStyle" TargetType="Border">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Width" Value="270"/>
+            <Setter Property="Height" Value="85"/>
+        </Style>
         <!-- DataTemplates -->
         <DataTemplate DataType="{x:Type inout:CylinderBase}">
             <ui:CylinderView/>
@@ -90,6 +101,7 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -124,7 +136,7 @@
 
         <!-- Custom Cylinder Template with InOut Style Buttons -->
         <DataTemplate x:Key="CylinderInOutTemplate" DataType="{x:Type inout:CylinderBase}">
-            <Border Style="{StaticResource ControlModuleStyle}">
+            <Border Style="{StaticResource CylinderControlStyle}">
                 <StackPanel>
                     <!-- Cylinder Name -->
                     <TextBlock Text="{Binding Name}" 
@@ -137,15 +149,13 @@
                     <UniformGrid Rows="1" Columns="2" HorizontalAlignment="Center">
                         <Button Content="{Binding CylinderType, Converter={StaticResource CylinderTypeToButtonNameConverter}, ConverterParameter=true}" 
                                 Style="{StaticResource CylinderButtonStyle}"
-                                Background="{Binding IsForward, Converter={StaticResource BooleanToOnOffBrushConverter}}" 
-                                BorderBrush="{Binding IsForward, Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                Foreground="White"
+                                Background="{Binding IsForward, Converter={StaticResource CylinderButtonBrushConverter}}" 
+                                BorderBrush="{Binding IsForward, Converter={StaticResource CylinderButtonBrushConverter}}"
                                 Click="CylinderForward_Click"/>
                         <Button Content="{Binding CylinderType, Converter={StaticResource CylinderTypeToButtonNameConverter}, ConverterParameter=false}" 
                                 Style="{StaticResource CylinderButtonStyle}"
-                                Background="{Binding IsBackward, Converter={StaticResource BooleanToOnOffBrushConverter}}" 
-                                BorderBrush="{Binding IsBackward, Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                Foreground="White"
+                                Background="{Binding IsBackward, Converter={StaticResource CylinderButtonBrushConverter}}" 
+                                BorderBrush="{Binding IsBackward, Converter={StaticResource CylinderButtonBrushConverter}}"
                                 Click="CylinderBackward_Click"/>
                     </UniformGrid>
                 </StackPanel>
@@ -160,14 +170,13 @@
             <ColumnDefinition Width="1.2*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="550"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="250"/>
         </Grid.RowDefinitions>
         
         <!-- Image Section -->
-        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2">
             <GroupBox Header="Image" Style="{StaticResource ScrollableGroupBoxStyle}" >
                 <Image Source="{Binding TeachingImage, RelativeSource={RelativeSource AncestorType=UserControl}}"
                        Stretch="Uniform"/>
@@ -185,8 +194,8 @@
                               ItemsSource="{Binding Motions, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Style="{StaticResource ControlModuleStyle}">
-                                    <ui:MovingView2 Motion="{Binding .}" />
+                                <Border Style="{StaticResource MontionControlStyle}">
+                                    <ui:MovingView Motion="{Binding .}" />
                                 </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -201,11 +210,11 @@
             </GroupBox>
         </Border>
         <!-- Cylinder Section -->
-        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
             <GroupBox Header="Cylinder" Style="{StaticResource ScrollableGroupBoxStyle}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding Cylinders, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
-                                                   ItemTemplate="{StaticResource CylinderInOutTemplate}">
+                                  ItemTemplate="{StaticResource CylinderInOutTemplate}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid Columns="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -217,7 +226,7 @@
         </Border>
 
             <!-- Position Teaching Section -->
-        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >
             <GroupBox Header="Position Teaching" Style="{StaticResource ScrollableGroupBoxStyle}" >
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                     <DataGrid x:Name="PositionTeachingDataGrid"
@@ -397,7 +406,7 @@
         </Border>
 
         <!-- In Out Section -->
-        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="2" Grid.Column="3" Grid.RowSpan="2">
+        <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="1" Grid.Column="3" Grid.RowSpan="2">
             <GroupBox Header="In Out" Style="{StaticResource ScrollableGroupBoxStyle}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 5 0 0">
                     <Grid>

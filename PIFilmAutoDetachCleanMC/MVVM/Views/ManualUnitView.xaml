@@ -21,27 +21,40 @@
         <converter:CylinderTypeToButtonNameConverter x:Key="CylinderTypeToButtonNameConverter" />
         <converter:BooleanToOnOffBrushConverter x:Key="BooleanToOnOffBrushConverter" />
         <cvt:RollerButtonConverter x:Key="RollerButtonConverter"/>
+        <cvt:CylinderButtonBrushConverter x:Key="CylinderButtonBrushConverter" />
 
         <!-- Brushes -->
         <SolidColorBrush x:Key="PrimaryBorderBrush" Color="#C3C9Cf"/>
 
         <!-- Common Styles -->
         <!-- Control Module Style - Common for Motion and Cylinder -->
-        <Style x:Key="ControlModuleStyle" TargetType="Border">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="White"/>
+        <!-- Common Styles -->
+        <!-- MotionStyle-->
+        <Style x:Key="MontionControlStyle" TargetType="Border">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="CornerRadius" Value="5"/>
             <Setter Property="Padding" Value="5"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Width" Value="270"/>
-            <Setter Property="Height" Value="180"/>
+            <Setter Property="Height" Value="270"/>
         </Style>
-        
+        <!-- CylinderStyle-->
+        <Style x:Key="CylinderControlStyle" TargetType="Border">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Width" Value="270"/>
+            <Setter Property="Height" Value="85"/>
+        </Style>
         <!-- DataTemplates -->
         <DataTemplate DataType="{x:Type motion:MotionBase}">
-            <Border Style="{StaticResource ControlModuleStyle}">
-                <ui:MovingView2 Motion="{Binding}"/>
+            <Border Style="{StaticResource MontionControlStyle}">
+                <ui:MotionView Motion="{Binding}"/>
             </Border>
         </DataTemplate>
         <DataTemplate DataType="{x:Type inout:CylinderBase}">
@@ -61,8 +74,9 @@
             <Setter Property="Margin" Value="3"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -97,7 +111,7 @@
 
         <!-- Speed Controller Template -->
         <DataTemplate x:Key="SpeedControllerTemplate" DataType="{x:Type speedController:ISpeedController}">
-            <Border Style="{StaticResource ControlModuleStyle}">
+            <Border Style="{StaticResource MontionControlStyle}">
                 <StackPanel>
                     <!-- Speed Controller Name -->
                     <TextBlock Text="{Binding Name}" 
@@ -180,7 +194,7 @@
 
         <!-- Custom Cylinder Template with InOut Style Buttons -->
         <DataTemplate x:Key="CylinderInOutTemplate" DataType="{x:Type inout:CylinderBase}">
-            <Border Style="{StaticResource ControlModuleStyle}">
+            <Border Style="{StaticResource CylinderControlStyle}">
                 <StackPanel>
                     <!-- Cylinder Name -->
                     <TextBlock Text="{Binding Name}" 
@@ -192,15 +206,13 @@
                     <UniformGrid Rows="1" Columns="2" HorizontalAlignment="Center">
                         <Button Content="{Binding CylinderType, Converter={StaticResource CylinderTypeToButtonNameConverter}, ConverterParameter=true}" 
                                 Style="{StaticResource CylinderButtonStyle}"
-                                Background="{Binding IsForward, Converter={StaticResource BooleanToOnOffBrushConverter}}" 
-                                BorderBrush="{Binding IsForward, Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                Foreground="White"
+                                Background="{Binding IsForward, Converter={StaticResource CylinderButtonBrushConverter}}" 
+                                BorderBrush="{Binding IsForward, Converter={StaticResource CylinderButtonBrushConverter}}"
                                 Click="CylinderForward_Click"/>
                         <Button Content="{Binding CylinderType, Converter={StaticResource CylinderTypeToButtonNameConverter}, ConverterParameter=false}" 
                                 Style="{StaticResource CylinderButtonStyle}"
-                                Background="{Binding IsBackward, Converter={StaticResource BooleanToOnOffBrushConverter}}" 
-                                BorderBrush="{Binding IsBackward, Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                Foreground="White"
+                                Background="{Binding IsBackward, Converter={StaticResource CylinderButtonBrushConverter}}" 
+                                BorderBrush="{Binding IsBackward, Converter={StaticResource CylinderButtonBrushConverter}}"
                                 Click="CylinderBackward_Click"/>
                     </UniformGrid>
                 </StackPanel>

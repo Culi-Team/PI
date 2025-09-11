@@ -71,6 +71,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public ObservableCollection<IMotion> InWorkConveyorMotions => GetInWorkConveyorMotions();
         public ObservableCollection<IMotion> OutWorkConveyorMotions => GetOutWorkConveyorMotions();
 
+        // CSTLoadUnload Tab Cylinder Properties
+        public ObservableCollection<ICylinder> InWorkConveyorCylinders => GetInWorkConveyorCylinders();
+        public ObservableCollection<ICylinder> OutWorkConveyorCylinders => GetOutWorkConveyorCylinders();
+
+        // CSTLoadUnload Tab Input Properties
+        public ObservableCollection<IDInput> InWorkConveyorInputs => GetInWorkConveyorInputs();
+        public ObservableCollection<IDInput> OutWorkConveyorInputs => GetOutWorkConveyorInputs();
+
+        // CSTLoadUnload Tab Output Properties
+        public ObservableCollection<IDOutput> InWorkConveyorOutputs => GetInWorkConveyorOutputs();
+        public ObservableCollection<IDOutput> OutWorkConveyorOutputs => GetOutWorkConveyorOutputs();
+
         // CSTLoadUnload Tab PositionTeaching Properties
         public ObservableCollection<PositionTeaching> InWorkConveyorPositionTeachings => GetInWorkConveyorPositionTeachings();
         public ObservableCollection<PositionTeaching> OutWorkConveyorPositionTeachings => GetOutWorkConveyorPositionTeachings();
@@ -79,17 +91,52 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public ObservableCollection<IMotion> TransferFixtureMotions => GetTransferFixtureMotions();
         public ObservableCollection<IMotion> DetachMotions => GetDetachMotions();
 
+        // Detach Tab Cylinder Properties
+        public ObservableCollection<ICylinder> TransferFixtureCylinders => GetTransferFixtureCylinders();
+        public ObservableCollection<ICylinder> DetachCylinders => GetDetachCylinders();
+
+        // Detach Tab Input Properties
+        public ObservableCollection<IDInput> TransferFixtureInputs => GetTransferFixtureInputs();
+        public ObservableCollection<IDInput> DetachInputs => GetDetachInputs();
+
+        // Detach Tab Output Properties
+        public ObservableCollection<IDOutput> TransferFixtureOutputs => GetTransferFixtureOutputs();
+        public ObservableCollection<IDOutput> DetachOutputs => GetDetachOutputs();
+
         // Detach Tab PositionTeaching Properties
         public ObservableCollection<PositionTeaching> TransferFixturePositionTeachings => GetTransferFixturePositionTeachings();
         public ObservableCollection<PositionTeaching> DetachPositionTeachings => GetDetachPositionTeachings();
 
         // Glass Transfer Tab Motion Properties
         public ObservableCollection<IMotion> GlassTransferMotions => GetGlassTransferMotions();
+
+        // Glass Transfer Tab Cylinder Properties
+        public ObservableCollection<ICylinder> GlassTransferCylinders => GetGlassTransferCylinders();
+
+        // Glass Transfer Tab Input Properties
+        public ObservableCollection<IDInput> GlassTransferInputs => GetGlassTransferInputs();
+
+        // Glass Transfer Tab Output Properties
+        public ObservableCollection<IDOutput> GlassTransferOutputs => GetGlassTransferOutputs();
+
+        // Glass Transfer Tab PositionTeaching Properties
         public ObservableCollection<PositionTeaching> GlassTransferPositionTeachings => GetGlassTransferPositionTeachings();
 
         // Transfer Shutter Tab Motion Properties
         public ObservableCollection<IMotion> TransferShutterLeftMotions => GetTransferShutterLeftMotions();
         public ObservableCollection<IMotion> TransferShutterRightMotions => GetTransferShutterRightMotions();
+
+        // Transfer Shutter Tab Cylinder Properties
+        public ObservableCollection<ICylinder> TransferShutterLeftCylinders => GetTransferShutterLeftCylinders();
+        public ObservableCollection<ICylinder> TransferShutterRightCylinders => GetTransferShutterRightCylinders();
+
+        // Transfer Shutter Tab Input Properties
+        public ObservableCollection<IDInput> TransferShutterLeftInputs => GetTransferShutterLeftInputs();
+        public ObservableCollection<IDInput> TransferShutterRightInputs => GetTransferShutterRightInputs();
+
+        // Transfer Shutter Tab Output Properties
+        public ObservableCollection<IDOutput> TransferShutterLeftOutputs => GetTransferShutterLeftOutputs();
+        public ObservableCollection<IDOutput> TransferShutterRightOutputs => GetTransferShutterRightOutputs();
 
         // Transfer Shutter Tab PositionTeaching Properties
         public ObservableCollection<PositionTeaching> TransferShutterLeftPositionTeachings => GetTransferShutterLeftPositionTeachings();
@@ -99,6 +146,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public ObservableCollection<IMotion> TransferRotationLeftMotions => GetTransferRotationLeftMotions();
         public ObservableCollection<IMotion> TransferRotationRightMotions => GetTransferRotationRightMotions();
 
+        // Transfer Rotation Tab Cylinder Properties
+        public ObservableCollection<ICylinder> TransferRotationLeftCylinders => GetTransferRotationLeftCylinders();
+        public ObservableCollection<ICylinder> TransferRotationRightCylinders => GetTransferRotationRightCylinders();
+
+        // Transfer Rotation Tab Input Properties
+        public ObservableCollection<IDInput> TransferRotationLeftInputs => GetTransferRotationLeftInputs();
+        public ObservableCollection<IDInput> TransferRotationRightInputs => GetTransferRotationRightInputs();
+
+        // Transfer Rotation Tab Output Properties
+        public ObservableCollection<IDOutput> TransferRotationLeftOutputs => GetTransferRotationLeftOutputs();
+        public ObservableCollection<IDOutput> TransferRotationRightOutputs => GetTransferRotationRightOutputs();
+
         // Transfer Rotation Tab PositionTeaching Properties
         public ObservableCollection<PositionTeaching> TransferRotationLeftPositionTeachings => GetTransferRotationLeftPositionTeachings();
         public ObservableCollection<PositionTeaching> TransferRotationRightPositionTeachings => GetTransferRotationRightPositionTeachings();
@@ -106,6 +165,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         // Unload Transfer Tab Motion Properties
         public ObservableCollection<IMotion> UnloadTransferLeftMotions => GetUnloadTransferLeftMotions();
         public ObservableCollection<IMotion> UnloadTransferRightMotions => GetUnloadTransferRightMotions();
+
+        // Unload Transfer Tab Cylinder Properties
+        public ObservableCollection<ICylinder> UnloadTransferLeftCylinders => GetUnloadTransferLeftCylinders();
+        public ObservableCollection<ICylinder> UnloadTransferRightCylinders => GetUnloadTransferRightCylinders();
+
+        // Unload Transfer Tab Input Properties
+        public ObservableCollection<IDInput> UnloadTransferLeftInputs => GetUnloadTransferLeftInputs();
+        public ObservableCollection<IDInput> UnloadTransferRightInputs => GetUnloadTransferRightInputs();
+
+        // Unload Transfer Tab Output Properties
+        public ObservableCollection<IDOutput> UnloadTransferLeftOutputs => GetUnloadTransferLeftOutputs();
+        public ObservableCollection<IDOutput> UnloadTransferRightOutputs => GetUnloadTransferRightOutputs();
 
         // Unload Transfer Tab PositionTeaching Properties
         public ObservableCollection<PositionTeaching> UnloadTransferLeftPositionTeachings => GetUnloadTransferLeftPositionTeachings();
