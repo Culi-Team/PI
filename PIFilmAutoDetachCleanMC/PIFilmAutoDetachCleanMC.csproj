@@ -108,6 +108,7 @@
     <Resource Include="Resource\Image\01.CSTLoadUnload\BufferCV.png" />
     <Resource Include="Resource\Image\01.CSTLoadUnload\InCassetteCV.png" />
     <Resource Include="Resource\Image\01.CSTLoadUnload\InputCassetteStage.png" />
+    <Resource Include="Resource\Image\01.CSTLoadUnload\LoadWorkCassetteStage.png" />
     <Resource Include="Resource\Image\01.CSTLoadUnload\OutCassetteCV.png" />
     <Resource Include="Resource\Image\01.CSTLoadUnload\OutputCassetteStage.png" />
     <Resource Include="Resource\Image\01.CSTLoadUnload\RollerCVSupport1.png" />
@@ -123,6 +124,7 @@
     <Resource Include="Resource\Image\03.Clean\AFClean.png" />
     <Resource Include="Resource\Image\03.Clean\AlignStage.png" />
     <Resource Include="Resource\Image\03.Clean\GlassShuttleUnit.png" />
+    <Resource Include="Resource\Image\03.Clean\GlassAlignStage.png" />
     <Resource Include="Resource\Image\03.Clean\GlassTransfer.png" />
     <Resource Include="Resource\Image\03.Clean\InShuttle.png" />
     <Resource Include="Resource\Image\03.Clean\ShuttleUnit.png" />
@@ -131,6 +133,7 @@
     <Resource Include="Resource\Image\04.Unload\OutShuttle.png" />
     <Resource Include="Resource\Image\04.Unload\UnloadRobot.png" />
     <Resource Include="Resource\Image\04.Unload\UnloadStage.png" />
+    <Resource Include="Resource\Image\04.Unload\UnloadAlignStage.png" />
     <Resource Include="Resource\Image\Machine.png" />
   </ItemGroup>
 

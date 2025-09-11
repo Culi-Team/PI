@@ -8,6 +8,8 @@
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/InputCassetteStage.png"/>
     <BitmapImage x:Key="OutputCassetteStageImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/OutputCassetteStage.png"/>
+    <BitmapImage x:Key="LoadWorkCassetteStageImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/LoadWorkCassetteStage.png"/>
     <BitmapImage x:Key="BufferCVImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/BufferCV.png"/>
     <BitmapImage x:Key="InCassetteCVImage" 
@@ -54,7 +56,9 @@
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/ShuttleUnit.png"/>
     <BitmapImage x:Key="WetCleanImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png"/>
-    
+    <BitmapImage x:Key="GlassAlignImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/GlassAlignStage.png"/>
+
     <!-- 04. UNLOAD IMAGES  -->
     <BitmapImage x:Key="UnloadTransferImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/OutShuttle.png"/>
@@ -62,6 +66,8 @@
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png"/>
     <BitmapImage x:Key="UnloadStageImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadStage.png"/>
+    <BitmapImage x:Key="UnloadAlignImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadAlignStage.png"/>
     
 
     

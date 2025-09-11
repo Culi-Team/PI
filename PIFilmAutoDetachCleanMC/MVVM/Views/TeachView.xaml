@@ -122,7 +122,7 @@
                 Motions="{Binding DataContext.InWorkConveyorMotions, ElementName=root}"
                 Outputs="{Binding DataContext.InWorkConveyorOutputs, ElementName=root}"
                 Inputs="{Binding DataContext.InWorkConveyorInputs, ElementName=root}"
-                TeachingImage="{StaticResource InputCassetteStageImage}"
+                TeachingImage="{StaticResource LoadWorkCassetteStageImage}"
                 PositionTeachings="{Binding DataContext.InWorkConveyorPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
         </DataTemplate>
@@ -133,7 +133,7 @@
                 Motions="{Binding DataContext.OutWorkConveyorMotions, ElementName=root}"
                 Outputs="{Binding DataContext.OutWorkConveyorOutputs, ElementName=root}"
                 Inputs="{Binding DataContext.OutWorkConveyorInputs, ElementName=root}"
-                TeachingImage="{StaticResource InputCassetteStageImage}"
+                TeachingImage="{StaticResource LoadWorkCassetteStageImage}"
                 PositionTeachings="{Binding DataContext.OutWorkConveyorPositionTeachings, ElementName=root}"
                 SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
         </DataTemplate>
