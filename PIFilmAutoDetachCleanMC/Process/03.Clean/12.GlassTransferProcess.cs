@@ -301,7 +301,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.WETCleanUnload:
                     break;
-                case ESequence.TransferRotationPlace:
+                case ESequence.TransferRotation:
                     break;
                 case ESequence.AFCleanLoad:
                     break;

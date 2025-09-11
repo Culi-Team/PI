@@ -14,6 +14,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Set_FlagCleanRequestLoad,
         Wait_CleanLoadDone,
         Set_FlagCleanLoadDoneReceived,
+        Vacuum_On,
         End
     }
 }

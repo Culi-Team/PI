@@ -317,6 +317,5 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
             return hostBuilder;
         }
-
     }
 }

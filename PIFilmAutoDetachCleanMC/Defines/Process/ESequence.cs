@@ -45,7 +45,7 @@
         WETClean,
         WETCleanUnload,
 
-        TransferRotationPlace,
+        TransferRotation,
 
         AFCleanLoad,
         AFClean,
