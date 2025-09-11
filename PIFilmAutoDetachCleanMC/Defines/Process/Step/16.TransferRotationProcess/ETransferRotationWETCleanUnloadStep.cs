@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PIFilmAutoDetachCleanMC.Defines
+{
+    public enum ETransferRotationWETCleanUnloadStep
+    {
+        Start,
+        Wait_WETCleanRequestUnload,
+        ZAxis_Move_PickPosition,
+        ZAxis_Move_PickPositionWait,
+        Vacuum_On,
+        Vacuum_On_Wait,
+        ZAxis_Move_ReadyPosition,
+        ZAxis_Move_ReadyPositionWait,
+        Set_FlagWETCleanUnloadDone,
+        Wait_WETCleanUnloadDoneReceived,
+        End
+    }
+}

@@ -1,7 +1,10 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
+using EQX.InOut;
+using EQX.InOut.Virtual;
 using EQX.Process;
+using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
@@ -20,6 +23,12 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private readonly Devices _devices;
         private readonly CommonRecipe _commonRecipe;
+        private readonly TransferRotationRecipe _transferRotationLeftRecipe;
+        private readonly TransferRotationRecipe _transferRotationRightRecipe;
+        private readonly IDInputDevice _transferRotationLeftInput;
+        private readonly IDOutputDevice _transferRotationLeftOutput;
+        private readonly IDInputDevice _transferRotationRightInput;
+        private readonly IDOutputDevice _transferRotationRightOutput;
 
         private IMotion ZAxis => port == EPort.Left ? _devices.MotionsInovance.TransferRotationLZAxis :
                                                       _devices.MotionsInovance.TransferRotationRZAxis;
@@ -29,21 +38,107 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder TransferCyl => port == EPort.Left ? _devices.Cylinders.TrRotateLeftFwBw :
                                                       _devices.Cylinders.TrRotateRightFwBw;
 
-        public IDOutput GlassVac1 => port == EPort.Left ? _devices.Outputs.TrRotateLeftVac1OnOff :
+        private ICylinder UpDownCyl => port == EPort.Left ? _devices.Cylinders.TrRotateLeftUpDown :
+                                                            _devices.Cylinders.TrRotateRightUpDown;
+
+        public IDOutput GlassVac1OnOff => port == EPort.Left ? _devices.Outputs.TrRotateLeftVac1OnOff :
                                                       _devices.Outputs.TrRotateRightVac1OnOff;
 
-        public IDOutput GlassVac2 => port == EPort.Left ? _devices.Outputs.TrRotateLeftVac2OnOff :
+        public IDOutput GlassVac2OnOff => port == EPort.Left ? _devices.Outputs.TrRotateLeftVac2OnOff :
                                                       _devices.Outputs.TrRotateRightVac2OnOff;
 
-        public IDOutput GlassRotateVac => port == EPort.Left ? _devices.Outputs.TrRotateLeftRotVacOnOff :
+        public IDOutput GlassRotateVacOnOff => port == EPort.Left ? _devices.Outputs.TrRotateLeftRotVacOnOff :
                                                       _devices.Outputs.TrRotateRightRotVacOnOff;
+
+        public IDInput GlassVac1 => port == EPort.Left ? _devices.Inputs.TrRotateLeftVac1 :
+                                                      _devices.Inputs.TrRotateRightVac1;
+
+        public IDInput GlassVac2 => port == EPort.Left ? _devices.Inputs.TrRotateLeftVac2 :
+                                                      _devices.Inputs.TrRotateRightVac2;
+
+        public IDInput GlassRotVac => port == EPort.Left ? _devices.Inputs.TrRotateLeftRotVac :
+                                                      _devices.Inputs.TrRotateRightRotVac;
+
+        private TransferRotationRecipe Recipe => port == EPort.Left ? _transferRotationLeftRecipe : _transferRotationRightRecipe;
+
+        private double ZAxisReadyPosition => Recipe.ZAxisReadyPosition;
+        private double ZAxisPickPosition => Recipe.ZAxisPickPosition;
+        private double ZAxisTransferBeforeRotatePosition => Recipe.ZAxisTransferBeforeRotatePosition;
+        private double ZAxisTransferAfterRotatePosition => Recipe.ZAxisTransferAfterRotatePosition;
+        private double ZAxisPlacePosition => Recipe.ZAxisPlacePosition;
+
+        private IDInputDevice Inputs => port == EPort.Left ? _transferRotationLeftInput : _transferRotationRightInput;
+        private IDOutputDevice Outputs => port == EPort.Left ? _transferRotationLeftOutput : _transferRotationRightOutput;
+        #endregion
+
+        #region Flags
+        private bool FlagWETCleanRequestUnload
+        {
+            get
+            {
+                return Inputs[(int)ETransferRotationProcessInput.WET_CLEAN_REQ_UNLOAD];
+            }
+        }
+
+        private bool FlagWETCleanUnloadDoneReceived
+        {
+            get
+            {
+                return Inputs[(int)ETransferRotationProcessInput.WET_CLEAN_UNLOAD_DONE_RECEIVED];
+            }
+        }
+
+        private bool FlagWETCleanUnloadDone
+        {
+            set
+            {
+                Outputs[(int)ETransferRotationProcessOutput.WET_CLEAN_UNLOAD_DONE] = value;
+            }
+        }
+
+        private bool FlagAFCleanRequestLoad
+        {
+            get
+            {
+                return Inputs[(int)ETransferRotationProcessInput.AF_CLEAN_REQ_LOAD];
+            }
+        }
+
+        private bool FlagAFCleanLoadDoneReceived
+        {
+            get
+            {
+                return Inputs[(int)ETransferRotationProcessInput.AF_CLEAN_LOAD_DONE_RECEIVED];
+            }
+        }
+
+        private bool FlagAFCleanLoadDone
+        {
+            set
+            {
+                Outputs[(int)ETransferRotationProcessOutput.AF_CLEAN_LOAD_DONE] = value;
+            }
+        }
         #endregion
 
         #region Constructor
-        public TransferRotationProcess(Devices devices,CommonRecipe commonRecipe)
+        public TransferRotationProcess(Devices devices,
+            CommonRecipe commonRecipe,
+            [FromKeyedServices("TransferRotationLeftRecipe")]TransferRotationRecipe transferRotationLeftRecipe,
+            [FromKeyedServices("TransferRotationRightRecipe")] TransferRotationRecipe transferRotationRightRecipe,
+            [FromKeyedServices("TransferRotationLeftInput")] IDInputDevice transferRotationLeftInput,
+            [FromKeyedServices("TransferRotationLeftOutput")] IDOutputDevice transferRotationLeftOutput,
+            [FromKeyedServices("TransferRotationRightInput")] IDInputDevice transferRotationRightInput,
+            [FromKeyedServices("TransferRotationRightOutput")] IDOutputDevice transferRotationRightOutput)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
+            _transferRotationLeftRecipe = transferRotationLeftRecipe;
+            _transferRotationRightRecipe = transferRotationRightRecipe;
+            _transferRotationLeftInput = transferRotationLeftInput;
+            _transferRotationLeftOutput = transferRotationLeftOutput;
+            _transferRotationRightInput = transferRotationRightInput;
+            _transferRotationRightOutput = transferRotationRightOutput;
         }
         #endregion
 
@@ -113,6 +208,486 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
 
             return true;
+        }
+
+        public override bool ProcessRun()
+        {
+            switch (Sequence)
+            {
+                case ESequence.Stop:
+                    break;
+                case ESequence.AutoRun:
+                    Sequence_AutoRun();
+                    break;
+                case ESequence.Ready:
+                    break;
+                case ESequence.InWorkCSTLoad:
+                    break;
+                case ESequence.InWorkCSTUnLoad:
+                    break;
+                case ESequence.CSTTilt:
+                    break;
+                case ESequence.CSTUnTilt:
+                    break;
+                case ESequence.OutWorkCSTLoad:
+                    break;
+                case ESequence.OutWorkCSTUnLoad:
+                    break;
+                case ESequence.RobotPickFixtureFromCST:
+                    break;
+                case ESequence.RobotPlaceFixtureToVinylClean:
+                    break;
+                case ESequence.VinylClean:
+                    break;
+                case ESequence.RobotPickFixtureFromVinylClean:
+                    break;
+                case ESequence.RobotPlaceFixtureToAlign:
+                    break;
+                case ESequence.FixtureAlign:
+                    break;
+                case ESequence.RobotPickFixtureFromRemoveZone:
+                    break;
+                case ESequence.RobotPlaceFixtureToOutWorkCST:
+                    break;
+                case ESequence.TransferFixtureLoad:
+                    break;
+                case ESequence.Detach:
+                    break;
+                case ESequence.TransferFixtureUnload:
+                    break;
+                case ESequence.DetachUnload:
+                    break;
+                case ESequence.RemoveFilm:
+                    break;
+                case ESequence.GlassTransferPick:
+                    break;
+                case ESequence.GlassTransferPlace:
+                    break;
+                case ESequence.AlignGlass:
+                    break;
+                case ESequence.TransferInShuttlePick:
+                    break;
+                case ESequence.WETCleanLoad:
+                    break;
+                case ESequence.WETClean:
+                    break;
+                case ESequence.WETCleanUnload:
+                    Sequence_WETCleanUnload();
+                    break;
+                case ESequence.TransferRotation:
+                    Sequence_TransferRotation();
+                    break;
+                case ESequence.AFCleanLoad:
+                    Sequence_AFCleanLoad();
+                    break;
+                case ESequence.AFClean:
+                    break;
+                case ESequence.AFCleanUnload:
+                    break;
+                case ESequence.UnloadTransferPick:
+                    break;
+                case ESequence.UnloadTransferPlace:
+                    break;
+                case ESequence.UnloadAlignGlass:
+                    break;
+                case ESequence.UnloadRobotPick:
+                    break;
+                case ESequence.UnloadRobotPlasma:
+                    break;
+                case ESequence.UnloadRobotPlace:
+                    break;
+            }
+
+            return true;
+        }
+        #endregion
+
+        #region Private Methods
+        private void Sequence_AutoRun()
+        {
+            switch ((ETransferRotationAutoRunStep)Step.RunStep)
+            {
+                case ETransferRotationAutoRunStep.Start:
+                    Log.Debug("Auto Run Start");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationAutoRunStep.GlassVac_Check:
+                    if(GlassVac1.Value || GlassRotVac.Value)
+                    {
+                        Log.Info("Sequence Transfer Rotation");
+                        Sequence = ESequence.TransferRotation;
+                        break;
+                    }
+                    if(GlassVac2.Value)
+                    {
+                        Log.Info("Sequence AF Clean Load");
+                        Sequence = ESequence.AFCleanLoad;
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationAutoRunStep.End:
+                    Log.Info("Sequence WET Clean Unload");
+                    Sequence = ESequence.WETCleanUnload;
+                    break;
+            }
+        }
+
+        private void Sequence_WETCleanUnload()
+        {
+            switch ((ETransferRotationWETCleanUnloadStep)Step.RunStep)
+            {
+                case ETransferRotationWETCleanUnloadStep.Start:
+                    Log.Debug("WET Clean Unload Start");
+                    Step.RunStep++;
+                    Log.Debug("Wait WET Clean Request Unload");
+                    break;
+                case ETransferRotationWETCleanUnloadStep.Wait_WETCleanRequestUnload:
+                    if(FlagWETCleanRequestUnload == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationWETCleanUnloadStep.ZAxis_Move_PickPosition:
+                    Log.Debug("Z Axis Move Pick Position");
+                    ZAxis.MoveAbs(ZAxisPickPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => ZAxis.IsOnPosition(ZAxisPickPosition));
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationWETCleanUnloadStep.ZAxis_Move_PickPositionWait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Pick Position Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationWETCleanUnloadStep.Vacuum_On:
+                    Log.Debug("Vacuum On");
+                    GlassVac1OnOff.Value = true;
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(GlassVac1, true);
+#endif
+                    Wait(_commonRecipe.VacDelay,() => GlassVac1.Value);
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationWETCleanUnloadStep.Vacuum_On_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationWETCleanUnloadStep.ZAxis_Move_ReadyPosition:
+                    Log.Debug("Z Axis Move Ready Position");
+                    ZAxis.MoveAbs(ZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationWETCleanUnloadStep.ZAxis_Move_ReadyPositionWait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Ready Positon Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationWETCleanUnloadStep.Set_FlagWETCleanUnloadDone:
+                    Log.Debug("Set Flag WET Clean Unload Done");
+                    FlagWETCleanUnloadDone = true;
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationWETCleanUnloadStep.Wait_WETCleanUnloadDoneReceived:
+                    if(FlagWETCleanUnloadDoneReceived == false)
+                    {
+                        break;
+                    }
+                    Log.Debug("Clear Flag WET Clean Unload Done");
+                    FlagWETCleanUnloadDone = false;
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationWETCleanUnloadStep.End:
+                    Log.Debug("WET Clean Unload End");
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence Transfer Rotation");
+                    Sequence = ESequence.TransferRotation;
+                    break;
+            }
+        }
+
+        private void Sequence_TransferRotation()
+        {
+            switch ((ETransferRotationStep)Step.RunStep)
+            {
+                case ETransferRotationStep.Start:
+                    Log.Debug("Transfer Rotation Start");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.TransferCyl_Forward:
+                    Log.Debug("Transfer Cylinder Forward");
+                    TransferCyl.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => TransferCyl.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.TransferCyl_Forward_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Transfer Cylinder Forward Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.ZAxis_Move_TransferBeforeRotatePositon:
+                    Log.Debug("Z Axis Move Transfer Before Rotate Position");
+                    ZAxis.MoveAbs(ZAxisTransferBeforeRotatePosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisTransferBeforeRotatePosition));
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.ZAxis_Move_TransferBeforeRotatePositon_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Transfer Before Rotate Position Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.GlassRotVac_On:
+                    Log.Debug("Glass Rotation Vacuum On");
+                    GlassRotateVacOnOff.Value = true;
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(GlassRotVac, true);
+#endif
+                    Wait(_commonRecipe.VacDelay);
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.GlassVac1_Off:
+                    Log.Debug("Glass Vacuum 1 Off");
+                    GlassVac1OnOff.Value = false;
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(GlassVac1, false);
+#endif
+                    Wait(_commonRecipe.VacDelay);
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.GlassRotVac_On_Check:
+                    if(GlassRotVac.Value)
+                    {
+                        //ALARM
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.ZAxis_Move_ReadyPositon:
+                    Log.Debug("Z Axis Move Ready Position");
+                    ZAxis.MoveAbs(ZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => ZAxis.IsOnPosition(ZAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.ZAxis_Move_ReadyPositon_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.Cyl_Rotate_180D:
+                    Log.Debug("Cylinder Rotate 180 Degree");
+                    RotateCyl.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => RotateCyl.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.Cyl_Rotate_180D_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder Rotate 180 Degree Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.Cyl_Down:
+                    Log.Debug("Cylinder Down");
+                    UpDownCyl.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.Cyl_Down_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder Down Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.ZAxis_Move_TransferAfterRotatePositon:
+                    Log.Debug("Z Axis Move Transfer After Rotate Position");
+                    ZAxis.MoveAbs(ZAxisTransferAfterRotatePosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => ZAxis.IsOnPosition(ZAxisTransferAfterRotatePosition));
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.ZAxis_Move_TransferAfterRotatePositon_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Transfer After Rotate Position Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.GlassVac2_On:
+                    Log.Debug("Glass Vacuum 2 On");
+                    GlassVac2OnOff.Value = true;
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(GlassVac2, true);
+#endif
+                    Wait(_commonRecipe.VacDelay);
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.GlassRotVac_Off:
+                    Log.Debug("Glass Rotation Vacuum Off");
+                    GlassRotateVacOnOff.Value = false;
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(GlassRotVac, false);
+#endif
+                    Wait(_commonRecipe.VacDelay);
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.GlassVac2_On_Check:
+                    if(GlassVac2.Value)
+                    {
+                        //ALARM
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.Cyl_Backward:
+                    Log.Debug("Cylinder Backward");
+                    TransferCyl.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => TransferCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.Cyl_Backward_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder Backward Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.End:
+                    Log.Debug("Transfer Rotation End");
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence AF Clean Load");
+                    Sequence = ESequence.AFCleanLoad;
+                    break;
+            }
+        }
+
+        private void Sequence_AFCleanLoad()
+        {
+            switch ((ETransferRotationAFCleanLoad)Step.RunStep)
+            {
+                case ETransferRotationAFCleanLoad.Start:
+                    Log.Debug("AF Clean Load Start");
+                    Step.RunStep++;
+                    Log.Debug("Wait AF Clean Request Load");
+                    break;
+                case ETransferRotationAFCleanLoad.Wait_AFCleanRequestLoad:
+                    if(FlagAFCleanRequestLoad == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationAFCleanLoad.ZAxis_Move_PlacePosition:
+                    Log.Debug("Z Axis Move Place Position");
+                    ZAxis.MoveAbs(ZAxisPlacePosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => ZAxis.IsOnPosition(ZAxisPlacePosition));
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationAFCleanLoad.ZAxis_Move_PlacePosition_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Place Position Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationAFCleanLoad.Vacuum_Off:
+                    Log.Debug("Glass Vacuum 2 Off");
+                    GlassVac2OnOff.Value = false;
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(GlassVac2,false);
+#endif
+                    Wait(_commonRecipe.VacDelay);
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationAFCleanLoad.ZAxis_Move_ReadyPosition:
+                    Log.Debug("Z Axis Move Ready Position");
+                    ZAxis.MoveAbs(ZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationAFCleanLoad.ZAxis_Move_ReadyPosition_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationAFCleanLoad.Set_FlagAFCleanLoadDone:
+                    Log.Debug("Set Flag AF Clean Load Done");
+                    FlagAFCleanLoadDone = true;
+                    Log.Debug("Wait AF Clean Load Done Received");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationAFCleanLoad.Wait_AFCleanLoadDoneReceived:
+                    if(FlagAFCleanLoadDoneReceived == false)
+                    {
+                        break;
+                    }
+                    Log.Debug("Clear Flag AF Clean Load Done");
+                    FlagAFCleanLoadDone = false;
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationAFCleanLoad.End:
+                    Log.Debug("AF Clean Load End");
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+
+                    Log.Info("Sequence WET Clean Unload");
+                    Sequence = ESequence.WETCleanUnload;
+                    break;
+            }
         }
         #endregion
     }

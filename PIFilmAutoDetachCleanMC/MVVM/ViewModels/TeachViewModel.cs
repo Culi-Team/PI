@@ -595,16 +595,16 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 },
                 new PositionTeaching(RecipeSelector)
                 {
-                    Name = Application.Current.Resources["str_TransferRotationZAxisTransferPositionUp"]?.ToString() ?? "Transfer Rotation Z Axis Transfer Position Up",
-                    PropertyName = "TransferRotationLeftZAxisTransferPositionUp",
-                    Position = RecipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisTransferPositionUp,
+                    Name = Application.Current.Resources["str_TransferRotationZAxisTransferBeforeRotatePosition"]?.ToString() ?? "Transfer Rotation Z Axis Transfer Before Rotate Position",
+                    PropertyName = "TransferRotationLeftZAxisTransferBeforeRotatePosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisTransferBeforeRotatePosition,
                     Motion = Devices.MotionsInovance.TransferRotationLZAxis
                 },
                 new PositionTeaching(RecipeSelector)
                 {
-                    Name = Application.Current.Resources["str_TransferRotationZAxisTransferPositionDown"]?.ToString() ?? "Transfer Rotation Z Axis Transfer Position Down",
-                    PropertyName = "TransferRotationLeftZAxisTransferPositionDown",
-                    Position = RecipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisTransferPositionDown,
+                    Name = Application.Current.Resources["str_TransferRotationZAxisTransferAfterRotatePosition"]?.ToString() ?? "Transfer Rotation Z Axis Transfer After Rotate Position",
+                    PropertyName = "TransferRotationLeftZAxisTransferAfterRotatePosition",
+                    Position = RecipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisTransferAfterRotatePosition,
                     Motion = Devices.MotionsInovance.TransferRotationLZAxis
                 },
                 new PositionTeaching(RecipeSelector)
@@ -641,16 +641,16 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 },
                 new PositionTeaching(RecipeSelector)
                 {
-                    Name = Application.Current.Resources["str_TransferRotationZAxisTransferPositionUp"]?.ToString() ?? "Transfer Rotation Z Axis Transfer Position Up",
+                    Name = Application.Current.Resources["str_TransferRotationZAxisTransferBeforeRotatePosition"]?.ToString() ?? "Transfer Rotation Z Axis Transfer Before Rotate Position",
                     PropertyName = "TransferRotationRightZAxisTransferPositionUp",
-                    Position = RecipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisTransferPositionUp,
+                    Position = RecipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisTransferBeforeRotatePosition,
                     Motion = Devices.MotionsInovance.TransferRotationRZAxis
                 },
                 new PositionTeaching(RecipeSelector)
                 {
-                    Name = Application.Current.Resources["str_TransferRotationZAxisTransferPositionDown"]?.ToString() ?? "Transfer Rotation Z Axis Transfer Position Down",
+                    Name = Application.Current.Resources["str_TransferRotationZAxisTransferAfterRotatePosition"]?.ToString() ?? "Transfer Rotation Z Axis Transfer After Rotate Position",
                     PropertyName = "TransferRotationRightZAxisTransferPositionDown",
-                    Position = RecipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisTransferPositionDown,
+                    Position = RecipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisTransferAfterRotatePosition,
                     Motion = Devices.MotionsInovance.TransferRotationRZAxis
                 },
                 new PositionTeaching(RecipeSelector)
@@ -1097,6 +1097,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
             inputs.Add(Devices.Inputs.TrRotateLeftVac1);
+            inputs.Add(Devices.Inputs.TrRotateLeftVac2);
+            inputs.Add(Devices.Inputs.TrRotateLeftRotVac);
             return inputs;
         }
 
@@ -1104,6 +1106,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
             inputs.Add(Devices.Inputs.TrRotateRightVac1);
+            inputs.Add(Devices.Inputs.TrRotateRightVac2);
+            inputs.Add(Devices.Inputs.TrRotateRightRotVac);
             return inputs;
         }
 
@@ -1215,6 +1219,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
             outputs.Add(Devices.Outputs.TrRotateLeftVac1OnOff);
+            outputs.Add(Devices.Outputs.TrRotateLeftVac2OnOff);
+            outputs.Add(Devices.Outputs.TrRotateLeftRotVacOnOff);
             return outputs;
         }
 
@@ -1222,6 +1228,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
             outputs.Add(Devices.Outputs.TrRotateRightVac1OnOff);
+            outputs.Add(Devices.Outputs.TrRotateRightVac2OnOff);
+            outputs.Add(Devices.Outputs.TrRotateRightRotVacOnOff);
             return outputs;
         }
 
@@ -1638,11 +1646,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 case "TransferRotationLeftZAxisPickPosition":
                     _recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisPickPosition = Position;
                     break;
-                case "TransferRotationLeftZAxisTransferPositionUp":
-                    _recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisTransferPositionUp = Position;
+                case "TransferRotationLeftZAxisTransferBeforeRotatePosition":
+                    _recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisTransferBeforeRotatePosition = Position;
                     break;
-                case "TransferRotationLeftZAxisTransferPositionDown":
-                    _recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisTransferPositionDown = Position;
+                case "TransferRotationLeftZAxisTransferAfterRotatePosition":
+                    _recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisTransferAfterRotatePosition = Position;
                     break;
                 case "TransferRotationLeftZAxisPlacePosition":
                     _recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisPlacePosition = Position;
@@ -1653,11 +1661,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 case "TransferRotationRightZAxisPickPosition":
                     _recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisPickPosition = Position;
                     break;
-                case "TransferRotationRightZAxisTransferPositionUp":
-                    _recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisTransferPositionUp = Position;
+                case "TransferRotationRightZAxisTransferBeforeRotatePosition":
+                    _recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisTransferBeforeRotatePosition = Position;
                     break;
-                case "TransferRotationRightZAxisTransferPositionDown":
-                    _recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisTransferPositionDown = Position;
+                case "TransferRotationRightZAxisTransferAfterRotatePosition":
+                    _recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisTransferAfterRotatePosition = Position;
                     break;
                 case "TransferRotationRightZAxisPlacePosition":
                     _recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisPlacePosition = Position;
