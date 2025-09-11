@@ -97,6 +97,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
         // Wet Clean
         public ICylinder WetCleanPusherRightUpDown { get; }
         public ICylinder WetCleanPusherLeftUpDown { get; }
+        public ICylinder WetCleanBrushRightUpDown { get; }
+        public ICylinder WetCleanBrushLeftUpDown { get; }
 
         // Transfer Rotate
         public ICylinder TrRotateRightRotate { get; }
@@ -109,6 +111,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
         // AF Clean
         public ICylinder AFCleanPusherRightUpDown { get; }
         public ICylinder AFCleanPusherLeftUpDown { get; }
+        public ICylinder AFCleanBrushRightUpDown { get; }
+        public ICylinder AFCleanBrushLeftUpDown { get; }
 
         // Robot 2 Unload
         public ICylinder UnloadRobotCyl1UpDown { get; }
@@ -428,6 +432,16 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                 .SetIdentity((int)ECylinder.WetCleanPusherLeftUpDown, ECylinder.WetCleanPusherLeftUpDown.ToString());
             WetCleanPusherLeftUpDown.CylinderType = ECylinderType.UpDown;
 
+            WetCleanBrushRightUpDown = _cylinderFactory
+                .Create(new List<IDInput> { _inputs.WetCleanBrushRightUp }, new List<IDInput> { _inputs.WetCleanBrushRightDown }, _outputs.WetCleanBrushRightUp, _outputs.WetCleanBrushRightDown)
+                .SetIdentity((int)ECylinder.WetCleanBrushRightUpDown, ECylinder.WetCleanBrushRightUpDown.ToString());
+            WetCleanBrushRightUpDown.CylinderType = ECylinderType.UpDown;
+
+            WetCleanBrushLeftUpDown = _cylinderFactory
+                .Create(new List<IDInput> { _inputs.WetCleanBrushLeftUp }, new List<IDInput> { _inputs.WetCleanBrushLeftDown }, _outputs.WetCleanBrushLeftUp, _outputs.WetCleanBrushLeftDown)
+                .SetIdentity((int)ECylinder.WetCleanBrushLeftUpDown, ECylinder.WetCleanBrushLeftUpDown.ToString());
+            WetCleanBrushLeftUpDown.CylinderType = ECylinderType.UpDown;
+
             // Transfer Rotate
             TrRotateRightRotate = _cylinderFactory
                 .Create(new List<IDInput> { _inputs.TrRotateRight0Degree }, new List<IDInput> { _inputs.TrRotateRight180Degree }, _outputs.TrRotateRight0Degree, _outputs.TrRotateRight180Degree)
@@ -469,6 +483,16 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                 .Create(new List<IDInput> { _inputs.AfCleanPusherLeftUp }, new List<IDInput> { _inputs.AfCleanPusherLeftDown }, _outputs.AfCleanPusherLeftUp, _outputs.AfCleanPusherLeftDown)
                 .SetIdentity((int)ECylinder.AFCleanPusherLeftUpDown, ECylinder.AFCleanPusherLeftUpDown.ToString());
             AFCleanPusherLeftUpDown.CylinderType = ECylinderType.UpDown;
+
+            AFCleanBrushRightUpDown = _cylinderFactory
+                .Create(new List<IDInput> { _inputs.AfCleanBrushRightUp }, new List<IDInput> { _inputs.AfCleanBrushRightDown }, _outputs.AfCleanBrushRightUp, _outputs.AfCleanBrushRightDown)
+                .SetIdentity((int)ECylinder.AFCleanBrushRightUpDown, ECylinder.AFCleanBrushRightUpDown.ToString());
+            AFCleanBrushRightUpDown.CylinderType = ECylinderType.UpDown;
+
+            AFCleanBrushLeftUpDown = _cylinderFactory
+                .Create(new List<IDInput> { _inputs.AfCleanBrushLeftUp }, new List<IDInput> { _inputs.AfCleanBrushLeftDown }, _outputs.AfCleanBrushLeftUp, _outputs.AfCleanBrushLeftDown)
+                .SetIdentity((int)ECylinder.AFCleanBrushLeftUpDown, ECylinder.AFCleanBrushLeftUpDown.ToString());
+            AFCleanBrushLeftUpDown.CylinderType = ECylinderType.UpDown;
 
             // Robot 2 Unload
             UnloadRobotCyl1UpDown = _cylinderFactory

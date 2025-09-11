@@ -100,6 +100,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         // Wet Clean
         WetCleanPusherRightUpDown,
         WetCleanPusherLeftUpDown,
+        WetCleanBrushRightUpDown,
+        WetCleanBrushLeftUpDown,
+
 
         // Transfer Rotate
         TrRotateRightRotate,
@@ -112,6 +115,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         // AF Clean
         AFCleanPusherRightUpDown,
         AFCleanPusherLeftUpDown,
+        AFCleanBrushRightUpDown,
+        AFCleanBrushLeftUpDown,
 
         // Robot 2 Unload
         UnloadRobotCyl1UpDown,
