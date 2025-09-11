@@ -28,6 +28,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private bool usePort6;
         private bool isCleanVertical;
 
+        private double feedingAxisLoadPosition;
         private double xAxisLoadPosition;
         private double yAxisLoadPosition;
         private double tAxisLoadPosition;
@@ -99,6 +100,13 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             set { rFeedingAxisCleaningSpeed = value; }
         }
 
+        [SingleRecipeDescription(Description = "Feeding Axis Load Position", Unit = Unit.mm)]
+        public double FeedingAxisLoadPosition
+        {
+            get { return feedingAxisLoadPosition; }
+            set { feedingAxisLoadPosition = value; }
+        }
+
         [SingleRecipeDescription(Description = "X Axis Load Position", Unit = Unit.mm)]
         public double XAxisLoadPosition
         {
@@ -149,7 +157,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Y Axis Clean Vertical Position", Unit = Unit.mm)]
-        public double YAxisCleanVertialPosition
+        public double YAxisCleanVerticalPosition
         {
             get { return yAxisCleanVerticalPosition; }
             set { yAxisCleanVerticalPosition = value; }

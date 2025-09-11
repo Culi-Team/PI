@@ -277,7 +277,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private double TAxisCleanHorizontalPosition => cleanRecipe.TAxisCleanHorizontalPosition;
 
         private double XAxisCleanVerticalPosition => cleanRecipe.XAxisCleanVerticalPosition;
-        private double YAxisCleanVerticalPosition => cleanRecipe.YAxisCleanVertialPosition;
+        private double YAxisCleanVerticalPosition => cleanRecipe.YAxisCleanVerticalPosition;
         private double TAxisCleanVerticalPosition => cleanRecipe.TAxisCleanHorizontalPosition;
         #endregion
 
