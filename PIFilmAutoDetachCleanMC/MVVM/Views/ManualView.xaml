@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
              xmlns:vm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels"
+             xmlns:vmm="clr-namespace:EQX.Core.Display;assembly=EQX.Core"
              xmlns:uc="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              d:DataContext="{d:DesignInstance Type=vm:ManualViewModel}"
              xmlns:uiControls="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
@@ -630,6 +631,42 @@
                     </Grid>
                 </StackPanel>
             </GroupBox>
+            <GroupBox Header="DISPLAY SCREEN"
+                      DockPanel.Dock="Top">
+                <StackPanel Orientation="Vertical">
+                    <UniformGrid Columns="2">
+                        <Button Content="Main Screen"
+                                Command="{Binding SetPrimaryInteractiveCommand}">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="Background" Value="LightGray" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ActiveScreen}" Value="{x:Static vmm:InteractiveScreen.Primary}">
+                                            <Setter Property="Background" Value="LightGreen" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Content="Second Screen"
+                                Command="{Binding SetSecondaryInteractiveCommand}">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="Background" Value="LightGray" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ActiveScreen}" Value="{x:Static vmm:InteractiveScreen.Secondary}">
+                                            <Setter Property="Background" Value="LightGreen" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </UniformGrid>
+                    <CheckBox Content="View Only"
+                              IsChecked="{Binding IsViewOnly}" />
+                </StackPanel>
+            </GroupBox>
+
 
         </DockPanel>
     </Grid>

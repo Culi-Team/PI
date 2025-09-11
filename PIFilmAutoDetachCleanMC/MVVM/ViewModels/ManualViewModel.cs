@@ -1,27 +1,30 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Common;
+using EQX.Core.Device.SpeedController;
+using EQX.Core.Display;
 using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Process;
 using EQX.Core.Sequence;
 using EQX.UI.Controls;
+using EQX.UI.Display;
+using Microsoft.Extensions.DependencyInjection;
+using PIFilmAutoDetachCleanMC.Converters;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
 using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Recipe;
-using PIFilmAutoDetachCleanMC.Converters;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Xml.Linq;
-using Microsoft.Extensions.DependencyInjection;
-using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
-using EQX.Core.Device.SpeedController;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -1463,11 +1466,136 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             AfCleanLeftPressure = Regulators.AfCleanLRegulator.GetPressure();
             AfCleanRightPressure = Regulators.AfCleanRRegulator.GetPressure();
 
+            SetPrimaryInteractiveCommand = new RelayCommand(
+                () => ActiveScreen = InteractiveScreen.Primary,
+                () => !IsViewOnly);
+            SetSecondaryInteractiveCommand = new RelayCommand(
+                () => ActiveScreen = InteractiveScreen.Secondary,
+                () => !IsViewOnly);
+            _displayManager.EnableExtend();
+            _activeScreen = InteractiveScreen.Primary;
+            MoveMainWindowTo(_activeScreen);
+            _isViewOnly = false;
+
             pressureUpdateTimer = new System.Timers.Timer(500);
             pressureUpdateTimer.Elapsed += PressureUpdateTimer_Elapsed;
             pressureUpdateTimer.Start();
             
             SelectedProcess = ProcessListTeaching.FirstOrDefault();
+        }
+
+        public IRelayCommand SetPrimaryInteractiveCommand { get; }
+        public IRelayCommand SetSecondaryInteractiveCommand { get; }
+
+        public InteractiveScreen ActiveScreen
+        {
+            get => _activeScreen;
+            set
+            {
+                if (_activeScreen != value)
+                {
+                    _activeScreen = value;
+                    OnPropertyChanged(nameof(ActiveScreen));
+                    MoveMainWindowTo(_activeScreen);
+                    if (_isViewOnly)
+                    {
+                        _viewOnlyOverlay.ShowOn(_activeScreen == InteractiveScreen.Primary ? 1 : 0);
+                    }
+                }
+            }
+        }
+
+        public bool IsViewOnly
+        {
+            get => _isViewOnly;
+            set
+            {
+                if (_isViewOnly != value)
+                {
+                    _isViewOnly = value;
+                    OnPropertyChanged(nameof(IsViewOnly));
+                    if (_isViewOnly)
+                    {
+                        _viewOnlyOverlay.ShowOn(_activeScreen == InteractiveScreen.Primary ? 1 : 0);
+                    }
+                    else
+                    {
+                        _viewOnlyOverlay.Hide();
+                    }
+                    SetPrimaryInteractiveCommand.NotifyCanExecuteChanged();
+                    SetSecondaryInteractiveCommand.NotifyCanExecuteChanged();
+                }
+            }
+        }
+
+        private readonly DisplayManager _displayManager = new();
+        private readonly ViewOnlyOverlay _viewOnlyOverlay = new();
+        private InteractiveScreen _activeScreen;
+        private bool _isViewOnly;
+
+        private void MoveMainWindowTo(InteractiveScreen screen)
+        {
+            var monitors = GetMonitors();
+            if (screen == InteractiveScreen.Primary && monitors.Count > 0)
+            {
+                PositionWindow(monitors[0]);
+            }
+            else if (screen == InteractiveScreen.Secondary && monitors.Count > 1)
+            {
+                PositionWindow(monitors[1]);
+            }
+        }
+
+        private static void PositionWindow(MonitorInfo info)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var window = Application.Current.MainWindow;
+                if (window != null)
+                {
+                    var wasMaximized = window.WindowState == WindowState.Maximized;
+                    if (wasMaximized)
+                    {
+                        window.WindowState = WindowState.Normal;
+                    }
+                    window.Left = info.Left;
+                    window.Top = info.Top;
+                    window.Width = info.Width;
+                    window.Height = info.Height;
+                    if (wasMaximized)
+                    {
+                        window.WindowState = WindowState.Maximized;
+                    }
+                }
+            });
+        }
+
+        private static IList<MonitorInfo> GetMonitors()
+        {
+            var result = new List<MonitorInfo>();
+            EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero,
+                (IntPtr hMonitor, IntPtr hdc, ref RECT rect, IntPtr data) =>
+                {
+                    result.Add(new MonitorInfo(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top));
+                    return true;
+                }, IntPtr.Zero);
+            return result;
+        }
+
+        private record MonitorInfo(int Left, int Top, int Width, int Height);
+
+        private delegate bool MonitorEnumProc(IntPtr hMonitor, IntPtr hdc, ref RECT lprcMonitor, IntPtr dwData);
+
+        [DllImport("user32.dll")]
+        private static extern bool EnumDisplayMonitors(IntPtr hdc, IntPtr lprcClip, MonitorEnumProc lpfnEnum, IntPtr dwData);
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct RECT
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
         }
     }
 }
