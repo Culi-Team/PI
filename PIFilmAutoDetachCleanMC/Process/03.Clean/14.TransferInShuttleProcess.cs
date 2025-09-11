@@ -346,7 +346,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ETransferInShuttlePlaceStep)Step.RunStep)
             {
                 case ETransferInShuttlePlaceStep.Start:
-                    Log.Debug("Transfer In Shuttle Place Start");
+                    Log.Debug("WET Clean Load Start");
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePlaceStep.YAxis_Move_PlacePosition:
@@ -410,7 +410,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Z Axis Move Ready Position Done");
                     Step.RunStep++;
                     break;
-                case ETransferInShuttlePlaceStep.Set_Flag_TransferInShuttlePlaceDone:
+                case ETransferInShuttlePlaceStep.Set_FlagWETCleanLoadDone:
                     Log.Debug("Set Flag WET Clean Load Done");
                     FlagWetCleanLoadDone = true;
                     Step.RunStep++;

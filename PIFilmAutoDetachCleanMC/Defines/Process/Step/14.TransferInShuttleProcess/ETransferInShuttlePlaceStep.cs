@@ -17,7 +17,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Vacuum_Off,
         ZAxis_Move_ReadyPosition,
         ZAxis_Move_ReadyPosition_Wait,
-        Set_Flag_TransferInShuttlePlaceDone,
+        Set_FlagWETCleanLoadDone,
         Wait_WETCleanPlaceDoneReceived,
         End
     }

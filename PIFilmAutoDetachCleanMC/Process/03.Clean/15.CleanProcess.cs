@@ -25,6 +25,16 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly CleanRecipe _wetCleanRightRecipe;
         private readonly CleanRecipe _afCleanLeftRecipe;
         private readonly CleanRecipe _afCleanRightRecipe;
+        private readonly IDInputDevice _wetCleanLeftInput;
+        private readonly IDOutputDevice _wetCleanLeftOutput;
+        private readonly IDInputDevice _wetCleanRightInput;
+        private readonly IDOutputDevice _wetCleanRightOutput;
+        private readonly IDInputDevice _afCleanLeftInput;
+        private readonly IDOutputDevice _afCleanLeftOutput;
+        private readonly IDInputDevice _afCleanRightInput;
+        private readonly IDOutputDevice _afCleanRightOutput;
+
+        private bool Is3MPrepareDone { get; set; } = false;
 
         private EClean cleanType
         {
@@ -221,6 +231,36 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private IDInputDevice Inputs
+        {
+            get
+            {
+                return cleanType switch
+                {
+                    EClean.WETCleanLeft => _wetCleanLeftInput,
+                    EClean.WETCleanRight => _wetCleanRightInput,
+                    EClean.AFCleanLeft => _afCleanLeftInput,
+                    EClean.AFCleanRight => _afCleanRightInput,
+                    _ => throw new NotImplementedException(),
+                };
+            }
+        }
+
+        private IDOutputDevice Outputs
+        {
+            get
+            {
+                return cleanType switch
+                {
+                    EClean.WETCleanLeft => _wetCleanLeftOutput,
+                    EClean.WETCleanRight => _wetCleanRightOutput,
+                    EClean.AFCleanLeft => _afCleanLeftOutput,
+                    EClean.AFCleanRight => _afCleanRightOutput,
+                    _ => throw new NotImplementedException(),
+                };
+            }
+        }
+
         private double XAxisLoadPosition => cleanRecipe.XAxisLoadPosition;
         private double YAxisLoadPosition => cleanRecipe.YAxisLoadPosition;
         private double TAxisLoadPosition => cleanRecipe.TAxisLoadPosition;
@@ -229,6 +269,63 @@ namespace PIFilmAutoDetachCleanMC.Process
         private double YAxisUnloadPosition => cleanRecipe.YAxisUnloadPosition;
         private double TAxisUnloadPosition => cleanRecipe.TAxisUnloadPosition;
 
+        private double XAxisCleanHorizontalPosition => cleanRecipe.XAxisCleanHorizontalPosition;
+        private double YAxisCleanHorizontalPosition => cleanRecipe.YAxisCleanHorizontalPosition;
+        private double TAxisCleanHorizontalPosition => cleanRecipe.TAxisCleanHorizontalPosition;
+
+        private double XAxisCleanVerticalPosition => cleanRecipe.XAxisCleanVerticalPosition;
+        private double YAxisCleanVerticalPosition => cleanRecipe.YAxisCleanVertialPosition;
+        private double TAxisCleanVerticalPosition => cleanRecipe.TAxisCleanHorizontalPosition;
+        #endregion
+
+        #region Flags
+        private bool FlagCleanRequestLoad
+        {
+            set
+            {
+                Outputs[(int)ECleanProcessOutput.REQ_LOAD] = value;
+            }
+        }
+
+        private bool FlagCleanLoadDoneReceived
+        {
+            set
+            {
+                Outputs[(int)ECleanProcessOutput.LOAD_DONE_RECEIVED] = value;
+            }
+        }
+
+        private bool FlagCleanLoadDone
+        {
+            get
+            {
+                return Inputs[(int)ECleanProcessInput.LOAD_DONE];
+            }
+        }
+
+        private bool FlagCleanRequestUnload
+        {
+            set
+            {
+                Outputs[(int)ECleanProcessOutput.REQ_UNLOAD] = value;
+            }
+        }
+
+        private bool FlagCleanUnloadDoneReceived
+        {
+            set
+            {
+                Outputs[(int)ECleanProcessOutput.UNLOAD_DONE_RECEIVED] = value;
+            }
+        }
+
+        private bool FlagCleanUnloadDone
+        {
+            get
+            {
+                return Inputs[(int)ECleanProcessInput.UNLOAD_DONE];
+            }
+        }
         #endregion
 
         #region Constructor
@@ -237,7 +334,15 @@ namespace PIFilmAutoDetachCleanMC.Process
             [FromKeyedServices("WETCleanLeftRecipe")] CleanRecipe wetCleanLeftRecipe,
             [FromKeyedServices("WETCleanRightRecipe")] CleanRecipe wetCleanRightRecipe,
             [FromKeyedServices("AFCleanLeftRecipe")] CleanRecipe afCleanLeftRecipe,
-            [FromKeyedServices("AFCleanRightRecipe")] CleanRecipe afCleanRightRecipe)
+            [FromKeyedServices("AFCleanRightRecipe")] CleanRecipe afCleanRightRecipe,
+            [FromKeyedServices("WETCleanLeftInput")] IDInputDevice wetCleanLeftInput,
+            [FromKeyedServices("WETCleanLeftOutput")] IDOutputDevice wetCleanLeftOutput,
+            [FromKeyedServices("WETCleanRightInput")] IDInputDevice wetCleanRightInput,
+            [FromKeyedServices("WETCleanRightOutput")] IDOutputDevice wetCleanRightOutput,
+            [FromKeyedServices("AFCleanLeftInput")] IDInputDevice afCleanLeftInput,
+            [FromKeyedServices("AFCleanLeftOutput")] IDOutputDevice afCleanLeftOutput,
+            [FromKeyedServices("AFCleanRightInput")] IDInputDevice afCleanRightInput,
+            [FromKeyedServices("AFCleanRightOutput")] IDOutputDevice afCleanRightOutput)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
@@ -245,6 +350,14 @@ namespace PIFilmAutoDetachCleanMC.Process
             _wetCleanRightRecipe = wetCleanRightRecipe;
             _afCleanLeftRecipe = afCleanLeftRecipe;
             _afCleanRightRecipe = afCleanRightRecipe;
+            _wetCleanLeftInput = wetCleanLeftInput;
+            _wetCleanLeftOutput = wetCleanLeftOutput;
+            _wetCleanRightInput = wetCleanRightInput;
+            _wetCleanRightOutput = wetCleanRightOutput;
+            _afCleanLeftInput = afCleanLeftInput;
+            _afCleanLeftOutput = afCleanLeftOutput;
+            _afCleanRightInput = afCleanRightInput;
+            _afCleanRightOutput = afCleanRightOutput;
         }
         #endregion
 
@@ -367,6 +480,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_Load();
                     break;
                 case ESequence.WETClean:
+                    Sequence_Clean();
                     break;
                 case ESequence.WETCleanUnload:
                     break;
@@ -376,6 +490,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_Load();
                     break;
                 case ESequence.AFClean:
+                    Sequence_Clean();
                     break;
                 case ESequence.AFCleanUnload:
                     break;
@@ -441,6 +556,9 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ECleanProcessLoadStep.Start:
                     Log.Debug("Clean Load Start");
+
+                    Log.Debug("Clear Flag Clean Load Done Received");
+                    FlagCleanLoadDoneReceived = false;
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.AxisMoveLoadPosition:
@@ -448,11 +566,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     XAxis.MoveAbs(XAxisLoadPosition);
                     YAxis.MoveAbs(YAxisLoadPosition);
                     TAxis.MoveAbs(TAxisLoadPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => XAxis.IsOnPosition(XAxisLoadPosition) && YAxis.IsOnPosition(YAxisLoadPosition) && TAxis.IsOnPosition(TAxisLoadPosition));
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => XAxis.IsOnPosition(XAxisLoadPosition) && YAxis.IsOnPosition(YAxisLoadPosition) && TAxis.IsOnPosition(TAxisLoadPosition));
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.AxisMoveLoadPosition_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         //Timeout ALARM
                         break;
@@ -461,16 +579,219 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.Set_FlagCleanRequestLoad:
-
+                    Log.Debug("Set Flag Request Load");
+                    FlagCleanRequestLoad = true;
+                    Log.Debug("Wait Clean Load Done");
+                    Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.Wait_CleanLoadDone:
+                    if(FlagCleanLoadDone == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Log.Debug("Clear Flag Request Load");
+                    FlagCleanRequestLoad = false;
+                    Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.Set_FlagCleanLoadDoneReceived:
+                    Log.Debug("Set Flag Clean Load Done Received");
+                    FlagCleanLoadDoneReceived = true;
+                    Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.End:
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                    {
+                        Log.Info("Sequence WET Clean");
+                        Sequence = ESequence.WETClean;
+                        break;
+                    }
+                    Log.Info("Sequence AF Clean");
+                    Sequence = ESequence.AFClean;
                     break;
             }
         }
-        #endregion
+
+        private void Sequence_Clean()
+        {
+            switch ((ECleanProcessCleanStep)Step.RunStep)
+            {
+                case ECleanProcessCleanStep.Start:
+                    Log.Debug("Clean Start");
+                    Log.Debug("Wait 3M Prepare Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.Wait_3M_PrepareDone:
+                    if(Is3MPrepareDone == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.Axis_MoveCleanHorizontalPosition:
+                    Log.Debug("X Y T Axis Move Clean Horizontal Position");
+                    XAxis.MoveAbs(XAxisCleanHorizontalPosition);
+                    YAxis.MoveAbs(YAxisCleanHorizontalPosition);
+                    TAxis.MoveAbs(TAxisCleanHorizontalPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => XAxis.IsOnPosition(XAxisCleanHorizontalPosition) &&
+                                                               YAxis.IsOnPosition(YAxisCleanHorizontalPosition) &&
+                                                               TAxis.IsOnPosition(TAxisCleanHorizontalPosition));
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.Axis_MoveCleanHorizontalPosition_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("X Y T Axis Move Clean Horizontal Position");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.CylPusher_Down_CleanHorizontal:
+                    Log.Debug("Cylinder Pusher Down");
+                    PushCyl.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => PushCyl.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.CylPusher_Down_CleanHorizontal_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder Pusher Down Done");
+                    Step.RunStep++; 
+                    break;
+                case ECleanProcessCleanStep.CleanHorizontal:
+                    Log.Debug("Clean Horizontal");
+                    FeedingAxis.MoveJog(cleanRecipe.RFeedingAxisCleaningSpeed,true);
+#if !SIMULATION
+                    _devices.MotionsAjin.CleanHorizontal(cleanType, XAxisCleanHorizontalPosition, YAxisCleanHorizontalPosition, 50, 10, cleanRecipe.CleanHorizontalCount);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => _devices.MotionsAjin.IsContiMotioning(cleanType) == false);
+#endif
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.CleanHorizontal_Wait:
+                    if(WaitTimeOutOccurred) 
+                    {
+                        //Timeout ALARM
+                        break; 
+                    }
+                    FeedingAxis.Stop();
+                    Log.Debug("Clean Horizontal Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.CylPusher_Up_CleanHorizontal:
+                    Log.Debug("Cylinder Pusher Up");
+                    PushCyl.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout,() => PushCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.CylPusherUp_CleanHorizontal_Wait:
+                    if(WaitTimeOutOccurred) 
+                    {
+                        //Timeout ALARM
+                        break; 
+                    }
+                    Log.Debug("Cylinder Pusher Up Done");
+                    if(cleanRecipe.IsCleanVertical)
+                    {
+                        Step.RunStep++;
+                        break;
+                    }
+                    Step.RunStep = (int)ECleanProcessCleanStep.End;
+                    break;
+                case ECleanProcessCleanStep.Axis_Move_CleanVerticalPosition:
+                    Log.Debug("Axis Move Clean Vertical Position");
+                    XAxis.MoveAbs(XAxisCleanVerticalPosition);
+                    YAxis.MoveAbs(YAxisCleanVerticalPosition);
+                    TAxis.MoveAbs(TAxisCleanVerticalPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => XAxis.IsOnPosition(XAxisCleanVerticalPosition) &&
+                                                               YAxis.IsOnPosition(YAxisCleanVerticalPosition) &&
+                                                               TAxis.IsOnPosition(TAxisCleanVerticalPosition));
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.Axis_Move_CleanVerticalPosition_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Axis Move Clean Vertical Position Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.CylPusher_Down_CleanVertical:
+                    Log.Debug("Cylinder Pusher Down");
+                    PushCyl.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => PushCyl.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.CylPusher_Down_CleanVertical_Wait:
+                    if(WaitTimeOutOccurred) 
+                    {
+                        //Timeout ALARM
+                        break; 
+                    }
+                    Log.Debug("Cylinder Pusher Down Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.CleanVertical:
+                    Log.Debug("Clean Vertical");
+#if !SIMULATION
+                    _devices.MotionsAjin.CleanVertical(cleanType,XAxisCleanVerticalPosition,YAxisCleanVerticalPosition,cleanRecipe.CleanVerticalCount);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => _devices.MotionsAjin.IsContiMotioning(cleanType));
+#endif
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.CleanVertical_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Clean Vertical Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.CylPusher_Up_CleanVertical:
+                    Log.Debug("Cylinder Pusher Up");
+                    PushCyl.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => PushCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.CylPusher_Up_CleanVertical_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder Pusher Up Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanStep.End:
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                    {
+                        Log.Info("Sequence WET Cleann Unload");
+                        Sequence = ESequence.WETCleanUnload;
+                        break;
+                    }
+                    Log.Info("Sequence AF Cleann Unload");
+                    Sequence = ESequence.AFCleanUnload;
+                    break;
+            }
+        }
+#endregion
     }
 }

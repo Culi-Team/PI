@@ -14,7 +14,12 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 		private int unwinderTorque;
         private int winderTorque;
         private double cleanVolume;
+        private int cleanHorizontalCount;
+        private int cleanVerticalCount;
         private double cylinderPushPressure;
+
+        private double rFeedingAxisCleaningSpeed;
+
         private bool usePort1;
         private bool usePort2;
         private bool usePort3;
@@ -31,6 +36,13 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private double yAxisUnloadPosition;
         private double tAxisUnloadPosition;
 
+        private double xAxisCleanHorizontalPosition;
+        private double yAxisCleanHorizontalPosition;
+        private double tAxisCleanHorizontalPosition;
+
+        private double xAxisCleanVerticalPosition;
+        private double yAxisCleanVerticalPosition;
+        private double tAxisCleanVerticalPosition;
 
         [SingleRecipeDescription(Description = "UnWinder Torque", Unit = Unit.Percentage)]
         [SingleRecipeMinMax(Max = 100.0, Min = 0.0)]
@@ -56,12 +68,35 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 			set { cleanVolume = value; }
 		}
 
+        [SingleRecipeDescription(Description = "Clean Horizontal Count", Unit = Unit.ETC)]
+        [SingleRecipeMinMax(Max = 50, Min = 1)]
+        public int CleanHorizontalCount
+        {
+            get { return cleanHorizontalCount; }
+            set { cleanHorizontalCount = value; }
+        }
+
+        [SingleRecipeDescription(Description = "Clean Vertical Count", Unit = Unit.ETC)]
+        [SingleRecipeMinMax(Max = 50, Min = 1)]
+        public int CleanVerticalCount
+        {
+            get { return cleanVerticalCount; }
+            set { cleanVerticalCount = value; }
+        }
+
         [SingleRecipeDescription(Description = "Cylinder Push Pressure", Unit = Unit.MilliPascal)]
         [SingleRecipeMinMax(Max = 0.9, Min = 0)]
         public double CylinderPushPressure
         {
             get { return cylinderPushPressure; }
             set { cylinderPushPressure = value; }
+        }
+
+        [SingleRecipeDescription(Description = "R Feeding Axis Cleaning Speed", Unit = Unit.mmPerSecond)]
+        public double RFeedingAxisCleaningSpeed
+        {
+            get { return rFeedingAxisCleaningSpeed; }
+            set { rFeedingAxisCleaningSpeed = value; }
         }
 
         [SingleRecipeDescription(Description = "X Axis Load Position", Unit = Unit.mm)]
@@ -85,6 +120,48 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             set { tAxisLoadPosition = value; }
         }
 
+        [SingleRecipeDescription(Description = "X Axis Clean Horizontal Position", Unit = Unit.mm)]
+        public double XAxisCleanHorizontalPosition
+        {
+            get { return xAxisCleanHorizontalPosition; }
+            set { xAxisCleanHorizontalPosition = value; }
+        }
+
+        [SingleRecipeDescription(Description = "Y Axis Clean Horizontal Position", Unit = Unit.mm)]
+        public double YAxisCleanHorizontalPosition
+        {
+            get { return yAxisCleanHorizontalPosition; }
+            set { yAxisCleanHorizontalPosition = value; }
+        }
+
+        [SingleRecipeDescription(Description = "T Axis Clean Horizontal Position", Unit = Unit.mm)]
+        public double TAxisCleanHorizontalPosition
+        {
+            get { return tAxisCleanHorizontalPosition; }
+            set { tAxisCleanHorizontalPosition = value; }
+        }
+
+        [SingleRecipeDescription(Description = "X Axis Clean Vertical Position", Unit = Unit.mm)]
+        public double XAxisCleanVerticalPosition
+        {
+            get { return xAxisCleanVerticalPosition; }
+            set { xAxisCleanVerticalPosition = value; }
+        }
+
+        [SingleRecipeDescription(Description = "Y Axis Clean Vertical Position", Unit = Unit.mm)]
+        public double YAxisCleanVertialPosition
+        {
+            get { return yAxisCleanVerticalPosition; }
+            set { yAxisCleanVerticalPosition = value; }
+        }
+
+        [SingleRecipeDescription(Description = "T Axis Clean Vertical Position", Unit = Unit.mm)]
+        public double TAxisCleanVerticalPosition
+        {
+            get { return tAxisCleanVerticalPosition; }
+            set { tAxisCleanVerticalPosition = value; }
+        }
+
         [SingleRecipeDescription(Description = "X Axis Unload Position", Unit = Unit.mm)]
         public double XAxisUnloadPosition
         {
@@ -105,7 +182,6 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             get { return tAxisUnloadPosition; }
             set { tAxisUnloadPosition = value; }
         }
-
 
         [SingleRecipeDescription(Description = "Use Syringe Pump Port 1", Unit = Unit.ETC)]
         public bool UsePort1
