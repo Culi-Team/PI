@@ -9,6 +9,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ECleanProcessUnloadStep
     {
         Start,
+        Wait_AFCleanLoadDone,
         AxisMoveUnloadPosition,
         AxisMoveUnloadPosition_Wait,
         Vacuum_Off,
