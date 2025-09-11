@@ -32,7 +32,7 @@
             <Setter Property="Padding" Value="5"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Width" Value="270"/>
-            <Setter Property="Height" Value="180"/>
+            <Setter Property="Height" Value="150"/>
         </Style>
         <!-- CylinderStyle-->
         <Style x:Key="CylinderControlStyle" TargetType="Border">
@@ -171,8 +171,8 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="550"/>
-            <RowDefinition Height="150"/>
-            <RowDefinition Height="250"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="260"/>
         </Grid.RowDefinitions>
         
         <!-- Image Section -->
