@@ -31,7 +31,7 @@
             <Setter Property="Padding" Value="5"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Width" Value="270"/>
-            <Setter Property="Height" Value="140"/>
+            <Setter Property="Height" Value="180"/>
         </Style>
         
         <!-- DataTemplates -->
@@ -186,7 +186,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border Style="{StaticResource ControlModuleStyle}">
-                                    <ui:MovingView Motion="{Binding .}" />
+                                    <ui:MovingView2 Motion="{Binding .}" />
                                 </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
