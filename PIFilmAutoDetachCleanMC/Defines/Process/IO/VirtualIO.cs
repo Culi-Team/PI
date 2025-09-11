@@ -292,10 +292,14 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //Left
             ((VirtualInputDevice<ECleanProcessInput>)_wetCleanLeftInput).Mapping((int)ECleanProcessInput.LOAD_DONE,
                 _transferInShuttleLeftOutput, (int)ETransferInShuttleProcessOutput.WET_CLEAN_LOAD_DONE);
+            ((VirtualInputDevice<ECleanProcessInput>)_wetCleanLeftInput).Mapping((int)ECleanProcessInput.AF_CLEAN_LOADING,
+                _afCleanLeftOutput, (int)ECleanProcessOutput.AF_CLEAN_LOADING);
 
             //Right 
             ((VirtualInputDevice<ECleanProcessInput>)_wetCleanRightInput).Mapping((int)ECleanProcessInput.LOAD_DONE,
                 _transferInShuttleRightOutput, (int)ETransferInShuttleProcessOutput.WET_CLEAN_LOAD_DONE);
+            ((VirtualInputDevice<ECleanProcessInput>)_wetCleanRightInput).Mapping((int)ECleanProcessInput.AF_CLEAN_LOADING,
+                _afCleanRightOutput, (int)ECleanProcessOutput.AF_CLEAN_LOADING);
         }
     }
 }
