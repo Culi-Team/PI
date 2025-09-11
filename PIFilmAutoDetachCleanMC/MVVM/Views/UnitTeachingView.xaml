@@ -366,7 +366,8 @@
                             <DataGridTemplateColumn Header="Move To" Width="70">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="Move" Command="{Binding PositionTeachingCommand}"
+                                        <Button Content="Move" Command="{Binding PositionTeachingMoveCommand}"
+                                                CommandParameter="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                 HorizontalAlignment="Left" VerticalAlignment="Center"
                                                 Padding="17,4" Margin="2" Background="YellowGreen" Foreground="White"
                                                 BorderThickness="0" FontWeight="SemiBold"/>

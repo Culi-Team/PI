@@ -7,6 +7,7 @@ using EQX.Core.Process;
 using EQX.UI.Controls;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System.Collections.ObjectModel;
@@ -1095,14 +1096,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDInput> GetTransferRotationLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            inputs.Add(Devices.Inputs.TrRotateLeft1Vac);
+            inputs.Add(Devices.Inputs.TrRotateLeftVac1);
             return inputs;
         }
 
         private ObservableCollection<IDInput> GetTransferRotationRightInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            inputs.Add(Devices.Inputs.TrRotateRight1Vac);
+            inputs.Add(Devices.Inputs.TrRotateRightVac1);
             return inputs;
         }
 
@@ -1213,14 +1214,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDOutput> GetTransferRotationLeftOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            outputs.Add(Devices.Outputs.TrRotateLeft1VacOnOff);
+            outputs.Add(Devices.Outputs.TrRotateLeftVac1OnOff);
             return outputs;
         }
 
         private ObservableCollection<IDOutput> GetTransferRotationRightOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            outputs.Add(Devices.Outputs.TrRotateRight1VacOnOff);
+            outputs.Add(Devices.Outputs.TrRotateRightVac1OnOff);
             return outputs;
         }
 
@@ -1428,16 +1429,46 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 OnPropertyChanged(nameof(Motion));
             }
         }
-        public ICommand PositionTeachingCommand
+        public ICommand PositionTeachingMoveCommand
         {
             get => new RelayCommand<object>((p) =>
             {
+                if (p is TeachViewModel teachViewModel)
+                {
+                    if (!InterLock(teachViewModel, teachViewModel.SelectedProcess))
+                    {
+                        return; 
+                    }
+                }
+
                 string MoveTo = (string)Application.Current.Resources["str_MoveTo"];
                 if (MessageBoxEx.ShowDialog($"{MoveTo} {Name} ?") == true)
                 {
                     Motion.MoveAbs(Position);
                 }
             });
+        }
+
+        // InterLock
+        public bool InterLock(TeachViewModel teachViewModel, IProcess<ESequence> process)
+        {
+            if (process == teachViewModel.Processes.TransferFixtureProcess)
+            {
+                return teachViewModel.Devices?.Cylinders?.TransferFixtureUpDown?.IsBackward == true;
+            }
+            if (process == teachViewModel.Processes.DetachProcess)
+            {
+                return teachViewModel.Devices?.Cylinders?.DetachCyl1UpDown?.IsBackward == true &&
+                       teachViewModel.Devices?.Cylinders?.DetachCyl2UpDown?.IsBackward == true;
+            }
+            if (process == teachViewModel.Processes.GlassTransferProcess)
+            {
+                return teachViewModel.Devices?.Cylinders?.GlassTransferCyl1UpDown?.IsBackward == true &&
+                       teachViewModel.Devices?.Cylinders?.GlassTransferCyl2UpDown?.IsBackward == true &&
+                       teachViewModel.Devices?.Cylinders?.GlassTransferCyl3UpDown?.IsBackward == true;
+            }
+
+            return true; 
         }
         private readonly RecipeSelector _recipeSelector;
         public RecipeSelector RecipeSelector { get; set; }

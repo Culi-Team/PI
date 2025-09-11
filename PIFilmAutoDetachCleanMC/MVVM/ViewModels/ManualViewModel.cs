@@ -945,8 +945,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
             
             // Add Transfer Rotation vacuum detection inputs
-            inputs.Add(Devices.Inputs.TrRotateLeft1Vac);
-            inputs.Add(Devices.Inputs.TrRotateRight1Vac);
+            inputs.Add(Devices.Inputs.TrRotateLeftVac1);
+            inputs.Add(Devices.Inputs.TrRotateRightVac1);
             
             return inputs;
         }
@@ -1147,8 +1147,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
             
             // Add Transfer Rotation vacuum control outputs
-            outputs.Add(Devices.Outputs.TrRotateLeft1VacOnOff);
-            outputs.Add(Devices.Outputs.TrRotateRight1VacOnOff);
+            outputs.Add(Devices.Outputs.TrRotateLeftVac1OnOff);
+            outputs.Add(Devices.Outputs.TrRotateRightVac1OnOff);
             
             return outputs;
         }
