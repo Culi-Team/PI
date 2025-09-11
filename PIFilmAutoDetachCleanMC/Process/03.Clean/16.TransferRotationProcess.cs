@@ -29,8 +29,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder TransferCyl => port == EPort.Left ? _devices.Cylinders.TrRotateLeftFwBw :
                                                       _devices.Cylinders.TrRotateRightFwBw;
 
-        public IDOutput GlassVac => port == EPort.Left ? _devices.Outputs.TrRotateLeft1VacOnOff :
-                                                      _devices.Outputs.TrRotateRight1VacOnOff;
+        public IDOutput GlassVac1 => port == EPort.Left ? _devices.Outputs.TrRotateLeftVac1OnOff :
+                                                      _devices.Outputs.TrRotateRightVac1OnOff;
 
         private bool IsVacDetect => port == EPort.Left ? _devices.Inputs.TrRotateLeft1Vac.Value :
                                                          _devices.Inputs.TrRotateRight1Vac.Value;

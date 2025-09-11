@@ -68,6 +68,12 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ECleanProcessInput>>("AFCleanRightInput");
                 services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ECleanProcessOutput>>("AFCleanRightOutput");
 
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ETransferRotationProcessInput>>("TransferRotationLeftInput");
+                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ETransferRotationProcessOutput>>("TransferRotationLeftOutput");
+
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ETransferRotationProcessInput>>("TransferRotationRightInput");
+                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ETransferRotationProcessOutput>>("TransferRotationRightOutput");
+
                 services.AddSingleton<VirtualIO>();
 
             });

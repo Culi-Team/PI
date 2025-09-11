@@ -41,6 +41,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         private readonly IDOutputDevice _wetCleanLeftOutput;
         private readonly IDInputDevice _wetCleanRightInput;
         private readonly IDOutputDevice _wetCleanRightOutput;
+        private readonly IDInputDevice _transferRotationLeftInput;
+        private readonly IDOutputDevice _transferRotationLeftOutput;
+        private readonly IDInputDevice _transferRotationRightInput;
+        private readonly IDOutputDevice _transferRotationRightOutput;
         private readonly IDInputDevice _afCleanLeftInput;
         private readonly IDOutputDevice _afCleanLeftOutput;
         private readonly IDInputDevice _afCleanRightInput;
@@ -76,6 +80,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
                          [FromKeyedServices("WETCleanLeftOutput")] IDOutputDevice wetCleanLeftOutput,
                          [FromKeyedServices("WETCleanRightInput")] IDInputDevice wetCleanRightInput,
                          [FromKeyedServices("WETCleanRightOutput")] IDOutputDevice wetCleanRightOutput,
+                         [FromKeyedServices("TransferRotationLeftInput")] IDInputDevice transferRotationLeftInput,
+                         [FromKeyedServices("TransferRotationLeftOutput")] IDOutputDevice transferRotationLeftOutput,
+                         [FromKeyedServices("TransferRotationRightInput")] IDInputDevice transferRotationRightInput,
+                         [FromKeyedServices("TransferRotationRightOutput")] IDOutputDevice transferRotationRightOutput,
                          [FromKeyedServices("AFCleanLeftInput")] IDInputDevice afCleanLeftInput,
                          [FromKeyedServices("AFCleanLeftOutput")] IDOutputDevice afCleanLeftOutput,
                          [FromKeyedServices("AFCleanRightInput")] IDInputDevice afCleanRightInput,
@@ -111,6 +119,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
             _wetCleanLeftOutput = wetCleanLeftOutput;
             _wetCleanRightInput = wetCleanRightInput;
             _wetCleanRightOutput = wetCleanRightOutput;
+
+            _transferRotationLeftInput = transferRotationLeftInput;
+            _transferRotationLeftOutput = transferRotationLeftOutput;
+            _transferRotationRightInput = transferRotationRightInput;
+            _transferRotationRightOutput = transferRotationRightOutput;
+
             _afCleanLeftInput = afCleanLeftInput;
             _afCleanLeftOutput = afCleanLeftOutput;
             _afCleanRightInput = afCleanRightInput;
@@ -160,6 +174,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
             _wetCleanLeftOutput.Initialize();
             _wetCleanRightInput.Initialize();
             _wetCleanRightOutput.Initialize();
+
+            _transferRotationLeftInput.Initialize();
+            _transferRotationLeftOutput.Initialize();
+            _transferRotationRightInput.Initialize();
+            _transferRotationRightOutput.Initialize();
 
             _afCleanLeftInput.Initialize();
             _afCleanLeftOutput.Initialize();
@@ -288,18 +307,56 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
 
             //Clean Input Mapping
-            //WET Clean
-            //Left
+                //WET Clean
+                    //Left
             ((VirtualInputDevice<ECleanProcessInput>)_wetCleanLeftInput).Mapping((int)ECleanProcessInput.LOAD_DONE,
                 _transferInShuttleLeftOutput, (int)ETransferInShuttleProcessOutput.WET_CLEAN_LOAD_DONE);
             ((VirtualInputDevice<ECleanProcessInput>)_wetCleanLeftInput).Mapping((int)ECleanProcessInput.AF_CLEAN_LOADING,
                 _afCleanLeftOutput, (int)ECleanProcessOutput.AF_CLEAN_LOADING);
+            ((VirtualInputDevice<ECleanProcessInput>)_wetCleanLeftInput).Mapping((int)ECleanProcessInput.UNLOAD_DONE,
+                _transferRotationLeftOutput, (int)ETransferRotationProcessOutput.WET_CLEAN_UNLOAD_DONE);
 
             //Right 
             ((VirtualInputDevice<ECleanProcessInput>)_wetCleanRightInput).Mapping((int)ECleanProcessInput.LOAD_DONE,
                 _transferInShuttleRightOutput, (int)ETransferInShuttleProcessOutput.WET_CLEAN_LOAD_DONE);
             ((VirtualInputDevice<ECleanProcessInput>)_wetCleanRightInput).Mapping((int)ECleanProcessInput.AF_CLEAN_LOADING,
                 _afCleanRightOutput, (int)ECleanProcessOutput.AF_CLEAN_LOADING);
+            ((VirtualInputDevice<ECleanProcessInput>)_wetCleanRightInput).Mapping((int)ECleanProcessInput.UNLOAD_DONE,
+                _transferRotationRightOutput, (int)ETransferRotationProcessOutput.WET_CLEAN_UNLOAD_DONE);
+
+            //AF Clean
+                //Left
+            ((VirtualInputDevice<ECleanProcessInput>)_afCleanLeftInput).Mapping((int)ECleanProcessInput.WET_CLEAN_UNLOADING,
+                _wetCleanLeftOutput, (int)ECleanProcessOutput.WET_CLEAN_UNLOADING);
+            ((VirtualInputDevice<ECleanProcessInput>)_afCleanLeftInput).Mapping((int)ECleanProcessInput.LOAD_DONE,
+                _transferRotationLeftOutput, (int)ETransferRotationProcessOutput.AF_CLEAN_LOAD_DONE);
+
+                //Right
+            ((VirtualInputDevice<ECleanProcessInput>)_afCleanRightInput).Mapping((int)ECleanProcessInput.WET_CLEAN_UNLOADING,
+                _wetCleanRightOutput, (int)ECleanProcessOutput.WET_CLEAN_UNLOADING);
+            ((VirtualInputDevice<ECleanProcessInput>)_afCleanRightInput).Mapping((int)ECleanProcessInput.LOAD_DONE,
+                _transferRotationRightOutput, (int)ETransferRotationProcessOutput.AF_CLEAN_LOAD_DONE);
+
+            //Transfer Rotation Input Mapping
+                //Left
+            ((VirtualInputDevice<ETransferRotationProcessInput>)_transferRotationLeftInput).Mapping((int)ETransferRotationProcessInput.WET_CLEAN_REQ_UNLOAD,
+                _wetCleanLeftOutput, (int)ECleanProcessOutput.REQ_UNLOAD);
+            ((VirtualInputDevice<ETransferRotationProcessInput>)_transferRotationLeftInput).Mapping((int)ETransferRotationProcessInput.WET_CLEAN_UNLOAD_DONE_RECEIVED,
+                _wetCleanLeftOutput, (int)ECleanProcessOutput.UNLOAD_DONE_RECEIVED);
+            ((VirtualInputDevice<ETransferRotationProcessInput>)_transferRotationLeftInput).Mapping((int)ETransferRotationProcessInput.AF_CLEAN_REQ_LOAD,
+                _afCleanLeftOutput, (int)ECleanProcessOutput.REQ_LOAD);
+            ((VirtualInputDevice<ETransferRotationProcessInput>)_transferRotationLeftInput).Mapping((int)ETransferRotationProcessInput.AF_CLEAN_LOAD_DONE_RECEIVED,
+                _afCleanLeftOutput, (int)ECleanProcessOutput.LOAD_DONE_RECEIVED);
+
+                //Right
+            ((VirtualInputDevice<ETransferRotationProcessInput>)_transferRotationRightInput).Mapping((int)ETransferRotationProcessInput.WET_CLEAN_REQ_UNLOAD,
+            _wetCleanRightOutput, (int)ECleanProcessOutput.REQ_UNLOAD);
+            ((VirtualInputDevice<ETransferRotationProcessInput>)_transferRotationRightInput).Mapping((int)ETransferRotationProcessInput.WET_CLEAN_UNLOAD_DONE_RECEIVED,
+                _wetCleanRightOutput, (int)ECleanProcessOutput.UNLOAD_DONE_RECEIVED);
+            ((VirtualInputDevice<ETransferRotationProcessInput>)_transferRotationRightInput).Mapping((int)ETransferRotationProcessInput.AF_CLEAN_REQ_LOAD,
+                _afCleanRightOutput, (int)ECleanProcessOutput.REQ_LOAD);
+            ((VirtualInputDevice<ETransferRotationProcessInput>)_transferRotationRightInput).Mapping((int)ETransferRotationProcessInput.AF_CLEAN_LOAD_DONE_RECEIVED,
+                _afCleanRightOutput, (int)ECleanProcessOutput.LOAD_DONE_RECEIVED);
         }
     }
 }
