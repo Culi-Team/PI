@@ -360,7 +360,7 @@
         OUT_SHUTTLE_VAC_2 = 355,
         UNLOAD_TRANSFER_L_VAC = 356,
         UNLOAD_TRANSFER_R_VAC = 357,
-        SPARE_IN358 = 358,
+        RELAY_PLASMA_MOTOR_ERROR = 358,
         PLASMA_STATUS_1 = 359,
         PLASMA_STATUS_2 = 360,
         PLASMA_STATUS_3 = 361,
@@ -415,8 +415,8 @@
         SPARE_IN410 = 410,
         SPARE_IN411 = 411,
         SPARE_IN412 = 412,
-        SPARE_IN413 = 413,
-        SPARE_IN414 = 414,
-        SPARE_IN415 = 415
+        MAIN_AIR_1 = 413,
+        MAIN_AIR_2 = 414,
+        MAIN_AIR_3 = 415
     }
 }

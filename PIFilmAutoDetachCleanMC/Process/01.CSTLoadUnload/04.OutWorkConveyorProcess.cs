@@ -37,7 +37,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Cylinders
-        private ICylinder Fix => _devices.Cylinders.OutCstFixCylFwBw;
+        private ICylinder Fix1 => _devices.Cylinders.OutCstFixCyl1FwBw;
+        private ICylinder Fix2 => _devices.Cylinders.OutCstFixCyl2FwBw;
         private ICylinder Tilt => _devices.Cylinders.OutCstTiltCylUpDown;
         private ICylinder RollerCyl => _devices.Cylinders.OutCvSupportUpDown;
         #endregion

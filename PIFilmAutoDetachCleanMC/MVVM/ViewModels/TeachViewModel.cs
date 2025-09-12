@@ -2139,20 +2139,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 interlockMsg = "Need GlassTransfer Z Axis Ready Position before Moving";
                 return teachViewModel.Devices?.MotionsAjin?.ShuttleTransferZAxis?.IsOnPosition(teachViewModel.RecipeSelector?.CurrentRecipe?.GlassTransferRecipe?.ZAxisReadyPosition ?? 0) == true;
             }
-            // Interlock WetClean Left
-            if (PropertyName == ""
-                || PropertyName == ""
-                || PropertyName == ""
-                || PropertyName == ""
-                || PropertyName == ""
-                || PropertyName == ""
-                || PropertyName == ""
-                || PropertyName == ""
-                || PropertyName == ""
-                || PropertyName == "")
+            // Interlock WetClean Left - Check WetCleanPusherLeftUpDown status
+            if (PropertyName == "WETCleanLeftXAxisLoadPosition"
+                || PropertyName == "WETCleanLeftYAxisLoadPosition"
+                || PropertyName == "WETCleanLeftTAxisLoadPosition"
+                || PropertyName == "WETCleanLeftXAxisCleanHorizontalPosition"
+                || PropertyName == "WETCleanLeftYAxisCleanHorizontalPosition"
+                || PropertyName == "WETCleanLeftTAxisCleanHorizontalPosition"
+                || PropertyName == "WETCleanLeftXAxisCleanVerticalPosition"
+                || PropertyName == "WETCleanLeftYAxisCleanVerticalPosition"
+                || PropertyName == "WETCleanLeftTAxisCleanVerticalPosition"
+                || PropertyName == "WETCleanLeftXAxisUnloadPosition"
+                || PropertyName == "WETCleanLeftYAxisUnloadPosition"
+                || PropertyName == "WETCleanLeftTAxisUnloadPosition")
             {
-                interlockMsg = "Need ShuttleTransfer Z Axis Ready Position before Moving";
-                return teachViewModel.Devices?.Cylinders?.WetCleanBrushLeftUpDown?.IsBackward == true;
+                interlockMsg = "Need WetCleanPusherLeftUpDown at UP position before Moving";
+                return teachViewModel.Devices?.Cylinders?.WetCleanPusherLeftUpDown?.IsBackward == true;
             }
             //cylinder.Name   "WetCleanPusherLeftUpDown"  string
 
