@@ -415,8 +415,8 @@
         SPARE_IN410 = 410,
         SPARE_IN411 = 411,
         SPARE_IN412 = 412,
-        SPARE_IN413 = 413,
-        SPARE_IN414 = 414,
-        SPARE_IN415 = 415
+        MAIN_AIR_1 = 413,
+        MAIN_AIR_2 = 414,
+        MAIN_AIR_3 = 415
     }
 }
