@@ -2049,22 +2049,47 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public bool InterLock(TeachViewModel teachViewModel, IProcess<ESequence> process, out string interlockMsg)
         {
             interlockMsg = string.Empty;
-
-            if (PropertyName == "TransferFixtureYAxisLoadPosition")
+            // Interlock TransferFixTure
+            if (PropertyName == "TransferFixtureYAxisLoadPosition" || PropertyName == "OutCstTAxisWorkPosition")
             {
                 interlockMsg = "Need TransferFixtureUp, RemoveZonePusherCyl1Up, DetachGlassZAxis at Ready Position before Moving";
                 return teachViewModel.Devices?.Cylinders?.TransferFixtureUpDown?.IsBackward == true &&
                        teachViewModel.Devices?.Cylinders?.RemoveZonePusherCyl1UpDown?.IsBackward == true &&
                        teachViewModel.Devices?.MotionsInovance?.DetachGlassZAxis?.IsOnPosition(teachViewModel.RecipeSelector?.CurrentRecipe?.DetachRecipe?.DetachZAxisReadyPosition ?? 0) == true;
             }
-
-            if (PropertyName == "OutCstTAxisWorkPosition")
+            // Interlock Detach
+            if (PropertyName == "ShuttleTransferXAxisDetachPosition" 
+                || PropertyName == "ShuttleTransferXAxisDetachCheckPosition" 
+                || PropertyName == "ShuttleTransferXAxisUnloadPosition")
             {
-                interlockMsg = "Need TransferFixtureUp, RemoveZonePusherCyl1Up, DetachGlassZAxis at Ready Position before Moving";
-                return teachViewModel.Devices?.Cylinders?.TransferFixtureUpDown?.IsBackward == true &&
-                       teachViewModel.Devices?.Cylinders?.RemoveZonePusherCyl1UpDown?.IsBackward == true &&
-                       teachViewModel.Devices?.MotionsInovance?.DetachGlassZAxis?.IsOnPosition(teachViewModel.RecipeSelector?.CurrentRecipe?.DetachRecipe?.DetachZAxisReadyPosition ?? 0) == true;
+                interlockMsg = "Need ShuttleTransfer Z Axis Ready Position before Moving";
+                return teachViewModel.Devices?.MotionsAjin?.ShuttleTransferZAxis?.IsOnPosition(teachViewModel.RecipeSelector?.CurrentRecipe?.DetachRecipe?.ShuttleTransferZAxisReadyPosition ?? 0) == true;
             }
+            // Interlock GlassTranfer
+            if (PropertyName == "YAxisReadyPosition"
+                || PropertyName == "YAxisPickPosition"
+                || PropertyName == "YAxisLeftPlacePosition"
+                || PropertyName == "YAxisRightPlacePosition")
+            {
+                interlockMsg = "Need ShuttleTransfer Z Axis Ready Position before Moving";
+                return teachViewModel.Devices?.MotionsInovance?.GlassTransferZAxis?.IsOnPosition(teachViewModel.RecipeSelector?.CurrentRecipe?.GlassTransferRecipe?.ZAxisPickPosition ?? 0) == true;
+            }
+            // Interlock TransferShutter Left / Right
+            if (PropertyName == "TransferInShuttleLeftYAxisReadyPosition"
+                || PropertyName == "TransferInShuttleLeftYAxisPickPosition1"
+                || PropertyName == "TransferInShuttleLeftYAxisPickPosition2"
+                || PropertyName == "TransferInShuttleLeftYAxisPickPosition3"
+                || PropertyName == "TransferInShuttleLeftYAxisPlacePosition"
+                || PropertyName == "TransferInShuttleRightYAxisReadyPosition"
+                || PropertyName == "TransferInShuttleRightYAxisPickPosition1"
+                || PropertyName == "TransferInShuttleRightYAxisPickPosition2"
+                || PropertyName == "TransferInShuttleRightYAxisPickPosition3"
+                || PropertyName == "TransferInShuttleRightZAxisPlacePosition")
+            {
+                interlockMsg = "Need ShuttleTransfer Z Axis Ready Position before Moving";
+                return teachViewModel.Devices?.MotionsAjin?.ShuttleTransferZAxis?.IsOnPosition(teachViewModel.RecipeSelector?.CurrentRecipe?.GlassTransferRecipe?.ZAxisReadyPosition ?? 0) == true;
+            }
+
             return true; 
         }
         private readonly RecipeSelector _recipeSelector;
