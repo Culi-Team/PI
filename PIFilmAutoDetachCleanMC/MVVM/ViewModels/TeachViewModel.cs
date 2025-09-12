@@ -2032,13 +2032,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             get => new RelayCommand<object>((p) =>
             {
                 if (p is TeachViewModel teachViewModel)
-                {
-                    if (!InterLock(teachViewModel, teachViewModel.SelectedProcess))
+                    if (!InterLock(teachViewModel, teachViewModel.SelectedProcess, out string interlockMsg))
                     {
-                        return; 
+                        MessageBoxEx.ShowDialog($"InterLock Fail! Cannot Move Axis\n\n{interlockMsg}");
+                        return;
                     }
-                }
-
                 string MoveTo = (string)Application.Current.Resources["str_MoveTo"];
                 if (MessageBoxEx.ShowDialog($"{MoveTo} {Name} ?") == true)
                 {
@@ -2048,28 +2046,25 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         }
 
         // InterLock
-        public bool InterLock(TeachViewModel teachViewModel, IProcess<ESequence> process)
+        public bool InterLock(TeachViewModel teachViewModel, IProcess<ESequence> process, out string interlockMsg)
         {
-            if (process == teachViewModel.Processes.InWorkConveyorProcess)
+            interlockMsg = string.Empty;
+
+            if (PropertyName == "TransferFixtureYAxisLoadPosition")
             {
-                return teachViewModel.Devices?.Cylinders?.InCstStopperUpDown?.IsBackward == true;
-            }
-            if (process == teachViewModel.Processes.TransferFixtureProcess)
-            {
-                return teachViewModel.Devices?.Cylinders?.TransferFixtureUpDown?.IsBackward == true;
-            }
-            if (process == teachViewModel.Processes.DetachProcess)
-            {
-                return teachViewModel.Devices?.Cylinders?.DetachCyl1UpDown?.IsBackward == true &&
-                       teachViewModel.Devices?.Cylinders?.DetachCyl2UpDown?.IsBackward == true;
-            }
-            if (process == teachViewModel.Processes.GlassTransferProcess)
-            {
-                return teachViewModel.Devices?.Cylinders?.GlassTransferCyl1UpDown?.IsBackward == true &&
-                       teachViewModel.Devices?.Cylinders?.GlassTransferCyl2UpDown?.IsBackward == true &&
-                       teachViewModel.Devices?.Cylinders?.GlassTransferCyl3UpDown?.IsBackward == true;
+                interlockMsg = "Need TransferFixtureUp, RemoveZonePusherCyl1Up, DetachGlassZAxis at Ready Position before Moving";
+                return teachViewModel.Devices?.Cylinders?.TransferFixtureUpDown?.IsBackward == true &&
+                       teachViewModel.Devices?.Cylinders?.RemoveZonePusherCyl1UpDown?.IsBackward == true &&
+                       teachViewModel.Devices?.MotionsInovance?.DetachGlassZAxis?.IsOnPosition(teachViewModel.RecipeSelector?.CurrentRecipe?.DetachRecipe?.DetachZAxisReadyPosition ?? 0) == true;
             }
 
+            if (PropertyName == "OutCstTAxisWorkPosition")
+            {
+                interlockMsg = "Need TransferFixtureUp, RemoveZonePusherCyl1Up, DetachGlassZAxis at Ready Position before Moving";
+                return teachViewModel.Devices?.Cylinders?.TransferFixtureUpDown?.IsBackward == true &&
+                       teachViewModel.Devices?.Cylinders?.RemoveZonePusherCyl1UpDown?.IsBackward == true &&
+                       teachViewModel.Devices?.MotionsInovance?.DetachGlassZAxis?.IsOnPosition(teachViewModel.RecipeSelector?.CurrentRecipe?.DetachRecipe?.DetachZAxisReadyPosition ?? 0) == true;
+            }
             return true; 
         }
         private readonly RecipeSelector _recipeSelector;

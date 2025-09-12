@@ -164,4 +164,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             }
         }
     }
+
+    public class PositionTeachingCommandParameter
+    {
+        public TeachViewModel TeachViewModel { get; set; }
+        public PositionTeaching PositionTeaching { get; set; }
+    }
 }
