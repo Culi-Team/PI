@@ -124,7 +124,8 @@
                 Inputs="{Binding DataContext.InWorkConveyorInputs, ElementName=root}"
                 TeachingImage="{StaticResource LoadWorkCassetteStageImage}"
                 PositionTeachings="{Binding DataContext.InWorkConveyorPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
+                TeachViewModel="{Binding DataContext, ElementName=root}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="OutWorkConveyorTemplate">
@@ -135,7 +136,8 @@
                 Inputs="{Binding DataContext.OutWorkConveyorInputs, ElementName=root}"
                 TeachingImage="{StaticResource LoadWorkCassetteStageImage}"
                 PositionTeachings="{Binding DataContext.OutWorkConveyorPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
+                TeachViewModel="{Binding DataContext, ElementName=root}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="TransferFixtureTemplate">
@@ -146,7 +148,8 @@
                 Inputs="{Binding DataContext.TransferFixtureInputs, ElementName=root}"
                 TeachingImage="{StaticResource TransferFixtureImage}"
                 PositionTeachings="{Binding DataContext.TransferFixturePositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
+                TeachViewModel="{Binding DataContext, ElementName=root}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="DetachTemplate">
@@ -157,7 +160,8 @@
                 Inputs="{Binding DataContext.DetachInputs, ElementName=root}"
                 TeachingImage="{StaticResource DetachImage}"
                 PositionTeachings="{Binding DataContext.DetachPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
+                TeachViewModel="{Binding DataContext, ElementName=root}"/>
         </DataTemplate>
         
         <DataTemplate x:Key="GlassTransferTemplate">
@@ -168,7 +172,8 @@
                 Inputs="{Binding DataContext.GlassTransferInputs, ElementName=root}"
                 TeachingImage="{StaticResource GlassTransferImage}"
                 PositionTeachings="{Binding DataContext.GlassTransferPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
+                TeachViewModel="{Binding DataContext, ElementName=root}"/>
         </DataTemplate>
 
         <!-- Transfer Shutter Templates -->
@@ -180,7 +185,8 @@
                 Inputs="{Binding DataContext.TransferShutterLeftInputs, ElementName=root}"
                 TeachingImage="{StaticResource TransferShutterImage}"
                 PositionTeachings="{Binding DataContext.TransferShutterLeftPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
+                TeachViewModel="{Binding DataContext, ElementName=root}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="TransferShutterRightTemplate">
@@ -191,7 +197,8 @@
                 Inputs="{Binding DataContext.TransferShutterRightInputs, ElementName=root}"
                 TeachingImage="{StaticResource TransferShutterImage}"
                 PositionTeachings="{Binding DataContext.TransferShutterRightPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
+                TeachViewModel="{Binding DataContext, ElementName=root}"/>
         </DataTemplate>
 
         <!-- Transfer Rotation Templates -->
@@ -203,7 +210,8 @@
                 Inputs="{Binding DataContext.TransferRotationLeftInputs, ElementName=root}"
                 TeachingImage="{StaticResource TransferRotationImage}"
                 PositionTeachings="{Binding DataContext.TransferRotationLeftPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
+                TeachViewModel="{Binding DataContext, ElementName=root}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="TransferRotationRightTemplate">
@@ -214,7 +222,8 @@
                 Inputs="{Binding DataContext.TransferRotationRightInputs, ElementName=root}"
                 TeachingImage="{StaticResource TransferRotationImage}"
                 PositionTeachings="{Binding DataContext.TransferRotationRightPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
+                TeachViewModel="{Binding DataContext, ElementName=root}"/>
         </DataTemplate>
 
         <!-- Unload Transfer Templates -->
@@ -226,7 +235,8 @@
                 Inputs="{Binding DataContext.UnloadTransferLeftInputs, ElementName=root}"
                 TeachingImage="{StaticResource UnloadTransferImage}"
                 PositionTeachings="{Binding DataContext.UnloadTransferLeftPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
+                TeachViewModel="{Binding DataContext, ElementName=root}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="UnloadTransferRightTemplate">
@@ -237,7 +247,8 @@
                 Inputs="{Binding DataContext.UnloadTransferRightInputs, ElementName=root}"
                 TeachingImage="{StaticResource UnloadTransferImage}"
                 PositionTeachings="{Binding DataContext.UnloadTransferRightPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
+                TeachViewModel="{Binding DataContext, ElementName=root}"/>
         </DataTemplate>
 
         <!-- Clean Templates -->
@@ -249,7 +260,8 @@
                 Inputs="{Binding DataContext.WETCleanLeftInputs, ElementName=root}"
                 TeachingImage="{StaticResource WetCleanImage}"
                 PositionTeachings="{Binding DataContext.WETCleanLeftPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
+                TeachViewModel="{Binding DataContext, ElementName=root}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="WETCleanRightTemplate">
@@ -260,7 +272,8 @@
                 Inputs="{Binding DataContext.WETCleanRightInputs, ElementName=root}"
                 TeachingImage="{StaticResource WetCleanImage}"
                 PositionTeachings="{Binding DataContext.WETCleanRightPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
+                TeachViewModel="{Binding DataContext, ElementName=root}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="AFCleanLeftTemplate">
@@ -271,7 +284,8 @@
                 Inputs="{Binding DataContext.AFCleanLeftInputs, ElementName=root}"
                 TeachingImage="{StaticResource AFCleanImage}"
                 PositionTeachings="{Binding DataContext.AFCleanLeftPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
+                TeachViewModel="{Binding DataContext, ElementName=root}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="AFCleanRightTemplate">
@@ -282,7 +296,8 @@
                 Inputs="{Binding DataContext.AFCleanRightInputs, ElementName=root}"
                 TeachingImage="{StaticResource AFCleanImage}"
                 PositionTeachings="{Binding DataContext.AFCleanRightPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"/>
+                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
+                TeachViewModel="{Binding DataContext, ElementName=root}"/>
         </DataTemplate>
 
     </UserControl.Resources>

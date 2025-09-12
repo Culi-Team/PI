@@ -2050,6 +2050,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         // InterLock
         public bool InterLock(TeachViewModel teachViewModel, IProcess<ESequence> process)
         {
+            if (process == teachViewModel.Processes.InWorkConveyorProcess)
+            {
+                return teachViewModel.Devices?.Cylinders?.InCstStopperUpDown?.IsBackward == true;
+            }
             if (process == teachViewModel.Processes.TransferFixtureProcess)
             {
                 return teachViewModel.Devices?.Cylinders?.TransferFixtureUpDown?.IsBackward == true;
@@ -2318,6 +2322,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     break;
 
                 // WETCleanLeftRecipe properties
+
                 case "WETCleanLeftXAxisLoadPosition":
                     _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.XAxisLoadPosition = Position;
                     break;
@@ -2356,6 +2361,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     break;
 
                 // WETCleanRightRecipe properties
+
                 case "WETCleanRightXAxisLoadPosition":
                     _recipeSelector.CurrentRecipe.WetCleanRightRecipe.XAxisLoadPosition = Position;
                     break;
@@ -2394,6 +2400,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     break;
 
                 // AFCleanLeftRecipe properties
+
                 case "AFCleanLeftXAxisLoadPosition":
                     _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisLoadPosition = Position;
                     break;
@@ -2432,6 +2439,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     break;
 
                 // AFCleanRightRecipe properties
+
                 case "AFCleanRightXAxisLoadPosition":
                     _recipeSelector.CurrentRecipe.AfCleanRightRecipe.XAxisLoadPosition = Position;
                     break;

@@ -72,6 +72,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         }
         public static readonly DependencyProperty TeachingImageProperty =
             DependencyProperty.Register(nameof(TeachingImage), typeof(ImageSource), typeof(UnitTeachingView), new PropertyMetadata(null));
+
+        public TeachViewModel TeachViewModel
+        {
+            get { return (TeachViewModel)GetValue(TeachViewModelProperty); }
+            set { SetValue(TeachViewModelProperty, value); }
+        }
+        public static readonly DependencyProperty TeachViewModelProperty =
+            DependencyProperty.Register("TeachViewModel", typeof(TeachViewModel), typeof(UnitTeachingView), new PropertyMetadata(null));
         public UnitTeachingView()
         {
             InitializeComponent();
