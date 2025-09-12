@@ -80,6 +80,9 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EUnloadTransferProcessInput>>("UnloadTransferRightInput");
                 services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EUnloadTransferProcessOutput>>("UnloadTransferRightOutput");
 
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EUnloadAlignProcessInput>>("UnloadAlignInput");
+                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EUnloadAlignProcessOutput>>("UnloadAlignOutput");
+
                 services.AddSingleton<VirtualIO>();
 
             });
