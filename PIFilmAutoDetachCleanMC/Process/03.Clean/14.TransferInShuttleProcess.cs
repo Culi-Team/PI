@@ -45,6 +45,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         public IDOutput GlassVac => port == EPort.Left ? _devices.Outputs.TransferInShuttleLVacOnOff
                                                         : _devices.Outputs.TransferInShuttleRVacOnOff;
 
+        public ICylinder RotCyl => port == EPort.Left ? _devices.Cylinders.TransferInShuttleLRotate
+                                                       : _devices.Cylinders.TransferInShuttleRRotate;
+
         private bool IsVacDetect => port == EPort.Left ? _devices.Inputs.TransferInShuttleLVac.Value
                                                         : _devices.Inputs.TransferInShuttleRVac.Value;
 
@@ -362,7 +365,21 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Y Axis Move Place Position Done");
-
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttlePlaceStep.Cyl_Rotate_180D:
+                    Log.Debug("Cylinder Rotate 180 Degree");
+                    RotCyl.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => RotCyl.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttlePlaceStep.Cyl_Rotate_180D_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder Rotate 180 Degree Done");
                     Log.Debug("Wait WET Clean Request Load");
                     Step.RunStep++;
                     break;
@@ -445,7 +462,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.Start:
                     Log.Debug("Transfer In Shuttle Pick Start");
                     Step.RunStep++;
+                    break;
+                case ETransferInShuttlePickStep.Cyl_Rotate_0D:
+                    Log.Debug("Cylinder Rotate 0 Degree");
+                    RotCyl.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout,() => RotCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttlePickStep.Cyl_Rotate_0D_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder Rotate 0 Degree Done");
                     Log.Debug("Wait Align Request Pick");
+                    Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.Wait_GlassAlignRequest_Pick:
                     if(FlagGlassAlignRequestPick == false)

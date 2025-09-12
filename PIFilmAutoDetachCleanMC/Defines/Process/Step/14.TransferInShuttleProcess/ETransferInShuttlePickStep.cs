@@ -9,6 +9,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ETransferInShuttlePickStep
     {
         Start,
+        Cyl_Rotate_0D,
+        Cyl_Rotate_0D_Wait,
+
         Wait_GlassAlignRequest_Pick,
         GlassDetect_Check,
 

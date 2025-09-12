@@ -11,6 +11,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Start,
         YAxis_Move_PlacePosition,
         YAxis_Move_PlacePosition_Wait,
+        Cyl_Rotate_180D,
+        Cyl_Rotate_180D_Wait,
         Wait_WETCleanRequestLoad,
         ZAxis_Move_PlacePosition,
         ZAxis_Move_PlacePosition_Wait,
