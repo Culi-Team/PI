@@ -49,6 +49,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         private readonly IDOutputDevice _afCleanLeftOutput;
         private readonly IDInputDevice _afCleanRightInput;
         private readonly IDOutputDevice _afCleanRightOutput;
+        private readonly IDInputDevice _unloadTransferLeftInput;
+        private readonly IDOutputDevice _unloadTransferLeftOutput;
+        private readonly IDInputDevice _unloadTransferRightInput;
+        private readonly IDOutputDevice _unloadTransferRightOutput;
 
         public VirtualIO([FromKeyedServices("InWorkConveyorInput")] IDInputDevice inWorkConveyorInput,
                          [FromKeyedServices("InWorkConveyorOutput")] IDOutputDevice inWorkConveyorOutput,
@@ -87,7 +91,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
                          [FromKeyedServices("AFCleanLeftInput")] IDInputDevice afCleanLeftInput,
                          [FromKeyedServices("AFCleanLeftOutput")] IDOutputDevice afCleanLeftOutput,
                          [FromKeyedServices("AFCleanRightInput")] IDInputDevice afCleanRightInput,
-                         [FromKeyedServices("AFCleanRightOutput")] IDOutputDevice afCleanRightOutput)
+                         [FromKeyedServices("AFCleanRightOutput")] IDOutputDevice afCleanRightOutput,
+                         [FromKeyedServices("UnloadTransferLeftInput")] IDInputDevice unloadTransferLeftInput,
+                         [FromKeyedServices("UnloadTransferLeftOutput")] IDOutputDevice unloadTransferLeftOutput,
+                         [FromKeyedServices("UnloadTransferRightInput")] IDInputDevice unloadTransferRightInput,
+                         [FromKeyedServices("UnloadTransferRightOutput")] IDOutputDevice unloadTransferRightOutput)
         {
             _inWorkConveyorInput = inWorkConveyorInput;
             _inWorkConveyorOutput = inWorkConveyorOutput;
@@ -129,6 +137,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
             _afCleanLeftOutput = afCleanLeftOutput;
             _afCleanRightInput = afCleanRightInput;
             _afCleanRightOutput = afCleanRightOutput;
+            _unloadTransferLeftInput = unloadTransferLeftInput;
+            _unloadTransferLeftOutput = unloadTransferLeftOutput;
+            _unloadTransferRightInput = unloadTransferRightInput;
+            _unloadTransferRightOutput = unloadTransferRightOutput;
         }
 
         public void Initialize()
@@ -185,6 +197,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
             _afCleanRightInput.Initialize();
             _afCleanRightOutput.Initialize();
 
+            _unloadTransferLeftInput.Initialize();
+            _unloadTransferLeftOutput.Initialize();
+            _unloadTransferRightInput.Initialize();
+            _unloadTransferRightOutput.Initialize();
         }
 
         public void Mappings()
@@ -330,15 +346,19 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 _wetCleanLeftOutput, (int)ECleanProcessOutput.WET_CLEAN_UNLOADING);
             ((VirtualInputDevice<ECleanProcessInput>)_afCleanLeftInput).Mapping((int)ECleanProcessInput.LOAD_DONE,
                 _transferRotationLeftOutput, (int)ETransferRotationProcessOutput.AF_CLEAN_LOAD_DONE);
+            ((VirtualInputDevice<ECleanProcessInput>)_afCleanLeftInput).Mapping((int)ECleanProcessInput.UNLOAD_DONE,
+                _unloadTransferLeftOutput, (int)EUnloadTransferProcessOutput.AF_CLEAN_UNLOAD_DONE);
 
-                //Right
+            //Right
             ((VirtualInputDevice<ECleanProcessInput>)_afCleanRightInput).Mapping((int)ECleanProcessInput.WET_CLEAN_UNLOADING,
                 _wetCleanRightOutput, (int)ECleanProcessOutput.WET_CLEAN_UNLOADING);
             ((VirtualInputDevice<ECleanProcessInput>)_afCleanRightInput).Mapping((int)ECleanProcessInput.LOAD_DONE,
                 _transferRotationRightOutput, (int)ETransferRotationProcessOutput.AF_CLEAN_LOAD_DONE);
+            ((VirtualInputDevice<ECleanProcessInput>)_afCleanRightInput).Mapping((int)ECleanProcessInput.UNLOAD_DONE,
+                _unloadTransferRightOutput, (int)EUnloadTransferProcessOutput.AF_CLEAN_UNLOAD_DONE);
 
             //Transfer Rotation Input Mapping
-                //Left
+            //Left
             ((VirtualInputDevice<ETransferRotationProcessInput>)_transferRotationLeftInput).Mapping((int)ETransferRotationProcessInput.WET_CLEAN_REQ_UNLOAD,
                 _wetCleanLeftOutput, (int)ECleanProcessOutput.REQ_UNLOAD);
             ((VirtualInputDevice<ETransferRotationProcessInput>)_transferRotationLeftInput).Mapping((int)ETransferRotationProcessInput.WET_CLEAN_UNLOAD_DONE_RECEIVED,
@@ -357,6 +377,15 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 _afCleanRightOutput, (int)ECleanProcessOutput.REQ_LOAD);
             ((VirtualInputDevice<ETransferRotationProcessInput>)_transferRotationRightInput).Mapping((int)ETransferRotationProcessInput.AF_CLEAN_LOAD_DONE_RECEIVED,
                 _afCleanRightOutput, (int)ECleanProcessOutput.LOAD_DONE_RECEIVED);
+
+            //Unload Transfer Input Mapping
+                //Left
+            ((VirtualInputDevice<EUnloadTransferProcessInput>)_unloadTransferLeftInput).Mapping((int)EUnloadTransferProcessInput.AF_CLEAN_REQ_UNLOAD,
+                        _afCleanLeftOutput, (int)ECleanProcessOutput.REQ_UNLOAD);
+            ((VirtualInputDevice<EUnloadTransferProcessInput>)_unloadTransferLeftInput).Mapping((int)EUnloadTransferProcessInput.AF_CLEAN_UNLOAD_DONE_RECEIVED,
+                        _afCleanLeftOutput, (int)ECleanProcessOutput.UNLOAD_DONE_RECEIVED);
+            ((VirtualInputDevice<EUnloadTransferProcessInput>)_unloadTransferLeftInput).Mapping((int)EUnloadTransferProcessInput.UNLOAD_TRANSFER_UNLOADING,
+                        _unloadTransferRightOutput, (int)EUnloadTransferProcessOutput.UNLOAD_TRANSFER_UNLOADING);
         }
     }
 }

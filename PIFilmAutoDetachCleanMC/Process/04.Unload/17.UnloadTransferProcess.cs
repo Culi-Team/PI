@@ -1,6 +1,7 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
+using EQX.InOut;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -23,6 +24,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly CommonRecipe _commonRecipe;
         private readonly UnloadTransferRecipe _unloadTransferLeftRecipe;
         private readonly UnloadTransferRecipe _unloadTransferRightRecipe;
+        private readonly IDInputDevice _unloadTransferLeftInput;
+        private readonly IDOutputDevice _unloadTransferLeftOutput;
+        private readonly IDInputDevice _unloadTransferRightInput;
+        private readonly IDOutputDevice _unloadTransferRightOutput;
 
         private IMotion YAxis => port == EPort.Left ? _devices.MotionsInovance.GlassUnloadLYAxis :
                                                   _devices.MotionsInovance.GlassUnloadRYAxis;
@@ -30,33 +35,114 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IMotion ZAxis => port == EPort.Left ? _devices.MotionsInovance.GlassUnloadLZAxis :
                                                   _devices.MotionsInovance.GlassUnloadRZAxis;
 
-        private IDOutput GlassVac => port == EPort.Left ? _devices.Outputs.UnloadTransferLVacOnOff:
+        private IDOutput GlassVacOnOff => port == EPort.Left ? _devices.Outputs.UnloadTransferLVacOnOff :
                                                   _devices.Outputs.UnloadTransferRVacOnOff;
+
+        private IDInput GlassVac => port == EPort.Left ? _devices.Inputs.UnloadTransferLVac :
+                                                         _devices.Inputs.UnloadTransferRVac;
+
+        private IDInput UnloadAlignVac1 => _devices.Inputs.UnloadGlassAlignVac1;
+        private IDInput UnloadAlignVac2 => _devices.Inputs.UnloadGlassAlignVac2;
+        private IDInput UnloadAlignVac3 => _devices.Inputs.UnloadGlassAlignVac3;
+        private IDInput UnloadAlignVac4 => _devices.Inputs.UnloadGlassAlignVac4;
 
         private bool IsVacDetect => port == EPort.Left ? _devices.Inputs.UnloadTransferLVac.Value :
                                                          _devices.Inputs.UnloadTransferRVac.Value;
 
         private UnloadTransferRecipe Recipe => port == EPort.Left ? _unloadTransferLeftRecipe :
                                                     _unloadTransferRightRecipe;
+
+        private IDInputDevice Inputs => port == EPort.Left ? _unloadTransferLeftInput : _unloadTransferRightInput;
+        private IDOutputDevice Outputs => port == EPort.Left ? _unloadTransferLeftOutput : _unloadTransferRightOutput;
+        #endregion
+
+        #region Flags
+        private bool FlagAFCleanRequestUnload
+        {
+            get
+            {
+                return Inputs[(int)EUnloadTransferProcessInput.AF_CLEAN_REQ_UNLOAD];
+            }
+        }
+
+        private bool FlagAFCleanUnloaDoneReceived
+        {
+            get
+            {
+                return Inputs[(int)EUnloadTransferProcessInput.AF_CLEAN_UNLOAD_DONE_RECEIVED];
+            }
+        }
+
+        private bool FlagUnloadTransferUnloading
+        {
+            get
+            {
+                return Inputs[(int)EUnloadTransferProcessInput.UNLOAD_TRANSFER_UNLOADING];
+            }
+            set
+            {
+                Outputs[(int)EUnloadTransferProcessOutput.UNLOAD_TRANSFER_UNLOADING] = value;
+            }
+        }
+
+        private bool FlagAFCleanUnloadDone
+        {
+            set
+            {
+                Outputs[(int)EUnloadTransferProcessOutput.AF_CLEAN_UNLOAD_DONE] = value;
+            }
+        }
+
+        private bool FlagUnloadAlignReady
+        {
+            get
+            {
+                return Inputs[(int)EUnloadTransferProcessInput.UNLOAD_ALIGN_READY];
+            }
+        }
+
+        private bool FlagUnloadTransferPlaceDone
+        {
+            set
+            {
+                Outputs[(int)EUnloadTransferProcessOutput.UNLOAD_TRANSFER_PLACE_DONE] = value;
+            }
+        }
+
+        private bool FlagUnloadAlignPlaceDoneReceived
+        {
+            get
+            {
+                return Inputs[(int)EUnloadTransferProcessInput.UNLOAD_ALIGN_PLACE_DONE_RECEIVED];
+            }
+        }
         #endregion
 
         #region Constructor
         public UnloadTransferProcess(Devices devices,
             CommonRecipe commonRecipe,
             [FromKeyedServices("UnloadTransferLeftRecipe")] UnloadTransferRecipe unloadTransferLeftRecipe,
-            [FromKeyedServices("UnloadTransferRightRecipe")] UnloadTransferRecipe unloadTransferRightRecipe)
+            [FromKeyedServices("UnloadTransferRightRecipe")] UnloadTransferRecipe unloadTransferRightRecipe,
+            [FromKeyedServices("UnloadTransferLeftInput")] IDInputDevice unloadTransferLeftInput,
+            [FromKeyedServices("UnloadTransferLeftOutput")] IDOutputDevice unloadTransferLeftOutput,
+            [FromKeyedServices("UnloadTransferRightInput")] IDInputDevice unloadTransferRightInput,
+            [FromKeyedServices("UnloadTransferRightOutput")] IDOutputDevice unloadTransferRightOutput)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
             _unloadTransferLeftRecipe = unloadTransferLeftRecipe;
             _unloadTransferRightRecipe = unloadTransferRightRecipe;
+            _unloadTransferLeftInput = unloadTransferLeftInput;
+            _unloadTransferLeftOutput = unloadTransferLeftOutput;
+            _unloadTransferRightInput = unloadTransferRightInput;
+            _unloadTransferRightOutput = unloadTransferRightOutput;
         }
         #endregion
 
         #region Override Methods
         public override bool ProcessOrigin()
         {
-            switch((EUnloadTransferOriginStep)Step.OriginStep)
+            switch ((EUnloadTransferOriginStep)Step.OriginStep)
             {
                 case EUnloadTransferOriginStep.Start:
                     Log.Debug("Origin Start");
@@ -111,6 +197,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.Stop:
                     break;
                 case ESequence.AutoRun:
+                    Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
                     break;
@@ -173,8 +260,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.AFClean:
                     break;
                 case ESequence.AFCleanUnload:
+                    Sequence_AFCleanUnload();
                     break;
                 case ESequence.UnloadTransferPlace:
+                    Sequence_UnloadTransferPlace();
                     break;
                 case ESequence.UnloadAlignGlass:
                     break;
@@ -200,7 +289,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadTransferAutoRunStep.GlassVac_Check:
-                    if(IsVacDetect)
+                    if (IsVacDetect)
                     {
                         Log.Info("Sequence Unload Transfer Place");
                         Sequence = ESequence.UnloadTransferPlace;
@@ -214,7 +303,299 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
             }
         }
-        #endregion
 
+        private void Sequence_AFCleanUnload()
+        {
+            switch ((EUnloadTransferAFCleanUnloadStep)Step.RunStep)
+            {
+                case EUnloadTransferAFCleanUnloadStep.Start:
+                    Log.Debug("AF Clean Unload Start");
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferAFCleanUnloadStep.YAxis_Move_PickPositon:
+                    Log.Debug("Y Axis Move Pick Position");
+                    YAxis.MoveAbs(Recipe.YAxisPickPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisPickPosition));
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferAFCleanUnloadStep.YAxis_Move_PickPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Pick Position Done");
+                    Log.Debug("Wait AF Clean Request Unload");
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferAFCleanUnloadStep.Wait_AFCleanRequestUnload:
+                    if (FlagAFCleanRequestUnload == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferAFCleanUnloadStep.ZAxis_Move_PickPosition:
+                    Log.Debug("Z Axis Move Pick Position");
+                    ZAxis.MoveAbs(Recipe.ZAxisPickPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(Recipe.ZAxisPickPosition));
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferAFCleanUnloadStep.ZAxis_Move_PickPositon_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Pick Position Done");
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferAFCleanUnloadStep.Vacuum_On:
+                    Log.Debug("Vacuum On");
+                    GlassVacOnOff.Value = true;
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(GlassVac, true);
+#endif
+                    Wait(_commonRecipe.VacDelay);
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferAFCleanUnloadStep.ZAxis_Move_ReadyPositon:
+                    Log.Debug("Z Axis Move Ready Position");
+                    ZAxis.MoveAbs(Recipe.ZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(Recipe.ZAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferAFCleanUnloadStep.ZAxis_Move_ReadyPositon_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    break;
+                case EUnloadTransferAFCleanUnloadStep.Set_FlagAFCleanUnloadDone:
+                    Log.Debug("Set Flag AF Clean Unload Done");
+                    FlagAFCleanUnloadDone = true;
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferAFCleanUnloadStep.Wait_AFCleanUnloadDoneReceived:
+                    if (FlagAFCleanUnloaDoneReceived == false)
+                    {
+                        break;
+                    }
+                    Log.Debug("Clear Flag AF Clean Unload Done");
+                    FlagAFCleanUnloadDone = false;
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferAFCleanUnloadStep.End:
+                    Log.Debug("AF Clean Unload End");
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence Unload Transfer Place");
+                    Sequence = ESequence.UnloadTransferPlace;
+                    break;
+            }
+            #endregion
+        }
+
+        private void Sequence_UnloadTransferPlace()
+        {
+            switch ((EUnloadTransferPlaceStep)Step.RunStep)
+            {
+                case EUnloadTransferPlaceStep.Start:
+                    Log.Debug("Unload Transfer Place Start");
+                    Log.Debug("Wait Unload Transfer Done And Unload Align Ready");
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferPlaceStep.Wait_OtherTransferUnloadingAndUnloadAlignReady:
+                    if (FlagUnloadTransferUnloading == true || FlagUnloadAlignReady == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    break;
+                case EUnloadTransferPlaceStep.UnloadAlign_GlassVacCheck:
+                    Log.Debug("Set Flag Unloading");
+                    FlagUnloadTransferUnloading = true;
+                    if(UnloadAlignVac1.Value == false)
+                    {
+#if SIMULATION
+                        SimulationInputSetter.SetSimModbusInput(UnloadAlignVac1, true);
+#endif
+                        Step.RunStep++;
+                        break;
+                    }
+                    if(UnloadAlignVac2.Value == false)
+                    {
+#if SIMULATION
+                        SimulationInputSetter.SetSimModbusInput(UnloadAlignVac2, true);
+#endif
+                        Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition2;
+                        break;
+                    }
+                    if(UnloadAlignVac3.Value == false)
+                    {
+#if SIMULATION
+                        SimulationInputSetter.SetSimModbusInput(UnloadAlignVac3, true);
+#endif
+                        Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition3;
+                        break;
+                    }
+                    if(UnloadAlignVac4.Value == false)
+                    {
+#if SIMULATION
+                        SimulationInputSetter.SetSimModbusInput(UnloadAlignVac4, true);
+#endif
+                        Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition4;
+                        break;
+                    }
+                    Step.RunStep = (int)EUnloadTransferPlaceStep.Wait_OtherTransferUnloadingAndUnloadAlignReady;
+                    break;
+                case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition1:
+                    Log.Debug("YAxis Move Place Position 1");
+                    YAxis.MoveAbs(Recipe.YAxisPlacePosition1);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => YAxis.IsOnPosition(Recipe.YAxisPlacePosition1));
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition1_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("YAxis Move Place Position 1 Done");
+                    Step.RunStep = (int)EUnloadTransferPlaceStep.ZAxis_Move_PlacePosition;
+                    break;
+                case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition2:
+                    Log.Debug("YAxis Move Place Position 2");
+                    YAxis.MoveAbs(Recipe.YAxisPlacePosition2);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisPlacePosition2));
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition2_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("YAxis Move Place Position 2 Done");
+                    Step.RunStep = (int)EUnloadTransferPlaceStep.ZAxis_Move_PlacePosition;
+                    break;
+                case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition3:
+                    Log.Debug("YAxis Move Place Position 3");
+                    YAxis.MoveAbs(Recipe.YAxisPlacePosition3);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisPlacePosition3));
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition3_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("YAxis Move Place Position 3 Done");
+                    Step.RunStep = (int)EUnloadTransferPlaceStep.ZAxis_Move_PlacePosition;
+                    break;
+                case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition4:
+                    Log.Debug("YAxis Move Place Position 4");
+                    YAxis.MoveAbs(Recipe.YAxisPlacePosition4);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisPlacePosition4));
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition4_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("YAxis Move Place Position 4 Done");
+                    Step.RunStep = (int)EUnloadTransferPlaceStep.ZAxis_Move_PlacePosition;
+                    break;
+                case EUnloadTransferPlaceStep.ZAxis_Move_PlacePosition:
+                    Log.Debug("Z Axis Move Place Position");
+                    ZAxis.MoveAbs(Recipe.ZAxisPlacePosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => ZAxis.IsOnPosition(Recipe.ZAxisPlacePosition));
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferPlaceStep.ZAxis_Move_PlacePosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Place Position Done");
+                    break;
+                case EUnloadTransferPlaceStep.Vacuum_Off:
+                    Log.Debug("Vacuum Off");
+                    GlassVacOnOff.Value = false;
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(GlassVac, false);
+#endif
+                    Wait(_commonRecipe.VacDelay);
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferPlaceStep.ZAxis_Move_ReadyPosition:
+                    Log.Debug("Z Axis Move Ready Position");
+                    ZAxis.MoveAbs(Recipe.ZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => ZAxis.IsOnPosition(Recipe.ZAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferPlaceStep.ZAxis_Move_ReadyPosition_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferPlaceStep.YAxis_Move_ReadyPosition:
+                    Log.Debug("Y Axis Move Ready Position");
+                    YAxis.MoveAbs(Recipe.YAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => YAxis.IsOnPosition(Recipe.YAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferPlaceStep.YAxis_Move_ReadyPosition_Wait:
+                    if(WaitTimeOutOccurred) 
+                    {
+                        //Timeout ALARM
+                        break; 
+                    }
+                    Log.Debug("Y Axis Move Ready Position Done");
+                    Log.Debug("Clear Flag Unloading");
+                    FlagUnloadTransferUnloading = false;
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferPlaceStep.Set_FlagUnloadTransferPlaceDone:
+                    Log.Debug("Set Flag Unload Transfer Place Done");
+                    FlagUnloadTransferPlaceDone = true;
+                    Log.Debug("Wait Unload Align Place Done Received");
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferPlaceStep.Wait_UnloadAlignPlaceDoneReceived:
+                    if(FlagUnloadAlignPlaceDoneReceived == false)
+                    {
+                        break;
+                    }
+                    Log.Debug("Clear Flag Unload Transfer Place Done");
+                    FlagUnloadTransferPlaceDone = false;
+                    break;
+                case EUnloadTransferPlaceStep.End:
+                    Log.Debug("Unload Transfer Place End");
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence AF Clean Unload");
+                    Sequence = ESequence.AFCleanUnload;
+                    break;
+            }
+        }
     }
 }
