@@ -4,16 +4,18 @@ using EQX.Core.Common;
 using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Process;
+using EQX.InOut;
 using EQX.UI.Controls;
 using PIFilmAutoDetachCleanMC.Defines;
+using PIFilmAutoDetachCleanMC.Defines.Cylinder;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Recipe;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using System;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -1996,7 +1998,58 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             RecipeSelector = recipeSelector;
             DataViewModel = dataViewModel;
             SelectedProcess = ProcessListTeaching.FirstOrDefault();
+            
+            // Initialize Commands
+            CylinderForwardCommand = new RelayCommand<ICylinder>(CylinderForward);
+            CylinderBackwardCommand = new RelayCommand<ICylinder>(CylinderBackward);
         }
+
+        #region Commands
+        public ICommand CylinderForwardCommand { get; }
+        public ICommand CylinderBackwardCommand { get; }
+
+        public void CylinderForward(ICylinder cylinder)
+        {
+            if (cylinder == null) return;
+
+            // Check interlock before moving
+            if (!CylinderInterLock(cylinder, true, out string CylinderInterlockMsg))
+            {
+                MessageBoxEx.ShowDialog($"InterLock Fail! Cannot Move Cylinder\n\n{CylinderInterlockMsg}");
+                return;
+            }
+            cylinder.Forward();
+
+        }
+
+        public void CylinderBackward(ICylinder cylinder)
+        {
+            if (cylinder == null) return;
+
+            // Check interlock before moving
+            if (!CylinderInterLock(cylinder, false, out string CylinderInterlockMsg))
+            {
+                MessageBoxEx.ShowDialog($"InterLock Fail! Cannot Move Cylinder\n\n{CylinderInterlockMsg}");
+                return;
+            }
+            cylinder.Backward();
+        }
+
+        // InterLock for Cylinder
+        public bool CylinderInterLock(ICylinder cylinder, bool isForward, out string CylinderInterlockMsg)
+        {
+            CylinderInterlockMsg = string.Empty;
+
+            // Interlock for TrRotateLeftRotate
+            if (cylinder.Name.Contains("TrRotateLeftRotate") || cylinder.Name.Contains("TrRotateLeftFwBw"))
+            {
+                CylinderInterlockMsg = "Need Transfer Rotation ZAxis at Ready Position before Moving";
+                return Devices?.MotionsInovance?.TransferRotationLZAxis?.IsOnPosition(RecipeSelector?.CurrentRecipe?.TransferRotationLeftRecipe?.ZAxisReadyPosition ?? 0) == true;
+            }            
+
+            return true;
+        }
+        #endregion
     }
     public class PositionTeaching : ObservableObject
     {
@@ -2038,10 +2091,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         return;
                     }
                 string MoveTo = (string)Application.Current.Resources["str_MoveTo"];
-                if (MessageBoxEx.ShowDialog($"{MoveTo} {Name} ?") == true)
-                {
-                    Motion.MoveAbs(Position);
-                }
+                Motion.MoveAbs(Position);
             });
         }
 
@@ -2071,8 +2121,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 || PropertyName == "YAxisLeftPlacePosition"
                 || PropertyName == "YAxisRightPlacePosition")
             {
-                interlockMsg = "Need ShuttleTransfer Z Axis Ready Position before Moving";
-                return teachViewModel.Devices?.MotionsInovance?.GlassTransferZAxis?.IsOnPosition(teachViewModel.RecipeSelector?.CurrentRecipe?.GlassTransferRecipe?.ZAxisPickPosition ?? 0) == true;
+                interlockMsg = "Need GlassTransfer Z Axis Ready Position before Moving";
+                return teachViewModel.Devices?.MotionsInovance?.GlassTransferZAxis?.IsOnPosition(teachViewModel.RecipeSelector?.CurrentRecipe?.GlassTransferRecipe?.ZAxisReadyPosition ?? 0) == true;
             }
             // Interlock TransferShutter Left / Right
             if (PropertyName == "TransferInShuttleLeftYAxisReadyPosition"
@@ -2086,12 +2136,29 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 || PropertyName == "TransferInShuttleRightYAxisPickPosition3"
                 || PropertyName == "TransferInShuttleRightZAxisPlacePosition")
             {
-                interlockMsg = "Need ShuttleTransfer Z Axis Ready Position before Moving";
+                interlockMsg = "Need GlassTransfer Z Axis Ready Position before Moving";
                 return teachViewModel.Devices?.MotionsAjin?.ShuttleTransferZAxis?.IsOnPosition(teachViewModel.RecipeSelector?.CurrentRecipe?.GlassTransferRecipe?.ZAxisReadyPosition ?? 0) == true;
             }
+            // Interlock WetClean Left
+            if (PropertyName == ""
+                || PropertyName == ""
+                || PropertyName == ""
+                || PropertyName == ""
+                || PropertyName == ""
+                || PropertyName == ""
+                || PropertyName == ""
+                || PropertyName == ""
+                || PropertyName == ""
+                || PropertyName == "")
+            {
+                interlockMsg = "Need ShuttleTransfer Z Axis Ready Position before Moving";
+                return teachViewModel.Devices?.Cylinders?.WetCleanBrushLeftUpDown?.IsBackward == true;
+            }
+            //cylinder.Name   "WetCleanPusherLeftUpDown"  string
 
             return true; 
         }
+
         private readonly RecipeSelector _recipeSelector;
         public RecipeSelector RecipeSelector { get; set; }
         public double PositionRecipe { get; set; }
@@ -2285,62 +2352,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     _recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisPlacePosition = Position;
                     break;
 
-                // UnloadTransferRecipe properties (Left & Right)
-                case "UnloadTransferLeftYAxisReadyPosition":
-                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisReadyPosition = Position;
-                    break;
-                case "UnloadTransferLeftZAxisReadyPosition":
-                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisReadyPosition = Position;
-                    break;
-                case "UnloadTransferLeftYAxisPickPosition":
-                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPickPosition = Position;
-                    break;
-                case "UnloadTransferLeftZAxisPickPosition":
-                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisPickPosition = Position;
-                    break;
-                case "UnloadTransferLeftYAxisPlacePosition1":
-                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition1 = Position;
-                    break;
-                case "UnloadTransferLeftYAxisPlacePosition2":
-                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition2 = Position;
-                    break;
-                case "UnloadTransferLeftYAxisPlacePosition3":
-                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition3 = Position;
-                    break;
-                case "UnloadTransferLeftYAxisPlacePosition4":
-                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition4 = Position;
-                    break;
-                case "UnloadTransferLeftZAxisPlacePosition":
-                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisPlacePosition = Position;
-                    break;
-                case "UnloadTransferRightYAxisReadyPosition":
-                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisReadyPosition = Position;
-                    break;
-                case "UnloadTransferRightZAxisReadyPosition":
-                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisReadyPosition = Position;
-                    break;
-                case "UnloadTransferRightYAxisPickPosition":
-                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPickPosition = Position;
-                    break;
-                case "UnloadTransferRightZAxisPickPosition":
-                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisPickPosition = Position;
-                    break;
-                case "UnloadTransferRightYAxisPlacePosition1":
-                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition1 = Position;
-                    break;
-                case "UnloadTransferRightYAxisPlacePosition2":
-                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition2 = Position;
-                    break;
-                case "UnloadTransferRightYAxisPlacePosition3":
-                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition3 = Position;
-                    break;
-                case "UnloadTransferRightYAxisPlacePosition4":
-                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition4 = Position;
-                    break;
-                case "UnloadTransferRightZAxisPlacePosition":
-                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisPlacePosition = Position;
-                    break;
-
                 // WETCleanLeftRecipe properties
 
                 case "WETCleanLeftXAxisLoadPosition":
@@ -2495,6 +2506,62 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     break;
                 case "AFCleanRightTAxisUnloadPosition":
                     _recipeSelector.CurrentRecipe.AfCleanRightRecipe.TAxisUnloadPosition = Position;
+                    break;
+
+                // UnloadTransferRecipe properties (Left & Right)
+                case "UnloadTransferLeftYAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisReadyPosition = Position;
+                    break;
+                case "UnloadTransferLeftZAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisReadyPosition = Position;
+                    break;
+                case "UnloadTransferLeftYAxisPickPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPickPosition = Position;
+                    break;
+                case "UnloadTransferLeftZAxisPickPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisPickPosition = Position;
+                    break;
+                case "UnloadTransferLeftYAxisPlacePosition1":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition1 = Position;
+                    break;
+                case "UnloadTransferLeftYAxisPlacePosition2":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition2 = Position;
+                    break;
+                case "UnloadTransferLeftYAxisPlacePosition3":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition3 = Position;
+                    break;
+                case "UnloadTransferLeftYAxisPlacePosition4":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.YAxisPlacePosition4 = Position;
+                    break;
+                case "UnloadTransferLeftZAxisPlacePosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisPlacePosition = Position;
+                    break;
+                case "UnloadTransferRightYAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisReadyPosition = Position;
+                    break;
+                case "UnloadTransferRightZAxisReadyPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisReadyPosition = Position;
+                    break;
+                case "UnloadTransferRightYAxisPickPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPickPosition = Position;
+                    break;
+                case "UnloadTransferRightZAxisPickPosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisPickPosition = Position;
+                    break;
+                case "UnloadTransferRightYAxisPlacePosition1":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition1 = Position;
+                    break;
+                case "UnloadTransferRightYAxisPlacePosition2":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition2 = Position;
+                    break;
+                case "UnloadTransferRightYAxisPlacePosition3":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition3 = Position;
+                    break;
+                case "UnloadTransferRightYAxisPlacePosition4":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.YAxisPlacePosition4 = Position;
+                    break;
+                case "UnloadTransferRightZAxisPlacePosition":
+                    _recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisPlacePosition = Position;
                     break;
 
                 default:

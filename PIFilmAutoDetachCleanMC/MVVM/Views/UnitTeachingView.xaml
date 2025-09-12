@@ -151,12 +151,14 @@
                                 Style="{StaticResource CylinderButtonStyle}"
                                 Background="{Binding IsForward, Converter={StaticResource CylinderButtonBrushConverter}}" 
                                 BorderBrush="{Binding IsForward, Converter={StaticResource CylinderButtonBrushConverter}}"
-                                Click="CylinderForward_Click"/>
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=TeachViewModel.CylinderForwardCommand}"
+                                CommandParameter="{Binding}"/>
                         <Button Content="{Binding CylinderType, Converter={StaticResource CylinderTypeToButtonNameConverter}, ConverterParameter=false}" 
                                 Style="{StaticResource CylinderButtonStyle}"
                                 Background="{Binding IsBackward, Converter={StaticResource CylinderButtonBrushConverter}}" 
                                 BorderBrush="{Binding IsBackward, Converter={StaticResource CylinderButtonBrushConverter}}"
-                                Click="CylinderBackward_Click"/>
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=TeachViewModel.CylinderBackwardCommand}"
+                                CommandParameter="{Binding}"/>
                     </UniformGrid>
                 </StackPanel>
             </Border>

@@ -312,12 +312,12 @@
             <TabItem Header="Transfer Shutter Right" ContentTemplate="{StaticResource TransferShutterRightTemplate}"/>
             <TabItem Header="Transfer Rotation Left" ContentTemplate="{StaticResource TransferRotationLeftTemplate}"/>
             <TabItem Header="Transfer Rotation Right" ContentTemplate="{StaticResource TransferRotationRightTemplate}"/>
-            <TabItem Header="Unload Transfer Left" ContentTemplate="{StaticResource UnloadTransferLeftTemplate}"/>
-            <TabItem Header="Unload Transfer Right" ContentTemplate="{StaticResource UnloadTransferRightTemplate}"/>
             <TabItem Header="WET Clean Left" ContentTemplate="{StaticResource WETCleanLeftTemplate}"/>
             <TabItem Header="WET Clean Right" ContentTemplate="{StaticResource WETCleanRightTemplate}"/>
             <TabItem Header="AF Clean Left" ContentTemplate="{StaticResource AFCleanLeftTemplate}"/>
             <TabItem Header="AF Clean Right" ContentTemplate="{StaticResource AFCleanRightTemplate}"/>
+            <TabItem Header="Unload Transfer Left" ContentTemplate="{StaticResource UnloadTransferLeftTemplate}"/>
+            <TabItem Header="Unload Transfer Right" ContentTemplate="{StaticResource UnloadTransferRightTemplate}"/>
         </TabControl>
     </Grid>
 </UserControl>
