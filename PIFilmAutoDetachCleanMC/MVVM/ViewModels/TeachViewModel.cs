@@ -2318,9 +2318,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     break;
 
                 // WETCleanLeftRecipe properties
-                case "WETCleanLeftFeedingAxisLoadPosition":
-                    _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.FeedingAxisLoadPosition = Position;
-                    break;
                 case "WETCleanLeftXAxisLoadPosition":
                     _recipeSelector.CurrentRecipe.WetCleanLeftRecipe.XAxisLoadPosition = Position;
                     break;
@@ -2359,9 +2356,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     break;
 
                 // WETCleanRightRecipe properties
-                case "WETCleanRightFeedingAxisLoadPosition":
-                    _recipeSelector.CurrentRecipe.WetCleanRightRecipe.FeedingAxisLoadPosition = Position;
-                    break;
                 case "WETCleanRightXAxisLoadPosition":
                     _recipeSelector.CurrentRecipe.WetCleanRightRecipe.XAxisLoadPosition = Position;
                     break;
@@ -2400,9 +2394,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     break;
 
                 // AFCleanLeftRecipe properties
-                case "AFCleanLeftFeedingAxisLoadPosition":
-                    _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.FeedingAxisLoadPosition = Position;
-                    break;
                 case "AFCleanLeftXAxisLoadPosition":
                     _recipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisLoadPosition = Position;
                     break;
@@ -2441,9 +2432,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     break;
 
                 // AFCleanRightRecipe properties
-                case "AFCleanRightFeedingAxisLoadPosition":
-                    _recipeSelector.CurrentRecipe.AfCleanRightRecipe.FeedingAxisLoadPosition = Position;
-                    break;
                 case "AFCleanRightXAxisLoadPosition":
                     _recipeSelector.CurrentRecipe.AfCleanRightRecipe.XAxisLoadPosition = Position;
                     break;
