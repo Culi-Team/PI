@@ -12,6 +12,15 @@ namespace PIFilmAutoDetachCleanMC.Recipe
     {
 		private int robotSpeed;
         private int robotPlaceSpeed;
+        private int model;
+
+        [SingleRecipeDescription(Description = "Model")]
+        [SingleRecipeMinMax(Max = 100, Min = 0)]
+        public int Model
+        {
+            get { return model; }
+            set { model = value; }
+        }
 
         [SingleRecipeDescription(Description = "Robot Speed", Unit = Unit.mmPerSecond)]
         [SingleRecipeMinMax(Max = 100, Min = 1)]
