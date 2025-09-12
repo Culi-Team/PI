@@ -31,6 +31,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private ICylinder PusherCyl1 => _devices.Cylinders.RemoveZonePusherCyl1UpDown;
         private ICylinder PusherCyl2 => _devices.Cylinders.RemoveZonePusherCyl2UpDown;
+
+        private bool IsFixtureDetect => _devices.Inputs.RemoveZoneFixtureDetect.Value;
         #endregion
 
         #region Contructor
@@ -273,8 +275,26 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Private Methods
         private void Sequence_AutoRun()
         {
-            Log.Info("SequenceTransfer Fixture Unload");
-            Sequence = ESequence.TransferFixtureUnload;
+            switch ((ERemoveFilmAutoRunStep)Step.RunStep)
+            {
+                case ERemoveFilmAutoRunStep.Start:
+                    Log.Debug("Auto Run Start");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmAutoRunStep.FixtureDetect_Check:
+                    if(IsFixtureDetect)
+                    {
+                        Log.Info("Sequence Remove Film");
+                        Sequence = ESequence.RemoveFilm;
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmAutoRunStep.End:
+                    Log.Info("Sequence Transfer Fixture Unload");
+                    Sequence = ESequence.TransferFixtureUnload;
+                    break;
+            }
         }
 
         private void Sequence_TransferFixtureUnload()
