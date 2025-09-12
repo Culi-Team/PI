@@ -51,7 +51,6 @@
         AFClean,
         AFCleanUnload,
 
-        UnloadTransferPick,
         UnloadTransferPlace,
 
         UnloadAlignGlass,

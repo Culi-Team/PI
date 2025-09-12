@@ -545,8 +545,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.AFCleanUnload:
                     Sequence_Unload();
                     break;
-                case ESequence.UnloadTransferPick:
-                    break;
                 case ESequence.UnloadTransferPlace:
                     break;
                 case ESequence.UnloadAlignGlass:
