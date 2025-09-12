@@ -18,7 +18,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
         public ICylinder OutCstStopperUpDown { get; }
 
         // In CST Work (per input pair)
-        public ICylinder InCstFixCylFwBw { get; }
+        public ICylinder InCstFixCyl1FwBw { get; }
+        public ICylinder InCstFixCyl2FwBw { get; }
         public ICylinder InCstTiltCylUpDown { get; }
 
         // Buffer CV Work
@@ -38,7 +39,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
         public ICylinder OutCvSupportUpDown { get; }
 
         // Out CST Work (per input pair)
-        public ICylinder OutCstFixCylFwBw { get; }
+        public ICylinder OutCstFixCyl1FwBw { get; }
+        public ICylinder OutCstFixCyl2FwBw { get; }
         public ICylinder OutCstTiltCylUpDown { get; }
 
         // Robot 1 Load/Unload (per cylinder by inputs, shared outputs where applicable)
@@ -145,13 +147,21 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             OutCstStopperUpDown.CylinderType = ECylinderType.UpDown;
 
             // In CST Work (per input pair)
-            InCstFixCylFwBw = _cylinderFactory
+            InCstFixCyl1FwBw = _cylinderFactory
                 .Create(
-                    new List<IDInput> { _inputs.InCstFixCyl1Fw, _inputs.InCstFixCyl2Fw },
-                    new List<IDInput> { _inputs.InCstFixCyl1Bw, _inputs.InCstFixCyl2Bw },
-                    _outputs.InCstFixCylFw, _outputs.InCstFixCylBw)
+                    new List<IDInput> { _inputs.InCstFixCyl1Fw },
+                    new List<IDInput> { _inputs.InCstFixCyl1Bw },
+                    _outputs.InCstFixCyl1Fw, _outputs.InCstFixCyl1Bw)
                 .SetIdentity((int)ECylinder.InCstFixCyl1FwBw, ECylinder.InCstFixCyl1FwBw.ToString());
-            InCstFixCylFwBw.CylinderType = ECylinderType.ForwardBackward;
+            InCstFixCyl1FwBw.CylinderType = ECylinderType.ForwardBackward;
+
+            InCstFixCyl2FwBw = _cylinderFactory
+                .Create(
+                    new List<IDInput> { _inputs.InCstFixCyl2Fw },
+                    new List<IDInput> { _inputs.InCstFixCyl2Bw },
+                    _outputs.InCstFixCyl2Fw, _outputs.InCstFixCyl2Bw)
+                .SetIdentity((int)ECylinder.InCstFixCyl2FwBw, ECylinder.InCstFixCyl2FwBw.ToString());
+            InCstFixCyl2FwBw.CylinderType = ECylinderType.ForwardBackward;
 
             InCstTiltCylUpDown = _cylinderFactory
                 .Create(new List<IDInput> { _inputs.InCstTiltCylUp }, new List<IDInput> { _inputs.InCstTiltCylDown }, _outputs.InCstTiltCylUp, _outputs.InCstTiltCylDown)
@@ -194,13 +204,21 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             OutCvSupportUpDown.CylinderType = ECylinderType.UpDown;
 
             // Out CST Work (per input pair)
-            OutCstFixCylFwBw = _cylinderFactory
+            OutCstFixCyl1FwBw = _cylinderFactory
                 .Create(
-                    new List<IDInput> { _inputs.OutCstFixCyl1Fw, _inputs.OutCstFixCyl2Fw },
-                    new List<IDInput> { _inputs.OutCstFixCyl1Bw, _inputs.OutCstFixCyl2Bw },
-                    _outputs.OutCstFixCylFw, _outputs.OutCstFixCylBw)
+                    new List<IDInput> { _inputs.OutCstFixCyl1Fw },
+                    new List<IDInput> { _inputs.OutCstFixCyl1Bw },
+                    _outputs.OutCstFixCyl1Fw, _outputs.OutCstFixCyl1Bw)
                 .SetIdentity((int)ECylinder.OutCstFixCyl1FwBw, ECylinder.OutCstFixCyl1FwBw.ToString());
-            OutCstFixCylFwBw.CylinderType = ECylinderType.ForwardBackward;
+            OutCstFixCyl1FwBw.CylinderType = ECylinderType.ForwardBackward;
+
+            OutCstFixCyl2FwBw = _cylinderFactory
+                .Create(
+                    new List<IDInput> { _inputs.OutCstFixCyl2Fw },
+                    new List<IDInput> { _inputs.OutCstFixCyl2Bw },
+                    _outputs.OutCstFixCyl2Fw, _outputs.OutCstFixCyl2Bw)
+                .SetIdentity((int)ECylinder.OutCstFixCyl2FwBw, ECylinder.OutCstFixCyl2FwBw.ToString());
+            OutCstFixCyl2FwBw.CylinderType = ECylinderType.ForwardBackward;
 
             OutCstTiltCylUpDown = _cylinderFactory
                 .Create(new List<IDInput> { _inputs.OutCstTiltCylUp }, new List<IDInput> { _inputs.OutCstTiltCylDown }, _outputs.OutCstTiltCylUp, _outputs.OutCstTiltCylDown)
@@ -250,7 +268,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             VinylCleanFixture2ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
 
             VinylCleanPusherRollerUpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.VinylCleanPusherRollerUp }, new List<IDInput> { _inputs.VinylCleanPusherRollerDown }, _outputs.VinylCleanPusherRollerUp, _outputs.VinylCleanPusherRollerDown)
+                .Create(new List<IDInput> { _inputs.VinylCleanPusherRollerUp }, new List<IDInput> { _inputs.VinylCleanPusherRollerDown }, _outputs.VinylCleanPusherRollerUp, null)
                 .SetIdentity((int)ECylinder.VinylCleanPusherRollerUpDown, ECylinder.VinylCleanPusherRollerUpDown.ToString());
             VinylCleanPusherRollerUpDown.CylinderType = ECylinderType.UpDown;
 
@@ -310,12 +328,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             RemoveZoneTrCylFwBw.CylinderType = ECylinderType.ForwardBackward;
 
             RemoveZoneZCyl1UpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.RemoveZoneZCyl1Up }, new List<IDInput> { _inputs.RemoveZoneZCyl1Down }, _outputs.RemoveZoneZCyl1Up, _outputs.RemoveZoneZCyl1Down)
+                .Create(new List<IDInput> { _inputs.RemoveZoneZCyl1Up }, new List<IDInput> { _inputs.RemoveZoneZCyl1Down }, null, _outputs.RemoveZoneZCyl1Down)
                 .SetIdentity((int)ECylinder.RemoveZoneZCyl1UpDown, ECylinder.RemoveZoneZCyl1UpDown.ToString());
             RemoveZoneZCyl1UpDown.CylinderType = ECylinderType.UpDown;
 
             RemoveZoneZCyl2UpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.RemoveZoneZCyl2Up }, new List<IDInput> { _inputs.RemoveZoneZCyl2Down }, _outputs.RemoveZoneZCyl2Up, _outputs.RemoveZoneZCyl2Down)
+                .Create(new List<IDInput> { _inputs.RemoveZoneZCyl2Up }, new List<IDInput> { _inputs.RemoveZoneZCyl2Down }, null, _outputs.RemoveZoneZCyl2Down)
                 .SetIdentity((int)ECylinder.RemoveZoneZCyl2UpDown, ECylinder.RemoveZoneZCyl2UpDown.ToString());
             RemoveZoneZCyl2UpDown.CylinderType = ECylinderType.UpDown;
 
@@ -366,42 +384,42 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
 
             // Align Stage L/R
             AlignStageLBrushCylUpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.AlignStageLBrushCylUp }, new List<IDInput> { _inputs.AlignStageLBrushCylDown }, _outputs.AlignStageLBrushCylUp, _outputs.AlignStageLBrushCylDown)
+                .Create(new List<IDInput> { _inputs.AlignStageLBrushCylUp }, new List<IDInput> { _inputs.AlignStageLBrushCylDown }, _outputs.AlignStageLBrushCylUp, null)
                 .SetIdentity((int)ECylinder.AlignStageLBrushCylUpDown, ECylinder.AlignStageLBrushCylUpDown.ToString());
             AlignStageLBrushCylUpDown.CylinderType = ECylinderType.UpDown;
 
             AlignStageL1AlignUnalign = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.AlignStageL1Align }, new List<IDInput> { _inputs.AlignStageL1Unalign }, _outputs.AlignStageL1Align, _outputs.AlignStageL1Unalign)
+                .Create(new List<IDInput> { _inputs.AlignStageL1Align }, new List<IDInput> { _inputs.AlignStageL1Unalign }, _outputs.AlignStageL1Align, null)
                 .SetIdentity((int)ECylinder.AlignStageL1AlignUnalign, ECylinder.AlignStageL1AlignUnalign.ToString());
             AlignStageL1AlignUnalign.CylinderType = ECylinderType.AlignUnalign;
 
             AlignStageL2AlignUnalign = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.AlignStageL2Align }, new List<IDInput> { _inputs.AlignStageL2Unalign }, _outputs.AlignStageL2Align, _outputs.AlignStageL2Unalign)
+                .Create(new List<IDInput> { _inputs.AlignStageL2Align }, new List<IDInput> { _inputs.AlignStageL2Unalign }, _outputs.AlignStageL2Align, null)
                 .SetIdentity((int)ECylinder.AlignStageL2AlignUnalign, ECylinder.AlignStageL2AlignUnalign.ToString());
             AlignStageL2AlignUnalign.CylinderType = ECylinderType.AlignUnalign;
 
             AlignStageL3AlignUnalign = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.AlignStageL3Align }, new List<IDInput> { _inputs.AlignStageL3Unalign }, _outputs.AlignStageL3Align, _outputs.AlignStageL3Unalign)
+                .Create(new List<IDInput> { _inputs.AlignStageL3Align }, new List<IDInput> { _inputs.AlignStageL3Unalign }, _outputs.AlignStageL3Align, null)
                 .SetIdentity((int)ECylinder.AlignStageL3AlignUnalign, ECylinder.AlignStageL3AlignUnalign.ToString());
             AlignStageL3AlignUnalign.CylinderType = ECylinderType.AlignUnalign;
 
             AlignStageRBrushCylUpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.AlignStageRBrushCylUp }, new List<IDInput> { _inputs.AlignStageRBrushCylDown }, _outputs.AlignStageRBrushCylUp, _outputs.AlignStageRBrushCylDown)
+                .Create(new List<IDInput> { _inputs.AlignStageRBrushCylUp }, new List<IDInput> { _inputs.AlignStageRBrushCylDown }, _outputs.AlignStageRBrushCylUp, null)
                 .SetIdentity((int)ECylinder.AlignStageRBrushCylUpDown, ECylinder.AlignStageRBrushCylUpDown.ToString());
             AlignStageRBrushCylUpDown.CylinderType = ECylinderType.UpDown;
 
             AlignStageR1AlignUnalign = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.AlignStageR1Align }, new List<IDInput> { _inputs.AlignStageR1Unalign }, _outputs.AlignStageR1Align, _outputs.AlignStageR1Unalign)
+                .Create(new List<IDInput> { _inputs.AlignStageR1Align }, new List<IDInput> { _inputs.AlignStageR1Unalign }, _outputs.AlignStageR1Align, null)
                 .SetIdentity((int)ECylinder.AlignStageR1AlignUnalign, ECylinder.AlignStageR1AlignUnalign.ToString());
             AlignStageR1AlignUnalign.CylinderType = ECylinderType.AlignUnalign;
 
             AlignStageR2AlignUnalign = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.AlignStageR2Align }, new List<IDInput> { _inputs.AlignStageR2Unalign }, _outputs.AlignStageR2Align, _outputs.AlignStageR2Unalign)
+                .Create(new List<IDInput> { _inputs.AlignStageR2Align }, new List<IDInput> { _inputs.AlignStageR2Unalign }, _outputs.AlignStageR2Align, null)
                 .SetIdentity((int)ECylinder.AlignStageR2AlignUnalign, ECylinder.AlignStageR2AlignUnalign.ToString());
             AlignStageR2AlignUnalign.CylinderType = ECylinderType.AlignUnalign;
 
             AlignStageR3AlignUnalign = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.AlignStageR3Align }, new List<IDInput> { _inputs.AlignStageR3Unalign }, _outputs.AlignStageR3Align, _outputs.AlignStageR3Unalign)
+                .Create(new List<IDInput> { _inputs.AlignStageR3Align }, new List<IDInput> { _inputs.AlignStageR3Unalign }, _outputs.AlignStageR3Align, null)
                 .SetIdentity((int)ECylinder.AlignStageR3AlignUnalign, ECylinder.AlignStageR3AlignUnalign.ToString());
             AlignStageR3AlignUnalign.CylinderType = ECylinderType.AlignUnalign;
 
@@ -433,12 +451,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             WetCleanPusherLeftUpDown.CylinderType = ECylinderType.UpDown;
 
             WetCleanBrushRightUpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.WetCleanBrushRightDown }, new List<IDInput> { _inputs.WetCleanBrushRightUp }, _outputs.WetCleanBrushRightDown, _outputs.WetCleanBrushRightUp)
+                .Create(new List<IDInput> { _inputs.WetCleanBrushRightDown }, new List<IDInput> { _inputs.WetCleanBrushRightUp }, _outputs.WetCleanBrushRightDown, null)
                 .SetIdentity((int)ECylinder.WetCleanBrushRightUpDown, ECylinder.WetCleanBrushRightUpDown.ToString());
             WetCleanBrushRightUpDown.CylinderType = ECylinderType.UpDown;
 
             WetCleanBrushLeftUpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.WetCleanBrushLeftDown }, new List<IDInput> { _inputs.WetCleanBrushLeftUp }, _outputs.WetCleanBrushLeftDown, _outputs.WetCleanBrushLeftUp)
+                .Create(new List<IDInput> { _inputs.WetCleanBrushLeftDown }, new List<IDInput> { _inputs.WetCleanBrushLeftUp }, _outputs.WetCleanBrushLeftDown, null)
                 .SetIdentity((int)ECylinder.WetCleanBrushLeftUpDown, ECylinder.WetCleanBrushLeftUpDown.ToString());
             WetCleanBrushLeftUpDown.CylinderType = ECylinderType.UpDown;
 
@@ -485,54 +503,54 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             AFCleanPusherLeftUpDown.CylinderType = ECylinderType.UpDown;
 
             AFCleanBrushRightUpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.AfCleanBrushRightDown }, new List<IDInput> { _inputs.AfCleanBrushRightUp }, _outputs.AfCleanBrushRightDown, _outputs.AfCleanBrushRightUp)
+                .Create(new List<IDInput> { _inputs.AfCleanBrushRightDown }, new List<IDInput> { _inputs.AfCleanBrushRightUp }, _outputs.AfCleanBrushRightDown, null)
                 .SetIdentity((int)ECylinder.AFCleanBrushRightUpDown, ECylinder.AFCleanBrushRightUpDown.ToString());
             AFCleanBrushRightUpDown.CylinderType = ECylinderType.UpDown;
 
             AFCleanBrushLeftUpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.AfCleanBrushLeftDown }, new List<IDInput> { _inputs.AfCleanBrushLeftUp }, _outputs.AfCleanBrushLeftDown, _outputs.AfCleanBrushLeftUp)
+                .Create(new List<IDInput> { _inputs.AfCleanBrushLeftDown }, new List<IDInput> { _inputs.AfCleanBrushLeftUp }, _outputs.AfCleanBrushLeftDown, null)
                 .SetIdentity((int)ECylinder.AFCleanBrushLeftUpDown, ECylinder.AFCleanBrushLeftUpDown.ToString());
             AFCleanBrushLeftUpDown.CylinderType = ECylinderType.UpDown;
 
             // Robot 2 Unload
             UnloadRobotCyl1UpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.UnloadRobotCyl1Up }, new List<IDInput> { _inputs.UnloadRobotCyl1Down }, _outputs.UnloadRobotCyl1Up, _outputs.UnloadRobotCyl1Down)
+                .Create(new List<IDInput> { _inputs.UnloadRobotCyl1Up }, new List<IDInput> { _inputs.UnloadRobotCyl1Down }, null, _outputs.UnloadRobotCyl1Down)
                 .SetIdentity((int)ECylinder.UnloadRobotCyl1UpDown, ECylinder.UnloadRobotCyl1UpDown.ToString());
             UnloadRobotCyl1UpDown.CylinderType = ECylinderType.UpDown;
 
             UnloadRobotCyl2UpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.UnloadRobotCyl2Up }, new List<IDInput> { _inputs.UnloadRobotCyl2Down }, _outputs.UnloadRobotCyl2Up, _outputs.UnloadRobotCyl2Down)
+                .Create(new List<IDInput> { _inputs.UnloadRobotCyl2Up }, new List<IDInput> { _inputs.UnloadRobotCyl2Down }, null, _outputs.UnloadRobotCyl2Down)
                 .SetIdentity((int)ECylinder.UnloadRobotCyl2UpDown, ECylinder.UnloadRobotCyl2UpDown.ToString());
             UnloadRobotCyl2UpDown.CylinderType = ECylinderType.UpDown;
 
             UnloadRobotCyl3UpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.UnloadRobotCyl3Up }, new List<IDInput> { _inputs.UnloadRobotCyl3Down }, _outputs.UnloadRobotCyl3Up, _outputs.UnloadRobotCyl3Down)
+                .Create(new List<IDInput> { _inputs.UnloadRobotCyl3Up }, new List<IDInput> { _inputs.UnloadRobotCyl3Down }, null, _outputs.UnloadRobotCyl3Down)
                 .SetIdentity((int)ECylinder.UnloadRobotCyl3UpDown, ECylinder.UnloadRobotCyl3UpDown.ToString());
             UnloadRobotCyl3UpDown.CylinderType = ECylinderType.UpDown;
 
             UnloadRobotCyl4UpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.UnloadRobotCyl4Up }, new List<IDInput> { _inputs.UnloadRobotCyl4Down }, _outputs.UnloadRobotCyl4Up, _outputs.UnloadRobotCyl4Down)
+                .Create(new List<IDInput> { _inputs.UnloadRobotCyl4Up }, new List<IDInput> { _inputs.UnloadRobotCyl4Down }, null, _outputs.UnloadRobotCyl4Down)
                 .SetIdentity((int)ECylinder.UnloadRobotCyl4UpDown, ECylinder.UnloadRobotCyl4UpDown.ToString());
             UnloadRobotCyl4UpDown.CylinderType = ECylinderType.UpDown;
 
             // Unload Stage
             UnloadAlignCyl1UpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.UnloadAlignCyl1Up }, new List<IDInput> { _inputs.UnloadAlignCyl1Down }, _outputs.UnloadAlignCyl1Up, _outputs.UnloadAlignCyl1Down)
+                .Create(new List<IDInput> { _inputs.UnloadAlignCyl1Up }, new List<IDInput> { _inputs.UnloadAlignCyl1Down }, _outputs.UnloadAlignCyl1Up, null)
                 .SetIdentity((int)ECylinder.UnloadAlignCyl1UpDown, ECylinder.UnloadAlignCyl1UpDown.ToString());
             UnloadAlignCyl1UpDown.CylinderType = ECylinderType.UpDown;
 
             UnloadAlignCyl2UpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.UnloadAlignCyl2Up }, new List<IDInput> { _inputs.UnloadAlignCyl2Down }, _outputs.UnloadAlignCyl2Up, _outputs.UnloadAlignCyl2Down)
+                .Create(new List<IDInput> { _inputs.UnloadAlignCyl2Up }, new List<IDInput> { _inputs.UnloadAlignCyl2Down }, _outputs.UnloadAlignCyl2Up, null)
                 .SetIdentity((int)ECylinder.UnloadAlignCyl2UpDown, ECylinder.UnloadAlignCyl2UpDown.ToString());
             UnloadAlignCyl2UpDown.CylinderType = ECylinderType.UpDown;
 
             UnloadAlignCyl3UpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.UnloadAlignCyl3Up }, new List<IDInput> { _inputs.UnloadAlignCyl3Down }, _outputs.UnloadAlignCyl3Up, _outputs.UnloadAlignCyl3Down)
+                .Create(new List<IDInput> { _inputs.UnloadAlignCyl3Up }, new List<IDInput> { _inputs.UnloadAlignCyl3Down }, _outputs.UnloadAlignCyl3Up, null)
                 .SetIdentity((int)ECylinder.UnloadAlignCyl3UpDown, ECylinder.UnloadAlignCyl3UpDown.ToString());
             UnloadAlignCyl3UpDown.CylinderType = ECylinderType.UpDown;
 
             UnloadAlignCyl4UpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.UnloadAlignCyl4Up }, new List<IDInput> { _inputs.UnloadAlignCyl4Down }, _outputs.UnloadAlignCyl4Up, _outputs.UnloadAlignCyl4Down)
+                .Create(new List<IDInput> { _inputs.UnloadAlignCyl4Up }, new List<IDInput> { _inputs.UnloadAlignCyl4Down }, _outputs.UnloadAlignCyl4Up, null)
                 .SetIdentity((int)ECylinder.UnloadAlignCyl4UpDown, ECylinder.UnloadAlignCyl4UpDown.ToString());
             UnloadAlignCyl4UpDown.CylinderType = ECylinderType.UpDown;
         }

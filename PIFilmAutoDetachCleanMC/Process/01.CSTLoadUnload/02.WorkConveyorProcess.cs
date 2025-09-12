@@ -77,8 +77,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Cylinders
-        private ICylinder FixCylinder => port == EPort.Right ? _devices.Cylinders.InCstFixCylFwBw :
-                                                              _devices.Cylinders.OutCstFixCylFwBw;
+        private ICylinder FixCylinder1 => port == EPort.Right ? _devices.Cylinders.InCstFixCyl1FwBw :
+                                                              _devices.Cylinders.OutCstFixCyl1FwBw;
+        private ICylinder FixCylinder2 => port == EPort.Right ? _devices.Cylinders.InCstFixCyl2FwBw :
+                                                              _devices.Cylinders.OutCstFixCyl2FwBw;
         private ICylinder TiltCylinder => port == EPort.Right ? _devices.Cylinders.InCstTiltCylUpDown :
                                                                _devices.Cylinders.OutCstTiltCylUpDown;
         private ICylinder CVSupportCyl1 => port == EPort.Right ? _devices.Cylinders.InCvSupportUpDown :
@@ -206,8 +208,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EWorkConveyorOriginStep.Cyl_UnAlign:
                     Log.Debug("Cylinder UnAlign");
-                    FixCylinder.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => FixCylinder.IsBackward);
+                    FixCylinder1.Backward();
+                    FixCylinder2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => FixCylinder1.IsBackward && FixCylinder2.IsBackward);
                     Step.OriginStep++;
                     break;
                 case EWorkConveyorOriginStep.Cyl_UnAlign_Wait:
@@ -382,8 +385,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EWorkConveyorTiltStep.Cyl_Fix_Forward:
                     Log.Debug("Cylinder Fix Forward");
-                    FixCylinder.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => FixCylinder.IsForward);
+                    FixCylinder1.Forward();
+                    FixCylinder2.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => FixCylinder1.IsForward && FixCylinder2.IsForward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorTiltStep.Cyl_Fix_Forward_Wait:

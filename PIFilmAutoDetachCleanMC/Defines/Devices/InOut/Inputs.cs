@@ -407,5 +407,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput PlasmaStatus2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_STATUS_2);
         public IDInput PlasmaStatus3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_STATUS_3);
         public IDInput PlasmaStatus4 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_STATUS_4);
+        public IDInput RelayPlasmaMotorError => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.RELAY_PLASMA_MOTOR_ERROR);
     }
 }
