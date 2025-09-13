@@ -1,6 +1,7 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
+using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -170,6 +171,61 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
+        public override bool ProcessToRun()
+        {
+            switch ((EGlassTransferToRunStep)Step.ToRunStep)
+            {
+                case EGlassTransferToRunStep.Start:
+                    Log.Debug("To Run Start");
+                    Step.ToRunStep++;
+                    break;
+                case EGlassTransferToRunStep.ZAxis_Move_ReadyPosition:
+                    Log.Debug("Z Axis Move Ready Position");
+                    ZAxis.MoveAbs(_glassTransferRecipe.ZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(_glassTransferRecipe.ZAxisReadyPosition));
+                    Step.ToRunStep++;
+                    break;
+                case EGlassTransferToRunStep.ZAxis_Move_ReadyPosition_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Ready Position Done");
+                    Step.ToRunStep++;
+                    break;
+                case EGlassTransferToRunStep.YAxis_Move_ReadyPosition:
+                    Log.Debug("Y Axis Move Ready Position");
+                    YAxis.MoveAbs(_glassTransferRecipe.YAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => YAxis.IsOnPosition(_glassTransferRecipe.YAxisReadyPosition));
+                    Step.ToRunStep++;
+                    break;
+                case EGlassTransferToRunStep.YAxis_Move_ReadyPosition_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Ready Position Done");
+                    Step.ToRunStep++;
+                    break;
+                case EGlassTransferToRunStep.Clear_Flag:
+                    Log.Debug("Clear Flag");
+                    ((VirtualOutputDevice<EGlassTransferProcessOutput>)_glassTransferOutput).Clear();
+                    Step.ToRunStep++;
+                    break;
+                case EGlassTransferToRunStep.End:
+                    Log.Debug("To Run End");
+                    Step.ToRunStep++;
+                    ProcessStatus = EProcessStatus.ToRunDone;
+                    break;
+                default:
+                    Thread.Sleep(20);
+                    break;
+            }
+
+            return true;
+        }
         public override bool ProcessOrigin()
         {
             switch ((EGlassTransferOriginStep)Step.OriginStep)
@@ -348,6 +404,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 CylinderUpDown3.Forward();
             }
         }
+
         private void Sequence_AutoRun()
         {
             switch ((EGlassTransferAutoRunStep)Step.RunStep)
