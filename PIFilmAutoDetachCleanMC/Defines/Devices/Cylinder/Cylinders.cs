@@ -441,28 +441,28 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
 
             // Wet Clean
             WetCleanPusherRightUpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.WetCleanPusherRightDown }, new List<IDInput> { _inputs.WetCleanPusherRightUp }, _outputs.WetCleanPusherRightDown, _outputs.WetCleanPusherRightUp)
+                .Create(new List<IDInput> { _inputs.WetCleanPusherRightUp }, new List<IDInput> { _inputs.WetCleanPusherRightDown }, _outputs.WetCleanPusherRightUp, _outputs.WetCleanPusherRightDown)
                 .SetIdentity((int)ECylinder.WetCleanPusherRightUpDown, ECylinder.WetCleanPusherRightUpDown.ToString());
             WetCleanPusherRightUpDown.CylinderType = ECylinderType.UpDown;
 
             WetCleanPusherLeftUpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.WetCleanPusherLeftDown }, new List<IDInput> { _inputs.WetCleanPusherLeftUp }, _outputs.WetCleanPusherLeftDown, _outputs.WetCleanPusherLeftUp)
+                .Create(new List<IDInput> { _inputs.WetCleanPusherLeftUp }, new List<IDInput> { _inputs.WetCleanPusherLeftDown }, _outputs.WetCleanPusherLeftUp, _outputs.WetCleanPusherLeftDown)
                 .SetIdentity((int)ECylinder.WetCleanPusherLeftUpDown, ECylinder.WetCleanPusherLeftUpDown.ToString());
             WetCleanPusherLeftUpDown.CylinderType = ECylinderType.UpDown;
 
             WetCleanBrushRightUpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.WetCleanBrushRightDown }, new List<IDInput> { _inputs.WetCleanBrushRightUp }, _outputs.WetCleanBrushRightDown, null)
+                .Create(new List<IDInput> { _inputs.WetCleanBrushRightUp }, new List<IDInput> { _inputs.WetCleanBrushRightDown }, null, _outputs.WetCleanBrushRightDown)
                 .SetIdentity((int)ECylinder.WetCleanBrushRightUpDown, ECylinder.WetCleanBrushRightUpDown.ToString());
             WetCleanBrushRightUpDown.CylinderType = ECylinderType.UpDown;
 
             WetCleanBrushLeftUpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.WetCleanBrushLeftDown }, new List<IDInput> { _inputs.WetCleanBrushLeftUp }, _outputs.WetCleanBrushLeftDown, null)
+                .Create(new List<IDInput> { _inputs.WetCleanBrushLeftUp }, new List<IDInput> { _inputs.WetCleanBrushLeftDown }, null, _outputs.WetCleanBrushLeftDown)
                 .SetIdentity((int)ECylinder.WetCleanBrushLeftUpDown, ECylinder.WetCleanBrushLeftUpDown.ToString());
             WetCleanBrushLeftUpDown.CylinderType = ECylinderType.UpDown;
 
             // Transfer Rotate
             TrRotateRightRotate = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.TrRotateRight0Degree }, new List<IDInput> { _inputs.TrRotateRight180Degree }, _outputs.TrRotateRight0Degree, _outputs.TrRotateRight180Degree)
+                .Create(new List<IDInput> { _inputs.TrRotateRight180Degree }, new List<IDInput> { _inputs.TrRotateRight0Degree }, _outputs.TrRotateRight180Degree, _outputs.TrRotateRight0Degree)
                 .SetIdentity((int)ECylinder.TrRotateRightRotate, ECylinder.TrRotateRightRotate.ToString());
             TrRotateRightRotate.CylinderType = ECylinderType.FlipUnflip;
 
@@ -472,7 +472,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             TrRotateRightFwBw.CylinderType = ECylinderType.ForwardBackward;
 
             TrRotateLeftRotate = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.TrRotateLeft0Degree }, new List<IDInput> { _inputs.TrRotateLeft180Degree }, _outputs.TrRotateLeft0Degree, _outputs.TrRotateLeft180Degree)
+                .Create(new List<IDInput> { _inputs.TrRotateLeft180Degree }, new List<IDInput> { _inputs.TrRotateLeft0Degree }, _outputs.TrRotateLeft180Degree, _outputs.TrRotateLeft0Degree)
                 .SetIdentity((int)ECylinder.TrRotateLeftRotate, ECylinder.TrRotateLeftRotate.ToString());
             TrRotateLeftRotate.CylinderType = ECylinderType.FlipUnflip;
 
@@ -493,22 +493,22 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
 
             // AF Clean
             AFCleanPusherRightUpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.AfCleanPusherRightDown }, new List<IDInput> { _inputs.AfCleanPusherRightUp }, _outputs.AfCleanPusherRightDown, _outputs.AfCleanPusherRightUp)
+                .Create(new List<IDInput> { _inputs.AfCleanPusherRightUp }, new List<IDInput> { _inputs.AfCleanPusherRightDown }, _outputs.AfCleanPusherRightUp, _outputs.AfCleanPusherRightDown)
                 .SetIdentity((int)ECylinder.AFCleanPusherRightUpDown, ECylinder.AFCleanPusherRightUpDown.ToString());
             AFCleanPusherRightUpDown.CylinderType = ECylinderType.UpDown;
 
             AFCleanPusherLeftUpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.AfCleanPusherLeftDown }, new List<IDInput> { _inputs.AfCleanPusherLeftUp }, _outputs.AfCleanPusherLeftDown, _outputs.AfCleanPusherLeftUp)
+                .Create(new List<IDInput> { _inputs.AfCleanPusherLeftUp }, new List<IDInput> { _inputs.AfCleanPusherLeftDown }, _outputs.AfCleanPusherLeftUp, _outputs.AfCleanPusherLeftDown)
                 .SetIdentity((int)ECylinder.AFCleanPusherLeftUpDown, ECylinder.AFCleanPusherLeftUpDown.ToString());
             AFCleanPusherLeftUpDown.CylinderType = ECylinderType.UpDown;
 
             AFCleanBrushRightUpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.AfCleanBrushRightDown }, new List<IDInput> { _inputs.AfCleanBrushRightUp }, _outputs.AfCleanBrushRightDown, null)
+                .Create(new List<IDInput> { _inputs.AfCleanBrushRightUp }, new List<IDInput> { _inputs.AfCleanBrushRightDown }, null, _outputs.AfCleanBrushRightDown)
                 .SetIdentity((int)ECylinder.AFCleanBrushRightUpDown, ECylinder.AFCleanBrushRightUpDown.ToString());
             AFCleanBrushRightUpDown.CylinderType = ECylinderType.UpDown;
 
             AFCleanBrushLeftUpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.AfCleanBrushLeftDown }, new List<IDInput> { _inputs.AfCleanBrushLeftUp }, _outputs.AfCleanBrushLeftDown, null)
+                .Create(new List<IDInput> { _inputs.AfCleanBrushLeftUp }, new List<IDInput> { _inputs.AfCleanBrushLeftDown }, null, _outputs.AfCleanBrushLeftDown)
                 .SetIdentity((int)ECylinder.AFCleanBrushLeftUpDown, ECylinder.AFCleanBrushLeftUpDown.ToString());
             AFCleanBrushLeftUpDown.CylinderType = ECylinderType.UpDown;
 
