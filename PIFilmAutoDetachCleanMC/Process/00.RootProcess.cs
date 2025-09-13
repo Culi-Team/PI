@@ -68,7 +68,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         public override bool PreProcess()
         {
             // 1. CHECK ALARM STATUS (Utils, Motion, Safety...)
-            if (ProcessMode != EProcessMode.ToAlarm && ProcessMode != EProcessMode.Alarm)
+            if (ProcessMode != EProcessMode.ToAlarm && ProcessMode != EProcessMode.Alarm && ProcessMode != EProcessMode.Stop)
             {
                 CheckRealTimeAlarmStatus();
             }

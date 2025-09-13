@@ -22,6 +22,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _navigationService = navigationService;
             SelectRunModeCommand = new RelayCommand(SelectRunMode);
             MachineStatus.PropertyChanged += MachineStatusOnPropertyChanged;
+
+            Log = LogManager.GetLogger("AutoVM");
         }
 
         public MachineStatus MachineStatus { get; }
@@ -141,7 +143,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     {
                         return;
                     }
-
+                    Log.Debug("Origin Button Click");
                     MachineStatus.OPCommand = EOperationCommand.Origin;
                 });
             }
@@ -157,7 +159,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     {
                         return;
                     }
-
+                    Log.Debug("Start Button Click");
                     MachineStatus.OPCommand = EOperationCommand.Start;
                 });
             }
@@ -169,6 +171,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    Log.Debug("Stop Button Click");
                     MachineStatus.OPCommand = EOperationCommand.Stop;
                 });
             }
