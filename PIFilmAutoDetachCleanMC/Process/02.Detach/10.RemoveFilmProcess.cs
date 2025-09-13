@@ -413,7 +413,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERemoveFilmProcessRemoveStep.Cyl_Clamp:
                     Log.Debug("Cylinder Clamp");
-                    ClampCyl1.Forward();
+                    CylClampUnClamp(true);
                     Wait(_commonRecipe.CylinderMoveTimeout, () => ClampCyl1.IsForward && ClampCyl2.IsForward && ClampCyl3.IsForward);
                     Step.RunStep++;
                     break;
@@ -514,7 +514,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERemoveFilmProcessRobotPickStep.Cyl_UnClamp:
                     Log.Debug("Cylinder UnClamp");
-                    ClampCyl1.Backward();
+                    CylClampUnClamp(false);
                     Wait(_commonRecipe.CylinderMoveTimeout, () => ClampCyl1.IsBackward && ClampCyl2.IsBackward && ClampCyl3.IsBackward);
                     Step.RunStep++;
                     break;
@@ -621,6 +621,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Info("Sequence Transfer Fixture Unload");
                     Sequence = ESequence.TransferFixtureUnload;
                     break;
+            }
+        }
+
+        private void CylClampUnClamp(bool bClamp)
+        {
+            if(bClamp)
+            {
+                ClampCyl1.Forward();
+                ClampCyl2.Forward();
+                ClampCyl3.Forward();
+            }
+            else
+            {
+                ClampCyl1.Backward();
+                ClampCyl2.Backward();
+                ClampCyl3.Backward();
             }
         }
         #endregion
