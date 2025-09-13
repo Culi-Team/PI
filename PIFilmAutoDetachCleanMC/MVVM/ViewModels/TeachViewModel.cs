@@ -2362,6 +2362,19 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 MessageBoxEx.ShowDialog($"InterLock Fail! Cannot Move Cylinder\n\n{CylinderInterlockMsg}");
                 return;
             }
+            if (cylinder.CylinderType == ECylinderType.ForwardBackwardReverse ||
+                    cylinder.CylinderType == ECylinderType.UpDownReverse ||
+                    cylinder.CylinderType == ECylinderType.RightLeftReverse ||
+                    cylinder.CylinderType == ECylinderType.LockUnlockReverse ||
+                    cylinder.CylinderType == ECylinderType.GripUngripReverse ||
+                    cylinder.CylinderType == ECylinderType.AlignUnalignReverse ||
+                    cylinder.CylinderType == ECylinderType.FlipUnflipReverse ||
+                    cylinder.CylinderType == ECylinderType.ClampUnclampReverse
+                    )
+            {
+                cylinder.Backward();
+                return;
+            }
             cylinder.Forward();
 
         }
@@ -2374,6 +2387,19 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             if (!CylinderInterLock(cylinder, false, out string CylinderInterlockMsg))
             {
                 MessageBoxEx.ShowDialog($"InterLock Fail! Cannot Move Cylinder\n\n{CylinderInterlockMsg}");
+                return;
+            }
+            if (cylinder.CylinderType == ECylinderType.ForwardBackwardReverse ||
+                    cylinder.CylinderType == ECylinderType.UpDownReverse ||
+                    cylinder.CylinderType == ECylinderType.RightLeftReverse ||
+                    cylinder.CylinderType == ECylinderType.LockUnlockReverse ||
+                    cylinder.CylinderType == ECylinderType.GripUngripReverse ||
+                    cylinder.CylinderType == ECylinderType.AlignUnalignReverse ||
+                    cylinder.CylinderType == ECylinderType.FlipUnflipReverse ||
+                    cylinder.CylinderType == ECylinderType.ClampUnclampReverse
+                    )
+            {
+                cylinder.Forward();
                 return;
             }
             cylinder.Backward();
