@@ -39,6 +39,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDInput GlassVac3 => _devices.Inputs.UnloadGlassAlignVac3;
         private IDInput GlassVac4 => _devices.Inputs.UnloadGlassAlignVac4;
 
+        private IDInput GlassDetect1 => _devices.Inputs.UnloadGlassDetect1;
+        private IDInput GlassDetect2 => _devices.Inputs.UnloadGlassDetect2;
+        private IDInput GlassDetect3 => _devices.Inputs.UnloadGlassDetect3;
+        private IDInput GlassDetect4 => _devices.Inputs.UnloadGlassDetect4;
+
         private bool IsGlassVac1 => _devices.Inputs.UnloadGlassAlignVac1.Value;
         private bool IsGlassVac2 => _devices.Inputs.UnloadGlassAlignVac2.Value;
         private bool IsGlassVac3 => _devices.Inputs.UnloadGlassAlignVac3.Value;
@@ -330,6 +335,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadAlignStep.Vacuum_On:
                     Log.Debug("Vacuum On");
                     VacOnOff(true);
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(GlassDetect1, true);
+                    SimulationInputSetter.SetSimModbusInput(GlassDetect2, true);
+                    SimulationInputSetter.SetSimModbusInput(GlassDetect3, true);
+                    SimulationInputSetter.SetSimModbusInput(GlassDetect4, true);
+#endif
                     Wait(_commonRecipe.VacDelay);
                     Step.RunStep++;
                     break;
@@ -381,6 +392,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadAlignRobotPickStep.Vacuum_Off:
                     Log.Debug("Vacuum Off");
                     VacOnOff(false);
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(GlassVac1, false);
+                    SimulationInputSetter.SetSimModbusInput(GlassVac2, false);
+                    SimulationInputSetter.SetSimModbusInput(GlassVac3, false);
+                    SimulationInputSetter.SetSimModbusInput(GlassVac4, false);
+#endif
                     Wait(_commonRecipe.VacDelay);
                     Step.RunStep++;
                     break;
@@ -396,10 +413,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(GlassVac1, false);
-                    SimulationInputSetter.SetSimModbusInput(GlassVac2, false);
-                    SimulationInputSetter.SetSimModbusInput(GlassVac3, false);
-                    SimulationInputSetter.SetSimModbusInput(GlassVac4, false);
+                    SimulationInputSetter.SetSimModbusInput(GlassDetect1, false);
+                    SimulationInputSetter.SetSimModbusInput(GlassDetect2, false);
+                    SimulationInputSetter.SetSimModbusInput(GlassDetect3, false);
+                    SimulationInputSetter.SetSimModbusInput(GlassDetect4, false);
 #endif
                     Log.Debug("Clear Flag Request Robot Unload");
                     FlagUnloadAlignRequestRobotUnload = false;
