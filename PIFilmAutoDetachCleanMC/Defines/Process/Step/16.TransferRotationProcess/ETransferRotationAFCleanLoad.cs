@@ -9,6 +9,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ETransferRotationAFCleanLoad
     {
         Start,
+        Set_FlagTransferRotationReadyPlace,
         Wait_AFCleanRequestLoad,
         ZAxis_Move_PlacePosition,
         ZAxis_Move_PlacePosition_Wait,

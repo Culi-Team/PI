@@ -330,27 +330,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagAFCleanLoading
+        private bool FlagTransferRotationReadyPickPlace
         {
             get
             {
-                if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
-                {
-                    return Inputs[(int)ECleanProcessInput.AF_CLEAN_LOADING];
-                }
-                return true;
-            }
-        }
-
-        private bool FlagWETCleanUnloading
-        {
-            get
-            {
-                if (cleanType == EClean.AFCleanLeft || cleanType == EClean.AFCleanRight)
-                {
-                    return Inputs[(int)ECleanProcessInput.WET_CLEAN_UNLOADING];
-                }
-                return true;
+                return Inputs[(int)ECleanProcessInput.TRANSFER_ROTATION_READY_PICK_PLACE];
             }
         }
 
@@ -358,7 +342,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                if(cleanType == EClean.AFCleanLeft || cleanType == EClean.AFCleanRight)
+                if (cleanType == EClean.AFCleanLeft || cleanType == EClean.AFCleanRight)
                 {
                     Outputs[(int)ECleanProcessOutput.AF_CLEAN_LOADING] = value;
                 }
@@ -369,7 +353,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                if(cleanType == EClean.WETCleanLeft || cleanType== EClean.WETCleanRight)
+                if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                 {
                     Outputs[(int)ECleanProcessOutput.WET_CLEAN_UNLOADING] = value;
                 }
@@ -573,6 +557,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessAutoRunStep.VacDetect_Check:
                     if (IsVacDetect)
                     {
+                        Sequence_Prepare3M();
                         if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                         {
                             Log.Info("Sequence WET Clean");
@@ -608,9 +593,9 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                     Log.Debug("Clear Flag Clean Load Done Received");
 
-                    if(cleanType == EClean.AFCleanLeft || cleanType == EClean.AFCleanRight)
+                    if (cleanType == EClean.AFCleanLeft || cleanType == EClean.AFCleanRight)
                     {
-                        Log.Debug("Wait WET Clean Unload Done");
+                        Log.Debug("Wait Transfer Rotation Ready Place");
                     }
 
                     FlagCleanLoadDoneReceived = false;
@@ -619,7 +604,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessLoadStep.Wait_WETCleanUnloadDone:
                     if (cleanType == EClean.AFCleanLeft || cleanType == EClean.AFCleanRight)
                     {
-                        if(FlagWETCleanUnloading == true)
+                        if (FlagTransferRotationReadyPickPlace == false)
                         {
                             Wait(20);
                             break;
@@ -652,7 +637,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessLoadStep.Set_FlagCleanRequestLoad:
                     Log.Debug("Set Flag Request Load");
                     FlagCleanRequestLoad = true;
-                    Log.Debug("Wait Clean Load Done");
+                    Log.Debug("Wait Clean Load Glass Done");
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.Wait_CleanLoadDone:
@@ -661,6 +646,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
+                    Sequence_Prepare3M();
                     Log.Debug("Clear Flag Request Load");
                     FlagCleanRequestLoad = false;
                     Step.RunStep++;
@@ -713,6 +699,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
+                    Is3MPrepareDone = false;
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.Axis_MoveCleanHorizontalPosition:
@@ -881,12 +868,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Unload Start");
                     Log.Debug("Clear Flag Unload Done Received");
                     FlagCleanUnloadDoneReceived = false;
+                    if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                    {
+                        Log.Debug("Wait Transfer Rotation Ready Pick");
+                    }
                     Step.RunStep++;
                     break;
                 case ECleanProcessUnloadStep.Wait_AFCleanLoadDone:
-                    if(cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                    if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
-                        if (FlagAFCleanLoading == true)
+                        if (FlagTransferRotationReadyPickPlace == false)
                         {
                             Wait(20);
                             break;
@@ -963,6 +954,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence = ESequence.AFCleanLoad;
                     break;
             }
+        }
+
+        private void Sequence_Prepare3M()
+        {
+            Log.Debug("Prepare 3M");
+            Is3MPrepareDone = true;
         }
         #endregion
     }

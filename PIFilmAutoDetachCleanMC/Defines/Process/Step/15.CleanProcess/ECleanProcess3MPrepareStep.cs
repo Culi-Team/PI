@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum ECleanProcessInput
+    public enum ECleanProcess3MPrepareStep
     {
-        LOAD_DONE,
-        UNLOAD_DONE,
-        TRANSFER_ROTATION_READY_PICK_PLACE
+
     }
 }

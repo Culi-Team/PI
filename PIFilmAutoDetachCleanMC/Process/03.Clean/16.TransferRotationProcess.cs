@@ -119,6 +119,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                 Outputs[(int)ETransferRotationProcessOutput.AF_CLEAN_LOAD_DONE] = value;
             }
         }
+
+        private bool FlagTransferRotationReadyPick
+        {
+            set
+            {
+                Outputs[(int)ETransferRotationProcessOutput.TRANSFER_ROTATION_READY_PICK] = value;
+            }
+        }
+
+        private bool FlagTransferRotationReadyPlace
+        {
+            set
+            {
+                Outputs[(int)ETransferRotationProcessOutput.TRANSFER_ROTATION_READY_PLACE] = value;
+            }
+        }
         #endregion
 
         #region Constructor
@@ -338,7 +354,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationWETCleanUnloadStep.Start:
                     Log.Debug("WET Clean Unload Start");
                     Step.RunStep++;
+                    break;
+                case ETransferRotationWETCleanUnloadStep.Set_FlagTransferRotationReadyPick:
+                    Log.Debug("Set Flag Transfer Rotation Ready Pick");
+                    FlagTransferRotationReadyPick = true;
+                    FlagTransferRotationReadyPlace = false;
                     Log.Debug("Wait WET Clean Request Unload");
+                    Step.RunStep++;
                     break;
                 case ETransferRotationWETCleanUnloadStep.Wait_WETCleanRequestUnload:
                     if(FlagWETCleanRequestUnload == false)
@@ -407,6 +429,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Clear Flag WET Clean Unload Done");
                     FlagWETCleanUnloadDone = false;
+
+                    Log.Debug("Clear Flag Transfer Rotation Ready Pick");
+                    FlagTransferRotationReadyPick = false;
                     Step.RunStep++;
                     break;
                 case ETransferRotationWETCleanUnloadStep.End:
@@ -480,9 +505,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassRotVac_On_Check:
-                    if(GlassRotVac.Value)
+                    if(GlassRotVac.Value == false)
                     {
                         //ALARM
+                        Wait(10);
                         break;
                     }
                     Step.RunStep++;
@@ -566,7 +592,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassVac2_On_Check:
-                    if(GlassVac2.Value)
+                    if(GlassVac2.Value == false)
                     {
                         //ALARM
                         break;
@@ -609,7 +635,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationAFCleanLoad.Start:
                     Log.Debug("AF Clean Load Start");
                     Step.RunStep++;
+                    break;
+                case ETransferRotationAFCleanLoad.Set_FlagTransferRotationReadyPlace:
+                    Log.Debug("Set Flag Transfer Rotation Ready Place");
+                    FlagTransferRotationReadyPlace = true;
+                    FlagTransferRotationReadyPick = false;
                     Log.Debug("Wait AF Clean Request Load");
+                    Step.RunStep++;
                     break;
                 case ETransferRotationAFCleanLoad.Wait_AFCleanRequestLoad:
                     if(FlagAFCleanRequestLoad == false)
@@ -671,6 +703,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Clear Flag AF Clean Load Done");
                     FlagAFCleanLoadDone = false;
+                    Log.Debug("Clear Flag Transfer Rotation Ready Place");
+                    FlagTransferRotationReadyPlace = false;
                     Step.RunStep++;
                     break;
                 case ETransferRotationAFCleanLoad.End:

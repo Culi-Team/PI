@@ -372,6 +372,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                         //Timeout ALARM
                         break;
                     }
+                    Log.Debug("Z Axis Move Ready Position Done");
+                    Step.RunStep++;
                     break;
                 case EUnloadTransferAFCleanUnloadStep.Set_FlagAFCleanUnloadDone:
                     Log.Debug("Set Flag AF Clean Unload Done");
@@ -417,6 +419,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
+                    Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.UnloadAlign_GlassVacCheck:
                     Log.Debug("Set Flag Unloading");
@@ -528,6 +531,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Z Axis Move Place Position Done");
+                    Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.Vacuum_Off:
                     Log.Debug("Vacuum Off");
@@ -583,6 +587,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Clear Flag Unload Transfer Place Done");
                     FlagUnloadTransferPlaceDone = false;
+                    Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.End:
                     Log.Debug("Unload Transfer Place End");

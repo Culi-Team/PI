@@ -444,6 +444,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadAlignUnloadTransferPlaceStep.Set_FlagUnloadAlignReady:
                     Log.Debug("Set Flag Unload Align Ready");
                     FlagUnloadAlignReady = true;
+                    Log.Debug("Wait Unload Transfer Place Done");
                     Step.RunStep++;
                     break;
                 case EUnloadAlignUnloadTransferPlaceStep.Wait_UnloadTransfePlaceDone:
