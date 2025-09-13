@@ -1379,14 +1379,30 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<ICylinder> GetInWorkConveyorCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // In CST Stopper
             cylinders.Add(Devices.Cylinders.InCstStopperUpDown);
+            // In CST Work cylinders
+            cylinders.Add(Devices.Cylinders.InCstFixCyl1FwBw);
+            cylinders.Add(Devices.Cylinders.InCstFixCyl2FwBw);
+            cylinders.Add(Devices.Cylinders.InCstTiltCylUpDown);
+            // In CV Support cylinders
+            cylinders.Add(Devices.Cylinders.InCvSupportUpDown);
+            cylinders.Add(Devices.Cylinders.InCvSupportBufferUpDown);
             return cylinders;
         }
         
         private ObservableCollection<ICylinder> GetOutWorkConveyorCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Out CST Stopper
             cylinders.Add(Devices.Cylinders.OutCstStopperUpDown);
+            // Out CST Work cylinders
+            cylinders.Add(Devices.Cylinders.OutCstFixCyl1FwBw);
+            cylinders.Add(Devices.Cylinders.OutCstFixCyl2FwBw);
+            cylinders.Add(Devices.Cylinders.OutCstTiltCylUpDown);
+            // Out CV Support cylinders
+            cylinders.Add(Devices.Cylinders.OutCvSupportUpDown);
+            cylinders.Add(Devices.Cylinders.OutCvSupportBufferUpDown);
             return cylinders;
         }
 
@@ -1434,68 +1450,108 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         // Transfer Shutter Tab Cylinders (No cylinders used in TransferInShuttle process)
         private ObservableCollection<ICylinder> GetTransferShutterLeftCylinders()
         {
-            return new ObservableCollection<ICylinder>();
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Add Transfer In Shuttle Left cylinders
+            cylinders.Add(Devices.Cylinders.TransferInShuttleLRotate);
+            return cylinders;
         }
 
         private ObservableCollection<ICylinder> GetTransferShutterRightCylinders()
         {
-            return new ObservableCollection<ICylinder>();
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Add Transfer In Shuttle Right cylinders
+            cylinders.Add(Devices.Cylinders.TransferInShuttleRRotate);
+            return cylinders;
         }
 
         // Transfer Rotation Tab Cylinders
         private ObservableCollection<ICylinder> GetTransferRotationLeftCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Add Transfer Rotation Left cylinders
             cylinders.Add(Devices.Cylinders.TrRotateLeftRotate);
             cylinders.Add(Devices.Cylinders.TrRotateLeftFwBw);
+            cylinders.Add(Devices.Cylinders.TrRotateLeftUpDown);
             return cylinders;
         }
 
         private ObservableCollection<ICylinder> GetTransferRotationRightCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Add Transfer Rotation Right cylinders
             cylinders.Add(Devices.Cylinders.TrRotateRightRotate);
             cylinders.Add(Devices.Cylinders.TrRotateRightFwBw);
+            cylinders.Add(Devices.Cylinders.TrRotateRightUpDown);
             return cylinders;
         }
 
-        // Unload Transfer Tab Cylinders (No cylinders used in UnloadTransfer process)
+        // Unload Transfer Tab Cylinders
         private ObservableCollection<ICylinder> GetUnloadTransferLeftCylinders()
         {
-            return new ObservableCollection<ICylinder>();
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Add Unload Robot Left cylinders
+            cylinders.Add(Devices.Cylinders.UnloadRobotCyl1UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadRobotCyl2UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadRobotCyl3UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadRobotCyl4UpDown);
+            // Add Unload Align Left cylinders
+            cylinders.Add(Devices.Cylinders.UnloadAlignCyl1UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadAlignCyl2UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadAlignCyl3UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadAlignCyl4UpDown);
+            return cylinders;
         }
 
         private ObservableCollection<ICylinder> GetUnloadTransferRightCylinders()
         {
-            return new ObservableCollection<ICylinder>();
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Add Unload Robot Right cylinders
+            cylinders.Add(Devices.Cylinders.UnloadRobotCyl1UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadRobotCyl2UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadRobotCyl3UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadRobotCyl4UpDown);
+            // Add Unload Align Right cylinders
+            cylinders.Add(Devices.Cylinders.UnloadAlignCyl1UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadAlignCyl2UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadAlignCyl3UpDown);
+            cylinders.Add(Devices.Cylinders.UnloadAlignCyl4UpDown);
+            return cylinders;
         }
 
         // Clean Tab Cylinders
         private ObservableCollection<ICylinder> GetWETCleanLeftCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Add WET Clean Left cylinders
             cylinders.Add(Devices.Cylinders.WetCleanPusherLeftUpDown);
+            cylinders.Add(Devices.Cylinders.WetCleanBrushLeftUpDown);
             return cylinders;
         }
 
         private ObservableCollection<ICylinder> GetWETCleanRightCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Add WET Clean Right cylinders
             cylinders.Add(Devices.Cylinders.WetCleanPusherRightUpDown);
+            cylinders.Add(Devices.Cylinders.WetCleanBrushRightUpDown);
             return cylinders;
         }
 
         private ObservableCollection<ICylinder> GetAFCleanLeftCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Add AF Clean Left cylinders
             cylinders.Add(Devices.Cylinders.AFCleanPusherLeftUpDown);
+            cylinders.Add(Devices.Cylinders.AFCleanBrushLeftUpDown);
             return cylinders;
         }
 
         private ObservableCollection<ICylinder> GetAFCleanRightCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Add AF Clean Right cylinders
             cylinders.Add(Devices.Cylinders.AFCleanPusherRightUpDown);
+            cylinders.Add(Devices.Cylinders.AFCleanBrushRightUpDown);
             return cylinders;
         }
 
@@ -1509,11 +1565,32 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             // Add In Cassette detection inputs
             inputs.Add(Devices.Inputs.InCstDetect1);
             inputs.Add(Devices.Inputs.InCstDetect2);
+            // Add In Cassette work detection inputs
+            inputs.Add(Devices.Inputs.InCstWorkDetect1);
+            inputs.Add(Devices.Inputs.InCstWorkDetect2);
+            inputs.Add(Devices.Inputs.InCstWorkDetect3);
+            inputs.Add(Devices.Inputs.InCstWorkDetect4);
             // Add In Cassette button inputs
             inputs.Add(Devices.Inputs.InButton1);
             inputs.Add(Devices.Inputs.InButton2);
             // Add In Cassette light curtain safety input
             inputs.Add(Devices.Inputs.InCstLightCurtainAlarmDetect);
+            // Add In CV Support detection inputs
+            inputs.Add(Devices.Inputs.InCvSupportUp);
+            inputs.Add(Devices.Inputs.InCvSupportDown);
+            inputs.Add(Devices.Inputs.InCvSupportBufferUp);
+            inputs.Add(Devices.Inputs.InCvSupportBufferDown);
+            // Add In CST Fix cylinder detection inputs
+            inputs.Add(Devices.Inputs.InCstFixCyl1Fw);
+            inputs.Add(Devices.Inputs.InCstFixCyl1Bw);
+            inputs.Add(Devices.Inputs.InCstFixCyl2Fw);
+            inputs.Add(Devices.Inputs.InCstFixCyl2Bw);
+            // Add In CST Tilt cylinder detection inputs
+            inputs.Add(Devices.Inputs.InCstTiltCylUp);
+            inputs.Add(Devices.Inputs.InCstTiltCylDown);
+            // Add In CST Stopper detection inputs
+            inputs.Add(Devices.Inputs.InCstStopperUp);
+            inputs.Add(Devices.Inputs.InCstStopperDown);
             
             return inputs;
         }
@@ -1533,6 +1610,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             inputs.Add(Devices.Inputs.OutButton2);
             // Add Out Cassette light curtain safety input
             inputs.Add(Devices.Inputs.OutCstLightCurtainAlarmDetect);
+            // Add Out CV Support detection inputs
+            inputs.Add(Devices.Inputs.OutCvSupportUp);
+            inputs.Add(Devices.Inputs.OutCvSupportDown);
+            inputs.Add(Devices.Inputs.OutCvSupportBufferUp);
+            inputs.Add(Devices.Inputs.OutCvSupportBufferDown);
+            // Add Out CST Fix cylinder detection inputs
+            inputs.Add(Devices.Inputs.OutCstFixCyl1Fw);
+            inputs.Add(Devices.Inputs.OutCstFixCyl1Bw);
+            inputs.Add(Devices.Inputs.OutCstFixCyl2Fw);
+            inputs.Add(Devices.Inputs.OutCstFixCyl2Bw);
+            // Add Out CST Tilt cylinder detection inputs
+            inputs.Add(Devices.Inputs.OutCstTiltCylUp);
+            inputs.Add(Devices.Inputs.OutCstTiltCylDown);
+            // Add Out CST Stopper detection inputs
+            inputs.Add(Devices.Inputs.OutCstStopperUp);
+            inputs.Add(Devices.Inputs.OutCstStopperDown);
             
             return inputs;
         }
@@ -1541,8 +1634,19 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDInput> GetTransferFixtureInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // TransferFixtureProcess doesn't have specific inputs defined
-            // Return empty collection for now
+            // Add Transfer Fixture detection inputs
+            inputs.Add(Devices.Inputs.TransferFixtureUp);
+            inputs.Add(Devices.Inputs.TransferFixtureDown);
+            // Add Transfer Fixture clamp detection inputs
+            inputs.Add(Devices.Inputs.TransferFixture11Clamp);
+            inputs.Add(Devices.Inputs.TransferFixture11Unclamp);
+            inputs.Add(Devices.Inputs.TransferFixture12Clamp);
+            inputs.Add(Devices.Inputs.TransferFixture12Unclamp);
+            inputs.Add(Devices.Inputs.TransferFixture21Clamp);
+            inputs.Add(Devices.Inputs.TransferFixture21Unclamp);
+            inputs.Add(Devices.Inputs.TransferFixture22Clamp);
+            inputs.Add(Devices.Inputs.TransferFixture22Unclamp);
+            
             return inputs;
         }
         
@@ -1555,6 +1659,20 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             inputs.Add(Devices.Inputs.DetachGlassShtVac1);
             inputs.Add(Devices.Inputs.DetachGlassShtVac2);
             inputs.Add(Devices.Inputs.DetachGlassShtVac3);
+            // Add Detach cylinder detection inputs
+            inputs.Add(Devices.Inputs.DetachCyl1Up);
+            inputs.Add(Devices.Inputs.DetachCyl1Down);
+            inputs.Add(Devices.Inputs.DetachCyl2Up);
+            inputs.Add(Devices.Inputs.DetachCyl2Down);
+            // Add Detach fix fixture cylinder detection inputs
+            inputs.Add(Devices.Inputs.DetachFixFixtureCyl11Fw);
+            inputs.Add(Devices.Inputs.DetachFixFixtureCyl11Bw);
+            inputs.Add(Devices.Inputs.DetachFixFixtureCyl12Fw);
+            inputs.Add(Devices.Inputs.DetachFixFixtureCyl12Bw);
+            inputs.Add(Devices.Inputs.DetachFixFixtureCyl21Fw);
+            inputs.Add(Devices.Inputs.DetachFixFixtureCyl21Bw);
+            inputs.Add(Devices.Inputs.DetachFixFixtureCyl22Fw);
+            inputs.Add(Devices.Inputs.DetachFixFixtureCyl22Bw);
             
             return inputs;
         }
@@ -1563,20 +1681,30 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDInput> GetTransferShutterLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add Glass detection inputs
             inputs.Add(Devices.Inputs.AlignStageLGlassDettect1);
             inputs.Add(Devices.Inputs.AlignStageLGlassDettect2);
             inputs.Add(Devices.Inputs.AlignStageLGlassDettect3);
+            // Add Vacuum detection inputs
             inputs.Add(Devices.Inputs.TransferInShuttleLVac);
+            // Add Transfer In Shuttle Left rotate detection inputs
+            inputs.Add(Devices.Inputs.TransferInShuttleL0Degree);
+            inputs.Add(Devices.Inputs.TransferInShuttleL180Degree);
             return inputs;
         }
 
         private ObservableCollection<IDInput> GetTransferShutterRightInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add Glass detection inputs
             inputs.Add(Devices.Inputs.AlignStageRGlassDetect1);
             inputs.Add(Devices.Inputs.AlignStageRGlassDetect2);
             inputs.Add(Devices.Inputs.AlignStageRGlassDetect3);
+            // Add Vacuum detection inputs
             inputs.Add(Devices.Inputs.TransferInShuttleRVac);
+            // Add Transfer In Shuttle Right rotate detection inputs
+            inputs.Add(Devices.Inputs.TransferInShuttleR0Degree);
+            inputs.Add(Devices.Inputs.TransferInShuttleR180Degree);
             return inputs;
         }
 
@@ -1584,18 +1712,34 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDInput> GetTransferRotationLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add Vacuum detection inputs
             inputs.Add(Devices.Inputs.TrRotateLeftVac1);
             inputs.Add(Devices.Inputs.TrRotateLeftVac2);
             inputs.Add(Devices.Inputs.TrRotateLeftRotVac);
+            // Add Transfer Rotation Left cylinder detection inputs
+            inputs.Add(Devices.Inputs.TrRotateLeft0Degree);
+            inputs.Add(Devices.Inputs.TrRotateLeft180Degree);
+            inputs.Add(Devices.Inputs.TrRotateLeftFw);
+            inputs.Add(Devices.Inputs.TrRotateLeftBw);
+            inputs.Add(Devices.Inputs.TrRotateLeftUp);
+            inputs.Add(Devices.Inputs.TrRotateLeftDown);
             return inputs;
         }
 
         private ObservableCollection<IDInput> GetTransferRotationRightInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add Vacuum detection inputs
             inputs.Add(Devices.Inputs.TrRotateRightVac1);
             inputs.Add(Devices.Inputs.TrRotateRightVac2);
             inputs.Add(Devices.Inputs.TrRotateRightRotVac);
+            // Add Transfer Rotation Right cylinder detection inputs
+            inputs.Add(Devices.Inputs.TrRotateRight0Degree);
+            inputs.Add(Devices.Inputs.TrRotateRight180Degree);
+            inputs.Add(Devices.Inputs.TrRotateRightFw);
+            inputs.Add(Devices.Inputs.TrRotateRightBw);
+            inputs.Add(Devices.Inputs.TrRotateRightUp);
+            inputs.Add(Devices.Inputs.TrRotateRightDown);
             return inputs;
         }
 
@@ -1603,14 +1747,62 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDInput> GetUnloadTransferLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add Unload Transfer Left vacuum detection inputs
             inputs.Add(Devices.Inputs.UnloadTransferLVac);
+            // Add Unload Align vacuum detection inputs
+            inputs.Add(Devices.Inputs.UnloadGlassAlignVac1);
+            inputs.Add(Devices.Inputs.UnloadGlassAlignVac2);
+            inputs.Add(Devices.Inputs.UnloadGlassAlignVac3);
+            inputs.Add(Devices.Inputs.UnloadGlassAlignVac4);
+            // Add Unload Robot cylinder detection inputs
+            inputs.Add(Devices.Inputs.UnloadRobotCyl1Up);
+            inputs.Add(Devices.Inputs.UnloadRobotCyl1Down);
+            inputs.Add(Devices.Inputs.UnloadRobotCyl2Up);
+            inputs.Add(Devices.Inputs.UnloadRobotCyl2Down);
+            inputs.Add(Devices.Inputs.UnloadRobotCyl3Up);
+            inputs.Add(Devices.Inputs.UnloadRobotCyl3Down);
+            inputs.Add(Devices.Inputs.UnloadRobotCyl4Up);
+            inputs.Add(Devices.Inputs.UnloadRobotCyl4Down);
+            // Add Unload Align cylinder detection inputs
+            inputs.Add(Devices.Inputs.UnloadAlignCyl1Up);
+            inputs.Add(Devices.Inputs.UnloadAlignCyl1Down);
+            inputs.Add(Devices.Inputs.UnloadAlignCyl2Up);
+            inputs.Add(Devices.Inputs.UnloadAlignCyl2Down);
+            inputs.Add(Devices.Inputs.UnloadAlignCyl3Up);
+            inputs.Add(Devices.Inputs.UnloadAlignCyl3Down);
+            inputs.Add(Devices.Inputs.UnloadAlignCyl4Up);
+            inputs.Add(Devices.Inputs.UnloadAlignCyl4Down);
             return inputs;
         }
 
         private ObservableCollection<IDInput> GetUnloadTransferRightInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add Unload Transfer Right vacuum detection inputs
             inputs.Add(Devices.Inputs.UnloadTransferRVac);
+            // Add Unload Align vacuum detection inputs
+            inputs.Add(Devices.Inputs.UnloadGlassAlignVac1);
+            inputs.Add(Devices.Inputs.UnloadGlassAlignVac2);
+            inputs.Add(Devices.Inputs.UnloadGlassAlignVac3);
+            inputs.Add(Devices.Inputs.UnloadGlassAlignVac4);
+            // Add Unload Robot cylinder detection inputs
+            inputs.Add(Devices.Inputs.UnloadRobotCyl1Up);
+            inputs.Add(Devices.Inputs.UnloadRobotCyl1Down);
+            inputs.Add(Devices.Inputs.UnloadRobotCyl2Up);
+            inputs.Add(Devices.Inputs.UnloadRobotCyl2Down);
+            inputs.Add(Devices.Inputs.UnloadRobotCyl3Up);
+            inputs.Add(Devices.Inputs.UnloadRobotCyl3Down);
+            inputs.Add(Devices.Inputs.UnloadRobotCyl4Up);
+            inputs.Add(Devices.Inputs.UnloadRobotCyl4Down);
+            // Add Unload Align cylinder detection inputs
+            inputs.Add(Devices.Inputs.UnloadAlignCyl1Up);
+            inputs.Add(Devices.Inputs.UnloadAlignCyl1Down);
+            inputs.Add(Devices.Inputs.UnloadAlignCyl2Up);
+            inputs.Add(Devices.Inputs.UnloadAlignCyl2Down);
+            inputs.Add(Devices.Inputs.UnloadAlignCyl3Up);
+            inputs.Add(Devices.Inputs.UnloadAlignCyl3Down);
+            inputs.Add(Devices.Inputs.UnloadAlignCyl4Up);
+            inputs.Add(Devices.Inputs.UnloadAlignCyl4Down);
             return inputs;
         }
 
@@ -1618,36 +1810,56 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDInput> GetWETCleanLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add WET Clean Left detection inputs
             inputs.Add(Devices.Inputs.WetCleanLeftFeedingRollerDetect);
+            // Add WET Clean Left pusher cylinder detection inputs
             inputs.Add(Devices.Inputs.WetCleanPusherLeftUp);
             inputs.Add(Devices.Inputs.WetCleanPusherLeftDown);
+            // Add WET Clean Left brush cylinder detection inputs
+            inputs.Add(Devices.Inputs.WetCleanBrushLeftUp);
+            inputs.Add(Devices.Inputs.WetCleanBrushLeftDown);
             return inputs;
         }
 
         private ObservableCollection<IDInput> GetWETCleanRightInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add WET Clean Right detection inputs
             inputs.Add(Devices.Inputs.WetCleanRightFeedingRollerDetect);
+            // Add WET Clean Right pusher cylinder detection inputs
             inputs.Add(Devices.Inputs.WetCleanPusherRightUp);
             inputs.Add(Devices.Inputs.WetCleanPusherRightDown);
+            // Add WET Clean Right brush cylinder detection inputs
+            inputs.Add(Devices.Inputs.WetCleanBrushRightUp);
+            inputs.Add(Devices.Inputs.WetCleanBrushRightDown);
             return inputs;
         }
 
         private ObservableCollection<IDInput> GetAFCleanLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add AF Clean Left detection inputs
             inputs.Add(Devices.Inputs.AfCleanLeftFeedingRollerDetect);
+            // Add AF Clean Left pusher cylinder detection inputs
             inputs.Add(Devices.Inputs.AfCleanPusherLeftUp);
             inputs.Add(Devices.Inputs.AfCleanPusherLeftDown);
+            // Add AF Clean Left brush cylinder detection inputs
+            inputs.Add(Devices.Inputs.AfCleanBrushLeftUp);
+            inputs.Add(Devices.Inputs.AfCleanBrushLeftDown);
             return inputs;
         }
 
         private ObservableCollection<IDInput> GetAFCleanRightInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add AF Clean Right detection inputs
             inputs.Add(Devices.Inputs.AfCleanRightFeedingRollerDetect);
+            // Add AF Clean Right pusher cylinder detection inputs
             inputs.Add(Devices.Inputs.AfCleanPusherRightUp);
             inputs.Add(Devices.Inputs.AfCleanPusherRightDown);
+            // Add AF Clean Right brush cylinder detection inputs
+            inputs.Add(Devices.Inputs.AfCleanBrushRightUp);
+            inputs.Add(Devices.Inputs.AfCleanBrushRightDown);
             return inputs;
         }
 
@@ -1659,6 +1871,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             inputs.Add(Devices.Inputs.GlassTransferVac1);
             inputs.Add(Devices.Inputs.GlassTransferVac2);
             inputs.Add(Devices.Inputs.GlassTransferVac3);
+            // Add Glass Transfer cylinder detection inputs
+            inputs.Add(Devices.Inputs.GlassTransferCyl1Up);
+            inputs.Add(Devices.Inputs.GlassTransferCyl1Down);
+            inputs.Add(Devices.Inputs.GlassTransferCyl2Up);
+            inputs.Add(Devices.Inputs.GlassTransferCyl2Down);
+            inputs.Add(Devices.Inputs.GlassTransferCyl3Up);
+            inputs.Add(Devices.Inputs.GlassTransferCyl3Down);
             return inputs;
         }
 
@@ -1677,6 +1896,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             // Add In Cassette light curtain muting output
             outputs.Add(Devices.Outputs.InCstLightCurtainMuting1);
             outputs.Add(Devices.Outputs.InCstLightCurtainMuting2);
+            // Add In CST Stopper outputs
+            outputs.Add(Devices.Outputs.InCstStopperUp);
+            outputs.Add(Devices.Outputs.InCstStopperDown);
+            // Add In CST Fix cylinder outputs
+            outputs.Add(Devices.Outputs.InCstFixCyl1Fw);
+            outputs.Add(Devices.Outputs.InCstFixCyl1Bw);
+            outputs.Add(Devices.Outputs.InCstFixCyl2Fw);
+            outputs.Add(Devices.Outputs.InCstFixCyl2Bw);
+            // Add In CST Tilt cylinder outputs
+            outputs.Add(Devices.Outputs.InCstTiltCylUp);
+            outputs.Add(Devices.Outputs.InCstTiltCylDown);
+            // Add In CV Support outputs
+            outputs.Add(Devices.Outputs.InCvSupportUp);
+            outputs.Add(Devices.Outputs.InCvSupportDown);
+            outputs.Add(Devices.Outputs.InCvSupportBufferUp);
+            outputs.Add(Devices.Outputs.InCvSupportBufferDown);
 
             return outputs;
         }
@@ -1690,6 +1925,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             // Add Out Cassette light curtain muting output
             outputs.Add(Devices.Outputs.OutCstLightCurtainMuting1);
             outputs.Add(Devices.Outputs.OutCstLightCurtainMuting2);
+            // Add Out CST Stopper outputs
+            outputs.Add(Devices.Outputs.OutCstStopperUp);
+            outputs.Add(Devices.Outputs.OutCstStopperDown);
+            // Add Out CST Fix cylinder outputs
+            outputs.Add(Devices.Outputs.OutCstFixCyl1Fw);
+            outputs.Add(Devices.Outputs.OutCstFixCyl1Bw);
+            outputs.Add(Devices.Outputs.OutCstFixCyl2Fw);
+            outputs.Add(Devices.Outputs.OutCstFixCyl2Bw);
+            // Add Out CST Tilt cylinder outputs
+            outputs.Add(Devices.Outputs.OutCstTiltCylUp);
+            outputs.Add(Devices.Outputs.OutCstTiltCylDown);
+            // Add Out CV Support outputs
+            outputs.Add(Devices.Outputs.OutCvSupportUp);
+            outputs.Add(Devices.Outputs.OutCvSupportDown);
+            outputs.Add(Devices.Outputs.OutCvSupportBufferUp);
+            outputs.Add(Devices.Outputs.OutCvSupportBufferDown);
             return outputs;
         }
 
@@ -1697,7 +1948,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDOutput> GetTransferFixtureOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            // TransferFixtureProcess doesn't have specific outputs defined
+            // Add Transfer Fixture outputs
+            outputs.Add(Devices.Outputs.TransferFixtureUp);
+            outputs.Add(Devices.Outputs.TransferFixtureDown);
+            // Add Transfer Fixture clamp outputs
+            outputs.Add(Devices.Outputs.TransferFixture1Clamp);
+            outputs.Add(Devices.Outputs.TransferFixture1Unclamp);
+            outputs.Add(Devices.Outputs.TransferFixture2Clamp);
+            outputs.Add(Devices.Outputs.TransferFixture2Unclamp);
+            
             return outputs;
         }
         
@@ -1708,6 +1967,16 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             outputs.Add(Devices.Outputs.DetachGlassShtVac1OnOff);
             outputs.Add(Devices.Outputs.DetachGlassShtVac2OnOff);
             outputs.Add(Devices.Outputs.DetachGlassShtVac3OnOff);
+            // Add Detach cylinder outputs
+            outputs.Add(Devices.Outputs.DetachCyl1Up);
+            outputs.Add(Devices.Outputs.DetachCyl1Down);
+            outputs.Add(Devices.Outputs.DetachCyl2Up);
+            outputs.Add(Devices.Outputs.DetachCyl2Down);
+            // Add Detach fix fixture cylinder outputs
+            outputs.Add(Devices.Outputs.DetachFixFixtureCyl1Fw);
+            outputs.Add(Devices.Outputs.DetachFixFixtureCyl1Bw);
+            outputs.Add(Devices.Outputs.DetachFixFixtureCyl2Fw);
+            outputs.Add(Devices.Outputs.DetachFixFixtureCyl2Bw);
             return outputs;
         }
 
@@ -1719,6 +1988,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             outputs.Add(Devices.Outputs.GlassTransferVac1OnOff);
             outputs.Add(Devices.Outputs.GlassTransferVac2OnOff);
             outputs.Add(Devices.Outputs.GlassTransferVac3OnOff);
+            // Add Glass Transfer cylinder outputs
+            outputs.Add(Devices.Outputs.GlassTransferCyl1Up);
+            outputs.Add(Devices.Outputs.GlassTransferCyl1Down);
+            outputs.Add(Devices.Outputs.GlassTransferCyl2Up);
+            outputs.Add(Devices.Outputs.GlassTransferCyl2Down);
+            outputs.Add(Devices.Outputs.GlassTransferCyl3Up);
+            outputs.Add(Devices.Outputs.GlassTransferCyl3Down);
             return outputs;
         }
 
@@ -1726,14 +2002,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDOutput> GetTransferShutterLeftOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add Vacuum outputs
             outputs.Add(Devices.Outputs.TransferInShuttleLVacOnOff);
+            // Add Transfer In Shuttle Left rotate outputs
+            outputs.Add(Devices.Outputs.TransferInShuttleL0Degree);
+            outputs.Add(Devices.Outputs.TransferInShuttleL180Degree);
             return outputs;
         }
 
         private ObservableCollection<IDOutput> GetTransferShutterRightOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add Vacuum outputs
             outputs.Add(Devices.Outputs.TransferInShuttleRVacOnOff);
+            // Add Transfer In Shuttle Right rotate outputs
+            outputs.Add(Devices.Outputs.TransferInShuttleR0Degree);
+            outputs.Add(Devices.Outputs.TransferInShuttleR180Degree);
             return outputs;
         }
 
@@ -1741,18 +2025,34 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDOutput> GetTransferRotationLeftOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add Vacuum outputs
             outputs.Add(Devices.Outputs.TrRotateLeftVac1OnOff);
             outputs.Add(Devices.Outputs.TrRotateLeftVac2OnOff);
             outputs.Add(Devices.Outputs.TrRotateLeftRotVacOnOff);
+            // Add Transfer Rotation Left cylinder control outputs
+            outputs.Add(Devices.Outputs.TrRotateLeft0Degree);
+            outputs.Add(Devices.Outputs.TrRotateLeft180Degree);
+            outputs.Add(Devices.Outputs.TrRotateLeftFw);
+            outputs.Add(Devices.Outputs.TrRotateLeftBw);
+            outputs.Add(Devices.Outputs.TrRotateLeftUp);
+            outputs.Add(Devices.Outputs.TrRotateLeftDown);
             return outputs;
         }
 
         private ObservableCollection<IDOutput> GetTransferRotationRightOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add Vacuum outputs
             outputs.Add(Devices.Outputs.TrRotateRightVac1OnOff);
             outputs.Add(Devices.Outputs.TrRotateRightVac2OnOff);
             outputs.Add(Devices.Outputs.TrRotateRightRotVacOnOff);
+            // Add Transfer Rotation Right cylinder control outputs
+            outputs.Add(Devices.Outputs.TrRotateRight0Degree);
+            outputs.Add(Devices.Outputs.TrRotateRight180Degree);
+            outputs.Add(Devices.Outputs.TrRotateRightFw);
+            outputs.Add(Devices.Outputs.TrRotateRightBw);
+            outputs.Add(Devices.Outputs.TrRotateRightUp);
+            outputs.Add(Devices.Outputs.TrRotateRightDown);
             return outputs;
         }
 
@@ -1760,14 +2060,46 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDOutput> GetUnloadTransferLeftOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add Unload Transfer Left vacuum outputs
             outputs.Add(Devices.Outputs.UnloadTransferLVacOnOff);
+            // Add Unload Align vacuum outputs
+            outputs.Add(Devices.Outputs.UnloadGlassAlignVac1OnOff);
+            outputs.Add(Devices.Outputs.UnloadGlassAlignVac2OnOff);
+            outputs.Add(Devices.Outputs.UnloadGlassAlignVac3OnOff);
+            outputs.Add(Devices.Outputs.UnloadGlassAlignVac4OnOff);
+            // Add Unload Robot cylinder control outputs
+            outputs.Add(Devices.Outputs.UnloadRobotCyl1Down);
+            outputs.Add(Devices.Outputs.UnloadRobotCyl2Down);
+            outputs.Add(Devices.Outputs.UnloadRobotCyl3Down);
+            outputs.Add(Devices.Outputs.UnloadRobotCyl4Down);
+            // Add Unload Align cylinder control outputs
+            outputs.Add(Devices.Outputs.UnloadAlignCyl1Up);
+            outputs.Add(Devices.Outputs.UnloadAlignCyl2Up);
+            outputs.Add(Devices.Outputs.UnloadAlignCyl3Up);
+            outputs.Add(Devices.Outputs.UnloadAlignCyl4Up);
             return outputs;
         }
 
         private ObservableCollection<IDOutput> GetUnloadTransferRightOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add Unload Transfer Right vacuum outputs
             outputs.Add(Devices.Outputs.UnloadTransferRVacOnOff);
+            // Add Unload Align vacuum outputs
+            outputs.Add(Devices.Outputs.UnloadGlassAlignVac1OnOff);
+            outputs.Add(Devices.Outputs.UnloadGlassAlignVac2OnOff);
+            outputs.Add(Devices.Outputs.UnloadGlassAlignVac3OnOff);
+            outputs.Add(Devices.Outputs.UnloadGlassAlignVac4OnOff);
+            // Add Unload Robot cylinder control outputs
+            outputs.Add(Devices.Outputs.UnloadRobotCyl1Down);
+            outputs.Add(Devices.Outputs.UnloadRobotCyl2Down);
+            outputs.Add(Devices.Outputs.UnloadRobotCyl3Down);
+            outputs.Add(Devices.Outputs.UnloadRobotCyl4Down);
+            // Add Unload Align cylinder control outputs
+            outputs.Add(Devices.Outputs.UnloadAlignCyl1Up);
+            outputs.Add(Devices.Outputs.UnloadAlignCyl2Up);
+            outputs.Add(Devices.Outputs.UnloadAlignCyl3Up);
+            outputs.Add(Devices.Outputs.UnloadAlignCyl4Up);
             return outputs;
         }
 
@@ -1775,28 +2107,40 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDOutput> GetWETCleanLeftOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            // Clean processes không có specific outputs, sử dụng pressure regulators
+            // Add WET Clean Left cylinder control outputs
+            outputs.Add(Devices.Outputs.WetCleanPusherLeftUp);
+            outputs.Add(Devices.Outputs.WetCleanPusherLeftDown);
+            outputs.Add(Devices.Outputs.WetCleanBrushLeftDown);
             return outputs;
         }
 
         private ObservableCollection<IDOutput> GetWETCleanRightOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            // Clean processes không có specific outputs, sử dụng pressure regulators
+            // Add WET Clean Right cylinder control outputs
+            outputs.Add(Devices.Outputs.WetCleanPusherRightUp);
+            outputs.Add(Devices.Outputs.WetCleanPusherRightDown);
+            outputs.Add(Devices.Outputs.WetCleanBrushRightDown);
             return outputs;
         }
 
         private ObservableCollection<IDOutput> GetAFCleanLeftOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            // Clean processes không có specific outputs, sử dụng pressure regulators
+            // Add AF Clean Left cylinder control outputs
+            outputs.Add(Devices.Outputs.AfCleanPusherLeftUp);
+            outputs.Add(Devices.Outputs.AfCleanPusherLeftDown);
+            outputs.Add(Devices.Outputs.AfCleanBrushLeftDown);
             return outputs;
         }
 
         private ObservableCollection<IDOutput> GetAFCleanRightOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            // Clean processes không có specific outputs, sử dụng pressure regulators
+            // Add AF Clean Right cylinder control outputs
+            outputs.Add(Devices.Outputs.AfCleanPusherRightUp);
+            outputs.Add(Devices.Outputs.AfCleanPusherRightDown);
+            outputs.Add(Devices.Outputs.AfCleanBrushRightDown);
             return outputs;
         }
 

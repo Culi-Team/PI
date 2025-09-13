@@ -30,7 +30,6 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="CornerRadius" Value="5"/>
             <Setter Property="Padding" Value="5"/>
-            <Setter Property="Margin" Value="5"/>
             <Setter Property="Width" Value="270"/>
             <Setter Property="Height" Value="150"/>
         </Style>
@@ -41,7 +40,6 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="CornerRadius" Value="5"/>
             <Setter Property="Padding" Value="5"/>
-            <Setter Property="Margin" Value="5"/>
             <Setter Property="Width" Value="270"/>
             <Setter Property="Height" Value="85"/>
         </Style>
@@ -172,9 +170,9 @@
             <ColumnDefinition Width="1.2*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="550"/>
-            <RowDefinition Height="120"/>
-            <RowDefinition Height="260"/>
+            <RowDefinition Height="500"/>
+            <RowDefinition Height="220"/>
+            <RowDefinition Height="220"/>
         </Grid.RowDefinitions>
         
         <!-- Image Section -->
@@ -190,8 +188,7 @@
         <Border Style="{StaticResource GroupBoxBorderStyle}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
             <GroupBox Header="Motion" Style="{StaticResource ScrollableGroupBoxStyle}" >
                 <ScrollViewer VerticalScrollBarVisibility="Auto" 
-                              HorizontalScrollBarVisibility="Auto"
-                              Margin="0 5 0 0">
+                              HorizontalScrollBarVisibility="Auto">
                     <ItemsControl x:Name="MotionItemsControl" 
                               ItemsSource="{Binding Motions, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
                         <ItemsControl.ItemTemplate>
