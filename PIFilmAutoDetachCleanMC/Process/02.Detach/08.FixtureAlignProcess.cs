@@ -1,5 +1,4 @@
 ﻿using EQX.Core.InOut;
-using EQX.Core.Motion;
 using EQX.Core.Sequence;
 using EQX.InOut;
 using EQX.Process;
@@ -7,11 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
