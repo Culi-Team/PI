@@ -24,7 +24,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDInputDevice _fixtureAlignInput;
         private readonly IDOutputDevice _fixtureAlignOutput;
 
-        private ICylinder AlignFixtureCyl => _devices.Cylinders.AlignFixtureCylFwBw;
+        private ICylinder AlignFixtureCyl1 => _devices.Cylinders.AlignFixtureCyl1FwBw;
+        private ICylinder AlignFixtureCyl2 => _devices.Cylinders.AlignFixtureCyl2FwBw;
         private bool IsFixtureDetect => _devices.Inputs.AlignFixtureDetect.Value;
         private bool IsFixtureTiltDetect => _devices.Inputs.AlignFixtureTiltDetect.Value;
         private bool IsFixtureReverseDetect => _devices.Inputs.AlignFixtureReverseDetect.Value;
@@ -98,8 +99,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EFixtureAlignOriginStep.AlignFixtureBackward:
                     Log.Debug("Align Fixture Backward");
-                    AlignFixtureCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return AlignFixtureCyl.IsBackward; });
+                    AlignFixtureCyl1.Backward();
+                    AlignFixtureCyl2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return AlignFixtureCyl1.IsBackward && AlignFixtureCyl2.IsBackward; });
                     Step.OriginStep++;
                     break;
                 case EFixtureAlignOriginStep.AlignFixtureBackward_Wait:
@@ -300,8 +302,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EFixtureAlignStep.Cyl_Align:
                     Log.Debug("Align Fixture");
-                    AlignFixtureCyl.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return AlignFixtureCyl.IsForward; });
+                    AlignFixtureCyl1.Forward();
+                    AlignFixtureCyl2.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return AlignFixtureCyl1.IsForward && AlignFixtureCyl2.IsForward; });
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.Cyl_Align_Wait:
@@ -335,8 +338,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EFixtureAlignStep.Cyl_UnAlign:
                     Log.Debug("UnAlign Fixture");
-                    AlignFixtureCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return AlignFixtureCyl.IsBackward; });
+                    AlignFixtureCyl1.Backward();
+                    AlignFixtureCyl2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return AlignFixtureCyl1.IsBackward && AlignFixtureCyl1.IsBackward; });
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.Cyl_UnAlign_Wait:

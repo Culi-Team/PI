@@ -586,7 +586,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<ICylinder> GetFixtureAlignCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Devices.Cylinders.AlignFixtureCylFwBw);
+            cylinders.Add(Devices.Cylinders.AlignFixtureCyl1FwBw);
+            cylinders.Add(Devices.Cylinders.AlignFixtureCyl2FwBw);
             return cylinders;
         }
 
@@ -634,8 +635,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.RemoveZoneZCyl2UpDown);
             
             // Add Remove Film clamp cylinder
-            cylinders.Add(Devices.Cylinders.RemoveZoneCylClampUnclamp);
-            
+            cylinders.Add(Devices.Cylinders.RemoveZoneCyl1ClampUnclamp);
+            cylinders.Add(Devices.Cylinders.RemoveZoneCyl2ClampUnclamp);
+            cylinders.Add(Devices.Cylinders.RemoveZoneCyl3ClampUnclamp);
+
             // Add Remove Film pusher cylinders
             cylinders.Add(Devices.Cylinders.RemoveZonePusherCyl1UpDown);
             cylinders.Add(Devices.Cylinders.RemoveZonePusherCyl2UpDown);

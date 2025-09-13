@@ -48,7 +48,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
         public ICylinder RobotFixtureClampUnclamp { get; }
 
         // Fixture Align (machine fixture, per input pair, shared outputs)
-        public ICylinder AlignFixtureCylFwBw { get; }
+        public ICylinder AlignFixtureCyl1FwBw { get; }
+        public ICylinder AlignFixtureCyl2FwBw { get; }
 
         // Vinyl Clean
         public ICylinder VinylCleanRollerFwBw { get; }
@@ -71,7 +72,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
         public ICylinder RemoveZoneTrCylFwBw { get; }
         public ICylinder RemoveZoneZCyl1UpDown { get; }
         public ICylinder RemoveZoneZCyl2UpDown { get; }
-        public ICylinder RemoveZoneCylClampUnclamp { get; }
+        public ICylinder RemoveZoneCyl1ClampUnclamp { get; }
+        public ICylinder RemoveZoneCyl2ClampUnclamp { get; }
+        public ICylinder RemoveZoneCyl3ClampUnclamp { get; }
         public ICylinder RemoveZonePusherCyl1UpDown { get; }
         public ICylinder RemoveZonePusherCyl2UpDown { get; }
         public ICylinder RemoveZoneFixCyl1FwBw { get; }
@@ -243,13 +246,21 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             RobotFixtureClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
 
             // Fixture Align (machine)
-            AlignFixtureCylFwBw = _cylinderFactory
+            AlignFixtureCyl1FwBw = _cylinderFactory
                 .Create(
-                    new List<IDInput> { _inputs.FixtureAlign1CylFw, _inputs.FixtureAlign2CylFw },
-                    new List<IDInput> { _inputs.FixtureAlign1CylBw, _inputs.FixtureAlign2CylBw },
-                    _outputs.FixtureAlignCylFw, _outputs.FixtureAlignCylBw)
-                .SetIdentity((int)ECylinder.FixtureAlignCylFwBw, ECylinder.FixtureAlignCylFwBw.ToString());
-            AlignFixtureCylFwBw.CylinderType = ECylinderType.ForwardBackward;
+                    new List<IDInput> { _inputs.FixtureAlign1CylFw },
+                    new List<IDInput> { _inputs.FixtureAlign1CylBw},
+                    _outputs.FixtureAlignCyl1Fw, _outputs.FixtureAlignCyl1Bw)
+                .SetIdentity((int)ECylinder.FixtureAlignCyl1FwBw, ECylinder.FixtureAlignCyl1FwBw.ToString());
+            AlignFixtureCyl1FwBw.CylinderType = ECylinderType.ForwardBackward;
+
+            AlignFixtureCyl2FwBw = _cylinderFactory
+                .Create(
+                    new List<IDInput> { _inputs.FixtureAlign2CylFw },
+                    new List<IDInput> { _inputs.FixtureAlign2CylBw },
+                    _outputs.FixtureAlignCyl2Fw, _outputs.FixtureAlignCyl2Bw)
+                .SetIdentity((int)ECylinder.FixtureAlignCyl2FwBw, ECylinder.FixtureAlignCyl2FwBw.ToString());
+            AlignFixtureCyl2FwBw.CylinderType = ECylinderType.ForwardBackward;
 
             // Vinyl Clean
             VinylCleanRollerFwBw = _cylinderFactory
@@ -337,13 +348,29 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                 .SetIdentity((int)ECylinder.RemoveZoneZCyl2UpDown, ECylinder.RemoveZoneZCyl2UpDown.ToString());
             RemoveZoneZCyl2UpDown.CylinderType = ECylinderType.UpDown;
 
-            RemoveZoneCylClampUnclamp = _cylinderFactory
+            RemoveZoneCyl1ClampUnclamp = _cylinderFactory
                 .Create(
-                    new List<IDInput> { _inputs.RemoveZoneCyl1Clamp, _inputs.RemoveZoneCyl2Clamp, _inputs.RemoveZoneCyl3Clamp },
-                    new List<IDInput> { _inputs.RemoveZoneCyl1Unclamp, _inputs.RemoveZoneCyl2Unclamp, _inputs.RemoveZoneCyl3Unclamp },
-                    _outputs.RemoveZoneCylClamp, _outputs.RemoveZoneCylUnclamp)
+                    new List<IDInput> { _inputs.RemoveZoneCyl1Clamp },
+                    new List<IDInput> { _inputs.RemoveZoneCyl1Unclamp },
+                    _outputs.RemoveZoneCyl1Clamp, _outputs.RemoveZoneCyl1Unclamp)
                 .SetIdentity((int)ECylinder.RemoveZoneCyl1ClampUnclamp, ECylinder.RemoveZoneCyl1ClampUnclamp.ToString());
-            RemoveZoneCylClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
+            RemoveZoneCyl1ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
+
+            RemoveZoneCyl2ClampUnclamp = _cylinderFactory
+                .Create(
+                    new List<IDInput> { _inputs.RemoveZoneCyl2Clamp },
+                    new List<IDInput> { _inputs.RemoveZoneCyl2Unclamp },
+                    _outputs.RemoveZoneCyl2Clamp, _outputs.RemoveZoneCyl2Unclamp)
+                .SetIdentity((int)ECylinder.RemoveZoneCyl2ClampUnclamp, ECylinder.RemoveZoneCyl2ClampUnclamp.ToString());
+            RemoveZoneCyl2ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
+
+            RemoveZoneCyl3ClampUnclamp = _cylinderFactory
+                .Create(
+                    new List<IDInput> { _inputs.RemoveZoneCyl3Clamp },
+                    new List<IDInput> { _inputs.RemoveZoneCyl3Unclamp },
+                    _outputs.RemoveZoneCyl3Clamp, _outputs.RemoveZoneCyl3Unclamp)
+                .SetIdentity((int)ECylinder.RemoveZoneCyl3ClampUnclamp, ECylinder.RemoveZoneCyl3ClampUnclamp.ToString());
+            RemoveZoneCyl3ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
 
             RemoveZonePusherCyl1UpDown = _cylinderFactory
                 .Create(new List<IDInput> { _inputs.RemoveZonePusherCyl1Up }, new List<IDInput> { _inputs.RemoveZonePusherCyl1Down }, _outputs.RemoveZonePusherCyl1Up, _outputs.RemoveZonePusherCyl1Down)

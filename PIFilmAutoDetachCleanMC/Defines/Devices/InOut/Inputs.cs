@@ -255,10 +255,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput GlassTransferCyl2Down => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.GLASS_TRANSFER_CYL_2_DOWN);
         public IDInput GlassTransferCyl3Up => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.GLASS_TRANSFER_CYL_3_UP);
         public IDInput GlassTransferCyl3Down => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.GLASS_TRANSFER_CYL_3_DOWN);
-        public IDInput Shuttle1RVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.SHUTTLE_1_R_VAC);
-        public IDInput Shuttle2RVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.SHUTTLE_2_R_VAC);
-        public IDInput Shuttle1LVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.SHUTTLE_1_L_VAC);
-        public IDInput Shuttle2LVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.SHUTTLE_2_L_VAC);
+        public IDInput InShuttleRVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_SHUTTLE_R_VAC);
+        public IDInput InShuttleLVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_SHUTTLE_L_VAC);
         public IDInput WetCleanPusherRightUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_PUSHER_RIGHT_UP);
         public IDInput WetCleanPusherRightDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_PUSHER_RIGHT_DOWN);
         public IDInput WetCleanRightPumpLeakDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_RIGHT_PUMP_LEAK_DETECT);
@@ -317,8 +315,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput AfCleanBrushLeftDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AF_CLEAN_BRUSH_LEFT_DOWN);
         public IDInput OutShuttleGlassCoatingDetect1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_GLASS_COATING_DETECT_1);
         public IDInput OutShuttleGlassCoatingDetect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_GLASS_COATING_DETECT_2);
-        public IDInput OutShuttleVac1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_VAC_1);
-        public IDInput OutShuttleVac2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_VAC_2);
+        public IDInput OutShuttleLVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_L_VAC);
+        public IDInput OutShuttleRVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_R_VAC);
         public IDInput UnloadTransferLVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_TRANSFER_L_VAC);
         public IDInput UnloadTransferRVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_TRANSFER_R_VAC);
         public IDInput OpRButtonStop => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_R_BUTTON_STOP);

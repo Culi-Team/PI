@@ -47,7 +47,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         RobotFixture2ClampUnclamp,
 
         // Fixture Align (non-robot, per cylinder by inputs)
-        FixtureAlignCylFwBw,
+        FixtureAlignCyl1FwBw,
+        FixtureAlignCyl2FwBw,
 
         // Vinyl Clean
         VinylCleanRollerFwBw,

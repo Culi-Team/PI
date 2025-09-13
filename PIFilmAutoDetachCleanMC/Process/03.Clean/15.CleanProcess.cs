@@ -178,10 +178,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.Outputs.Shuttle1LVacOnOff,
-                    EClean.WETCleanRight => _devices.Outputs.Shuttle1RVacOnOff,
-                    EClean.AFCleanLeft => _devices.Outputs.Shuttle2LVacOnOff,
-                    EClean.AFCleanRight => _devices.Outputs.Shuttle2RVacOnOff,
+                    EClean.WETCleanLeft => _devices.Outputs.InShuttleLVacOnOff,
+                    EClean.WETCleanRight => _devices.Outputs.InShuttleRVacOnOff,
+                    EClean.AFCleanLeft => _devices.Outputs.OutShuttleLVacOnOff,
+                    EClean.AFCleanRight => _devices.Outputs.OutShuttleRVacOnOff,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -193,10 +193,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.Inputs.Shuttle1LVac,
-                    EClean.WETCleanRight => _devices.Inputs.Shuttle1RVac,
-                    EClean.AFCleanLeft => _devices.Inputs.Shuttle2LVac,
-                    EClean.AFCleanRight => _devices.Inputs.Shuttle2RVac,
+                    EClean.WETCleanLeft => _devices.Inputs.InShuttleLVac,
+                    EClean.WETCleanRight => _devices.Inputs.InShuttleRVac,
+                    EClean.AFCleanLeft => _devices.Inputs.OutShuttleLVac,
+                    EClean.AFCleanRight => _devices.Inputs.OutShuttleRVac,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
