@@ -8,11 +8,6 @@ using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Robot;
 using PIFilmAutoDetachCleanMC.Defines.Process.Step._07.RobotLoadProcess;
 using PIFilmAutoDetachCleanMC.Recipe;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
@@ -547,7 +542,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadReadyStep.RobotHome:
                     Log.Debug("Start Home Robot Load");
-                    _robotLoad.SendCommand(RobotHelpers.MotionCommands(ERobotCommand.HOME));
+                    SendCommand(ERobotCommand.HOME);
                     Log.Debug(message: $"Send Robot Motion Command {ERobotCommand.HOME}");
                     Step.RunStep++;
                     break;
