@@ -656,6 +656,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.GlassTransferCyl2UpDown);
             cylinders.Add(Devices.Cylinders.GlassTransferCyl3UpDown);
             
+            // Add Glass Transfer vacuum cylinders
+            cylinders.Add(Devices.Cylinders.GlassTransferVac1OnOff);
+            cylinders.Add(Devices.Cylinders.GlassTransferVac2OnOff);
+            cylinders.Add(Devices.Cylinders.GlassTransferVac3OnOff);
+            
             return cylinders;
         }
 
@@ -679,7 +684,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<ICylinder> GetTransferInShuttleCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            // Transfer In Shuttle không có cylinder riêng
+            // Add Transfer In Shuttle cylinders
+            cylinders.Add(Devices.Cylinders.TransferInShuttleLRotate);
+            cylinders.Add(Devices.Cylinders.TransferInShuttleRRotate);
+            cylinders.Add(Devices.Cylinders.TransferInShuttleLVacOnOff);
+            cylinders.Add(Devices.Cylinders.TransferInShuttleRVacOnOff);
             return cylinders;
         }
 
@@ -690,10 +699,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             // Add Transfer Rotation Left cylinders
             cylinders.Add(Devices.Cylinders.TrRotateLeftRotate);
             cylinders.Add(Devices.Cylinders.TrRotateLeftFwBw);
+            cylinders.Add(Devices.Cylinders.TrRotateLeftUpDown);
+            cylinders.Add(Devices.Cylinders.TrRotateLeftVacOnOff);
+            cylinders.Add(Devices.Cylinders.TrRotateLeftVac1OnOff);
+            cylinders.Add(Devices.Cylinders.TrRotateLeftVac2OnOff);
             
             // Add Transfer Rotation Right cylinders
             cylinders.Add(Devices.Cylinders.TrRotateRightRotate);
             cylinders.Add(Devices.Cylinders.TrRotateRightFwBw);
+            cylinders.Add(Devices.Cylinders.TrRotateRightUpDown);
+            cylinders.Add(Devices.Cylinders.TrRotateRightVacOnOff);
+            cylinders.Add(Devices.Cylinders.TrRotateRightVac1OnOff);
+            cylinders.Add(Devices.Cylinders.TrRotateRightVac2OnOff);
             
             return cylinders;
         }
@@ -701,7 +718,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<ICylinder> GetUnloadTransferCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            // Unload Transfer không có cylinder riêng
+            // Add Unload Transfer vacuum cylinders
+            cylinders.Add(Devices.Cylinders.UnloadTransferLVacOnOff);
+            cylinders.Add(Devices.Cylinders.UnloadTransferRVacOnOff);
+            cylinders.Add(Devices.Cylinders.UnloadGlassAlignVac1OnOff);
+            cylinders.Add(Devices.Cylinders.UnloadGlassAlignVac2OnOff);
+            cylinders.Add(Devices.Cylinders.UnloadGlassAlignVac3OnOff);
+            cylinders.Add(Devices.Cylinders.UnloadGlassAlignVac4OnOff);
             return cylinders;
         }
 

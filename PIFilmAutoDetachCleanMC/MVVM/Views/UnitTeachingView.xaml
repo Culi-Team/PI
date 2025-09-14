@@ -37,7 +37,7 @@
             <Setter Property="Padding"
                     Value="5" />
             <Setter Property="Width"
-                    Value="270" />
+                    Value="260" />
             <Setter Property="Height"
                     Value="150" />
         </Style>
@@ -55,7 +55,7 @@
             <Setter Property="Padding"
                     Value="5" />
             <Setter Property="Width"
-                    Value="270" />
+                    Value="260" />
             <Setter Property="Height"
                     Value="85" />
         </Style>
@@ -236,13 +236,13 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="1.6*" />
+            <ColumnDefinition Width="0.3*" />
+            <ColumnDefinition Width="1.4*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="500" />
-            <RowDefinition Height="220" />
-            <RowDefinition Height="220" />
+            <RowDefinition Height="280" />
+            <RowDefinition Height="170" />
         </Grid.RowDefinitions>
 
         <!-- Image Section -->

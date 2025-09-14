@@ -1415,7 +1415,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.TransferFixtureUpDown);
             cylinders.Add(Devices.Cylinders.TransferFixture1ClampUnclamp);
             cylinders.Add(Devices.Cylinders.TransferFixture2ClampUnclamp);
-            
+
             return cylinders;
         }
         
@@ -1431,6 +1431,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.DetachCyl1UpDown);
             cylinders.Add(Devices.Cylinders.DetachCyl2UpDown);
             
+            // Add Detach vacuum cylinders
+            cylinders.Add(Devices.Cylinders.DetachGlassShtVac1OnOff);
+            cylinders.Add(Devices.Cylinders.DetachGlassShtVac2OnOff);
+            cylinders.Add(Devices.Cylinders.DetachGlassShtVac3OnOff);
+            
             return cylinders;
         }
 
@@ -1444,6 +1449,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.GlassTransferCyl2UpDown);
             cylinders.Add(Devices.Cylinders.GlassTransferCyl3UpDown);
             
+            // Add Glass Transfer vacuum cylinders
+            cylinders.Add(Devices.Cylinders.GlassTransferVac1OnOff);
+            cylinders.Add(Devices.Cylinders.GlassTransferVac2OnOff);
+            cylinders.Add(Devices.Cylinders.GlassTransferVac3OnOff);
+            
             return cylinders;
         }
 
@@ -1453,6 +1463,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
             // Add Transfer In Shuttle Left cylinders
             cylinders.Add(Devices.Cylinders.TransferInShuttleLRotate);
+            cylinders.Add(Devices.Cylinders.TransferInShuttleLVacOnOff);
             return cylinders;
         }
 
@@ -1461,6 +1472,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
             // Add Transfer In Shuttle Right cylinders
             cylinders.Add(Devices.Cylinders.TransferInShuttleRRotate);
+            cylinders.Add(Devices.Cylinders.TransferInShuttleRVacOnOff);
             return cylinders;
         }
 
@@ -1472,6 +1484,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.TrRotateLeftRotate);
             cylinders.Add(Devices.Cylinders.TrRotateLeftFwBw);
             cylinders.Add(Devices.Cylinders.TrRotateLeftUpDown);
+            cylinders.Add(Devices.Cylinders.TrRotateLeftVacOnOff);
+            cylinders.Add(Devices.Cylinders.TrRotateLeftVac1OnOff);
+            cylinders.Add(Devices.Cylinders.TrRotateLeftVac2OnOff);
             return cylinders;
         }
 
@@ -1482,6 +1497,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.TrRotateRightRotate);
             cylinders.Add(Devices.Cylinders.TrRotateRightFwBw);
             cylinders.Add(Devices.Cylinders.TrRotateRightUpDown);
+            cylinders.Add(Devices.Cylinders.TrRotateRightVacOnOff);
+            cylinders.Add(Devices.Cylinders.TrRotateRightVac1OnOff);
+            cylinders.Add(Devices.Cylinders.TrRotateRightVac2OnOff);
             return cylinders;
         }
 
@@ -1499,6 +1517,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.UnloadAlignCyl2UpDown);
             cylinders.Add(Devices.Cylinders.UnloadAlignCyl3UpDown);
             cylinders.Add(Devices.Cylinders.UnloadAlignCyl4UpDown);
+            // Add Unload Transfer Left vacuum cylinders
+            cylinders.Add(Devices.Cylinders.UnloadTransferLVacOnOff);
+            cylinders.Add(Devices.Cylinders.UnloadGlassAlignVac1OnOff);
+            cylinders.Add(Devices.Cylinders.UnloadGlassAlignVac2OnOff);
             return cylinders;
         }
 
@@ -1515,6 +1537,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.UnloadAlignCyl2UpDown);
             cylinders.Add(Devices.Cylinders.UnloadAlignCyl3UpDown);
             cylinders.Add(Devices.Cylinders.UnloadAlignCyl4UpDown);
+            // Add Unload Transfer Right vacuum cylinders
+            cylinders.Add(Devices.Cylinders.UnloadTransferRVacOnOff);
+            cylinders.Add(Devices.Cylinders.UnloadGlassAlignVac3OnOff);
+            cylinders.Add(Devices.Cylinders.UnloadGlassAlignVac4OnOff);
             return cylinders;
         }
 
@@ -2377,6 +2403,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
             cylinder.Forward();
 
+            // For OnOff cylinders in simulation mode, auto-set input feedback
+#if SIMULATION
+            if (cylinder.CylinderType == ECylinderType.OnOff)
+            {
+                // Use reflection to access protected InForward property
+                var inForwardProperty = cylinder.GetType().GetProperty("InForward", 
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                var inForward = inForwardProperty?.GetValue(cylinder) as List<IDInput>;
+                
+                if (inForward?.Count > 0)
+                {
+                    // Set vacuum detect input to true when vacuum is turned on
+                    SimulationInputSetter.SetSimModbusInput(inForward[0], true);
+                }
+            }
+#endif
         }
 
         public void CylinderBackward(ICylinder cylinder)
@@ -2403,6 +2445,23 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 return;
             }
             cylinder.Backward();
+
+            // For OnOff cylinders in simulation mode, auto-set input feedback
+#if SIMULATION
+            if (cylinder.CylinderType == ECylinderType.OnOff)
+            {
+                // Use reflection to access protected InForward property
+                var inForwardProperty = cylinder.GetType().GetProperty("InForward", 
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                var inForward = inForwardProperty?.GetValue(cylinder) as List<IDInput>;
+                
+                if (inForward?.Count > 0)
+                {
+                    // Set vacuum detect input to false when vacuum is turned off
+                    SimulationInputSetter.SetSimModbusInput(inForward[0], false);
+                }
+            }
+#endif
         }
 
         // InterLock for Cylinder

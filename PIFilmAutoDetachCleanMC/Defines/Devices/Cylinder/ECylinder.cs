@@ -66,6 +66,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         DetachCyl2UpDown,
         DetachFixFixtureCyl1FwBw,
         DetachFixFixtureCyl2FwBw,
+        DetachGlassShtVac1OnOff,
+        DetachGlassShtVac2OnOff,
+        DetachGlassShtVac3OnOff,
 
         // Remove Zone
         RemoveZoneTrCylFwBw,
@@ -82,6 +85,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         // In Shuttle (rotate 0°/180°)
         TransferInShuttleLRotate,
         TransferInShuttleRRotate,
+        TransferInShuttleLVacOnOff,
+        TransferInShuttleRVacOnOff,
 
         // Align Stage L/R
         AlignStageLBrushCylUpDown,
@@ -97,6 +102,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         GlassTransferCyl1UpDown,
         GlassTransferCyl2UpDown,
         GlassTransferCyl3UpDown,
+        GlassTransferVac1OnOff,
+        GlassTransferVac2OnOff,
+        GlassTransferVac3OnOff,
 
         // Wet Clean
         WetCleanPusherRightUpDown,
@@ -112,6 +120,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         TrRotateLeftFwBw,
         TrRotateRightUpDown,
         TrRotateLeftUpDown,
+        TrRotateRightVacOnOff,
+        TrRotateLeftVacOnOff,
+        TrRotateRightVac1OnOff,
+        TrRotateRightVac2OnOff,
+        TrRotateLeftVac1OnOff,
+        TrRotateLeftVac2OnOff,
 
         // AF Clean
         AFCleanPusherRightUpDown,
@@ -130,5 +144,13 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         UnloadAlignCyl2UpDown,
         UnloadAlignCyl3UpDown,
         UnloadAlignCyl4UpDown,
+
+        // Unload Transfer
+        UnloadTransferLVacOnOff,
+        UnloadTransferRVacOnOff,
+        UnloadGlassAlignVac1OnOff,
+        UnloadGlassAlignVac2OnOff,
+        UnloadGlassAlignVac3OnOff,
+        UnloadGlassAlignVac4OnOff,
     }
 }
