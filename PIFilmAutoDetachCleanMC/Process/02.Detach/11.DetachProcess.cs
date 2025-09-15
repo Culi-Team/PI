@@ -2,6 +2,7 @@
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
 using EQX.InOut;
+using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -142,6 +143,47 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
 
             return base.PreProcess();
+        }
+
+        public override bool ProcessToRun()
+        {
+            switch ((EDetachProcessToRunStep)Step.ToRunStep)
+            {
+                case EDetachProcessToRunStep.Start:
+                    Log.Debug("To Run Start");
+                    Step.ToRunStep++;
+                    break;
+                case EDetachProcessToRunStep.ZAxis_Move_ReadyPosition:
+                    Log.Debug("Z Axis Move Ready Position");
+                    DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisReadyPosition);
+                    ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisReadyPosition) &&
+                                                               ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisReadyPosition));
+                    Step.ToRunStep++;
+                    break;
+                case EDetachProcessToRunStep.ZAxis_Move_ReadyPosition_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Step.ToRunStep++;
+                    break;
+                case EDetachProcessToRunStep.Clear_Flags:
+                    Log.Debug("Clear Flags");
+                    ((VirtualOutputDevice<EDetachProcessOutput>)_detachOutput).Clear();
+                    Step.ToRunStep++;
+                    break;
+                case EDetachProcessToRunStep.End:
+                    Log.Debug("To Run End");
+                    ProcessStatus = EProcessStatus.ToRunDone;
+                    Step.ToRunStep++;
+                    break;
+                default:
+                    Thread.Sleep(20);
+                    break;
+            }
+            return true;
         }
         public override bool ProcessOrigin()
         {
