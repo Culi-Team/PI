@@ -77,45 +77,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             InitializeComponent();
         }
 
-        private void CylinderForward_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            var cylinder = button?.DataContext as ICylinder;
-            if (cylinder == null) return;
-            button.IsEnabled = false;
-            try
-            {
-               cylinder.Forward();
-            }
-            catch (Exception ex)
-            {
-                MessageBoxEx.ShowDialog($"Cylinder {cylinder.Name} Forward Error: {ex.Message}");
-            }
-            finally
-            {
-                button.IsEnabled = true;
-            }
-        }
-        private void CylinderBackward_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            var cylinder = button?.DataContext as ICylinder;
-            if (cylinder == null) return;
-            button.IsEnabled = false;
-            try
-            {
-
-               cylinder.Backward();
-            }
-            catch (Exception ex)
-            {
-                MessageBoxEx.ShowDialog($"Cylinder {cylinder.Name} Backward Error: {ex.Message}");
-            }
-            finally
-            {
-                button.IsEnabled = true;
-            }
-        }
 
         private void SpeedControllerStart_Click(object sender, RoutedEventArgs e)
         {

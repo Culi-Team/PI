@@ -38,9 +38,8 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="CornerRadius" Value="5"/>
             <Setter Property="Padding" Value="5"/>
-            <Setter Property="Margin" Value="5"/>
             <Setter Property="Width" Value="270"/>
-            <Setter Property="Height" Value="270"/>
+            <Setter Property="Height" Value="300"/>
         </Style>
         <!-- CylinderStyle-->
         <Style x:Key="CylinderControlStyle" TargetType="Border">
@@ -49,7 +48,6 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="CornerRadius" Value="5"/>
             <Setter Property="Padding" Value="5"/>
-            <Setter Property="Margin" Value="5"/>
             <Setter Property="Width" Value="270"/>
             <Setter Property="Height" Value="85"/>
         </Style>
@@ -244,12 +242,14 @@
                                 Style="{StaticResource CylinderButtonStyle}"
                                 Background="{Binding IsForward, Converter={StaticResource CylinderButtonBrushConverter}}" 
                                 BorderBrush="{Binding IsForward, Converter={StaticResource CylinderButtonBrushConverter}}"
-                                Click="CylinderForward_Click"/>
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.CylinderForwardCommand}"
+                                CommandParameter="{Binding}"/>
                         <Button Content="{Binding CylinderType, Converter={StaticResource CylinderTypeToButtonNameConverter}, ConverterParameter=false}" 
                                 Style="{StaticResource CylinderButtonStyle}"
                                 Background="{Binding IsBackward, Converter={StaticResource CylinderButtonBrushConverter}}" 
                                 BorderBrush="{Binding IsBackward, Converter={StaticResource CylinderButtonBrushConverter}}"
-                                Click="CylinderBackward_Click"/>
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.CylinderBackwardCommand}"
+                                CommandParameter="{Binding}"/>
                     </UniformGrid>
                 </StackPanel>
             </Border>
@@ -261,9 +261,9 @@
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="450"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="350"/>
+            <RowDefinition Height="220"/>
+            <RowDefinition Height="350"/>
         </Grid.RowDefinitions>
         
         <!-- Image Section -->
@@ -312,7 +312,7 @@
                         <!-- Motion Controls - Hiển thị sau -->
                         <ScrollViewer VerticalScrollBarVisibility="Auto" 
                                       HorizontalScrollBarVisibility="Disabled"
-                                      MaxHeight="200"
+                                      MaxHeight="400"
                                       Margin="0 10 0 0">
                             <ItemsControl x:Name="MotionItemsControl" 
                                             ItemsSource="{Binding Motions, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">

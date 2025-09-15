@@ -278,59 +278,59 @@
 
                     </TabItem>
                     <TabItem Header="Transfer In Shuttle Left">
-                        <local:ManualUnitView Motions="{Binding TransferInShuttleMotions}" 
-                                             Cylinders="{Binding TransferInShuttleCylinders}" 
-                                             Inputs="{Binding TransferInShuttleInputs}" 
-                                             Outputs="{Binding TransferInShuttleOutputs}"
+                        <local:ManualUnitView Motions="{Binding TransferInShuttleLeftMotions}" 
+                                             Cylinders="{Binding TransferInShuttleLeftCylinders}" 
+                                             Inputs="{Binding TransferInShuttleLeftInputs}" 
+                                             Outputs="{Binding TransferInShuttleLeftOutputs}"
                                              ManualImage="{StaticResource TransferShutterImage}"/>
                     </TabItem>
                     <TabItem Header="Transfer In Shuttle Right">
-                        <local:ManualUnitView Motions="{Binding TransferInShuttleMotions}" 
-                                             Cylinders="{Binding TransferInShuttleCylinders}" 
-                                             Inputs="{Binding TransferInShuttleInputs}" 
-                                             Outputs="{Binding TransferInShuttleOutputs}"
+                        <local:ManualUnitView Motions="{Binding TransferInShuttleRightMotions}" 
+                                             Cylinders="{Binding TransferInShuttleRightCylinders}" 
+                                             Inputs="{Binding TransferInShuttleRightInputs}" 
+                                             Outputs="{Binding TransferInShuttleRightOutputs}"
                                              ManualImage="{StaticResource TransferShutterImage}"/>
                     </TabItem>
                     <TabItem Header="Wet Clean Left">
-                        <local:ManualUnitView Motions="{Binding WetCleanMotions}" 
-                                             Cylinders="{Binding WetCleanCylinders}" 
-                                             Inputs="{Binding WetCleanInputs}" 
-                                             Outputs="{Binding WetCleanOutputs}"
+                        <local:ManualUnitView Motions="{Binding WetCleanLeftMotions}" 
+                                             Cylinders="{Binding WetCleanLeftCylinders}" 
+                                             Inputs="{Binding WetCleanLeftInputs}" 
+                                             Outputs="{Binding WetCleanLeftOutputs}"
                                               ManualImage="{StaticResource WetCleanImage}"/>
                     </TabItem>
                     <TabItem Header="Wet Clean Right">
-                        <local:ManualUnitView Motions="{Binding WetCleanMotions}" 
-                                             Cylinders="{Binding WetCleanCylinders}" 
-                                             Inputs="{Binding WetCleanInputs}" 
-                                             Outputs="{Binding WetCleanOutputs}"
+                        <local:ManualUnitView Motions="{Binding WetCleanRightMotions}" 
+                                             Cylinders="{Binding WetCleanRightCylinders}" 
+                                             Inputs="{Binding WetCleanRightInputs}" 
+                                             Outputs="{Binding WetCleanRightOutputs}"
                                               ManualImage="{StaticResource WetCleanImage}"/>
                     </TabItem>
                     <TabItem Header="AF Clean Left">
-                        <local:ManualUnitView Motions="{Binding AfCleanMotions}" 
-                                             Cylinders="{Binding AfCleanCylinders}" 
-                                             Inputs="{Binding AfCleanInputs}" 
-                                             Outputs="{Binding AfCleanOutputs}"
+                        <local:ManualUnitView Motions="{Binding AfCleanLeftMotions}" 
+                                             Cylinders="{Binding AfCleanLeftCylinders}" 
+                                             Inputs="{Binding AfCleanLeftInputs}" 
+                                             Outputs="{Binding AfCleanLeftOutputs}"
                                               ManualImage="{StaticResource AFCleanImage}"/>
                     </TabItem>
                     <TabItem Header="AF Clean Right">
-                        <local:ManualUnitView Motions="{Binding AfCleanMotions}" 
-                                             Cylinders="{Binding AfCleanCylinders}" 
-                                             Inputs="{Binding AfCleanInputs}" 
-                                             Outputs="{Binding AfCleanOutputs}"
+                        <local:ManualUnitView Motions="{Binding AfCleanRightMotions}" 
+                                             Cylinders="{Binding AfCleanRightCylinders}" 
+                                             Inputs="{Binding AfCleanRightInputs}" 
+                                             Outputs="{Binding AfCleanRightOutputs}"
                                               ManualImage="{StaticResource AFCleanImage}"/>
                     </TabItem>
                     <TabItem Header="Transfer Rotation Left">
-                        <local:ManualUnitView Motions="{Binding TransferRotationMotions}" 
-                                             Cylinders="{Binding TransferRotationCylinders}" 
-                                             Inputs="{Binding TransferRotationInputs}" 
-                                             Outputs="{Binding TransferRotationOutputs}"
+                        <local:ManualUnitView Motions="{Binding TransferRotationLeftMotions}" 
+                                             Cylinders="{Binding TransferRotationLeftCylinders}" 
+                                             Inputs="{Binding TransferRotationLeftInputs}" 
+                                             Outputs="{Binding TransferRotationLeftOutputs}"
                                              ManualImage="{StaticResource TransferRotationImage}"/>
                     </TabItem>
                     <TabItem Header="Transfer Rotation Right">
-                        <local:ManualUnitView Motions="{Binding TransferRotationMotions}" 
-                                             Cylinders="{Binding TransferRotationCylinders}" 
-                                             Inputs="{Binding TransferRotationInputs}" 
-                                             Outputs="{Binding TransferRotationOutputs}"
+                        <local:ManualUnitView Motions="{Binding TransferRotationRightMotions}" 
+                                             Cylinders="{Binding TransferRotationRightCylinders}" 
+                                             Inputs="{Binding TransferRotationRightInputs}" 
+                                             Outputs="{Binding TransferRotationRightOutputs}"
                                              ManualImage="{StaticResource TransferRotationImage}"/>
                     </TabItem>
                 </TabControl>
@@ -339,17 +339,17 @@
                      Width="200">
                 <TabControl Style="{StaticResource SubTabControlStyle}">
                     <TabItem Header="Unload Transfer Left">
-                        <local:ManualUnitView Motions="{Binding UnloadTransferMotions}" 
-                                             Cylinders="{Binding UnloadTransferCylinders}" 
-                                             Inputs="{Binding UnloadTransferInputs}" 
-                                             Outputs="{Binding UnloadTransferOutputs}"
+                        <local:ManualUnitView Motions="{Binding UnloadTransferLeftMotions}" 
+                                             Cylinders="{Binding UnloadTransferLeftCylinders}" 
+                                             Inputs="{Binding UnloadTransferLeftInputs}" 
+                                             Outputs="{Binding UnloadTransferLeftOutputs}"
                                              ManualImage="{StaticResource UnloadTransferImage}"/>
                     </TabItem>
                     <TabItem Header="Unload Transfer Right">
-                        <local:ManualUnitView Motions="{Binding UnloadTransferMotions}" 
-                                             Cylinders="{Binding UnloadTransferCylinders}" 
-                                             Inputs="{Binding UnloadTransferInputs}" 
-                                             Outputs="{Binding UnloadTransferOutputs}"
+                        <local:ManualUnitView Motions="{Binding UnloadTransferRightMotions}" 
+                                             Cylinders="{Binding UnloadTransferRightCylinders}" 
+                                             Inputs="{Binding UnloadTransferRightInputs}" 
+                                             Outputs="{Binding UnloadTransferRightOutputs}"
                                              ManualImage="{StaticResource UnloadTransferImage}"/>
                     </TabItem>
                     <TabItem Header="Unload Align">

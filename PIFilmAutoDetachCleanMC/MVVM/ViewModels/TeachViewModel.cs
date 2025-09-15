@@ -2369,7 +2369,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             // Check interlock before moving
             if (!CylinderInterLock(cylinder, true, out string CylinderInterlockMsg))
             {
-                MessageBoxEx.ShowDialog($"InterLock Fail! Cannot Move Cylinder\n\n{CylinderInterlockMsg}");
+                MessageBoxEx.ShowDialog($"{CylinderInterlockMsg}");
                 return;
             }
             if (cylinder.CylinderType == ECylinderType.ForwardBackwardReverse ||
@@ -2412,7 +2412,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             // Check interlock before moving
             if (!CylinderInterLock(cylinder, false, out string CylinderInterlockMsg))
             {
-                MessageBoxEx.ShowDialog($"InterLock Fail! Cannot Move Cylinder\n\n{CylinderInterlockMsg}");
+                MessageBoxEx.ShowDialog($"{CylinderInterlockMsg}");
                 return;
             }
             if (cylinder.CylinderType == ECylinderType.ForwardBackwardReverse ||
@@ -2506,7 +2506,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 if (p is TeachViewModel teachViewModel)
                     if (!InterLock(teachViewModel, teachViewModel.SelectedProcess, out string interlockMsg))
                     {
-                        MessageBoxEx.ShowDialog($"InterLock Fail! Cannot Move Axis\n\n{interlockMsg}");
+                        MessageBoxEx.ShowDialog($"{interlockMsg}");
                         return;
                     }
                 string MoveTo = (string)Application.Current.Resources["str_MoveTo"];
