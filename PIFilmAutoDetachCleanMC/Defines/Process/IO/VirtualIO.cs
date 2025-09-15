@@ -215,18 +215,18 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public void Mappings()
         {
             //InWorkConveyor Input Mapping
-            ((VirtualInputDevice<EInWorkConveyorProcessInput>)_inWorkConveyorInput).Mapping((int)EInWorkConveyorProcessInput.ROBOT_PICK_IN_CST_DONE,
+            ((VirtualInputDevice<EWorkConveyorProcessInput>)_inWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.ROBOT_PICK_PLACE_CST_DONE,
                 _robotLoadOutput, (int)ERobotLoadProcessOutput.ROBOT_PICK_IN_CST_DONE);
 
             //OutWorkConveyor Input Mapping
-            ((VirtualInputDevice<EOutWorkConveyorProcessInput>)_outWorkConveyorInput).Mapping((int)EOutWorkConveyorProcessInput.ROBOT_PLACE_OUT_CST_DONE,
+            ((VirtualInputDevice<EWorkConveyorProcessInput>)_outWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.ROBOT_PICK_PLACE_CST_DONE,
                 _robotLoadOutput, (int)ERobotLoadProcessOutput.ROBOT_PLACE_OUT_CST_DONE);
 
             //Robot Load Input Mapping
             ((VirtualInputDevice<ERobotLoadProcessInput>)_robotLoadInput).Mapping((int)ERobotLoadProcessInput.IN_CST_READY,
-                _inWorkConveyorOutput, (int)EInWorkConveyorProcessOutput.IN_CST_READY);
+                _inWorkConveyorOutput, (int)EWorkConveyorProcessOutput.CST_READY);
             ((VirtualInputDevice<ERobotLoadProcessInput>)_robotLoadInput).Mapping((int)ERobotLoadProcessInput.OUT_CST_READY,
-                _outWorkConveyorOutput, (int)EOutWorkConveyorProcessOutput.OUT_CST_READY);
+                _outWorkConveyorOutput, (int)EWorkConveyorProcessOutput.CST_READY);
             ((VirtualInputDevice<ERobotLoadProcessInput>)_robotLoadInput).Mapping((int)ERobotLoadProcessInput.VINYL_CLEAN_REQ_LOAD,
                 _vinylCleanOutput, (int)EVinylCleanProcessOutput.VINYL_CLEAN_REQ_LOAD);
             ((VirtualInputDevice<ERobotLoadProcessInput>)_robotLoadInput).Mapping((int)ERobotLoadProcessInput.VINYL_CLEAN_RECEIVE_LOAD_DONE,
@@ -239,10 +239,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 _fixtureAlignOutput, (int)EFixtureAlignProcessOutput.FIXTURE_ALIGN_REQ_LOAD);
             ((VirtualInputDevice<ERobotLoadProcessInput>)_robotLoadInput).Mapping((int)ERobotLoadProcessInput.REMOVE_FILM_REQ_UNLOAD,
                 _removeFilmOutput, (int)ERemoveFilmProcessOutput.REMOVE_FILM_REQ_UNLOAD);
-            ((VirtualInputDevice<ERobotLoadProcessInput>)_robotLoadInput).Mapping((int)ERobotLoadProcessInput.IN_CST_PICK_DONE,
-                _inWorkConveyorOutput, (int)EInWorkConveyorProcessOutput.IN_CST_PICK_DONE);
-            ((VirtualInputDevice<ERobotLoadProcessInput>)_robotLoadInput).Mapping((int)ERobotLoadProcessInput.OUT_CST_PLACE_DONE,
-                _outWorkConveyorOutput, (int)EOutWorkConveyorProcessOutput.OUT_CST_PLACE_DONE);
+            ((VirtualInputDevice<ERobotLoadProcessInput>)_robotLoadInput).Mapping((int)ERobotLoadProcessInput.IN_CST_PICK_DONE_RECEIVED,
+                _inWorkConveyorOutput, (int)EWorkConveyorProcessOutput.IN_CST_PICK_PLACE_DONE_RECEIVED);
+            ((VirtualInputDevice<ERobotLoadProcessInput>)_robotLoadInput).Mapping((int)ERobotLoadProcessInput.OUT_CST_PLACE_DONE_RECEIVED,
+                _outWorkConveyorOutput, (int)EWorkConveyorProcessOutput.IN_CST_PICK_PLACE_DONE_RECEIVED);
 
             //Vinyl Clean Input Mapping
             ((VirtualInputDevice<EVinylCleanProcessInput>)_vinylCleanInput).Mapping((int)EVinylCleanProcessInput.VINYL_CLEAN_LOAD_DONE,

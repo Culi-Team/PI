@@ -17,11 +17,11 @@ namespace PIFilmAutoDetachCleanMC.Extensions
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EInWorkConveyorProcessInput>>("InWorkConveyorInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EInWorkConveyorProcessOutput>>("InWorkConveyorOutput");
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EWorkConveyorProcessInput>>("InWorkConveyorInput");
+                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EWorkConveyorProcessOutput>>("InWorkConveyorOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EOutWorkConveyorProcessInput>>("OutWorkConveyorInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EOutWorkConveyorProcessOutput>>("OutWorkConveyorOutput");
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EWorkConveyorProcessInput>>("OutWorkConveyorInput");
+                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EWorkConveyorProcessOutput>>("OutWorkConveyorOutput");
 
                 services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ERobotLoadProcessInput>>("RobotLoadInput");
                 services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ERobotLoadProcessOutput>>("RobotLoadOutput");

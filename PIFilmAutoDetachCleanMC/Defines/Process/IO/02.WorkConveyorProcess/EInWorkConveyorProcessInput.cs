@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum EInWorkConveyorProcessInput
+    public enum EWorkConveyorProcessInput
     {
-        ROBOT_PICK_IN_CST_DONE
+        ROBOT_PICK_PLACE_CST_DONE,
     }
 }

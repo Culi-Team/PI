@@ -87,11 +87,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagInCSTPickDone
+        private bool FlagInCSTPickDoneReceived
         {
             get
             {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.IN_CST_PICK_DONE];
+                return _robotLoadInput[(int)ERobotLoadProcessInput.IN_CST_PICK_DONE_RECEIVED];
             }
         }
 
@@ -159,11 +159,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagOutCSTPlaceDone
+        private bool FlagOutCSTPlaceDoneReceived
         {
             get
             {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.OUT_CST_PLACE_DONE];
+                return _robotLoadInput[(int)ERobotLoadProcessInput.OUT_CST_PLACE_DONE_RECEIVED];
             }
         }
 
@@ -266,8 +266,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.InWorkCSTUnLoad:
                     break;
                 case ESequence.CSTTilt:
-                    break;
-                case ESequence.CSTUnTilt:
                     break;
                 case ESequence.OutWorkCSTLoad:
                     break;
@@ -665,9 +663,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Wait_InCST_PickDone:
-                    if (FlagInCSTPickDone == false)
+                    if (FlagInCSTPickDoneReceived == false)
                     {
-                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag Robot Pick In CST Done");
@@ -1021,10 +1018,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     FlagRobotPlaceOutCSTDone = true;
                     Step.RunStep++;
                     break;
-                case ERobotLoadPlaceFixtureToOutCSTStep.Wait_OutCST_Place_Done:
-                    if (FlagOutCSTPlaceDone == false)
+                case ERobotLoadPlaceFixtureToOutCSTStep.Wait_OutCSTPlaceDoneReceived:
+                    if (FlagOutCSTPlaceDoneReceived == false)
                     {
-                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag Robot Place Out CST Done");

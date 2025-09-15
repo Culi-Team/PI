@@ -243,8 +243,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.CSTTilt:
                     break;
-                case ESequence.CSTUnTilt:
-                    break;
                 case ESequence.OutWorkCSTLoad:
                     break;
                 case ESequence.OutWorkCSTUnLoad:

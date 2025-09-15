@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum EInWorkConveyorProcessOutput
+    public enum EWorkConveyorProcessOutput
     {
         REQUEST_CST_IN,
 
-        IN_CST_READY,
+        CST_READY,
 
-        IN_CST_PICK_DONE,
+        IN_CST_PICK_PLACE_DONE_RECEIVED,
 
         REQUEST_CST_OUT,
 
