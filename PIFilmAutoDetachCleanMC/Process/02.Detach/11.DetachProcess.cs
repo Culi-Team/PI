@@ -167,6 +167,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         //Timeout ALARM
                         break;
                     }
+                    Log.Debug("Z Axis Move Ready Position Done");
                     Step.ToRunStep++;
                     break;
                 case EDetachProcessToRunStep.Clear_Flags:
