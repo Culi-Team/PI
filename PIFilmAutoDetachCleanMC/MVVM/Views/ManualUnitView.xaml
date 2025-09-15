@@ -283,7 +283,7 @@
                                                    ItemTemplate="{StaticResource CylinderInOutTemplate}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <UniformGrid Columns="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <UniformGrid Columns="4" VerticalAlignment="Top" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
@@ -304,7 +304,7 @@
                                         ItemTemplate="{StaticResource SpeedControllerTemplate}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Columns="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <UniformGrid Columns="4" VerticalAlignment="Top" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
@@ -318,7 +318,7 @@
                                             ItemsSource="{Binding Motions, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <UniformGrid Columns="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <UniformGrid Columns="4" VerticalAlignment="Top" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                             </ItemsControl>

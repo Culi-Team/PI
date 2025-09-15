@@ -241,8 +241,8 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="500" />
-            <RowDefinition Height="280" />
-            <RowDefinition Height="170" />
+            <RowDefinition Height="200" />
+            <RowDefinition Height="200" />
         </Grid.RowDefinitions>
 
         <!-- Image Section -->
@@ -278,9 +278,7 @@
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <UniformGrid Columns="4"
-                                             HorizontalAlignment="Center"
-                                             VerticalAlignment="Center" />
+                                <UniformGrid Columns="4" VerticalAlignment="Top" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
@@ -301,9 +299,7 @@
                                   ItemTemplate="{StaticResource CylinderInOutTemplate}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <UniformGrid Columns="4"
-                                             HorizontalAlignment="Center"
-                                             VerticalAlignment="Center" />
+                                <UniformGrid Columns="4" VerticalAlignment="Top" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
