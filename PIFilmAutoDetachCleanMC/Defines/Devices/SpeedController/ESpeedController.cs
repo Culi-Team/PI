@@ -30,7 +30,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         SUPPORT_CV4_ROLLER,
 
         OUT_CV_ROLLER1,
-        OUT_CV_ROLLER2,
-        OUT_CV_ROLLER3
+        OUT_CV_ROLLER2
     }
 }

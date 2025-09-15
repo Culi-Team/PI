@@ -58,8 +58,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                                                                  _devices.SpeedControllerList.OutConveyorRoller1;
         private ISpeedController Roller2 => port == EPort.Right ? _devices.SpeedControllerList.InConveyorRoller2 :
                                                                  _devices.SpeedControllerList.OutConveyorRoller2;
-        private ISpeedController Roller3 => port == EPort.Right ? _devices.SpeedControllerList.InConveyorRoller3 :
-                                                                 _devices.SpeedControllerList.OutConveyorRoller3;
+        private ISpeedController Roller3 => _devices.SpeedControllerList.InConveyorRoller3;
         #endregion
 
         #region Override Method
