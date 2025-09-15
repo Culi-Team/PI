@@ -39,8 +39,30 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private bool DoorLatch
+        {
+            get
+            {
+                return _devices.Inputs.DoorLatch1L.Value &&
+                       _devices.Inputs.DoorLatch1R.Value &&
+                       _devices.Inputs.DoorLatch2L.Value &&
+                       _devices.Inputs.DoorLatch2R.Value &&
+                       _devices.Inputs.DoorLatch3L.Value &&
+                       _devices.Inputs.DoorLatch3R.Value &&
+                       _devices.Inputs.DoorLatch4L.Value &&
+                       _devices.Inputs.DoorLatch4R.Value &&
+                       _devices.Inputs.DoorLatch5L.Value &&
+                       _devices.Inputs.DoorLatch5R.Value &&
+                       _devices.Inputs.DoorLatch6L.Value &&
+                       _devices.Inputs.DoorLatch6R.Value &&
+                       _devices.Inputs.DoorLatch7L.Value &&
+                       _devices.Inputs.DoorLatch7R.Value;
+            }
+        }
+
         private bool IsLightCurtainLeftDetect => _devices.Inputs.OutCstLightCurtainAlarmDetect.Value;
         private bool IsLightCurtainRightDetect => _devices.Inputs.InCstLightCurtainAlarmDetect.Value;
+        private bool IsMainAirSupplied => _devices.Inputs.MainAir1.Value && _devices.Inputs.MainAir2.Value && _devices.Inputs.MainAir3.Value;
         #endregion
 
         #region Constructor
@@ -68,9 +90,21 @@ namespace PIFilmAutoDetachCleanMC.Process
         public override bool PreProcess()
         {
             // 1. CHECK ALARM STATUS (Utils, Motion, Safety...)
-            if (ProcessMode != EProcessMode.ToAlarm && ProcessMode != EProcessMode.Alarm && ProcessMode != EProcessMode.Stop && ProcessMode != EProcessMode.None)
+            if (ProcessMode != EProcessMode.ToAlarm && ProcessMode != EProcessMode.Alarm)
             {
                 CheckRealTimeAlarmStatus();
+            }
+
+            if (ProcessMode == EProcessMode.ToOrigin || ProcessMode == EProcessMode.Origin || ProcessMode == EProcessMode.ToRun || ProcessMode == EProcessMode.Run)
+            {
+                if (!IsLightCurtainLeftDetect)
+                {
+                    RaiseAlarm((int)EAlarm.LightCurtainLeftDetected);
+                }
+                if (!IsLightCurtainRightDetect)
+                {
+                    RaiseAlarm(alarmId: (int)EAlarm.LightCurtainRightDetected);
+                }
             }
 
             //2.CHECK USER OPERATION COMMAND(Origin / Ready / Start / Stop / Semiauto...)
@@ -142,6 +176,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                 _machineStatus.OriginDone = false;
 
+                _devices.Outputs.Lamp_Alarm();
 
                 ProcessMode = EProcessMode.Alarm;
                 Log.Info("ToAlarm Done, Alarm");
@@ -163,7 +198,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 foreach (var motion in _devices.MotionsInovance.All!) { motion.Stop(); }
                 foreach (var motion in _devices.MotionsAjin.All!) { motion.Stop(); }
 
-
+                _devices.Outputs.Lamp_Alarm();
                 ProcessMode = EProcessMode.Warning;
                 Log.Info("ToWarning Done, Warning");
                 //AlertNotifyView.ShowDialog(_warningService.GetById(raisedWarningCode), true);
@@ -201,32 +236,30 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ERootProcessToOriginStep.Start:
                     Log.Info("To Origin started");
+                    _devices.Outputs.Lamp_Run();
                     Step.OriginStep++;
                     break;
                 case ERootProcessToOriginStep.DoorSensorCheck:
-                    Log.Info("DoorSensorCheck");
                     if (DoorSensor == false)
                     {
                         //WARNING
                         RaiseWarning((int)EWarning.DoorOpen);
                         break;
                     }
+                    Log.Debug("Doors closed.");
                     Step.OriginStep++;
                     break;
-                case ERootProcessToOriginStep.LightCurtainCheck:
-                    Log.Info("Light Curtain Sensor Check");
-                    if (!IsLightCurtainLeftDetect)
+                case ERootProcessToOriginStep.DoorLock:
+                    _devices.Outputs.DoorOpen.Value = false;
+                    Step.OriginStep++;
+                    break;
+                case ERootProcessToOriginStep.DoorLatchCheck:
+                    if(DoorLatch == false)
                     {
-                        //WARNING
-                        RaiseWarning((int)EWarning.LightCurtainLeftDetected);
+                        RaiseWarning((int)EWarning.DoorNotSafetyLock);
                         break;
                     }
-                    if (!IsLightCurtainRightDetect)
-                    {
-                        //WARNING
-                        RaiseWarning((int)EWarning.LightCurtainRightDetected);
-                        break;
-                    }
+                    Log.Debug("Doors locked safely.");
                     Step.OriginStep++;
                     break;
                 case ERootProcessToOriginStep.ChildsToOriginDoneWait:
@@ -235,7 +268,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(10);
                         break;
                     }
-
                     Step.OriginStep++;
                     break;
                 case ERootProcessToOriginStep.End:
@@ -253,6 +285,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 ProcessMode = EProcessMode.Stop;
 
+                _devices.Outputs.Lamp_Stop();
                 Log.Info("ToStop Done, Stop");
             }
             else
@@ -269,15 +302,29 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ERootProcessToRunStep.Start:
                     Log.Debug("ToRun Start");
+                    _devices.Outputs.Lamp_Run();
                     Step.ToRunStep++;
                     break;
-                case ERootProcessToRunStep.DoorSensor_Check:
+                case ERootProcessToRunStep.DoorSensorCheck:
                     if (DoorSensor == false)
                     {
                         RaiseWarning((int)EWarning.DoorOpen);
                         break;
                     }
                     Log.Debug("Doors closed.");
+                    Step.ToRunStep++;
+                    break;
+                case ERootProcessToRunStep.DoorLock:
+                    _devices.Outputs.DoorOpen.Value = false;
+                    Step.ToRunStep++;
+                    break;
+                case ERootProcessToRunStep.DoorLatchCheck:
+                    if(DoorLatch == false)
+                    {
+                        RaiseWarning((int)EWarning.DoorNotSafetyLock);
+                        break;
+                    }
+                    Log.Debug("Doors locked safely.");
                     Step.ToRunStep++;
                     break;
                 case ERootProcessToRunStep.ChildsToRunDone_Wait:
@@ -310,16 +357,17 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void CheckRealTimeAlarmStatus()
         {
-            if (!IsLightCurtainLeftDetect)
+            if (IsMainAirSupplied == false)
             {
-                RaiseAlarm((int)EAlarm.LightCurtainLeftDetected);
+                RaiseAlarm(EAlarm.MainAirNotSupplied);
                 return;
             }
-            if (!IsLightCurtainRightDetect)
-            {
-                RaiseAlarm(alarmId: (int)EAlarm.LightCurtainRightDetected);
-                return;
-            }
+
+        }
+
+        private void RaiseAlarm(EAlarm mainAirNotSupplied)
+        {
+            throw new NotImplementedException();
         }
 
         //private EOperationCommand GetUserCommand()

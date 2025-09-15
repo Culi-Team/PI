@@ -11,8 +11,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         //Root
         Root = 0,
         DoorOpen = 1,
-        LightCurtainLeftDetected = 2,
-        LightCurtainRightDetected = 3,
+        DoorNotSafetyLock,
+        LightCurtainLeftDetected,
+        LightCurtainRightDetected,
 
         //InConveyor
         InConveyor = 1000,

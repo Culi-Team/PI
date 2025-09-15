@@ -10,7 +10,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         Start,
         DoorSensorCheck,
-        LightCurtainCheck,
+        DoorLock,
+        DoorLatchCheck,
         ChildsToOriginDoneWait,
         End
     }

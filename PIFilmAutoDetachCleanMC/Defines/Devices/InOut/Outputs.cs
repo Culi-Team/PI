@@ -232,5 +232,44 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput PlasmaPowerReset => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_POWER_RESET);
         public IDOutput PlasmaIdleMode => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_IDLE_MODE);
         public IDOutput PlasmaMotorMCOn => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_MOTOR_MC_ON);
+
+        public void Lamp_Run()
+        {
+            Lamp_Clear();
+            TowerLampGreen.Value = true;
+            OpLButtonStartLamp.Value = true;
+            OpRButtonStartLamp.Value = true;
+        }
+
+        public void Lamp_Stop()
+        {
+            Lamp_Clear();
+            TowerLampYellow.Value = true;
+            OpLButtonStopLamp.Value = true;
+            OpRButtonStopLamp.Value = true;
+        }
+
+        public void Lamp_Alarm()
+        {
+            Lamp_Clear();
+            TowerLampRed.Value = true;
+            TowerBuzzer.Value = true;
+            Task.Delay(3000).ContinueWith(t => TowerBuzzer.Value = false);
+        }
+        private void Lamp_Clear()
+        {
+            TowerLampGreen.Value = false;
+            TowerLampRed.Value = false;
+            TowerLampYellow.Value = false;
+
+            OpLButtonStartLamp.Value = false;
+            OpLButtonStopLamp.Value = false;
+            OpLButtonResetLamp.Value = false;
+
+            OpRButtonStartLamp.Value = false;
+            OpRButtonStopLamp.Value = false;
+            OpRButtonResetLamp.Value = false;
+        }
+
     }
 }
