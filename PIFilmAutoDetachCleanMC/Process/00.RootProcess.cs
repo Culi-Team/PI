@@ -359,18 +359,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             if (IsMainAirSupplied == false)
             {
-                RaiseAlarm(EAlarm.MainAirNotSupplied);
+                RaiseAlarm((int)EAlarm.MainAirNotSupplied);
                 return;
             }
 
         }
 
-        private void RaiseAlarm(EAlarm mainAirNotSupplied)
-        {
-            throw new NotImplementedException();
-        }
-
-        //private EOperationCommand GetUserCommand()
+               //private EOperationCommand GetUserCommand()
         //{
         //    if (_systemState.CommandState.HMICommand == EOperationCommand.Stop ||
         //        _devices.Inputs.StopSW.Value == true)
