@@ -360,7 +360,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.DetachGlassShtVac1OnOff, null)
                 .SetIdentity((int)ECylinder.DetachGlassShtVac1OnOff, ECylinder.DetachGlassShtVac1OnOff.ToString());
-            DetachGlassShtVac1OnOff.CylinderType = ECylinderType.OnOff;
+            DetachGlassShtVac1OnOff.CylinderType = ECylinderType.GripUngrip;
 
             DetachGlassShtVac2OnOff = _cylinderFactory
                 .Create(
@@ -368,7 +368,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.DetachGlassShtVac2OnOff, null)
                 .SetIdentity((int)ECylinder.DetachGlassShtVac2OnOff, ECylinder.DetachGlassShtVac2OnOff.ToString());
-            DetachGlassShtVac2OnOff.CylinderType = ECylinderType.OnOff;
+            DetachGlassShtVac2OnOff.CylinderType = ECylinderType.GripUngrip;
 
             DetachGlassShtVac3OnOff = _cylinderFactory
                 .Create(
@@ -376,7 +376,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.DetachGlassShtVac3OnOff, null)
                 .SetIdentity((int)ECylinder.DetachGlassShtVac3OnOff, ECylinder.DetachGlassShtVac3OnOff.ToString());
-            DetachGlassShtVac3OnOff.CylinderType = ECylinderType.OnOff;
+            DetachGlassShtVac3OnOff.CylinderType = ECylinderType.GripUngrip;
 
             // Remove Zone
             RemoveZoneTrCylFwBw = _cylinderFactory
@@ -461,7 +461,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.TransferInShuttleLVacOnOff, null)
                 .SetIdentity((int)ECylinder.TransferInShuttleLVacOnOff, ECylinder.TransferInShuttleLVacOnOff.ToString());
-            TransferInShuttleLVacOnOff.CylinderType = ECylinderType.OnOff;
+            TransferInShuttleLVacOnOff.CylinderType = ECylinderType.GripUngrip;
 
             TransferInShuttleRVacOnOff = _cylinderFactory
                 .Create(
@@ -469,7 +469,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.TransferInShuttleRVacOnOff, null)
                 .SetIdentity((int)ECylinder.TransferInShuttleRVacOnOff, ECylinder.TransferInShuttleRVacOnOff.ToString());
-            TransferInShuttleRVacOnOff.CylinderType = ECylinderType.OnOff;
+            TransferInShuttleRVacOnOff.CylinderType = ECylinderType.GripUngrip;
 
             // Align Stage L/R
             AlignStageLBrushCylUpDown = _cylinderFactory
@@ -534,7 +534,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.GlassTransferVac1OnOff, null)
                 .SetIdentity((int)ECylinder.GlassTransferVac1OnOff, ECylinder.GlassTransferVac1OnOff.ToString());
-            GlassTransferVac1OnOff.CylinderType = ECylinderType.OnOff;
+            GlassTransferVac1OnOff.CylinderType = ECylinderType.GripUngrip;
 
             GlassTransferVac2OnOff = _cylinderFactory
                 .Create(
@@ -542,7 +542,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.GlassTransferVac2OnOff, null)
                 .SetIdentity((int)ECylinder.GlassTransferVac2OnOff, ECylinder.GlassTransferVac2OnOff.ToString());
-            GlassTransferVac2OnOff.CylinderType = ECylinderType.OnOff;
+            GlassTransferVac2OnOff.CylinderType = ECylinderType.GripUngrip;
 
             GlassTransferVac3OnOff = _cylinderFactory
                 .Create(
@@ -550,7 +550,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.GlassTransferVac3OnOff, null)
                 .SetIdentity((int)ECylinder.GlassTransferVac3OnOff, ECylinder.GlassTransferVac3OnOff.ToString());
-            GlassTransferVac3OnOff.CylinderType = ECylinderType.OnOff;
+            GlassTransferVac3OnOff.CylinderType = ECylinderType.GripUngrip;
 
             // Wet Clean
             WetCleanPusherRightUpDown = _cylinderFactory
@@ -610,7 +610,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.TrRotateRightRotVacOnOff, null)
                 .SetIdentity((int)ECylinder.TrRotateRightVacOnOff, ECylinder.TrRotateRightVacOnOff.ToString());
-            TrRotateRightVacOnOff.CylinderType = ECylinderType.OnOff;
+            TrRotateRightVacOnOff.CylinderType = ECylinderType.GripUngrip;
 
             TrRotateLeftVacOnOff = _cylinderFactory
                 .Create(
@@ -618,7 +618,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.TrRotateLeftRotVacOnOff, null)
                 .SetIdentity((int)ECylinder.TrRotateLeftVacOnOff, ECylinder.TrRotateLeftVacOnOff.ToString());
-            TrRotateLeftVacOnOff.CylinderType = ECylinderType.OnOff;
+            TrRotateLeftVacOnOff.CylinderType = ECylinderType.GripUngrip;
 
             TrRotateRightVac1OnOff = _cylinderFactory
                 .Create(
@@ -626,7 +626,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.TrRotateRightVac1OnOff, null)
                 .SetIdentity((int)ECylinder.TrRotateRightVac1OnOff, ECylinder.TrRotateRightVac1OnOff.ToString());
-            TrRotateRightVac1OnOff.CylinderType = ECylinderType.OnOff;
+            TrRotateRightVac1OnOff.CylinderType = ECylinderType.GripUngrip;
 
             TrRotateRightVac2OnOff = _cylinderFactory
                 .Create(
@@ -634,7 +634,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.TrRotateRightVac2OnOff, null)
                 .SetIdentity((int)ECylinder.TrRotateRightVac2OnOff, ECylinder.TrRotateRightVac2OnOff.ToString());
-            TrRotateRightVac2OnOff.CylinderType = ECylinderType.OnOff;
+            TrRotateRightVac2OnOff.CylinderType = ECylinderType.GripUngrip;
 
             TrRotateLeftVac1OnOff = _cylinderFactory
                 .Create(
@@ -642,7 +642,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.TrRotateLeftVac1OnOff, null)
                 .SetIdentity((int)ECylinder.TrRotateLeftVac1OnOff, ECylinder.TrRotateLeftVac1OnOff.ToString());
-            TrRotateLeftVac1OnOff.CylinderType = ECylinderType.OnOff;
+            TrRotateLeftVac1OnOff.CylinderType = ECylinderType.GripUngrip;
 
             TrRotateLeftVac2OnOff = _cylinderFactory
                 .Create(
@@ -650,7 +650,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.TrRotateLeftVac2OnOff, null)
                 .SetIdentity((int)ECylinder.TrRotateLeftVac2OnOff, ECylinder.TrRotateLeftVac2OnOff.ToString());
-            TrRotateLeftVac2OnOff.CylinderType = ECylinderType.OnOff;
+            TrRotateLeftVac2OnOff.CylinderType = ECylinderType.GripUngrip;
 
             // AF Clean
             AFCleanPusherRightUpDown = _cylinderFactory
@@ -722,7 +722,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.UnloadTransferLVacOnOff, null)
                 .SetIdentity((int)ECylinder.UnloadTransferLVacOnOff, ECylinder.UnloadTransferLVacOnOff.ToString());
-            UnloadTransferLVacOnOff.CylinderType = ECylinderType.OnOff;
+            UnloadTransferLVacOnOff.CylinderType = ECylinderType.GripUngrip;
 
             UnloadTransferRVacOnOff = _cylinderFactory
                 .Create(
@@ -730,7 +730,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.UnloadTransferRVacOnOff, null)
                 .SetIdentity((int)ECylinder.UnloadTransferRVacOnOff, ECylinder.UnloadTransferRVacOnOff.ToString());
-            UnloadTransferRVacOnOff.CylinderType = ECylinderType.OnOff;
+            UnloadTransferRVacOnOff.CylinderType = ECylinderType.GripUngrip;
 
             UnloadGlassAlignVac1OnOff = _cylinderFactory
                 .Create(
@@ -738,7 +738,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.UnloadGlassAlignVac1OnOff, null)
                 .SetIdentity((int)ECylinder.UnloadGlassAlignVac1OnOff, ECylinder.UnloadGlassAlignVac1OnOff.ToString());
-            UnloadGlassAlignVac1OnOff.CylinderType = ECylinderType.OnOff;
+            UnloadGlassAlignVac1OnOff.CylinderType = ECylinderType.GripUngrip;
 
             UnloadGlassAlignVac2OnOff = _cylinderFactory
                 .Create(
@@ -746,7 +746,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.UnloadGlassAlignVac2OnOff, null)
                 .SetIdentity((int)ECylinder.UnloadGlassAlignVac2OnOff, ECylinder.UnloadGlassAlignVac2OnOff.ToString());
-            UnloadGlassAlignVac2OnOff.CylinderType = ECylinderType.OnOff;
+            UnloadGlassAlignVac2OnOff.CylinderType = ECylinderType.GripUngrip;
 
             UnloadGlassAlignVac3OnOff = _cylinderFactory
                 .Create(
@@ -754,7 +754,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.UnloadGlassAlignVac3OnOff, null)
                 .SetIdentity((int)ECylinder.UnloadGlassAlignVac3OnOff, ECylinder.UnloadGlassAlignVac3OnOff.ToString());
-            UnloadGlassAlignVac3OnOff.CylinderType = ECylinderType.OnOff;
+            UnloadGlassAlignVac3OnOff.CylinderType = ECylinderType.GripUngrip;
 
             UnloadGlassAlignVac4OnOff = _cylinderFactory
                 .Create(
@@ -762,7 +762,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                     null,
                     _outputs.UnloadGlassAlignVac4OnOff, null)
                 .SetIdentity((int)ECylinder.UnloadGlassAlignVac4OnOff, ECylinder.UnloadGlassAlignVac4OnOff.ToString());
-            UnloadGlassAlignVac4OnOff.CylinderType = ECylinderType.OnOff;
+            UnloadGlassAlignVac4OnOff.CylinderType = ECylinderType.GripUngrip;
         }
 
         private readonly ICylinderFactory _cylinderFactory;

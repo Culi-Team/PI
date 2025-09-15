@@ -2379,8 +2379,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     cylinder.CylinderType == ECylinderType.GripUngripReverse ||
                     cylinder.CylinderType == ECylinderType.AlignUnalignReverse ||
                     cylinder.CylinderType == ECylinderType.FlipUnflipReverse ||
-                    cylinder.CylinderType == ECylinderType.ClampUnclampReverse ||
-                    cylinder.CylinderType == ECylinderType.OnOff
+                    cylinder.CylinderType == ECylinderType.ClampUnclampReverse
                     )
             {
                 cylinder.Backward();
@@ -2390,7 +2389,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
             // For OnOff cylinders in simulation mode, auto-set input feedback
 #if SIMULATION
-            if (cylinder.CylinderType == ECylinderType.OnOff)
+            if (cylinder.CylinderType == ECylinderType.GripUngrip)
             {
                 // Use reflection to access protected InForward property
                 var inForwardProperty = cylinder.GetType().GetProperty("InForward", 
@@ -2423,8 +2422,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     cylinder.CylinderType == ECylinderType.GripUngripReverse ||
                     cylinder.CylinderType == ECylinderType.AlignUnalignReverse ||
                     cylinder.CylinderType == ECylinderType.FlipUnflipReverse ||
-                    cylinder.CylinderType == ECylinderType.ClampUnclampReverse ||
-                    cylinder.CylinderType == ECylinderType.OnOff
+                    cylinder.CylinderType == ECylinderType.ClampUnclampReverse
                     )
             {
                 cylinder.Forward();
@@ -2434,7 +2432,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
             // For OnOff cylinders in simulation mode, auto-set input feedback
 #if SIMULATION
-            if (cylinder.CylinderType == ECylinderType.OnOff)
+            if (cylinder.CylinderType == ECylinderType.GripUngrip)
             {
                 // Use reflection to access protected InForward property
                 var inForwardProperty = cylinder.GetType().GetProperty("InForward", 
