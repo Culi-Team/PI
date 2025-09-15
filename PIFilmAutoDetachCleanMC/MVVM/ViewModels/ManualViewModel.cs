@@ -550,7 +550,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             // Add Out Conveyor rollers
             speedControllers.Add(Devices.SpeedControllerList.OutConveyorRoller1);
             speedControllers.Add(Devices.SpeedControllerList.OutConveyorRoller2);
-            speedControllers.Add(Devices.SpeedControllerList.OutConveyorRoller3);
             return speedControllers;
         }
         #endregion

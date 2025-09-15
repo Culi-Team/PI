@@ -50,7 +50,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Rollers
         private ISpeedController Roller1 => _devices.SpeedControllerList.OutConveyorRoller1;
         private ISpeedController Roller2 => _devices.SpeedControllerList.OutConveyorRoller2;
-        private ISpeedController Roller3 => _devices.SpeedControllerList.OutConveyorRoller3;
 
         #endregion
     }
