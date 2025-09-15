@@ -2,6 +2,7 @@
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
 using EQX.InOut;
+using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -27,7 +28,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDInputDevice _transferInShuttleRightInput;
         private readonly IDOutputDevice _transferInShuttleRightOutput;
 
-        private bool IsGlassDetect1 => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect1.Value 
+        private IDInputDevice Inputs => port == EPort.Left ? _transferInShuttleLeftInput : _transferInShuttleRightInput;
+        private IDOutputDevice Outputs => port == EPort.Left ? _transferInShuttleLeftOutput : _transferInShuttleRightOutput;
+
+        private bool IsGlassDetect1 => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect1.Value
                                                             : _devices.Inputs.AlignStageRGlassDetect1.Value;
         private bool IsGlassDetect2 => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect2.Value
                                                             : _devices.Inputs.AlignStageRGlassDetect2.Value;
@@ -93,11 +97,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                if(port == EPort.Left)
-                {
-                    return _transferInShuttleLeftInput[(int)ETransferInShuttleProcessInput.WET_CLEAN_REQ_LOAD];
-                }
-                return _transferInShuttleRightInput[(int)ETransferInShuttleProcessInput.WET_CLEAN_REQ_LOAD];
+                return Inputs[(int)ETransferInShuttleProcessInput.WET_CLEAN_REQ_LOAD];
             }
         }
 
@@ -105,11 +105,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                if (port == EPort.Left)
-                {
-                    return _transferInShuttleLeftInput[(int)ETransferInShuttleProcessInput.GLASS_ALIGN_PICK_DONE_RECEIVED];
-                }
-                return _transferInShuttleRightInput[(int)ETransferInShuttleProcessInput.GLASS_ALIGN_PICK_DONE_RECEIVED];
+                return Inputs[(int)ETransferInShuttleProcessInput.GLASS_ALIGN_PICK_DONE_RECEIVED];
             }
         }
 
@@ -117,11 +113,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                if (port == EPort.Left)
-                {
-                    return _transferInShuttleLeftInput[(int)ETransferInShuttleProcessInput.WET_CLEAN_LOAD_DONE_RECEIVED];
-                }
-                return _transferInShuttleRightInput[(int)ETransferInShuttleProcessInput.WET_CLEAN_LOAD_DONE_RECEIVED];
+                return Inputs[(int)ETransferInShuttleProcessInput.WET_CLEAN_LOAD_DONE_RECEIVED];
             }
         }
 
@@ -129,14 +121,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                if (port == EPort.Left)
-                {
-                    _transferInShuttleLeftOutput[(int)ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_PICK_DONE] = value;
-                }
-                else
-                {
-                    _transferInShuttleRightOutput[(int)ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_PICK_DONE] = value;
-                }
+                Outputs[(int)ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_PICK_DONE] = value;
             }
         }
 
@@ -144,19 +129,12 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                if (port == EPort.Left)
-                {
-                    _transferInShuttleLeftOutput[(int)ETransferInShuttleProcessOutput.WET_CLEAN_LOAD_DONE] = value;
-                }
-                else
-                {
-                    _transferInShuttleRightOutput[(int)ETransferInShuttleProcessOutput.WET_CLEAN_LOAD_DONE] = value;
-                }
+                Outputs[(int)ETransferInShuttleProcessOutput.WET_CLEAN_LOAD_DONE] = value;
             }
         }
         #endregion
 
-            #region Constructor
+        #region Constructor
         public TransferInShuttleProcess(Devices devices,
             CommonRecipe commonRecipe,
             [FromKeyedServices("TransferInShuttleLeftRecipe")] TransferInShuttleRecipe transferInShuttleLeftRecipe,
@@ -180,7 +158,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Override Methods
         public override bool ProcessOrigin()
         {
-            switch((ETransferInShuttleOriginStep)Step.OriginStep)
+            switch ((ETransferInShuttleOriginStep)Step.OriginStep)
             {
                 case ETransferInShuttleOriginStep.Start:
                     Log.Debug("Origin Start");
@@ -316,6 +294,61 @@ namespace PIFilmAutoDetachCleanMC.Process
 
             return true;
         }
+
+        public override bool ProcessToRun()
+        {
+            switch ((ETransferInShuttleProcessToRunStep)Step.ToRunStep)
+            {
+                case ETransferInShuttleProcessToRunStep.Start:
+                    Log.Debug("To Run Start");
+                    Step.ToRunStep++;
+                    break;
+                case ETransferInShuttleProcessToRunStep.ZAxis_Move_ReadyPosition:
+                    Log.Debug("Z Axis Move Ready Position");
+                    ZAxis.MoveAbs(ZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisReadyPosition));
+                    Step.ToRunStep++;
+                    break;
+                case ETransferInShuttleProcessToRunStep.ZAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Ready Position Done");
+                    Step.ToRunStep++;
+                    break;
+                case ETransferInShuttleProcessToRunStep.YAxis_Move_ReadyPosition:
+                    Log.Debug("Y Axis Move Ready Position");
+                    YAxis.MoveAbs(YAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(YAxisReadyPosition));
+                    Step.ToRunStep++;
+                    break;
+                case ETransferInShuttleProcessToRunStep.YAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Ready Position Done");
+                    Step.ToRunStep++;
+                    break;
+                case ETransferInShuttleProcessToRunStep.Clear_Flags:
+                    Log.Debug("Clear Flags");
+                    ((VirtualOutputDevice<ETransferInShuttleProcessOutput>)Outputs).Clear();
+                    Step.ToRunStep++;
+                    break;
+                case ETransferInShuttleProcessToRunStep.End:
+                    Log.Debug("To Run End");
+                    Step.ToRunStep++;
+                    ProcessStatus = EProcessStatus.ToRunDone;
+                    break;
+                default:
+                    Thread.Sleep(20);
+                    break;
+            }
+            return true;
+        }
         #endregion
 
         #region Private Methods
@@ -328,7 +361,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleAutoRunStep.GlassVac_Check:
-                    if(IsVacDetect)
+                    if (IsVacDetect)
                     {
                         Log.Info("Sequence WET Clean Load");
                         Sequence = ESequence.WETCleanLoad;
@@ -353,11 +386,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePlaceStep.YAxis_Move_PlacePosition:
                     Log.Debug("Y Axis Move Place Position");
                     YAxis.MoveAbs(YAxisPlacePosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => YAxis.IsOnPosition(YAxisPlacePosition));
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(YAxisPlacePosition));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePlaceStep.YAxis_Move_PlacePosition_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         //Timeout ALARM
                         break;
@@ -372,7 +405,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePlaceStep.Cyl_Rotate_180D_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         //Timeout ALARM
                         break;
@@ -382,7 +415,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePlaceStep.Wait_WETCleanRequestLoad:
-                    if(FlagWETCleanRequestLoad == false)
+                    if (FlagWETCleanRequestLoad == false)
                     {
                         Wait(20);
                         break;
@@ -392,11 +425,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePlaceStep.ZAxis_Move_PlacePosition:
                     Log.Debug("Z Axis Move Place Position");
                     ZAxis.MoveAbs(ZAxisPlacePosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => ZAxis.IsOnPosition(ZAxisPlacePosition));
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisPlacePosition));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePlaceStep.ZAxis_Move_PlacePosition_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         //Timeout ALARM
                         break;
@@ -413,7 +446,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePlaceStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(ZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => ZAxis.IsOnPosition(ZAxisReadyPosition));
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisReadyPosition));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePlaceStep.ZAxis_Move_ReadyPosition_Wait:
@@ -432,7 +465,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait WET Clean Load Done Received");
                     break;
                 case ETransferInShuttlePlaceStep.Wait_WETCleanPlaceDoneReceived:
-                    if(FlagWETCleanLoadDoneReceived == false)
+                    if (FlagWETCleanLoadDoneReceived == false)
                     {
                         break;
                     }
@@ -464,11 +497,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.Cyl_Rotate_0D:
                     Log.Debug("Cylinder Rotate 0 Degree");
                     RotCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout,() => RotCyl.IsBackward);
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => RotCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.Cyl_Rotate_0D_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         //Timeout ALARM
                         break;
@@ -478,7 +511,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.Wait_GlassAlignRequest_Pick:
-                    if(FlagGlassAlignRequestPick == false)
+                    if (FlagGlassAlignRequestPick == false)
                     {
                         Wait(20);
                         break;
@@ -487,7 +520,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferInShuttlePickStep.GlassDetect_Check:
                     Log.Debug("Glass Detect Check");
-                    if(IsGlassDetect1)
+                    if (IsGlassDetect1)
                     {
 #if SIMULATION
                         SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect1 : _devices.Inputs.AlignStageRGlassDetect1, false);
@@ -496,7 +529,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep++;
                         break;
                     }
-                    if(IsGlassDetect2)
+                    if (IsGlassDetect2)
                     {
 #if SIMULATION
                         SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect2 : _devices.Inputs.AlignStageRGlassDetect2, false);
@@ -505,7 +538,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep = (int)ETransferInShuttlePickStep.YAxis_Move_PickPosition2;
                         break;
                     }
-                    if(IsGlassDetect3)
+                    if (IsGlassDetect3)
                     {
 #if SIMULATION
                         SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect3 : _devices.Inputs.AlignStageRGlassDetect3, false);
@@ -518,11 +551,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.YAxis_Move_PickPosition1:
                     Log.Debug("Y Axis Move Pick Position 1");
                     YAxis.MoveAbs(YAxisPickPosition1);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => YAxis.IsOnPosition(YAxisPickPosition1));
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(YAxisPickPosition1));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.YAxis_Move_PickPosition1_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         //Timeout ALARM
                         break;
@@ -563,7 +596,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.ZAxis_Move_PickPosition:
                     Log.Debug("Z Axis Move Pick Position");
                     ZAxis.MoveAbs(ZAxisPickPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => ZAxis.IsOnPosition(ZAxisPickPosition));
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisPickPosition));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.ZAxis_Move_PickPosition_Wait:
@@ -599,7 +632,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.YAxis_Move_ReadyPosition:
                     Log.Debug("Y Axis Move Ready Position");
                     YAxis.MoveAbs(YAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => YAxis.IsOnPosition(YAxisReadyPosition));
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(YAxisReadyPosition));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.YAxis_Move_ReadyPosition_Wait:
@@ -618,7 +651,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.Wait_GlassAlignPickDoneReceived:
-                    if(FlagGlassAlignPickDoneReceived == false)
+                    if (FlagGlassAlignPickDoneReceived == false)
                     {
                         break;
                     }
