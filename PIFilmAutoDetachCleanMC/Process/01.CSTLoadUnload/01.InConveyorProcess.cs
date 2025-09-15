@@ -17,7 +17,6 @@ namespace PIFilmAutoDetachCleanMC.Process
     public class InConveyorProcess : ProcessBase<ESequence>
     {
         #region Private
-        private EPort port => Name == EProcess.InConveyor.ToString() ? EPort.Right : EPort.Left;
         private readonly Devices _devices;
         private readonly CSTLoadUnloadRecipe _cstLoadUnloadRecipe;
         private readonly CommonRecipe _commonRecipe;
@@ -37,8 +36,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDInput CST_Det2 => _devices.Inputs.InCstDetect2;
         private IDInput InButton1 => _devices.Inputs.InButton1;
         private IDInput InButton2 => _devices.Inputs.InButton2;
-        private IDInput InCSTLightCurtain => _devices.Inputs.InCstLightCurtainAlarmDetect;
-
         #endregion
 
         #region Outputs
@@ -49,15 +46,12 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Cylinders
-        private ICylinder StopperCylinder => port == EPort.Right ? _devices.Cylinders.InCstStopperUpDown :
-                                                              _devices.Cylinders.OutCstStopperUpDown;
+        private ICylinder StopperCylinder => _devices.Cylinders.InCstStopperUpDown;
         #endregion
 
         #region Rollers
-        private ISpeedController Roller1 => port == EPort.Right ? _devices.SpeedControllerList.InConveyorRoller1 :
-                                                                 _devices.SpeedControllerList.OutConveyorRoller1;
-        private ISpeedController Roller2 => port == EPort.Right ? _devices.SpeedControllerList.InConveyorRoller2 :
-                                                                 _devices.SpeedControllerList.OutConveyorRoller2;
+        private ISpeedController Roller1 => _devices.SpeedControllerList.InConveyorRoller1;
+        private ISpeedController Roller2 => _devices.SpeedControllerList.InConveyorRoller2;
         private ISpeedController Roller3 => _devices.SpeedControllerList.InConveyorRoller3;
         #endregion
 
@@ -67,11 +61,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EConveyorOriginStep)Step.OriginStep)
             {
                 case EConveyorOriginStep.Start:
-                    Log.Debug("Orign start");
+                    Log.Debug("Origin Start");
                     Step.OriginStep++;
                     break;
                 case EConveyorOriginStep.CstStopper_Down:
-                    Log.Debug("CstStopper_Down");
+                    Log.Debug("Cassette Stopper Up");
                     StopperCylinder.Backward();
                     Wait(_commonRecipe.CylinderMoveTimeout, () => StopperCylinder.IsBackward);
                     Step.OriginStep++;
@@ -82,14 +76,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                         //Timeout ALARM
                         break;
                     }
-                    Log.Debug("Stopper cylinder down done");
+                    Log.Debug("Stopper Cylinder Down Done");
                     Step.OriginStep++;
                     break;
                 case EConveyorOriginStep.Roller_Stop:
+                    Log.Debug("Roller Stop");
                     Roller1.Stop();
                     Roller2.Stop();
                     Roller3.Stop();
-                    Log.Debug("Roller Stop");
                     Step.OriginStep++;
                     break;
                 case EConveyorOriginStep.End:
