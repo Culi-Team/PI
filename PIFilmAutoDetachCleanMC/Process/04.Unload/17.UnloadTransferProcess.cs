@@ -2,6 +2,7 @@
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
 using EQX.InOut;
+using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -277,6 +278,61 @@ namespace PIFilmAutoDetachCleanMC.Process
 
             return true;
         }
+
+        public override bool ProcessToRun()
+        {
+            switch ((EUnloadTransferProcessToRunStep)Step.ToRunStep)
+            {
+                case EUnloadTransferProcessToRunStep.Start:
+                    Log.Debug("To Run Start");
+                    Step.ToRunStep++;
+                    break;
+                case EUnloadTransferProcessToRunStep.ZAxis_Move_ReadyPosition:
+                    Log.Debug("Z Axis Move Ready Position");
+                    ZAxis.MoveAbs(Recipe.ZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => ZAxis.IsOnPosition(Recipe.ZAxisReadyPosition));
+                    Step.ToRunStep++;
+                    break;
+                case EUnloadTransferProcessToRunStep.ZAxis_Move_ReadyPosition_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Ready Position Done");
+                    Step.ToRunStep++;
+                    break;
+                case EUnloadTransferProcessToRunStep.YAxis_Move_ReadyPosition:
+                    Log.Debug("Y Axis Move Ready Position");
+                    YAxis.MoveAbs(Recipe.YAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => YAxis.IsOnPosition(Recipe.YAxisReadyPosition));
+                    Step.ToRunStep++;
+                    break;
+                case EUnloadTransferProcessToRunStep.YAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Ready Position Done");
+                    Step.ToRunStep++;
+                    break;
+                case EUnloadTransferProcessToRunStep.Clear_Flags:
+                    Log.Debug("Clear Flags");
+                    ((VirtualOutputDevice<EUnloadTransferProcessOutput>)Outputs).Clear();
+                    Step.ToRunStep++;
+                    break;
+                case EUnloadTransferProcessToRunStep.End:
+                    Log.Debug("To Run End");
+                    Step.ToRunStep++;
+                    ProcessStatus = EProcessStatus.ToRunDone;
+                    break;
+                default:
+                    Thread.Sleep(20);
+                    break;
+            }
+            return true;
+        }
         #endregion
 
         #region Private Methods
@@ -401,7 +457,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence = ESequence.UnloadTransferPlace;
                     break;
             }
-            #endregion
         }
 
         private void Sequence_UnloadTransferPlace()
@@ -602,5 +657,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
             }
         }
+
+        #endregion
+
     }
 }

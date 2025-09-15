@@ -4,6 +4,7 @@ using EQX.Core.Motion;
 using EQX.Core.Sequence;
 using EQX.Core.TorqueController;
 using EQX.InOut;
+using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -197,6 +198,66 @@ namespace PIFilmAutoDetachCleanMC.Process
                     EClean.WETCleanRight => _devices.Inputs.InShuttleRVac,
                     EClean.AFCleanLeft => _devices.Inputs.OutShuttleLVac,
                     EClean.AFCleanRight => _devices.Inputs.OutShuttleRVac,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+        }
+
+        private IDInput FeedingRollerDetect
+        {
+            get
+            {
+                return cleanType switch
+                {
+                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftFeedingRollerDetect,
+                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightFeedingRollerDetect,
+                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftFeedingRollerDetect,
+                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightFeedingRollerDetect,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+        }
+
+        private IDInput WiperCleanDetect1
+        {
+            get
+            {
+                return cleanType switch
+                {
+                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftWiperCleanDetect1,
+                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightWiperCleanDetect1,
+                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftWiperCleanDetect1,
+                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightWiperCleanDetect1,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+        }
+
+        private IDInput WiperCleanDetect2
+        {
+            get
+            {
+                return cleanType switch
+                {
+                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftWiperCleanDetect2,
+                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightWiperCleanDetect2,
+                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftWiperCleanDetect2,
+                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightWiperCleanDetect2,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+        }
+
+        private IDInput WiperCleanDetect3
+        {
+            get
+            {
+                return cleanType switch
+                {
+                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftWiperCleanDetect3,
+                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightWiperCleanDetect3,
+                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftWiperCleanDetect3,
+                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightWiperCleanDetect3,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -543,6 +604,49 @@ namespace PIFilmAutoDetachCleanMC.Process
 
             return true;
         }
+
+        public override bool ProcessToRun()
+        {
+            switch ((ECleanProcessToRunStep)Step.ToRunStep)
+            {
+                case ECleanProcessToRunStep.Start:
+                    Log.Debug("To Run Start");
+                    Step.ToRunStep++;
+                    break;
+                case ECleanProcessToRunStep.FeedingRollerDetect_Check:
+                    Log.Debug("Feeding Roller Detect Check");
+                    if(FeedingRollerDetect.Value == false)
+                    {
+                        //ALARM
+                        break;
+                    }
+                    Step.ToRunStep++;
+                    break;
+                case ECleanProcessToRunStep.Wiper_Check:
+                    Log.Debug("Wiper Clean Detect Check");
+                    if(WiperCleanDetect1.Value == false || WiperCleanDetect2.Value == false || WiperCleanDetect3.Value == false)
+                    {
+                        //ALARM
+                        break;
+                    }
+                    Step.ToRunStep++;
+                    break;
+                case ECleanProcessToRunStep.Clear_Flags:
+                    Log.Debug("Clear Flags");
+                    ((VirtualOutputDevice<ECleanProcessOutput>)Outputs).Clear();
+                    Step.ToRunStep++;
+                    break;
+                case ECleanProcessToRunStep.End:
+                    Log.Debug("To Run End");
+                    Step.ToRunStep++;
+                    ProcessStatus = EProcessStatus.ToRunDone;
+                    break;
+                default:
+                    Thread.Sleep(20);
+                    break;
+            }
+            return true;
+        }
         #endregion
 
         #region Private Methods
@@ -742,6 +846,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if !SIMULATION
                     _devices.MotionsAjin.CleanHorizontal(cleanType, XAxisCleanHorizontalPosition, YAxisCleanHorizontalPosition, 50, 10, cleanRecipe.CleanHorizontalCount);
                     Wait(_commonRecipe.MotionMoveTimeOut, () => _devices.MotionsAjin.IsContiMotioning(cleanType) == false);
+#else
+                    Wait(3000);
 #endif
                     Step.RunStep++;
                     break;
@@ -814,6 +920,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if !SIMULATION
                     _devices.MotionsAjin.CleanVertical(cleanType,XAxisCleanVerticalPosition,YAxisCleanVerticalPosition,cleanRecipe.CleanVerticalCount);
                     Wait(_commonRecipe.MotionMoveTimeOut, () => _devices.MotionsAjin.IsContiMotioning(cleanType));
+#else
+                    Wait(3000);
 #endif
                     Step.RunStep++;
                     break;

@@ -1,6 +1,7 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Robot;
 using EQX.Core.Sequence;
+using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -52,6 +53,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDOutput ConfMess => _devices.Outputs.LoadRobConfMess;
         private IDOutput ExtStart => _devices.Outputs.LoadRobExtStart;
         #endregion
+
         #region Flags
         private bool FlagVinylCleanRequestLoad
         {
@@ -337,6 +339,31 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
             }
 
+            return true;
+        }
+
+        public override bool ProcessToRun()
+        {
+            switch ((ERobotLoadProcessToRunStep)Step.ToRunStep)
+            {
+                case ERobotLoadProcessToRunStep.Start:
+                    Log.Debug("To Run Start");
+                    Step.ToRunStep++;
+                    break;
+                case ERobotLoadProcessToRunStep.Clear_Flags:
+                    Log.Debug("Clear Flags");
+                    ((VirtualOutputDevice<ERobotLoadProcessOutput>)_robotLoadOutput).Clear();
+                    Step.ToRunStep++;
+                    break;
+                case ERobotLoadProcessToRunStep.End:
+                    Log.Debug("To Run End");
+                    Step.ToRunStep++;
+                    ProcessStatus = EProcessStatus.ToRunDone;
+                    break;
+                default:
+                    Thread.Sleep(20);
+                    break;
+            }
             return true;
         }
         #endregion

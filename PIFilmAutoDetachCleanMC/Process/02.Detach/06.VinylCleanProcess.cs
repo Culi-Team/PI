@@ -2,6 +2,7 @@
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
 using EQX.InOut;
+using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -234,6 +235,31 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.UnloadRobotPlasma:
                     break;
                 case ESequence.UnloadRobotPlace:
+                    break;
+            }
+            return true;
+        }
+
+        public override bool ProcessToRun()
+        {
+            switch ((EVinylCleanProcessToRunStep)Step.ToRunStep)
+            {
+                case EVinylCleanProcessToRunStep.Start:
+                    Log.Debug("To Run Start");
+                    Step.ToRunStep++;
+                    break;
+                case EVinylCleanProcessToRunStep.Clear_Flags:
+                    Log.Debug("Clear Flags");
+                    ((VirtualOutputDevice<EVinylCleanProcessOutput>)_vinylCleanOutput).Clear();
+                    Step.ToRunStep++;
+                    break;
+                case EVinylCleanProcessToRunStep.End:
+                    Log.Debug("To Run End");
+                    Step.ToRunStep++;
+                    ProcessStatus = EProcessStatus.ToRunDone;
+                    break;
+                default:
+                    Thread.Sleep(20);
                     break;
             }
             return true;

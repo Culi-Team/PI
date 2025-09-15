@@ -1,6 +1,7 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
+using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -99,6 +100,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
         #endregion
+
+        #region Constructor
         public TransferFixtrueProcess(Devices devices,
             CommonRecipe commonRecipe,
             TransferFixtureRecipe transferFixtureRecipe,
@@ -111,6 +114,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             _transferFixtureInput = transferFixtureInput;
             _transferFixtureOutput = transferFixtureOutput;
         }
+        #endregion
 
         #region Override Methods
         public override bool ProcessOrigin()
@@ -276,6 +280,31 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
             }
 
+            return true;
+        }
+
+        public override bool ProcessToRun()
+        {
+            switch ((ETransferFixtureProcessToRunStep)Step.ToRunStep)
+            {
+                case ETransferFixtureProcessToRunStep.Start:
+                    Log.Debug("To Run Start");
+                    Step.ToRunStep++;
+                    break;
+                case ETransferFixtureProcessToRunStep.Clear_Flags:
+                    Log.Debug("Clear Flags");
+                    ((VirtualOutputDevice<ETransferFixtureProcessOutput>)_transferFixtureOutput).Clear();
+                    Step.ToRunStep++;
+                    break;
+                case ETransferFixtureProcessToRunStep.End:
+                    Log.Debug("To Run End");
+                    Step.ToRunStep++;
+                    ProcessStatus = EProcessStatus.ToRunDone;
+                    break;
+                default:
+                    Thread.Sleep(20);
+                    break;
+            }
             return true;
         }
         #endregion

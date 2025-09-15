@@ -1,6 +1,7 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Sequence;
 using EQX.InOut;
+using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -206,6 +207,30 @@ namespace PIFilmAutoDetachCleanMC.Process
             return true;
         }
 
+        public override bool ProcessToRun()
+        {
+            switch ((EFixtureAlignProcessToRunStep)Step.ToRunStep)
+            {
+                case EFixtureAlignProcessToRunStep.Start:
+                    Log.Debug("To Run Start");
+                    Step.ToRunStep++;
+                    break;
+                case EFixtureAlignProcessToRunStep.Clear_Flags:
+                    Log.Debug("Clear Flags");
+                    ((VirtualOutputDevice<EFixtureAlignProcessOutput>)_fixtureAlignOutput).Clear();
+                    Step.ToRunStep++;
+                    break;
+                case EFixtureAlignProcessToRunStep.End:
+                    Log.Debug(" To Run End");
+                    Step.ToRunStep++;
+                    ProcessStatus = EProcessStatus.ToRunDone;
+                    break;
+                default:
+                    Thread.Sleep(20);
+                    break;
+            }
+            return true;
+        }
         #endregion
 
         #region Private Methods
