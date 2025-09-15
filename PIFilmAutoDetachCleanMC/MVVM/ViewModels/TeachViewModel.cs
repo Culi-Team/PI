@@ -2558,7 +2558,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 interlockMsg = "Need GlassTransfer Z Axis Ready Position before Moving";
                 return teachViewModel.Devices?.MotionsAjin?.ShuttleTransferZAxis?.IsOnPosition(teachViewModel.RecipeSelector?.CurrentRecipe?.GlassTransferRecipe?.ZAxisReadyPosition ?? 0) == true;
             }
-            // Interlock WetClean Left - Check WetCleanPusherLeftUpDown status
+            // Interlock WetClean Left 
             if (PropertyName == "WETCleanLeftXAxisLoadPosition"
                 || PropertyName == "WETCleanLeftYAxisLoadPosition"
                 || PropertyName == "WETCleanLeftTAxisLoadPosition"
@@ -2575,8 +2575,81 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 interlockMsg = "Need WetCleanPusherLeftUpDown at UP position before Moving";
                 return teachViewModel.Devices?.Cylinders?.WetCleanPusherLeftUpDown?.IsBackward == true;
             }
-            //cylinder.Name   "WetCleanPusherLeftUpDown"  string
-
+            // Interlock WetClean Right
+            if (PropertyName == "WETCleanRightXAxisLoadPosition"
+                || PropertyName == "WETCleanRightYAxisLoadPosition"
+                || PropertyName == "WETCleanRightTAxisLoadPosition"
+                || PropertyName == "WETCleanRightXAxisCleanHorizontalPosition"
+                || PropertyName == "WETCleanRightYAxisCleanHorizontalPosition"
+                || PropertyName == "WETCleanRightTAxisCleanHorizontalPosition"
+                || PropertyName == "WETCleanRightXAxisCleanVerticalPosition"
+                || PropertyName == "WETCleanRightYAxisCleanVerticalPosition"
+                || PropertyName == "WETCleanRightTAxisCleanVerticalPosition"
+                || PropertyName == "WETCleanRightXAxisUnloadPosition"
+                || PropertyName == "WETCleanRightYAxisUnloadPosition"
+                || PropertyName == "WETCleanRightTAxisUnloadPosition")
+            {
+                interlockMsg = "Need WetCleanPusherRightUpDown at UP position before Moving";
+                return teachViewModel.Devices?.Cylinders?.WetCleanPusherRightUpDown?.IsBackward == true;
+            }
+            // Interlock AFClean Left
+            if (PropertyName == "AFCleanLeftXAxisLoadPosition"
+                || PropertyName == "AFCleanLeftYAxisLoadPosition"
+                || PropertyName == "AFCleanLeftTAxisLoadPosition"
+                || PropertyName == "AFCleanLeftXAxisCleanHorizontalPosition"
+                || PropertyName == "AFCleanLeftYAxisCleanHorizontalPosition"
+                || PropertyName == "AFCleanLeftTAxisCleanHorizontalPosition"
+                || PropertyName == "AFCleanLeftXAxisCleanVerticalPosition"
+                || PropertyName == "AFCleanLeftYAxisCleanVerticalPosition"
+                || PropertyName == "AFCleanLeftTAxisCleanVerticalPosition"
+                || PropertyName == "AFCleanLeftXAxisUnloadPosition"
+                || PropertyName == "AFCleanLeftYAxisUnloadPosition"
+                || PropertyName == "AFCleanLeftTAxisUnloadPosition")
+            {
+                interlockMsg = "Need AFCleanPusherLeftUpDown at UP position before Moving";
+                return teachViewModel.Devices?.Cylinders?.AFCleanPusherLeftUpDown?.IsBackward == true;
+            }
+            // Interlock AFClean Right
+            if (PropertyName == "AFCleanRightXAxisLoadPosition"
+                || PropertyName == "AFCleanRightYAxisLoadPosition"
+                || PropertyName == "AFCleanRightTAxisLoadPosition"
+                || PropertyName == "AFCleanRightXAxisCleanHorizontalPosition"
+                || PropertyName == "AFCleanRightYAxisCleanHorizontalPosition"
+                || PropertyName == "AFCleanRightTAxisCleanHorizontalPosition"
+                || PropertyName == "AFCleanRightXAxisCleanVerticalPosition"
+                || PropertyName == "AFCleanRightYAxisCleanVerticalPosition"
+                || PropertyName == "AFCleanRightTAxisCleanVerticalPosition"
+                || PropertyName == "AFCleanRightXAxisUnloadPosition"
+                || PropertyName == "AFCleanRightYAxisUnloadPosition"
+                || PropertyName == "AFCleanRightTAxisUnloadPosition")
+            {
+                interlockMsg = "Need AFCleanPusherRightUpDown at UP position before Moving";
+                return teachViewModel.Devices?.Cylinders?.AFCleanPusherRightUpDown?.IsBackward == true;
+            }
+            // Interlock UnloadTransfer Left
+            if (PropertyName == "UnloadTransferLeftYAxisReadyPosition"
+                || PropertyName == "UnloadTransferLeftYAxisPickPosition"
+                || PropertyName == "UnloadTransferLeftYAxisPlacePosition1"
+                || PropertyName == "UnloadTransferLeftYAxisPlacePosition2"
+                || PropertyName == "UnloadTransferLeftYAxisPlacePosition3"
+                || PropertyName == "UnloadTransferLeftYAxisPlacePosition4"
+                || PropertyName == "UnloadTransferLeftZAxisPlacePosition")
+            {
+                interlockMsg = "Need UnloadTransfer Z Axis Ready Position before Moving";
+                return teachViewModel.Devices?.MotionsInovance?.GlassUnloadLZAxis?.IsOnPosition(teachViewModel.RecipeSelector?.CurrentRecipe?.UnloadTransferLeftRecipe?.ZAxisReadyPosition ?? 0) == true;
+            }
+            // Interlock UnloadTransfer Right
+            if (PropertyName == "UnloadTransferRightYAxisReadyPosition"
+                || PropertyName == "UnloadTransferRightYAxisPickPosition"
+                || PropertyName == "UnloadTransferRightYAxisPlacePosition1"
+                || PropertyName == "UnloadTransferRightYAxisPlacePosition2"
+                || PropertyName == "UnloadTransferRightYAxisPlacePosition3"
+                || PropertyName == "UnloadTransferRightYAxisPlacePosition4"
+                || PropertyName == "UnloadTransferRightZAxisPlacePosition")
+            {
+                interlockMsg = "Need UnloadTransfer Z Axis Ready Position before Moving";
+                return teachViewModel.Devices?.MotionsInovance?.GlassUnloadRZAxis?.IsOnPosition(teachViewModel.RecipeSelector?.CurrentRecipe?.UnloadTransferRightRecipe?.ZAxisReadyPosition ?? 0) == true;
+            }
             return true; 
         }
 
