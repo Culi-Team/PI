@@ -2463,7 +2463,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             if (cylinder.Name.Contains("TrRotateRightRotate") || cylinder.Name.Contains("TrRotateRightFwBw"))
             {
                 CylinderInterlockMsg = "Need Transfer Rotation ZAxis at Ready Position before Moving";
-                return Devices?.MotionsInovance?.TransferRotationRZAxis?.IsOnPosition(RecipeSelector?.CurrentRecipe?.TransferRotationLeftRecipe?.ZAxisReadyPosition ?? 0) == true;
+                return Devices?.MotionsInovance?.TransferRotationRZAxis?.IsOnPosition(RecipeSelector?.CurrentRecipe?.TransferRotationRightRecipe?.ZAxisReadyPosition ?? 0) == true;
             }
 
             return true;
