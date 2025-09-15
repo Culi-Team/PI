@@ -2372,13 +2372,21 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 MessageBoxEx.ShowDialog($"{CylinderInterlockMsg}");
                 return;
             }
-            if (cylinder.CylinderType == ECylinderType.ForwardBackwardReverse ||
+            if (cylinder.CylinderType == ECylinderType.ForwardBackward ||
+                    cylinder.CylinderType == ECylinderType.ForwardBackwardReverse ||
+                    cylinder.CylinderType == ECylinderType.UpDown ||
                     cylinder.CylinderType == ECylinderType.UpDownReverse ||
+                    cylinder.CylinderType == ECylinderType.RightLeft ||
                     cylinder.CylinderType == ECylinderType.RightLeftReverse ||
-                    cylinder.CylinderType == ECylinderType.LockUnlockReverse ||
+                    cylinder.CylinderType == ECylinderType.GripUngrip ||
                     cylinder.CylinderType == ECylinderType.GripUngripReverse ||
+                    cylinder.CylinderType == ECylinderType.AlignUnalign ||
                     cylinder.CylinderType == ECylinderType.AlignUnalignReverse ||
+                    cylinder.CylinderType == ECylinderType.LockUnlock ||
+                    cylinder.CylinderType == ECylinderType.LockUnlockReverse ||
+                    cylinder.CylinderType == ECylinderType.FlipUnflip ||
                     cylinder.CylinderType == ECylinderType.FlipUnflipReverse ||
+                    cylinder.CylinderType == ECylinderType.ClampUnclamp ||
                     cylinder.CylinderType == ECylinderType.ClampUnclampReverse
                     )
             {
@@ -2415,13 +2423,21 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 MessageBoxEx.ShowDialog($"{CylinderInterlockMsg}");
                 return;
             }
-            if (cylinder.CylinderType == ECylinderType.ForwardBackwardReverse ||
+            if (cylinder.CylinderType == ECylinderType.ForwardBackward ||
+                    cylinder.CylinderType == ECylinderType.ForwardBackwardReverse ||
+                    cylinder.CylinderType == ECylinderType.UpDown ||
                     cylinder.CylinderType == ECylinderType.UpDownReverse ||
+                    cylinder.CylinderType == ECylinderType.RightLeft ||
                     cylinder.CylinderType == ECylinderType.RightLeftReverse ||
-                    cylinder.CylinderType == ECylinderType.LockUnlockReverse ||
+                    cylinder.CylinderType == ECylinderType.GripUngrip ||
                     cylinder.CylinderType == ECylinderType.GripUngripReverse ||
+                    cylinder.CylinderType == ECylinderType.AlignUnalign ||
                     cylinder.CylinderType == ECylinderType.AlignUnalignReverse ||
+                    cylinder.CylinderType == ECylinderType.LockUnlock ||
+                    cylinder.CylinderType == ECylinderType.LockUnlockReverse ||
+                    cylinder.CylinderType == ECylinderType.FlipUnflip ||
                     cylinder.CylinderType == ECylinderType.FlipUnflipReverse ||
+                    cylinder.CylinderType == ECylinderType.ClampUnclamp ||
                     cylinder.CylinderType == ECylinderType.ClampUnclampReverse
                     )
             {
