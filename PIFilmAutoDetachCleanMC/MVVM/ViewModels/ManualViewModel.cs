@@ -166,6 +166,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public ObservableCollection<IDInput> TransferInShuttleInputs => GetTransferInShuttleInputs();
         public ObservableCollection<IDOutput> TransferInShuttleOutputs => GetTransferInShuttleOutputs();
 
+
         // Transfer Rotation Properties
         public ObservableCollection<IMotion> TransferRotationMotions => GetTransferRotationMotions();
         public ObservableCollection<ICylinder> TransferRotationCylinders => GetTransferRotationCylinders();
@@ -439,6 +440,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return motions;
         }
 
+
         private ObservableCollection<IMotion> GetTransferRotationMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
@@ -484,10 +486,38 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return motions;
         }
 
+        private ObservableCollection<IMotion> GetWetCleanLeftMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // WET Clean Left không có specific motions
+            return motions;
+        }
+
+        private ObservableCollection<IMotion> GetWetCleanRightMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // WET Clean Right không có specific motions
+            return motions;
+        }
+
         private ObservableCollection<IMotion> GetAfCleanMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
             // AF Clean không có motion riêng, chỉ sử dụng pressure regulators
+            return motions;
+        }
+
+        private ObservableCollection<IMotion> GetAfCleanLeftMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // AF Clean Left không có specific motions
+            return motions;
+        }
+
+        private ObservableCollection<IMotion> GetAfCleanRightMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            // AF Clean Right không có specific motions
             return motions;
         }
 
@@ -692,6 +722,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return cylinders;
         }
 
+
         private ObservableCollection<ICylinder> GetTransferRotationCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
@@ -762,10 +793,46 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return cylinders;
         }
 
+        private ObservableCollection<ICylinder> GetWetCleanLeftCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Add WET Clean Left cylinders
+            cylinders.Add(Devices.Cylinders.WetCleanBrushLeftUpDown);
+            cylinders.Add(Devices.Cylinders.WetCleanPusherLeftUpDown);
+            return cylinders;
+        }
+
+        private ObservableCollection<ICylinder> GetWetCleanRightCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Add WET Clean Right cylinders
+            cylinders.Add(Devices.Cylinders.WetCleanBrushRightUpDown);
+            cylinders.Add(Devices.Cylinders.WetCleanPusherRightUpDown);
+            return cylinders;
+        }
+
         private ObservableCollection<ICylinder> GetAfCleanCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
             // AF Clean không có cylinder riêng, sử dụng pressure regulators
+            return cylinders;
+        }
+
+        private ObservableCollection<ICylinder> GetAfCleanLeftCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Add AF Clean Left cylinders
+            cylinders.Add(Devices.Cylinders.AFCleanBrushLeftUpDown);
+            cylinders.Add(Devices.Cylinders.AFCleanPusherLeftUpDown);
+            return cylinders;
+        }
+
+        private ObservableCollection<ICylinder> GetAfCleanRightCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            // Add AF Clean Right cylinders
+            cylinders.Add(Devices.Cylinders.AFCleanBrushRightUpDown);
+            cylinders.Add(Devices.Cylinders.AFCleanPusherRightUpDown);
             return cylinders;
         }
 
@@ -910,10 +977,54 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return inputs;
         }
 
+        private ObservableCollection<IDInput> GetWetCleanLeftInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add WET Clean Left detection inputs
+            inputs.Add(Devices.Inputs.WetCleanPusherLeftUp);
+            inputs.Add(Devices.Inputs.WetCleanPusherLeftDown);
+            inputs.Add(Devices.Inputs.WetCleanBrushLeftUp);
+            inputs.Add(Devices.Inputs.WetCleanBrushLeftDown);
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetWetCleanRightInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add WET Clean Right detection inputs
+            inputs.Add(Devices.Inputs.WetCleanPusherRightUp);
+            inputs.Add(Devices.Inputs.WetCleanPusherRightDown);
+            inputs.Add(Devices.Inputs.WetCleanBrushRightUp);
+            inputs.Add(Devices.Inputs.WetCleanBrushRightDown);
+            return inputs;
+        }
+
         private ObservableCollection<IDInput> GetAfCleanInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
             // AF Clean không có physical inputs riêng, sử dụng pressure monitoring
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetAfCleanLeftInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add AF Clean Left detection inputs
+            inputs.Add(Devices.Inputs.AfCleanPusherLeftUp);
+            inputs.Add(Devices.Inputs.AfCleanPusherLeftDown);
+            inputs.Add(Devices.Inputs.AfCleanBrushLeftUp);
+            inputs.Add(Devices.Inputs.AfCleanBrushLeftDown);
+            return inputs;
+        }
+
+        private ObservableCollection<IDInput> GetAfCleanRightInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add AF Clean Right detection inputs
+            inputs.Add(Devices.Inputs.AfCleanPusherRightUp);
+            inputs.Add(Devices.Inputs.AfCleanPusherRightDown);
+            inputs.Add(Devices.Inputs.AfCleanBrushRightUp);
+            inputs.Add(Devices.Inputs.AfCleanBrushRightDown);
             return inputs;
         }
 
@@ -963,8 +1074,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             inputs.Add(Devices.Inputs.TransferInShuttleLVac);
             inputs.Add(Devices.Inputs.TransferInShuttleRVac);
             
+            // Add Transfer In Shuttle position detection inputs
+            inputs.Add(Devices.Inputs.TransferInShuttleL0Degree);
+            inputs.Add(Devices.Inputs.TransferInShuttleL180Degree);
+            inputs.Add(Devices.Inputs.TransferInShuttleR0Degree);
+            inputs.Add(Devices.Inputs.TransferInShuttleR180Degree);
+            
             return inputs;
         }
+
 
         private ObservableCollection<IDInput> GetTransferRotationInputs()
         {
@@ -973,6 +1091,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             // Add Transfer Rotation vacuum detection inputs
             inputs.Add(Devices.Inputs.TrRotateLeftVac1);
             inputs.Add(Devices.Inputs.TrRotateRightVac1);
+            
+            // Add Transfer Rotation position detection inputs
+            inputs.Add(Devices.Inputs.TrRotateLeft0Degree);
+            inputs.Add(Devices.Inputs.TrRotateLeft180Degree);
+            inputs.Add(Devices.Inputs.TrRotateRight0Degree);
+            inputs.Add(Devices.Inputs.TrRotateRight180Degree);
             
             return inputs;
         }
@@ -1165,8 +1289,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             outputs.Add(Devices.Outputs.TransferInShuttleLVacOnOff);
             outputs.Add(Devices.Outputs.TransferInShuttleRVacOnOff);
             
+            // Add Transfer In Shuttle position control outputs
+            outputs.Add(Devices.Outputs.TransferInShuttleL0Degree);
+            outputs.Add(Devices.Outputs.TransferInShuttleL180Degree);
+            outputs.Add(Devices.Outputs.TransferInShuttleR0Degree);
+            outputs.Add(Devices.Outputs.TransferInShuttleR180Degree);
+            
             return outputs;
         }
+
 
         private ObservableCollection<IDOutput> GetTransferRotationOutputs()
         {
@@ -1175,6 +1306,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             // Add Transfer Rotation vacuum control outputs
             outputs.Add(Devices.Outputs.TrRotateLeftVac1OnOff);
             outputs.Add(Devices.Outputs.TrRotateRightVac1OnOff);
+            
+            // Add Transfer Rotation position control outputs
+            outputs.Add(Devices.Outputs.TrRotateLeft0Degree);
+            outputs.Add(Devices.Outputs.TrRotateLeft180Degree);
+            outputs.Add(Devices.Outputs.TrRotateRight0Degree);
+            outputs.Add(Devices.Outputs.TrRotateRight180Degree);
             
             return outputs;
         }
@@ -1224,10 +1361,50 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return outputs;
         }
 
+        private ObservableCollection<IDOutput> GetWetCleanLeftOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add WET Clean Left control outputs
+            outputs.Add(Devices.Outputs.WetCleanPusherLeftUp);
+            outputs.Add(Devices.Outputs.WetCleanPusherLeftDown);
+            outputs.Add(Devices.Outputs.WetCleanBrushLeftDown);
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetWetCleanRightOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add WET Clean Right control outputs
+            outputs.Add(Devices.Outputs.WetCleanPusherRightUp);
+            outputs.Add(Devices.Outputs.WetCleanPusherRightDown);
+            outputs.Add(Devices.Outputs.WetCleanBrushRightDown);
+            return outputs;
+        }
+
         private ObservableCollection<IDOutput> GetAfCleanOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
             // AF Clean không có physical outputs riêng, sử dụng pressure regulators
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetAfCleanLeftOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add AF Clean Left control outputs
+            outputs.Add(Devices.Outputs.AfCleanPusherLeftUp);
+            outputs.Add(Devices.Outputs.AfCleanPusherLeftDown);
+            outputs.Add(Devices.Outputs.AfCleanBrushLeftDown);
+            return outputs;
+        }
+
+        private ObservableCollection<IDOutput> GetAfCleanRightOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add AF Clean Right control outputs
+            outputs.Add(Devices.Outputs.AfCleanPusherRightUp);
+            outputs.Add(Devices.Outputs.AfCleanPusherRightDown);
+            outputs.Add(Devices.Outputs.AfCleanBrushRightDown);
             return outputs;
         }
 
@@ -1239,6 +1416,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public ObservableCollection<ICylinder> WetCleanCylinders => GetWetCleanCylinders();
         public ObservableCollection<IDInput> WetCleanInputs => GetWetCleanInputs();
         public ObservableCollection<IDOutput> WetCleanOutputs => GetWetCleanOutputs();
+
+        // WET Clean Left Properties
+        public ObservableCollection<IMotion> WetCleanLeftMotions => GetWetCleanLeftMotions();
+        public ObservableCollection<ICylinder> WetCleanLeftCylinders => GetWetCleanLeftCylinders();
+        public ObservableCollection<IDInput> WetCleanLeftInputs => GetWetCleanLeftInputs();
+        public ObservableCollection<IDOutput> WetCleanLeftOutputs => GetWetCleanLeftOutputs();
+
+        // WET Clean Right Properties
+        public ObservableCollection<IMotion> WetCleanRightMotions => GetWetCleanRightMotions();
+        public ObservableCollection<ICylinder> WetCleanRightCylinders => GetWetCleanRightCylinders();
+        public ObservableCollection<IDInput> WetCleanRightInputs => GetWetCleanRightInputs();
+        public ObservableCollection<IDOutput> WetCleanRightOutputs => GetWetCleanRightOutputs();
         #endregion
 
         #region AF Clean Properties
@@ -1246,6 +1435,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public ObservableCollection<ICylinder> AfCleanCylinders => GetAfCleanCylinders();
         public ObservableCollection<IDInput> AfCleanInputs => GetAfCleanInputs();
         public ObservableCollection<IDOutput> AfCleanOutputs => GetAfCleanOutputs();
+
+        // AF Clean Left Properties
+        public ObservableCollection<IMotion> AfCleanLeftMotions => GetAfCleanLeftMotions();
+        public ObservableCollection<ICylinder> AfCleanLeftCylinders => GetAfCleanLeftCylinders();
+        public ObservableCollection<IDInput> AfCleanLeftInputs => GetAfCleanLeftInputs();
+        public ObservableCollection<IDOutput> AfCleanLeftOutputs => GetAfCleanLeftOutputs();
+
+        // AF Clean Right Properties
+        public ObservableCollection<IMotion> AfCleanRightMotions => GetAfCleanRightMotions();
+        public ObservableCollection<ICylinder> AfCleanRightCylinders => GetAfCleanRightCylinders();
+        public ObservableCollection<IDInput> AfCleanRightInputs => GetAfCleanRightInputs();
+        public ObservableCollection<IDOutput> AfCleanRightOutputs => GetAfCleanRightOutputs();
         #endregion
 
         #region GetProcess
@@ -1413,19 +1614,33 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 Inputs = GetTransferRotationInputs();
                 Outputs = GetTransferRotationOutputs();
             }
-            else if (SelectedProcess == Processes.WETCleanLeftProcess || SelectedProcess == Processes.WETCleanRightProcess)
+            else if (SelectedProcess == Processes.WETCleanLeftProcess)
             {
-                Motions = GetWetCleanMotions();
-                Cylinders = GetWetCleanCylinders();
-                Inputs = GetWetCleanInputs();
-                Outputs = GetWetCleanOutputs();
+                Motions = GetWetCleanLeftMotions();
+                Cylinders = GetWetCleanLeftCylinders();
+                Inputs = GetWetCleanLeftInputs();
+                Outputs = GetWetCleanLeftOutputs();
             }
-            else if (SelectedProcess == Processes.AFCleanLeftProcess || SelectedProcess == Processes.AFCleanRightProcess)
+            else if (SelectedProcess == Processes.WETCleanRightProcess)
             {
-                Motions = GetAfCleanMotions();
-                Cylinders = GetAfCleanCylinders();
-                Inputs = GetAfCleanInputs();
-                Outputs = GetAfCleanOutputs();
+                Motions = GetWetCleanRightMotions();
+                Cylinders = GetWetCleanRightCylinders();
+                Inputs = GetWetCleanRightInputs();
+                Outputs = GetWetCleanRightOutputs();
+            }
+            else if (SelectedProcess == Processes.AFCleanLeftProcess)
+            {
+                Motions = GetAfCleanLeftMotions();
+                Cylinders = GetAfCleanLeftCylinders();
+                Inputs = GetAfCleanLeftInputs();
+                Outputs = GetAfCleanLeftOutputs();
+            }
+            else if (SelectedProcess == Processes.AFCleanRightProcess)
+            {
+                Motions = GetAfCleanRightMotions();
+                Cylinders = GetAfCleanRightCylinders();
+                Inputs = GetAfCleanRightInputs();
+                Outputs = GetAfCleanRightOutputs();
             }
             else if (SelectedProcess == Processes.UnloadTransferLeftProcess || SelectedProcess == Processes.UnloadTransferRightProcess)
             {
