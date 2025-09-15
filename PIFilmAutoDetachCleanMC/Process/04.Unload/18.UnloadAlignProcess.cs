@@ -516,7 +516,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence = ESequence.UnloadAlignGlass;
                     break;
             }
-            #endregion
         }
+        #endregion
+
     }
 }
