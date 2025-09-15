@@ -1778,8 +1778,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             // Add Unload Align vacuum detection inputs
             inputs.Add(Devices.Inputs.UnloadGlassAlignVac1);
             inputs.Add(Devices.Inputs.UnloadGlassAlignVac2);
-            inputs.Add(Devices.Inputs.UnloadGlassAlignVac3);
-            inputs.Add(Devices.Inputs.UnloadGlassAlignVac4);
             // Add Unload Robot cylinder detection inputs
             inputs.Add(Devices.Inputs.UnloadRobotCyl1Up);
             inputs.Add(Devices.Inputs.UnloadRobotCyl1Down);
@@ -1794,10 +1792,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             inputs.Add(Devices.Inputs.UnloadAlignCyl1Down);
             inputs.Add(Devices.Inputs.UnloadAlignCyl2Up);
             inputs.Add(Devices.Inputs.UnloadAlignCyl2Down);
-            inputs.Add(Devices.Inputs.UnloadAlignCyl3Up);
-            inputs.Add(Devices.Inputs.UnloadAlignCyl3Down);
-            inputs.Add(Devices.Inputs.UnloadAlignCyl4Up);
-            inputs.Add(Devices.Inputs.UnloadAlignCyl4Down);
             return inputs;
         }
 
@@ -1807,8 +1801,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             // Add Unload Transfer Right vacuum detection inputs
             inputs.Add(Devices.Inputs.UnloadTransferRVac);
             // Add Unload Align vacuum detection inputs
-            inputs.Add(Devices.Inputs.UnloadGlassAlignVac1);
-            inputs.Add(Devices.Inputs.UnloadGlassAlignVac2);
             inputs.Add(Devices.Inputs.UnloadGlassAlignVac3);
             inputs.Add(Devices.Inputs.UnloadGlassAlignVac4);
             // Add Unload Robot cylinder detection inputs
@@ -1821,10 +1813,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             inputs.Add(Devices.Inputs.UnloadRobotCyl4Up);
             inputs.Add(Devices.Inputs.UnloadRobotCyl4Down);
             // Add Unload Align cylinder detection inputs
-            inputs.Add(Devices.Inputs.UnloadAlignCyl1Up);
-            inputs.Add(Devices.Inputs.UnloadAlignCyl1Down);
-            inputs.Add(Devices.Inputs.UnloadAlignCyl2Up);
-            inputs.Add(Devices.Inputs.UnloadAlignCyl2Down);
             inputs.Add(Devices.Inputs.UnloadAlignCyl3Up);
             inputs.Add(Devices.Inputs.UnloadAlignCyl3Down);
             inputs.Add(Devices.Inputs.UnloadAlignCyl4Up);
@@ -2091,8 +2079,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             // Add Unload Align vacuum outputs
             outputs.Add(Devices.Outputs.UnloadGlassAlignVac1OnOff);
             outputs.Add(Devices.Outputs.UnloadGlassAlignVac2OnOff);
-            outputs.Add(Devices.Outputs.UnloadGlassAlignVac3OnOff);
-            outputs.Add(Devices.Outputs.UnloadGlassAlignVac4OnOff);
             // Add Unload Robot cylinder control outputs
             outputs.Add(Devices.Outputs.UnloadRobotCyl1Down);
             outputs.Add(Devices.Outputs.UnloadRobotCyl2Down);
@@ -2112,8 +2098,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             // Add Unload Transfer Right vacuum outputs
             outputs.Add(Devices.Outputs.UnloadTransferRVacOnOff);
             // Add Unload Align vacuum outputs
-            outputs.Add(Devices.Outputs.UnloadGlassAlignVac1OnOff);
-            outputs.Add(Devices.Outputs.UnloadGlassAlignVac2OnOff);
             outputs.Add(Devices.Outputs.UnloadGlassAlignVac3OnOff);
             outputs.Add(Devices.Outputs.UnloadGlassAlignVac4OnOff);
             // Add Unload Robot cylinder control outputs
@@ -2395,7 +2379,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     cylinder.CylinderType == ECylinderType.GripUngripReverse ||
                     cylinder.CylinderType == ECylinderType.AlignUnalignReverse ||
                     cylinder.CylinderType == ECylinderType.FlipUnflipReverse ||
-                    cylinder.CylinderType == ECylinderType.ClampUnclampReverse
+                    cylinder.CylinderType == ECylinderType.ClampUnclampReverse ||
+                    cylinder.CylinderType == ECylinderType.OnOff
                     )
             {
                 cylinder.Backward();
@@ -2438,7 +2423,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     cylinder.CylinderType == ECylinderType.GripUngripReverse ||
                     cylinder.CylinderType == ECylinderType.AlignUnalignReverse ||
                     cylinder.CylinderType == ECylinderType.FlipUnflipReverse ||
-                    cylinder.CylinderType == ECylinderType.ClampUnclampReverse
+                    cylinder.CylinderType == ECylinderType.ClampUnclampReverse ||
+                    cylinder.CylinderType == ECylinderType.OnOff
                     )
             {
                 cylinder.Forward();
@@ -2474,7 +2460,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 CylinderInterlockMsg = "Need Transfer Rotation ZAxis at Ready Position before Moving";
                 return Devices?.MotionsInovance?.TransferRotationLZAxis?.IsOnPosition(RecipeSelector?.CurrentRecipe?.TransferRotationLeftRecipe?.ZAxisReadyPosition ?? 0) == true;
-            }            
+            }
+            // Interlock for TrRotateRightRotate
+            if (cylinder.Name.Contains("TrRotateRightRotate") || cylinder.Name.Contains("TrRotateRightFwBw"))
+            {
+                CylinderInterlockMsg = "Need Transfer Rotation ZAxis at Ready Position before Moving";
+                return Devices?.MotionsInovance?.TransferRotationRZAxis?.IsOnPosition(RecipeSelector?.CurrentRecipe?.TransferRotationLeftRecipe?.ZAxisReadyPosition ?? 0) == true;
+            }
 
             return true;
         }
