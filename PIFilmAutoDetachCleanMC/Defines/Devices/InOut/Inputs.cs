@@ -90,10 +90,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput OutCstWorkDetect1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_CST_WORK_DETECT_1);
         public IDInput OutCstWorkDetect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_CST_WORK_DETECT_2);
         public IDInput OutCstWorkDetect3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_CST_WORK_DETECT_3);
-        public IDInput InButton1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_BUTTON_1);
-        public IDInput InButton2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_BUTTON_2);
-        public IDInput OutButton1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_BUTTON_1);
-        public IDInput OutButton2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_BUTTON_2);
+        public IDInput InCompleteButton => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_COMPLETE_BUTTON);
+        public IDInput InMutingButton => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_MUTING_BUTTON);
+        public IDInput OutCompleteButton => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_COMPLETE_BUTTON);
+        public IDInput OutMutingButton => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_MUTING_BUTTON);
         public IDInput InCstLightCurtainAlarmDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_CST_LIGHT_CURTAIN_ALARM_DETECT);
         public IDInput OutCstLightCurtainAlarmDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_CST_LIGHT_CURTAIN_ALARM_DETECT);
         public IDInput LoadRobStopmess => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.LOAD_ROB_STOPMESS);

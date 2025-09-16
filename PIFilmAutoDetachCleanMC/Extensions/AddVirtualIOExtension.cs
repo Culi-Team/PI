@@ -17,6 +17,8 @@ namespace PIFilmAutoDetachCleanMC.Extensions
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EInConveyorProcessInput>>("InConveyorInput");
+
                 services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EWorkConveyorProcessInput>>("InWorkConveyorInput");
                 services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EWorkConveyorProcessOutput>>("InWorkConveyorOutput");
 
