@@ -1597,8 +1597,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             inputs.Add(Devices.Inputs.InCstWorkDetect3);
             inputs.Add(Devices.Inputs.InCstWorkDetect4);
             // Add In Cassette button inputs
-            inputs.Add(Devices.Inputs.InButton1);
-            inputs.Add(Devices.Inputs.InButton2);
+            inputs.Add(Devices.Inputs.InCompleteButton);
+            inputs.Add(Devices.Inputs.InMutingButton);
             // Add In Cassette light curtain safety input
             inputs.Add(Devices.Inputs.InCstLightCurtainAlarmDetect);
             // Add In CV Support detection inputs
@@ -1632,8 +1632,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             inputs.Add(Devices.Inputs.OutCstDetect1);
             inputs.Add(Devices.Inputs.OutCstDetect2);
             // Add Out Cassette button inputs
-            inputs.Add(Devices.Inputs.OutButton1);
-            inputs.Add(Devices.Inputs.OutButton2);
+            inputs.Add(Devices.Inputs.OutCompleteButton);
+            inputs.Add(Devices.Inputs.OutMutingButton);
             // Add Out Cassette light curtain safety input
             inputs.Add(Devices.Inputs.OutCstLightCurtainAlarmDetect);
             // Add Out CV Support detection inputs
@@ -1905,8 +1905,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
             // Add In Cassette button lamp outputs
-            outputs.Add(Devices.Outputs.InButtonLamp1);
-            outputs.Add(Devices.Outputs.InButtonLamp2);
+            outputs.Add(Devices.Outputs.InCompleteButtonLamp);
+            outputs.Add(Devices.Outputs.InMutingButtonLamp);
             // Add In Cassette light curtain muting output
             outputs.Add(Devices.Outputs.InCstLightCurtainMuting1);
             outputs.Add(Devices.Outputs.InCstLightCurtainMuting2);
@@ -1934,8 +1934,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
             // Add Out Cassette button lamp outputs
-            outputs.Add(Devices.Outputs.OutButtonLamp1);
-            outputs.Add(Devices.Outputs.OutButtonLamp2);
+            outputs.Add(Devices.Outputs.OutCompleteButtonLamp);
+            outputs.Add(Devices.Outputs.OutMutingButtonLamp);
             // Add Out Cassette light curtain muting output
             outputs.Add(Devices.Outputs.OutCstLightCurtainMuting1);
             outputs.Add(Devices.Outputs.OutCstLightCurtainMuting2);
