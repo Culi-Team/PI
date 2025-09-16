@@ -183,10 +183,20 @@
                 <UniformGrid x:Name="OptionsRecipe_StackPanel" 
                              Columns="2"/>
             </ScrollViewer>
-            <ScrollViewer Grid.Column="1"
-                          Grid.RowSpan="2">
-                <StackPanel x:Name="CurrentRecipe_StackPanel" />
-            </ScrollViewer>
+            
+            <!-- TabControl for Recipe and Config -->
+            <TabControl Grid.Column="1" Grid.RowSpan="2" Margin="5">
+                <TabItem Header="Recipe">
+                    <ScrollViewer>
+                        <StackPanel x:Name="CurrentRecipe_StackPanel" />
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="Config">
+                    <ScrollViewer>
+                        <StackPanel x:Name="CurrentConfig_StackPanel" />
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
             <GroupBox Grid.Row="1"
                       Header="Models">
                 <Grid>
