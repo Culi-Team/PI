@@ -1,7 +1,9 @@
-﻿using EQX.Core.Device.SpeedController;
+﻿using EQX.Core.Common;
+using EQX.Core.Device.SpeedController;
 using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
+using EQX.InOut;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -27,6 +29,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _inWorkConveyorOutput;
         private readonly IDInputDevice _outWorkConveyorInput;
         private readonly IDOutputDevice _outWorkConveyorOutput;
+        private readonly ActionAssignableTimer _blinkTimer;
+        private const string OutLightCurtainMutingActionKey = "OutLightCurtainMutingAction";
 
         private IDInputDevice Inputs => port == EPort.Right ? _inWorkConveyorInput : _outWorkConveyorInput;
         private IDOutputDevice Outputs => port == EPort.Right ? _inWorkConveyorOutput : _outWorkConveyorOutput;
@@ -42,7 +46,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             [FromKeyedServices("InWorkConveyorInput")] IDInputDevice inWorkConveyorInput,
             [FromKeyedServices("InWorkConveyorOutput")] IDOutputDevice inWorkConveyorOutput,
             [FromKeyedServices("OutWorkConveyorInput")] IDInputDevice outWorkConveyorInput,
-            [FromKeyedServices("OutWorkConveyorOutput")] IDOutputDevice outWorkConveyorOutput)
+            [FromKeyedServices("OutWorkConveyorOutput")] IDOutputDevice outWorkConveyorOutput,
+            [FromKeyedServices("BlinkTimer")] ActionAssignableTimer blinkTimer)
         {
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
@@ -51,6 +56,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             _inWorkConveyorOutput = inWorkConveyorOutput;
             _outWorkConveyorInput = outWorkConveyorInput;
             _outWorkConveyorOutput = outWorkConveyorOutput;
+            _blinkTimer = blinkTimer;
         }
         #endregion
 
@@ -760,13 +766,56 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.RunStep++;
                     break;
+                case EWorkConveyorUnloadStep.Muting_LightCurtain:
+                    if(port == EPort.Left)
+                    {
+                        Log.Debug("Muting Light Curtain");
+                        _devices.Outputs.OutCstLightCurtainMuting1.Value = true;
+                        _devices.Outputs.OutCstLightCurtainMuting2.Value = true;
+
+                        _blinkTimer.EnableAction(OutLightCurtainMutingActionKey,
+                            () => _devices.Outputs.OutMutingButtonLamp.Value = true,
+                            () => _devices.Outputs.OutMutingButtonLamp.Value = false);
+                    }
+                    Step.RunStep++;
+                    break;
                 case EWorkConveyorUnloadStep.Conveyor_Run:
                     ConveyorRunInOut(false);
+#if SIMULATION
+                    Wait(3000);
+                    if(port == EPort.Right)
+                    {
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect1, false);
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect2, false);
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect3, false);
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect4, false);
+
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.BufferCstDetect1,true);
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.BufferCstDetect2,true);
+                    }
+                    else
+                    {
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstWorkDetect1,false);
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstWorkDetect2,false);
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstWorkDetect3,false);
+
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstDetect1,true);
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstDetect2,true);
+                    }
+#endif
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Wait_CSTOut_Done:
                     if(IsCassetteOut && IsNextConveyorDetect)
                     {
+                        if (port == EPort.Left)
+                        {
+                            Log.Debug("Enable Light Curtain");
+                            _devices.Outputs.OutCstLightCurtainMuting1.Value = false;
+                            _devices.Outputs.OutCstLightCurtainMuting2.Value = false;
+
+                            _blinkTimer.DisableAction(OutLightCurtainMutingActionKey);
+                        }
                         Step.RunStep++;
                         break;
                     }

@@ -6,21 +6,18 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum EBufferConveyorOutWorkCSTLoadStep
+    public enum EOutConveyorUnloadStep
     {
         Start,
-        Wait_OutWorkConveyorRequestCSTIn,
+        Stopper_Up,
+        Stopper_Up_Wait,
 
-        Stopper2_Down,
-        Stopper2_Down_Wait,
-
+        CSTDetect_Check,
         Conveyor_Run,
-
-        Wait_OutWorkConveyorLoadDone,
-
         Conveyor_Stop,
 
-        End
+        Wait_CSTUnload,
 
+        End
     }
 }

@@ -18,6 +18,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         private readonly IDOutputDevice _bufferConveyorOutput;
         private readonly IDInputDevice _outWorkConveyorInput;
         private readonly IDOutputDevice _outWorkConveyorOutput;
+        private readonly IDInputDevice _outConveyorInput;
+        private readonly IDOutputDevice _outConveyorOutput;
         private readonly IDInputDevice _robotLoadInput;
         private readonly IDOutputDevice _robotLoadOutput;
         private readonly IDInputDevice _vinylCleanInput;
@@ -66,6 +68,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                          [FromKeyedServices("BufferConveyorOutput")] IDOutputDevice bufferConveyorOutput,
                          [FromKeyedServices("OutWorkConveyorInput")] IDInputDevice outWorkConveyorInput,
                          [FromKeyedServices("OutWorkConveyorOutput")] IDOutputDevice outWorkConveyorOutput,
+                         [FromKeyedServices("OutConveyorInput")] IDInputDevice outConveyorInput,
+                         [FromKeyedServices("OutConveyorOutput")] IDOutputDevice outConveyorOutput,
                          [FromKeyedServices("RobotLoadInput")] IDInputDevice robotLoadInput,
                          [FromKeyedServices("RobotLoadOutput")] IDOutputDevice robotLoadOutput,
                          [FromKeyedServices("VinylCleanInput")] IDInputDevice vinylCleanInput,
@@ -114,6 +118,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
             _bufferConveyorOutput = bufferConveyorOutput;
             _outWorkConveyorInput = outWorkConveyorInput;
             _outWorkConveyorOutput = outWorkConveyorOutput;
+            _outConveyorInput = outConveyorInput;
+            _outConveyorOutput = outConveyorOutput;
             _robotLoadInput = robotLoadInput;
             _robotLoadOutput = robotLoadOutput;
             _vinylCleanInput = vinylCleanInput;
@@ -170,6 +176,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
             _outWorkConveyorInput.Initialize();
             _outWorkConveyorOutput.Initialize();
+
+            _outConveyorInput.Initialize();
+            _outConveyorOutput.Initialize();
 
             _robotLoadInput.Initialize();
             _robotLoadOutput.Initialize();
@@ -247,6 +256,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //OutWorkConveyor Input Mapping
             ((VirtualInputDevice<EWorkConveyorProcessInput>)_outWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.ROBOT_PICK_PLACE_CST_DONE,
                 _robotLoadOutput, (int)ERobotLoadProcessOutput.ROBOT_PLACE_OUT_CST_DONE);
+            ((VirtualInputDevice<EWorkConveyorProcessInput>)_outWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.NEXT_CONVEYOR_READY,
+                _outConveyorOutput, (int)EOutConveyorProcessOutput.OUT_CONVEYOR_READY);
+
+            //OutConveyor Input Mapping
+            ((VirtualInputDevice<EOutConveyorProcessInput>)_outConveyorInput).Mapping((int)EOutConveyorProcessInput.OUT_WORK_CONVEYOR_REQUEST_CST_OUT,
+                _outWorkConveyorOutput, (int)EWorkConveyorProcessOutput.REQUEST_CST_OUT);
 
             //Robot Load Input Mapping
             ((VirtualInputDevice<ERobotLoadProcessInput>)_robotLoadInput).Mapping((int)ERobotLoadProcessInput.IN_CST_READY,

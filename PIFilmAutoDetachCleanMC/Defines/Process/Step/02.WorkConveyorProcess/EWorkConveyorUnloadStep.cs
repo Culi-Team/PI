@@ -25,8 +25,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_Fix_Backward_Wait,
 
         Set_FlagRequestCSTOut,
-
         Wait_NextConveyorReady,
+
+        Muting_LightCurtain,
 
         Conveyor_Run,
 

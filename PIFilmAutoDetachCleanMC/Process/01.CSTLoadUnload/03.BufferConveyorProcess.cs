@@ -65,6 +65,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                 return _bufferConveyorInput[(int)EBufferConveyorProcessInput.IN_WORK_CONVEYOR_REQUEST_CST_OUT];
             }
         }
+
+        private bool FlagBufferConveyorReady
+        {
+            set
+            {
+                _bufferConveyorOutput[(int)EBufferConveyorProcessOutput.BUFFER_CONVEYOR_READY] = value;
+            }
+        }
+
+        private bool FlagOutWorkConveyorRequestCSTIn
+        {
+            get
+            {
+                return _bufferConveyorInput[(int)EBufferConveyorProcessInput.OUT_WORK_CONVEYOR_REQUEST_CST_IN];
+            }
+        }
         #endregion
 
         #region Override Method
@@ -292,6 +308,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.BufferConveyor_CST_Position_Error);
                         break;
                     }
+                    FlagBufferConveyorReady = true;
                     Step.RunStep++;
                     break;
                 case EBufferConveyorInWorkCSTUnloadStep.Wait_InWorkCSTRequestCSTOut:
@@ -314,6 +331,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EBufferConveyorInWorkCSTUnloadStep.Conveyor_Stop:
                     Log.Debug("Conveyor Stop");
                     ConveyorRunStop(false);
+                    FlagBufferConveyorReady = false;
                     Step.RunStep++;
                     break;
                 case EBufferConveyorInWorkCSTUnloadStep.End:
@@ -326,6 +344,70 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Info("Sequence Out Work CST Load");
                     Sequence = ESequence.OutWorkCSTLoad;
+                    break;
+            }
+        }
+
+        private void Sequence_OutWorkCSTLoad()
+        {
+            switch ((EBufferConveyorOutWorkCSTLoadStep)Step.RunStep)
+            {
+                case EBufferConveyorOutWorkCSTLoadStep.Start:
+                    Log.Debug("Out Work CST Load Start");
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorOutWorkCSTLoadStep.Wait_OutWorkConveyorRequestCSTIn:
+                    if(FlagOutWorkConveyorRequestCSTIn == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorOutWorkCSTLoadStep.Stopper2_Down:
+                    Log.Debug("Stopper 2 Down");
+                    BufferStopper2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => BufferStopper2.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorOutWorkCSTLoadStep.Stopper2_Down_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Stopper 2 Down Done");
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorOutWorkCSTLoadStep.Conveyor_Run:
+                    Log.Debug("Conveyor Run");
+                    ConveyorRunStop(true);
+                    Log.Debug("Wait Out Work Conveyor Load Done");
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorOutWorkCSTLoadStep.Wait_OutWorkConveyorLoadDone:
+                    if(FlagOutWorkConveyorRequestCSTIn == true)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorOutWorkCSTLoadStep.Conveyor_Stop:
+                    Log.Debug("Conveyor Stop");
+                    ConveyorRunStop(false);
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorOutWorkCSTLoadStep.End:
+                    Log.Debug("Out Work CST Load End");
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence In Work CST Unload");
+                    Sequence = ESequence.InWorkCSTUnLoad;
                     break;
             }
         }

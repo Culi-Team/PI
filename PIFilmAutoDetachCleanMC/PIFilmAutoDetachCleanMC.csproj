@@ -98,9 +98,7 @@
 
   <ItemGroup>
     <Folder Include="Converters\JsonConverters\" />
-    <Folder Include="Defines\Process\IO\05.OutConveyorProcess\" />
     <Folder Include="Defines\Process\Step\04.OutWorkConveyorProcess\" />
-    <Folder Include="Defines\Process\Step\05.OutConveyorProcess\" />
   </ItemGroup>
 
   <ItemGroup>
