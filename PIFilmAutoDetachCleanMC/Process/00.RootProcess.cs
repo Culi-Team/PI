@@ -60,6 +60,9 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private bool IsAutoMode => _devices.Inputs.AutoModeSwitchL.Value && _devices.Inputs.AutoModeSwitchR.Value;
+        private bool IsManualMode => _devices.Inputs.ManualModeSwitchL.Value || _devices.Inputs.ManualModeSwitchL.Value;
+
         private bool IsLightCurtainLeftDetect => _devices.Inputs.OutCstLightCurtainAlarmDetect.Value;
         private bool IsLightCurtainRightDetect => _devices.Inputs.InCstLightCurtainAlarmDetect.Value;
         private bool IsMainAirSupplied => _devices.Inputs.MainAir1.Value && _devices.Inputs.MainAir2.Value && _devices.Inputs.MainAir3.Value;
@@ -104,6 +107,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                 if (!IsLightCurtainRightDetect)
                 {
                     RaiseAlarm(alarmId: (int)EAlarm.LightCurtainRightDetected);
+                }
+                if (IsAutoMode == false || IsManualMode == true)
+                {
+                    RaiseWarning((int)EWarning.ManualModeSwitch);
                 }
             }
 
@@ -239,6 +246,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     _devices.Outputs.Lamp_Run();
                     Step.OriginStep++;
                     break;
+                case ERootProcessToOriginStep.AutoMode_Check:
+                    if(IsAutoMode == false || IsManualMode == true)
+                    {
+                        RaiseWarning((int)EWarning.ManualModeSwitch);
+                        break;
+                    }
+                    Step.OriginStep++;
+                    break;
                 case ERootProcessToOriginStep.DoorSensorCheck:
                     if (DoorSensor == false)
                     {
@@ -303,6 +318,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERootProcessToRunStep.Start:
                     Log.Debug("ToRun Start");
                     _devices.Outputs.Lamp_Run();
+                    Step.ToRunStep++;
+                    break;
+                case ERootProcessToRunStep.AutoMode_Check:
+                    if(IsAutoMode == false || IsManualMode == true)
+                    {
+                        RaiseWarning((int)EWarning.ManualModeSwitch);
+                        break;
+                    }
                     Step.ToRunStep++;
                     break;
                 case ERootProcessToRunStep.DoorSensorCheck:

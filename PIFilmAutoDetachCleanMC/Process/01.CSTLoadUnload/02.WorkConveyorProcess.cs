@@ -581,6 +581,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorProcessLoadStep.Set_FlagRequestCassetteIn:
                     Log.Debug("Set Flag Request Cassette In");
                     FlagRequestCSTIn = true;
+                    Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Wait_CassetteLoadDone:
                     if(IsCassetteDetect == false)

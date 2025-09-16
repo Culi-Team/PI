@@ -24,8 +24,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         Conveyor_Run,
 
-        MutingAreaSensor,
-
         Set_FlagRequestCassetteIn,
 
         Wait_CassetteLoadDone,

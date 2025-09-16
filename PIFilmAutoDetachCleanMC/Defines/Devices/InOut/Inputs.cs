@@ -327,9 +327,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput OpRButtonStart => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_R_BUTTON_START);
         public IDInput OpRButtonReset => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_R_BUTTON_RESET);
         public IDInput AutoModeSwitchR => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AUTO_MODE_SWITCH_R);
-        public IDInput TeachModeSwitchR => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TEACH_MODE_SWITCH_R);
+        public IDInput ManualModeSwitchR => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.MANUAL_MODE_SWITCH_R);
         public IDInput AutoModeSwitchL => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.AUTO_MODE_SWITCH_L);
-        public IDInput TeachModeSwitchL => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.TEACH_MODE_SWITCH_L);
+        public IDInput ManualModeSwitchL => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.MANUAL_MODE_SWITCH_L);
         public IDInput OpREmo => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_R_EMO);
         public IDInput OpLButtonStop => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_L_BUTTON_STOP);
         public IDInput OpLButtonStart => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_L_BUTTON_START);

@@ -10,7 +10,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         //Root
         Root = 0,
-        DoorOpen = 1,
+        ManualModeSwitch,
+        DoorOpen,
         DoorNotSafetyLock,
         LightCurtainLeftDetected,
         LightCurtainRightDetected,
