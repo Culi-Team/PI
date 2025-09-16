@@ -52,8 +52,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
 
         // Vinyl Clean
         VinylCleanRollerFwBw,
-        VinylCleanFixture1ClampUnclamp,
-        VinylCleanFixture2ClampUnclamp,
+        VinylCleanFixtureClampUnclamp,
         VinylCleanPusherRollerUpDown,
 
         // Transfer Y Fixture
@@ -130,6 +129,5 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         UnloadAlignCyl2UpDown,
         UnloadAlignCyl3UpDown,
         UnloadAlignCyl4UpDown,
-
     }
 }
