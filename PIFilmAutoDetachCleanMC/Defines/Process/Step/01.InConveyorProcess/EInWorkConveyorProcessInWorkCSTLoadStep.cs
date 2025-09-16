@@ -20,6 +20,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Enable_LightCurtain,
         Conveyor_Stop,
 
+        Stopper_Up,
+        Stopper_Up_Wait,
         End
     }
 }

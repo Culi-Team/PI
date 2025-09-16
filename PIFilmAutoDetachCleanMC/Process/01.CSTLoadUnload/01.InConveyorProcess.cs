@@ -1,6 +1,7 @@
 ﻿using EQX.Core.Device.SpeedController;
 using EQX.Core.InOut;
 using EQX.Core.Sequence;
+using EQX.InOut;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -125,6 +126,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.Ready:
                     break;
                 case ESequence.InConveyorLoad:
+                    Sequence_InConveyorLoad();
                     break;
                 case ESequence.InWorkCSTLoad:
                     Sequence_InWorkCSTLoad();
@@ -215,7 +217,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EInConveyorAutoRunStep.CSTDetect_Check:
-                    if(CST_Det1.Value && CST_Det2.Value)
+                    if (CST_Det1.Value && CST_Det2.Value)
                     {
                         Log.Info("Sequence In Work CST Load");
                         Sequence = ESequence.InWorkCSTLoad;
@@ -239,7 +241,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Wait_InWorkCSTRequestLoad:
-                    if(FlagInWorkCSTRequestCSTIn == false)
+                    if (FlagInWorkCSTRequestCSTIn == false)
                     {
                         Wait(20);
                         break;
@@ -253,7 +255,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Down_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         //Timeout ALARM
                         break;
@@ -267,14 +269,107 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Conveyor_Run:
+                    Log.Debug("Conveyor Run");
+                    ConveyorRunStop(true);
+#if SIMULATION
+                    Wait(3000);
+                    SimulationInputSetter.SetSimModbusInput(CST_Det1,false);
+                    SimulationInputSetter.SetSimModbusInput(CST_Det2,false);
+
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect1, true);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect2, true);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect3, true);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect4, true);
+#endif
+                    Step.RunStep++;
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Wait_InWorkCSTLoadDone:
+                    if (FlagInWorkCSTRequestCSTIn == true)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Step.RunStep++;
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Enable_LightCurtain:
+                    Log.Debug("Enable Light Curtain");
+                    MutingLightCurtain(false);
+                    Step.RunStep++;
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Conveyor_Stop:
+                    Log.Debug("Conveyor Stop");
+                    ConveyorRunStop(false);
+                    Step.RunStep++;
+                    break;
+                case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Up:
+                    Log.Debug("Stopper Up");
+                    StopperCylinder.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => StopperCylinder.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Stopper Up Done");
+                    Step.RunStep++;
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.End:
+                    Log.Debug("In Work CST Load End");
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence In Conveyor Load");
+                    Sequence = ESequence.InConveyorLoad;
+                    break;
+            }
+        }
+
+        private void Sequence_InConveyorLoad()
+        {
+            switch ((EInConveyorLoadStep)Step.RunStep)
+            {
+                case EInConveyorLoadStep.Start:
+                    Log.Debug("In Conveyor Load Start");
+                    Step.RunStep++;
+                    break;
+                case EInConveyorLoadStep.CSTDetect_Check:
+                    if (CST_Det1.Value && CST_Det2.Value)
+                    {
+                        Step.RunStep = (int)EInConveyorLoadStep.Conveyor_Stop;
+                        break;
+                    }
+                    if (CST_Det1.Value)
+                    {
+                        Step.RunStep++;
+                        break;
+                    }
+                    break;
+                case EInConveyorLoadStep.Conveyor_Run:
+                    Log.Debug("Conveyor Run");
+                    ConveyorRunStop(true);
+                    Step.RunStep = (int)EInConveyorLoadStep.CSTDetect_Check;
+                    break;
+                case EInConveyorLoadStep.Conveyor_Stop:
+                    Log.Debug("Conveyor Stop");
+                    ConveyorRunStop(false);
+                    Step.RunStep++;
+                    break;
+                case EInConveyorLoadStep.End:
+                    Log.Debug("In Conveyor Load End");
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence In Work CST Load");
+                    Sequence = ESequence.InWorkCSTLoad;
                     break;
             }
         }
@@ -283,6 +378,22 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             InCstMutingLightCurtain1.Value = bOnOff;
             InCstMutingLightCurtain2.Value = bOnOff;
+        }
+
+        private void ConveyorRunStop(bool bRun)
+        {
+            if (bRun)
+            {
+                Roller1.Start();
+                Roller2.Start();
+                Roller3.Start();
+            }
+            else
+            {
+                Roller1.Stop();
+                Roller2.Stop();
+                Roller3.Stop();
+            }
         }
         #endregion
     }
