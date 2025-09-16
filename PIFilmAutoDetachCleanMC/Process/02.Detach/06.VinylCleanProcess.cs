@@ -27,7 +27,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _vinylCleanOutput;
 
         private bool IsFixtureDetect => _devices.Inputs.VinylCleanFixtureDetect.Value;
-        private ICylinder FixtureClampCyl => _devices.Cylinders.VinylCleanFixture1ClampUnclamp;
+        private ICylinder FixtureClampCyl => _devices.Cylinders.VinylCleanFixtureClampUnclamp;
 
         private ICylinder RollerFwBwCyl => _devices.Cylinders.VinylCleanRollerFwBw;
         private ICylinder PusherCyl => _devices.Cylinders.VinylCleanPusherRollerUpDown;

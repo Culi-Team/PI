@@ -780,7 +780,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<ICylinder> GetVinylCleanCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Devices.Cylinders.VinylCleanFixture1ClampUnclamp);
+            cylinders.Add(Devices.Cylinders.VinylCleanFixtureClampUnclamp);
             cylinders.Add(Devices.Cylinders.VinylCleanRollerFwBw);
             cylinders.Add(Devices.Cylinders.VinylCleanPusherRollerUpDown);
             return cylinders;
