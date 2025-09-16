@@ -109,9 +109,24 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 {
                     var configuration = ser.GetRequiredService<IConfiguration>();
 
-                    var vinylCleanEncoderPara = JsonConvert.DeserializeObject<MotionParameter>(
-                        File.ReadAllText(configuration["Files:VinylCleanEncoderParaConfigFile"] ?? "")
-                    );
+                    string configContent = File.ReadAllText(configuration["Files:VinylCleanEncoderParaConfigFile"] ?? "");
+                    MotionParameter vinylCleanEncoderPara = null;
+                    
+                    try
+                    {
+                        // Try to deserialize as single object first
+                        vinylCleanEncoderPara = JsonConvert.DeserializeObject<MotionParameter>(configContent);
+                    }
+                    catch
+                    {
+                        // If single object fails, try as array and take first element
+                        var configArray = JsonConvert.DeserializeObject<MotionParameter[]>(configContent);
+                        if (configArray != null && configArray.Length > 0)
+                        {
+                            vinylCleanEncoderPara = configArray[0];
+                        }
+                    }
+                    
                     IMotionFactory<IMotion> motionPlusEFactory = ser.GetRequiredKeyedService<IMotionFactory<IMotion>>("MotionEziPlusEFactory");
 
                     return motionPlusEFactory.Create(10, "VinylCleanEncoder", vinylCleanEncoderPara);

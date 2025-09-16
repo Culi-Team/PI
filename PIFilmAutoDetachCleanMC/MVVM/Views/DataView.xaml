@@ -191,9 +191,9 @@
                         <StackPanel x:Name="CurrentRecipe_StackPanel" />
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="Config">
+                <TabItem Header="Speed Config">
                     <ScrollViewer>
-                        <StackPanel x:Name="CurrentConfig_StackPanel" />
+                        <StackPanel x:Name="SpeedConfig_StackPanel" />
                     </ScrollViewer>
                 </TabItem>
             </TabControl>

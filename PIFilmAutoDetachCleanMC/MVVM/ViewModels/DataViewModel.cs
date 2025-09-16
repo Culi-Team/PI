@@ -16,12 +16,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private string selectedModel;
         private RecipeBase _selectedRecipe;
 
-        public DataViewModel(RecipeSelector recipeSelector)
+        public DataViewModel(RecipeSelector recipeSelector, MotionConfigSelector motionConfigSelector)
         {
             RecipeSelector = recipeSelector;
+            MotionConfigSelector = motionConfigSelector;
         }
 
         public RecipeSelector RecipeSelector { get; }
+        public MotionConfigSelector MotionConfigSelector { get; }
 
         public string SelectedModel
         {
@@ -90,6 +92,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     if (MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_SaveAllData"]) == true)
                     {
                         RecipeSelector.Save();
+                        MotionConfigSelector?.Save();
                     }
                 });
             }
@@ -101,6 +104,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 return new RelayCommand(() =>
                 {
                     RecipeSelector.ValidRecipes = RecipeSelector.UpdateValidRecipes();
+                    MotionConfigSelector?.Load();
                     LoadRecipeEvent?.Invoke();
                 });
             }
