@@ -77,6 +77,30 @@ namespace PIFilmAutoDetachCleanMC.Process
                 }
             }
         }
+
+        private bool IsCassetteOut
+        {
+            get
+            {
+                if (port == EPort.Right)
+                {
+                    return Detect1.Value == false && Detect2.Value == false && Detect3.Value == false && Detect4.Value == false;
+                }
+                return Detect1.Value == false && Detect2.Value == false && Detect3.Value == false;
+            }
+        }
+
+        private bool IsNextConveyorDetect
+        {
+            get
+            {
+                if(port == EPort.Right)
+                {
+                    return _devices.Inputs.BufferCstDetect1.Value && _devices.Inputs.BufferCstDetect2.Value;
+                }
+                return _devices.Inputs.OutCstDetect1.Value && _devices.Inputs.OutCstDetect2.Value;
+            }
+        }
         #endregion
 
         #region Outputs
@@ -128,6 +152,21 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private bool FlagRequestCSTOut
+        {
+            set
+            {
+                Outputs[(int)EWorkConveyorProcessOutput.REQUEST_CST_OUT] = value;
+            }
+        }
+
+        private bool FlagNextConveyorReady
+        {
+            get
+            {
+                return Inputs[(int)EWorkConveyorProcessInput.NEXT_CONVEYOR_READY];
+            }
+        }
         #endregion
 
         #region Motions
@@ -257,6 +296,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_Load();
                     break;
                 case ESequence.InWorkCSTUnLoad:
+                    Sequence_Unload();
                     break;
                 case ESequence.CSTTilt:
                     Sequence_Tilt();
@@ -265,6 +305,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_Load();
                     break;
                 case ESequence.OutWorkCSTUnLoad:
+                    Sequence_Unload();
                     break;
                 case ESequence.OutConveyorUnload:
                     break;
@@ -499,7 +540,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Parent.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
-                    Log.Info("Sequence UnTilt");
+                    if (port == EPort.Right)
+                    {
+                        Log.Info("Sequence In Work CST Unload");
+                        Sequence = ESequence.InWorkCSTUnLoad;
+                        break;
+                    }
+                    Log.Info("Sequence Out Work CST Unload");
+                    Sequence = ESequence.OutWorkCSTUnLoad;
                     break;
             }
         }
@@ -608,6 +656,138 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Info("Sequence CST Tilt");
                     Sequence = ESequence.CSTTilt;
+                    break;
+            }
+        }
+
+        private void Sequence_Unload()
+        {
+            switch ((EWorkConveyorUnloadStep)Step.RunStep)
+            {
+                case EWorkConveyorUnloadStep.Start:
+                    Log.Debug("Unload Start");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorUnloadStep.Cyl_UnTilt:
+                    Log.Debug("Cylinder UnTilt");
+                    TiltCylinder.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => TiltCylinder.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorUnloadStep.Cyl_UnTilt_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder UnTilt Done");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorUnloadStep.Support_CV_Down:
+                    Log.Debug("Support Conveyor Down");
+                    CVSupportCyl1.Backward();
+                    CVSupportCyl2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout,() => CVSupportCyl1.IsBackward && CVSupportCyl2.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorUnloadStep.Support_CV_Down_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Support Conveyor Down Done");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorUnloadStep.TAxis_MoveLoadPosition:
+                    Log.Debug("T Axis Move Load Position");
+                    TAxis.MoveAbs(TAxisLoadPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut,() => TAxis.IsOnPosition(TAxisLoadPosition));
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorUnloadStep.TAxis_MoveLoadPosition_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("T Axis Move Load Position Done");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorUnloadStep.Support_CV_Up:
+                    Log.Debug("Support Conveyor Up");
+                    CVSupportCyl1.Forward();
+                    CVSupportCyl2.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => CVSupportCyl1.IsForward && CVSupportCyl2.IsForward);
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorUnloadStep.Support_CV_Up_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Support Conveyor Up Done");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorUnloadStep.Cyl_Fix_Backward:
+                    Log.Debug("Cylinder Fix Backward");
+                    FixCylinder1.Backward();
+                    FixCylinder2.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout,() => FixCylinder1.IsBackward && FixCylinder2.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorUnloadStep.Cyl_Fix_Backward_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Cylinder Fix Backward Done");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorUnloadStep.Set_FlagRequestCSTOut:
+                    Log.Debug("Set Flag Request CST Out");
+                    FlagRequestCSTOut = true;
+                    Log.Debug("Wait Next Conveyor Ready");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorUnloadStep.Wait_NextConveyorReady:
+                    if(FlagNextConveyorReady == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorUnloadStep.Conveyor_Run:
+                    ConveyorRunInOut(false);
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorUnloadStep.Wait_CSTOut_Done:
+                    if(IsCassetteOut && IsNextConveyorDetect)
+                    {
+                        Step.RunStep++;
+                        break;
+                    }
+                    Wait(20);
+                    break;
+                case EWorkConveyorUnloadStep.End:
+                    Log.Debug("Unload End");
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    if (port == EPort.Right)
+                    {
+                        Log.Info("Sequence In Work CST Load");
+                        Sequence = ESequence.InWorkCSTLoad;
+                        break;
+                    }
+                    Log.Info("Sequence Out Work CST Load");
+                    Sequence = ESequence.OutWorkCSTLoad;
                     break;
             }
         }

@@ -9,5 +9,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EWorkConveyorProcessInput
     {
         ROBOT_PICK_PLACE_CST_DONE,
+        NEXT_CONVEYOR_READY,
     }
 }

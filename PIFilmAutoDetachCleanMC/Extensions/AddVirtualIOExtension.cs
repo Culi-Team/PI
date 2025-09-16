@@ -22,6 +22,9 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EWorkConveyorProcessInput>>("InWorkConveyorInput");
                 services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EWorkConveyorProcessOutput>>("InWorkConveyorOutput");
 
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EBufferConveyorProcessInput>>("BufferConveyorInput");
+                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EBufferConveyorProcessOutput>>("BufferConveyorOutput");
+
                 services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EWorkConveyorProcessInput>>("OutWorkConveyorInput");
                 services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EWorkConveyorProcessOutput>>("OutWorkConveyorOutput");
 

@@ -14,6 +14,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         private readonly IDInputDevice _inConveyorInput;
         private readonly IDInputDevice _inWorkConveyorInput;
         private readonly IDOutputDevice _inWorkConveyorOutput;
+        private readonly IDInputDevice _bufferConveyorInput;
+        private readonly IDOutputDevice _bufferConveyorOutput;
         private readonly IDInputDevice _outWorkConveyorInput;
         private readonly IDOutputDevice _outWorkConveyorOutput;
         private readonly IDInputDevice _robotLoadInput;
@@ -60,6 +62,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public VirtualIO([FromKeyedServices("InConveyorInput")] IDInputDevice inConveyorInput,
                          [FromKeyedServices("InWorkConveyorInput")] IDInputDevice inWorkConveyorInput,
                          [FromKeyedServices("InWorkConveyorOutput")] IDOutputDevice inWorkConveyorOutput,
+                         [FromKeyedServices("BufferConveyorInput")] IDInputDevice bufferConveyorInput,
+                         [FromKeyedServices("BufferConveyorOutput")] IDOutputDevice bufferConveyorOutput,
                          [FromKeyedServices("OutWorkConveyorInput")] IDInputDevice outWorkConveyorInput,
                          [FromKeyedServices("OutWorkConveyorOutput")] IDOutputDevice outWorkConveyorOutput,
                          [FromKeyedServices("RobotLoadInput")] IDInputDevice robotLoadInput,
@@ -106,6 +110,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
             _inConveyorInput = inConveyorInput;
             _inWorkConveyorInput = inWorkConveyorInput;
             _inWorkConveyorOutput = inWorkConveyorOutput;
+            _bufferConveyorInput = bufferConveyorInput;
+            _bufferConveyorOutput = bufferConveyorOutput;
             _outWorkConveyorInput = outWorkConveyorInput;
             _outWorkConveyorOutput = outWorkConveyorOutput;
             _robotLoadInput = robotLoadInput;
@@ -158,6 +164,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
             _inWorkConveyorInput.Initialize();
             _inWorkConveyorOutput.Initialize();
+
+            _bufferConveyorInput.Initialize();
+            _bufferConveyorOutput.Initialize();
 
             _outWorkConveyorInput.Initialize();
             _outWorkConveyorOutput.Initialize();
@@ -226,6 +235,14 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //InWorkConveyor Input Mapping
             ((VirtualInputDevice<EWorkConveyorProcessInput>)_inWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.ROBOT_PICK_PLACE_CST_DONE,
                 _robotLoadOutput, (int)ERobotLoadProcessOutput.ROBOT_PICK_IN_CST_DONE);
+            ((VirtualInputDevice<EWorkConveyorProcessInput>)_inWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.NEXT_CONVEYOR_READY,
+                _bufferConveyorOutput, (int)EBufferConveyorProcessOutput.BUFFER_CONVEYOR_READY);
+
+            //BufferConveyor Input Mapping
+            ((VirtualInputDevice<EBufferConveyorProcessInput>)_bufferConveyorInput).Mapping((int)EBufferConveyorProcessInput.IN_WORK_CONVEYOR_REQUEST_CST_OUT,
+                _inWorkConveyorOutput, (int)EWorkConveyorProcessOutput.REQUEST_CST_OUT);
+            ((VirtualInputDevice<EBufferConveyorProcessInput>)_bufferConveyorInput).Mapping((int)EBufferConveyorProcessInput.OUT_WORK_CONVEYOR_REQUEST_CST_IN,
+                _outWorkConveyorOutput, (int)EWorkConveyorProcessOutput.REQUEST_CST_IN);
 
             //OutWorkConveyor Input Mapping
             ((VirtualInputDevice<EWorkConveyorProcessInput>)_outWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.ROBOT_PICK_PLACE_CST_DONE,

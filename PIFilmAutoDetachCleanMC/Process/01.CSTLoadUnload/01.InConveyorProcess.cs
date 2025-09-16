@@ -223,10 +223,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EInConveyorAutoRunStep.CSTDetect_Check:
-                    if (CST_Det1.Value && CST_Det2.Value)
+                    if (CST_Det2.Value && StopperCylinder.IsForward)
                     {
                         Log.Info("Sequence In Work CST Load");
                         Sequence = ESequence.InWorkCSTLoad;
+                        break;
+                    }
+                    if (CST_Det2.Value && StopperCylinder.IsBackward)
+                    {
+                        RaiseWarning((int)EWarning.InConveyor_CST_Position_Error);
                         break;
                     }
                     Step.RunStep++;
@@ -352,8 +357,23 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("In Conveyor Load Start");
                     Step.RunStep++;
                     break;
+                case EInConveyorLoadStep.Stopper_Up:
+                    Log.Debug("Stopper Up");
+                    StopperCylinder.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => StopperCylinder.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case EInConveyorLoadStep.Stopper_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Stopper Up Done");
+                    Step.RunStep++;
+                    break;
                 case EInConveyorLoadStep.CSTDetect_Check:
-                    if (CST_Det1.Value && CST_Det2.Value)
+                    if (CST_Det2.Value)
                     {
                         Step.RunStep = (int)EInConveyorLoadStep.Conveyor_Stop;
                         break;
@@ -365,7 +385,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     break;
                 case EInConveyorLoadStep.Conveyor_Run:
-                    Log.Debug("Conveyor Run");
                     ConveyorRunStop(true);
                     Step.RunStep = (int)EInConveyorLoadStep.CSTDetect_Check;
                     break;

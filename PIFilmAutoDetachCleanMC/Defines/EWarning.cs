@@ -18,6 +18,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         //InConveyor
         InConveyor = 1000,
+        InConveyor_CST_Position_Error,
 
         //InWorkConveyor
         InWorkConveyor = 2000,
@@ -25,6 +26,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         //BufferConveyor
         BufferConveyor = 3000,
+        BufferConveyor_CST_Position_Error,
 
         //OutWorkConveyor
         OutWorkConveyor = 4000,

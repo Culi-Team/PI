@@ -1,7 +1,9 @@
 ﻿using EQX.Core.Device.SpeedController;
 using EQX.Core.InOut;
 using EQX.Core.Sequence;
+using EQX.InOut;
 using EQX.Process;
+using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
@@ -20,33 +22,49 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly Devices _devices;
         private readonly CSTLoadUnloadRecipe _cstLoadUnloadRecipe;
         private readonly CommonRecipe _commonRecipe;
+        private readonly IDInputDevice _bufferConveyorInput;
+        private readonly IDOutputDevice _bufferConveyorOutput;
         #endregion
 
         #region Constructor
-        public BufferConveyorProcess(Devices devices, CSTLoadUnloadRecipe cstLoadUnloadRecipe, CommonRecipe commonRecipe)
+        public BufferConveyorProcess(Devices devices,
+            CSTLoadUnloadRecipe cstLoadUnloadRecipe,
+            CommonRecipe commonRecipe,
+            [FromKeyedServices("BufferConveyorInput")] IDInputDevice bufferConveyorInput,
+            [FromKeyedServices("BufferConveyorOutput")] IDOutputDevice bufferConveyorOutput)
         {
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
             _commonRecipe = commonRecipe;
+            _bufferConveyorInput = bufferConveyorInput;
+            _bufferConveyorOutput = bufferConveyorOutput;
         }
         #endregion
 
         #region Inputs
-        private IDInput BufferDect1 => _devices.Inputs.BufferCstDetect1;
-        private IDInput BufferDect2 => _devices.Inputs.BufferCstDetect2;
+        private IDInput BufferDetect1 => _devices.Inputs.BufferCstDetect1;
+        private IDInput BufferDetect2 => _devices.Inputs.BufferCstDetect2;
 
         #endregion
 
         #region Cylinders
         private ICylinder BufferStopper1 => _devices.Cylinders.BufferCvStopper1UpDown;
         private ICylinder BufferStopper2 => _devices.Cylinders.BufferCvStopper2UpDown;
-        private ICylinder InCvSupBuffer => _devices.Cylinders.InCvSupportBufferUpDown;
-        private ICylinder OutCvSupBuffer => _devices.Cylinders.OutCvSupportBufferUpDown;
         #endregion
 
         #region Rollers
         private ISpeedController BufferRoller1 => _devices.SpeedControllerList.BufferConveyorRoller1;
         private ISpeedController BufferRoller2 => _devices.SpeedControllerList.BufferConveyorRoller2;
+        #endregion
+
+        #region Flags
+        private bool FlagInWorkConveyorRequestCSTOut
+        {
+            get
+            {
+                return _bufferConveyorInput[(int)EBufferConveyorProcessInput.IN_WORK_CONVEYOR_REQUEST_CST_OUT];
+            }
+        }
         #endregion
 
         #region Override Method
@@ -55,11 +73,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EBufferConveyorOriginStep)Step.OriginStep)
             {
                 case EBufferConveyorOriginStep.Start:
-                    Log.Debug("Orign start");
+                    Log.Debug("Origin start");
                     Step.OriginStep++;
                     break;
                 case EBufferConveyorOriginStep.Stopper_Cylinder_Down:
-                    Log.Debug("Stopper_Cylinder_Down");
+                    Log.Debug("Stopper Down");
                     BufferStopper1.Backward();
                     BufferStopper2.Backward();
                     Wait(_commonRecipe.CylinderMoveTimeout, () => BufferStopper1.IsBackward && BufferStopper2.IsBackward);
@@ -71,7 +89,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         //Timeout ALARM
                         break;
                     }
-                    Log.Debug("Stopper Cylinder down done");
+                    Log.Debug("Stopper Cylinder Down Done");
                     Step.OriginStep++;
                     break;
                 case EBufferConveyorOriginStep.Roller_Stop:
@@ -89,6 +107,241 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
             }
             return true;
+        }
+
+        public override bool ProcessRun()
+        {
+            switch (Sequence)
+            {
+                case ESequence.Stop:
+                    break;
+                case ESequence.AutoRun:
+                    Sequence_AutoRun();
+                    break;
+                case ESequence.Ready:
+                    break;
+                case ESequence.InConveyorLoad:
+                    break;
+                case ESequence.InWorkCSTLoad:
+                    break;
+                case ESequence.InWorkCSTUnLoad:
+                    Sequence_InWorkCSTUnload();
+                    break;
+                case ESequence.CSTTilt:
+                    break;
+                case ESequence.OutWorkCSTLoad:
+                    break;
+                case ESequence.OutWorkCSTUnLoad:
+                    break;
+                case ESequence.OutConveyorUnload:
+                    break;
+                case ESequence.RobotPickFixtureFromCST:
+                    break;
+                case ESequence.RobotPlaceFixtureToVinylClean:
+                    break;
+                case ESequence.VinylClean:
+                    break;
+                case ESequence.RobotPickFixtureFromVinylClean:
+                    break;
+                case ESequence.RobotPlaceFixtureToAlign:
+                    break;
+                case ESequence.FixtureAlign:
+                    break;
+                case ESequence.RobotPickFixtureFromRemoveZone:
+                    break;
+                case ESequence.RobotPlaceFixtureToOutWorkCST:
+                    break;
+                case ESequence.TransferFixtureLoad:
+                    break;
+                case ESequence.Detach:
+                    break;
+                case ESequence.TransferFixtureUnload:
+                    break;
+                case ESequence.DetachUnload:
+                    break;
+                case ESequence.RemoveFilm:
+                    break;
+                case ESequence.GlassTransferPick:
+                    break;
+                case ESequence.GlassTransferPlace:
+                    break;
+                case ESequence.AlignGlass:
+                    break;
+                case ESequence.TransferInShuttlePick:
+                    break;
+                case ESequence.WETCleanLoad:
+                    break;
+                case ESequence.WETClean:
+                    break;
+                case ESequence.WETCleanUnload:
+                    break;
+                case ESequence.TransferRotation:
+                    break;
+                case ESequence.AFCleanLoad:
+                    break;
+                case ESequence.AFClean:
+                    break;
+                case ESequence.AFCleanUnload:
+                    break;
+                case ESequence.UnloadTransferPlace:
+                    break;
+                case ESequence.UnloadAlignGlass:
+                    break;
+                case ESequence.UnloadRobotPick:
+                    break;
+                case ESequence.UnloadRobotPlasma:
+                    break;
+                case ESequence.UnloadRobotPlace:
+                    break;
+            }
+
+            return true;
+        }
+        #endregion
+
+        #region Private Methods
+        private void Sequence_AutoRun()
+        {
+            switch ((EBufferConveyorAutoRunStep)Step.RunStep)
+            {
+                case EBufferConveyorAutoRunStep.Start:
+                    Log.Debug("Auto Run Start");
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorAutoRunStep.CSTDetect_Check:
+                    if (BufferDetect1.Value == false && BufferDetect2.Value == false)
+                    {
+                        Log.Info("Sequence In Work CST Unload");
+                        Sequence = ESequence.InWorkCSTUnLoad;
+                        break;
+                    }
+                    if (BufferDetect1.Value == true && BufferDetect2.Value == true)
+                    {
+                        Log.Info("Sequence Out Work CST Load");
+                        Sequence = ESequence.OutWorkCSTLoad;
+                        break;
+                    }
+                    if(BufferDetect1.Value == true && BufferStopper1.IsBackward)
+                    {
+                        Log.Info("Sequence In Work CST Unload");
+                        Sequence = ESequence.InWorkCSTUnLoad;
+                        break;
+                    }
+                    if(BufferDetect2.Value == true && BufferStopper2.IsBackward)
+                    {
+                        RaiseWarning((int)EWarning.BufferConveyor_CST_Position_Error);
+                        break;
+                    }
+                    break;
+                case EBufferConveyorAutoRunStep.End:
+                    break;
+            }
+        }
+
+        private void Sequence_InWorkCSTUnload()
+        {
+            switch ((EBufferConveyorInWorkCSTUnloadStep)Step.RunStep)
+            {
+                case EBufferConveyorInWorkCSTUnloadStep.Start:
+                    Log.Debug("In Work CST Unload Start");
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorInWorkCSTUnloadStep.Stopper1_Down:
+                    Log.Debug("Stopper 1 Down");
+                    BufferStopper1.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout,() => BufferStopper1.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorInWorkCSTUnloadStep.Stopper1_Down_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Stopper 1 Down Done");
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorInWorkCSTUnloadStep.Stopper2_Up:
+                    Log.Debug("Stopper 2 Up");
+                    BufferStopper2.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => BufferStopper2.IsForward);
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorInWorkCSTUnloadStep.Stopper2_Up_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Stopper 2 Up Done");
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorInWorkCSTUnloadStep.CSTDetect_Check:
+                    if(BufferDetect1.Value == true && BufferDetect2.Value == false)
+                    {
+                        Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.Conveyor_Run;
+                        break;
+                    }
+                    if (BufferDetect1.Value == true && BufferDetect2.Value == true)
+                    {
+                        Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.Conveyor_Stop;
+                        break;
+                    }
+                    if(BufferDetect1.Value == false && BufferDetect2.Value == true)
+                    {
+                        RaiseWarning((int)EWarning.BufferConveyor_CST_Position_Error);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorInWorkCSTUnloadStep.Wait_InWorkCSTRequestCSTOut:
+                    if(FlagInWorkConveyorRequestCSTOut == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorInWorkCSTUnloadStep.Conveyor_Run:
+                    ConveyorRunStop(true);
+#if SIMULATION
+                    Wait(2000);
+                    SimulationInputSetter.SetSimModbusInput(BufferDetect1,true);
+                    SimulationInputSetter.SetSimModbusInput(BufferDetect2,true);
+#endif
+                    Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.CSTDetect_Check;
+                    break;
+                case EBufferConveyorInWorkCSTUnloadStep.Conveyor_Stop:
+                    Log.Debug("Conveyor Stop");
+                    ConveyorRunStop(false);
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorInWorkCSTUnloadStep.End:
+                    Log.Debug("In Work CST Unload End");
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+                    Log.Info("Sequence Out Work CST Load");
+                    Sequence = ESequence.OutWorkCSTLoad;
+                    break;
+            }
+        }
+
+        private void ConveyorRunStop(bool bRun)
+        {
+            if(bRun)
+            {
+                BufferRoller1.Start();
+                BufferRoller2.Start();
+            }
+            else
+            {
+                BufferRoller1.Stop();
+                BufferRoller2.Stop();
+            }
         }
         #endregion
     }
