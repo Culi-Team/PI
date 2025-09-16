@@ -1,4 +1,5 @@
-﻿using EQX.Core.Device.SpeedController;
+﻿using EQX.Core.Common;
+using EQX.Core.Device.SpeedController;
 using EQX.Core.InOut;
 using EQX.Core.Sequence;
 using EQX.InOut;
@@ -23,18 +24,23 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly CSTLoadUnloadRecipe _cstLoadUnloadRecipe;
         private readonly CommonRecipe _commonRecipe;
         private readonly IDInputDevice _inConveyorInput;
+        private readonly ActionAssignableTimer _blinkTimer;
+
+        private const string InLightCurtainnMutingActionKey = "InLightCurtainMutingAction";
         #endregion
 
         #region Constructor
         public InConveyorProcess(Devices devices,
             CSTLoadUnloadRecipe cstLoadUnloadRecipe,
             CommonRecipe commonRecipe,
-            [FromKeyedServices("InConveyorInput")] IDInputDevice inConveyorInput)
+            [FromKeyedServices("InConveyorInput")] IDInputDevice inConveyorInput,
+            [FromKeyedServices("BlinkTimer")] ActionAssignableTimer blinkTimer)
         {
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
             _commonRecipe = commonRecipe;
             _inConveyorInput = inConveyorInput;
+            _blinkTimer = blinkTimer;
         }
         #endregion
 
@@ -265,6 +271,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Muting_LightCurtain:
                     Log.Debug("Disable Light Curtain");
+
+                    _blinkTimer.EnableAction(InLightCurtainnMutingActionKey,
+                        () => InMutingButtonLamp.Value = true,
+                        () => InMutingButtonLamp.Value = false);
+
                     MutingLightCurtain(true);
                     Step.RunStep++;
                     break;
@@ -273,8 +284,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     ConveyorRunStop(true);
 #if SIMULATION
                     Wait(3000);
-                    SimulationInputSetter.SetSimModbusInput(CST_Det1,false);
-                    SimulationInputSetter.SetSimModbusInput(CST_Det2,false);
+                    SimulationInputSetter.SetSimModbusInput(CST_Det1, false);
+                    SimulationInputSetter.SetSimModbusInput(CST_Det2, false);
 
                     SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect1, true);
                     SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect2, true);
@@ -293,6 +304,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Enable_LightCurtain:
                     Log.Debug("Enable Light Curtain");
+
+                    _blinkTimer.DisableAction(InLightCurtainnMutingActionKey);
+
                     MutingLightCurtain(false);
                     Step.RunStep++;
                     break;

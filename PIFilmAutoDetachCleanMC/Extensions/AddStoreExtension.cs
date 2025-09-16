@@ -14,6 +14,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             {
                 services.AddSingleton<UserStore>();
 
+                services.AddKeyedScoped("BlinkTimer", (s, o) => { return new ActionAssignableTimer(500); });
             });
 
             return hostBuilder;
