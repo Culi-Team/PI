@@ -11,6 +11,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 {
     public class VirtualIO
     {
+        private readonly IDInputDevice _inConveyorInput;
         private readonly IDInputDevice _inWorkConveyorInput;
         private readonly IDOutputDevice _inWorkConveyorOutput;
         private readonly IDInputDevice _outWorkConveyorInput;
@@ -56,7 +57,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         private readonly IDInputDevice _unloadAlignInput;
         private readonly IDOutputDevice _unloadAlignOutput;
 
-        public VirtualIO([FromKeyedServices("InWorkConveyorInput")] IDInputDevice inWorkConveyorInput,
+        public VirtualIO([FromKeyedServices("InConveyorInput")] IDInputDevice inConveyorInput,
+                         [FromKeyedServices("InWorkConveyorInput")] IDInputDevice inWorkConveyorInput,
                          [FromKeyedServices("InWorkConveyorOutput")] IDOutputDevice inWorkConveyorOutput,
                          [FromKeyedServices("OutWorkConveyorInput")] IDInputDevice outWorkConveyorInput,
                          [FromKeyedServices("OutWorkConveyorOutput")] IDOutputDevice outWorkConveyorOutput,
@@ -101,6 +103,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
                          [FromKeyedServices("UnloadAlignInput")] IDInputDevice unloadAlignInput,
                          [FromKeyedServices("UnloadAlignOutput")] IDOutputDevice unloadAlignOutput)
         {
+            _inConveyorInput = inConveyorInput;
             _inWorkConveyorInput = inWorkConveyorInput;
             _inWorkConveyorOutput = inWorkConveyorOutput;
             _outWorkConveyorInput = outWorkConveyorInput;
@@ -151,6 +154,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         public void Initialize()
         {
+            _inConveyorInput.Initialize();
+
             _inWorkConveyorInput.Initialize();
             _inWorkConveyorOutput.Initialize();
 
@@ -214,6 +219,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         public void Mappings()
         {
+            //InConveyor Input Mapping
+            ((VirtualInputDevice<EInConveyorProcessInput>)_inConveyorInput).Mapping((int)EInConveyorProcessInput.REQUEST_CST_IN,
+                _inWorkConveyorOutput, (int)EWorkConveyorProcessOutput.REQUEST_CST_IN);
+
             //InWorkConveyor Input Mapping
             ((VirtualInputDevice<EWorkConveyorProcessInput>)_inWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.ROBOT_PICK_PLACE_CST_DONE,
                 _robotLoadOutput, (int)ERobotLoadProcessOutput.ROBOT_PICK_IN_CST_DONE);

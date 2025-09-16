@@ -2,6 +2,7 @@
 using EQX.Core.InOut;
 using EQX.Core.Sequence;
 using EQX.Process;
+using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
@@ -20,29 +21,44 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly Devices _devices;
         private readonly CSTLoadUnloadRecipe _cstLoadUnloadRecipe;
         private readonly CommonRecipe _commonRecipe;
+        private readonly IDInputDevice _inConveyorInput;
         #endregion
 
         #region Constructor
-        public InConveyorProcess(Devices devices, CSTLoadUnloadRecipe cstLoadUnloadRecipe, CommonRecipe commonRecipe)
+        public InConveyorProcess(Devices devices,
+            CSTLoadUnloadRecipe cstLoadUnloadRecipe,
+            CommonRecipe commonRecipe,
+            [FromKeyedServices("InConveyorInput")] IDInputDevice inConveyorInput)
         {
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
             _commonRecipe = commonRecipe;
+            _inConveyorInput = inConveyorInput;
         }
         #endregion
 
         #region Inputs
         private IDInput CST_Det1 => _devices.Inputs.InCstDetect1;
         private IDInput CST_Det2 => _devices.Inputs.InCstDetect2;
-        private IDInput InButton1 => _devices.Inputs.InButton1;
-        private IDInput InButton2 => _devices.Inputs.InButton2;
+        private IDInput InCompleteButton => _devices.Inputs.InCompleteButton;
+        private IDInput InMutingButton => _devices.Inputs.InMutingButton;
         #endregion
 
         #region Outputs
-        private IDOutput InButton1Lamp => _devices.Outputs.InButtonLamp1;
-        private IDOutput InButton2Lamp => _devices.Outputs.InButtonLamp2;
+        private IDOutput InCompleteButtonLamp => _devices.Outputs.InCompleteButtonLamp;
+        private IDOutput InMutingButtonLamp => _devices.Outputs.InMutingButtonLamp;
         private IDOutput InCstMutingLightCurtain1 => _devices.Outputs.InCstLightCurtainMuting1;
         private IDOutput InCstMutingLightCurtain2 => _devices.Outputs.InCstLightCurtainMuting2;
+        #endregion
+
+        #region Flags
+        private bool FlagInWorkCSTRequestCSTIn
+        {
+            get
+            {
+                return _inConveyorInput[(int)EInConveyorProcessInput.REQUEST_CST_IN];
+            }
+        }
         #endregion
 
         #region Cylinders
@@ -95,6 +111,178 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
             }
             return true;
+        }
+
+        public override bool ProcessRun()
+        {
+            switch (Sequence)
+            {
+                case ESequence.Stop:
+                    break;
+                case ESequence.AutoRun:
+                    Sequence_AutoRun();
+                    break;
+                case ESequence.Ready:
+                    break;
+                case ESequence.InConveyorLoad:
+                    break;
+                case ESequence.InWorkCSTLoad:
+                    Sequence_InWorkCSTLoad();
+                    break;
+                case ESequence.InWorkCSTUnLoad:
+                    break;
+                case ESequence.CSTTilt:
+                    break;
+                case ESequence.OutWorkCSTLoad:
+                    break;
+                case ESequence.OutWorkCSTUnLoad:
+                    break;
+                case ESequence.OutConveyorUnload:
+                    break;
+                case ESequence.RobotPickFixtureFromCST:
+                    break;
+                case ESequence.RobotPlaceFixtureToVinylClean:
+                    break;
+                case ESequence.VinylClean:
+                    break;
+                case ESequence.RobotPickFixtureFromVinylClean:
+                    break;
+                case ESequence.RobotPlaceFixtureToAlign:
+                    break;
+                case ESequence.FixtureAlign:
+                    break;
+                case ESequence.RobotPickFixtureFromRemoveZone:
+                    break;
+                case ESequence.RobotPlaceFixtureToOutWorkCST:
+                    break;
+                case ESequence.TransferFixtureLoad:
+                    break;
+                case ESequence.Detach:
+                    break;
+                case ESequence.TransferFixtureUnload:
+                    break;
+                case ESequence.DetachUnload:
+                    break;
+                case ESequence.RemoveFilm:
+                    break;
+                case ESequence.GlassTransferPick:
+                    break;
+                case ESequence.GlassTransferPlace:
+                    break;
+                case ESequence.AlignGlass:
+                    break;
+                case ESequence.TransferInShuttlePick:
+                    break;
+                case ESequence.WETCleanLoad:
+                    break;
+                case ESequence.WETClean:
+                    break;
+                case ESequence.WETCleanUnload:
+                    break;
+                case ESequence.TransferRotation:
+                    break;
+                case ESequence.AFCleanLoad:
+                    break;
+                case ESequence.AFClean:
+                    break;
+                case ESequence.AFCleanUnload:
+                    break;
+                case ESequence.UnloadTransferPlace:
+                    break;
+                case ESequence.UnloadAlignGlass:
+                    break;
+                case ESequence.UnloadRobotPick:
+                    break;
+                case ESequence.UnloadRobotPlasma:
+                    break;
+                case ESequence.UnloadRobotPlace:
+                    break;
+                default:
+                    break;
+            }
+
+            return true;
+        }
+        #endregion
+
+        #region Private Methods
+        private void Sequence_AutoRun()
+        {
+            switch ((EInConveyorAutoRunStep)Step.RunStep)
+            {
+                case EInConveyorAutoRunStep.Start:
+                    Log.Debug("Auto Run Start");
+                    Step.RunStep++;
+                    break;
+                case EInConveyorAutoRunStep.CSTDetect_Check:
+                    if(CST_Det1.Value && CST_Det2.Value)
+                    {
+                        Log.Info("Sequence In Work CST Load");
+                        Sequence = ESequence.InWorkCSTLoad;
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EInConveyorAutoRunStep.End:
+                    Log.Info("Sequence In Conveyor Load");
+                    Sequence = ESequence.InConveyorLoad;
+                    break;
+            }
+        }
+
+        private void Sequence_InWorkCSTLoad()
+        {
+            switch ((EInWorkConveyorProcessInWorkCSTLoadStep)Step.RunStep)
+            {
+                case EInWorkConveyorProcessInWorkCSTLoadStep.Start:
+                    Log.Debug("In Work CST Load Start");
+                    Step.RunStep++;
+                    break;
+                case EInWorkConveyorProcessInWorkCSTLoadStep.Wait_InWorkCSTRequestLoad:
+                    if(FlagInWorkCSTRequestCSTIn == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Down:
+                    Log.Debug("Stopper Down");
+                    StopperCylinder.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => StopperCylinder.IsForward);
+                    Step.RunStep++;
+                    break;
+                case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Down_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Stopper Down Done");
+                    Step.RunStep++;
+                    break;
+                case EInWorkConveyorProcessInWorkCSTLoadStep.Muting_LightCurtain:
+                    Log.Debug("Disable Light Curtain");
+                    MutingLightCurtain(true);
+                    Step.RunStep++;
+                    break;
+                case EInWorkConveyorProcessInWorkCSTLoadStep.Conveyor_Run:
+                    break;
+                case EInWorkConveyorProcessInWorkCSTLoadStep.Wait_InWorkCSTLoadDone:
+                    break;
+                case EInWorkConveyorProcessInWorkCSTLoadStep.Enable_LightCurtain:
+                    break;
+                case EInWorkConveyorProcessInWorkCSTLoadStep.Conveyor_Stop:
+                    break;
+                case EInWorkConveyorProcessInWorkCSTLoadStep.End:
+                    break;
+            }
+        }
+
+        private void MutingLightCurtain(bool bOnOff)
+        {
+            InCstMutingLightCurtain1.Value = bOnOff;
+            InCstMutingLightCurtain2.Value = bOnOff;
         }
         #endregion
     }

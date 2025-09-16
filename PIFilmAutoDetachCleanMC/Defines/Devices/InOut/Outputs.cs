@@ -64,10 +64,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput OutCvSupportBufferDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CV_SUPPORT_BUFFER_DOWN);
         public IDOutput OutCvSupportUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CV_SUPPORT_UP);
         public IDOutput OutCvSupportDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CV_SUPPORT_DOWN);
-        public IDOutput InButtonLamp1 => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_BUTTON_LAMP_1);
-        public IDOutput InButtonLamp2 => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_BUTTON_LAMP_2);
-        public IDOutput OutButtonLamp1 => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_BUTTON_LAMP_1);
-        public IDOutput OutButtonLamp2 => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_BUTTON_LAMP_2);
+        public IDOutput InCompleteButtonLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_COMPLETE_BUTTON_LAMP);
+        public IDOutput InMutingButtonLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_MUTING_BUTTON_LAMP);
+        public IDOutput OutCompleteButtonLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_COMPLETE_BUTTON_LAMP);
+        public IDOutput OutMutingButtonLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_MUTING_BUTTON_LAMP);
         public IDOutput InCstLightCurtainReset => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_LIGHT_CURTAIN_RESET);
         public IDOutput OutCstLightCurtainReset => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_LIGHT_CURTAIN_RESET);
         public IDOutput InCstLightCurtainMuting1 => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_LIGHT_CURTAIN_MUTING_1);

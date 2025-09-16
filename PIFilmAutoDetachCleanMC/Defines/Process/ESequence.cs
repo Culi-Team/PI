@@ -9,6 +9,7 @@
 
         AutoRun,
         Ready,
+        InConveyorLoad,
 
         InWorkCSTLoad,
         InWorkCSTUnLoad,
@@ -18,6 +19,7 @@
         OutWorkCSTLoad,
         OutWorkCSTUnLoad,
 
+        OutConveyorUnload,
         RobotPickFixtureFromCST,
         RobotPlaceFixtureToVinylClean,
         VinylClean,

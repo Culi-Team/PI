@@ -251,6 +251,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.Ready:
                     break;
+                case ESequence.InConveyorLoad:
+                    break;
                 case ESequence.InWorkCSTLoad:
                     Sequence_Load();
                     break;
@@ -263,6 +265,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_Load();
                     break;
                 case ESequence.OutWorkCSTUnLoad:
+                    break;
+                case ESequence.OutConveyorUnload:
                     break;
                 case ESequence.RobotPickFixtureFromCST:
                     Sequence_PickPlace();
@@ -326,7 +330,9 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
             return true;
         }
+        #endregion
 
+        #region Private Methods
         private void Sequence_AutoRun()
         {
             switch ((EWorkConveyorAutoRunStep)Step.RunStep)
@@ -583,6 +589,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Clear Flag Request Cassette In");
+                    FlagRequestCSTIn = false;
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Conveyor_Stop:
