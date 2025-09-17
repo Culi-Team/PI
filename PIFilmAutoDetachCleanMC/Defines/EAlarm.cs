@@ -150,8 +150,26 @@
         WETCleanRight_YAxis_MoveUnloadPosition_Fail,
         WETCleanRight_TAxis_MoveUnloadPosition_Fail,
 
+        //Transfer Rotation Left
+        TransferRotationLeft = 19000,
+        TransferRotationLeft_ZAxis_Origin_Fail,
+        TransferRotationLeft_ZAxis_MoveReadyPosition_Fail,
+        TransferRotationLeft_ZAxis_MovePickPosition_Fail,
+        TransferRotationLeft_ZAxis_Move_TransferBeforeRotatePosition_Fail,
+        TransferRotationLeft_ZAxis_Move_TransferAfterRotatePosition_Fail,
+        TransferRotationLeft_ZAxis_MovePlacePosition_Fail,
+
+        //Transfer Rotation Right
+        TransferRotationRight = 20000,
+        TransferRotationRight_ZAxis_Origin_Fail,
+        TransferRotationRight_ZAxis_MoveReadyPosition_Fail,
+        TransferRotationRight_ZAxis_MovePickPosition_Fail,
+        TransferRotationRight_ZAxis_Move_TransferBeforeRotatePosition_Fail,
+        TransferRotationRight_ZAxis_Move_TransferAfterRotatePosition_Fail,
+        TransferRotationRight_ZAxis_MovePlacePosition_Fail,
+
         //AF Clean Left
-        AFCleanLeft = 19000,
+        AFCleanLeft = 21000,
         AFCleanLeft_XAxis_Origin_Fail,
         AFCleanLeft_YAxis_Origin_Fail,
         AFCleanLeft_TAxis_Origin_Fail,
@@ -172,7 +190,7 @@
         AFCleanLeft_TAxis_MoveUnloadPosition_Fail,
 
         //AF Clean Right
-        AFCleanRight = 20000,
+        AFCleanRight = 22000,
         AFCleanRight_XAxis_Origin_Fail,
         AFCleanRight_YAxis_Origin_Fail,
         AFCleanRight_TAxis_Origin_Fail,
@@ -193,15 +211,15 @@
         AFCleanRight_TAxis_MoveUnloadPosition_Fail,
 
         //Unload Glass Left
-        UnloadGlassLeft = 21000,
+        UnloadGlassLeft = 23000,
 
         //Unload Glass Right
-        UnloadGlassRight = 22000,
+        UnloadGlassRight = 24000,
 
         //Unload Align
-        UnloadAlign = 23000,
+        UnloadAlign = 25000,
 
         //Robot Unload
-        RobotUnload = 24000,
+        RobotUnload = 26000,
     }
 }

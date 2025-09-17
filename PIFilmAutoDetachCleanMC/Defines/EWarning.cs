@@ -156,30 +156,53 @@ namespace PIFilmAutoDetachCleanMC.Defines
         WETCleanRight_FeedingRoller_NotDetect,
         WETCleanRight_WiperClean_NotDetect,
 
+        //Transfer Rotation Left
+        TransferRotationLeft = 19000,
+        TransferRotationLeft_Cylinder_Backward_Fail,
+        TransferRotationLeft_Cylinder_Forward_Fail,
+        TransferRotationLeft_RotationCylinder_0D_Fail,
+        TransferRotationLeft_RotationCylinder_180D_Fail,
+        TransferRotationLeft_Cylinder_Up_Fail,
+        TransferRotationLeft_Cylinder_Down_Fail,
+        TransferRotationLeft_RotateVac_Check_Fail,
+        TransferRotationLeft_GlassVacAfterRotate_Check_Fail,
+
+
+        //Transfer Rotation Right
+        TransferRotationRight = 20000,
+        TransferRotationRight_Cylinder_Backward_Fail,
+        TransferRotationRight_Cylinder_Forward_Fail,
+        TransferRotationRight_RotationCylinder_0D_Fail,
+        TransferRotationRight_RotationCylinder_180D_Fail,
+        TransferRotationRight_Cylinder_Up_Fail,
+        TransferRotationRight_Cylinder_Down_Fail,
+        TransferRotationRight_RotateVac_Check_Fail,
+        TransferRotationRight_GlassVacAfterRotate_Check_Fail,
+
         //AF Clean Left
-        AFCleanLeft = 19000,
+        AFCleanLeft = 21000,
         AFCleanLeft_PusherCylinder_Up_Fail,
         AFCleanLeft_PusherCylinder_Down_Fail,
         AFCleanLeft_FeedingRoller_NotDetect,
         AFCleanLeft_WiperClean_NotDetect,
 
         //AF Clean Right
-        AFCleanRight = 20000,
+        AFCleanRight = 22000,
         AFCleanRight_PusherCylinder_Up_Fail,
         AFCleanRight_PusherCylinder_Down_Fail,
         AFCleanRight_FeedingRoller_NotDetect,
         AFCleanRight_WiperClean_NotDetect,
 
         //Unload Glass Left
-        UnloadGlassLeft = 21000,
+        UnloadGlassLeft = 23000,
 
         //Unload Glass Right
-        UnloadGlassRight = 22000,
+        UnloadGlassRight = 24000,
 
         //Unload Align
-        UnloadAlign = 23000,
+        UnloadAlign = 25000,
 
         //Robot Unload
-        RobotUnload = 24000,
+        RobotUnload = 26000,
     }
 }

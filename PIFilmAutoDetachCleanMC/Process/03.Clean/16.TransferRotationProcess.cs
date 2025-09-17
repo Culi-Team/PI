@@ -177,7 +177,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationOriginStep.ZAxis_Origin_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferRotationLeft_ZAxis_Origin_Fail :
+                                                        EAlarm.TransferRotationRight_ZAxis_Origin_Fail));
                         break;
                     }
                     Log.Debug("Z Axis Origin Done");
@@ -192,7 +193,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationOriginStep.TransferRotation_Cyl_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_Cylinder_Backward_Fail :
+                                                          EWarning.TransferRotationRight_Cylinder_Backward_Fail));
                         break;
                     }
                     Log.Debug("Transfer Rotation Cylinder Backward Done");
@@ -207,7 +209,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationOriginStep.TransferRotation_0Degree_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_RotationCylinder_0D_Fail :
+                                                          EWarning.TransferRotationRight_RotationCylinder_0D_Fail));
                         break;
                     }
                     Log.Debug("Transfer Rotation to 0 Degree Done");
@@ -330,7 +333,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationProcessToRunStep.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferRotationLeft_ZAxis_MoveReadyPosition_Fail :
+                                                        EAlarm.TransferRotationLeft_ZAxis_MoveReadyPosition_Fail));
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");
@@ -345,7 +349,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationProcessToRunStep.Cyl_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_Cylinder_Up_Fail :
+                                                          EWarning.TransferRotationRight_Cylinder_Up_Fail));
                         break;
                     }
                     Log.Debug("Cylinder Up Done");
@@ -432,7 +437,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationWETCleanUnloadStep.ZAxis_Move_PickPositionWait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferRotationLeft_ZAxis_MovePickPosition_Fail :
+                                                        EAlarm.TransferRotationRight_ZAxis_MovePickPosition_Fail));
                         break;
                     }
                     Log.Debug("Z Axis Move Pick Position Done");
@@ -464,7 +470,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationWETCleanUnloadStep.ZAxis_Move_ReadyPositionWait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferRotationLeft_ZAxis_MoveReadyPosition_Fail :
+                                                        EAlarm.TransferRotationRight_ZAxis_MoveReadyPosition_Fail));
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Positon Done");
@@ -518,22 +525,24 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationStep.TransferCyl_Forward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_Cylinder_Forward_Fail :
+                                                          EWarning.TransferRotationRight_Cylinder_Forward_Fail));
                         break;
                     }
                     Log.Debug("Transfer Cylinder Forward Done");
                     Step.RunStep++;
                     break;
-                case ETransferRotationStep.ZAxis_Move_TransferBeforeRotatePositon:
+                case ETransferRotationStep.ZAxis_Move_TransferBeforeRotatePosition:
                     Log.Debug("Z Axis Move Transfer Before Rotate Position");
                     ZAxis.MoveAbs(ZAxisTransferBeforeRotatePosition);
                     Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisTransferBeforeRotatePosition));
                     Step.RunStep++;
                     break;
-                case ETransferRotationStep.ZAxis_Move_TransferBeforeRotatePositon_Wait:
+                case ETransferRotationStep.ZAxis_Move_TransferBeforeRotatePosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferRotationLeft_ZAxis_Move_TransferBeforeRotatePosition_Fail :
+                                                        EAlarm.TransferRotationRight_ZAxis_Move_TransferBeforeRotatePosition_Fail));
                         break;
                     }
                     Log.Debug("Z Axis Move Transfer Before Rotate Position Done");
@@ -560,22 +569,23 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationStep.GlassRotVac_On_Check:
                     if (GlassRotVac.Value == false)
                     {
-                        //ALARM
-                        Wait(10);
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_RotateVac_Check_Fail :
+                                                          EWarning.TransferRotationRight_RotateVac_Check_Fail));
                         break;
                     }
                     Step.RunStep++;
                     break;
-                case ETransferRotationStep.ZAxis_Move_ReadyPositon:
+                case ETransferRotationStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(ZAxisReadyPosition);
                     Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisReadyPosition));
                     Step.RunStep++;
                     break;
-                case ETransferRotationStep.ZAxis_Move_ReadyPositon_Wait:
+                case ETransferRotationStep.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferRotationLeft_ZAxis_MoveReadyPosition_Fail :
+                                                        EAlarm.TransferRotationRight_ZAxis_MoveReadyPosition_Fail));
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");
@@ -590,7 +600,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationStep.Cyl_Rotate_180D_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_RotationCylinder_180D_Fail :
+                                                          EWarning.TransferRotationRight_RotationCylinder_180D_Fail));
                         break;
                     }
                     Log.Debug("Cylinder Rotate 180 Degree Done");
@@ -605,7 +616,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationStep.Cyl_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_Cylinder_Down_Fail :
+                                                          EWarning.TransferRotationRight_Cylinder_Down_Fail));
                         break;
                     }
                     Log.Debug("Cylinder Down Done");
@@ -620,7 +632,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationStep.ZAxis_Move_TransferAfterRotatePositon_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferRotationLeft_ZAxis_Move_TransferAfterRotatePosition_Fail :
+                                                        EAlarm.TransferRotationRight_ZAxis_Move_TransferAfterRotatePosition_Fail));
                         break;
                     }
                     Log.Debug("Z Axis Move Transfer After Rotate Position Done");
@@ -647,7 +660,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationStep.GlassVac2_On_Check:
                     if (GlassVac2.Value == false)
                     {
-                        //ALARM
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_GlassVacAfterRotate_Check_Fail :
+                                                          EWarning.TransferRotationRight_GlassVacAfterRotate_Check_Fail));
                         break;
                     }
                     Step.RunStep++;
@@ -661,7 +675,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationStep.Cyl_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_Cylinder_Backward_Fail :
+                                                          EWarning.TransferRotationRight_Cylinder_Backward_Fail));
                         break;
                     }
                     Log.Debug("Cylinder Backward Done");
@@ -713,7 +728,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationAFCleanLoad.ZAxis_Move_PlacePosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferRotationLeft_ZAxis_MovePlacePosition_Fail :
+                                                        EAlarm.TransferRotationRight_ZAxis_MovePlacePosition_Fail));
                         break;
                     }
                     Log.Debug("Z Axis Move Place Position Done");
@@ -737,7 +753,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationAFCleanLoad.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferRotationLeft_ZAxis_MoveReadyPosition_Fail :
+                                                        EAlarm.TransferRotationRight_ZAxis_MoveReadyPosition_Fail));
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");
