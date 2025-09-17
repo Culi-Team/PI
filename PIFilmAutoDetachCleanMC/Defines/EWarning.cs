@@ -117,6 +117,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         //Glass Transfer
         GlassTransfer = 12000,
+        GlassTransfer_UpDownCylinder_Up_Fail,
+        GlassTransfer_UpDownCylinder_Down_Fail,
 
         //Align Glass Left
         AlignGlassLeft = 13000,

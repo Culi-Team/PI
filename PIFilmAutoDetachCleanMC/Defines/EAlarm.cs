@@ -68,6 +68,12 @@
 
         //Glass Transfer
         GlassTransfer = 12000,
+        GlassTransfer_YAxis_MoveReadyPosition_Fail,
+        GlassTransfer_ZAxis_MoveReadyPosition_Fail,
+        GlassTransfer_YAxis_MovePickPosition_Fail,
+        GlassTransfer_ZAxis_MovePickPosition_Fail,
+        GlassTransfer_YAxis_MovePlacePosition_Fail,
+        GlassTransfer_ZAxis_MovePlacePosition_Fail,
 
         //Align Glass Left
         AlignGlassLeft = 13000,

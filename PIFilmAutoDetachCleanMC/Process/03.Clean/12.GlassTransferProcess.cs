@@ -453,7 +453,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPickStep.Cyl_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.GlassTransfer_UpDownCylinder_Down_Fail);
                         break;
                     }
                     Log.Debug("Cylinder Down Done");
@@ -468,7 +468,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPickStep.YAxis_MovePickPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.GlassTransfer_YAxis_MovePickPosition_Fail);
                         break;
                     }
                     Log.Debug("Y Axis Move Pick Position Done");
@@ -483,7 +483,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPickStep.ZAxis_MovePickPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.GlassTransfer_ZAxis_MovePickPosition_Fail);
                         break;
                     }
                     Log.Debug("Z Axis Move Pick Position Done");
@@ -504,7 +504,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPickStep.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.GlassTransfer_ZAxis_MoveReadyPosition_Fail);
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");
@@ -519,7 +519,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPickStep.YAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.GlassTransfer_YAxis_MoveReadyPosition_Fail);
                         break;
                     }
                     Log.Debug("Y Axis Move Ready Position Done");
@@ -534,7 +534,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPickStep.Cyl_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.GlassTransfer_UpDownCylinder_Up_Fail);
                         break;
                     }
                     Log.Debug("Cylinder Up Done");
@@ -604,7 +604,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPlaceStep.YAxis_Move_PlacePosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.GlassTransfer_YAxis_MovePlacePosition_Fail);
                         break;
                     }
                     Log.Debug("Y Axis Move Place Position Done");
@@ -619,7 +619,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPlaceStep.Cyl_Down_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.GlassTransfer_UpDownCylinder_Down_Fail);
                         break;
                     }
                     Log.Debug("Cylinder Down Done");
@@ -634,7 +634,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPlaceStep.ZAxis_Move_PlacePosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.GlassTransfer_ZAxis_MovePlacePosition_Fail);
                         break;
                     }
                     Log.Debug("Z Axis Move Place Position Done");
@@ -655,7 +655,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPlaceStep.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.GlassTransfer_ZAxis_MoveReadyPosition_Fail);
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");
@@ -670,7 +670,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPlaceStep.Cyl_Up_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.GlassTransfer_UpDownCylinder_Up_Fail);
                         break;
                     }
                     Log.Debug("Cylinder Up Done");
@@ -685,7 +685,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPlaceStep.YAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.GlassTransfer_YAxis_MoveReadyPosition_Fail);
                         break;
                     }
                     Log.Debug("Y Axis Move Ready Position Done");
