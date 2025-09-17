@@ -72,7 +72,8 @@
                     Command="{Binding IOMonitoringNavigate}"
                     Background="LightBlue" />
             <Button Content="Initialize"
-                    Background="LightBlue" />
+                    Background="LightBlue"
+                    Command="{Binding InitializeNavigate}"/>
             <Button Content="Origin"
                     Background="LightBlue"
                     Command="{Binding OriginCommand}" />
