@@ -9,8 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EGlassAlignGlassTransferPlaceStep
     {
         Start,
-        Cyl_UnAlign,
-        Cyl_UnAlign_Wait,
+        Cyl_Align_Down,
+        Cyl_Align_Down_Wait,
         Set_FlagRequestGlass,
         Wait_GlassTransferPlace_Done,
         End

@@ -161,19 +161,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Origin Start");
                     Step.OriginStep++;
                     break;
-                case EGlassAlignOriginStep.Cyl_UnAlign:
-                    Log.Debug("Cylinder UnAlign");
+                case EGlassAlignOriginStep.Cyl_Align_Down:
+                    Log.Debug("Cylinder Align Down");
                     AlignUnAlign(false);
                     Wait(_commonRecipe.CylinderMoveTimeout, () => IsUnalign);
                     Step.OriginStep++;
                     break;
-                case EGlassAlignOriginStep.Cyl_UnAlign_Wait:
+                case EGlassAlignOriginStep.Cyl_Align_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_AlignCylinder_Down_Fail :
+                                                          EWarning.GlassAlignRight_AlignCylinder_Down_Fail));
                         break;
                     }
-                    Log.Debug("Cylinder UnAlign Done");
+                    Log.Debug("Cylinder Align Down Done");
                     Step.OriginStep++;
                     break;
                 case EGlassAlignOriginStep.End:
@@ -356,19 +357,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                     FlagGlassAlignPlaceDoneReceived = false;
                     Step.RunStep++;
                     break;
-                case EGlassAlignGlassTransferPlaceStep.Cyl_UnAlign:
-                    Log.Debug("Cylinder UnAlign");
+                case EGlassAlignGlassTransferPlaceStep.Cyl_Align_Down:
+                    Log.Debug("Cylinder Align Down");
                     AlignUnAlign(false);
                     Wait(_commonRecipe.CylinderMoveTimeout,() => IsUnalign);
                     Step.RunStep++;
                     break;
-                case EGlassAlignGlassTransferPlaceStep.Cyl_UnAlign_Wait:
+                case EGlassAlignGlassTransferPlaceStep.Cyl_Align_Down_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_AlignCylinder_Down_Fail :
+                                                          EWarning.GlassAlignRight_AlignCylinder_Down_Fail));
                         break;
                     }
-                    Log.Debug("Cylinder UnAlign Done");
+                    Log.Debug("Cylinder Align Down Done");
                     Step.RunStep++;
                     break;
                 case EGlassAlignGlassTransferPlaceStep.Set_FlagRequestGlass:
@@ -422,8 +424,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Wait(_commonRecipe.VacDelay, () => IsVacDetect);
                     Step.RunStep++;
                     break;
-                case EGlassAlignStep.Cyl_Align:
-                    Log.Debug("Cylinder Align");
+                case EGlassAlignStep.Cyl_Align_Up:
+                    Log.Debug("Cylinder Align Up");
                     AlignUnAlign(true);
 #if SIMULATION
                     SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac1 : _devices.Inputs.AlignStageRVac1, false);
@@ -433,13 +435,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Wait(_commonRecipe.CylinderMoveTimeout, () => IsAlign);
                     Step.RunStep++;
                     break;
-                case EGlassAlignStep.Cyl_Align_Wait:
+                case EGlassAlignStep.Cyl_Align_Up_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_AlignCylinder_Up_Fail : EWarning.GlassAlignRight_AlignCylinder_Up_Fail));
                         break;
                     }
-                    Log.Debug("Cylinder Align Done");
+                    Log.Debug("Cylinder Align Up Done");
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Vacuum_Off:
@@ -450,13 +452,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect2 : _devices.Inputs.AlignStageRGlassDetect2, true);
                     SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect3 : _devices.Inputs.AlignStageRGlassDetect3, true);
 #endif
-                    Wait(_commonRecipe.VacDelay,() => IsGlassDetect);
+                    Wait(_commonRecipe.VacDelay);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Wait_GlassDetect:
-                    if(WaitTimeOutOccurred)
+                    if (IsGlassDetect == false)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_GlassNotDetect : EWarning.GlassAlignRight_GlassNotDetect));
                         break;
                     }
 #if SIMULATION
@@ -473,19 +475,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Wait(_commonRecipe.VacDelay, () => IsVacDetect);
                     Step.RunStep++;
                     break;
-                case EGlassAlignStep.Cyl_UnAlign:
-                    Log.Debug("Cylinder UnAlign");
+                case EGlassAlignStep.Cyl_Align_Down:
+                    Log.Debug("Cylinder Align Down");
                     AlignUnAlign(false);
                     Wait(_commonRecipe.CylinderMoveTimeout, () => IsUnalign);
                     Step.RunStep++;
                     break;
-                case EGlassAlignStep.Cyl_UnAlign_Wait:
+                case EGlassAlignStep.Cyl_Align_Down_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_AlignCylinder_Down_Fail : EWarning.GlassAlignRight_AlignCylinder_Down_Fail));
                         break;
                     }
-                    Log.Debug("Cylinder UnAlign Done");
+                    Log.Debug("Cylinder Align Down Done");
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.End:

@@ -9,8 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EGlassAlignOriginStep
     {
         Start,
-        Cyl_UnAlign,
-        Cyl_UnAlign_Wait,
+        Cyl_Align_Down,
+        Cyl_Align_Down_Wait,
         End
     }
 }
