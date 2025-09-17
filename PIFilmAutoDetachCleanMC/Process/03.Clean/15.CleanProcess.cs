@@ -399,27 +399,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagCleanLoading
-        {
-            set
-            {
-                if (cleanType == EClean.AFCleanLeft || cleanType == EClean.AFCleanRight)
-                {
-                    Outputs[(int)ECleanProcessOutput.AF_CLEAN_LOADING] = value;
-                }
-            }
-        }
-
-        private bool FlagCleanUnloading
-        {
-            set
-            {
-                if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
-                {
-                    Outputs[(int)ECleanProcessOutput.WET_CLEAN_UNLOADING] = value;
-                }
-            }
-        }
         #endregion
 
         #region Constructor
@@ -793,8 +772,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                             break;
                         }
                     }
-                    Log.Debug("Set Flag Loading");
-                    FlagCleanLoading = true;
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.AxisMoveLoadPosition:
@@ -852,9 +829,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("X Y T Axis Move Load Position Done");
-
-                    Log.Debug("Clear Flag Unloading");
-                    FlagCleanUnloading = false;
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.Set_FlagCleanRequestLoad:
@@ -1013,7 +987,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     _devices.MotionsAjin.CleanHorizontal(cleanType, XAxisCleanHorizontalPosition, YAxisCleanHorizontalPosition, 50, 10, cleanRecipe.CleanHorizontalCount);
                     Wait(_commonRecipe.MotionMoveTimeOut, () => _devices.MotionsAjin.IsContiMotioning(cleanType) == false);
 #else
-                    Wait(3000);
+                    Thread.Sleep(3000);
 #endif
                     Step.RunStep++;
                     break;
@@ -1238,9 +1212,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                             break;
                         }
                     }
-
-                    Log.Debug("Set Flag Unloading");
-                    FlagCleanUnloading = true;
                     Step.RunStep++;
                     break;
                 case ECleanProcessUnloadStep.AxisMoveUnloadPosition:
@@ -1300,9 +1271,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("X Y T Axis Move Unload Position Done");
-
-                    Log.Debug("Clear Flag Loading");
-                    FlagCleanLoading = false;
                     Step.RunStep++;
                     break;
                 case ECleanProcessUnloadStep.Vacuum_Off:
