@@ -49,9 +49,19 @@
         //Transfer Fixture
         TransferFixture = 9000,
         TransferFixtureOriginFixtureDetect = 9001,
+        TransferFixture_YAxis_MoveLoadPosition_Fail,
+        TransferFixture_YAxis_MoveUnloadPosition_Fail,
 
         //Detach
         Detach = 10000,
+        Detach_ShuttleTransferZAxis_MoveReadyPosition_Fail,
+        Detach_ShuttleTransferXAxis_MoveDetachCheckPosition_Fail,
+        Detach_ShuttleTransferXAxis_MoveUnloadPosition_Fail,
+        Detach_ShuttleTransferZAxis_MoveUnloadPosition_Fail,
+        Detach_ShuttleTransferXAxis_MoveDetachPosition_Fail,
+        Detach_ZAxis_MoveDetachReadyPosition_Fail,
+        Detach_ZAxis_MoveDetachPosition1_Fail,
+        Detach_ZAxis_MoveDetachPosition2_Fail,
 
         //Remove Film
         RemoveFilm = 11000,

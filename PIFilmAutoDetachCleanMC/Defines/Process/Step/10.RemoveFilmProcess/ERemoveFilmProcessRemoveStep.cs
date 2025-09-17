@@ -9,8 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ERemoveFilmProcessRemoveStep
     {
         Start,
-        Align_Fixture,
-        Align_Fixture_Wait,
+        Fix_Cyl_Forward,
+        Fix_Cyl_Forward_Wait,
         Cyl_Transfer_Forward,
         Cyl_Transfer_Forward_Wait,
         Pusher_Cyl_1_Up,

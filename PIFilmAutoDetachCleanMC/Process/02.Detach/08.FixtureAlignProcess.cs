@@ -329,7 +329,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EFixtureAlignStep.Cyl_Align_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.FixtureAlign_AlignCylinder_Forward_Fail);
                         break;
                     }
                     Log.Debug("Align Fixture Done");
@@ -365,7 +365,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EFixtureAlignStep.Cyl_UnAlign_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.FixtureAlign_AlignCylinder_Backward_Fail);
                         break;
                     }
                     Log.Debug("UnAlign Fixture Done");

@@ -40,6 +40,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
         ZAxis_Move_ReadyPosition,
         ZAxis_Move_ReadyPosition_Wait,
 
+        Cyl_Detach1_Up,
+        Cyl_Detach1_Up_Wait,
+
+        Cyl_Detach2_Up,
+        Cyl_Detach2_Up_Wait,
+
         Cyl_Fix_Backward,
         Cyl_Fix_Backward_Wait,
 

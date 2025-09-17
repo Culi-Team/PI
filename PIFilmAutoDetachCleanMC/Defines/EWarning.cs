@@ -58,6 +58,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
         //VinylClean
         VinylClean = 6000,
         VinylCleanFixtureNotDetect,
+        VinylClean_FixtureCylinder_Clamp_Fail,
+        VinylClean_FixtureCylinder_UnClamp_Fail,
+        VinylClean_PusherCylinder_Up_Fail,
+        VinylClean_PusherCylinder_Down_Fail,
+        VinylClean_RollerBwFwCylinder_Backward_Fail,
+        VinylClean_RollerBwFwCylinder_Forward_Fail,
 
         //Robot Load
         RobotLoad = 7000,
@@ -71,17 +77,43 @@ namespace PIFilmAutoDetachCleanMC.Defines
         FixtureAlignTiltDetect = 8001,
         FixtureAlignReverseDetect = 8002,
         FixtureAlignLoadFail = 8003,
+        FixtureAlign_AlignCylinder_Backward_Fail,
+        FixtureAlign_AlignCylinder_Forward_Fail,
 
         //Transfer Fixture
         TransferFixture = 9000,
         TransferFixtureOriginFixtureDetect = 9001,
+        TransferFixture_UpDownCylinder_Up_Fail,
+        TransferFixture_UpDownCylinder_Down_Fail,
+        TransferFixture_ClampCylinder_Clamp_Fail,
+        TransferFixture_ClampCylinder_UnClamp_Fail,
 
         //Detach
         Detach = 10000,
         DetachFail = 10001,
+        Detach_FixCylinder_Backward_Fail,
+        Detach_FixCylinder_Forward_Fail,
+        Detach_DetachCylinder1_Up_Fail,
+        Detach_DetachCylinder1_Down_Fail,
+        Detach_DetachCylinder2_Up_Fail,
+        Detach_DetachCylinder2_Down_Fail,
 
         //Remove Film
         RemoveFilm = 11000,
+        RemoveFilm_FixCylinder_Backward_Fail,
+        RemoveFilm_FixCylinder_Forward_Fail,
+        RemoveFilm_TransferCylinder_Backward_Fail,
+        RemoveFilm_TransferCylinder_Forward_Fail,
+        RemoveFilm_UpDownCylinder1_Up_Fail,
+        RemoveFilm_UpDownCylinder1_Down_Fail,
+        RemoveFilm_UpDownCylinder2_Up_Fail,
+        RemoveFilm_UpDownCylinder2_Down_Fail,
+        RemoveFilm_PusherCylinder1_Up_Fail,
+        RemoveFilm_PusherCylinder1_Down_Fail,
+        RemoveFilm_PusherCylinder2_Up_Fail,
+        RemoveFilm_PusherCylinder2_Down_Fail,
+        RemoveFilm_ClampCylinder_Clamp_Fail,
+        RemoveFilm_ClampCylinder_UnClamp_Fail,
 
         //Glass Transfer
         GlassTransfer = 12000,

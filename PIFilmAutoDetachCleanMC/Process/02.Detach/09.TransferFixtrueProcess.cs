@@ -351,7 +351,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessLoadStep.Cyl_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.TransferFixture_UpDownCylinder_Up_Fail);
                         break;
                     }
                     Log.Debug("Transfer Fixture Cylinder Up Done");
@@ -366,7 +366,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessLoadStep.YAxis_Move_LoadPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.TransferFixture_YAxis_MoveLoadPosition_Fail);
                         break;
                     }
                     Log.Debug("Transfer Fixture Y Axis move Load Position Done");
@@ -381,7 +381,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessLoadStep.Cyl_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.TransferFixture_UpDownCylinder_Down_Fail);
                         break;
                     }
                     Log.Debug("Transfer Fixture Cylinder Up Done");
@@ -397,7 +397,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessLoadStep.Cyl_Clamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.TransferFixture_ClampCylinder_Clamp_Fail);
                         break;
                     }
                     Log.Debug("Transfer Fixture Cylinder Clamp Done");
@@ -431,9 +431,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessUnloadStep.Cyl_Up_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.TransferFixture_UpDownCylinder_Up_Fail);
                         break;
                     }
                     Log.Debug("Transfer Fixture Cylinder Up Done");
@@ -441,7 +441,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Remove Film Done");
                     break;
                 case ETransferFixtureProcessUnloadStep.Wait_RemoveFilm_Done:
-                    if(FlagRemoveFilmDone == false)
+                    if (FlagRemoveFilmDone == false)
                     {
                         Wait(20);
                         break;
@@ -457,7 +457,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessUnloadStep.YAxis_Move_UnloadPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.TransferFixture_YAxis_MoveUnloadPosition_Fail);
                         break;
                     }
                     Log.Debug("Transfer Fixture Y Axis Move Unload Position Done");
@@ -472,7 +472,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessUnloadStep.Cyl_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.TransferFixture_UpDownCylinder_Down_Fail);
                         break;
                     }
                     Log.Debug("Transfer Fixture Cylinder Down Done");
@@ -488,7 +488,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessUnloadStep.Cyl_UnClamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.TransferFixture_ClampCylinder_UnClamp_Fail);
                         break;
                     }
                     Log.Debug("Transfer Fixture Cylinder UnClamp Done");
@@ -501,7 +501,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessUnloadStep.WaitProcesses_ReceiveTransferDone:
-                    if(FlagAlignTransferFixtureDoneReceived == false ||
+                    if (FlagAlignTransferFixtureDoneReceived == false ||
                        FlagDetachTransferFixtureDoneReceived == false ||
                        FlagRemoveFilmTransferFixtureDoneReceived == false)
                     {

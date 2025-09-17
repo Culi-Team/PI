@@ -320,7 +320,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessVinylCleanStep.Cyl_Clamp_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.VinylClean_FixtureCylinder_Clamp_Fail);
                         break;
                     }
                     Log.Debug("Vinyl Clean Cylinder Clamp Done");
@@ -335,7 +335,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessVinylCleanStep.Cyl_Pusher_Up_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.VinylClean_PusherCylinder_Up_Fail);
                         break;
                     }
                     Log.Debug("Vinyl Clean Cylinder Pusher Up Done");
@@ -350,7 +350,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessVinylCleanStep.Cyl_Forward_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.VinylClean_RollerBwFwCylinder_Forward_Fail);
                         break;
                     }
                     Log.Debug("Vinyl Clean Cylinder Forward Done");
@@ -365,7 +365,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessVinylCleanStep.Cyl_Pusher_Down_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.VinylClean_PusherCylinder_Down_Fail);
                         break;
                     }
                     Log.Debug("Vinyl Clean Cylinder Pusher Down Done");
@@ -380,7 +380,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessVinylCleanStep.Cyl_Backward_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.VinylClean_RollerBwFwCylinder_Backward_Fail);
                         break;
                     }
                     Log.Debug("Vinyl Clean Cylinder Backward Done");
@@ -422,7 +422,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessRobotPickFixtureFromVinylClean.Cyl_UnClamp_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.VinylClean_FixtureCylinder_UnClamp_Fail);
                         break;
                     }
                     Log.Debug("Vinyl Clean Cylinder UnClamp Done");
@@ -482,7 +482,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_UnClamp_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.VinylClean_FixtureCylinder_UnClamp_Fail);
                         break;
                     }
                     Log.Debug("Vinyl Clean Cylinder UnClamp Done");
@@ -497,7 +497,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_Pusher_Down_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.VinylClean_PusherCylinder_Down_Fail);
                         break;
                     }
                     Log.Debug("Vinyl Clean Cylinder Pusher Down Done");
@@ -512,7 +512,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_Backward_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.VinylClean_RollerBwFwCylinder_Backward_Fail);
                         break;
                     }
                     Log.Debug("Vinyl Clean Cylinder Backward Done");
