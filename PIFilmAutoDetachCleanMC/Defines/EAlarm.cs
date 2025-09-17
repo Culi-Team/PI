@@ -83,9 +83,30 @@
 
         //Transfer In Shuttle Left
         TransferInShuttleLeft = 15000,
+        TransferInShuttleLeft_YAxis_Origin_Fail,
+        TransferInShuttleLeft_ZAxis_Origin_Fail,
+        TransferInShuttleLeft_YAxis_MoveReadyPosition_Fail,
+        TransferInShuttleLeft_ZAxis_MoveReadyPosition_Fail,
+        TransferInShuttleLeft_YAxis_MovePlacePosition_Fail,
+        TransferInShuttleLeft_ZAxis_MovePlacePosition_Fail,
+        TransferInShuttleLeft_YAxis_MovePickPosition1_Fail,
+        TransferInShuttleLeft_YAxis_MovePickPosition2_Fail,
+        TransferInShuttleLeft_YAxis_MovePickPosition3_Fail,
+        TransferInShuttleLeft_ZAxis_MovePickPosition_Fail,
+
 
         //Transfer In Shuttle Right
         TransferInShuttleRight = 16000,
+        TransferInShuttleRight_YAxis_Origin_Fail,
+        TransferInShuttleRight_ZAxis_Origin_Fail,
+        TransferInShuttleRight_YAxis_MoveReadyPosition_Fail,
+        TransferInShuttleRight_ZAxis_MoveReadyPosition_Fail,
+        TransferInShuttleRight_YAxis_MovePlacePosition_Fail,
+        TransferInShuttleRight_ZAxis_MovePlacePosition_Fail,
+        TransferInShuttleRight_YAxis_MovePickPosition1_Fail,
+        TransferInShuttleRight_YAxis_MovePickPosition2_Fail,
+        TransferInShuttleRight_YAxis_MovePickPosition3_Fail,
+        TransferInShuttleRight_ZAxis_MovePickPosition_Fail,
 
         //WET Clean Left
         WETCleanLeft = 17000,

@@ -173,7 +173,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttleOriginStep.ZAxis_Origin_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_ZAxis_Origin_Fail : EAlarm.TransferInShuttleRight_ZAxis_Origin_Fail));
                         break;
                     }
                     Log.Debug("Transfer In Shuttle Z Axis Origin Done");
@@ -188,7 +188,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttleOriginStep.YAxis_Origin_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_Origin_Fail : EAlarm.TransferInShuttleRight_YAxis_Origin_Fail));
                         break;
                     }
                     Log.Debug("Transfer In Shuttle Y Axis Origin Done");
@@ -310,7 +310,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttleProcessToRunStep.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_ZAxis_MoveReadyPosition_Fail :
+                                                        EAlarm.TransferInShuttleRight_ZAxis_MoveReadyPosition_Fail));
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");
@@ -325,7 +326,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttleProcessToRunStep.YAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MoveReadyPosition_Fail :
+                                                        EAlarm.TransferInShuttleRight_YAxis_MoveReadyPosition_Fail));
                         break;
                     }
                     Log.Debug("Y Axis Move Ready Position Done");
@@ -390,7 +392,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePlaceStep.YAxis_Move_PlacePosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MovePlacePosition_Fail :
+                                                        EAlarm.TransferInShuttleRight_YAxis_MovePlacePosition_Fail));
                         break;
                     }
                     Log.Debug("Y Axis Move Place Position Done");
@@ -405,7 +408,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePlaceStep.Cyl_Rotate_180D_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferInShuttleLeft_RotateCylinder_180D_Fail :
+                                                          EWarning.TransferInShuttleRight_RotateCylinder_180D_Fail));
                         break;
                     }
                     Log.Debug("Cylinder Rotate 180 Degree Done");
@@ -429,7 +433,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePlaceStep.ZAxis_Move_PlacePosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_ZAxis_MovePlacePosition_Fail :
+                                                        EAlarm.TransferInShuttleRight_ZAxis_MovePlacePosition_Fail));
                         break;
                     }
                     Log.Debug("Z Axis Move Place Position Done");
@@ -450,7 +455,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePlaceStep.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_ZAxis_MoveReadyPosition_Fail :
+                                                        EAlarm.TransferInShuttleRight_ZAxis_MoveReadyPosition_Fail));
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");
@@ -501,7 +507,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.Cyl_Rotate_0D_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferInShuttleLeft_RotateCylinder_0D_Fail :
+                                                          EWarning.TransferInShuttleRight_RotateCylinder_0D_Fail));
                         break;
                     }
                     Log.Debug("Cylinder Rotate 0 Degree Done");
@@ -555,7 +562,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.YAxis_Move_PickPosition1_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MovePickPosition1_Fail :
+                                                        EAlarm.TransferInShuttleRight_YAxis_MovePickPosition1_Fail));
                         break;
                     }
                     Log.Debug("Y Axis Move Pick Position 1 Done");
@@ -570,7 +578,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.YAxis_Move_PickPosition2_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MovePickPosition2_Fail :
+                                                        EAlarm.TransferInShuttleRight_YAxis_MovePickPosition2_Fail));
                         break;
                     }
                     Log.Debug("Y Axis Move Pick Position 2 Done");
@@ -585,7 +594,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.YAxis_Move_PickPosition3_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MovePickPosition3_Fail :
+                                                        EAlarm.TransferInShuttleRight_YAxis_MovePickPosition3_Fail));
                         break;
                     }
                     Log.Debug("Y Axis Move Pick Position 3 Done");
@@ -600,7 +610,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.ZAxis_Move_PickPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_ZAxis_MovePickPosition_Fail :
+                                                        EAlarm.TransferInShuttleRight_ZAxis_MovePickPosition_Fail));
                         break;
                     }
                     Log.Debug("Z Axis Move Pick Position Done");
@@ -621,7 +632,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_ZAxis_MoveReadyPosition_Fail :
+                                                        EAlarm.TransferInShuttleRight_ZAxis_MoveReadyPosition_Fail));
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");
@@ -636,7 +648,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.YAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MoveReadyPosition_Fail :
+                                                        EAlarm.TransferInShuttleRight_YAxis_MoveReadyPosition_Fail));
                         break;
                     }
                     Log.Debug("Y Axis Move Ready Position Done");

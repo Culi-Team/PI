@@ -134,9 +134,13 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         //Transfer In Shuttle Left
         TransferInShuttleLeft = 15000,
+        TransferInShuttleLeft_RotateCylinder_180D_Fail,
+        TransferInShuttleLeft_RotateCylinder_0D_Fail,
 
         //Transfer In Shuttle Right
         TransferInShuttleRight = 16000,
+        TransferInShuttleRight_RotateCylinder_180D_Fail,
+        TransferInShuttleRight_RotateCylinder_0D_Fail,
 
         //WET Clean Left
         WETCleanLeft = 17000,
