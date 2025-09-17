@@ -34,6 +34,9 @@
             <DataTemplate DataType="{x:Type vm:InitDeinitViewModel}">
                 <views:InitDeinitView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:InitializeViewModel}">
+                <views:InitializeView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vm:AutoViewModel}">
                 <views:AutoView/>
             </DataTemplate>

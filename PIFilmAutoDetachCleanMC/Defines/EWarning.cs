@@ -15,6 +15,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         DoorNotSafetyLock,
         LightCurtainLeftDetected,
         LightCurtainRightDetected,
+        InitializeTimeout,
 
         //InConveyor
         InConveyor = 1000,

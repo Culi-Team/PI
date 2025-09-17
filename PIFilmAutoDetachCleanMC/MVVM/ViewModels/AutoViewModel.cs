@@ -86,6 +86,17 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
+        public ICommand InitializeNavigate
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _navigationService.NavigateTo<InitializeViewModel>();
+                });
+            }
+        }
+
         public ICommand InputStopCommand
         {
             get
