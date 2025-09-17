@@ -258,17 +258,17 @@
                       CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Axis Name"
-                                        Binding="{Binding Name}"
-                                        Width="50" />
+                                        Binding="{Binding Name}" 
+                                        Width="*"/>
                     <DataGridTextColumn Header="Speed"
                                         Binding="{Binding Parameter.Velocity}"
                                         Width="*" />
                     <DataGridTextColumn Header="Acc"
                                         Binding="{Binding Parameter.Acceleration}"
-                                        Width="100" />
+                                        Width="*" />
                     <DataGridTextColumn Header="Dec"
                                         Binding="{Binding Parameter.Deceleration}"
-                                        Width="100" />
+                                        Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
         </TabItem>
