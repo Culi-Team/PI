@@ -132,15 +132,31 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         //WET Clean Left
         WETCleanLeft = 17000,
+        WETCleanLeft_PusherCylinder_Up_Fail,
+        WETCleanLeft_PusherCylinder_Down_Fail,
+        WETCleanLeft_FeedingRoller_NotDetect,
+        WETCleanLeft_WiperClean_NotDetect,
 
         //WET Clean Right
         WETCleanRight = 18000,
+        WETCleanRight_PusherCylinder_Up_Fail,
+        WETCleanRight_PusherCylinder_Down_Fail,
+        WETCleanRight_FeedingRoller_NotDetect,
+        WETCleanRight_WiperClean_NotDetect,
 
         //AF Clean Left
         AFCleanLeft = 19000,
+        AFCleanLeft_PusherCylinder_Up_Fail,
+        AFCleanLeft_PusherCylinder_Down_Fail,
+        AFCleanLeft_FeedingRoller_NotDetect,
+        AFCleanLeft_WiperClean_NotDetect,
 
         //AF Clean Right
         AFCleanRight = 20000,
+        AFCleanRight_PusherCylinder_Up_Fail,
+        AFCleanRight_PusherCylinder_Down_Fail,
+        AFCleanRight_FeedingRoller_NotDetect,
+        AFCleanRight_WiperClean_NotDetect,
 
         //Unload Glass Left
         UnloadGlassLeft = 21000,

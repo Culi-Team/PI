@@ -473,7 +473,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanOriginStep.PushCyl_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_PusherCylinder_Up_Fail,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_PusherCylinder_Up_Fail,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_PusherCylinder_Up_Fail,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_PusherCylinder_Up_Fail,
+                            _ => null
+                        };
+
+                        RaiseWarning((int)warning!);
                         break;
                     }
                     Log.Debug("Push Cylinder Up Done");
@@ -494,7 +503,61 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanOriginStep.AxisOrigin_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if (XAxis.Status.IsHomeDone == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_XAxis_Origin_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_XAxis_Origin_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_XAxis_Origin_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_XAxis_Origin_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+                        if (YAxis.Status.IsHomeDone == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_YAxis_Origin_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_YAxis_Origin_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_YAxis_Origin_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_YAxis_Origin_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+
+                        if (TAxis.Status.IsHomeDone == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_TAxis_Origin_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_TAxis_Origin_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_TAxis_Origin_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_TAxis_Origin_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+
+                        if (FeedingAxis.Status.IsHomeDone == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_FeedingAxis_Origin_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_FeedingAxis_Origin_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_FeedingAxis_Origin_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_FeedingAxis_Origin_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+
                         break;
                     }
                     Log.Debug("X Axis Origin Done");
@@ -613,18 +676,36 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ECleanProcessToRunStep.FeedingRollerDetect_Check:
                     Log.Debug("Feeding Roller Detect Check");
-                    if(FeedingRollerDetect.Value == false)
+                    if (FeedingRollerDetect.Value == false)
                     {
-                        //ALARM
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_FeedingRoller_NotDetect,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_FeedingRoller_NotDetect,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_FeedingRoller_NotDetect,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_FeedingRoller_NotDetect,
+                            _ => null
+                        };
+
+                        RaiseWarning((int)warning!);
                         break;
                     }
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.Wiper_Check:
                     Log.Debug("Wiper Clean Detect Check");
-                    if(WiperCleanDetect1.Value == false || WiperCleanDetect2.Value == false || WiperCleanDetect3.Value == false)
+                    if (WiperCleanDetect1.Value == false || WiperCleanDetect2.Value == false || WiperCleanDetect3.Value == false)
                     {
-                        //ALARM
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_WiperClean_NotDetect,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_WiperClean_NotDetect,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_WiperClean_NotDetect,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_WiperClean_NotDetect,
+                            _ => null
+                        };
+
+                        RaiseWarning((int)warning!);
                         break;
                     }
                     Step.ToRunStep++;
@@ -727,7 +808,47 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessLoadStep.AxisMoveLoadPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if (XAxis.IsOnPosition(XAxisLoadPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_XAxis_MoveLoadPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_XAxis_MoveLoadPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_XAxis_MoveLoadPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_XAxis_MoveLoadPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+
+                        if (YAxis.IsOnPosition(YAxisLoadPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_YAxis_MoveLoadPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_YAxis_MoveLoadPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_YAxis_MoveLoadPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_YAxis_MoveLoadPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+
+                        if (TAxis.IsOnPosition(TAxisLoadPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_TAxis_MoveLoadPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_TAxis_MoveLoadPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_TAxis_MoveLoadPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_TAxis_MoveLoadPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
                         break;
                     }
                     Log.Debug("X Y T Axis Move Load Position Done");
@@ -817,7 +938,45 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanStep.Axis_MoveCleanHorizontalPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if (XAxis.IsOnPosition(XAxisCleanHorizontalPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_XAxis_MoveCleanHorizontalPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_XAxis_MoveCleanHorizontalPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_XAxis_MoveCleanHorizontalPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_XAxis_MoveCleanHorizontalPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+                        if (YAxis.IsOnPosition(YAxisCleanHorizontalPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_YAxis_MoveCleanHorizontalPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_YAxis_MoveCleanHorizontalPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_YAxis_MoveCleanHorizontalPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_YAxis_MoveCleanHorizontalPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+                        if (TAxis.IsOnPosition(TAxisCleanHorizontalPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_TAxis_MoveCleanHorizontalPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_TAxis_MoveCleanHorizontalPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_TAxis_MoveCleanHorizontalPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_TAxis_MoveCleanHorizontalPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
                         break;
                     }
                     Log.Debug("X Y T Axis Move Clean Horizontal Position");
@@ -832,7 +991,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanStep.CylPusher_Down_CleanHorizontal_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_PusherCylinder_Down_Fail,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_PusherCylinder_Down_Fail,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_PusherCylinder_Down_Fail,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_PusherCylinder_Down_Fail,
+                            _ => null
+                        };
+
+                        RaiseWarning((int)warning!);
                         break;
                     }
                     Log.Debug("Cylinder Pusher Down Done");
@@ -852,7 +1020,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanStep.CleanHorizontal_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        EAlarm? alarm = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EAlarm.WETCleanLeft_CleanHorizontal_Fail,
+                            EClean.WETCleanRight => EAlarm.WETCleanRight_CleanHorizontal_Fail,
+                            EClean.AFCleanLeft => EAlarm.AFCleanLeft_CleanHorizontal_Fail,
+                            EClean.AFCleanRight => EAlarm.AFCleanRight_CleanHorizontal_Fail,
+                            _ => null
+                        };
+                        RaiseAlarm((int)alarm!);
                         break;
                     }
                     FeedingAxis.Stop();
@@ -868,7 +1044,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanStep.CylPusherUp_CleanHorizontal_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_PusherCylinder_Up_Fail,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_PusherCylinder_Up_Fail,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_PusherCylinder_Up_Fail,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_PusherCylinder_Up_Fail,
+                            _ => null
+                        };
+
+                        RaiseWarning((int)warning!);
                         break;
                     }
                     Log.Debug("Cylinder Pusher Up Done");
@@ -892,7 +1077,45 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanStep.Axis_Move_CleanVerticalPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if (XAxis.IsOnPosition(XAxisCleanVerticalPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_XAxis_MoveCleanVerticalPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_XAxis_MoveCleanVerticalPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_XAxis_MoveCleanVerticalPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_XAxis_MoveCleanVerticalPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+                        if (YAxis.IsOnPosition(YAxisCleanVerticalPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_YAxis_MoveCleanVerticalPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_YAxis_MoveCleanVerticalPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_YAxis_MoveCleanVerticalPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_YAxis_MoveCleanVerticalPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+                        if (TAxis.IsOnPosition(TAxisCleanVerticalPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_TAxis_MoveCleanVerticalPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_TAxis_MoveCleanVerticalPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_TAxis_MoveCleanVerticalPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_TAxis_MoveCleanVerticalPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
                         break;
                     }
                     Log.Debug("X Y T Axis Move Clean Vertical Position Done");
@@ -907,7 +1130,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanStep.CylPusher_Down_CleanVertical_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_PusherCylinder_Down_Fail,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_PusherCylinder_Down_Fail,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_PusherCylinder_Down_Fail,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_PusherCylinder_Down_Fail,
+                            _ => null
+                        };
+
+                        RaiseWarning((int)warning!);
                         break;
                     }
                     Log.Debug("Cylinder Pusher Down Done");
@@ -926,7 +1158,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanStep.CleanVertical_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        EAlarm? alarm = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EAlarm.WETCleanLeft_CleanVertical_Fail,
+                            EClean.WETCleanRight => EAlarm.WETCleanRight_CleanVertical_Fail,
+                            EClean.AFCleanLeft => EAlarm.AFCleanLeft_CleanVertical_Fail,
+                            EClean.AFCleanRight => EAlarm.AFCleanRight_CleanVertical_Fail,
+                            _ => null
+                        };
+                        RaiseAlarm((int)alarm!);
                         break;
                     }
                     Log.Debug("Clean Vertical Done");
@@ -941,7 +1181,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanStep.CylPusher_Up_CleanVertical_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_PusherCylinder_Up_Fail,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_PusherCylinder_Up_Fail,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_PusherCylinder_Up_Fail,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_PusherCylinder_Up_Fail,
+                            _ => null
+                        };
+
+                        RaiseWarning((int)warning!);
                         break;
                     }
                     Log.Debug("Cylinder Pusher Up Done");
@@ -1007,7 +1256,47 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessUnloadStep.AxisMoveUnloadPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if (XAxis.IsOnPosition(XAxisUnloadPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_XAxis_MoveUnloadPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_XAxis_MoveUnloadPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_XAxis_MoveUnloadPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_XAxis_MoveUnloadPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+
+                        if (YAxis.IsOnPosition(YAxisUnloadPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_YAxis_MoveUnloadPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_YAxis_MoveUnloadPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_YAxis_MoveUnloadPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_YAxis_MoveUnloadPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+
+                        if (TAxis.IsOnPosition(TAxisUnloadPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_TAxis_MoveUnloadPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_TAxis_MoveUnloadPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_TAxis_MoveUnloadPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_TAxis_MoveUnloadPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
                         break;
                     }
                     Log.Debug("X Y T Axis Move Unload Position Done");
@@ -1034,6 +1323,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessUnloadStep.Wait_CleanUnloadDone:
                     if (FlagCleanUnloadDone == false)
                     {
+                        Wait(20);
                         break;
                     }
                     Log.Debug("Set Flag Unload Done Received");
