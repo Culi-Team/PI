@@ -10,6 +10,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
     public class RecipeList
     {
         public RecipeList(CommonRecipe commonRecipe,
+                          MontionSpeedConfig montionSpeedConfig,
                           CSTLoadUnloadRecipe cstLoadUnloadRecipe,
                           RobotLoadRecipe robotLoadRecipe,
                           VinylCleanRecipe vinylCleanRecipe,
@@ -29,6 +30,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
                           RobotUnloadRecipe robotUnloadRecipe)
         {
             CommonRecipe = commonRecipe;
+            MontionSpeedConfig = montionSpeedConfig;
             CstLoadUnloadRecipe = cstLoadUnloadRecipe;
             RobotLoadRecipe = robotLoadRecipe;
             VinylCleanRecipe = vinylCleanRecipe;
@@ -67,6 +69,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         public CommonRecipe CommonRecipe { get; }
+        public MontionSpeedConfig MontionSpeedConfig { get; }
         public CSTLoadUnloadRecipe CstLoadUnloadRecipe { get; }
         public RobotLoadRecipe RobotLoadRecipe { get; }
         public VinylCleanRecipe VinylCleanRecipe { get; }
