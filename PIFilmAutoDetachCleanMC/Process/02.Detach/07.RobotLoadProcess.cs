@@ -636,6 +636,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPickFixtureFromCSTStep.Cyl_Clamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
+                        RaiseWarning((int)EWarning.RobotLoad_Cylinder_Clamp_Fail);
                         break;
                     }
                     Log.Debug("Cylinder Clamp Done");
@@ -650,6 +651,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPickFixtureFromCSTStep.Cyl_Align_Wait:
                     if (WaitTimeOutOccurred)
                     {
+                        RaiseWarning((int)EWarning.RobotLoad_Cylinder_Forward_Fail);
                         break;
                     }
                     Log.Debug("Cylinder Align Done");
@@ -729,6 +731,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.CylConntact_Wait:
                     if (WaitTimeOutOccurred)
                     {
+                        if(ClampCyl.IsForward == false)
+                        {
+                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_Clamp_Fail);
+                            break;
+                        }
+                        if(AlignCyl.IsForward == false)
+                        {
+                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_Backward_Fail);
+                            break;
+                        }
                         break;
                     }
                     Log.Debug("Cylinder Contact Done");
@@ -744,6 +756,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.Cyl_UnContact_Wait:
                     if (WaitTimeOutOccurred)
                     {
+                        if(ClampCyl.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnClamp_Fail);
+                            break;
+                        }
+                        if(AlignCyl.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_Backward_Fail);
+                            break;
+                        }
                         break;
                     }
                     Log.Debug("Cylinder UnContact Done");
@@ -871,7 +893,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPlaceFixtureToAlignStep.UnContact_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if(AlignCyl.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_Backward_Fail);
+                            break;
+                        }
+                        if(ClampCyl.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnClamp_Fail);
+                            break;
+                        }
                         break;
                     }
                     Log.Debug("UnContact Done");
@@ -934,7 +965,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPickFixtureFromRemoveZoneStep.Contact_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if(AlignCyl.IsForward == false)
+                        {
+                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_Forward_Fail);
+                            break;
+                        }
+                        if(ClampCyl.IsForward == false)
+                        {
+                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_Clamp_Fail); 
+                            break;
+                        }
                         break;
                     }
                     Log.Debug("Contact Done");
@@ -981,6 +1021,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPlaceFixtureToOutCSTStep.Wait_OutCSTReady:
                     if (FlagOutCSTReady == false)
                     {
+                        Wait(20);
                         break;
                     }
 
@@ -1006,7 +1047,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPlaceFixtureToOutCSTStep.UnContact_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if(AlignCyl.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_Backward_Fail);
+                            break;
+                        }
+                        if(ClampCyl.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnClamp_Fail);
+                            break;
+                        }
                         break;
                     }
                     Log.Debug("UnContact Done");
