@@ -194,10 +194,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         AFCleanRight_WiperClean_NotDetect,
 
         //Unload Glass Left
-        UnloadGlassLeft = 23000,
+        UnloadTransferLeft = 23000,
 
         //Unload Glass Right
-        UnloadGlassRight = 24000,
+        UnloadTransferRight = 24000,
 
         //Unload Align
         UnloadAlign = 25000,

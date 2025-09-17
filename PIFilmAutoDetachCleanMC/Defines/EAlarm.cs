@@ -211,10 +211,32 @@
         AFCleanRight_TAxis_MoveUnloadPosition_Fail,
 
         //Unload Glass Left
-        UnloadGlassLeft = 23000,
+        UnloadTransferLeft = 23000,
+        UnloadTransferLeft_YAxis_Origin_Fail,
+        UnloadTransferLeft_ZAxis_Origin_Fail,
+        UnloadTransferLeft_YAxis_MoveReadyPosition_Fail,
+        UnloadTransferLeft_ZAxis_MoveReadyPosition_Fail,
+        UnloadTransferLeft_YAxis_MovePickPosition_Fail,
+        UnloadTransferLeft_ZAxis_MovePickPosition_Fail,
+        UnloadTransferLeft_YAxis_MovePlacePosition1_Fail,
+        UnloadTransferLeft_YAxis_MovePlacePosition2_Fail,
+        UnloadTransferLeft_YAxis_MovePlacePosition3_Fail,
+        UnloadTransferLeft_YAxis_MovePlacePosition4_Fail,
+        UnloadTransferLeft_ZAxis_MovePlacePosition_Fail,
 
         //Unload Glass Right
-        UnloadGlassRight = 24000,
+        UnloadTransferRight = 24000,
+        UnloadTransferRight_YAxis_Origin_Fail,
+        UnloadTransferRight_ZAxis_Origin_Fail,
+        UnloadTransferRight_YAxis_MoveReadyPosition_Fail,
+        UnloadTransferRight_ZAxis_MoveReadyPosition_Fail,
+        UnloadTransferRight_YAxis_MovePickPosition_Fail,
+        UnloadTransferRight_ZAxis_MovePickPosition_Fail,
+        UnloadTransferRight_YAxis_MovePlacePosition1_Fail,
+        UnloadTransferRight_YAxis_MovePlacePosition2_Fail,
+        UnloadTransferRight_YAxis_MovePlacePosition3_Fail,
+        UnloadTransferRight_YAxis_MovePlacePosition4_Fail,
+        UnloadTransferRight_ZAxis_MovePlacePosition_Fail,
 
         //Unload Align
         UnloadAlign = 25000,
