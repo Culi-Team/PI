@@ -146,6 +146,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.CSTTilt:
                     break;
                 case ESequence.OutWorkCSTLoad:
+                    Sequence_OutWorkCSTLoad();
                     break;
                 case ESequence.OutWorkCSTUnLoad:
                     break;
@@ -271,7 +272,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EBufferConveyorInWorkCSTUnloadStep.Stopper1_Down_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.BufferConveyor_Stopper1_Down_Fail);
                         break;
                     }
                     Log.Debug("Stopper 1 Down Done");
@@ -286,7 +287,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EBufferConveyorInWorkCSTUnloadStep.Stopper2_Up_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.BufferConveyor_Stopper2_Up_Fail);
                         break;
                     }
                     Log.Debug("Stopper 2 Up Done");
@@ -373,7 +374,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EBufferConveyorOutWorkCSTLoadStep.Stopper2_Down_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.BufferConveyor_Stopper2_Down_Fail);
                         break;
                     }
                     Log.Debug("Stopper 2 Down Done");

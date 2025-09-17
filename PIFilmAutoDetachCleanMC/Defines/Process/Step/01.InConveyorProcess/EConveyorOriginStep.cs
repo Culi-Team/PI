@@ -11,7 +11,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Start,
         CstStopper_Down,
         CstStopper_Down_Wait,
-        Roller_Stop,
+        Conveyor_Stop,
         End
     }
 }

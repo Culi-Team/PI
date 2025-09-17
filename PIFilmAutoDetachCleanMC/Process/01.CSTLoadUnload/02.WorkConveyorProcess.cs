@@ -100,7 +100,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                if(port == EPort.Right)
+                if (port == EPort.Right)
                 {
                     return _devices.Inputs.BufferCstDetect1.Value && _devices.Inputs.BufferCstDetect2.Value;
                 }
@@ -202,19 +202,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Start");
                     Step.OriginStep++;
                     break;
-                case EWorkConveyorOriginStep.Cyl_UnTilt:
-                    Log.Debug("Cyl_UnTilt");
+                case EWorkConveyorOriginStep.Cyl_Tilt_Down:
+                    Log.Debug("Cylinder Tilt Down");
                     TiltCylinder.Backward();
                     Wait(_commonRecipe.CylinderMoveTimeout, () => TiltCylinder.IsBackward);
                     Step.OriginStep++;
                     break;
-                case EWorkConveyorOriginStep.Cyl_UnTilt_Wait:
+                case EWorkConveyorOriginStep.Cyl_Tilt_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_TiltCylinder_Down_Fail :
+                                                           EWarning.OutWorkConveyor_TiltCylinder_Down_Fail));
                         break;
                     }
-                    Log.Debug("Cylinder UnTilt Done");
+                    Log.Debug("Cylinder Tilt Down Done");
                     Step.OriginStep++;
                     break;
                 case EWorkConveyorOriginStep.SupportCV_Down:
@@ -227,7 +228,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorOriginStep.SupportCV_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_SupportCV_Down_Fail :
+                                                           EWarning.OutWorkConveyor_SupportCV_Down_Fail));
                         break;
                     }
                     Log.Debug("Support CV Down Done");
@@ -242,34 +244,33 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorOriginStep.TAxis_Origin_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Right ? EAlarm.InWorkConveyor_TAxis_Origin_Fail :
+                                                         EAlarm.OutWorkConveyor_TAxis_Origin_Fail));
                         break;
                     }
                     Log.Debug("T Axis Origin Done");
                     Step.OriginStep++;
                     break;
-                case EWorkConveyorOriginStep.Cyl_UnAlign:
-                    Log.Debug("Cylinder UnAlign");
+                case EWorkConveyorOriginStep.Cyl_Fix_Backward:
+                    Log.Debug("Cylinder Fix Backward");
                     FixCylinder1.Backward();
                     FixCylinder2.Backward();
                     Wait(_commonRecipe.CylinderMoveTimeout, () => FixCylinder1.IsBackward && FixCylinder2.IsBackward);
                     Step.OriginStep++;
                     break;
-                case EWorkConveyorOriginStep.Cyl_UnAlign_Wait:
+                case EWorkConveyorOriginStep.Cyl_Fix_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_FixCylinder_Backward_Fail :
+                                                           EWarning.OutWorkConveyor_FixCylinder_Backward_Fail));
                         break;
                     }
-                    Log.Debug("Cylinder UnAlign Done");
+                    Log.Debug("Cylinder Fix Backward Done");
                     Step.OriginStep++;
                     break;
-                case EWorkConveyorOriginStep.Roller_Stop:
-                    Roller1.Stop();
-                    Roller2.Stop();
-                    RollerSupport1.Stop();
-                    RollerSupport2.Stop();
-                    Log.Debug("Roller Stop");
+                case EWorkConveyorOriginStep.Conveyor_Stop:
+                    Log.Debug("Conveyor Stop");
+                    ConveyorStop();
                     Step.OriginStep++;
                     break;
                 case EWorkConveyorOriginStep.End:
@@ -416,7 +417,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EWorkConveyorTiltStep)Step.RunStep)
             {
                 case EWorkConveyorTiltStep.Start:
-                    Log.Debug((port == EPort.Right ? "Pick" : "Place") + "Start");
+                    Log.Debug("Tilt Start");
                     Step.RunStep++;
                     break;
                 case EWorkConveyorTiltStep.Cyl_SupportCV_Down:
@@ -429,7 +430,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorTiltStep.Cyl_SupportCV_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_SupportCV_Down_Fail :
+                                                           EWarning.OutWorkConveyor_SupportCV_Down_Fail));
                         break;
                     }
                     Log.Debug("Cylinder Support Conveyor Down Done");
@@ -445,7 +447,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorTiltStep.Cyl_Fix_Forward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_FixCylinder_Forward_Fail :
+                                                           EWarning.OutWorkConveyor_FixCylinder_Forward_Fail));
                         break;
                     }
                     Log.Debug("Cylinder Fix Forward Done");
@@ -460,7 +463,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorTiltStep.TAxis_Move_WorkPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Right ? EAlarm.InWorkConveyor_TAxis_MoveWorkPosition_Fail :
+                                                         EAlarm.OutWorkConveyor_TAxis_MoveWorkPosition_Fail));
                         break;
                     }
                     Log.Debug("T Axis Move Work Position Done");
@@ -475,7 +479,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorTiltStep.Cyl_Tilt_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_TiltCylinder_Up_Fail :
+                                                           EWarning.OutWorkConveyor_TiltCylinder_Up_Fail));
                         break;
                     }
                     Log.Debug("Cylinder Tilt Up Done");
@@ -566,19 +571,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Load Start");
                     Step.RunStep++;
                     break;
-                case EWorkConveyorProcessLoadStep.Cyl_UnTilt:
-                    Log.Debug("Cylinder UnTilt");
+                case EWorkConveyorProcessLoadStep.Cyl_Tilt_Down:
+                    Log.Debug("Cylinder Tilt Down");
                     TiltCylinder.Backward();
                     Wait(_commonRecipe.CylinderMoveTimeout, () => TiltCylinder.IsBackward);
                     Step.RunStep++;
                     break;
-                case EWorkConveyorProcessLoadStep.Cyl_UnTilt_Wait:
+                case EWorkConveyorProcessLoadStep.Cyl_Tilt_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_TiltCylinder_Down_Fail :
+                                                           EWarning.OutWorkConveyor_TiltCylinder_Down_Fail));
                         break;
                     }
-                    Log.Debug("Cylinder UnTilt Done");
+                    Log.Debug("Cylinder Tilt Down Done");
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.TAxis_Move_LoadPosition:
@@ -587,10 +593,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Wait(_commonRecipe.MotionMoveTimeOut, () => TAxis.IsOnPosition(TAxisLoadPosition));
                     Step.RunStep++;
                     break;
-                case EWorkConveyorProcessLoadStep.TAxis_Move_MovePosition_Wait:
+                case EWorkConveyorProcessLoadStep.TAxis_Move_MoveLoadPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Right ? EAlarm.InWorkConveyor_TAxis_MoveLoadPosition_Fail :
+                                                         EAlarm.OutWorkConveyor_TAxis_MoveLoadPosition_Fail));
                         break;
                     }
                     Log.Debug("T Axis Move Load Position Done");
@@ -606,7 +613,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorProcessLoadStep.Cyl_Fix_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_FixCylinder_Backward_Fail :
+                                                           EWarning.OutWorkConveyor_FixCylinder_Backward_Fail));
                         break;
                     }
                     Log.Debug("Cylinder Fix Backward Done");
@@ -621,7 +629,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorProcessLoadStep.Support_CV_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_SupportCV_Up_Fail :
+                                                           EWarning.OutWorkConveyor_SupportCV_Up_Fail));
                         break;
                     }
                     Log.Debug("Support Conveyor In Up Done");
@@ -638,7 +647,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Wait_CassetteLoadDone:
-                    if(IsCassetteDetect == false)
+                    if (IsCassetteDetect == false)
                     {
                         Wait(20);
                         break;
@@ -674,32 +683,34 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Unload Start");
                     Step.RunStep++;
                     break;
-                case EWorkConveyorUnloadStep.Cyl_UnTilt:
-                    Log.Debug("Cylinder UnTilt");
+                case EWorkConveyorUnloadStep.Cyl_Tilt_Down:
+                    Log.Debug("Cylinder Tilt Down");
                     TiltCylinder.Backward();
                     Wait(_commonRecipe.CylinderMoveTimeout, () => TiltCylinder.IsBackward);
                     Step.RunStep++;
                     break;
-                case EWorkConveyorUnloadStep.Cyl_UnTilt_Wait:
-                    if(WaitTimeOutOccurred)
+                case EWorkConveyorUnloadStep.Cyl_Tilt_Down_Wait:
+                    if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_TiltCylinder_Down_Fail :
+                                                           EWarning.OutWorkConveyor_TiltCylinder_Down_Fail));
                         break;
                     }
-                    Log.Debug("Cylinder UnTilt Done");
+                    Log.Debug("Cylinder Tilt Down Done");
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Support_CV_Down:
                     Log.Debug("Support Conveyor Down");
                     CVSupportCyl1.Backward();
                     CVSupportCyl2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout,() => CVSupportCyl1.IsBackward && CVSupportCyl2.IsBackward);
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => CVSupportCyl1.IsBackward && CVSupportCyl2.IsBackward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Support_CV_Down_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_SupportCV_Down_Fail :
+                                                           EWarning.OutWorkConveyor_SupportCV_Down_Fail));
                         break;
                     }
                     Log.Debug("Support Conveyor Down Done");
@@ -708,13 +719,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorUnloadStep.TAxis_MoveLoadPosition:
                     Log.Debug("T Axis Move Load Position");
                     TAxis.MoveAbs(TAxisLoadPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => TAxis.IsOnPosition(TAxisLoadPosition));
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => TAxis.IsOnPosition(TAxisLoadPosition));
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.TAxis_MoveLoadPosition_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)(port == EPort.Right ? EAlarm.InWorkConveyor_TAxis_MoveLoadPosition_Fail :
+                                                         EAlarm.OutWorkConveyor_TAxis_MoveLoadPosition_Fail));
                         break;
                     }
                     Log.Debug("T Axis Move Load Position Done");
@@ -728,9 +740,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Support_CV_Up_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_SupportCV_Up_Fail :
+                                                           EWarning.OutWorkConveyor_SupportCV_Up_Fail));
                         break;
                     }
                     Log.Debug("Support Conveyor Up Done");
@@ -740,13 +753,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Fix Backward");
                     FixCylinder1.Backward();
                     FixCylinder2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout,() => FixCylinder1.IsBackward && FixCylinder2.IsBackward);
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => FixCylinder1.IsBackward && FixCylinder2.IsBackward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Cyl_Fix_Backward_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_FixCylinder_Backward_Fail :
+                                                           EWarning.OutWorkConveyor_FixCylinder_Backward_Fail));
                         break;
                     }
                     Log.Debug("Cylinder Fix Backward Done");
@@ -759,7 +773,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Wait_NextConveyorReady:
-                    if(FlagNextConveyorReady == false)
+                    if (FlagNextConveyorReady == false)
                     {
                         Wait(20);
                         break;
@@ -767,7 +781,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Muting_LightCurtain:
-                    if(port == EPort.Left)
+                    if (port == EPort.Left)
                     {
                         Log.Debug("Muting Light Curtain");
                         _devices.Outputs.OutCstLightCurtainMuting1.Value = true;
@@ -783,30 +797,30 @@ namespace PIFilmAutoDetachCleanMC.Process
                     ConveyorRunInOut(false);
 #if SIMULATION
                     Wait(3000);
-                    if(port == EPort.Right)
+                    if (port == EPort.Right)
                     {
                         SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect1, false);
                         SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect2, false);
                         SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect3, false);
                         SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect4, false);
 
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.BufferCstDetect1,true);
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.BufferCstDetect2,true);
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.BufferCstDetect1, true);
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.BufferCstDetect2, true);
                     }
                     else
                     {
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstWorkDetect1,false);
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstWorkDetect2,false);
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstWorkDetect3,false);
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstWorkDetect1, false);
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstWorkDetect2, false);
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstWorkDetect3, false);
 
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstDetect1,true);
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstDetect2,true);
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstDetect1, true);
+                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstDetect2, true);
                     }
 #endif
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Wait_CSTOut_Done:
-                    if(IsCassetteOut && IsNextConveyorDetect)
+                    if (IsCassetteOut && IsNextConveyorDetect)
                     {
                         if (port == EPort.Left)
                         {

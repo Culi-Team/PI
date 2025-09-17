@@ -256,7 +256,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EOutConveyorUnloadStep.Stopper_Up_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.OutConveyor_Stopper_Up_Fail);
                         break;
                     }
                     Log.Debug("Stopper Up Done");
@@ -320,7 +320,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EOutConveyorProcessOutWorkCSTUnloadStep.Stopper_Up_Wait:
                     if(WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.OutConveyor_Stopper_Up_Fail);
                         break;
                     }
                     Log.Debug("Stopper Up Done");

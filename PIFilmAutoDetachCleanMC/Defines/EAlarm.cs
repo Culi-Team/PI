@@ -17,12 +17,18 @@
 
         //InWorkConveyor
         InWorkConveyor = 2000,
+        InWorkConveyor_TAxis_Origin_Fail,
+        InWorkConveyor_TAxis_MoveWorkPosition_Fail,
+        InWorkConveyor_TAxis_MoveLoadPosition_Fail,
 
         //BufferConveyor
         BufferConveyor = 3000,
 
         //OutWorkConveyor
         OutWorkConveyor = 4000,
+        OutWorkConveyor_TAxis_Origin_Fail,
+        OutWorkConveyor_TAxis_MoveWorkPosition_Fail,
+        OutWorkConveyor_TAxis_MoveLoadPosition_Fail,
 
         //OutConveyor
         OutConveyor = 5000,

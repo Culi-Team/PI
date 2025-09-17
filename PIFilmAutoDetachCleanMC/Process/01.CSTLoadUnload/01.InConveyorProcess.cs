@@ -96,17 +96,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EConveyorOriginStep.CstStopper_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.InConveyor_CST_Stopper_Up_Fail);
                         break;
                     }
                     Log.Debug("Stopper Cylinder Down Done");
                     Step.OriginStep++;
                     break;
-                case EConveyorOriginStep.Roller_Stop:
-                    Log.Debug("Roller Stop");
-                    Roller1.Stop();
-                    Roller2.Stop();
-                    Roller3.Stop();
+                case EConveyorOriginStep.Conveyor_Stop:
+                    Log.Debug("Conveyor Stop");
+                    ConveyorRunStop(false);
                     Step.OriginStep++;
                     break;
                 case EConveyorOriginStep.End:
@@ -268,7 +266,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.InConveyor_CST_Stopper_Down_Fail);
                         break;
                     }
                     Log.Debug("Stopper Down Done");
@@ -329,7 +327,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.InConveyor_CST_Stopper_Up_Fail);
                         break;
                     }
                     Log.Debug("Stopper Up Done");
@@ -366,7 +364,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EInConveyorLoadStep.Stopper_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.InConveyor_CST_Stopper_Up_Fail);
                         break;
                     }
                     Log.Debug("Stopper Up Done");

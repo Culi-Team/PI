@@ -19,21 +19,41 @@ namespace PIFilmAutoDetachCleanMC.Defines
         //InConveyor
         InConveyor = 1000,
         InConveyor_CST_Position_Error,
+        InConveyor_CST_Stopper_Up_Fail,
+        InConveyor_CST_Stopper_Down_Fail,
 
         //InWorkConveyor
         InWorkConveyor = 2000,
         InWorkConveyorCSTNotDetect,
+        InWorkConveyor_TiltCylinder_Up_Fail,
+        InWorkConveyor_TiltCylinder_Down_Fail,
+        InWorkConveyor_SupportCV_Up_Fail,
+        InWorkConveyor_SupportCV_Down_Fail,
+        InWorkConveyor_FixCylinder_Backward_Fail,
+        InWorkConveyor_FixCylinder_Forward_Fail,
 
         //BufferConveyor
         BufferConveyor = 3000,
         BufferConveyor_CST_Position_Error,
+        BufferConveyor_Stopper1_Up_Fail,
+        BufferConveyor_Stopper1_Down_Fail,
+        BufferConveyor_Stopper2_Up_Fail,
+        BufferConveyor_Stopper2_Down_Fail,
 
         //OutWorkConveyor
         OutWorkConveyor = 4000,
         OutWorkConveyorCSTNotDetect,
+        OutWorkConveyor_TiltCylinder_Up_Fail,
+        OutWorkConveyor_TiltCylinder_Down_Fail,
+        OutWorkConveyor_SupportCV_Up_Fail,
+        OutWorkConveyor_SupportCV_Down_Fail,
+        OutWorkConveyor_FixCylinder_Backward_Fail,
+        OutWorkConveyor_FixCylinder_Forward_Fail,
 
         //OutConveyor
         OutConveyor = 5000,
+        OutConveyor_Stopper_Up_Fail,
+        OutConveyor_Stopper_Down_Fail,
 
         //VinylClean
         VinylClean = 6000,
