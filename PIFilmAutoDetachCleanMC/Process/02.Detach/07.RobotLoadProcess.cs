@@ -228,7 +228,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadOriginStep.Cyl_BackwardWait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if (ClampCyl.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnClamp_Fail);
+                            break;
+                        }
+                        if (AlignCyl.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_Backward_Fail);
+                            break;
+                        }
                         break;
                     }
                     Log.Debug("Cylinders Backward Done");
