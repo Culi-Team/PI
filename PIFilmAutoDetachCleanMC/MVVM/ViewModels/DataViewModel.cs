@@ -1,7 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Common;
+using EQX.Core.Motion;
 using EQX.Core.Recipe;
+using EQX.Motion;
 using EQX.UI.Controls;
+using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -15,11 +18,29 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
     {
         private string selectedModel;
         private RecipeBase _selectedRecipe;
-
-        public DataViewModel(RecipeSelector recipeSelector)
+        private readonly MotionsInovance _motionsInovance;
+        private readonly MotionsAjin _motionAjin;
+        public DataViewModel(RecipeSelector recipeSelector,
+            MotionsInovance motionsInovance,
+            MotionsAjin motionAjin)
         {
             RecipeSelector = recipeSelector;
+            _motionsInovance = motionsInovance;
+            _motionAjin = motionAjin;
         }
+
+        public ObservableCollection<IMotion> AllMotions
+        {
+            get
+            {
+                List<IMotion> motions = new List<IMotion>();
+                motions.AddRange(_motionsInovance.All);
+                motions.AddRange(_motionAjin.All);
+
+                return new ObservableCollection<IMotion>(motions);
+            }
+        }
+        
 
         public RecipeSelector RecipeSelector { get; }
 

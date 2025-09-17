@@ -141,108 +141,136 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10*" />
-            <RowDefinition Height="90*" />
-        </Grid.RowDefinitions>
-        <ListBox ItemsSource="{Binding Recipes}"
-                 Loaded="ListBox_Loaded"
-                 SelectedItem="{Binding SelectedRecipe}"
-                 SelectionChanged="RecipeChanged"
-                 Style="{StaticResource MainListBoxStyle}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Label Content="{Binding Name}"
-                           FontWeight="Bold"
-                           HorizontalContentAlignment="Center"
-                           FontSize="14"
-                           Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem" BasedOn="{StaticResource MainListBoxItemStyle}"/>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Rows="2" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-        </ListBox>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="1.5*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-
-            <ScrollViewer>
-                <UniformGrid x:Name="OptionsRecipe_StackPanel" 
-                             Columns="2"/>
-            </ScrollViewer>
-            
-            <!-- Recipe Panel -->
-            <ScrollViewer Grid.Column="1" Grid.RowSpan="2" Margin="5">
-                <StackPanel x:Name="CurrentRecipe_StackPanel" />
-            </ScrollViewer>
-            <GroupBox Grid.Row="1"
-                      Header="Models">
-                <Grid>
+    <TabControl>
+        <TabItem Header="Recipe">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*" />
+                    <RowDefinition Height="90*" />
+                </Grid.RowDefinitions>
+                <ListBox ItemsSource="{Binding Recipes}"
+                         Loaded="ListBox_Loaded"
+                         SelectedItem="{Binding SelectedRecipe}"
+                         SelectionChanged="RecipeChanged"
+                         Style="{StaticResource MainListBoxStyle}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Name}"
+                                   FontWeight="Bold"
+                                   HorizontalContentAlignment="Center"
+                                   FontSize="14"
+                                   Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem"
+                               BasedOn="{StaticResource MainListBoxItemStyle}" />
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="2" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="1.5*" />
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="6*" />
-                        <RowDefinition Height="4*" />
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                                  VerticalScrollBarVisibility="Auto">
-                        <ListBox ItemsSource="{Binding RecipeSelector.ValidRecipes}"
-                                 Loaded="ModelsListBox_Loaded"
-                                 SelectedItem="{Binding SelectedModel,Mode=OneWayToSource}"
-                                 Style="{StaticResource ModelsListBoxStyle}">
-                            <ListBox.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource ModelsListBoxItemStyle}"/>
-                            </ListBox.ItemContainerStyle>
-                        </ListBox>
+                    <ScrollViewer>
+                        <UniformGrid x:Name="OptionsRecipe_StackPanel"
+                                     Columns="2" />
                     </ScrollViewer>
 
-                    <UniformGrid Grid.Row="1"
-                                 Rows="2">
-                        <ui:ImageButton Content="{DynamicResource str_Select}"
-                                        Image="{StaticResource image_setting_selected2}"
-                                        Click="ChangeButton_Click"
-                                        FontSize="12"
-                                        Margin="2"
-                                        Height="50" />
-                        <ui:ImageButton Content="{DynamicResource str_Save}"
-                                        Command="{Binding SaveRecipeCommand}"
-                                        Image="{StaticResource image_save_all_selected}"
-                                        FontSize="12"
-                                        Margin="2"
-                                        Height="50" />
-                        <ui:ImageButton Content="{DynamicResource str_Load}"
-                                        Image="{StaticResource image_export_selected}"
-                                        FontSize="12"
-                                        Margin="2"
-                                        Height="50"
-                                        Click="ReloadButton_Clicked" />
-                        <ui:ImageButton Content="{DynamicResource str_Refresh}"
-                                        Image="{StaticResource image_refresh_selected}"
-                                        Command="{Binding RefreshRecipeCommand}"
-                                        FontSize="11"
-                                        Margin="2"
-                                        Height="50" />
-                        <ui:ImageButton Content="{DynamicResource str_Copy}"
-                                        Image="{StaticResource image_copy_selected}"
-                                        Command="{Binding CopyRecipeCommand}"
-                                        FontSize="12"
-                                        Height="50"
-                                        Margin="2" />
-                    </UniformGrid>
+                    <!-- Recipe Panel -->
+                    <ScrollViewer Grid.Column="1"
+                                  Grid.RowSpan="2"
+                                  Margin="5">
+                        <StackPanel x:Name="CurrentRecipe_StackPanel" />
+                    </ScrollViewer>
+                    <GroupBox Grid.Row="1"
+                              Header="Models">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="6*" />
+                                <RowDefinition Height="4*" />
+                            </Grid.RowDefinitions>
+
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                          VerticalScrollBarVisibility="Auto">
+                                <ListBox ItemsSource="{Binding RecipeSelector.ValidRecipes}"
+                                         Loaded="ModelsListBox_Loaded"
+                                         SelectedItem="{Binding SelectedModel,Mode=OneWayToSource}"
+                                         Style="{StaticResource ModelsListBoxStyle}">
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem"
+                                               BasedOn="{StaticResource ModelsListBoxItemStyle}" />
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
+                            </ScrollViewer>
+
+                            <UniformGrid Grid.Row="1"
+                                         Rows="2">
+                                <ui:ImageButton Content="{DynamicResource str_Select}"
+                                                Image="{StaticResource image_setting_selected2}"
+                                                Click="ChangeButton_Click"
+                                                FontSize="12"
+                                                Margin="2"
+                                                Height="50" />
+                                <ui:ImageButton Content="{DynamicResource str_Save}"
+                                                Command="{Binding SaveRecipeCommand}"
+                                                Image="{StaticResource image_save_all_selected}"
+                                                FontSize="12"
+                                                Margin="2"
+                                                Height="50" />
+                                <ui:ImageButton Content="{DynamicResource str_Load}"
+                                                Image="{StaticResource image_export_selected}"
+                                                FontSize="12"
+                                                Margin="2"
+                                                Height="50"
+                                                Click="ReloadButton_Clicked" />
+                                <ui:ImageButton Content="{DynamicResource str_Refresh}"
+                                                Image="{StaticResource image_refresh_selected}"
+                                                Command="{Binding RefreshRecipeCommand}"
+                                                FontSize="11"
+                                                Margin="2"
+                                                Height="50" />
+                                <ui:ImageButton Content="{DynamicResource str_Copy}"
+                                                Image="{StaticResource image_copy_selected}"
+                                                Command="{Binding CopyRecipeCommand}"
+                                                FontSize="12"
+                                                Height="50"
+                                                Margin="2" />
+                            </UniformGrid>
+                        </Grid>
+                    </GroupBox>
                 </Grid>
-            </GroupBox>
-        </Grid>
-    </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Speed">
+            <DataGrid ItemsSource="{Binding AllMotions}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Axis Name"
+                                        Binding="{Binding Name}"
+                                        Width="50" />
+                    <DataGridTextColumn Header="Speed"
+                                        Binding="{Binding Parameter.Velocity}"
+                                        Width="*" />
+                    <DataGridTextColumn Header="Acc"
+                                        Binding="{Binding Parameter.Acceleration}"
+                                        Width="100" />
+                    <DataGridTextColumn Header="Dec"
+                                        Binding="{Binding Parameter.Deceleration}"
+                                        Width="100" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </TabItem>
+    </TabControl>
 </UserControl>
