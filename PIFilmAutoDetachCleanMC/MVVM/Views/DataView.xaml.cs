@@ -69,10 +69,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             //Clear Recipe
             CurrentRecipe_StackPanel.Children.Clear();
             OptionsRecipe_StackPanel.Children.Clear();
-            SpeedConfig_StackPanel.Children.Clear();
 
             CurrentRecipe_StackPanel.Children.Add(new SingleRecipe(null, null) { IsHeader = true });
-            SpeedConfig_StackPanel.Children.Add(new SingleRecipe(null, null) { IsHeader = true });
 
             int index = 0;
 
@@ -153,154 +151,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                     continue;
                 }
             }
-            
-            // Also load SpeedConfig after loading recipe
-            if (this.DataContext is DataViewModel viewModel && viewModel.MotionConfigSelector?.CurrentMotionConfig != null)
-            {
-                LoadSpeedConfig(viewModel.MotionConfigSelector.CurrentMotionConfig);
-            }
         }
 
-        private void LoadSpeedConfig(MotionConfigList motionConfigList)
-        {
-            //Clear SpeedConfig
-            SpeedConfig_StackPanel.Children.Clear();
-
-            SpeedConfig_StackPanel.Children.Add(new SingleRecipe(null, null) { IsHeader = true });
-
-            int index = 0;
-
-            // Debug: Check if motionConfigList is null
-            if (motionConfigList == null)
-            {
-                System.Diagnostics.Debug.WriteLine("MotionConfigList is null!");
-                return;
-            }
-
-            // Debug: Check individual configs
-            if (motionConfigList.MotionAjinConfig == null)
-                System.Diagnostics.Debug.WriteLine("MotionAjinConfig is null!");
-            if (motionConfigList.MotionInovanceConfig == null)
-                System.Diagnostics.Debug.WriteLine("MotionInovanceConfig is null!");
-            if (motionConfigList.VinylCleanEncoderConfig == null)
-                System.Diagnostics.Debug.WriteLine("VinylCleanEncoderConfig is null!");
-
-            // Load MotionAjinConfig
-            LoadConfigObjectToStackPanel(motionConfigList.MotionAjinConfig, ref index);
-            
-            // Load MotionInovanceConfig  
-            LoadConfigObjectToStackPanel(motionConfigList.MotionInovanceConfig, ref index);
-            
-            // Load VinylCleanEncoderConfig
-            LoadConfigObjectToStackPanel(motionConfigList.VinylCleanEncoderConfig, ref index);
-
-            // Debug: Check final count
-            System.Diagnostics.Debug.WriteLine($"SpeedConfig_StackPanel children count: {SpeedConfig_StackPanel.Children.Count}");
-        }
-
-        private void LoadConfigObjectToStackPanel(IRecipe config, ref int index)
-        {
-            if (config == null)
-            {
-                System.Diagnostics.Debug.WriteLine("Config object is null!");
-                return;
-            }
-
-            PropertyInfo[] props = config.GetType().GetProperties();
-            System.Diagnostics.Debug.WriteLine($"Loading config: {config.GetType().Name}, Properties count: {props.Length}");
-
-            foreach (PropertyInfo prop in props)
-            {
-                // 1. Get all attributes of property
-                List<object> attrs = prop.GetCustomAttributes(false).ToList();
-
-                // 2. Ignore properties of base clas (Head / Name properties)
-                if (attrs.Count <= 0) continue;
-
-                // 3. Get DataDescriptionAttribute
-                if (attrs.FirstOrDefault(att => (att is SingleRecipeDescriptionAttribute)) == null)
-                {
-                    continue;
-                }
-                SingleRecipeDescriptionAttribute dataAttr = (SingleRecipeDescriptionAttribute)attrs.First(att => (att as SingleRecipeDescriptionAttribute) != null);
-                if (dataAttr.DescriptionKey != null)
-                    dataAttr.Description = Application.Current.Resources[dataAttr.DescriptionKey].ToString();
-                if (dataAttr.DetailKey != null)
-                    dataAttr.Detail = Application.Current.Resources[dataAttr.DetailKey].ToString();
-                // 4. Adding spacer if it's
-                if (dataAttr == null)
-                {
-                    throw new Exception("Attribute need to be add to recipe properties");
-                }
-                else if (dataAttr.IsSpacer)
-                {
-                    SpeedConfig_StackPanel.Children.Add(new SingleRecipe(dataAttr, null));
-                    continue;
-                }
-                
-                // 5. Extract DataMinMaxAtrribute
-                SingleRecipeMinMaxAttribute minMaxAttribute = null;
-                if (attrs.FirstOrDefault(att => att is SingleRecipeMinMaxAttribute) != null)
-                {
-                    minMaxAttribute = (SingleRecipeMinMaxAttribute)attrs.FirstOrDefault(att => att is SingleRecipeMinMaxAttribute);
-                }
-
-                // 6. Add speed config DataView to the view
-                if (prop.PropertyType.Name == nameof(Double)
-                    || prop.PropertyType.Name == nameof(Int32) || prop.PropertyType.Name == nameof(UInt32)
-                    || prop.PropertyType.Name == nameof(Int64) || prop.PropertyType.Name == nameof(UInt64))
-                {
-                    dataAttr.Index = ++index;
-                    Binding binding = new Binding(prop.Name)
-                    {
-                        Source = config,
-                        Mode = BindingMode.TwoWay,
-                        UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-                    };
-
-                    SingleRecipe singleRecipe = new SingleRecipe(dataAttr, minMaxAttribute);
-                    singleRecipe.SetBinding(SingleRecipe.ValueProperty, binding);
-                    SpeedConfig_StackPanel.Children.Add(singleRecipe);
-                }
-                else if (prop.PropertyType.Name == nameof(Boolean))
-                {
-                    Binding binding = new Binding(prop.Name)
-                    {
-                        Source = config,
-                        Mode = BindingMode.TwoWay,
-                        UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-                    };
-                    CheckBox checkBox = new CheckBox()
-                    {
-                        Content = dataAttr.Description,
-                        Tag = dataAttr.Detail,
-                        Margin = new Thickness(5),
-                    };
-
-                    checkBox.SetBinding(CheckBox.IsCheckedProperty, binding);
-
-                    SpeedConfig_StackPanel.Children.Add(checkBox);
-
-                    continue;
-                }
-            }
-        }
 
         private void DataView_Loaded(object sender, RoutedEventArgs e)
         {
             if (this.DataContext is not DataViewModel viewModel) return;
-
-            // Load SpeedConfig initially
-            if (viewModel.MotionConfigSelector != null)
-            {
-                // Load MotionConfig data first
-                viewModel.MotionConfigSelector.Load();
-                
-                if (viewModel.MotionConfigSelector.CurrentMotionConfig != null)
-                {
-                    LoadSpeedConfig(viewModel.MotionConfigSelector.CurrentMotionConfig);
-                }
-            }
 
             viewModel.LoadRecipeEvent += () =>
             {
@@ -309,7 +165,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                     LoadRecipe(viewModel.CurrentRecipe);
                 }
             };
-
         }
 
         private void ListBox_Loaded(object sender, RoutedEventArgs e)

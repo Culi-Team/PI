@@ -41,14 +41,6 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
                 services.AddSingleton<RecipeList>();
                 services.AddSingleton<RecipeSelector>();
-
-                // Config services - Multiple instances for different recipes
-                services.AddKeyedSingleton<MotionAjinConfig>("MotionAjinConfig");
-                services.AddKeyedSingleton<MotionInovanceConfig>("MotionInovanceConfig");
-                services.AddKeyedSingleton<VinylCleanEncoderConfig>("VinylCleanEncoderConfig");
-
-                services.AddSingleton<MotionConfigList>();
-                services.AddSingleton<MotionConfigSelector>();
             });
             return hostBuilder;
         }
