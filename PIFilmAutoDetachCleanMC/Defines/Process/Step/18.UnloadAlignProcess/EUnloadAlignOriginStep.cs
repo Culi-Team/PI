@@ -9,8 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EUnloadAlignOriginStep
     {
         Start,
-        Cyl_Unalign,
-        Cyl_Unalign_Wait,
+        Cyl_Align_Down,
+        Cyl_Align_Down_Wait,
         End
     }
 }

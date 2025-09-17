@@ -201,6 +201,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         //Unload Align
         UnloadAlign = 25000,
+        UnloadAlign_AlignCylinder_Up_Fail,
+        UnloadAlign_AlignCylinder_Down_Fail,
 
         //Robot Unload
         RobotUnload = 26000,

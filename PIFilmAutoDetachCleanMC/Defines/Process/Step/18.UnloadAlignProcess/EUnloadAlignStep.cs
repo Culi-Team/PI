@@ -9,13 +9,13 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EUnloadAlignStep
     {
         Start,
-        Cyl_Align,
-        Cyl_Align_Wait,
+        Cyl_Align_Up,
+        Cyl_Align_Up_Wait,
         Vacuum_Off_Align,
         Vacuum_On,
         GlassDetect_Check,
-        Cyl_UnAlign,
-        Cyl_UnAlign_Wait,
+        Cyl_Align_Down,
+        Cyl_Align_Down_Wait,
 
         End
     }

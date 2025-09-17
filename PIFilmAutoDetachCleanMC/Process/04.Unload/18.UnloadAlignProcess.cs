@@ -137,19 +137,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Origin Start");
                     Step.OriginStep++;
                     break;
-                case EUnloadAlignOriginStep.Cyl_Unalign:
-                    Log.Debug("Cylinder Unalign");
+                case EUnloadAlignOriginStep.Cyl_Align_Down:
+                    Log.Debug("Cylinder Align Down");
                     AlignUnalign(false);
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return IsUnalign; });
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => IsUnalign);
                     Step.OriginStep++;
                     break;
-                case EUnloadAlignOriginStep.Cyl_Unalign_Wait:
-                    if (!IsUnalign)
+                case EUnloadAlignOriginStep.Cyl_Align_Down_Wait:
+                    if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.UnloadAlign_AlignCylinder_Down_Fail);
                         break;
                     }
-                    Log.Debug("Cylinder Unalign Done");
+                    Log.Debug("Cylinder Align Down Done");
                     Step.OriginStep++;
                     break;
                 case EUnloadAlignOriginStep.End:
@@ -335,19 +335,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     FlagRobotUnloadDoneReceived = false;
                     Step.RunStep++;
                     break;
-                case EUnloadAlignStep.Cyl_Align:
-                    Log.Debug("Cylinder Align");
+                case EUnloadAlignStep.Cyl_Align_Up:
+                    Log.Debug("Cylinder Align Up");
                     AlignUnalign(true);
                     Wait(_commonRecipe.CylinderMoveTimeout, () => IsAlign);
                     Step.RunStep++;
                     break;
-                case EUnloadAlignStep.Cyl_Align_Wait:
+                case EUnloadAlignStep.Cyl_Align_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.UnloadAlign_AlignCylinder_Up_Fail);
                         break;
                     }
-                    Log.Debug("Cylinder Align Done");
+                    Log.Debug("Cylinder Align Up Done");
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.Vacuum_Off_Align:
@@ -376,19 +376,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.RunStep++;
                     break;
-                case EUnloadAlignStep.Cyl_UnAlign:
-                    Log.Debug("Cylinder UnAlign");
+                case EUnloadAlignStep.Cyl_Align_Down:
+                    Log.Debug("Cylinder Align Down");
                     AlignUnalign(false);
                     Wait(_commonRecipe.CylinderMoveTimeout, () => IsAlign == false);
                     Step.RunStep++;
                     break;
-                case EUnloadAlignStep.Cyl_UnAlign_Wait:
+                case EUnloadAlignStep.Cyl_Align_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.UnloadAlign_AlignCylinder_Down_Fail);
                         break;
                     }
-                    Log.Debug("Cylinder UnAlign Done");
+                    Log.Debug("Cylinder Align Down Done");
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.End:
