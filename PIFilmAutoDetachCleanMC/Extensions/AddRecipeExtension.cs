@@ -39,6 +39,8 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
                 services.AddSingleton<RobotUnloadRecipe>();
 
+                services.AddSingleton<MontionSpeedConfig>();
+
                 services.AddSingleton<RecipeList>();
                 services.AddSingleton<RecipeSelector>();
             });
