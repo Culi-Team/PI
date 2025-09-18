@@ -24,6 +24,7 @@ using EQX.Core.TorqueController;
 using EQX.Motion.Torque;
 using EQX.Core.Robot;
 using EQX.Motion.Robot;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -328,6 +329,16 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     return new RobotKukaTcp(2, "Kuka Robot","192.168.1.200");
                 });
 #endif
+            });
+
+            return hostBuilder;
+        }
+
+        public static IHostBuilder AddCassette(this IHostBuilder hostBuilder)
+        {
+            hostBuilder.ConfigureServices((hostContext, services) =>
+            {
+                services.AddSingleton<CassetteList>();
             });
 
             return hostBuilder;

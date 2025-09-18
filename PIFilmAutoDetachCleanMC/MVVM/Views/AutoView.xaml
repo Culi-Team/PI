@@ -6,32 +6,49 @@
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
              xmlns:cvt="clr-namespace:PIFilmAutoDetachCleanMC.Converters"
              mc:Ignorable="d"
+             xmlns:vm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels"
+             d:DataContext="{d:DesignInstance Type={x:Type vm:AutoViewModel}}"
              xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              d:DesignHeight="450"
              d:DesignWidth="800">
     <UserControl.Resources>
         <Style TargetType="{x:Type Button}">
-            <Setter Property="Margin" Value="2 2 0 2" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Margin"
+                    Value="2 2 0 2" />
+            <Setter Property="FontWeight"
+                    Value="SemiBold" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="Cursor"
+                    Value="Hand" />
         </Style>
-        <Style TargetType="{x:Type ui:InterlockButton}" BasedOn="{StaticResource {x:Type ui:InterlockButton}}">
-            <Setter Property="Margin" Value="2 2 0 2" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="Cursor" Value="Hand" />
+        <Style TargetType="{x:Type ui:InterlockButton}"
+               BasedOn="{StaticResource {x:Type ui:InterlockButton}}">
+            <Setter Property="Margin"
+                    Value="2 2 0 2" />
+            <Setter Property="FontWeight"
+                    Value="SemiBold" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="Cursor"
+                    Value="Hand" />
         </Style>
-        
+
         <!-- Signal Ellipse Style -->
-        <Style x:Key="SignalEllipseStyle" TargetType="Ellipse">
-            <Setter Property="Width" Value="20" />
-            <Setter Property="Height" Value="20" />
-            <Setter Property="Fill" Value="Red" />
-            <Setter Property="Stroke" Value="White" />
-            <Setter Property="StrokeThickness" Value="2" />
+        <Style x:Key="SignalEllipseStyle"
+               TargetType="Ellipse">
+            <Setter Property="Width"
+                    Value="20" />
+            <Setter Property="Height"
+                    Value="20" />
+            <Setter Property="Fill"
+                    Value="Red" />
+            <Setter Property="Stroke"
+                    Value="White" />
+            <Setter Property="StrokeThickness"
+                    Value="2" />
         </Style>
-        
+
         <cvt:InputOutputStopConverter x:Key="InputOutputStopConverter" />
     </UserControl.Resources>
     <Grid>
@@ -41,26 +58,73 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            <Border Grid.Row="1" Margin="0 0 0 0">
-                <Viewbox Stretch="UniformToFill">
-                    <Grid>
-                        <Image Source="{StaticResource AutoViewImage}"/>
-                        <Canvas>
-                            <Ellipse Canvas.Left="25" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
-                            <Ellipse Canvas.Left="59" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
-                            <Ellipse Canvas.Left="100" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
-                            <Ellipse Canvas.Left="138" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
-                            <Ellipse Canvas.Left="179" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
-                            <Ellipse Canvas.Left="219" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
-                            <Ellipse Canvas.Left="263" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
-                            <Ellipse Canvas.Left="306" Canvas.Top="230" Style="{StaticResource SignalEllipseStyle}"/>
-                        </Canvas>
-                    </Grid>
-                </Viewbox>
+            <Border Grid.Row="1"
+                    Margin="0 0 0 0">
+                <Canvas>
+                    <Image Source="{StaticResource AutoViewImage}"
+                           Canvas.Left="200"
+                           Canvas.Top="50"/>
+                    <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
+                                  Margin="5 5 5 0"
+                                  Canvas.Left="300"
+                                  Canvas.Top="420"
+                                  Height="250"
+                                  Grid.Row="2"
+                                  Grid.Column="1"
+                                  ItemsSource="{Binding CassetteList.CassetteIn.Cells}">
+                        <ItemsControl.Template>
+                            <ControlTemplate>
+                                <GroupBox Header="CASSETTE IN"
+                                          Background="Gray">
+                                    <ItemsPresenter />
+                                </GroupBox>
+                            </ControlTemplate>
+                        </ItemsControl.Template>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ui:TrayCellView />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="{Binding DataContext.CassetteList.CassetteIn.Columns, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+
+                    <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
+                                  Margin="5 5 5 0"
+                                  Canvas.Left="300"
+                                  Canvas.Top="-220"
+                                  Height="250"
+                                  Grid.Row="2"
+                                  Grid.Column="1"
+                                  ItemsSource="{Binding CassetteList.CassetteOut.Cells}">
+                        <ItemsControl.Template>
+                            <ControlTemplate>
+                                <GroupBox Header="CASSETTE OUT"
+                                          Background="Gray">
+                                    <ItemsPresenter />
+                                </GroupBox>
+                            </ControlTemplate>
+                        </ItemsControl.Template>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ui:TrayCellView />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="{Binding DataContext.CassetteList.CassetteOut.Columns, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+
+                </Canvas>
             </Border>
         </Grid>
         <UniformGrid Rows="9"
@@ -73,7 +137,7 @@
                     Background="LightBlue" />
             <Button Content="Initialize"
                     Background="LightBlue"
-                    Command="{Binding InitializeNavigate}"/>
+                    Command="{Binding InitializeNavigate}" />
             <Button Content="Origin"
                     Background="LightBlue"
                     Command="{Binding OriginCommand}" />

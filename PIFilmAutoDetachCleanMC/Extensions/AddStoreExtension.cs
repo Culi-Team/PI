@@ -1,6 +1,8 @@
 ﻿using EQX.Core.Common;
+using EQX.UI.Converters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
 using PIFilmAutoDetachCleanMC.Process;
 
@@ -13,7 +15,8 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
                 services.AddSingleton<UserStore>();
-
+                services.AddSingleton<ICellColorRepository,CellColorRepository>();
+                services.AddSingleton<CellStatusToColorConverter>();
                 services.AddKeyedScoped("BlinkTimer", (s, o) => { return new ActionAssignableTimer(500); });
             });
 

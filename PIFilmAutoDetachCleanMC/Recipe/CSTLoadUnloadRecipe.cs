@@ -13,7 +13,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 		private uint conveyorSpeed;
         private uint conveyorAcc;
         private uint conveyorDec;
-        private uint casetteRow;
+        private int casetteColumn;
         private uint pitch;
         private double inCstTAxisLoadPosition;
         private double inCstTAxisWorkPosition;
@@ -44,12 +44,12 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 			set { conveyorDec = value; }
 		}
 
-        [SingleRecipeDescription(Description = "Cassette Rows", Unit = Unit.ETC)]
+        [SingleRecipeDescription(Description = "Cassette Columns", Unit = Unit.ETC)]
         [SingleRecipeMinMax(Max = 20, Min = 1)]
-        public uint CasetteRow
-		{
-			get { return casetteRow; }
-			set { casetteRow = value; }
+        public int CasetteColumn
+        {
+			get { return casetteColumn; }
+			set { casetteColumn = value; }
 		}
 
         [SingleRecipeDescription(Description = "Cassette Pitch", Unit = Unit.mm)]

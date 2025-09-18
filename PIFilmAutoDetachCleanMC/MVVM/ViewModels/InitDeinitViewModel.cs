@@ -12,6 +12,7 @@ using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
 using log4net;
 using System.Runtime.CompilerServices;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -33,6 +34,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         ProcessHandle,
 
+        CassetteHandle,
 
         End,
         Error,
@@ -71,10 +73,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public InitDeinitViewModel(Devices devices,
             Processes processes,
             INavigationService navigationService,
-            [FromKeyedServices("RollerModbusCommunication")]IModbusCommunication rollerModbusCommunication,
-            [FromKeyedServices("TorqueControllerModbusCommunication")]IModbusCommunication torqueModbusCommnication,
+            [FromKeyedServices("RollerModbusCommunication")] IModbusCommunication rollerModbusCommunication,
+            [FromKeyedServices("TorqueControllerModbusCommunication")] IModbusCommunication torqueModbusCommnication,
             RecipeSelector recipeSelector,
-            VirtualIO virtualIO)
+            VirtualIO virtualIO,
+            CassetteList cassetteList)
         {
             _devices = devices;
             _processes = processes;
@@ -83,6 +86,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _torqueModbusCommnication = torqueModbusCommnication;
             _recipeSelector = recipeSelector;
             _virtualIO = virtualIO;
+            _cassetteList = cassetteList;
             _task = new Task(() => { });
             ErrorMessages = new List<string>();
 
@@ -152,11 +156,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         break;
                     case EHandleStep.CommunicationHandle:
                         Log.Debug("Connect Modbus Communication");
-                        if(_rollerModbusCommunication.Connect() == false)
+                        if (_rollerModbusCommunication.Connect() == false)
                         {
                             ErrorMessages.Add("Speed Controller Connect Fail");
                         }
-                        if(_torqueModbusCommnication.Connect() == false)
+                        if (_torqueModbusCommnication.Connect() == false)
                         {
                             ErrorMessages.Add("Torque Controller Connect Fail");
                         }
@@ -232,7 +236,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     case EHandleStep.RecipeHandle:
                         Log.Debug("Load Recipes");
                         MessageText = "Load Recipes";
-                        if(_recipeSelector.Load() == false)
+                        if (_recipeSelector.Load() == false)
                         {
                             ErrorMessages.Add("Recipes Load Fail.");
                             Log.Debug("Recipe Load Fail");
@@ -246,6 +250,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         _virtualIO.Initialize();
                         _virtualIO.Mappings();
+                        _step++;
+                        break;
+                    case EHandleStep.CassetteHandle:
+                        Log.Debug("Init Cassette");
+                        _cassetteList.RecipeUpdateHandle();
+                        _cassetteList.SubscribeCellClickedEvent();
                         _step++;
                         break;
                     case EHandleStep.End:
@@ -325,6 +335,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     case EHandleStep.ProcessHandle:
                         _step++;
                         break;
+                    case EHandleStep.CassetteHandle:
+                        _step++;
+                        break;
                     case EHandleStep.End:
                         _step++;
                         break;
@@ -354,6 +367,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly IModbusCommunication _torqueModbusCommnication;
         private readonly RecipeSelector _recipeSelector;
         private readonly VirtualIO _virtualIO;
+        private readonly CassetteList _cassetteList;
         private readonly Devices _devices;
         private readonly Processes _processes;
 

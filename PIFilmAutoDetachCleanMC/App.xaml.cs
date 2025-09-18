@@ -6,6 +6,7 @@ using System.Windows;
 using PIFilmAutoDetachCleanMC.Extensions;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
 using PIFilmAutoDetachCleanMC.MVVM.Views;
+using EQX.UI.Converters;
 
 namespace PIFilmAutoDetachCleanMC
 {
@@ -34,12 +35,16 @@ namespace PIFilmAutoDetachCleanMC
                 .AddTorqueControllerDevices()
                 .AddRecipes()
                 .AddProcesses()
+                .AddCassette()
                 .Build();
         }
 
         protected override async void OnStartup(StartupEventArgs e)
         {
             await AppHost!.StartAsync();
+
+            var converter = AppHost.Services.GetRequiredService<CellStatusToColorConverter>();
+            Application.Current.Resources.Add(nameof(CellStatusToColorConverter), converter);
 
             Window window = AppHost.Services.GetRequiredService<MainWindowView>();
             window.DataContext = AppHost.Services.GetRequiredService<MainWindowViewModel>();
