@@ -225,8 +225,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Down:
                     Log.Debug("Stopper Down");
-                    StopperCylinder.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => StopperCylinder.IsForward);
+                    StopperCylinder.Backward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => StopperCylinder.IsBackward);
                     Step.RunStep++;
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Down_Wait:
@@ -286,8 +286,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Up:
                     Log.Debug("Stopper Up");
-                    StopperCylinder.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => StopperCylinder.IsBackward);
+                    StopperCylinder.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => StopperCylinder.IsForward);
                     Step.RunStep++;
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Up_Wait:
