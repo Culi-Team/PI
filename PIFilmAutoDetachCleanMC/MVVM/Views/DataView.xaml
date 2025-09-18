@@ -253,24 +253,83 @@
             </Grid>
         </TabItem>
         <TabItem Header="Speed">
-            <DataGrid ItemsSource="{Binding AllMotions}"
-                      AutoGenerateColumns="False"
-                      CanUserAddRows="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Axis Name"
-                                        Binding="{Binding Name}" 
-                                        Width="*"/>
-                    <DataGridTextColumn Header="Speed"
-                                        Binding="{Binding Parameter.Velocity}"
-                                        Width="*" />
-                    <DataGridTextColumn Header="Acc"
-                                        Binding="{Binding Parameter.Acceleration}"
-                                        Width="*" />
-                    <DataGridTextColumn Header="Dec"
-                                        Binding="{Binding Parameter.Deceleration}"
-                                        Width="*" />
-                </DataGrid.Columns>
-            </DataGrid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+                <DataGrid Grid.Row="0"
+                          ItemsSource="{Binding AllMotions}"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Axis Name"
+                                            Binding="{Binding Name}" 
+                                            Width="*"/>
+                        <DataGridTextColumn Header="Speed"
+                                            Binding="{Binding Parameter.Velocity}"
+                                            Width="*" />
+                        <DataGridTextColumn Header="Acc"
+                                            Binding="{Binding Parameter.Acceleration}"
+                                            Width="*" />
+                        <DataGridTextColumn Header="Dec"
+                                            Binding="{Binding Parameter.Deceleration}"
+                                            Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                
+                <StackPanel Grid.Row="1" 
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Right" 
+                            Margin="5">
+                    <ui:ImageButton Content="{DynamicResource str_Save}"
+                                    Command="{Binding SaveMotionConfigCommand}"
+                                    Image="{StaticResource image_save_all_selected}"
+                                    FontSize="12"
+                                    Margin="5"
+                                    Height="40"
+                                    Width="100" />
+                </StackPanel>
+            </Grid>
         </TabItem>
+        <TabItem Header="VinylCleanEncoder">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <DataGrid Grid.Row="0"
+                          ItemsSource="{Binding VinylCleanEncoder}"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Parameter"
+                                            Binding="{Binding Parameter}"
+                                            IsReadOnly="True"
+                                            Width="*"/>
+                        <DataGridTextColumn Header="Value"
+                                            Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                            Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <StackPanel Grid.Row="1" 
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Right" 
+                            Margin="5">
+                    <ui:ImageButton Content="{DynamicResource str_Save}"
+                                    Command="{Binding SaveVinylCleanEncoderCommand}"
+                                    Image="{StaticResource image_save_all_selected}"
+                                    FontSize="12"
+                                    Margin="5"
+                                    Height="40"
+                                    Width="100" />
+                </StackPanel>
+            </Grid>
+        </TabItem>
+
     </TabControl>
 </UserControl>

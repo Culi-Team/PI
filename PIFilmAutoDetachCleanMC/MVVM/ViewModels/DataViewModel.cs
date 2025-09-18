@@ -3,6 +3,7 @@ using EQX.Core.Common;
 using EQX.Core.Motion;
 using EQX.Core.Recipe;
 using EQX.Motion;
+using EQX.Motion.ByVendor.Inovance;
 using EQX.UI.Controls;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Recipe;
@@ -11,6 +12,10 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
+using Newtonsoft.Json;
+using System.IO;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -20,13 +25,19 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private RecipeBase _selectedRecipe;
         private readonly MotionsInovance _motionsInovance;
         private readonly MotionsAjin _motionAjin;
+        private readonly IMotion _vinylCleanEncoder;
+        private readonly IConfiguration _configuration;
         public DataViewModel(RecipeSelector recipeSelector,
             MotionsInovance motionsInovance,
-            MotionsAjin motionAjin)
+            MotionsAjin motionAjin,
+            [FromKeyedServices("VinylCleanEncoder")] IMotion vinylCleanEncoder,
+            IConfiguration configuration)
         {
             RecipeSelector = recipeSelector;
             _motionsInovance = motionsInovance;
             _motionAjin = motionAjin;
+            _vinylCleanEncoder = vinylCleanEncoder;
+            _configuration = configuration;
         }
 
         public ObservableCollection<IMotion> AllMotions
@@ -41,6 +52,43 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
         
+        public ObservableCollection<VinylCleanParameter> VinylCleanEncoder
+        {
+            get
+            {
+                List<VinylCleanParameter> encoders = new List<VinylCleanParameter>();
+                encoders.Add(new VinylCleanParameter 
+                { 
+                    Parameter = "Pulse", 
+                    Value = _vinylCleanEncoder?.Parameter?.Pulse.ToString() ?? "0",
+                    OnValueChanged = (value) => UpdateVinylCleanEncoderPulse(value)
+                });
+                encoders.Add(new VinylCleanParameter 
+                { 
+                    Parameter = "Unit", 
+                    Value = _vinylCleanEncoder?.Parameter?.Unit.ToString() ?? "0",
+                    OnValueChanged = (value) => UpdateVinylCleanEncoderUnit(value)
+                });
+
+                return new ObservableCollection<VinylCleanParameter>(encoders);
+            }
+        }
+
+        private void UpdateVinylCleanEncoderPulse(string value)
+        {
+            if (double.TryParse(value, out double pulse) && _vinylCleanEncoder?.Parameter != null)
+            {
+                _vinylCleanEncoder.Parameter.Pulse = (int)pulse;
+            }
+        }
+
+        private void UpdateVinylCleanEncoderUnit(string value)
+        {
+            if (double.TryParse(value, out double unit) && _vinylCleanEncoder?.Parameter != null)
+            {
+                _vinylCleanEncoder.Parameter.Unit = (uint)unit;
+            }
+        }
 
         public RecipeSelector RecipeSelector { get; }
 
@@ -143,5 +191,134 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
+        public ICommand SaveMotionConfigCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    try
+                    {
+                        var result = MessageBoxEx.ShowDialog("Do you want to save the motion configurations?",true,"Confirm Save");
+                        
+                        if (result == true) 
+                        {
+                            SaveMotionConfigurations();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBoxEx.ShowDialog($"Error saving motion configurations: {ex.Message}");
+                    }
+                });
+            }
+        }
+
+        public ICommand SaveVinylCleanEncoderCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    try
+                    {
+                        var result = MessageBoxEx.ShowDialog("Do you want to save the VinylCleanEncoder configuration?", true, "Confirm Save");
+
+                        if (result == true)
+                        {
+                            SaveVinylCleanEncoderConfiguration();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBoxEx.ShowDialog($"Error saving VinylCleanEncoder configuration: {ex.Message}");
+                    }
+                });
+            }
+        }
+
+        private void SaveMotionConfigurations()
+        {
+            // Lưu cấu hình Motion Inovance
+            var inovanceConfigPath = _configuration["Files:MotionInovanceParaConfigFile"];
+            if (!string.IsNullOrEmpty(inovanceConfigPath))
+            {
+                // Đọc file config hiện tại để giữ nguyên các giá trị khác
+                var existingInovanceParams = JsonConvert.DeserializeObject<List<MotionInovanceParameter>>(
+                    File.ReadAllText(inovanceConfigPath)) ?? new List<MotionInovanceParameter>();
+
+                // Cập nhật chỉ 3 giá trị: Velocity, Acceleration, Deceleration
+                for (int i = 0; i < _motionsInovance.All.Count && i < existingInovanceParams.Count; i++)
+                {
+                    existingInovanceParams[i].Velocity = _motionsInovance.All[i].Parameter.Velocity;
+                    existingInovanceParams[i].Acceleration = _motionsInovance.All[i].Parameter.Acceleration;
+                    existingInovanceParams[i].Deceleration = _motionsInovance.All[i].Parameter.Deceleration;
+                }
+
+                var inovanceJson = JsonConvert.SerializeObject(existingInovanceParams, Formatting.Indented);
+                File.WriteAllText(inovanceConfigPath, inovanceJson);
+            }
+
+            // Lưu cấu hình Motion Ajin
+            var ajinConfigPath = _configuration["Files:MotionAjinParaConfigFile"];
+            if (!string.IsNullOrEmpty(ajinConfigPath))
+            {
+                // Đọc file config hiện tại để giữ nguyên các giá trị khác
+                var existingAjinParams = JsonConvert.DeserializeObject<List<MotionAjinParameter>>(
+                    File.ReadAllText(ajinConfigPath)) ?? new List<MotionAjinParameter>();
+
+                // Cập nhật chỉ 3 giá trị: Velocity, Acceleration, Deceleration
+                for (int i = 0; i < _motionAjin.All.Count && i < existingAjinParams.Count; i++)
+                {
+                    existingAjinParams[i].Velocity = _motionAjin.All[i].Parameter.Velocity;
+                    existingAjinParams[i].Acceleration = _motionAjin.All[i].Parameter.Acceleration;
+                    existingAjinParams[i].Deceleration = _motionAjin.All[i].Parameter.Deceleration;
+                }
+
+                var ajinJson = JsonConvert.SerializeObject(existingAjinParams, Formatting.Indented);
+                File.WriteAllText(ajinConfigPath, ajinJson);
+            }
+        }
+        private void SaveVinylCleanEncoderConfiguration()
+        {
+            // Lưu cấu hình VinylCleanEncoder
+            var vinylCleanConfigPath = _configuration["Files:VinylCleanEncoderParaConfigFile"];
+            if (!string.IsNullOrEmpty(vinylCleanConfigPath))
+            {
+                // Đọc file config hiện tại để giữ nguyên các giá trị khác
+                var existingVinylCleanParam = JsonConvert.DeserializeObject<MotionParameter>(
+                    File.ReadAllText(vinylCleanConfigPath));
+
+                if (existingVinylCleanParam != null)
+                {
+                    // Cập nhật chỉ các giá trị Pulse và Unit
+                    existingVinylCleanParam.Pulse = _vinylCleanEncoder?.Parameter != null ? _vinylCleanEncoder.Parameter.Pulse : 0;
+                    existingVinylCleanParam.Unit = _vinylCleanEncoder?.Parameter?.Unit ?? 0u;
+
+                    var vinylCleanJson = JsonConvert.SerializeObject(existingVinylCleanParam, Formatting.Indented);
+                    File.WriteAllText(vinylCleanConfigPath, vinylCleanJson);
+                }
+            }
+        }
     }
+}
+
+public class VinylCleanParameter : ViewModelBase
+{
+    private string _value;
+    
+    public string Parameter { get; set; }
+    
+    public string Value 
+    { 
+        get { return _value; }
+        set 
+        { 
+            _value = value;
+            OnPropertyChanged();
+            OnValueChanged?.Invoke(value);
+        }
+    }
+    
+    public Action<string> OnValueChanged { get; set; }
 }
