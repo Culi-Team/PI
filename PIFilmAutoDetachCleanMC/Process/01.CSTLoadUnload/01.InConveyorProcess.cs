@@ -136,73 +136,39 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_InWorkCSTLoad();
                     break;
                 case ESequence.InWorkCSTUnLoad:
-                    break;
                 case ESequence.CSTTilt:
-                    break;
                 case ESequence.OutWorkCSTLoad:
-                    break;
                 case ESequence.OutWorkCSTUnLoad:
-                    break;
                 case ESequence.OutConveyorUnload:
-                    break;
                 case ESequence.RobotPickFixtureFromCST:
-                    break;
                 case ESequence.RobotPlaceFixtureToVinylClean:
-                    break;
                 case ESequence.VinylClean:
-                    break;
                 case ESequence.RobotPickFixtureFromVinylClean:
-                    break;
                 case ESequence.RobotPlaceFixtureToAlign:
-                    break;
                 case ESequence.FixtureAlign:
-                    break;
                 case ESequence.RobotPickFixtureFromRemoveZone:
-                    break;
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
-                    break;
                 case ESequence.TransferFixtureLoad:
-                    break;
                 case ESequence.Detach:
-                    break;
                 case ESequence.TransferFixtureUnload:
-                    break;
                 case ESequence.DetachUnload:
-                    break;
                 case ESequence.RemoveFilm:
-                    break;
                 case ESequence.GlassTransferPick:
-                    break;
                 case ESequence.GlassTransferPlace:
-                    break;
                 case ESequence.AlignGlass:
-                    break;
                 case ESequence.TransferInShuttlePick:
-                    break;
                 case ESequence.WETCleanLoad:
-                    break;
                 case ESequence.WETClean:
-                    break;
                 case ESequence.WETCleanUnload:
-                    break;
                 case ESequence.TransferRotation:
-                    break;
                 case ESequence.AFCleanLoad:
-                    break;
                 case ESequence.AFClean:
-                    break;
                 case ESequence.AFCleanUnload:
-                    break;
                 case ESequence.UnloadTransferPlace:
-                    break;
                 case ESequence.UnloadAlignGlass:
-                    break;
                 case ESequence.UnloadRobotPick:
-                    break;
                 case ESequence.UnloadRobotPlasma:
-                    break;
                 case ESequence.UnloadRobotPlace:
-                    break;
                 default:
                     break;
             }
@@ -393,7 +359,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EInConveyorLoadStep.End:
                     Log.Debug("In Conveyor Load End");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
