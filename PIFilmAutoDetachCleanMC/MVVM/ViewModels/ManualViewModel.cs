@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Common;
+using EQX.Core.Communication.Modbus;
 using EQX.Core.Device.SpeedController;
 using EQX.Core.Display;
 using EQX.Core.InOut;
@@ -38,8 +39,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public RecipeList RecipeList;
         public RecipeSelector RecipeSelector;
         public Processes Processes;
-        public DataViewModel DataViewModel { get; }
+        private readonly IModbusCommunication _rollerModbusCommunication;
+        private readonly IModbusCommunication _torqueModbusCommunication;
+
         public ObservableCollection<IProcess<ESequence>> ProcessListTeaching => GetProcessList();
+
         private IProcess<ESequence> _selectedProcess;
         public IProcess<ESequence> SelectedProcess
         {
@@ -51,6 +55,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 SelectedPropertyProcess();
             }
         }
+
         private ObservableCollection<ICylinder> _cylinders;
         public ObservableCollection<ICylinder> Cylinders
         {
@@ -241,7 +246,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         // Properties for binding
         public bool MotionsInovanceIsConnected => MotionsInovance.MotionControllerInovance.IsConnected;
         public bool MotionAjinIsConnected => MotionsAjin.All.All(m => m.IsConnected);
-        
+        public bool SpeedControllersIsConnected => Devices.SpeedControllerList.All.All(sc => sc.IsConnected);
+        public bool TorqueControllersIsConnected => Devices.TorqueControllers.All.All(tc => tc.IsConnected);
+
         // Robot properties - dựa trên input status
         public bool RobotLoadIsConnected => DeviceInputs.LoadRobPeriRdy.Value && DeviceInputs.LoadRobIoActconf.Value;
         public bool RobotUnloadIsConnected => DeviceInputs.LoadRobPeriRdy.Value && DeviceInputs.LoadRobIoActconf.Value; 
@@ -308,16 +315,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             AfCleanRightPressure = Regulators.AfCleanRRegulator.GetPressure();
         });
 
-        public ICommand ConnectMotionCommand
+        public ICommand MotionInovanceConnectCommand
         {
             get
             {
                 return new RelayCommand(() =>
                 {
-                    MotionsAjin.All.ForEach(m => m.Connect());
                     MotionsInovance.MotionControllerInovance.Connect();
                     OnPropertyChanged(nameof(MotionsInovanceIsConnected));
-                    OnPropertyChanged(nameof(MotionAjinIsConnected));
                 });
             }
         }
@@ -362,6 +367,29 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
+        public ICommand SpeedControllerConnectCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _rollerModbusCommunication.Connect();
+                    OnPropertyChanged(nameof(SpeedControllersIsConnected));
+                });
+            }
+        }
+
+        public ICommand TorqueControllerConnectCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _torqueModbusCommunication.Connect();
+                    OnPropertyChanged(nameof(TorqueControllersIsConnected));
+                });
+            }
+        }
         public ICommand CylinderForwardCommand { get; }
         public ICommand CylinderBackwardCommand { get; }
 
@@ -2109,18 +2137,23 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         }
         #endregion
 
-        public ManualViewModel(Devices devices, MachineStatus machineStatus, RecipeList recipeList, RecipeSelector recipeSelector, Processes processes, DataViewModel dataViewModel,
+        public ManualViewModel(Devices devices,
+            MachineStatus machineStatus,
+            RecipeList recipeList,
+            RecipeSelector recipeSelector,
+            Processes processes,
             [FromKeyedServices("WETCleanLeftRecipe")] CleanRecipe wetCleanLeftRecipe,
             [FromKeyedServices("WETCleanRightRecipe")] CleanRecipe wetCleanRightRecipe,
             [FromKeyedServices("AFCleanLeftRecipe")] CleanRecipe afCleanLeftRecipe,
-            [FromKeyedServices("AFCleanRightRecipe")] CleanRecipe afCleanRightRecipe)
+            [FromKeyedServices("AFCleanRightRecipe")] CleanRecipe afCleanRightRecipe,
+            [FromKeyedServices("RollerModbusCommunication")] IModbusCommunication rollerModbusCommunication,
+            [FromKeyedServices("TorqueControllerModbusCommunication")] IModbusCommunication torqueModbusCommunication)
         {
             Devices = devices;
             MachineStatus = machineStatus;
             RecipeList = recipeList;
             RecipeSelector = recipeSelector;
             Processes = processes;
-            DataViewModel = dataViewModel;
             
             DeviceInputs = devices.Inputs;
             DeviceOutputs = devices.Outputs;
@@ -2131,7 +2164,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             WetCleanRightRecipe = wetCleanRightRecipe;
             AfCleanLeftRecipe = afCleanLeftRecipe;
             AfCleanRightRecipe = afCleanRightRecipe;
-
+            _rollerModbusCommunication = rollerModbusCommunication;
+            _torqueModbusCommunication = torqueModbusCommunication;
             WetCleanLeftPressure = Regulators.WetCleanLRegulator.GetPressure();
             WetCleanRightPressure = Regulators.WetCleanRRegulator.GetPressure();
             AfCleanLeftPressure = Regulators.AfCleanLRegulator.GetPressure();

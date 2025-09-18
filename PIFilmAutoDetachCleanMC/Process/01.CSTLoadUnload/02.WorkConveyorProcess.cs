@@ -3,11 +3,13 @@ using EQX.Core.Device.SpeedController;
 using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
+using EQX.Core.Units;
 using EQX.InOut;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System;
@@ -30,6 +32,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDInputDevice _outWorkConveyorInput;
         private readonly IDOutputDevice _outWorkConveyorOutput;
         private readonly ActionAssignableTimer _blinkTimer;
+        private readonly CassetteList _cassetteList;
         private const string OutLightCurtainMutingActionKey = "OutLightCurtainMutingAction";
 
         private IDInputDevice Inputs => port == EPort.Right ? _inWorkConveyorInput : _outWorkConveyorInput;
@@ -37,6 +40,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private double TAxisWorkPosition => port == EPort.Right ? _cstLoadUnloadRecipe.InCstTAxisWorkPosition : _cstLoadUnloadRecipe.OutCstTAxisWorkPosition;
         private double TAxisLoadPosition => port == EPort.Right ? _cstLoadUnloadRecipe.InCstTAxisLoadPosition : _cstLoadUnloadRecipe.OutCstTAxisLoadPosition;
+
+        private ITray<ETrayCellStatus> Cassette => port == EPort.Right ? _cassetteList.CassetteIn : _cassetteList.CassetteOut;
         #endregion
 
         #region Constructor
@@ -47,7 +52,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             [FromKeyedServices("InWorkConveyorOutput")] IDOutputDevice inWorkConveyorOutput,
             [FromKeyedServices("OutWorkConveyorInput")] IDInputDevice outWorkConveyorInput,
             [FromKeyedServices("OutWorkConveyorOutput")] IDOutputDevice outWorkConveyorOutput,
-            [FromKeyedServices("BlinkTimer")] ActionAssignableTimer blinkTimer)
+            [FromKeyedServices("BlinkTimer")] ActionAssignableTimer blinkTimer,
+            CassetteList cassetteList)
         {
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
@@ -57,6 +63,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             _outWorkConveyorInput = outWorkConveyorInput;
             _outWorkConveyorOutput = outWorkConveyorOutput;
             _blinkTimer = blinkTimer;
+            _cassetteList = cassetteList;
         }
         #endregion
 

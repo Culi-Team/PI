@@ -375,19 +375,53 @@
                       DockPanel.Dock="Top">
                 <StackPanel Orientation="Vertical">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Speed:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                        <TextBox Grid.Column="1" 
-                                 Text="{Binding Speed}" 
-                                 Width="100" 
-                                 HorizontalAlignment="Left"
-                                 Margin="0,5"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Width="26"
+                                     Height="26"
+                                     Fill="{Binding SpeedControllersIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                     Stroke="{StaticResource PrimaryBorderBrush}"
+                                     StrokeThickness="1"
+                                     Margin="0 0 5 0" />
+                            <uiControls:ImageButton Grid.Column="1"
+                                                    Content="Speed Controllers"
+                                                    Command="{Binding SpeedControllerConnectCommand}"
+                                                    Height="40"
+                                                    Margin="0 5 0 0" />
+                        </Grid>
+
                     </Grid>
                 </StackPanel>
             </GroupBox>
+            <GroupBox Header="TORQUE CONTROL"
+                      DockPanel.Dock="Top">
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Width="26"
+                                     Height="26"
+                                     Fill="{Binding TorqueControllersIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                     Stroke="{StaticResource PrimaryBorderBrush}"
+                                     StrokeThickness="1"
+                                     Margin="0 0 5 0" />
+                            <uiControls:ImageButton Grid.Column="1"
+                                                    Content="Torque Controllers"
+                                                    Command="{Binding TorqueControllerConnectCommand}"
+                                                    Height="40"
+                                                    Margin="0 5 0 0" />
+                        </Grid>
+
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+
             <GroupBox Header="MOTION"
                       DockPanel.Dock="Top">
                 <StackPanel Orientation="Vertical">
@@ -404,7 +438,7 @@
                                  Margin="0 0 5 0" />
                         <uiControls:ImageButton Grid.Column="1"
                                                 Content="Motions Inovance"
-                                                Command="{Binding ConnectMotionCommand}"
+                                                Command="{Binding MotionInovanceConnectCommand}"
                                                 Height="40"
                                                 Margin="0 5 0 0" />
                     </Grid>
