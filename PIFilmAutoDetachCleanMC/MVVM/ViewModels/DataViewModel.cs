@@ -51,44 +51,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 return new ObservableCollection<IMotion>(motions);
             }
         }
-        
-        public ObservableCollection<VinylCleanParameter> VinylCleanEncoder
-        {
-            get
-            {
-                List<VinylCleanParameter> encoders = new List<VinylCleanParameter>();
-                encoders.Add(new VinylCleanParameter 
-                { 
-                    Parameter = "Pulse", 
-                    Value = _vinylCleanEncoder?.Parameter?.Pulse.ToString() ?? "0",
-                    OnValueChanged = (value) => UpdateVinylCleanEncoderPulse(value)
-                });
-                encoders.Add(new VinylCleanParameter 
-                { 
-                    Parameter = "Unit", 
-                    Value = _vinylCleanEncoder?.Parameter?.Unit.ToString() ?? "0",
-                    OnValueChanged = (value) => UpdateVinylCleanEncoderUnit(value)
-                });
-
-                return new ObservableCollection<VinylCleanParameter>(encoders);
-            }
-        }
-
-        private void UpdateVinylCleanEncoderPulse(string value)
-        {
-            if (double.TryParse(value, out double pulse) && _vinylCleanEncoder?.Parameter != null)
-            {
-                _vinylCleanEncoder.Parameter.Pulse = (int)pulse;
-            }
-        }
-
-        private void UpdateVinylCleanEncoderUnit(string value)
-        {
-            if (double.TryParse(value, out double unit) && _vinylCleanEncoder?.Parameter != null)
-            {
-                _vinylCleanEncoder.Parameter.Unit = (uint)unit;
-            }
-        }
 
         public RecipeSelector RecipeSelector { get; }
 
@@ -214,29 +176,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
-        public ICommand SaveVinylCleanEncoderCommand
-        {
-            get
-            {
-                return new RelayCommand(() =>
-                {
-                    try
-                    {
-                        var result = MessageBoxEx.ShowDialog("Do you want to save the VinylCleanEncoder configuration?", true, "Confirm Save");
-
-                        if (result == true)
-                        {
-                            SaveVinylCleanEncoderConfiguration();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBoxEx.ShowDialog($"Error saving VinylCleanEncoder configuration: {ex.Message}");
-                    }
-                });
-            }
-        }
-
         private void SaveMotionConfigurations()
         {
             // Lưu cấu hình Motion Inovance
@@ -279,46 +218,5 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 File.WriteAllText(ajinConfigPath, ajinJson);
             }
         }
-        private void SaveVinylCleanEncoderConfiguration()
-        {
-            // Lưu cấu hình VinylCleanEncoder
-            var vinylCleanConfigPath = _configuration["Files:VinylCleanEncoderParaConfigFile"];
-            if (!string.IsNullOrEmpty(vinylCleanConfigPath))
-            {
-                // Đọc file config hiện tại để giữ nguyên các giá trị khác
-                var existingVinylCleanParam = JsonConvert.DeserializeObject<MotionParameter>(
-                    File.ReadAllText(vinylCleanConfigPath));
-
-                if (existingVinylCleanParam != null)
-                {
-                    // Cập nhật chỉ các giá trị Pulse và Unit
-                    existingVinylCleanParam.Pulse = _vinylCleanEncoder?.Parameter != null ? _vinylCleanEncoder.Parameter.Pulse : 0;
-                    existingVinylCleanParam.Unit = _vinylCleanEncoder?.Parameter?.Unit ?? 0u;
-
-                    var vinylCleanJson = JsonConvert.SerializeObject(existingVinylCleanParam, Formatting.Indented);
-                    File.WriteAllText(vinylCleanConfigPath, vinylCleanJson);
-                }
-            }
-        }
     }
-}
-
-public class VinylCleanParameter : ViewModelBase
-{
-    private string _value;
-    
-    public string Parameter { get; set; }
-    
-    public string Value 
-    { 
-        get { return _value; }
-        set 
-        { 
-            _value = value;
-            OnPropertyChanged();
-            OnValueChanged?.Invoke(value);
-        }
-    }
-    
-    public Action<string> OnValueChanged { get; set; }
 }
