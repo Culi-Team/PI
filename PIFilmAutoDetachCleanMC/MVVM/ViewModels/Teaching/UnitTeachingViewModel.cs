@@ -40,7 +40,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 return new RelayCommand<object>((o) =>
                 {
                     if (o is SinglePositionTeaching spt == false) return;
-                    string motionName = spt.SingleRecipePosition.Motion;
+                    string motionName = spt.SinglePosition.Motion;
                     Motions.FirstOrDefault(m => m.Name == motionName)!.MoveAbs(spt.Value);
                 });
             }
@@ -54,7 +54,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 {
                     if (o is SinglePositionTeaching spt == false) return;
 
-                    string motionName = spt.SingleRecipePosition.Motion;
+                    string motionName = spt.SinglePosition.Motion;
 
                     spt.Value = Motions.FirstOrDefault(m => m.Name == motionName)!.Status.ActualPosition;
                 });
