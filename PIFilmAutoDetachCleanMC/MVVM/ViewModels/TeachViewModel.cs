@@ -54,6 +54,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         #endregion
 
+        public void SelectedUnitTeachingOnChanged()
+        {
+            OnPropertyChanged(nameof(SelectedUnitTeaching));
+        }
+
         #region GetMotions
         // CSTLoadUnload Tab Motions
         private ObservableCollection<IMotion> GetInWorkConveyorMotions()

@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -40,8 +41,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 return new RelayCommand<object>((o) =>
                 {
                     if (o is SinglePositionTeaching spt == false) return;
+                    string MoveTo = (string)Application.Current.Resources["str_MoveTo"];
+
                     string motionName = spt.SinglePosition.Motion;
-                    Motions.FirstOrDefault(m => m.Name == motionName)!.MoveAbs(spt.Value);
+                    if (MessageBoxEx.ShowDialog($"{MoveTo} {spt.SingleRecipeDescription.Description} ?") == true)
+                    {
+                        Motions.FirstOrDefault(m => m.Name.Contains(motionName))!.MoveAbs(spt.Value);
+                    }
                 });
             }
         }
@@ -67,7 +73,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             {
                 return new RelayCommand<object>((o) =>
                 {
-                    RecipeSelector.Save();
+                    if (MessageBoxEx.ShowDialog($"{(string)Application.Current.Resources["str_Save"]}?") == true)
+                    {
+                        RecipeSelector.Save();
+                    }
                 });
             }
         }

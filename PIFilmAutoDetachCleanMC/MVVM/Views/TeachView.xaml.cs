@@ -16,5 +16,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             InitializeComponent();
         }
 
+        private void root_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (this.DataContext is TeachViewModel vm == false) return;
+            vm.SelectedUnitTeachingOnChanged();
+        }
     }
 }

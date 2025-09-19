@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views.Teaching"
              mc:Ignorable="d"
              x:Name="root"
+             DataContextChanged="root_DataContextChanged"
              xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              Loaded="UserControl_Loaded"
              xmlns:inout="clr-namespace:EQX.InOut;assembly=EQX.InOut"
