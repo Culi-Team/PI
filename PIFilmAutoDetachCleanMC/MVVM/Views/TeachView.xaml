@@ -18,96 +18,140 @@
         <Style x:Key="AutoWidthTabItemStyle"
                TargetType="{x:Type TabItem}"
                BasedOn="{StaticResource {x:Type TabItem}}">
-            <Setter Property="Width" Value="Auto" />
-            <Setter Property="Height" Value="Auto" />
-            <Setter Property="Background" Value="#F5F5F5"/>
-            <Setter Property="Foreground" Value="#333333"/>
-            <Setter Property="BorderBrush" Value="#CCCCCC"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Margin" Value="1"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Width"
+                    Value="Auto" />
+            <Setter Property="Height"
+                    Value="Auto" />
+            <Setter Property="Background"
+                    Value="#F5F5F5" />
+            <Setter Property="Foreground"
+                    Value="#333333" />
+            <Setter Property="BorderBrush"
+                    Value="#CCCCCC" />
+            <Setter Property="BorderThickness"
+                    Value="1" />
+            <Setter Property="Margin"
+                    Value="1" />
+            <Setter Property="FontWeight"
+                    Value="SemiBold" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TabItem">
                         <Grid>
-                            <Border Name="Border" 
-                                    Background="{TemplateBinding Background}" 
-                                    BorderBrush="{TemplateBinding BorderBrush}" 
-                                    BorderThickness="{TemplateBinding BorderThickness}" 
-                                    CornerRadius="4,0,0,4" 
+                            <Border Name="Border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="4,0,0,4"
                                     Margin="{TemplateBinding Margin}">
-                                <ContentPresenter x:Name="ContentSite" 
-                                                VerticalAlignment="Center" 
-                                                HorizontalAlignment="Center" 
-                                                ContentSource="Header" 
-                                                Margin="{TemplateBinding Padding}" 
-                                                RecognizesAccessKey="True"/>
+                                <ContentPresenter x:Name="ContentSite"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"
+                                                  ContentSource="Header"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  RecognizesAccessKey="True" />
                             </Border>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <!-- Trạng thái đã chọn (Selected) - Tab chính -->
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#2196F3"/>
-                                <Setter Property="Foreground" Value="White"/>
-                                <Setter Property="FontWeight" Value="Bold"/>
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#1976D2"/>
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+                                <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="#2196F3" />
+                                <Setter Property="Foreground"
+                                        Value="White" />
+                                <Setter Property="FontWeight"
+                                        Value="Bold" />
+                                <Setter TargetName="Border"
+                                        Property="BorderBrush"
+                                        Value="#1976D2" />
                             </Trigger>
-                            
+
                             <!-- Trạng thái hover (IsMouseOver) - Tab chính -->
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#64B5F6"/>
-                                <Setter Property="Foreground" Value="White"/>
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#2196F3"/>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="#64B5F6" />
+                                <Setter Property="Foreground"
+                                        Value="White" />
+                                <Setter TargetName="Border"
+                                        Property="BorderBrush"
+                                        Value="#2196F3" />
                             </Trigger>
-                            
+
                             <!-- Trạng thái bình thường - Tab chính -->
-                            <Trigger Property="IsSelected" Value="False">
-                                <Setter TargetName="Border" Property="Background" Value="#F5F5F5"/>
-                                <Setter Property="Foreground" Value="Black"/>
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#E0E0E0"/>
+                            <Trigger Property="IsSelected"
+                                     Value="False">
+                                <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="#F5F5F5" />
+                                <Setter Property="Foreground"
+                                        Value="Black" />
+                                <Setter TargetName="Border"
+                                        Property="BorderBrush"
+                                        Value="#E0E0E0" />
                             </Trigger>
-                            
+
                             <!-- Hiệu ứng khi focus - Tab chính -->
-                            <Trigger Property="IsKeyboardFocused" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#42A5F5"/>
-                                <Setter Property="Foreground" Value="White"/>
+                            <Trigger Property="IsKeyboardFocused"
+                                     Value="True">
+                                <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="#42A5F5" />
+                                <Setter Property="Foreground"
+                                        Value="White" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+
         <Style TargetType="{x:Type TabControl}">
-            <Setter Property="ItemContainerStyle" Value="{StaticResource AutoWidthTabItemStyle}" />
+            <Setter Property="ItemContainerStyle"
+                    Value="{StaticResource AutoWidthTabItemStyle}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TabControl">
-                        <Grid ClipToBounds="True" KeyboardNavigation.TabNavigation="Local">
+                        <Grid ClipToBounds="True"
+                              KeyboardNavigation.TabNavigation="Local">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            
+
                             <!-- Header trong cột tab -->
-                            <Border Grid.Column="0" Grid.Row="0" Background="Transparent" Padding="10,8" Margin="0,0,0,5">
-                                <TextBlock Text="Unit" 
-                                           FontSize="16" 
-                                           FontWeight="Bold" 
-                                           Foreground="Black" 
-                                           HorizontalAlignment="Center"/>
+                            <Border Grid.Column="0"
+                                    Grid.Row="0"
+                                    Background="Transparent"
+                                    Padding="10,8"
+                                    Margin="0,0,0,5">
+                                <TextBlock Text="Unit"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           Foreground="Black"
+                                           HorizontalAlignment="Center" />
                             </Border>
-                            
+
                             <!-- Tab items -->
-                            <UniformGrid Columns="1" Rows="20" IsItemsHost="True" Grid.Column="0" Grid.Row="1"/>
-                            
+                            <UniformGrid Columns="1"
+                                         Rows="20"
+                                         IsItemsHost="True"
+                                         Grid.Column="0"
+                                         Grid.Row="1" />
+
                             <!-- Content area -->
-                            <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
+                            <Border Grid.Column="1"
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     KeyboardNavigation.DirectionalNavigation="Contained">
                                 <ContentPresenter x:Name="PART_SelectedContentHost"
                                                   ContentSource="SelectedContent"
-                                                  Margin="{TemplateBinding Padding}"/>
+                                                  Margin="{TemplateBinding Padding}" />
                             </Border>
                         </Grid>
                     </ControlTemplate>
@@ -115,209 +159,24 @@
             </Setter>
         </Style>
 
-        <!-- CSTLoadUnload Tab Templates -->
-        <DataTemplate x:Key="InWorkConveyorTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.InWorkConveyorCylinders, ElementName=root}"
-                Motions="{Binding DataContext.InWorkConveyorMotions, ElementName=root}"
-                Outputs="{Binding DataContext.InWorkConveyorOutputs, ElementName=root}"
-                Inputs="{Binding DataContext.InWorkConveyorInputs, ElementName=root}"
-                TeachingImage="{StaticResource LoadWorkCassetteStageImage}"
-                PositionTeachings="{Binding DataContext.InWorkConveyorPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
-                TeachViewModel="{Binding DataContext, ElementName=root}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="OutWorkConveyorTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.OutWorkConveyorCylinders, ElementName=root}"
-                Motions="{Binding DataContext.OutWorkConveyorMotions, ElementName=root}"
-                Outputs="{Binding DataContext.OutWorkConveyorOutputs, ElementName=root}"
-                Inputs="{Binding DataContext.OutWorkConveyorInputs, ElementName=root}"
-                TeachingImage="{StaticResource LoadWorkCassetteStageImage}"
-                PositionTeachings="{Binding DataContext.OutWorkConveyorPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
-                TeachViewModel="{Binding DataContext, ElementName=root}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="TransferFixtureTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.TransferFixtureCylinders, ElementName=root}"
-                Motions="{Binding DataContext.TransferFixtureMotions, ElementName=root}"
-                Outputs="{Binding DataContext.TransferFixtureOutputs, ElementName=root}"
-                Inputs="{Binding DataContext.TransferFixtureInputs, ElementName=root}"
-                TeachingImage="{StaticResource TransferFixtureImage}"
-                PositionTeachings="{Binding DataContext.TransferFixturePositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
-                TeachViewModel="{Binding DataContext, ElementName=root}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="DetachTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.DetachCylinders, ElementName=root}"
-                Motions="{Binding DataContext.DetachMotions, ElementName=root}"
-                Outputs="{Binding DataContext.DetachOutputs, ElementName=root}"
-                Inputs="{Binding DataContext.DetachInputs, ElementName=root}"
-                TeachingImage="{StaticResource DetachImage}"
-                PositionTeachings="{Binding DataContext.DetachPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
-                TeachViewModel="{Binding DataContext, ElementName=root}"/>
-        </DataTemplate>
-        
-        <DataTemplate x:Key="GlassTransferTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.GlassTransferCylinders, ElementName=root}"
-                Motions="{Binding DataContext.GlassTransferMotions, ElementName=root}"
-                Outputs="{Binding DataContext.GlassTransferOutputs, ElementName=root}"
-                Inputs="{Binding DataContext.GlassTransferInputs, ElementName=root}"
-                TeachingImage="{StaticResource GlassTransferImage}"
-                PositionTeachings="{Binding DataContext.GlassTransferPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
-                TeachViewModel="{Binding DataContext, ElementName=root}"/>
-        </DataTemplate>
-
-        <!-- Transfer Shutter Templates -->
-        <DataTemplate x:Key="TransferShutterLeftTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.TransferShutterLeftCylinders, ElementName=root}"
-                Motions="{Binding DataContext.TransferShutterLeftMotions, ElementName=root}"
-                Outputs="{Binding DataContext.TransferShutterLeftOutputs, ElementName=root}"
-                Inputs="{Binding DataContext.TransferShutterLeftInputs, ElementName=root}"
-                TeachingImage="{StaticResource TransferShutterImage}"
-                PositionTeachings="{Binding DataContext.TransferShutterLeftPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
-                TeachViewModel="{Binding DataContext, ElementName=root}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="TransferShutterRightTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.TransferShutterRightCylinders, ElementName=root}"
-                Motions="{Binding DataContext.TransferShutterRightMotions, ElementName=root}"
-                Outputs="{Binding DataContext.TransferShutterRightOutputs, ElementName=root}"
-                Inputs="{Binding DataContext.TransferShutterRightInputs, ElementName=root}"
-                TeachingImage="{StaticResource TransferShutterImage}"
-                PositionTeachings="{Binding DataContext.TransferShutterRightPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
-                TeachViewModel="{Binding DataContext, ElementName=root}"/>
-        </DataTemplate>
-
-        <!-- Transfer Rotation Templates -->
-        <DataTemplate x:Key="TransferRotationLeftTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.TransferRotationLeftCylinders, ElementName=root}"
-                Motions="{Binding DataContext.TransferRotationLeftMotions, ElementName=root}"
-                Outputs="{Binding DataContext.TransferRotationLeftOutputs, ElementName=root}"
-                Inputs="{Binding DataContext.TransferRotationLeftInputs, ElementName=root}"
-                TeachingImage="{StaticResource TransferRotationImage}"
-                PositionTeachings="{Binding DataContext.TransferRotationLeftPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
-                TeachViewModel="{Binding DataContext, ElementName=root}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="TransferRotationRightTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.TransferRotationRightCylinders, ElementName=root}"
-                Motions="{Binding DataContext.TransferRotationRightMotions, ElementName=root}"
-                Outputs="{Binding DataContext.TransferRotationRightOutputs, ElementName=root}"
-                Inputs="{Binding DataContext.TransferRotationRightInputs, ElementName=root}"
-                TeachingImage="{StaticResource TransferRotationImage}"
-                PositionTeachings="{Binding DataContext.TransferRotationRightPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
-                TeachViewModel="{Binding DataContext, ElementName=root}"/>
-        </DataTemplate>
-
-        <!-- Unload Transfer Templates -->
-        <DataTemplate x:Key="UnloadTransferLeftTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.UnloadTransferLeftCylinders, ElementName=root}"
-                Motions="{Binding DataContext.UnloadTransferLeftMotions, ElementName=root}"
-                Outputs="{Binding DataContext.UnloadTransferLeftOutputs, ElementName=root}"
-                Inputs="{Binding DataContext.UnloadTransferLeftInputs, ElementName=root}"
-                TeachingImage="{StaticResource UnloadTransferImage}"
-                PositionTeachings="{Binding DataContext.UnloadTransferLeftPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
-                TeachViewModel="{Binding DataContext, ElementName=root}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="UnloadTransferRightTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.UnloadTransferRightCylinders, ElementName=root}"
-                Motions="{Binding DataContext.UnloadTransferRightMotions, ElementName=root}"
-                Outputs="{Binding DataContext.UnloadTransferRightOutputs, ElementName=root}"
-                Inputs="{Binding DataContext.UnloadTransferRightInputs, ElementName=root}"
-                TeachingImage="{StaticResource UnloadTransferImage}"
-                PositionTeachings="{Binding DataContext.UnloadTransferRightPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
-                TeachViewModel="{Binding DataContext, ElementName=root}"/>
-        </DataTemplate>
-
-        <!-- Clean Templates -->
-        <DataTemplate x:Key="WETCleanLeftTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.WETCleanLeftCylinders, ElementName=root}"
-                Motions="{Binding DataContext.WETCleanLeftMotions, ElementName=root}"
-                Outputs="{Binding DataContext.WETCleanLeftOutputs, ElementName=root}"
-                Inputs="{Binding DataContext.WETCleanLeftInputs, ElementName=root}"
-                TeachingImage="{StaticResource WetCleanImage}"
-                PositionTeachings="{Binding DataContext.WETCleanLeftPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
-                TeachViewModel="{Binding DataContext, ElementName=root}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="WETCleanRightTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.WETCleanRightCylinders, ElementName=root}"
-                Motions="{Binding DataContext.WETCleanRightMotions, ElementName=root}"
-                Outputs="{Binding DataContext.WETCleanRightOutputs, ElementName=root}"
-                Inputs="{Binding DataContext.WETCleanRightInputs, ElementName=root}"
-                TeachingImage="{StaticResource WetCleanImage}"
-                PositionTeachings="{Binding DataContext.WETCleanRightPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
-                TeachViewModel="{Binding DataContext, ElementName=root}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="AFCleanLeftTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.AFCleanLeftCylinders, ElementName=root}"
-                Motions="{Binding DataContext.AFCleanLeftMotions, ElementName=root}"
-                Outputs="{Binding DataContext.AFCleanLeftOutputs, ElementName=root}"
-                Inputs="{Binding DataContext.AFCleanLeftInputs, ElementName=root}"
-                TeachingImage="{StaticResource AFCleanImage}"
-                PositionTeachings="{Binding DataContext.AFCleanLeftPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
-                TeachViewModel="{Binding DataContext, ElementName=root}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="AFCleanRightTemplate">
-            <local:UnitTeachingView 
-                Cylinders="{Binding DataContext.AFCleanRightCylinders, ElementName=root}"
-                Motions="{Binding DataContext.AFCleanRightMotions, ElementName=root}"
-                Outputs="{Binding DataContext.AFCleanRightOutputs, ElementName=root}"
-                Inputs="{Binding DataContext.AFCleanRightInputs, ElementName=root}"
-                TeachingImage="{StaticResource AFCleanImage}"
-                PositionTeachings="{Binding DataContext.AFCleanRightPositionTeachings, ElementName=root}"
-                SelectedProcess="{Binding DataContext.SelectedProcess, ElementName=root}"
-                TeachViewModel="{Binding DataContext, ElementName=root}"/>
-        </DataTemplate>
-
     </UserControl.Resources>
     <Grid>
-        <TabControl  TabStripPlacement="Left">
-            <TabItem Header="In Cassette" ContentTemplate="{StaticResource InWorkConveyorTemplate}"/>
-            <TabItem Header="Out Cassette" ContentTemplate="{StaticResource OutWorkConveyorTemplate}"/>
-            <TabItem Header="Transfer Fixture" ContentTemplate="{StaticResource TransferFixtureTemplate}"/>
-            <TabItem Header="Detach" ContentTemplate="{StaticResource DetachTemplate}"/>
-            <TabItem Header="Glass Transfer" ContentTemplate="{StaticResource GlassTransferTemplate}"/>
-            <TabItem Header="Transfer Shutter Left" ContentTemplate="{StaticResource TransferShutterLeftTemplate}"/>
-            <TabItem Header="Transfer Shutter Right" ContentTemplate="{StaticResource TransferShutterRightTemplate}"/>
-            <TabItem Header="Transfer Rotation Left" ContentTemplate="{StaticResource TransferRotationLeftTemplate}"/>
-            <TabItem Header="Transfer Rotation Right" ContentTemplate="{StaticResource TransferRotationRightTemplate}"/>
-            <TabItem Header="WET Clean Left" ContentTemplate="{StaticResource WETCleanLeftTemplate}"/>
-            <TabItem Header="WET Clean Right" ContentTemplate="{StaticResource WETCleanRightTemplate}"/>
-            <TabItem Header="AF Clean Left" ContentTemplate="{StaticResource AFCleanLeftTemplate}"/>
-            <TabItem Header="AF Clean Right" ContentTemplate="{StaticResource AFCleanRightTemplate}"/>
-            <TabItem Header="Unload Transfer Left" ContentTemplate="{StaticResource UnloadTransferLeftTemplate}"/>
-            <TabItem Header="Unload Transfer Right" ContentTemplate="{StaticResource UnloadTransferRightTemplate}"/>
+        <TabControl ItemsSource="{Binding UnitTeachings}"
+                    SelectedItem="{Binding SelectedUnitTeaching, Mode=TwoWay}"
+                    Margin="10"
+                    BorderBrush="Gray"
+                    BorderThickness="1">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding Name}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding}" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
         </TabControl>
     </Grid>
 </UserControl>

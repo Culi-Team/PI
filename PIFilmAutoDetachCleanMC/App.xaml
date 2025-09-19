@@ -3,57 +3,71 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels"
              xmlns:views="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
+             xmlns:cvt="clr-namespace:PIFilmAutoDetachCleanMC.Converters"
+             xmlns:uiCvt="clr-namespace:EQX.UI.Converters;assembly=EQX.UI"
+             xmlns:teachingVM="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching"
+             xmlns:teachingViews="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views.Teaching"
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/EQX.UI;component/Resources/Themes/SamsungTheme.xaml"/>
-                <ResourceDictionary Source="/EQX.UI;component/Generic.xaml"/>
+                <ResourceDictionary Source="/EQX.UI;component/Resources/Themes/SamsungTheme.xaml" />
+                <ResourceDictionary Source="/EQX.UI;component/Generic.xaml" />
 
                 <ResourceDictionary Source="/EQX.UI;component/Resources/Language/KoreanLanguage.xaml" />
                 <ResourceDictionary Source="/EQX.UI;component/Resources/Language/VietnameseLanguage.xaml" />
                 <ResourceDictionary Source="/EQX.UI;component/Resources/Language/ChineseLanguage.xaml" />
                 <ResourceDictionary Source="/EQX.UI;component/Resources/Language/EnglishLanguage.xaml" />
-                <ResourceDictionary Source="/Resource/Resource.xaml"/>
+                <ResourceDictionary Source="/Resource/Resource.xaml" />
 
                 <ResourceDictionary>
-                    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+                    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+                    <cvt:CylinderButtonBrushConverter x:Key="CylinderButtonBrushConverter"/>
+                    <uiCvt:CylinderTypeToButtonNameConverter x:Key="CylinderTypeToButtonNameConverter"/>
                 </ResourceDictionary>
+
+                <ResourceDictionary Source="/Resource/Template/CylinderControlDataTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type vm:FooterViewModel}">
-                <views:FooterView/>
+                <views:FooterView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:HeaderViewModel}">
-                <views:HeaderView/>
+                <views:HeaderView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NavigateMenuViewModel}">
-                <views:NavigateMenuView/>
+                <views:NavigateMenuView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type vm:InitDeinitViewModel}">
-                <views:InitDeinitView/>
+                <views:InitDeinitView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:InitializeViewModel}">
-                <views:InitializeView/>
+                <views:InitializeView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:AutoViewModel}">
-                <views:AutoView/>
+                <views:AutoView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:DataViewModel}">
-                <views:DataView/>
+                <views:DataView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:ManualViewModel}">
-                <views:ManualView/>
+                <views:ManualView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:TeachViewModel}">
-                <views:TeachView/>
+                <views:TeachView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:LogViewModel}">
-                <views:LogView/>
+                <views:LogView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:IOMonitoringViewModel}">
                 <views:IOMonitoringView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type teachingVM:UnitTeachingViewModel}">
+                <teachingViews:UnitTeachingView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type teachingVM:CleanUnitTeachingViewModel}">
+                <teachingViews:CleanUnitTeachingView />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
