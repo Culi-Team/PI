@@ -1,5 +1,6 @@
 ﻿using EQX.Core.Recipe;
 using EQX.UI.Controls;
+using Newtonsoft.Json.Linq;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching;
 using System;
 using System.Collections.Generic;
@@ -110,6 +111,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views.Teaching
         private void root_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             LoadPositionTeaching();
+        }
+
+        private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Label label)
+            {
+                DataEditor dataEditor = new DataEditor((double)label.Content, null);
+                if (dataEditor.ShowDialog() == true)
+                {
+                    label.Content = dataEditor.NewValue;
+                }
+            }
         }
     }
 }
