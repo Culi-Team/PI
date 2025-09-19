@@ -100,7 +100,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "X Axis Load Position", Unit = Unit.mm)]
-        [SinglePositionTeaching(Motion = "XAxis")]
+        [SinglePositionTeaching(Motion = "X Axis")]
         public double XAxisLoadPosition
         {
             get { return xAxisLoadPosition; }
@@ -108,7 +108,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Y Axis Load Position", Unit = Unit.mm)]
-        [SinglePositionTeaching(Motion = "YAxis")]
+        [SinglePositionTeaching(Motion = "Y Axis")]
         public double YAxisLoadPosition
         {
             get { return yAxisLoadPosition; }
@@ -116,7 +116,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "T Axis Load Position", Unit = Unit.mm)]
-        [SinglePositionTeaching(Motion = "TAxis")]
+        [SinglePositionTeaching(Motion = "T Axis")]
         public double TAxisLoadPosition
         {
             get { return tAxisLoadPosition; }
@@ -124,7 +124,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "X Axis Clean Horizontal Position", Unit = Unit.mm)]
-        [SinglePositionTeaching(Motion = "XAxis")]
+        [SinglePositionTeaching(Motion = "X Axis")]
         public double XAxisCleanHorizontalPosition
         {
             get { return xAxisCleanHorizontalPosition; }
@@ -132,7 +132,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Y Axis Clean Horizontal Position", Unit = Unit.mm)]
-        [SinglePositionTeaching(Motion = "YAxis")]
+        [SinglePositionTeaching(Motion = "Y Axis")]
         public double YAxisCleanHorizontalPosition
         {
             get { return yAxisCleanHorizontalPosition; }
@@ -140,7 +140,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "T Axis Clean Horizontal Position", Unit = Unit.mm)]
-        [SinglePositionTeaching(Motion = "TAxis")]
+        [SinglePositionTeaching(Motion = "T Axis")]
         public double TAxisCleanHorizontalPosition
         {
             get { return tAxisCleanHorizontalPosition; }
@@ -148,7 +148,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "X Axis Clean Vertical Position", Unit = Unit.mm)]
-        [SinglePositionTeaching(Motion = "XAxis")]
+        [SinglePositionTeaching(Motion = "X Axis")]
         public double XAxisCleanVerticalPosition
         {
             get { return xAxisCleanVerticalPosition; }
@@ -156,7 +156,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Y Axis Clean Vertical Position", Unit = Unit.mm)]
-        [SinglePositionTeaching(Motion = "YAxis")]
+        [SinglePositionTeaching(Motion = "Y Axis")]
         public double YAxisCleanVerticalPosition
         {
             get { return yAxisCleanVerticalPosition; }
@@ -164,7 +164,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "T Axis Clean Vertical Position", Unit = Unit.mm)]
-        [SinglePositionTeaching(Motion = "TAxis")]
+        [SinglePositionTeaching(Motion = "T Axis")]
         public double TAxisCleanVerticalPosition
         {
             get { return tAxisCleanVerticalPosition; }
@@ -172,7 +172,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "X Axis Unload Position", Unit = Unit.mm)]
-        [SinglePositionTeaching(Motion = "XAxis")]
+        [SinglePositionTeaching(Motion = "X Axis")]
         public double XAxisUnloadPosition
         {
             get { return xAxisUnloadPosition; }
@@ -180,7 +180,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Y Axis Unload Position", Unit = Unit.mm)]
-        [SinglePositionTeaching(Motion = "YAxis")]
+        [SinglePositionTeaching(Motion = "Y Axis")]
         public double YAxisUnloadPosition
         {
             get { return yAxisUnloadPosition; }
@@ -188,7 +188,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "T Axis Unload Position", Unit = Unit.mm)]
-        [SinglePositionTeaching(Motion = "TAxis")]
+        [SinglePositionTeaching(Motion = "T Axis")]
         public double TAxisUnloadPosition
         {
             get { return tAxisUnloadPosition; }

@@ -17,7 +17,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
     public class TeachViewModel : ViewModelBase
     {
         #region Properties
-
+        
+        public UnitTeachingViewModel CSTLoadUnloadUnitTeaching { get; }
+        public UnitTeachingViewModel TransferFixtureUnitTeaching { get; }
         public UnitTeachingViewModel DetachUnitTeaching { get; }
         public UnitTeachingViewModel GlassTransferUnitTeaching { get; }
         public UnitTeachingViewModel TransferInShuttleLeftUnitTeaching { get; }
@@ -28,6 +30,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public UnitTeachingViewModel TransferRotationRightUnitTeaching { get; }
         public CleanUnitTeachingViewModel AFCleanLeftUnitTeaching { get; }
         public CleanUnitTeachingViewModel AFCleanRightUnitTeaching { get; }
+        public UnitTeachingViewModel UnloadTransferLeftUnitTeaching { get; }
+        public UnitTeachingViewModel UnloadTransferRightUnitTeaching { get; }
 
         public Devices Devices { get; }
         public RecipeList RecipeList;
@@ -62,30 +66,25 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         #region GetMotions
         // CSTLoadUnload Tab Motions
-        private ObservableCollection<IMotion> GetInWorkConveyorMotions()
+        private ObservableCollection<IMotion> GetCSTLoadUnloadMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
             motions.Add(Devices.MotionsInovance.InCassetteTAxis);
-            return motions;
-        }
-
-        private ObservableCollection<IMotion> GetOutWorkConveyorMotions()
-        {
-            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
             motions.Add(Devices.MotionsInovance.OutCassetteTAxis);
             return motions;
         }
 
 
-        // Detach Tab Motions
+        // Transfer Fixture Tab Motions
         private ObservableCollection<IMotion> GetTransferFixtureMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-                motions.Add(Devices.MotionsInovance.FixtureTransferYAxis);
-            // TransferFixtureProcess chỉ sử dụng FixtureTransferYAxis, không sử dụng ShuttleTransferZAxis
+            motions.Add(Devices.MotionsInovance.FixtureTransferYAxis);
             return motions;
         }
 
+
+        // Detach Tab Motions
         private ObservableCollection<IMotion> GetDetachMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
@@ -198,10 +197,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return motions;
         }
 
+
         #endregion
 
         #region GetCylinders
-        // CSTLoadUnload Tab Cylinders
+        // CST Load/Unload Tab Cylinders
         private ObservableCollection<ICylinder> GetInWorkConveyorCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
@@ -229,6 +229,28 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             // Out CV Support cylinders
             cylinders.Add(Devices.Cylinders.OutCvSupportUpDown);
             cylinders.Add(Devices.Cylinders.OutCvSupportBufferUpDown);
+            return cylinders;
+        }
+
+        // CST Load/Unload Combined Cylinders (In + Out)
+        private ObservableCollection<ICylinder> GetCSTLoadUnloadCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            
+            // Add In Work Conveyor cylinders
+            var inCylinders = GetInWorkConveyorCylinders();
+            foreach (var cylinder in inCylinders)
+            {
+                cylinders.Add(cylinder);
+            }
+            
+            // Add Out Work Conveyor cylinders
+            var outCylinders = GetOutWorkConveyorCylinders();
+            foreach (var cylinder in outCylinders)
+            {
+                cylinders.Add(cylinder);
+            }
+            
             return cylinders;
         }
 
@@ -273,8 +295,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return cylinders;
         }
 
-        // Transfer Shutter Tab Cylinders (No cylinders used in TransferInShuttle process)
-        private ObservableCollection<ICylinder> GetTransferShutterLeftCylinders()
+        // Transfer In Shuttle Tab Cylinders
+        private ObservableCollection<ICylinder> GetTransferInShuttleLeftCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
             // Add Transfer In Shuttle Left cylinders
@@ -282,13 +304,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return cylinders;
         }
 
-        private ObservableCollection<ICylinder> GetTransferShutterRightCylinders()
+        private ObservableCollection<ICylinder> GetTransferInShuttleRightCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
             // Add Transfer In Shuttle Right cylinders
             cylinders.Add(Devices.Cylinders.TransferInShuttleRRotate);
             return cylinders;
         }
+
 
         // Transfer Rotation Tab Cylinders
         private ObservableCollection<ICylinder> GetTransferRotationLeftCylinders()
@@ -380,6 +403,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.AFCleanBrushRightUpDown);
             return cylinders;
         }
+
+
+
 
         #endregion
 
@@ -695,7 +721,71 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return inputs;
         }
 
-        // Unload Tab Inputs
+        // CSTLoadUnload Tab Inputs
+        private ObservableCollection<IDInput> GetCSTLoadUnloadInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            // Add In Cassette detection inputs
+            inputs.Add(Devices.Inputs.InCstDetect1);
+            inputs.Add(Devices.Inputs.InCstDetect2);
+            // Add In Cassette work detection inputs
+            inputs.Add(Devices.Inputs.InCstWorkDetect1);
+            inputs.Add(Devices.Inputs.InCstWorkDetect2);
+            inputs.Add(Devices.Inputs.InCstWorkDetect3);
+            inputs.Add(Devices.Inputs.InCstWorkDetect4);
+            // Add In Cassette button inputs
+            inputs.Add(Devices.Inputs.InCompleteButton);
+            inputs.Add(Devices.Inputs.InMutingButton);
+            // Add In Cassette light curtain safety input
+            inputs.Add(Devices.Inputs.InCstLightCurtainAlarmDetect);
+            // Add In CV Support detection inputs
+            inputs.Add(Devices.Inputs.InCvSupportUp);
+            inputs.Add(Devices.Inputs.InCvSupportDown);
+            inputs.Add(Devices.Inputs.InCvSupportBufferUp);
+            inputs.Add(Devices.Inputs.InCvSupportBufferDown);
+            // Add In CST Fix cylinder detection inputs
+            inputs.Add(Devices.Inputs.InCstFixCyl1Fw);
+            inputs.Add(Devices.Inputs.InCstFixCyl1Bw);
+            inputs.Add(Devices.Inputs.InCstFixCyl2Fw);
+            inputs.Add(Devices.Inputs.InCstFixCyl2Bw);
+            // Add In CST Tilt cylinder detection inputs
+            inputs.Add(Devices.Inputs.InCstTiltCylUp);
+            inputs.Add(Devices.Inputs.InCstTiltCylDown);
+            // Add In CST Stopper detection inputs
+            inputs.Add(Devices.Inputs.InCstStopperUp);
+            inputs.Add(Devices.Inputs.InCstStopperDown);
+            // Add Out Cassette work detection inputs
+            inputs.Add(Devices.Inputs.OutCstWorkDetect1);
+            inputs.Add(Devices.Inputs.OutCstWorkDetect2);
+            inputs.Add(Devices.Inputs.OutCstWorkDetect3);
+            // Add Out Cassette detection inputs
+            inputs.Add(Devices.Inputs.OutCstDetect1);
+            inputs.Add(Devices.Inputs.OutCstDetect2);
+            // Add Out Cassette button inputs
+            inputs.Add(Devices.Inputs.OutCompleteButton);
+            inputs.Add(Devices.Inputs.OutMutingButton);
+            // Add Out Cassette light curtain safety input
+            inputs.Add(Devices.Inputs.OutCstLightCurtainAlarmDetect);
+            // Add Out CV Support detection inputs
+            inputs.Add(Devices.Inputs.OutCvSupportUp);
+            inputs.Add(Devices.Inputs.OutCvSupportDown);
+            inputs.Add(Devices.Inputs.OutCvSupportBufferUp);
+            inputs.Add(Devices.Inputs.OutCvSupportBufferDown);
+            // Add Out CST Fix cylinder detection inputs
+            inputs.Add(Devices.Inputs.OutCstFixCyl1Fw);
+            inputs.Add(Devices.Inputs.OutCstFixCyl1Bw);
+            inputs.Add(Devices.Inputs.OutCstFixCyl2Fw);
+            inputs.Add(Devices.Inputs.OutCstFixCyl2Bw);
+            // Add Out CST Tilt cylinder detection inputs
+            inputs.Add(Devices.Inputs.OutCstTiltCylUp);
+            inputs.Add(Devices.Inputs.OutCstTiltCylDown);
+            // Add Out CST Stopper detection inputs
+            inputs.Add(Devices.Inputs.OutCstStopperUp);
+            inputs.Add(Devices.Inputs.OutCstStopperDown);
+            return inputs;
+        }
+
+
 
         #endregion
 
@@ -954,6 +1044,59 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return outputs;
         }
 
+        // CSTLoadUnload Tab Outputs
+        private ObservableCollection<IDOutput> GetCSTLoadUnloadOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            // Add In Cassette button lamp outputs
+            outputs.Add(Devices.Outputs.InCompleteButtonLamp);
+            outputs.Add(Devices.Outputs.InMutingButtonLamp);
+            // Add In Cassette light curtain muting output
+            outputs.Add(Devices.Outputs.InCstLightCurtainMuting1);
+            outputs.Add(Devices.Outputs.InCstLightCurtainMuting2);
+            // Add In CST Stopper outputs
+            outputs.Add(Devices.Outputs.InCstStopperUp);
+            outputs.Add(Devices.Outputs.InCstStopperDown);
+            // Add In CST Fix cylinder outputs
+            outputs.Add(Devices.Outputs.InCstFixCyl1Fw);
+            outputs.Add(Devices.Outputs.InCstFixCyl1Bw);
+            outputs.Add(Devices.Outputs.InCstFixCyl2Fw);
+            outputs.Add(Devices.Outputs.InCstFixCyl2Bw);
+            // Add In CST Tilt cylinder outputs
+            outputs.Add(Devices.Outputs.InCstTiltCylUp);
+            outputs.Add(Devices.Outputs.InCstTiltCylDown);
+            // Add In CV Support outputs
+            outputs.Add(Devices.Outputs.InCvSupportUp);
+            outputs.Add(Devices.Outputs.InCvSupportDown);
+            outputs.Add(Devices.Outputs.InCvSupportBufferUp);
+            outputs.Add(Devices.Outputs.InCvSupportBufferDown);
+            // Add Out Cassette button lamp outputs
+            outputs.Add(Devices.Outputs.OutCompleteButtonLamp);
+            outputs.Add(Devices.Outputs.OutMutingButtonLamp);
+            // Add Out Cassette light curtain muting output
+            outputs.Add(Devices.Outputs.OutCstLightCurtainMuting1);
+            outputs.Add(Devices.Outputs.OutCstLightCurtainMuting2);
+            // Add Out CST Stopper outputs
+            outputs.Add(Devices.Outputs.OutCstStopperUp);
+            outputs.Add(Devices.Outputs.OutCstStopperDown);
+            // Add Out CST Fix cylinder outputs
+            outputs.Add(Devices.Outputs.OutCstFixCyl1Fw);
+            outputs.Add(Devices.Outputs.OutCstFixCyl1Bw);
+            outputs.Add(Devices.Outputs.OutCstFixCyl2Fw);
+            outputs.Add(Devices.Outputs.OutCstFixCyl2Bw);
+            // Add Out CST Tilt cylinder outputs
+            outputs.Add(Devices.Outputs.OutCstTiltCylUp);
+            outputs.Add(Devices.Outputs.OutCstTiltCylDown);
+            // Add Out CV Support outputs
+            outputs.Add(Devices.Outputs.OutCvSupportUp);
+            outputs.Add(Devices.Outputs.OutCvSupportDown);
+            outputs.Add(Devices.Outputs.OutCvSupportBufferUp);
+            outputs.Add(Devices.Outputs.OutCvSupportBufferDown);
+            return outputs;
+        }
+
+
+
         #endregion
 
         #region GetDetailProcess
@@ -975,6 +1118,23 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             CylinderForwardCommand = new RelayCommand<ICylinder>(CylinderForward);
             CylinderBackwardCommand = new RelayCommand<ICylinder>(CylinderBackward);
 
+            // Initialize Unit Teachings
+            CSTLoadUnloadUnitTeaching = new UnitTeachingViewModel("CST Load/Unload", recipeSelector);
+            CSTLoadUnloadUnitTeaching.Cylinders = GetCSTLoadUnloadCylinders();
+            CSTLoadUnloadUnitTeaching.Motions = GetCSTLoadUnloadMotions();
+            CSTLoadUnloadUnitTeaching.Inputs = GetCSTLoadUnloadInputs();
+            CSTLoadUnloadUnitTeaching.Outputs = GetCSTLoadUnloadOutputs();
+            CSTLoadUnloadUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe;
+            CSTLoadUnloadUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("InputCassetteStageImage");
+
+            TransferFixtureUnitTeaching = new UnitTeachingViewModel("Transfer Fixture", recipeSelector);
+            TransferFixtureUnitTeaching.Cylinders = GetTransferFixtureCylinders();
+            TransferFixtureUnitTeaching.Motions = GetTransferFixtureMotions();
+            TransferFixtureUnitTeaching.Inputs = GetTransferFixtureInputs();
+            TransferFixtureUnitTeaching.Outputs = GetTransferFixtureOutputs();
+            TransferFixtureUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.TransferFixtureRecipe;
+            TransferFixtureUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferFixtureImage");
+
             DetachUnitTeaching = new UnitTeachingViewModel("Detach",recipeSelector);
             DetachUnitTeaching.Cylinders = GetDetachCylinders();
             DetachUnitTeaching.Motions = GetDetachMotions();
@@ -993,7 +1153,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
 
             TransferInShuttleLeftUnitTeaching = new UnitTeachingViewModel("Transfer In Shuttle Left", recipeSelector);
-            TransferInShuttleLeftUnitTeaching.Cylinders = GetTransferShutterLeftCylinders();
+            TransferInShuttleLeftUnitTeaching.Cylinders = GetTransferInShuttleLeftCylinders();
             TransferInShuttleLeftUnitTeaching.Motions = GetTransferShutterLeftMotions();
             TransferInShuttleLeftUnitTeaching.Inputs = GetTransferShutterLeftInputs();
             TransferInShuttleLeftUnitTeaching.Outputs = GetTransferShutterLeftOutputs();
@@ -1001,7 +1161,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             TransferInShuttleLeftUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage");
 
             TransferInShuttleRightUnitTeaching = new UnitTeachingViewModel("Transfer In Shuttle Right", recipeSelector);
-            TransferInShuttleRightUnitTeaching.Cylinders = GetTransferShutterRightCylinders();
+            TransferInShuttleRightUnitTeaching.Cylinders = GetTransferInShuttleRightCylinders();
             TransferInShuttleRightUnitTeaching.Motions = GetTransferShutterRightMotions();
             TransferInShuttleRightUnitTeaching.Inputs = GetTransferShutterRightInputs();
             TransferInShuttleRightUnitTeaching.Outputs = GetTransferShutterRightOutputs();
@@ -1068,9 +1228,27 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             AFCleanRightUnitTeaching.Regulator = Devices.Regulators.AfCleanRRegulator;
             AFCleanRightUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
 
+            UnloadTransferLeftUnitTeaching = new UnitTeachingViewModel("Unload Transfer Left", recipeSelector);
+            UnloadTransferLeftUnitTeaching.Cylinders = GetUnloadTransferLeftCylinders();
+            UnloadTransferLeftUnitTeaching.Motions = GetUnloadTransferLeftMotions();
+            UnloadTransferLeftUnitTeaching.Inputs = GetUnloadTransferLeftInputs();
+            UnloadTransferLeftUnitTeaching.Outputs = GetUnloadTransferLeftOutputs();
+            UnloadTransferLeftUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.UnloadTransferLeftRecipe;
+            UnloadTransferLeftUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferFixtureImage");
+
+            UnloadTransferRightUnitTeaching = new UnitTeachingViewModel("Unload Transfer Right", recipeSelector);
+            UnloadTransferRightUnitTeaching.Cylinders = GetUnloadTransferRightCylinders();
+            UnloadTransferRightUnitTeaching.Motions = GetUnloadTransferRightMotions();
+            UnloadTransferRightUnitTeaching.Inputs = GetUnloadTransferRightInputs();
+            UnloadTransferRightUnitTeaching.Outputs = GetUnloadTransferRightOutputs();
+            UnloadTransferRightUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.UnloadTransferRightRecipe;
+            UnloadTransferRightUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferFixtureImage");
+
 
             UnitTeachings = new ObservableCollection<UnitTeachingViewModel>()
             {
+                CSTLoadUnloadUnitTeaching,
+                TransferFixtureUnitTeaching,
                 DetachUnitTeaching,
                 GlassTransferUnitTeaching,
 
@@ -1084,7 +1262,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 TransferRotationRightUnitTeaching,
                 
                 AFCleanLeftUnitTeaching,
-                AFCleanRightUnitTeaching
+                AFCleanRightUnitTeaching,
+
+                UnloadTransferLeftUnitTeaching,
+                UnloadTransferRightUnitTeaching
             };
 
             SelectedUnitTeaching = UnitTeachings.First();
