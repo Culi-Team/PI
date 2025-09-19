@@ -1,5 +1,6 @@
 ﻿using EQX.Core.Recipe;
 using EQX.Core.Units;
+using PIFilmAutoDetachCleanMC.Defines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private double shuttleTransferZAxisUnloadPosition;
 
         [SingleRecipeDescription(Description = "Detach Z Axis Ready Position", Unit = Unit.mm)]
+        [SingleRecipePosition(Motion = "DetachGlassZAxis")]
         public double DetachZAxisReadyPosition
         {
             get { return detachZAxisReadyPosition; }
@@ -31,6 +33,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Detach Z Axis Detach Ready Position", Unit = Unit.mm)]
+        [SingleRecipePosition(Motion = "DetachGlassZAxis")]
         public double DetachZAxisDetachReadyPosition
         {
             get { return detachZAxisDetachReadyPosition; }
@@ -38,6 +41,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Detach Z Axis Detach 1 Position", Unit = Unit.mm)]
+        [SingleRecipePosition(Motion = "DetachGlassZAxis")]
         public double DetachZAxisDetach1Position
         {
             get { return detachZAxisDetach1Position; }
@@ -45,6 +49,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Detach Z Axis Detach 2 Position", Unit = Unit.mm)]
+        [SingleRecipePosition(Motion = "DetachGlassZAxis")]
         public double DetachZAxisDetach2Position
         {
             get { return detachZAxisDetach2Position; }
@@ -52,6 +57,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Sht Tr Z Axis Ready Position", Unit = Unit.mm)]
+        [SingleRecipePosition(Motion = "ShuttleTransferZAxis")]
         public double ShuttleTransferZAxisReadyPosition
         {
             get { return shuttleTransferZAxisReadyPosition; }
@@ -59,6 +65,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Sht Tr Z Axis Detach Ready Position", Unit = Unit.mm)]
+        [SingleRecipePosition(Motion = "ShuttleTransferZAxis")]
         public double ShuttleTransferZAxisDetachReadyPosition
         {
             get { return shuttleTransferZAxisDetachReadyPosition; }
@@ -66,6 +73,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Sht Tr Z Axis Detach 1 Position", Unit = Unit.mm)]
+        [SingleRecipePosition(Motion = "ShuttleTransferZAxis")]
         public double ShuttleTransferZAxisDetach1Position
         {
             get { return shuttleTransferZAxisDetach1Position; }
@@ -73,6 +81,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Sht Tr Z Axis Detach 2 Position", Unit = Unit.mm)]
+        [SingleRecipePosition(Motion = "ShuttleTransferZAxis")]
         public double ShuttleTransferZAxisDetach2Position
         {
             get { return shuttleTransferZAxisDetach2Position; }
@@ -80,6 +89,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Sht Tr Z Axis Unload Position", Unit = Unit.mm)]
+        [SingleRecipePosition(Motion = "ShuttleTransferZAxis")]
         public double ShuttleTransferZAxisUnloadPosition
         {
             get { return shuttleTransferZAxisUnloadPosition; }
@@ -87,6 +97,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Sht Tr X Axis Detach Position", Unit = Unit.mm)]
+        [SingleRecipePosition(Motion = "ShuttleTransferXAxis")]
         public double ShuttleTransferXAxisDetachPosition
         {
             get { return shuttleTransferXAxisDetachPosition; }
@@ -94,6 +105,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Sht Tr X Axis Detach Check Position", Unit = Unit.mm)]
+        [SingleRecipePosition(Motion = "ShuttleTransferXAxis")]
         public double ShuttleTransferXAxisDetachCheckPosition
         {
             get { return shuttleTransferXAxisDetachCheckPosition; }
@@ -101,6 +113,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Sht Tr X Axis Unload Position", Unit = Unit.mm)]
+        [SingleRecipePosition(Motion = "ShuttleTransferXAxis")]
         public double ShuttleTransferXAxisUnloadPosition
         {
             get { return shuttleTransferXAxisUnloadPosition; }

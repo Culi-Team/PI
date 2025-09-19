@@ -51,14 +51,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         public static readonly DependencyProperty OutputsProperty =
             DependencyProperty.Register("Outputs", typeof(ObservableCollection<IDOutput>), typeof(UnitTeachingView), new PropertyMetadata(new ObservableCollection<IDOutput> { }));
 
-        public ObservableCollection<PositionTeaching> PositionTeachings
-        {
-            get { return (ObservableCollection<PositionTeaching>)GetValue(PositionTeachingsProperty); }
-            set { SetValue(PositionTeachingsProperty, value); }
-        }
-        public static readonly DependencyProperty PositionTeachingsProperty =
-            DependencyProperty.Register("PositionTeachings", typeof(ObservableCollection<PositionTeaching>), typeof(UnitTeachingView), new PropertyMetadata(new ObservableCollection<PositionTeaching> { }));
-
         public IProcess<ESequence> SelectedProcess
         {
             get { return (IProcess<ESequence>)GetValue(SelectedProcessProperty); }
@@ -89,49 +81,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
 
         private void EditPosition_Click(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var positionTeaching = button?.DataContext as PositionTeaching;
-            
-            if (positionTeaching == null) return;
-
-            var minMaxAttribute = new SingleRecipeMinMaxAttribute
-            {
-                Min = 0,
-                Max = 999.999
-            };
-            double currentValue = positionTeaching.Position;
-            if (currentValue == 0 && positionTeaching.Motion?.Status?.ActualPosition != null)
-            {
-                currentValue = positionTeaching.Motion.Status.ActualPosition;
-            }
-            if (currentValue == 0)
-            {
-                currentValue = 0; // Giá trị mặc định
-            }
-            
-            var dataEditor = new DataEditor(currentValue, minMaxAttribute);
-            dataEditor.Title = $"Edit Position - {positionTeaching.Name}";
-            if (dataEditor.ShowDialog() == true)
-            {
-                positionTeaching.Position = dataEditor.NewValue;
-                PositionTeachingDataGrid.Items.Refresh();
-            }
         }
         private void GetMotionPosition_Click(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var positionTeaching = button?.DataContext as PositionTeaching;
-            
-            if (positionTeaching == null) return;
-            positionTeaching.UpdatePositionFromMotion();
-            PositionTeachingDataGrid.Items.Refresh();
-            
         }
     }
 
     public class PositionTeachingCommandParameter
     {
         public TeachViewModel TeachViewModel { get; set; }
-        public PositionTeaching PositionTeaching { get; set; }
     }
 }
