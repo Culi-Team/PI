@@ -18,7 +18,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
     {
         #region Properties
         
-        public UnitTeachingViewModel CSTLoadUnloadUnitTeaching { get; }
+        public UnitTeachingViewModel CSTLoadUnitTeaching { get; }
+        public UnitTeachingViewModel CSTUnloadUnitTeaching { get; }
         public UnitTeachingViewModel TransferFixtureUnitTeaching { get; }
         public UnitTeachingViewModel DetachUnitTeaching { get; }
         public UnitTeachingViewModel GlassTransferUnitTeaching { get; }
@@ -232,27 +233,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return cylinders;
         }
 
-        // CST Load/Unload Combined Cylinders (In + Out)
-        private ObservableCollection<ICylinder> GetCSTLoadUnloadCylinders()
-        {
-            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            
-            // Add In Work Conveyor cylinders
-            var inCylinders = GetInWorkConveyorCylinders();
-            foreach (var cylinder in inCylinders)
-            {
-                cylinders.Add(cylinder);
-            }
-            
-            // Add Out Work Conveyor cylinders
-            var outCylinders = GetOutWorkConveyorCylinders();
-            foreach (var cylinder in outCylinders)
-            {
-                cylinders.Add(cylinder);
-            }
-            
-            return cylinders;
-        }
 
         // Detach Tab Cylinders
         private ObservableCollection<ICylinder> GetTransferFixtureCylinders()
@@ -414,33 +394,23 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDInput> GetInWorkConveyorInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add In Cassette detection inputs
+            // Add In Cassette detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.InCstDetect1);
             inputs.Add(Devices.Inputs.InCstDetect2);
-            // Add In Cassette work detection inputs
-            inputs.Add(Devices.Inputs.InCstWorkDetect1);
-            inputs.Add(Devices.Inputs.InCstWorkDetect2);
-            inputs.Add(Devices.Inputs.InCstWorkDetect3);
-            inputs.Add(Devices.Inputs.InCstWorkDetect4);
-            // Add In Cassette button inputs
-            inputs.Add(Devices.Inputs.InCompleteButton);
-            inputs.Add(Devices.Inputs.InMutingButton);
-            // Add In Cassette light curtain safety input
-            inputs.Add(Devices.Inputs.InCstLightCurtainAlarmDetect);
-            // Add In CV Support detection inputs
+            // Add In CV Support detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.InCvSupportUp);
             inputs.Add(Devices.Inputs.InCvSupportDown);
             inputs.Add(Devices.Inputs.InCvSupportBufferUp);
             inputs.Add(Devices.Inputs.InCvSupportBufferDown);
-            // Add In CST Fix cylinder detection inputs
+            // Add In CST Fix cylinder detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.InCstFixCyl1Fw);
             inputs.Add(Devices.Inputs.InCstFixCyl1Bw);
             inputs.Add(Devices.Inputs.InCstFixCyl2Fw);
             inputs.Add(Devices.Inputs.InCstFixCyl2Bw);
-            // Add In CST Tilt cylinder detection inputs
+            // Add In CST Tilt cylinder detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.InCstTiltCylUp);
             inputs.Add(Devices.Inputs.InCstTiltCylDown);
-            // Add In CST Stopper detection inputs
+            // Add In CST Stopper detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.InCstStopperUp);
             inputs.Add(Devices.Inputs.InCstStopperDown);
             
@@ -450,32 +420,23 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDInput> GetOutWorkConveyorInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add Out Cassette work detection inputs
-            inputs.Add(Devices.Inputs.OutCstWorkDetect1);
-            inputs.Add(Devices.Inputs.OutCstWorkDetect2);
-            inputs.Add(Devices.Inputs.OutCstWorkDetect3);
-            // Add Out Cassette detection inputs
+            // Add Out Cassette detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.OutCstDetect1);
             inputs.Add(Devices.Inputs.OutCstDetect2);
-            // Add Out Cassette button inputs
-            inputs.Add(Devices.Inputs.OutCompleteButton);
-            inputs.Add(Devices.Inputs.OutMutingButton);
-            // Add Out Cassette light curtain safety input
-            inputs.Add(Devices.Inputs.OutCstLightCurtainAlarmDetect);
-            // Add Out CV Support detection inputs
+            // Add Out CV Support detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.OutCvSupportUp);
             inputs.Add(Devices.Inputs.OutCvSupportDown);
             inputs.Add(Devices.Inputs.OutCvSupportBufferUp);
             inputs.Add(Devices.Inputs.OutCvSupportBufferDown);
-            // Add Out CST Fix cylinder detection inputs
+            // Add Out CST Fix cylinder detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.OutCstFixCyl1Fw);
             inputs.Add(Devices.Inputs.OutCstFixCyl1Bw);
             inputs.Add(Devices.Inputs.OutCstFixCyl2Fw);
             inputs.Add(Devices.Inputs.OutCstFixCyl2Bw);
-            // Add Out CST Tilt cylinder detection inputs
+            // Add Out CST Tilt cylinder detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.OutCstTiltCylUp);
             inputs.Add(Devices.Inputs.OutCstTiltCylDown);
-            // Add Out CST Stopper detection inputs
+            // Add Out CST Stopper detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.OutCstStopperUp);
             inputs.Add(Devices.Inputs.OutCstStopperDown);
             
@@ -650,12 +611,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDInput> GetWETCleanLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add WET Clean Left detection inputs
-            inputs.Add(Devices.Inputs.WetCleanLeftFeedingRollerDetect);
-            // Add WET Clean Left pusher cylinder detection inputs
+            // Add WET Clean Left pusher cylinder detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.WetCleanPusherLeftUp);
             inputs.Add(Devices.Inputs.WetCleanPusherLeftDown);
-            // Add WET Clean Left brush cylinder detection inputs
+            // Add WET Clean Left brush cylinder detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.WetCleanBrushLeftUp);
             inputs.Add(Devices.Inputs.WetCleanBrushLeftDown);
             return inputs;
@@ -664,12 +623,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDInput> GetWETCleanRightInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add WET Clean Right detection inputs
-            inputs.Add(Devices.Inputs.WetCleanRightFeedingRollerDetect);
-            // Add WET Clean Right pusher cylinder detection inputs
+            // Add WET Clean Right pusher cylinder detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.WetCleanPusherRightUp);
             inputs.Add(Devices.Inputs.WetCleanPusherRightDown);
-            // Add WET Clean Right brush cylinder detection inputs
+            // Add WET Clean Right brush cylinder detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.WetCleanBrushRightUp);
             inputs.Add(Devices.Inputs.WetCleanBrushRightDown);
             return inputs;
@@ -678,12 +635,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDInput> GetAFCleanLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add AF Clean Left detection inputs
-            inputs.Add(Devices.Inputs.AfCleanLeftFeedingRollerDetect);
-            // Add AF Clean Left pusher cylinder detection inputs
+            // Add AF Clean Left pusher cylinder detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.AfCleanPusherLeftUp);
             inputs.Add(Devices.Inputs.AfCleanPusherLeftDown);
-            // Add AF Clean Left brush cylinder detection inputs
+            // Add AF Clean Left brush cylinder detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.AfCleanBrushLeftUp);
             inputs.Add(Devices.Inputs.AfCleanBrushLeftDown);
             return inputs;
@@ -692,12 +647,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDInput> GetAFCleanRightInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add AF Clean Right detection inputs
-            inputs.Add(Devices.Inputs.AfCleanRightFeedingRollerDetect);
-            // Add AF Clean Right pusher cylinder detection inputs
+            // Add AF Clean Right pusher cylinder detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.AfCleanPusherRightUp);
             inputs.Add(Devices.Inputs.AfCleanPusherRightDown);
-            // Add AF Clean Right brush cylinder detection inputs
+            // Add AF Clean Right brush cylinder detection inputs (essential for teaching)
             inputs.Add(Devices.Inputs.AfCleanBrushRightUp);
             inputs.Add(Devices.Inputs.AfCleanBrushRightDown);
             return inputs;
@@ -721,69 +674,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             return inputs;
         }
 
-        // CSTLoadUnload Tab Inputs
-        private ObservableCollection<IDInput> GetCSTLoadUnloadInputs()
-        {
-            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add In Cassette detection inputs
-            inputs.Add(Devices.Inputs.InCstDetect1);
-            inputs.Add(Devices.Inputs.InCstDetect2);
-            // Add In Cassette work detection inputs
-            inputs.Add(Devices.Inputs.InCstWorkDetect1);
-            inputs.Add(Devices.Inputs.InCstWorkDetect2);
-            inputs.Add(Devices.Inputs.InCstWorkDetect3);
-            inputs.Add(Devices.Inputs.InCstWorkDetect4);
-            // Add In Cassette button inputs
-            inputs.Add(Devices.Inputs.InCompleteButton);
-            inputs.Add(Devices.Inputs.InMutingButton);
-            // Add In Cassette light curtain safety input
-            inputs.Add(Devices.Inputs.InCstLightCurtainAlarmDetect);
-            // Add In CV Support detection inputs
-            inputs.Add(Devices.Inputs.InCvSupportUp);
-            inputs.Add(Devices.Inputs.InCvSupportDown);
-            inputs.Add(Devices.Inputs.InCvSupportBufferUp);
-            inputs.Add(Devices.Inputs.InCvSupportBufferDown);
-            // Add In CST Fix cylinder detection inputs
-            inputs.Add(Devices.Inputs.InCstFixCyl1Fw);
-            inputs.Add(Devices.Inputs.InCstFixCyl1Bw);
-            inputs.Add(Devices.Inputs.InCstFixCyl2Fw);
-            inputs.Add(Devices.Inputs.InCstFixCyl2Bw);
-            // Add In CST Tilt cylinder detection inputs
-            inputs.Add(Devices.Inputs.InCstTiltCylUp);
-            inputs.Add(Devices.Inputs.InCstTiltCylDown);
-            // Add In CST Stopper detection inputs
-            inputs.Add(Devices.Inputs.InCstStopperUp);
-            inputs.Add(Devices.Inputs.InCstStopperDown);
-            // Add Out Cassette work detection inputs
-            inputs.Add(Devices.Inputs.OutCstWorkDetect1);
-            inputs.Add(Devices.Inputs.OutCstWorkDetect2);
-            inputs.Add(Devices.Inputs.OutCstWorkDetect3);
-            // Add Out Cassette detection inputs
-            inputs.Add(Devices.Inputs.OutCstDetect1);
-            inputs.Add(Devices.Inputs.OutCstDetect2);
-            // Add Out Cassette button inputs
-            inputs.Add(Devices.Inputs.OutCompleteButton);
-            inputs.Add(Devices.Inputs.OutMutingButton);
-            // Add Out Cassette light curtain safety input
-            inputs.Add(Devices.Inputs.OutCstLightCurtainAlarmDetect);
-            // Add Out CV Support detection inputs
-            inputs.Add(Devices.Inputs.OutCvSupportUp);
-            inputs.Add(Devices.Inputs.OutCvSupportDown);
-            inputs.Add(Devices.Inputs.OutCvSupportBufferUp);
-            inputs.Add(Devices.Inputs.OutCvSupportBufferDown);
-            // Add Out CST Fix cylinder detection inputs
-            inputs.Add(Devices.Inputs.OutCstFixCyl1Fw);
-            inputs.Add(Devices.Inputs.OutCstFixCyl1Bw);
-            inputs.Add(Devices.Inputs.OutCstFixCyl2Fw);
-            inputs.Add(Devices.Inputs.OutCstFixCyl2Bw);
-            // Add Out CST Tilt cylinder detection inputs
-            inputs.Add(Devices.Inputs.OutCstTiltCylUp);
-            inputs.Add(Devices.Inputs.OutCstTiltCylDown);
-            // Add Out CST Stopper detection inputs
-            inputs.Add(Devices.Inputs.OutCstStopperUp);
-            inputs.Add(Devices.Inputs.OutCstStopperDown);
-            return inputs;
-        }
 
 
 
@@ -794,24 +684,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDOutput> GetInWorkConveyorOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            // Add In Cassette button lamp outputs
-            outputs.Add(Devices.Outputs.InCompleteButtonLamp);
-            outputs.Add(Devices.Outputs.InMutingButtonLamp);
-            // Add In Cassette light curtain muting output
-            outputs.Add(Devices.Outputs.InCstLightCurtainMuting1);
-            outputs.Add(Devices.Outputs.InCstLightCurtainMuting2);
-            // Add In CST Stopper outputs
+            // Add In CST Stopper outputs (essential for teaching)
             outputs.Add(Devices.Outputs.InCstStopperUp);
             outputs.Add(Devices.Outputs.InCstStopperDown);
-            // Add In CST Fix cylinder outputs
+            // Add In CST Fix cylinder outputs (essential for teaching)
             outputs.Add(Devices.Outputs.InCstFixCyl1Fw);
             outputs.Add(Devices.Outputs.InCstFixCyl1Bw);
             outputs.Add(Devices.Outputs.InCstFixCyl2Fw);
             outputs.Add(Devices.Outputs.InCstFixCyl2Bw);
-            // Add In CST Tilt cylinder outputs
+            // Add In CST Tilt cylinder outputs (essential for teaching)
             outputs.Add(Devices.Outputs.InCstTiltCylUp);
             outputs.Add(Devices.Outputs.InCstTiltCylDown);
-            // Add In CV Support outputs
+            // Add In CV Support outputs (essential for teaching)
             outputs.Add(Devices.Outputs.InCvSupportUp);
             outputs.Add(Devices.Outputs.InCvSupportDown);
             outputs.Add(Devices.Outputs.InCvSupportBufferUp);
@@ -823,24 +707,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDOutput> GetOutWorkConveyorOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            // Add Out Cassette button lamp outputs
-            outputs.Add(Devices.Outputs.OutCompleteButtonLamp);
-            outputs.Add(Devices.Outputs.OutMutingButtonLamp);
-            // Add Out Cassette light curtain muting output
-            outputs.Add(Devices.Outputs.OutCstLightCurtainMuting1);
-            outputs.Add(Devices.Outputs.OutCstLightCurtainMuting2);
-            // Add Out CST Stopper outputs
+            // Add Out CST Stopper outputs (essential for teaching)
             outputs.Add(Devices.Outputs.OutCstStopperUp);
             outputs.Add(Devices.Outputs.OutCstStopperDown);
-            // Add Out CST Fix cylinder outputs
+            // Add Out CST Fix cylinder outputs (essential for teaching)
             outputs.Add(Devices.Outputs.OutCstFixCyl1Fw);
             outputs.Add(Devices.Outputs.OutCstFixCyl1Bw);
             outputs.Add(Devices.Outputs.OutCstFixCyl2Fw);
             outputs.Add(Devices.Outputs.OutCstFixCyl2Bw);
-            // Add Out CST Tilt cylinder outputs
+            // Add Out CST Tilt cylinder outputs (essential for teaching)
             outputs.Add(Devices.Outputs.OutCstTiltCylUp);
             outputs.Add(Devices.Outputs.OutCstTiltCylDown);
-            // Add Out CV Support outputs
+            // Add Out CV Support outputs (essential for teaching)
             outputs.Add(Devices.Outputs.OutCvSupportUp);
             outputs.Add(Devices.Outputs.OutCvSupportDown);
             outputs.Add(Devices.Outputs.OutCvSupportBufferUp);
@@ -1007,7 +885,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDOutput> GetWETCleanLeftOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            // Add WET Clean Left cylinder control outputs
+            // Add WET Clean Left cylinder control outputs (essential for teaching)
             outputs.Add(Devices.Outputs.WetCleanPusherLeftUp);
             outputs.Add(Devices.Outputs.WetCleanPusherLeftDown);
             outputs.Add(Devices.Outputs.WetCleanBrushLeftDown);
@@ -1017,7 +895,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDOutput> GetWETCleanRightOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            // Add WET Clean Right cylinder control outputs
+            // Add WET Clean Right cylinder control outputs (essential for teaching)
             outputs.Add(Devices.Outputs.WetCleanPusherRightUp);
             outputs.Add(Devices.Outputs.WetCleanPusherRightDown);
             outputs.Add(Devices.Outputs.WetCleanBrushRightDown);
@@ -1027,7 +905,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDOutput> GetAFCleanLeftOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            // Add AF Clean Left cylinder control outputs
+            // Add AF Clean Left cylinder control outputs (essential for teaching)
             outputs.Add(Devices.Outputs.AfCleanPusherLeftUp);
             outputs.Add(Devices.Outputs.AfCleanPusherLeftDown);
             outputs.Add(Devices.Outputs.AfCleanBrushLeftDown);
@@ -1037,63 +915,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private ObservableCollection<IDOutput> GetAFCleanRightOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            // Add AF Clean Right cylinder control outputs
+            // Add AF Clean Right cylinder control outputs (essential for teaching)
             outputs.Add(Devices.Outputs.AfCleanPusherRightUp);
             outputs.Add(Devices.Outputs.AfCleanPusherRightDown);
             outputs.Add(Devices.Outputs.AfCleanBrushRightDown);
             return outputs;
         }
 
-        // CSTLoadUnload Tab Outputs
-        private ObservableCollection<IDOutput> GetCSTLoadUnloadOutputs()
-        {
-            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            // Add In Cassette button lamp outputs
-            outputs.Add(Devices.Outputs.InCompleteButtonLamp);
-            outputs.Add(Devices.Outputs.InMutingButtonLamp);
-            // Add In Cassette light curtain muting output
-            outputs.Add(Devices.Outputs.InCstLightCurtainMuting1);
-            outputs.Add(Devices.Outputs.InCstLightCurtainMuting2);
-            // Add In CST Stopper outputs
-            outputs.Add(Devices.Outputs.InCstStopperUp);
-            outputs.Add(Devices.Outputs.InCstStopperDown);
-            // Add In CST Fix cylinder outputs
-            outputs.Add(Devices.Outputs.InCstFixCyl1Fw);
-            outputs.Add(Devices.Outputs.InCstFixCyl1Bw);
-            outputs.Add(Devices.Outputs.InCstFixCyl2Fw);
-            outputs.Add(Devices.Outputs.InCstFixCyl2Bw);
-            // Add In CST Tilt cylinder outputs
-            outputs.Add(Devices.Outputs.InCstTiltCylUp);
-            outputs.Add(Devices.Outputs.InCstTiltCylDown);
-            // Add In CV Support outputs
-            outputs.Add(Devices.Outputs.InCvSupportUp);
-            outputs.Add(Devices.Outputs.InCvSupportDown);
-            outputs.Add(Devices.Outputs.InCvSupportBufferUp);
-            outputs.Add(Devices.Outputs.InCvSupportBufferDown);
-            // Add Out Cassette button lamp outputs
-            outputs.Add(Devices.Outputs.OutCompleteButtonLamp);
-            outputs.Add(Devices.Outputs.OutMutingButtonLamp);
-            // Add Out Cassette light curtain muting output
-            outputs.Add(Devices.Outputs.OutCstLightCurtainMuting1);
-            outputs.Add(Devices.Outputs.OutCstLightCurtainMuting2);
-            // Add Out CST Stopper outputs
-            outputs.Add(Devices.Outputs.OutCstStopperUp);
-            outputs.Add(Devices.Outputs.OutCstStopperDown);
-            // Add Out CST Fix cylinder outputs
-            outputs.Add(Devices.Outputs.OutCstFixCyl1Fw);
-            outputs.Add(Devices.Outputs.OutCstFixCyl1Bw);
-            outputs.Add(Devices.Outputs.OutCstFixCyl2Fw);
-            outputs.Add(Devices.Outputs.OutCstFixCyl2Bw);
-            // Add Out CST Tilt cylinder outputs
-            outputs.Add(Devices.Outputs.OutCstTiltCylUp);
-            outputs.Add(Devices.Outputs.OutCstTiltCylDown);
-            // Add Out CV Support outputs
-            outputs.Add(Devices.Outputs.OutCvSupportUp);
-            outputs.Add(Devices.Outputs.OutCvSupportDown);
-            outputs.Add(Devices.Outputs.OutCvSupportBufferUp);
-            outputs.Add(Devices.Outputs.OutCvSupportBufferDown);
-            return outputs;
-        }
 
 
 
@@ -1119,13 +947,21 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             CylinderBackwardCommand = new RelayCommand<ICylinder>(CylinderBackward);
 
             // Initialize Unit Teachings
-            CSTLoadUnloadUnitTeaching = new UnitTeachingViewModel("CST Load/Unload", recipeSelector);
-            CSTLoadUnloadUnitTeaching.Cylinders = GetCSTLoadUnloadCylinders();
-            CSTLoadUnloadUnitTeaching.Motions = GetCSTLoadUnloadMotions();
-            CSTLoadUnloadUnitTeaching.Inputs = GetCSTLoadUnloadInputs();
-            CSTLoadUnloadUnitTeaching.Outputs = GetCSTLoadUnloadOutputs();
-            CSTLoadUnloadUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe;
-            CSTLoadUnloadUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("InputCassetteStageImage");
+            CSTLoadUnitTeaching = new UnitTeachingViewModel("CST Load", recipeSelector);
+            CSTLoadUnitTeaching.Cylinders = GetInWorkConveyorCylinders();
+            CSTLoadUnitTeaching.Motions = GetCSTLoadUnloadMotions();
+            CSTLoadUnitTeaching.Inputs = GetInWorkConveyorInputs();
+            CSTLoadUnitTeaching.Outputs = GetInWorkConveyorOutputs();
+            CSTLoadUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe;
+            CSTLoadUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("InputCassetteStageImage");
+
+            CSTUnloadUnitTeaching = new UnitTeachingViewModel("CST Unload", recipeSelector);
+            CSTUnloadUnitTeaching.Cylinders = GetOutWorkConveyorCylinders();
+            CSTUnloadUnitTeaching.Motions = GetCSTLoadUnloadMotions();
+            CSTUnloadUnitTeaching.Inputs = GetOutWorkConveyorInputs();
+            CSTUnloadUnitTeaching.Outputs = GetOutWorkConveyorOutputs();
+            CSTUnloadUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe;
+            CSTUnloadUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("OutputCassetteStageImage");
 
             TransferFixtureUnitTeaching = new UnitTeachingViewModel("Transfer Fixture", recipeSelector);
             TransferFixtureUnitTeaching.Cylinders = GetTransferFixtureCylinders();
@@ -1247,7 +1083,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
             UnitTeachings = new ObservableCollection<UnitTeachingViewModel>()
             {
-                CSTLoadUnloadUnitTeaching,
+                CSTLoadUnitTeaching,
+                CSTUnloadUnitTeaching,
                 TransferFixtureUnitTeaching,
                 DetachUnitTeaching,
                 GlassTransferUnitTeaching,
