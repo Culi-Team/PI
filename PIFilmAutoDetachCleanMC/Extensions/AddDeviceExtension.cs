@@ -202,7 +202,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
                     for (int i = 0; i < torqueCtlList.Count; i++)
                     {
-                        list.Add(new DX3000TorqueController(torqueCtlIndex[i], torqueCtlList[i]) { ModbusCommunication = modbusCommunication });
+                        list.Add(new DX3000TorqueController(torqueCtlIndex[i], torqueCtlList[i], modbusCommunication));
                     }
 
                     return new TorqueControllerList(list);
