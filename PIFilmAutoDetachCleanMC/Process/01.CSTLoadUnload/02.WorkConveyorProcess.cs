@@ -5,6 +5,7 @@ using EQX.Core.Motion;
 using EQX.Core.Sequence;
 using EQX.Core.Units;
 using EQX.InOut;
+using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -388,6 +389,51 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
             return true;
         }
+
+        public override bool ProcessToRun()
+        {
+            switch ((EWorkConveyorToRunStep)Step.ToRunStep)
+            {
+                case EWorkConveyorToRunStep.Start:
+                    Log.Debug("To Run Start");
+                    Step.ToRunStep++;
+                    break;
+                case EWorkConveyorToRunStep.Conveyor_Stop:
+                    Log.Debug("Conveyor Stop");
+                    ConveyorStop();
+                    Step.ToRunStep++;
+                    break;
+                case EWorkConveyorToRunStep.Set_ConveyorSpeed:
+                    Log.Debug("Conveyor Set Speed");
+                    ConveyorSetSpeed((int)_cstLoadUnloadRecipe.ConveyorSpeed);
+                    Step.ToRunStep++;
+                    break;
+                case EWorkConveyorToRunStep.Set_ConveyorAccel:
+                    Log.Debug("Conveyor Set Accel");
+                    ConveyorSetAccel((int)_cstLoadUnloadRecipe.ConveyorAcc);
+                    Step.ToRunStep++;
+                    break;
+                case EWorkConveyorToRunStep.Set_ConveyorDeccel:
+                    Log.Debug("Conveyor Set Deccel");
+                    ConveyorSetDeccel((int)_cstLoadUnloadRecipe.ConveyorDec);
+                    Step.ToRunStep++;
+                    break;
+                case EWorkConveyorToRunStep.Clear_Flags:
+                    Log.Debug("Clear Flags");
+                    ((VirtualOutputDevice<EWorkConveyorProcessOutput>)Outputs).Clear();
+                    Step.ToRunStep++;
+                    break;
+                case EWorkConveyorToRunStep.End:
+                    Log.Debug("To Run End");
+                    Step.ToRunStep++;
+                    ProcessStatus = EProcessStatus.ToRunDone;
+                    break;
+                default:
+                    Wait(20);
+                    break;
+            }
+            return true;
+        }
         #endregion
 
         #region Private Methods
@@ -536,7 +582,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cassette Work Condition Check");
                     if (CassetteWorkDone)
                     {
-                        if(port == EPort.Right)
+                        if (port == EPort.Right)
                         {
                             Log.Info("Sequence In Work CST Unload");
                             Sequence = ESequence.InWorkCSTUnLoad;
@@ -913,6 +959,30 @@ namespace PIFilmAutoDetachCleanMC.Process
             Roller2.Stop();
             RollerSupport1.Stop();
             RollerSupport2.Stop();
+        }
+
+        private void ConveyorSetSpeed(int speed)
+        {
+            Roller1.SetSpeed(speed);
+            Roller2.SetSpeed(speed);
+            RollerSupport1.SetSpeed(speed);
+            RollerSupport2.SetSpeed(speed);
+        }
+
+        private void ConveyorSetAccel(int accel)
+        {
+            Roller1.SetAcceleration(accel);
+            Roller2.SetAcceleration(accel);
+            RollerSupport1.SetAcceleration(accel);
+            RollerSupport2.SetAcceleration(accel);
+        }
+
+        private void ConveyorSetDeccel(int deccel)
+        {
+            Roller1.SetDeceleration(deccel);
+            Roller2.SetDeceleration(deccel);
+            RollerSupport1.SetDeceleration(deccel);
+            RollerSupport2.SetDeceleration(deccel);
         }
         #endregion
     }
