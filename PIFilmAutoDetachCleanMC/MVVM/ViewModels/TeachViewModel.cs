@@ -66,15 +66,21 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         }
 
         #region GetMotions
-        // CSTLoadUnload Tab Motions
-        private ObservableCollection<IMotion> GetCSTLoadUnloadMotions()
+        // CSTLoad Tab Motions
+        private ObservableCollection<IMotion> GetCSTLoadMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
             motions.Add(Devices.MotionsInovance.InCassetteTAxis);
-            motions.Add(Devices.MotionsInovance.OutCassetteTAxis);
             return motions;
         }
 
+        // CSTUnload Tab Motions
+        private ObservableCollection<IMotion> GetCSTUnloadMotions()
+        {
+            ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
+            motions.Add(Devices.MotionsInovance.OutCassetteTAxis);
+            return motions;
+        }
 
         // Transfer Fixture Tab Motions
         private ObservableCollection<IMotion> GetTransferFixtureMotions()
@@ -949,7 +955,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             // Initialize Unit Teachings
             CSTLoadUnitTeaching = new UnitTeachingViewModel("CST Load", recipeSelector);
             CSTLoadUnitTeaching.Cylinders = GetInWorkConveyorCylinders();
-            CSTLoadUnitTeaching.Motions = GetCSTLoadUnloadMotions();
+            CSTLoadUnitTeaching.Motions = GetCSTLoadMotions();
             CSTLoadUnitTeaching.Inputs = GetInWorkConveyorInputs();
             CSTLoadUnitTeaching.Outputs = GetInWorkConveyorOutputs();
             CSTLoadUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe;
@@ -957,7 +963,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
             CSTUnloadUnitTeaching = new UnitTeachingViewModel("CST Unload", recipeSelector);
             CSTUnloadUnitTeaching.Cylinders = GetOutWorkConveyorCylinders();
-            CSTUnloadUnitTeaching.Motions = GetCSTLoadUnloadMotions();
+            CSTUnloadUnitTeaching.Motions = GetCSTUnloadMotions();
             CSTUnloadUnitTeaching.Inputs = GetOutWorkConveyorInputs();
             CSTUnloadUnitTeaching.Outputs = GetOutWorkConveyorOutputs();
             CSTUnloadUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe;

@@ -59,7 +59,7 @@
                                       ItemTemplate="{StaticResource CylinderControlDataTemplate}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Rows="1"
+                                    <UniformGrid Columns="4"
                                                  VerticalAlignment="Top" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
@@ -128,7 +128,7 @@
                             </ItemsControl.ItemTemplate>
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Rows="1"/>
+                                    <UniformGrid Columns="4"/>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
