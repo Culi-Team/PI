@@ -87,13 +87,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Origin Start");
                     Step.OriginStep++;
                     break;
-                case EConveyorOriginStep.CstStopper_Down:
+                case EConveyorOriginStep.CstStopper_Up:
                     Log.Debug("Cassette Stopper Up");
-                    StopperCylinder.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => StopperCylinder.IsBackward);
+                    StopperCylinder.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => StopperCylinder.IsForward);
                     Step.OriginStep++;
                     break;
-                case EConveyorOriginStep.CstStopper_Down_Wait:
+                case EConveyorOriginStep.CstStopper_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.InConveyor_CST_Stopper_Up_Fail);

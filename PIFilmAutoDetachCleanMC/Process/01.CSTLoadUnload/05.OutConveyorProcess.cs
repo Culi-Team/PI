@@ -306,6 +306,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Stopper Up Done");
+                    Step.RunStep++;
                     break;
                 case EOutConveyorUnloadStep.CSTDetect_Check:
                     if(CSTDetect1.Value == true && CSTDetect2.Value == false)

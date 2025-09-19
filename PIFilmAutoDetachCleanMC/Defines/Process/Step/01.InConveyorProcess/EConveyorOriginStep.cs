@@ -9,8 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EConveyorOriginStep
     {
         Start,
-        CstStopper_Down,
-        CstStopper_Down_Wait,
+        CstStopper_Up,
+        CstStopper_Up_Wait,
         Conveyor_Stop,
         End
     }
