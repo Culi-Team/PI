@@ -28,6 +28,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         Wait_CassetteLoadDone,
 
+        Reset_Cassette_Status,
+
         Conveyor_Stop,
 
         End

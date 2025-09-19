@@ -42,6 +42,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private double TAxisLoadPosition => port == EPort.Right ? _cstLoadUnloadRecipe.InCstTAxisLoadPosition : _cstLoadUnloadRecipe.OutCstTAxisLoadPosition;
 
         private ITray<ETrayCellStatus> Cassette => port == EPort.Right ? _cassetteList.CassetteIn : _cassetteList.CassetteOut;
+
+        private bool CassetteWorkDone => Cassette.Cells.Count(c => c.Status == ETrayCellStatus.Ready || c.Status == ETrayCellStatus.Working) == 0;
         #endregion
 
         #region Constructor
@@ -114,6 +116,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 return _devices.Inputs.OutCstDetect1.Value && _devices.Inputs.OutCstDetect2.Value;
             }
         }
+
         #endregion
 
         #region Outputs
@@ -531,6 +534,26 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EWorkConveyorPickPlaceStep.Cassette_WorkCondition_Check:
                     Log.Debug("Cassette Work Condition Check");
+                    if (CassetteWorkDone)
+                    {
+                        if(port == EPort.Right)
+                        {
+                            Log.Info("Sequence In Work CST Unload");
+                            Sequence = ESequence.InWorkCSTUnLoad;
+                            break;
+                        }
+
+                        Log.Info("Sequence Out Work CST Unload");
+                        Sequence = ESequence.OutWorkCSTUnLoad;
+                        break;
+                    }
+
+                    // CassetteWorkDone = false -> Atlest 1 ETrayCellStatus.Ready cell exist
+                    if (Cassette.GetFirstIndex(ETrayCellStatus.Working) == -1)
+                    {
+                        Cassette[(uint)Cassette.GetFirstIndex(ETrayCellStatus.Ready)] = ETrayCellStatus.Working;
+                    }
+
                     Step.RunStep++;
                     break;
                 case EWorkConveyorPickPlaceStep.Set_FlagReady:
@@ -543,6 +566,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorPickPlaceStep.Wait_Robot_PickPlace_Done:
                     if (FlagRobotPickPlaceDone == false)
                     {
+                        Wait(20);
                         break;
                     }
                     Log.Debug("Set Flag In Out Cassette Pick Place Done Received");
@@ -661,6 +685,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Clear Flag Request Cassette In");
                     FlagRequestCSTIn = false;
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorProcessLoadStep.Reset_Cassette_Status:
+                    Log.Debug("Reset Cassette Status");
+                    Cassette.Cells.ToList().ForEach(c => c.Status = ETrayCellStatus.Ready);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Conveyor_Stop:

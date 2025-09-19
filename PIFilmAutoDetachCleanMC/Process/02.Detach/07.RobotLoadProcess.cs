@@ -6,6 +6,7 @@ using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Robot;
 using PIFilmAutoDetachCleanMC.Defines.Process.Step._07.RobotLoadProcess;
 using PIFilmAutoDetachCleanMC.Recipe;
@@ -21,6 +22,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly Devices _devices;
         private readonly IDInputDevice _robotLoadInput;
         private readonly IDOutputDevice _robotLoadOutput;
+        private readonly CassetteList _cassetteList;
+        private int CurrentInWorkCSTFixtureIndex = -1;
+        private int CurrentOutWorkCSTFixtureIndex = -1;
 
         private ICylinder ClampCyl => _devices.Cylinders.RobotFixtureClampUnclamp;
         private ICylinder AlignCyl => _devices.Cylinders.RobotFixtureAlignFwBw;
@@ -190,7 +194,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             RobotLoadRecipe robotLoadRecipe,
             Devices devices,
             [FromKeyedServices("RobotLoadInput")] IDInputDevice robotLoadInput,
-            [FromKeyedServices("RobotLoadOutput")] IDOutputDevice robotLoadOutput)
+            [FromKeyedServices("RobotLoadOutput")] IDOutputDevice robotLoadOutput,
+            CassetteList cassetteList)
         {
             _robotLoad = robotLoad;
             _commonRecipe = commonRecipe;
@@ -198,6 +203,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             _devices = devices;
             _robotLoadInput = robotLoadInput;
             _robotLoadOutput = robotLoadOutput;
+            _cassetteList = cassetteList;
         }
         #endregion
 
@@ -612,9 +618,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPickFixtureFromCSTStep.Wait_InCST_Ready:
                     if (FlagInCSTReady == false)
                     {
+                        Wait(20);
                         break;
                     }
 
+                    CurrentInWorkCSTFixtureIndex = _cassetteList.CassetteIn.GetFirstIndex(ETrayCellStatus.Working);
+                    Log.Debug("Current Fixture Index: " + CurrentInWorkCSTFixtureIndex);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Move_InCST_PickPositon:
@@ -665,6 +674,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPickFixtureFromCSTStep.Move_InCST_ReadyPositon_Wait:
                     Log.Debug("Move In Cassette Ready Position Wait");
                     Wait(1000);
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPickFixtureFromCSTStep.Update_Cassette_Status:
+                    Log.Debug("Update Cassette Status");
+                    _cassetteList.CassetteIn[(uint)CurrentInWorkCSTFixtureIndex] = ETrayCellStatus.Done;
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Set_Flag_RobotPickInCSTDone:
@@ -1024,7 +1038,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
-
+                    CurrentOutWorkCSTFixtureIndex = _cassetteList.CassetteOut.GetFirstIndex(ETrayCellStatus.Working);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Move_OutCSTPlacePosition:
@@ -1070,6 +1084,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPlaceFixtureToOutCSTStep.Move_OutCSTReadyPosition_Wait:
                     Log.Debug("Robot Move Out Cassette Ready Position Wait");
                     Wait(1000);
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPlaceFixtureToOutCSTStep.Update_Cassette_Status:
+                    Log.Debug("Update Cassette Status");
+                    _cassetteList.CassetteOut[(uint)CurrentOutWorkCSTFixtureIndex] = ETrayCellStatus.Done;
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Set_FlagPlaceOutCSTDone:

@@ -21,6 +21,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Move_InCST_ReadyPositon,
         Move_InCST_ReadyPositon_Wait,
 
+        Update_Cassette_Status,
+
         Set_Flag_RobotPickInCSTDone,
         Wait_InCST_PickDone,
 

@@ -20,6 +20,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Move_OutCSTReadyPosition,
         Move_OutCSTReadyPosition_Wait,
 
+        Update_Cassette_Status,
+
         Set_FlagPlaceOutCSTDone,
         Wait_OutCSTPlaceDoneReceived,
         End,
