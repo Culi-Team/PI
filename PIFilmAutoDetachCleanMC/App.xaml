@@ -19,6 +19,7 @@
                 <ResourceDictionary Source="/EQX.UI;component/Resources/Language/ChineseLanguage.xaml" />
                 <ResourceDictionary Source="/EQX.UI;component/Resources/Language/EnglishLanguage.xaml" />
                 <ResourceDictionary Source="/Resource/Resource.xaml" />
+                <ResourceDictionary Source="/Styles/DataGridCellStyles.xaml"/>
 
                 <ResourceDictionary>
                     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />

@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EQX.Core.Motion;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.Views
 {
@@ -218,6 +219,66 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                 {
                     item.Focus();
                 }
+            }
+        }
+
+        private void EditSpeed_Click(object sender, MouseButtonEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            var motion = textBox?.DataContext as IMotion;
+            
+            if (motion == null || textBox?.Tag == null) return;
+
+            string parameterType = textBox.Tag.ToString();
+            var minMaxAttribute = new SingleRecipeMinMaxAttribute
+            {
+                Min = 0,
+                Max = 999.999
+            };
+
+            double currentValue = 0;
+            string title = "";
+
+            switch (parameterType)
+            {
+                case "Velocity":
+                    currentValue = motion.Parameter.Velocity;
+                    title = $"Edit Speed - {motion.Name}";
+                    break;
+                case "Acceleration":
+                    currentValue = motion.Parameter.Acceleration;
+                    title = $"Edit Acceleration - {motion.Name}";
+                    break;
+                case "Deceleration":
+                    currentValue = motion.Parameter.Deceleration;
+                    title = $"Edit Deceleration - {motion.Name}";
+                    break;
+                default:
+                    return;
+            }
+
+            if (currentValue == 0)
+            {
+                currentValue = 0; // Giá trị mặc định
+            }
+            
+            var dataEditor = new DataEditor(currentValue, minMaxAttribute);
+            dataEditor.Title = title;
+            if (dataEditor.ShowDialog() == true)
+            {
+                switch (parameterType)
+                {
+                    case "Velocity":
+                        motion.Parameter.Velocity = dataEditor.NewValue;
+                        break;
+                    case "Acceleration":
+                        motion.Parameter.Acceleration = dataEditor.NewValue;
+                        break;
+                    case "Deceleration":
+                        motion.Parameter.Deceleration = dataEditor.NewValue;
+                        break;
+                }
+                MotionDataGrid.Items.Refresh();
             }
         }
     }

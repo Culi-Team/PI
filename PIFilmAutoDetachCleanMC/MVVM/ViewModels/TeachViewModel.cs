@@ -33,6 +33,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public RecipeList RecipeList;
         public RecipeSelector RecipeSelector;
         public Processes Processes;
+        public MachineStatus MachineStatus { get; }
       
 
         public ObservableCollection<UnitTeachingViewModel> UnitTeachings { get; }
@@ -961,12 +962,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public TeachViewModel(Devices devices,
             RecipeList recipeList,
             RecipeSelector recipeSelector,
-            Processes processes)
+            Processes processes,
+            MachineStatus machineStatus)
         {
             Devices = devices;
             RecipeList = recipeList;
             Processes = processes;
             RecipeSelector = recipeSelector;
+            MachineStatus = machineStatus;
             
             // Initialize Commands
             CylinderForwardCommand = new RelayCommand<ICylinder>(CylinderForward);
