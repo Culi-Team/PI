@@ -16,12 +16,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Converters\JsonConverters\**" />
     <Compile Remove="Process\Define\**" />
     <Compile Remove="Process\Steps\**" />
+    <EmbeddedResource Remove="Converters\JsonConverters\**" />
     <EmbeddedResource Remove="Process\Define\**" />
     <EmbeddedResource Remove="Process\Steps\**" />
+    <None Remove="Converters\JsonConverters\**" />
     <None Remove="Process\Define\**" />
     <None Remove="Process\Steps\**" />
+    <Page Remove="Converters\JsonConverters\**" />
     <Page Remove="Process\Define\**" />
     <Page Remove="Process\Steps\**" />
   </ItemGroup>
@@ -97,7 +101,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Converters\JsonConverters\" />
     <Folder Include="Defines\Process\Step\04.OutWorkConveyorProcess\" />
   </ItemGroup>
 

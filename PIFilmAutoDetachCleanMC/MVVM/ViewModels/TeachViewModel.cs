@@ -16,158 +16,41 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
     public class TeachViewModel : ViewModelBase
     {
+        #region Properties
+
         public UnitTeachingViewModel DetachUnitTeaching { get; }
         public UnitTeachingViewModel GlassTransferUnitTeaching { get; }
         public UnitTeachingViewModel TransferInShuttleLeftUnitTeaching { get; }
         public UnitTeachingViewModel TransferInShuttleRightUnitTeaching { get; }
+        public CleanUnitTeachingViewModel WETCleanLeftUnitTeaching { get; }
+        public CleanUnitTeachingViewModel WETCleanRightUnitTeaching { get; }
+        public UnitTeachingViewModel TransferRotationLeftUnitTeaching { get; }
+        public UnitTeachingViewModel TransferRotationRightUnitTeaching { get; }
+        public CleanUnitTeachingViewModel AFCleanLeftUnitTeaching { get; }
+        public CleanUnitTeachingViewModel AFCleanRightUnitTeaching { get; }
 
-
-        #region Properties
         public Devices Devices { get; }
         public RecipeList RecipeList;
         public RecipeSelector RecipeSelector;
         public Processes Processes;
       
-        private ObservableCollection<ICylinder> _cylinders;
-        public ObservableCollection<ICylinder> Cylinders
+
+        public ObservableCollection<UnitTeachingViewModel> UnitTeachings { get; }
+
+        private UnitTeachingViewModel selectedUnitTeaching;
+
+        public UnitTeachingViewModel SelectedUnitTeaching
         {
-            get { return _cylinders; }
-            set { _cylinders = value; OnPropertyChanged(); }
+            get 
+            {
+                return selectedUnitTeaching; 
+            }
+            set 
+            {
+                selectedUnitTeaching = value;
+                OnPropertyChanged(nameof(SelectedUnitTeaching));
+            }
         }
-        private ObservableCollection<IMotion> _motions;
-        public ObservableCollection<IMotion> Motions
-        {
-            get { return _motions; }
-            set { _motions = value; OnPropertyChanged(); }
-        }
-        private ObservableCollection<IDOutput> _outputs;
-        public ObservableCollection<IDOutput> Outputs
-        {
-            get { return _outputs; }
-            set { _outputs = value; OnPropertyChanged(); }
-        }
-        private ObservableCollection<IDInput> _inputs;
-        public ObservableCollection<IDInput> Inputs
-        {
-            get { return _inputs; }
-            set { _inputs = value; OnPropertyChanged(); }
-        }
-
-        // CSTLoadUnload Tab Motion Properties
-        public ObservableCollection<IMotion> InWorkConveyorMotions => GetInWorkConveyorMotions();
-        public ObservableCollection<IMotion> OutWorkConveyorMotions => GetOutWorkConveyorMotions();
-
-        // CSTLoadUnload Tab Cylinder Properties
-        public ObservableCollection<ICylinder> InWorkConveyorCylinders => GetInWorkConveyorCylinders();
-        public ObservableCollection<ICylinder> OutWorkConveyorCylinders => GetOutWorkConveyorCylinders();
-
-        // CSTLoadUnload Tab Input Properties
-        public ObservableCollection<IDInput> InWorkConveyorInputs => GetInWorkConveyorInputs();
-        public ObservableCollection<IDInput> OutWorkConveyorInputs => GetOutWorkConveyorInputs();
-
-        // CSTLoadUnload Tab Output Properties
-        public ObservableCollection<IDOutput> InWorkConveyorOutputs => GetInWorkConveyorOutputs();
-        public ObservableCollection<IDOutput> OutWorkConveyorOutputs => GetOutWorkConveyorOutputs();
-
-        // Detach Tab Motion Properties
-        public ObservableCollection<IMotion> TransferFixtureMotions => GetTransferFixtureMotions();
-        public ObservableCollection<IMotion> DetachMotions => GetDetachMotions();
-
-        // Detach Tab Cylinder Properties
-        public ObservableCollection<ICylinder> TransferFixtureCylinders => GetTransferFixtureCylinders();
-        public ObservableCollection<ICylinder> DetachCylinders => GetDetachCylinders();
-
-        // Detach Tab Input Properties
-        public ObservableCollection<IDInput> TransferFixtureInputs => GetTransferFixtureInputs();
-        public ObservableCollection<IDInput> DetachInputs => GetDetachInputs();
-
-        // Detach Tab Output Properties
-        public ObservableCollection<IDOutput> TransferFixtureOutputs => GetTransferFixtureOutputs();
-        public ObservableCollection<IDOutput> DetachOutputs => GetDetachOutputs();
-
-        // Glass Transfer Tab Motion Properties
-        public ObservableCollection<IMotion> GlassTransferMotions => GetGlassTransferMotions();
-
-        // Glass Transfer Tab Cylinder Properties
-        public ObservableCollection<ICylinder> GlassTransferCylinders => GetGlassTransferCylinders();
-
-        // Glass Transfer Tab Input Properties
-        public ObservableCollection<IDInput> GlassTransferInputs => GetGlassTransferInputs();
-
-        // Glass Transfer Tab Output Properties
-        public ObservableCollection<IDOutput> GlassTransferOutputs => GetGlassTransferOutputs();
-
-        // Transfer Shutter Tab Motion Properties
-        public ObservableCollection<IMotion> TransferShutterLeftMotions => GetTransferShutterLeftMotions();
-        public ObservableCollection<IMotion> TransferShutterRightMotions => GetTransferShutterRightMotions();
-
-        // Transfer Shutter Tab Cylinder Properties
-        public ObservableCollection<ICylinder> TransferShutterLeftCylinders => GetTransferShutterLeftCylinders();
-        public ObservableCollection<ICylinder> TransferShutterRightCylinders => GetTransferShutterRightCylinders();
-
-        // Transfer Shutter Tab Input Properties
-        public ObservableCollection<IDInput> TransferShutterLeftInputs => GetTransferShutterLeftInputs();
-        public ObservableCollection<IDInput> TransferShutterRightInputs => GetTransferShutterRightInputs();
-
-        // Transfer Shutter Tab Output Properties
-        public ObservableCollection<IDOutput> TransferShutterLeftOutputs => GetTransferShutterLeftOutputs();
-        public ObservableCollection<IDOutput> TransferShutterRightOutputs => GetTransferShutterRightOutputs();
-
-        // Transfer Rotation Tab Motion Properties
-        public ObservableCollection<IMotion> TransferRotationLeftMotions => GetTransferRotationLeftMotions();
-        public ObservableCollection<IMotion> TransferRotationRightMotions => GetTransferRotationRightMotions();
-
-        // Transfer Rotation Tab Cylinder Properties
-        public ObservableCollection<ICylinder> TransferRotationLeftCylinders => GetTransferRotationLeftCylinders();
-        public ObservableCollection<ICylinder> TransferRotationRightCylinders => GetTransferRotationRightCylinders();
-
-        // Transfer Rotation Tab Input Properties
-        public ObservableCollection<IDInput> TransferRotationLeftInputs => GetTransferRotationLeftInputs();
-        public ObservableCollection<IDInput> TransferRotationRightInputs => GetTransferRotationRightInputs();
-
-        // Transfer Rotation Tab Output Properties
-        public ObservableCollection<IDOutput> TransferRotationLeftOutputs => GetTransferRotationLeftOutputs();
-        public ObservableCollection<IDOutput> TransferRotationRightOutputs => GetTransferRotationRightOutputs();
-
-        // Unload Transfer Tab Motion Properties
-        public ObservableCollection<IMotion> UnloadTransferLeftMotions => GetUnloadTransferLeftMotions();
-        public ObservableCollection<IMotion> UnloadTransferRightMotions => GetUnloadTransferRightMotions();
-
-        // Unload Transfer Tab Cylinder Properties
-        public ObservableCollection<ICylinder> UnloadTransferLeftCylinders => GetUnloadTransferLeftCylinders();
-        public ObservableCollection<ICylinder> UnloadTransferRightCylinders => GetUnloadTransferRightCylinders();
-
-        // Unload Transfer Tab Input Properties
-        public ObservableCollection<IDInput> UnloadTransferLeftInputs => GetUnloadTransferLeftInputs();
-        public ObservableCollection<IDInput> UnloadTransferRightInputs => GetUnloadTransferRightInputs();
-
-        // Unload Transfer Tab Output Properties
-        public ObservableCollection<IDOutput> UnloadTransferLeftOutputs => GetUnloadTransferLeftOutputs();
-        public ObservableCollection<IDOutput> UnloadTransferRightOutputs => GetUnloadTransferRightOutputs();
-
-        // Clean Tab Motion Properties
-        public ObservableCollection<IMotion> WETCleanLeftMotions => GetWETCleanLeftMotions();
-        public ObservableCollection<IMotion> WETCleanRightMotions => GetWETCleanRightMotions();
-        public ObservableCollection<IMotion> AFCleanLeftMotions => GetAFCleanLeftMotions();
-        public ObservableCollection<IMotion> AFCleanRightMotions => GetAFCleanRightMotions();
-
-        // Clean Tab Cylinder Properties
-        public ObservableCollection<ICylinder> WETCleanLeftCylinders => GetWETCleanLeftCylinders();
-        public ObservableCollection<ICylinder> WETCleanRightCylinders => GetWETCleanRightCylinders();
-        public ObservableCollection<ICylinder> AFCleanLeftCylinders => GetAFCleanLeftCylinders();
-        public ObservableCollection<ICylinder> AFCleanRightCylinders => GetAFCleanRightCylinders();
-
-        // Clean Tab Input Properties
-        public ObservableCollection<IDInput> WETCleanLeftInputs => GetWETCleanLeftInputs();
-        public ObservableCollection<IDInput> WETCleanRightInputs => GetWETCleanRightInputs();
-        public ObservableCollection<IDInput> AFCleanLeftInputs => GetAFCleanLeftInputs();
-        public ObservableCollection<IDInput> AFCleanRightInputs => GetAFCleanRightInputs();
-
-        // Clean Tab Output Properties
-        public ObservableCollection<IDOutput> WETCleanLeftOutputs => GetWETCleanLeftOutputs();
-        public ObservableCollection<IDOutput> WETCleanRightOutputs => GetWETCleanRightOutputs();
-        public ObservableCollection<IDOutput> AFCleanLeftOutputs => GetAFCleanLeftOutputs();
-        public ObservableCollection<IDOutput> AFCleanRightOutputs => GetAFCleanRightOutputs();
 
         #endregion
 
@@ -272,6 +155,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             motions.Add(Devices.MotionsAjin.InShuttleLXAxis);
             motions.Add(Devices.MotionsAjin.InShuttleLYAxis);
             motions.Add(Devices.MotionsInovance.InShuttleLTAxis);
+            motions.Add(Devices.MotionsInovance.WETCleanLFeedingAxis);
             return motions;
         }
 
@@ -282,6 +166,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             motions.Add(Devices.MotionsAjin.InShuttleRXAxis);
             motions.Add(Devices.MotionsAjin.InShuttleRYAxis);
             motions.Add(Devices.MotionsInovance.InShuttleRTAxis);
+            motions.Add(Devices.MotionsInovance.WETCleanRFeedingAxis);
             return motions;
         }
 
@@ -292,6 +177,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             motions.Add(Devices.MotionsAjin.OutShuttleLXAxis);
             motions.Add(Devices.MotionsAjin.OutShuttleLYAxis);
             motions.Add(Devices.MotionsInovance.OutShuttleLTAxis);
+            motions.Add(Devices.MotionsInovance.AFCleanLFeedingAxis);
             return motions;
         }
 
@@ -302,6 +188,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             motions.Add(Devices.MotionsAjin.OutShuttleRXAxis);
             motions.Add(Devices.MotionsAjin.OutShuttleRYAxis);
             motions.Add(Devices.MotionsInovance.OutShuttleRTAxis);
+            motions.Add(Devices.MotionsInovance.AFCleanRFeedingAxis);
             return motions;
         }
 
@@ -377,11 +264,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.GlassTransferCyl2UpDown);
             cylinders.Add(Devices.Cylinders.GlassTransferCyl3UpDown);
             
-            // Add Glass Transfer vacuum cylinders
-            cylinders.Add(Devices.Cylinders.GlassTransferVac1OnOff);
-            cylinders.Add(Devices.Cylinders.GlassTransferVac2OnOff);
-            cylinders.Add(Devices.Cylinders.GlassTransferVac3OnOff);
-            
             return cylinders;
         }
 
@@ -391,7 +273,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
             // Add Transfer In Shuttle Left cylinders
             cylinders.Add(Devices.Cylinders.TransferInShuttleLRotate);
-            cylinders.Add(Devices.Cylinders.TransferInShuttleLVacOnOff);
             return cylinders;
         }
 
@@ -400,7 +281,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
             // Add Transfer In Shuttle Right cylinders
             cylinders.Add(Devices.Cylinders.TransferInShuttleRRotate);
-            cylinders.Add(Devices.Cylinders.TransferInShuttleRVacOnOff);
             return cylinders;
         }
 
@@ -412,9 +292,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.TrRotateLeftRotate);
             cylinders.Add(Devices.Cylinders.TrRotateLeftFwBw);
             cylinders.Add(Devices.Cylinders.TrRotateLeftUpDown);
-            cylinders.Add(Devices.Cylinders.TrRotateLeftVacOnOff);
-            cylinders.Add(Devices.Cylinders.TrRotateLeftVac1OnOff);
-            cylinders.Add(Devices.Cylinders.TrRotateLeftVac2OnOff);
             return cylinders;
         }
 
@@ -425,9 +302,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.TrRotateRightRotate);
             cylinders.Add(Devices.Cylinders.TrRotateRightFwBw);
             cylinders.Add(Devices.Cylinders.TrRotateRightUpDown);
-            cylinders.Add(Devices.Cylinders.TrRotateRightVacOnOff);
-            cylinders.Add(Devices.Cylinders.TrRotateRightVac1OnOff);
-            cylinders.Add(Devices.Cylinders.TrRotateRightVac2OnOff);
             return cylinders;
         }
 
@@ -445,10 +319,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.UnloadAlignCyl2UpDown);
             cylinders.Add(Devices.Cylinders.UnloadAlignCyl3UpDown);
             cylinders.Add(Devices.Cylinders.UnloadAlignCyl4UpDown);
-            // Add Unload Transfer Left vacuum cylinders
-            cylinders.Add(Devices.Cylinders.UnloadTransferLVacOnOff);
-            cylinders.Add(Devices.Cylinders.UnloadGlassAlignVac1OnOff);
-            cylinders.Add(Devices.Cylinders.UnloadGlassAlignVac2OnOff);
             return cylinders;
         }
 
@@ -465,10 +335,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             cylinders.Add(Devices.Cylinders.UnloadAlignCyl2UpDown);
             cylinders.Add(Devices.Cylinders.UnloadAlignCyl3UpDown);
             cylinders.Add(Devices.Cylinders.UnloadAlignCyl4UpDown);
-            // Add Unload Transfer Right vacuum cylinders
-            cylinders.Add(Devices.Cylinders.UnloadTransferRVacOnOff);
-            cylinders.Add(Devices.Cylinders.UnloadGlassAlignVac3OnOff);
-            cylinders.Add(Devices.Cylinders.UnloadGlassAlignVac4OnOff);
             return cylinders;
         }
 
@@ -1115,6 +981,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             GlassTransferUnitTeaching.Inputs = GetGlassTransferInputs();
             GlassTransferUnitTeaching.Outputs = GetGlassTransferOutputs();
             GlassTransferUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.GlassTransferRecipe;
+            GlassTransferUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("GlassTransferImage");
+
 
             TransferInShuttleLeftUnitTeaching = new UnitTeachingViewModel("Transfer In Shuttle Left", recipeSelector);
             TransferInShuttleLeftUnitTeaching.Cylinders = GetTransferShutterLeftCylinders();
@@ -1122,6 +990,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             TransferInShuttleLeftUnitTeaching.Inputs = GetTransferShutterLeftInputs();
             TransferInShuttleLeftUnitTeaching.Outputs = GetTransferShutterLeftOutputs();
             TransferInShuttleLeftUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe;
+            TransferInShuttleLeftUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage");
 
             TransferInShuttleRightUnitTeaching = new UnitTeachingViewModel("Transfer In Shuttle Right", recipeSelector);
             TransferInShuttleRightUnitTeaching.Cylinders = GetTransferShutterRightCylinders();
@@ -1129,8 +998,88 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             TransferInShuttleRightUnitTeaching.Inputs = GetTransferShutterRightInputs();
             TransferInShuttleRightUnitTeaching.Outputs = GetTransferShutterRightOutputs();
             TransferInShuttleRightUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.TransferInShuttleRightRecipe;
+            TransferInShuttleRightUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage");
+
+            WETCleanLeftUnitTeaching = new CleanUnitTeachingViewModel("WET Clean Left", recipeSelector);
+            WETCleanLeftUnitTeaching.Cylinders = GetWETCleanLeftCylinders();
+            WETCleanLeftUnitTeaching.Motions = GetWETCleanLeftMotions();
+            WETCleanLeftUnitTeaching.Inputs = GetWETCleanLeftInputs();
+            WETCleanLeftUnitTeaching.Outputs = GetWETCleanLeftOutputs();
+            WETCleanLeftUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.WetCleanLeftRecipe;
+            WETCleanLeftUnitTeaching.Winder = Devices.TorqueControllers.WETCleanLeftWinder;
+            WETCleanLeftUnitTeaching.UnWinder = Devices.TorqueControllers.WETCleanLeftUnWinder;
+            WETCleanLeftUnitTeaching.Regulator = Devices.Regulators.WetCleanLRegulator;
+            WETCleanLeftUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
+
+            WETCleanRightUnitTeaching = new CleanUnitTeachingViewModel("WET Clean Right", recipeSelector);
+            WETCleanRightUnitTeaching.Cylinders = GetWETCleanRightCylinders();
+            WETCleanRightUnitTeaching.Motions = GetWETCleanRightMotions();
+            WETCleanRightUnitTeaching.Inputs = GetWETCleanRightInputs();
+            WETCleanRightUnitTeaching.Outputs = GetWETCleanRightOutputs();
+            WETCleanRightUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.WetCleanRightRecipe;
+            WETCleanRightUnitTeaching.Winder = Devices.TorqueControllers.WETCleanRightWinder;
+            WETCleanRightUnitTeaching.UnWinder = Devices.TorqueControllers.WETCleanRightUnWinder;
+            WETCleanRightUnitTeaching.Regulator = Devices.Regulators.WetCleanRRegulator;
+            WETCleanRightUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
+
+            TransferRotationLeftUnitTeaching = new UnitTeachingViewModel("Transfer Rotation Left", recipeSelector);
+            TransferRotationLeftUnitTeaching.Cylinders = GetTransferRotationLeftCylinders();
+            TransferRotationLeftUnitTeaching.Motions = GetTransferRotationLeftMotions();
+            TransferRotationLeftUnitTeaching.Inputs = GetTransferRotationLeftInputs();
+            TransferRotationLeftUnitTeaching.Outputs = GetTransferRotationLeftOutputs();
+            TransferRotationLeftUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.TransferRotationLeftRecipe;
+            TransferRotationLeftUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferRotationImage");
+
+            TransferRotationRightUnitTeaching = new UnitTeachingViewModel("Transfer Rotation Right", recipeSelector);
+            TransferRotationRightUnitTeaching.Cylinders = GetTransferRotationRightCylinders();
+            TransferRotationRightUnitTeaching.Motions = GetTransferRotationRightMotions();
+            TransferRotationRightUnitTeaching.Inputs = GetTransferRotationRightInputs();
+            TransferRotationRightUnitTeaching.Outputs = GetTransferRotationRightOutputs();
+            TransferRotationRightUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.TransferRotationRightRecipe;
+            TransferRotationRightUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferRotationImage");
+
+            AFCleanLeftUnitTeaching = new CleanUnitTeachingViewModel("AF Clean Left", recipeSelector);
+            AFCleanLeftUnitTeaching.Cylinders = GetAFCleanLeftCylinders();
+            AFCleanLeftUnitTeaching.Motions = GetAFCleanLeftMotions();
+            AFCleanLeftUnitTeaching.Inputs = GetAFCleanLeftInputs();
+            AFCleanLeftUnitTeaching.Outputs = GetAFCleanLeftOutputs();
+            AFCleanLeftUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.AfCleanLeftRecipe;
+            AFCleanLeftUnitTeaching.Winder = Devices.TorqueControllers.AFCleanLeftWinder;
+            AFCleanLeftUnitTeaching.UnWinder = Devices.TorqueControllers.AFCleanLeftUnWinder;
+            AFCleanLeftUnitTeaching.Regulator = Devices.Regulators.AfCleanLRegulator;
+            AFCleanLeftUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
+
+            AFCleanRightUnitTeaching = new CleanUnitTeachingViewModel("AF Clean Right", recipeSelector);
+            AFCleanRightUnitTeaching.Cylinders = GetAFCleanRightCylinders();
+            AFCleanRightUnitTeaching.Motions = GetAFCleanRightMotions();
+            AFCleanRightUnitTeaching.Inputs = GetAFCleanRightInputs();
+            AFCleanRightUnitTeaching.Outputs = GetAFCleanRightOutputs();
+            AFCleanRightUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.AfCleanRightRecipe;
+            AFCleanRightUnitTeaching.Winder = Devices.TorqueControllers.AFCleanRightWinder;
+            AFCleanRightUnitTeaching.UnWinder = Devices.TorqueControllers.AFCleanRightUnWinder;
+            AFCleanRightUnitTeaching.Regulator = Devices.Regulators.AfCleanRRegulator;
+            AFCleanRightUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
 
 
+            UnitTeachings = new ObservableCollection<UnitTeachingViewModel>()
+            {
+                DetachUnitTeaching,
+                GlassTransferUnitTeaching,
+
+                TransferInShuttleLeftUnitTeaching,
+                TransferInShuttleRightUnitTeaching,
+
+                WETCleanLeftUnitTeaching,
+                WETCleanRightUnitTeaching,
+
+                TransferRotationLeftUnitTeaching,
+                TransferRotationRightUnitTeaching,
+                
+                AFCleanLeftUnitTeaching,
+                AFCleanRightUnitTeaching
+            };
+
+            SelectedUnitTeaching = UnitTeachings.First();
         }
 
         #region Commands

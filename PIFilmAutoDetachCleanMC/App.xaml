@@ -25,6 +25,8 @@
                     <cvt:CylinderButtonBrushConverter x:Key="CylinderButtonBrushConverter"/>
                     <uiCvt:CylinderTypeToButtonNameConverter x:Key="CylinderTypeToButtonNameConverter"/>
                 </ResourceDictionary>
+
+                <ResourceDictionary Source="/Resource/Template/CylinderControlDataTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type vm:FooterViewModel}">
@@ -63,6 +65,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type teachingVM:UnitTeachingViewModel}">
                 <teachingViews:UnitTeachingView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type teachingVM:CleanUnitTeachingViewModel}">
+                <teachingViews:CleanUnitTeachingView />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

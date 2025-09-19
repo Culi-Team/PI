@@ -18,7 +18,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             Name = name;
         }
 
-        public ObservableCollection<ITorqueController> TorqueControllers { get; set; }
+        public ITorqueController Winder { get; set; }
+        public ITorqueController UnWinder { get; set; }
         public ISyringePump SyringePump { get; set; }
         public IRegulator Regulator { get; set; }
     }
