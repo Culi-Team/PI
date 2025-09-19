@@ -75,10 +75,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views.Teaching
                 }
 
                 // 5. Extract SingleRecipePositionAttribute
-                SingleRecipePositionAttribute positionAttribute = null;
-                if (attrs.FirstOrDefault(att => att is SingleRecipePositionAttribute) != null)
+                SinglePositionTeachingAttribute positionAttribute = null;
+                if (attrs.FirstOrDefault(att => att is SinglePositionTeachingAttribute) != null)
                 {
-                    positionAttribute = (SingleRecipePositionAttribute)attrs.FirstOrDefault(att => att is SingleRecipePositionAttribute);
+                    positionAttribute = (SinglePositionTeachingAttribute)attrs.FirstOrDefault(att => att is SinglePositionTeachingAttribute);
                 }
 
                 // 6. Add recipe DataView to the view

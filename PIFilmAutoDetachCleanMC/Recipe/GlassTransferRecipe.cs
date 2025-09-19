@@ -20,7 +20,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private double zAxisRightPlacePosition;
 
         [SingleRecipeDescription(Description = "Glass Transfer Y Axis Ready Position", Unit = Unit.mm)]
-        [SingleRecipePosition(Motion = "GlassTransferYAxis")]
+        [SinglePositionTeaching(Motion = "GlassTransferYAxis")]
         public double YAxisReadyPosition
         {
             get { return yAxisReadyPosition; }
@@ -28,7 +28,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Glass Transfer Z Axis Ready Position", Unit = Unit.mm)]
-        [SingleRecipePosition(Motion = "GlassTransferZAxis")]
+        [SinglePositionTeaching(Motion = "GlassTransferZAxis")]
         public double ZAxisReadyPosition
 		{
 			get { return zAxisReadyPosition; }
@@ -36,7 +36,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 		}
 
         [SingleRecipeDescription(Description = "Glass Transfer Y Axis Pick Position", Unit = Unit.mm)]
-        [SingleRecipePosition(Motion = "GlassTransferYAxis")]
+        [SinglePositionTeaching(Motion = "GlassTransferYAxis")]
         public double YAxisPickPosition
         {
             get { return yAxisPickPosition; }
@@ -44,7 +44,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Glass Transfer Z Axis Pick Position", Unit = Unit.mm)]
-        [SingleRecipePosition(Motion = "GlassTransferZAxis")]
+        [SinglePositionTeaching(Motion = "GlassTransferZAxis")]
         public double ZAxisPickPosition
         {
             get { return zAxisPickPosition; }
@@ -52,7 +52,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Glass Transfer Y Axis Left Place Position", Unit = Unit.mm)]
-        [SingleRecipePosition(Motion = "GlassTransferYAxis")]
+        [SinglePositionTeaching(Motion = "GlassTransferYAxis")]
         public double YAxisLeftPlacePosition
         {
             get { return yAxisLeftPlacePosition; }
@@ -60,7 +60,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Glass Transfer Z Axis Left Place Position", Unit = Unit.mm)]
-        [SingleRecipePosition(Motion = "GlassTransferZAxis")]
+        [SinglePositionTeaching(Motion = "GlassTransferZAxis")]
         public double ZAxisLeftPlacePosition
         {
             get { return zAxisLeftPlacePosition; }
@@ -68,7 +68,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Glass Transfer Y Axis Right Place Position", Unit = Unit.mm)]
-        [SingleRecipePosition(Motion = "GlassTransferYAxis")]
+        [SinglePositionTeaching(Motion = "GlassTransferYAxis")]
         public double YAxisRightPlacePosition
         {
             get { return yAxisRightPlacePosition; }
@@ -76,7 +76,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
         [SingleRecipeDescription(Description = "Glass Transfer Z Axis Right Place Position", Unit = Unit.mm)]
-        [SingleRecipePosition(Motion = "GlassTransferZAxis")]
+        [SinglePositionTeaching(Motion = "GlassTransferZAxis")]
         public double ZAxisRightPlacePosition
         {
             get { return zAxisRightPlacePosition; }
