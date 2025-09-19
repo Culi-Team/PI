@@ -175,6 +175,46 @@ namespace PIFilmAutoDetachCleanMC.Process
 
             return true;
         }
+
+        public override bool ProcessToRun()
+        {
+            switch ((EInConveyorToRunStep)Step.ToRunStep)
+            {
+                case EInConveyorToRunStep.Start:
+                    Log.Debug("To Run Start");
+                    Step.ToRunStep++;
+                    break;
+                case EInConveyorToRunStep.Conveyor_Stop:
+                    Log.Debug("Conveyor Stop");
+                    ConveyorRunStop(false);
+                    Step.ToRunStep++;
+                    break;
+                case EInConveyorToRunStep.Set_ConveyorSpeed:
+                    Log.Debug("Set Conveyor Speed");
+                    SetConveyorSpeed((int)_cstLoadUnloadRecipe.ConveyorSpeed);
+                    Step.ToRunStep++;
+                    break;
+                case EInConveyorToRunStep.Set_ConveyorAccel:
+                    Log.Debug("Set Conveyor Accel");
+                    SetConveyorAccel((int)_cstLoadUnloadRecipe.ConveyorAcc);
+                    Step.ToRunStep++;
+                    break;
+                case EInConveyorToRunStep.Set_ConveyorDeccel:
+                    Log.Debug("Set Conveyor Deccel");
+                    SetConveyorDeccel((int)_cstLoadUnloadRecipe.ConveyorDec);
+                    Step.ToRunStep++;
+                    break;
+                case EInConveyorToRunStep.End:
+                    Log.Debug("To Run End");
+                    Step.ToRunStep++;
+                    ProcessStatus = EProcessStatus.ToRunDone;
+                    break;
+                default:
+                    Wait(20);
+                    break;
+            }
+            return true;
+        }
         #endregion
 
         #region Private Methods
@@ -391,6 +431,25 @@ namespace PIFilmAutoDetachCleanMC.Process
                 Roller2.Stop();
                 Roller3.Stop();
             }
+        }
+
+        private void SetConveyorSpeed(int speed)
+        {
+            Roller1.SetSpeed(speed);
+            Roller2.SetSpeed(speed);
+            Roller3.SetSpeed(speed);
+        }
+        private void SetConveyorAccel(int accel)
+        {
+            Roller1.SetAcceleration(accel);
+            Roller2.SetAcceleration(accel);
+            Roller3.SetAcceleration(accel);
+        }
+        private void SetConveyorDeccel(int deccel)
+        {
+            Roller1.SetDeceleration(deccel);
+            Roller2.SetDeceleration(deccel);
+            Roller3.SetDeceleration(deccel);
         }
         #endregion
     }

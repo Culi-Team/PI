@@ -323,7 +323,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
 
             // Detach Glass
             DetachCyl1UpDown = _cylinderFactory
-                .Create(new List<IDInput> { _inputs.DetachCyl1Up }, new List<IDInput> { _inputs.DetachCyl1Down }, _outputs.DetachCyl1Up, _outputs.DetachCyl1Down)
+                .Create(new List<IDInput> { _inputs.DetachCyl1Down }, new List<IDInput> { _inputs.DetachCyl1Up }, _outputs.DetachCyl1Down, _outputs.DetachCyl1Up)
                 .SetIdentity((int)ECylinder.DetachCyl1UpDown, ECylinder.DetachCyl1UpDown.ToString());
             DetachCyl1UpDown.CylinderType = ECylinderType.UpDown;
 
