@@ -30,6 +30,7 @@ namespace PIFilmAutoDetachCleanMC
                 .AddMotionDevices()
                 .AddCylinderDevices()
                 .AddRegulatorDevices()
+                .AddSyringePumpDevices()
                 .AddRobotDevices()
                 .AddSpeedControllerDevices()
                 .AddTorqueControllerDevices()

@@ -25,6 +25,9 @@ using EQX.Motion.Torque;
 using EQX.Core.Robot;
 using EQX.Motion.Robot;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
+using EQX.Core.Communication;
+using EQX.Core.Device.SyringePump;
+using EQX.Device.SyringePump;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -112,7 +115,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
                     string configContent = File.ReadAllText(configuration["Files:VinylCleanEncoderParaConfigFile"] ?? "");
                     MotionParameter vinylCleanEncoderPara = null;
-                    
+
                     try
                     {
                         // Try to deserialize as single object first
@@ -127,7 +130,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                             vinylCleanEncoderPara = configArray[0];
                         }
                     }
-                    
+
                     IMotionFactory<IMotion> motionPlusEFactory = ser.GetRequiredKeyedService<IMotionFactory<IMotion>>("MotionEziPlusEFactory");
 
                     return motionPlusEFactory.Create(10, "VinylCleanEncoder", vinylCleanEncoderPara);
@@ -305,13 +308,49 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
             return hostBuilder;
         }
+        public static IHostBuilder AddSyringePumpDevices(this IHostBuilder hostBuilder)
+        {
+            hostBuilder.ConfigureServices((hostContext, services) =>
+            {
+                services.AddKeyedSingleton<SerialCommunicator>("SyringePumpSerialCommunicator", (ser, obj) =>
+                {
+                    return new SerialCommunicator(1, "SyringePumpSerialCommunicator", "COM7", 9600);
+                });
+
+                services.AddKeyedSingleton<ISyringePump, PSD4SyringePump>("WETCleanLeftSyringePump", (ser, obj) =>
+                {
+                    var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
+                    return new PSD4SyringePump("WETCleanLeftSyringePump", 1, serialCommunicator, 1.0);
+                });
+                services.AddKeyedSingleton<ISyringePump, PSD4SyringePump>("WETCleanRightSyringePump", (ser, obj) =>
+                {
+                    var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
+                    return new PSD4SyringePump("WETCleanRightSyringePump", 1, serialCommunicator, 1.0);
+                });
+                services.AddKeyedSingleton<ISyringePump, PSD4SyringePump>("AFCleanLeftSyringePump", (ser, obj) =>
+                {
+                    var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
+                    return new PSD4SyringePump("AFCleanLeftSyringePump", 1, serialCommunicator, 1.0);
+                });
+                services.AddKeyedSingleton<ISyringePump, PSD4SyringePump>("AFCleanRightSyringePump", (ser, obj) =>
+                {
+                    var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
+                    return new PSD4SyringePump("AFCleanLeftSyringePump", 1, serialCommunicator, 1.0);
+                });
+
+                services.AddSingleton<SyringePumps>();
+            });
+
+            return hostBuilder;
+        }
+
 
         public static IHostBuilder AddRobotDevices(this IHostBuilder hostBuilder)
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
 #if SIMULATION
-                services.AddKeyedSingleton<IRobot, RobotSimulation>("RobotLoad",(services,obj) =>
+                services.AddKeyedSingleton<IRobot, RobotSimulation>("RobotLoad", (services, obj) =>
                 {
                     return new RobotSimulation(1, "Kuka Robot Load");
                 });
