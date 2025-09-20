@@ -308,6 +308,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
             return hostBuilder;
         }
+
         public static IHostBuilder AddSyringePumpDevices(this IHostBuilder hostBuilder)
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
