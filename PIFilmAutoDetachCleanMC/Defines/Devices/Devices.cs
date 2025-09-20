@@ -18,7 +18,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             Cylinders cylinders,
             TorqueControllerList torqueControllers,
             SpeedControllerList speedControllerList,
-            Regulators regulators)
+            Regulators regulators,
+            AnalogInputs analogInputs)
         {
             Inputs = inputs;
             Outputs = outputs;
@@ -28,6 +29,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             TorqueControllers = torqueControllers;
             SpeedControllerList = speedControllerList;
             Regulators = regulators;
+            AnalogInputs = analogInputs;
         }
 
         public Inputs Inputs { get; }
@@ -38,5 +40,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public TorqueControllerList TorqueControllers { get; }
         public SpeedControllerList SpeedControllerList { get; }
         public Regulators Regulators { get; }
+        public AnalogInputs AnalogInputs { get; }
     }
 }

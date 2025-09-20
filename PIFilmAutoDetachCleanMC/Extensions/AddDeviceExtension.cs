@@ -28,6 +28,8 @@ using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 using EQX.Core.Communication;
 using EQX.Core.Device.SyringePump;
 using EQX.Device.SyringePump;
+using EQX.InOut.InOut.Analog;
+using EQX.InOut.ByVendor.Ajinextek;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -177,9 +179,23 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 });
                 //services.AddKeyedScoped<IDOutputDevice>("OutputDevice#1", (services, obj) => { return new AjinOutputDevice<EOutput1> { Id = 1, Name = "OutDevice1", MaxPin = 32 }; });
 #endif
+#if SIMULATION
+                services.AddKeyedSingleton<IAInputDevice>("AnalogInputDevice#1", (services, obj) => { return new SimulationAnalogInputDevice<EAnalogInput>(); });
+#else
+                services.AddKeyedSingleton<IAInputDevice>("AnalogInputDevice#1", (services, obj) =>
+                {
+                    return new AjinAnalogInputDevice<EAnalogInput>()
+                    {
+                        Id = 9,
+                        Name = "AnalogInputDevice",
+                    };
+                });
+#endif
 
                 services.AddSingleton<Inputs>();
                 services.AddSingleton<Outputs>();
+
+                services.AddSingleton<AnalogInputs>();
             });
 
             return hostBuilder;
