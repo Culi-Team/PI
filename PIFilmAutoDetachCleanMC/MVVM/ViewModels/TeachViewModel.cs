@@ -967,7 +967,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             CSTUnloadUnitTeaching.Inputs = GetOutWorkConveyorInputs();
             CSTUnloadUnitTeaching.Outputs = GetOutWorkConveyorOutputs();
             CSTUnloadUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe;
-            CSTUnloadUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("OutputCassetteStageImage");
+            CSTUnloadUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("InputCassetteStageImage");
 
             TransferFixtureUnitTeaching = new UnitTeachingViewModel("Transfer Fixture", recipeSelector);
             TransferFixtureUnitTeaching.Cylinders = GetTransferFixtureCylinders();
