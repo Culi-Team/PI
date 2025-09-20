@@ -62,53 +62,19 @@
                 <RowDefinition Height="2*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            
-            <Grid Grid.Row="0">
-                <Canvas x:Name="OutCstOvelay" Background="Transparent"
-                        Width="{Binding ActualWidth, ElementName=MachineImgCanvas}"
-                        Height="{Binding ActualHeight, ElementName=MachineImgCanvas}">
+            <Border Grid.Row="1"
+                    Margin="0 0 0 0">
+                <Canvas>
+                    <Image Source="{StaticResource AutoViewImage}"
+                           Canvas.Left="200"
+                           Canvas.Top="50"/>
                     <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
-                                  Canvas.Left="200"
-                                  Canvas.Top="5"
-                                  ItemsSource="{Binding CassetteList.CassetteOut.Cells}">
-                        <ItemsControl.Template>
-                            <ControlTemplate>
-                                <GroupBox Header="CASSETTE OUT"
-                                          Background="Gray">
-                                    <ItemsPresenter />
-                                </GroupBox>
-                            </ControlTemplate>
-                        </ItemsControl.Template>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <ui:TrayCellView />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="{Binding DataContext.CassetteList.CassetteOut.Columns, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </Canvas>
-            </Grid>
-
-            <Grid Grid.Row="1">
-                <Canvas x:Name="MachineImgCanvas" Background="Black">
-                    <Image x:Name="MachineImage"
-                           Source="{StaticResource AutoViewImage}"
-                           Stretch="UniformToFill"
-                           Width="{Binding ActualWidth, ElementName=MachineImgCanvas}"
-                           Height="{Binding ActualHeight, ElementName=MachineImgCanvas}" />
-                </Canvas>
-            </Grid>
-            <Grid Grid.Row="2">
-                <Canvas x:Name="InCstOvelay" Background="Transparent"
-                        Width="{Binding ActualWidth, ElementName=MachineImgCanvas}"
-                        Height="{Binding ActualHeight, ElementName=MachineImgCanvas}">
-                    <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
-                                  Canvas.Left="200"
-                                  Canvas.Top="5"
+                                  Margin="5 5 5 0"
+                                  Canvas.Left="300"
+                                  Canvas.Top="420"
+                                  Height="250"
+                                  Grid.Row="2"
+                                  Grid.Column="1"
                                   ItemsSource="{Binding CassetteList.CassetteIn.Cells}">
                         <ItemsControl.Template>
                             <ControlTemplate>
@@ -129,9 +95,37 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
-                </Canvas>
-            </Grid>
 
+                    <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
+                                  Margin="5 5 5 0"
+                                  Canvas.Left="300"
+                                  Canvas.Top="-220"
+                                  Height="250"
+                                  Grid.Row="2"
+                                  Grid.Column="1"
+                                  ItemsSource="{Binding CassetteList.CassetteOut.Cells}">
+                        <ItemsControl.Template>
+                            <ControlTemplate>
+                                <GroupBox Header="CASSETTE OUT"
+                                          Background="Gray">
+                                    <ItemsPresenter />
+                                </GroupBox>
+                            </ControlTemplate>
+                        </ItemsControl.Template>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ui:TrayCellView />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="{Binding DataContext.CassetteList.CassetteOut.Columns, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+
+                </Canvas>
+            </Border>
         </Grid>
         <UniformGrid Rows="9"
                      Grid.Column="1">
