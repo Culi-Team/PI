@@ -82,10 +82,10 @@
                 <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
                                   Width="370"
                                   Height="270"
-                                  ItemsSource="{Binding CassetteList.CassetteIn.Cells}">
+                                  ItemsSource="{Binding CassetteList.CassetteOut.Cells}">
                     <ItemsControl.Template>
                         <ControlTemplate>
-                            <GroupBox Header="CASSETTE IN"
+                            <GroupBox Header="CASSETTE OUT"
                                           Style="{StaticResource TextBlockHeaderGroupBox}">
                                 <ItemsPresenter />
                             </GroupBox>
@@ -98,7 +98,7 @@
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid Columns="{Binding DataContext.CassetteList.CassetteIn.Columns, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                            <UniformGrid Columns="{Binding DataContext.CassetteList.CassetteOut.Columns, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
@@ -114,10 +114,10 @@
                               Canvas.Top="1"
                               Width="370"
                               Height="270"
-                              ItemsSource="{Binding CassetteList.CassetteOut.Cells}">
+                              ItemsSource="{Binding CassetteList.CassetteIn.Cells}">
                     <ItemsControl.Template>
                         <ControlTemplate>
-                            <GroupBox Header="CASSETTE OUT"
+                            <GroupBox Header="CASSETTE IN"
                                           Style="{StaticResource TextBlockHeaderGroupBox }">
                                 <ItemsPresenter />
                             </GroupBox>
@@ -130,7 +130,7 @@
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid Columns="{Binding DataContext.CassetteList.CassetteOut.Columns, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                            <UniformGrid Columns="{Binding DataContext.CassetteList.CassetteIn.Columns, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
