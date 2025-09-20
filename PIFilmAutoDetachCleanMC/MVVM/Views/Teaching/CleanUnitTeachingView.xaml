@@ -55,21 +55,6 @@
                 </Grid>
             </Border>
         </DataTemplate>
-        <Style TargetType="GroupBox"
-               x:Key="TextBlockHeaderGroupBox">
-            <Setter Property="HeaderTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}"
-                                   FontWeight="Bold"
-                                   Background="#00BAF5"
-                                   FontSize="15"
-                                   Foreground="Black"
-                                   VerticalAlignment="Center" />
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -136,8 +121,8 @@
                                        BorderBrush="LightGray"
                                        BorderThickness="0.5"
                                        HorizontalContentAlignment="Center" />
-                                <Button Content="Set" />
-                                <Button Content="Save" />
+                                <Button Content="Set" FontSize="14" Command="{Binding SetPressureCommand}"/>
+                                <Button Content="Save" FontSize="14" Command="{Binding SaveCommand}"/>
                             </UniformGrid>
 
                         </StackPanel>
@@ -172,14 +157,22 @@
                             </UniformGrid>
                             <UniformGrid Columns="2">
                                 <Button Content="Set"
+                                        FontSize="14"
+                                        Command="{Binding WinderSetTorqueCommand}"
                                             Margin="0 2 2 2" />
                                 <Button Content="Save"
+                                        FontSize="14"
+                                        Command="{Binding SaveCommand}"
                                             Margin="0 2 2 2" />
                             </UniformGrid>
                             <UniformGrid Columns="2">
                                 <Button Content="Run"
+                                        FontSize="14"
+                                        Command="{Binding WinderRunCommand}"
                                             Margin="0 2 2 2" />
                                 <Button Content="Stop"
+                                        FontSize="14"
+                                        Command="{Binding WinderStopCommand}"
                                             Margin="0 2 2 2" />
                             </UniformGrid>
                         </UniformGrid>
@@ -208,14 +201,22 @@
                             </UniformGrid>
                             <UniformGrid Columns="2">
                                 <Button Content="Set"
+                                        FontSize="14"
+                                        Command="{Binding UnWinderSetTorqueCommand}"
                                             Margin="0 2 2 2" />
                                 <Button Content="Save"
+                                        FontSize="14"
+                                        Command="{Binding SaveCommand}"
                                             Margin="0 2 2 2" />
                             </UniformGrid>
                             <UniformGrid Columns="2">
                                 <Button Content="Run"
+                                        FontSize="14"
+                                        Command="{Binding UnWinderRunCommand}"
                                             Margin="0 2 2 2" />
                                 <Button Content="Stop"
+                                        FontSize="14"
+                                        Command="{Binding UnWinderStopCommand}"
                                             Margin="0 2 2 2" />
                             </UniformGrid>
                         </UniformGrid>

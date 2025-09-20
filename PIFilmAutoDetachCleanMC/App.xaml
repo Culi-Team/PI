@@ -20,6 +20,7 @@
                 <ResourceDictionary Source="/EQX.UI;component/Resources/Language/EnglishLanguage.xaml" />
                 <ResourceDictionary Source="/Resource/Resource.xaml" />
                 <ResourceDictionary Source="/Styles/DataGridCellStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/TextBlockHeaderGroupBoxStyle.xaml"/>
 
                 <ResourceDictionary>
                     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
