@@ -66,13 +66,15 @@
                     Margin="0 0 0 0">
                 <Canvas>
                     <Image Source="{StaticResource AutoViewImage}"
+                           Stretch="UniformToFill"
                            Canvas.Left="200"
                            Canvas.Top="50"/>
                     <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
                                   Margin="5 5 5 0"
                                   Canvas.Left="300"
                                   Canvas.Top="420"
-                                  Height="250"
+                                  Width="250"
+                                  Height="280"
                                   Grid.Row="2"
                                   Grid.Column="1"
                                   ItemsSource="{Binding CassetteList.CassetteIn.Cells}">
@@ -99,8 +101,9 @@
                     <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
                                   Margin="5 5 5 0"
                                   Canvas.Left="300"
-                                  Canvas.Top="-220"
-                                  Height="250"
+                                  Canvas.Top="-240"
+                                  Width="250"
+                                  Height="280"
                                   Grid.Row="2"
                                   Grid.Column="1"
                                   ItemsSource="{Binding CassetteList.CassetteOut.Cells}">

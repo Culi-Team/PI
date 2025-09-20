@@ -40,12 +40,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cassette
 
         public void RecipeUpdateHandle()
         {
-            CassetteIn.Columns = _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.CasetteColumn;
-            CassetteIn.Rows = 1;
+            CassetteIn.Rows = _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.CasetteRows;
+            CassetteIn.Columns = 1;
             CassetteIn.GenerateCells();
 
-            CassetteOut.Columns = _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.CasetteColumn;
-            CassetteOut.Rows = 1;
+            CassetteOut.Rows = _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.CasetteRows;
+            CassetteOut.Columns = 1;
             CassetteOut.GenerateCells();
         }
 
