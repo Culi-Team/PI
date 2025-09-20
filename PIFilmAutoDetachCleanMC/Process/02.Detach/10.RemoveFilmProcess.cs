@@ -434,7 +434,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERemoveFilmProcessTransferFixtureUnloadStep.End:
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
@@ -581,7 +581,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERemoveFilmProcessRemoveStep.End:
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
@@ -716,7 +716,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERemoveFilmProcessRobotPickStep.End:
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;

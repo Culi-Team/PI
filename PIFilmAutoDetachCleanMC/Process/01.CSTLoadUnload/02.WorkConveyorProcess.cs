@@ -543,7 +543,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorTiltStep.End:
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
@@ -622,7 +622,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep = (int)EWorkConveyorPickPlaceStep.Cassette_WorkCondition_Check;
                     break;
                 case EWorkConveyorPickPlaceStep.End:
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
@@ -735,7 +735,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EWorkConveyorProcessLoadStep.Reset_Cassette_Status:
                     Log.Debug("Reset Cassette Status");
-                    Cassette.Cells.ToList().ForEach(c => c.Status = ETrayCellStatus.Ready);
+                    //Cassette.Cells.ToList().ForEach(c => c.Status = ETrayCellStatus.Ready);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Conveyor_Stop:
@@ -745,7 +745,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EWorkConveyorProcessLoadStep.End:
                     Log.Debug("Load End");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
@@ -919,7 +919,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EWorkConveyorUnloadStep.End:
                     Log.Debug("Unload End");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;

@@ -388,7 +388,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EVinylCleanProcessVinylCleanStep.End:
                     Log.Debug("Vinyl Clean End");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
@@ -448,7 +448,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPickFixtureFromVinylClean.End:
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
@@ -566,7 +566,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.End:
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;

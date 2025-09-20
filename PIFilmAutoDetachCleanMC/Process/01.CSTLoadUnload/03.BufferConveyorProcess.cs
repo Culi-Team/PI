@@ -383,7 +383,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EBufferConveyorInWorkCSTUnloadStep.End:
                     Log.Debug("In Work CST Unload End");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
@@ -447,7 +447,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EBufferConveyorOutWorkCSTLoadStep.End:
                     Log.Debug("Out Work CST Load End");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;

@@ -452,7 +452,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EUnloadTransferAFCleanUnloadStep.End:
                     Log.Debug("AF Clean Unload End");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
@@ -658,7 +658,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EUnloadTransferPlaceStep.End:
                     Log.Debug("Unload Transfer Place End");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;

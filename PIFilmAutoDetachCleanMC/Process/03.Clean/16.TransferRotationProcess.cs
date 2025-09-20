@@ -496,7 +496,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferRotationWETCleanUnloadStep.End:
                     Log.Debug("WET Clean Unload End");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
@@ -684,7 +684,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferRotationStep.End:
                     Log.Debug("Transfer Rotation End");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
@@ -779,7 +779,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferRotationAFCleanLoad.End:
                     Log.Debug("AF Clean Load End");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;

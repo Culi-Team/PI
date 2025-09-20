@@ -698,7 +698,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.End:
                     Log.Debug("Robot Pick Fixture From CST End");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
@@ -833,7 +833,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.End:
                     Log.Debug("Robot Place Fixture To Vinyl Clean Done");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
@@ -939,7 +939,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadPlaceFixtureToAlignStep.End:
                     Log.Debug("Robot Place Fixture To Align Done");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
@@ -1011,7 +1011,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadPickFixtureFromRemoveZoneStep.End:
                     Log.Debug("Robot Pick Fixture From Remove Zone Done");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
@@ -1107,7 +1107,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.End:
                     Log.Debug("Robot Place Fixture To Out CST Done");
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
