@@ -109,9 +109,9 @@
                 <Image Source="{StaticResource AutoViewImage}"
                        Stretch="Fill"/>
                 <!-- InCST Image overlay-->
-                <Border Margin="-1498 225 0 0" 
+                <Border Margin="-1495 227 0 0" 
                         Width="145"
-                        Height="110">
+                        Height="113">
                     <Image Source="{StaticResource InCSTImage}"
                            Stretch="Fill">
                         <Image.Visibility>
@@ -167,8 +167,8 @@
                     </Image>
                 </Border>
                 <!-- OUTCST Image overlay-->
-                <Border Margin="-1498 -230 0 0" 
-                        Width="150"
+                <Border Margin="-1495 -230 0 0" 
+                        Width="145"
                         Height="109">
                     <Image Source="{StaticResource OutCSTImage}"
                            Stretch="Fill">
