@@ -6,6 +6,7 @@ using EQX.Motion;
 using EQX.Motion.ByVendor.Inovance;
 using EQX.UI.Controls;
 using PIFilmAutoDetachCleanMC.Defines;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -31,13 +32,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             MotionsInovance motionsInovance,
             MotionsAjin motionAjin,
             [FromKeyedServices("VinylCleanEncoder")] IMotion vinylCleanEncoder,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            CassetteList cassetteList)
         {
             RecipeSelector = recipeSelector;
             _motionsInovance = motionsInovance;
             _motionAjin = motionAjin;
             _vinylCleanEncoder = vinylCleanEncoder;
             _configuration = configuration;
+            CassetteList = cassetteList;
         }
 
         public ObservableCollection<IMotion> AllMotions
@@ -53,6 +56,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         }
 
         public RecipeSelector RecipeSelector { get; }
+        public CassetteList CassetteList { get; }
 
         public string SelectedModel
         {
@@ -121,6 +125,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     if (MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_SaveAllData"]) == true)
                     {
                         RecipeSelector.Save();
+                        CassetteList.RecipeUpdateHandle();
+                        OnPropertyChanged(nameof(Recipes));
                     }
                 });
             }
