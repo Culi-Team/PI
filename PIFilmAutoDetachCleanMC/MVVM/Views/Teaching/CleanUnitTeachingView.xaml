@@ -62,7 +62,9 @@
                     <DataTemplate>
                         <TextBlock Text="{Binding}"
                                    FontWeight="Bold"
-                                   FontSize="14"
+                                   Background="#00BAF5"
+                                   FontSize="15"
+                                   Foreground="Black"
                                    VerticalAlignment="Center" />
                     </DataTemplate>
                 </Setter.Value>
@@ -78,7 +80,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="1.2*"/>
             </Grid.ColumnDefinitions>
             <ScrollViewer Grid.Column="0"
                           Grid.ColumnSpan="2">
@@ -95,7 +97,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition Width="1.1*" />
+                <ColumnDefinition Width="1.2*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -145,21 +147,20 @@
 
             <!--Torque-->
             <Border Grid.Column="1">
-                <GroupBox Header="Torque"
-                          Style="{StaticResource TextBlockHeaderGroupBox}">
-                    <UniformGrid Columns="2">
-                        <GroupBox Header="Winder"
+                <UniformGrid Columns="2">
+                    <GroupBox Header="Winder Torque"
+                                  Style="{StaticResource TextBlockHeaderGroupBox}"
                                   Margin="0 0 2 0">
-                            <UniformGrid Rows="3">
-                                <UniformGrid Columns="2">
-                                    <Label Content="Torque (%)"
+                        <UniformGrid Rows="3">
+                            <UniformGrid Columns="2">
+                                <Label Content="Torque (%)"
                                            VerticalContentAlignment="Center"
                                            BorderThickness="1"
                                            FontSize="14"
                                            FontWeight="SemiBold"
                                            BorderBrush="LightGray"
                                            Margin="0 2 2 2" />
-                                    <Label Margin="0 2 2 2"
+                                <Label Margin="0 2 2 2"
                                            BorderBrush="LightGray"
                                            Cursor="Hand"
                                            BorderThickness="0.5"
@@ -168,106 +169,99 @@
                                            HorizontalContentAlignment="Center"
                                            VerticalContentAlignment="Center"
                                            FontSize="14" />
-                                </UniformGrid>
-                                <UniformGrid Columns="2">
-                                    <Button Content="Set"
-                                            Margin="0 2 2 2" />
-                                    <Button Content="Save"
-                                            Margin="0 2 2 2" />
-                                </UniformGrid>
-                                <UniformGrid Columns="2">
-                                    <Button Content="Run"
-                                            Margin="0 2 2 2" />
-                                    <Button Content="Stop"
-                                            Margin="0 2 2 2" />
-                                </UniformGrid>
                             </UniformGrid>
-                        </GroupBox>
-                        <GroupBox Header="UnWinder"
-                                  Margin="2 0 0 0">
-                            <UniformGrid Rows="3">
-                                <UniformGrid Columns="2">
-                                    <Label Content="Torque (%)"
-                                           VerticalContentAlignment="Center"
-                                           BorderThickness="1"
-                                           FontSize="14"
-                                           FontWeight="SemiBold"
-                                           BorderBrush="LightGray"
-                                           Margin="0 2 2 2" />
-                                    <Label Margin="0 2 2 2"
-                                           BorderBrush="LightGray"
-                                           BorderThickness="0.5"
-                                           Cursor="Hand"
-                                           MouseLeftButtonDown="Label_MouseLeftButtonDown"
-                                           Content="{Binding Recipe.UnwinderTorque,Mode=TwoWay}"
-                                           HorizontalContentAlignment="Center"
-                                           VerticalContentAlignment="Center"
-                                           FontSize="14" />
-                                </UniformGrid>
-                                <UniformGrid Columns="2">
-                                    <Button Content="Set"
+                            <UniformGrid Columns="2">
+                                <Button Content="Set"
                                             Margin="0 2 2 2" />
-                                    <Button Content="Save"
+                                <Button Content="Save"
                                             Margin="0 2 2 2" />
-                                </UniformGrid>
-                                <UniformGrid Columns="2">
-                                    <Button Content="Run"
-                                            Margin="0 2 2 2" />
-                                    <Button Content="Stop"
-                                            Margin="0 2 2 2" />
-                                </UniformGrid>
                             </UniformGrid>
-                        </GroupBox>
-                    </UniformGrid>
-                </GroupBox>
+                            <UniformGrid Columns="2">
+                                <Button Content="Run"
+                                            Margin="0 2 2 2" />
+                                <Button Content="Stop"
+                                            Margin="0 2 2 2" />
+                            </UniformGrid>
+                        </UniformGrid>
+                    </GroupBox>
+                    <GroupBox Header="UnWinder Torque"
+                              Style="{StaticResource TextBlockHeaderGroupBox}"
+                              Margin="2 0 0 0">
+                        <UniformGrid Rows="3">
+                            <UniformGrid Columns="2">
+                                <Label Content="Torque (%)"
+                                       VerticalContentAlignment="Center"
+                                       BorderThickness="1"
+                                       FontSize="14"
+                                       FontWeight="SemiBold"
+                                       BorderBrush="LightGray"
+                                       Margin="0 2 2 2" />
+                                <Label Margin="0 2 2 2"
+                                       BorderBrush="LightGray"
+                                       BorderThickness="0.5"
+                                       Cursor="Hand"
+                                       MouseLeftButtonDown="Label_MouseLeftButtonDown"
+                                       Content="{Binding Recipe.UnwinderTorque,Mode=TwoWay}"
+                                       HorizontalContentAlignment="Center"
+                                       VerticalContentAlignment="Center"
+                                       FontSize="14" />
+                            </UniformGrid>
+                            <UniformGrid Columns="2">
+                                <Button Content="Set"
+                                            Margin="0 2 2 2" />
+                                <Button Content="Save"
+                                            Margin="0 2 2 2" />
+                            </UniformGrid>
+                            <UniformGrid Columns="2">
+                                <Button Content="Run"
+                                            Margin="0 2 2 2" />
+                                <Button Content="Stop"
+                                            Margin="0 2 2 2" />
+                            </UniformGrid>
+                        </UniformGrid>
+                    </GroupBox>
+                </UniformGrid>
+
             </Border>
 
             <!--Inout-->
             <Border Grid.Column="2">
-                <GroupBox Header="In Out">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                  Margin="0 5 0 0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <!-- Input Section -->
-                            <StackPanel>
-                                <TextBlock Text="Input"
-                                           HorizontalAlignment="Center"
-                                           FontSize="20"
-                                           FontWeight="Bold" />
-                                <ItemsControl ItemsSource="{Binding Inputs}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <ui:DInputView Width="300"
-                                                           FontSize="11"
-                                                           DataContext="{Binding }" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-                            <!-- Output Section -->
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Text="Output"
-                                           HorizontalAlignment="Center"
-                                           FontSize="20"
-                                           FontWeight="Bold" />
-                                <ItemsControl ItemsSource="{Binding Outputs}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <ui:DOutputView Width="300"
-                                                            FontSize="11"
-                                                            DataContext="{Binding }" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-                        </Grid>
-                    </ScrollViewer>
-                </GroupBox>
-
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <!-- Input Section -->
+                        <GroupBox Header="Input"
+              Grid.Column="0"
+              Style="{StaticResource TextBlockHeaderGroupBox}">
+                            <ItemsControl ItemsSource="{Binding Inputs}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <ui:DInputView Width="300"
+                                       FontSize="11"
+                                       DataContext="{Binding }" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+                        <!-- Output Section -->
+                        <GroupBox Header="Output"
+              Grid.Column="1"
+              Style="{StaticResource TextBlockHeaderGroupBox}">
+                            <ItemsControl ItemsSource="{Binding Outputs}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <ui:DOutputView Width="300"
+                                        FontSize="11"
+                                        DataContext="{Binding }" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+                    </Grid>
+                </ScrollViewer>
             </Border>
 
             <!--Syring Pump-->
@@ -275,7 +269,6 @@
                     Grid.Row="1">
                 <GroupBox Header="Syringe Pump"
                           Style="{StaticResource TextBlockHeaderGroupBox}">
-
                 </GroupBox>
             </Border>
 

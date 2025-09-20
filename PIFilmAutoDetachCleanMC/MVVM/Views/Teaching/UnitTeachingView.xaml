@@ -15,6 +15,21 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
     <UserControl.Resources>
+        <Style TargetType="GroupBox"
+               x:Key="TextBlockHeaderGroupBox">
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}"
+                                   FontWeight="Bold"
+                                   FontSize="15"
+                                   Background="#00BAF5"
+                                   Foreground="Black"
+                                   VerticalAlignment="Center"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -25,7 +40,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="1.2*"/>
             </Grid.ColumnDefinitions>
             <ScrollViewer Grid.Column="0"
                           Grid.ColumnSpan="2">
@@ -52,7 +67,7 @@
             <Border Grid.Column="0"
                     Grid.ColumnSpan="2">
                 <GroupBox Header="Cylinder"
-                          Style="{x:Null}">
+                          Style="{StaticResource TextBlockHeaderGroupBox}">
                     <ScrollViewer VerticalScrollBarVisibility="Auto"
                                   HorizontalScrollBarVisibility="Auto">
                         <ItemsControl ItemsSource="{Binding Cylinders}"
@@ -70,54 +85,46 @@
 
             <Border Grid.Column="2"
                     Grid.RowSpan="2">
-                <GroupBox Header="In Out">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                  Margin="0 5 0 0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <!-- Input Section -->
-                            <StackPanel>
-                                <TextBlock Text="Input"
-                                           HorizontalAlignment="Center"
-                                           FontSize="20"
-                                           FontWeight="Bold" />
-                                <ItemsControl ItemsSource="{Binding Inputs}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <ui:DInputView Width="300"
-                                                           DataContext="{Binding }" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-                            <!-- Output Section -->
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Text="Output"
-                                           HorizontalAlignment="Center"
-                                           FontSize="20"
-                                           FontWeight="Bold" />
-                                <ItemsControl ItemsSource="{Binding Outputs}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <ui:DOutputView Width="300"
-                                                           DataContext="{Binding }" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-                        </Grid>
-                    </ScrollViewer>
-                </GroupBox>
-
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <!-- Input Section -->
+                        <GroupBox Header="Input"
+                  Grid.Column="0"
+                  Style="{StaticResource TextBlockHeaderGroupBox}">
+                            <ItemsControl ItemsSource="{Binding Inputs}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <ui:DInputView Width="300"
+                                       DataContext="{Binding }" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+                        <!-- Output Section -->
+                        <GroupBox Header="Output"
+                  Style="{StaticResource TextBlockHeaderGroupBox}"
+                  Grid.Column="1">
+                            <ItemsControl ItemsSource="{Binding Outputs}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <ui:DOutputView Width="300"
+                                       DataContext="{Binding }" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+                    </Grid>
+                </ScrollViewer>
             </Border>
 
             <Border Grid.Row="1"
                     Grid.ColumnSpan="2">
                 <GroupBox Header="Motions"
-                          Style="{x:Null}">
+                          Style="{StaticResource TextBlockHeaderGroupBox}">
                     <ScrollViewer VerticalScrollBarVisibility="Auto"
                                   HorizontalScrollBarVisibility="Auto">
                         <ItemsControl ItemsSource="{Binding Motions}">
