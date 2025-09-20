@@ -23,5 +23,20 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public IAInput PlasmaN2FlowRate => _aInputDevice.AnalogInputs.First(a => a.Id == (int)EAnalogInput.PLASMA_N2_FLOW_RATE);
         public IAInput PlasmaCDAFlowRate => _aInputDevice.AnalogInputs.First(a => a.Id == (int)EAnalogInput.PLASMA_CDA_FLOW_RATE);
         public IAInput PlasmaTemperature => _aInputDevice.AnalogInputs.First(a => a.Id == (int)EAnalogInput.PLASMA_TEMPERATURE);
+
+        public bool Initialize()
+        {
+            return _aInputDevice.Initialize();
+        }
+
+        public bool Connect()
+        {
+            return _aInputDevice.Connect();
+        }
+
+        public bool Disconnect()
+        {
+            return _aInputDevice.Disconnect();
+        }
     }
 }
