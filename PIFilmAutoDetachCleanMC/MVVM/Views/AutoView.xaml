@@ -12,9 +12,24 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
     <UserControl.Resources>
+            <Style TargetType="GroupBox"
+               x:Key="TextBlockHeaderGroupBox">
+                <Setter Property="HeaderTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}"
+                                   FontWeight="Bold"
+                                   FontSize="14"
+                                   Background="#00BAF5"
+                                   Foreground="Black"
+                                   VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+        </Style>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Margin"
-                    Value="2 2 0 2" />
+                    Value="1 1 0 1" />
             <Setter Property="FontWeight"
                     Value="SemiBold" />
             <Setter Property="FontSize"
@@ -25,7 +40,7 @@
         <Style TargetType="{x:Type ui:InterlockButton}"
                BasedOn="{StaticResource {x:Type ui:InterlockButton}}">
             <Setter Property="Margin"
-                    Value="2 2 0 2" />
+                    Value="1 1 0 1" />
             <Setter Property="FontWeight"
                     Value="SemiBold" />
             <Setter Property="FontSize"
@@ -59,77 +74,69 @@
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="1.5*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            <Border Grid.Row="1"
-                    Margin="0 0 0 0">
-                <Canvas>
-                    <Image Source="{StaticResource AutoViewImage}"
-                           Stretch="UniformToFill"
-                           Canvas.Left="200"
-                           Canvas.Top="50"/>
-                    <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
-                                  Margin="5 5 5 0"
-                                  Canvas.Left="300"
-                                  Canvas.Top="420"
-                                  Width="250"
-                                  Height="280"
-                                  Grid.Row="2"
-                                  Grid.Column="1"
+            
+            <Canvas Grid.Row="0">
+                <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
+                                  Width="370"
+                                  Height="270"
                                   ItemsSource="{Binding CassetteList.CassetteIn.Cells}">
-                        <ItemsControl.Template>
-                            <ControlTemplate>
-                                <GroupBox Header="CASSETTE IN"
-                                          Background="Gray">
-                                    <ItemsPresenter />
-                                </GroupBox>
-                            </ControlTemplate>
-                        </ItemsControl.Template>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <ui:TrayCellView />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="{Binding DataContext.CassetteList.CassetteIn.Columns, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-
-                    <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
-                                  Margin="5 5 5 0"
-                                  Canvas.Left="300"
-                                  Canvas.Top="-240"
-                                  Width="250"
-                                  Height="280"
-                                  Grid.Row="2"
-                                  Grid.Column="1"
-                                  ItemsSource="{Binding CassetteList.CassetteOut.Cells}">
-                        <ItemsControl.Template>
-                            <ControlTemplate>
-                                <GroupBox Header="CASSETTE OUT"
-                                          Background="Gray">
-                                    <ItemsPresenter />
-                                </GroupBox>
-                            </ControlTemplate>
-                        </ItemsControl.Template>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <ui:TrayCellView />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="{Binding DataContext.CassetteList.CassetteOut.Columns, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-
-                </Canvas>
-            </Border>
+                    <ItemsControl.Template>
+                        <ControlTemplate>
+                            <GroupBox Header="CASSETTE IN"
+                                          Style="{StaticResource TextBlockHeaderGroupBox}">
+                                <ItemsPresenter />
+                            </GroupBox>
+                        </ControlTemplate>
+                    </ItemsControl.Template>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ui:TrayCellView />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="{Binding DataContext.CassetteList.CassetteIn.Columns, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Canvas>
+            
+            <Image Source="{StaticResource AutoViewImage}"
+                   Grid.Row="1"
+                   Stretch="Fill"
+                   Canvas.Left="200"
+                   Canvas.Top="50"/>
+            <Canvas Grid.Row="2">
+                <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
+                              Canvas.Top="1"
+                              Width="370"
+                              Height="270"
+                              ItemsSource="{Binding CassetteList.CassetteOut.Cells}">
+                    <ItemsControl.Template>
+                        <ControlTemplate>
+                            <GroupBox Header="CASSETTE OUT"
+                                          Style="{StaticResource TextBlockHeaderGroupBox }">
+                                <ItemsPresenter />
+                            </GroupBox>
+                        </ControlTemplate>
+                    </ItemsControl.Template>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ui:TrayCellView />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="{Binding DataContext.CassetteList.CassetteOut.Columns, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Canvas>
         </Grid>
+        
         <UniformGrid Rows="9"
                      Grid.Column="1">
             <Button Content="{Binding MachineStatus.MachineRunModeDisplay}"
