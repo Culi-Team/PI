@@ -361,6 +361,14 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             return hostBuilder;
         }
 
+        public static IHostBuilder AddPlasmaDevices(this IHostBuilder hostBuilder)
+        {
+            hostBuilder.ConfigureServices((hostContext, services) =>
+            {
+                services.AddSingleton<DieHardK180Plasma>();
+            });
+            return hostBuilder;
+        }
 
         public static IHostBuilder AddRobotDevices(this IHostBuilder hostBuilder)
         {

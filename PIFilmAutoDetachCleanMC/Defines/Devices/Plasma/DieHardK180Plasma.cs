@@ -52,6 +52,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
 
             return (value - vMin) * (unitMax - unitMin) / (vMax - vMin) + unitMin;
         }
+
         private void PlasmaStatusUpdateTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
             OnPropertyChanged(nameof(Voltage));
