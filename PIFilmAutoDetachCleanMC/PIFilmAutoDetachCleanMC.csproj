@@ -115,6 +115,11 @@
     <Resource Include="Resource\Image\01.CSTLoadUnload\RollerCVSupport2.png" />
     <Resource Include="Resource\Image\01.CSTLoadUnload\RollerCVSupport3.png" />
     <Resource Include="Resource\Image\01.CSTLoadUnload\RollerCVSupport4.png" />
+    <Resource Include="Resource\Image\01.CSTLoadUnload\IN_CST.png" />
+    <Resource Include="Resource\Image\01.CSTLoadUnload\IN_CST_Work.png" />
+    <Resource Include="Resource\Image\01.CSTLoadUnload\Buffer_CST.png" />
+    <Resource Include="Resource\Image\01.CSTLoadUnload\OUT_CST.png" />
+    <Resource Include="Resource\Image\01.CSTLoadUnload\OUT_CST_Work.png" />
     <Resource Include="Resource\Image\02.Detach\AlignFixture.png" />
     <Resource Include="Resource\Image\02.Detach\Detach.png" />
     <Resource Include="Resource\Image\02.Detach\LoadRobot.png" />

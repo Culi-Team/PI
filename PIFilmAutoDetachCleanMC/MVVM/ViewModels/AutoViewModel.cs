@@ -4,6 +4,7 @@ using EQX.Core.Sequence;
 using EQX.Motion;
 using EQX.UI.Controls;
 using log4net;
+using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 using PIFilmAutoDetachCleanMC.Process;
 using System.ComponentModel;
@@ -18,11 +19,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         #region Properties
         public AutoViewModel(MachineStatus machineStatus,
             INavigationService navigationService,
-            CassetteList cassetteList)
+            CassetteList cassetteList,
+            Devices devices)
         {
             MachineStatus = machineStatus;
             _navigationService = navigationService;
             CassetteList = cassetteList;
+            Devices = devices;
             SelectRunModeCommand = new RelayCommand(SelectRunMode);
             MachineStatus.PropertyChanged += MachineStatusOnPropertyChanged;
 
@@ -31,6 +34,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         public MachineStatus MachineStatus { get; }
         public CassetteList CassetteList { get; }
+        public Devices Devices { get; }
         public IRelayCommand SelectRunModeCommand { get; }
 
         public string MachineRunModeDisplay => MachineStatus.MachineRunModeDisplay;

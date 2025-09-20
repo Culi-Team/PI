@@ -12,20 +12,20 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
     <UserControl.Resources>
-            <Style TargetType="GroupBox"
+        <Style TargetType="GroupBox"
                x:Key="TextBlockHeaderGroupBox">
-                <Setter Property="HeaderTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding}"
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}"
                                    FontWeight="Bold"
                                    FontSize="14"
                                    Background="#00BAF5"
                                    Foreground="Black"
                                    VerticalAlignment="Center"/>
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Margin"
@@ -65,6 +65,8 @@
         </Style>
 
         <cvt:InputOutputStopConverter x:Key="InputOutputStopConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <cvt:BooleanOrToVisibilityConverter x:Key="BooleanOrToVisibilityConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -77,7 +79,7 @@
                 <RowDefinition Height="1.5*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            
+
             <Canvas Grid.Row="0">
                 <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
                                   Width="370"
@@ -103,12 +105,83 @@
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
             </Canvas>
-            
-            <Image Source="{StaticResource AutoViewImage}"
-                   Grid.Row="1"
-                   Stretch="Fill"
-                   Canvas.Left="200"
-                   Canvas.Top="50"/>
+            <Grid Grid.Row="1">
+                <Image Source="{StaticResource AutoViewImage}"
+                       Stretch="Fill"/>
+                <!-- InCST Image overlay-->
+                <Border Margin="-1498 225 0 0" 
+                        Width="145"
+                        Height="110">
+                    <Image Source="{StaticResource InCSTImage}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.InCstDetect1.Value"/>
+                                <Binding Path="Devices.Inputs.InCstDetect2.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+                <!-- InCSTWork Image overlay-->
+                <Border Margin="-1090 225 0 0" 
+                        Width="120"
+                        Height="90">
+                    <Image Source="{StaticResource InCSTWorkImage}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.InCstWorkDetect1.Value"/>
+                                <Binding Path="Devices.Inputs.InCstWorkDetect2.Value"/>
+                                <Binding Path="Devices.Inputs.InCstWorkDetect3.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+                <!-- Buffer Image overlay-->
+                <Border Margin="-1090 0 0 0" 
+                        Width="140"
+                        Height="80">
+                    <Image Source="{StaticResource BufferImage}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.BufferCstDetect1.Value"/>
+                                <Binding Path="Devices.Inputs.BufferCstDetect2.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+                <!-- OUTCSTWork Image overlay-->
+                <Border Margin="-1097 -235 0 0" 
+                        Width="120"
+                        Height="90">
+                    <Image Source="{StaticResource OutCSTWorkImage}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.OutCstWorkDetect1.Value"/>
+                                <Binding Path="Devices.Inputs.OutCstWorkDetect2.Value"/>
+                                <Binding Path="Devices.Inputs.OutCstWorkDetect3.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+                <!-- OUTCST Image overlay-->
+                <Border Margin="-1498 -230 0 0" 
+                        Width="150"
+                        Height="109">
+                    <Image Source="{StaticResource OutCSTImage}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.OutCstDetect1.Value"/>
+                                <Binding Path="Devices.Inputs.OutCstDetect2.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+            </Grid>
+
             <Canvas Grid.Row="2">
                 <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
                               Canvas.Top="1"
@@ -136,7 +209,7 @@
                 </ItemsControl>
             </Canvas>
         </Grid>
-        
+
         <UniformGrid Rows="9"
                      Grid.Column="1">
             <Button Content="{Binding MachineStatus.MachineRunModeDisplay}"

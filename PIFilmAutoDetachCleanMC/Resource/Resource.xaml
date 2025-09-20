@@ -25,6 +25,16 @@
     <BitmapImage x:Key="RollerCVSupport4Image" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/RollerCVSupport4.png"/>
     
+    <BitmapImage x:Key="InCSTImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/IN_CST.png"/>
+    <BitmapImage x:Key="InCSTWorkImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/IN_CST_Work.png"/>
+    <BitmapImage x:Key="BufferImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/Buffer_CST.png"/>
+    <BitmapImage x:Key="OutCSTImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/OUT_CST.png"/>
+    <BitmapImage x:Key="OutCSTWorkImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/OUT_CST_Work.png"/>
     <!-- 02. DETACH IMAGES  -->
     <BitmapImage x:Key="TransferFixtureImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/TransferFixture.png"/>
