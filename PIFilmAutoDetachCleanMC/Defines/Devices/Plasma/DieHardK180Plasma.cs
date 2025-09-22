@@ -24,7 +24,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             _outputs = outputs;
             _analogInputs = analogInputs;
 
-            System.Timers.Timer plasmaStatusUpdateTimer = new System.Timers.Timer(10);
+            System.Timers.Timer plasmaStatusUpdateTimer = new System.Timers.Timer(500);
             plasmaStatusUpdateTimer.Elapsed += PlasmaStatusUpdateTimer_Elapsed;
             plasmaStatusUpdateTimer.AutoReset = true;
             plasmaStatusUpdateTimer.Enabled = true;

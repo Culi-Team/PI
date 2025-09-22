@@ -217,10 +217,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         _isSuccess &= _devices.Inputs.Initialize();
                         _isSuccess &= _devices.Outputs.Initialize();
+                        _isSuccess &= _devices.AnalogInputs.Initialize();
 
                         _isSuccess &= _devices.Inputs.Connect();
                         _isSuccess &= _devices.Outputs.Connect();
-
                         _isSuccess &= _devices.AnalogInputs.Connect();
 
                         _isSuccess &= _devices.Regulators.WetCleanLRegulator.Connect();

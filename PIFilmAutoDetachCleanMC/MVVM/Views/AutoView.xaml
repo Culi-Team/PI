@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
              xmlns:cvt="clr-namespace:PIFilmAutoDetachCleanMC.Converters"
              mc:Ignorable="d"
+             xmlns:control="clr-namespace:PIFilmAutoDetachCleanMC.Controls"
              xmlns:vm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels"
              d:DataContext="{d:DesignInstance Type={x:Type vm:AutoViewModel}}"
              xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
@@ -153,6 +154,7 @@
                 <Image Source="{StaticResource AutoViewImage}"
                        Stretch="Fill"/>
             </Grid>
+            
             <Grid Grid.Row="2" 
                   Grid.Column="1"
                   Grid.RowSpan="3">
@@ -300,6 +302,17 @@
                 </Border>
             </Grid>
 
+            
+            <!--Plasma Status View-->
+            <Border Grid.Row="0"
+                    Grid.Column="7"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2"
+                    BorderBrush="Gray"
+                    BorderThickness="1"
+                    Margin="5">
+                <control:PlasmaStatusView DataContext="{Binding Plasma}" />
+            </Border>
         </Grid>
 
         <UniformGrid Rows="9"

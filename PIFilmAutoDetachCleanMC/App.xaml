@@ -18,6 +18,7 @@
                 <ResourceDictionary Source="/EQX.UI;component/Resources/Language/VietnameseLanguage.xaml" />
                 <ResourceDictionary Source="/EQX.UI;component/Resources/Language/ChineseLanguage.xaml" />
                 <ResourceDictionary Source="/EQX.UI;component/Resources/Language/EnglishLanguage.xaml" />
+                <ResourceDictionary Source="/EQX.UI;component/Styles/TextBox/TextBoxWithNameLeftStyle.xaml" />
                 <ResourceDictionary Source="/Resource/Resource.xaml" />
                 <ResourceDictionary Source="/Styles/DataGridCellStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/TextBlockHeaderGroupBoxStyle.xaml"/>

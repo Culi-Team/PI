@@ -16,45 +16,29 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
     public class AutoViewModel : ViewModelBase
     {
-        #region Properties
+        #region Constructor
         public AutoViewModel(MachineStatus machineStatus,
             INavigationService navigationService,
             CassetteList cassetteList,
-            Devices devices)
+            Devices devices,
+            DieHardK180Plasma plasma)
         {
             MachineStatus = machineStatus;
             _navigationService = navigationService;
             CassetteList = cassetteList;
             Devices = devices;
-            SelectRunModeCommand = new RelayCommand(SelectRunMode);
+            Plasma = plasma;
             MachineStatus.PropertyChanged += MachineStatusOnPropertyChanged;
 
             Log = LogManager.GetLogger("AutoVM");
         }
+        #endregion
 
+        #region Properties
         public MachineStatus MachineStatus { get; }
         public CassetteList CassetteList { get; }
         public Devices Devices { get; }
-        public IRelayCommand SelectRunModeCommand { get; }
-
-        public string MachineRunModeDisplay => MachineStatus.MachineRunModeDisplay;
-
-        private void SelectRunMode()
-        {
-            var selected = RunModeDialog.ShowRunModeDialog(Enum.GetValues<EMachineRunMode>());
-            if (selected.HasValue)
-            {
-                MachineStatus.MachineRunMode = selected.Value;
-            }
-        }
-
-        private void MachineStatusOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(MachineStatus.MachineRunMode))
-            {
-                OnPropertyChanged(nameof(MachineRunModeDisplay));
-            }
-        }
+        public DieHardK180Plasma Plasma { get; }
 
         public bool IsInputStop
         {
@@ -79,6 +63,32 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     _isOutputStop = value;
                     OnPropertyChanged(nameof(IsOutputStop));
                 }
+            }
+        }
+        public string MachineRunModeDisplay => MachineStatus.MachineRunModeDisplay;
+        #endregion
+
+        private void MachineStatusOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MachineStatus.MachineRunMode))
+            {
+                OnPropertyChanged(nameof(MachineRunModeDisplay));
+            }
+        }
+
+        #region Commands
+        public ICommand SelectRunModeCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    var selected = RunModeDialog.ShowRunModeDialog(Enum.GetValues<EMachineRunMode>());
+                    if (selected.HasValue)
+                    {
+                        MachineStatus.MachineRunMode = selected.Value;
+                    }
+                });
             }
         }
 
@@ -143,13 +153,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 });
             }
         }
-        #endregion
-
-        #region Privates
-        private readonly INavigationService _navigationService;
-        private bool _isInputStop;
-        private bool _isOutputStop;
-        #endregion
 
         public ICommand OriginCommand
         {
@@ -194,5 +197,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 });
             }
         }
+        #endregion
+
+        #region Privates
+        private readonly INavigationService _navigationService;
+        private bool _isInputStop;
+        private bool _isOutputStop;
+        #endregion
+
     }
 }
