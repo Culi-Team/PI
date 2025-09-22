@@ -44,6 +44,40 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public double Temperature => ConvertAnalog(_analogInputs.PlasmaTemperature.Volt, 1.0, 5.0, 0, 100);
         #endregion
 
+        #region Public Methods
+        public void EnableRemote()
+        {
+            _outputs.PlasmaRemoteEnable.Value = true;
+        }
+
+        public void AirOpenClose(bool bOpen)
+        {
+            _outputs.PlasmaN2SolOpen.Value = bOpen;
+            _outputs.PlasmaCDASolOpen.Value = bOpen;
+        }
+
+        public void PlasmaOnOff(bool bOn)
+        {
+            _outputs.PlasmaRun.Value = bOn;
+        }
+
+        public void IdleMode()
+        {
+            _outputs.PlasmaRun.Value = false;
+            _outputs.PlasmaN2SolOpen.Value = false;
+            _outputs.PlasmaCDASolOpen.Value = false;
+
+            _outputs.PlasmaIdleMode.Value = true;
+        }
+
+        public void Reset()
+        {
+            _outputs.PlasmaPowerReset.Value = true;
+            Thread.Sleep(500);
+            _outputs.PlasmaPowerReset.Value = false;
+        }
+        #endregion
+
         #region Private Methods
         private double ConvertAnalog(double value, double vMin, double vMax, double unitMin, double unitMax)
         {

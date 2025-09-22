@@ -226,7 +226,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         //Plasma
         public IDOutput PlasmaRun => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_RUN);
-        public IDOutput PlasmaInterfaceError => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_INTERFACE_ERROR);
+        public IDOutput PlasmaRemoteEnable => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_REMOTE_ENABLE);
         public IDOutput PlasmaN2SolOpen => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_N2_SOL_OPEN);
         public IDOutput PlasmaCDASolOpen => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_CDA_SOL_OPEN);
         public IDOutput PlasmaPowerReset => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_POWER_RESET);
