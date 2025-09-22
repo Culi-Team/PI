@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace PIFilmAutoDetachCleanMC.Defines.Devices.Robot
+﻿namespace PIFilmAutoDetachCleanMC.Defines.Devices.Robot
 {
     public static class RobotHelpers
     {
@@ -13,9 +11,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Robot
             return $"model,{model},0\r\n";
         }
 
-        public static string MotionCommands(ERobotCommand robotCommand)
+        public static string MotionCommands(ERobotCommand robotCommand, int lowSpeed, int highSpeed)
         {
-            return $"motion,{(uint)robotCommand},0\r\n";
+            return $"motion,{(uint)robotCommand},{lowSpeed},{highSpeed},0\r\n";
         }
 
         public static string MotionRspComplete(ERobotCommand robotCommand)
@@ -28,11 +26,11 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Robot
             return $"motion,{(uint)robotCommand},start\r\n";
         }
 
-        public static string MotionCommands(ERobotCommand robotCommand, params string[] paras)
+        public static string MotionCommands(ERobotCommand robotCommand, int lowSpeed, int highSpeed, params string[] paras)
         {
             if (paras == null || paras.Length != 8) throw new ArgumentException("Parameter format exception");
 
-            return $"motion,{(uint)robotCommand}," + string.Format(
+            return $"motion,{(uint)robotCommand},{lowSpeed},{highSpeed}," + string.Format(
                 "{0}," +    // INDEX X
                 "{1}," +    // INDEX Y
                 "{2}," +    // OFFSET X

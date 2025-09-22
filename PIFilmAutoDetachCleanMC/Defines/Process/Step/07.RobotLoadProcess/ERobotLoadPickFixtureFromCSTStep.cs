@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PIFilmAutoDetachCleanMC.Defines
+﻿namespace PIFilmAutoDetachCleanMC.Defines
 {
     public enum ERobotLoadPickFixtureFromCSTStep
     {
         Start,
         Wait_InCST_Ready,
+        Index_Initiation,
         Move_InCST_PickPositon,
         Move_InCST_PickPosition_Wait,
 

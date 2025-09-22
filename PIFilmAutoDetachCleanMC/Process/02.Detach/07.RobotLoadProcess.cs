@@ -26,20 +26,25 @@ namespace PIFilmAutoDetachCleanMC.Process
         private int CurrentInWorkCSTFixtureIndex = -1;
         private int CurrentOutWorkCSTFixtureIndex = -1;
 
+        private int cstIndexX, cstIndexY;
+
+        private int HightSpeed => _robotLoadRecipe.RobotSpeedHigh;
+        private int LowSpeed => _robotLoadRecipe.RobotSpeedLow;
+
         private ICylinder ClampCyl => _devices.Cylinders.RobotFixtureClampUnclamp;
         private ICylinder AlignCyl => _devices.Cylinders.RobotFixtureAlignFwBw;
 
         private bool IsFixtureDetect => !ClampCyl.IsBackward && !ClampCyl.IsForward;
 
-        private bool SendCommand(ERobotCommand command, string[] paras = null)
+        private bool SendCommand(ERobotCommand command, int lowSpeed, int highSpeed, string[] paras = null)
         {
             if (paras == null || paras.Count() == 0)
             {
-                _robotLoad.SendCommand(RobotHelpers.MotionCommands(command));
+                _robotLoad.SendCommand(RobotHelpers.MotionCommands(command, lowSpeed, highSpeed));
             }
             else
             {
-                _robotLoad.SendCommand(RobotHelpers.MotionCommands(command, paras));
+                _robotLoad.SendCommand(RobotHelpers.MotionCommands(command, lowSpeed, highSpeed, paras));
             }
 
             return _robotLoad.ReadResponse(2000, RobotHelpers.MotionRspStart(command));
@@ -582,9 +587,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadReadyStep.RobotHome:
                     Log.Debug("Start Home Robot Load");
-                    SendCommand(ERobotCommand.HOME);
-                    Log.Debug(message: $"Send Robot Motion Command {ERobotCommand.HOME}");
-                    Step.RunStep++;
+                    Log.Debug($"Send Robot Motion Command {ERobotCommand.HOME}");
+                    if (SendCommand(ERobotCommand.HOME, 10, 20)) 
+                    {
+                        Step.RunStep++;
+                        break;
+                    }
+
+                    RaiseAlarm((int)EAlarm.Robot_SendMotionCommand_Fail);
                     break;
                 case ERobotLoadReadyStep.RobotHome_Check:
                     if (_robotLoad.ReadResponse((int)(_commonRecipe.MotionOriginTimeout * 1000.0), RobotHelpers.MotionRspComplete(ERobotCommand.HOME)))
@@ -626,8 +636,18 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Current Fixture Index: " + CurrentInWorkCSTFixtureIndex);
                     Step.RunStep++;
                     break;
+                case ERobotLoadPickFixtureFromCSTStep.Index_Initiation:
+                    //TODO: Index Initiation
+
+                    break;
                 case ERobotLoadPickFixtureFromCSTStep.Move_InCST_PickPositon:
                     Log.Debug("Move In Cassette Pick Position");
+                    Log.Debug($"Send Robot Motion Command {ERobotCommand.S1_PICK}");
+                    if (SendCommand(ERobotCommand.S1_PICK, LowSpeed, HightSpeed, paras))
+                    {
+                        Step.RunStep++;
+                        break;
+                    }
                     Wait(1000);
                     Step.RunStep++;
                     break;
