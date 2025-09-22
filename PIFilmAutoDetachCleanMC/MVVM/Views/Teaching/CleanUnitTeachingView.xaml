@@ -194,7 +194,7 @@
                                        BorderThickness="0.5"
                                        Cursor="Hand"
                                        MouseLeftButtonDown="Label_MouseLeftButtonDown"
-                                       Content="{Binding Recipe.UnwinderTorque,Mode=TwoWay}"
+                                       Content="{Binding Recipe.UnWinderTorque,Mode=TwoWay}"
                                        HorizontalContentAlignment="Center"
                                        VerticalContentAlignment="Center"
                                        FontSize="14" />

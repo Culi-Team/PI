@@ -300,7 +300,71 @@
                     </Image>
                 </Border>
             </Grid>
-
+            <Grid Grid.Column="5"
+                  Grid.Row="2"
+                  Grid.RowSpan="3"
+                  Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="1.1*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!--Wet Clean Left Image overlay-->
+                <Border Grid.Column="1">
+                    <Image Source="{StaticResource WetCleanImageDetachLeft}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.WetCleanPusherLeftDown.Value"/>
+                                <Binding Path="Devices.Outputs.WetCleanPusherLeftDown.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+                <!--AF Clean Left Image overlay-->
+                <Border Grid.Column="3">
+                    <Image Source="{StaticResource AFCleanImageDetachLeft}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.AfCleanPusherLeftDown.Value"/>
+                                <Binding Path="Devices.Outputs.AfCleanPusherLeftDown.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+                <!--Wet Clean Left Image overlay-->
+                <Border Grid.Column="1" 
+                        Grid.Row="1">
+                    <Image Source="{StaticResource WetCleanImageDetachRight}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.WetCleanPusherRightDown.Value"/>
+                                <Binding Path="Devices.Outputs.WetCleanPusherRightDown.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+                <!--AF Clean Left Image overlay-->
+                <Border Grid.Column="3" 
+                        Grid.Row="1">
+                    <Image Source="{StaticResource AFCleanImageDetachRight}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.AfCleanPusherRightDown.Value"/>
+                                <Binding Path="Devices.Outputs.AfCleanPusherRightDown.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+            </Grid>
             
             <!--Plasma Status View-->
             <Border Grid.Row="0"
