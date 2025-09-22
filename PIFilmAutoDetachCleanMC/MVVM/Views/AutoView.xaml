@@ -75,15 +75,30 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1.5*" />
-                <RowDefinition Height="1*" />
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-            <Canvas Grid.Row="0">
+            <Grid Grid.Row="0" 
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2">
                 <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
-                                  Width="370"
-                                  Height="270"
                                   ItemsSource="{Binding CassetteList.CassetteOut.Cells}">
                     <ItemsControl.Template>
                         <ControlTemplate>
@@ -104,89 +119,11 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
-            </Canvas>
-            <Grid Grid.Row="1">
-                <Image Source="{StaticResource AutoViewImage}"
-                       Stretch="Fill"/>
-                <!-- InCST Image overlay-->
-                <Border Margin="-1495 227 0 0" 
-                        Width="145"
-                        Height="113">
-                    <Image Source="{StaticResource InCSTImage}"
-                           Stretch="Fill">
-                        <Image.Visibility>
-                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
-                                <Binding Path="Devices.Inputs.InCstDetect1.Value"/>
-                                <Binding Path="Devices.Inputs.InCstDetect2.Value"/>
-                            </MultiBinding>
-                        </Image.Visibility>
-                    </Image>
-                </Border>
-                <!-- InCSTWork Image overlay-->
-                <Border Margin="-1090 225 0 0" 
-                        Width="120"
-                        Height="90">
-                    <Image Source="{StaticResource InCSTWorkImage}"
-                           Stretch="Fill">
-                        <Image.Visibility>
-                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
-                                <Binding Path="Devices.Inputs.InCstWorkDetect1.Value"/>
-                                <Binding Path="Devices.Inputs.InCstWorkDetect2.Value"/>
-                                <Binding Path="Devices.Inputs.InCstWorkDetect3.Value"/>
-                            </MultiBinding>
-                        </Image.Visibility>
-                    </Image>
-                </Border>
-                <!-- Buffer Image overlay-->
-                <Border Margin="-1090 0 0 0" 
-                        Width="140"
-                        Height="80">
-                    <Image Source="{StaticResource BufferImage}"
-                           Stretch="Fill">
-                        <Image.Visibility>
-                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
-                                <Binding Path="Devices.Inputs.BufferCstDetect1.Value"/>
-                                <Binding Path="Devices.Inputs.BufferCstDetect2.Value"/>
-                            </MultiBinding>
-                        </Image.Visibility>
-                    </Image>
-                </Border>
-                <!-- OUTCSTWork Image overlay-->
-                <Border Margin="-1097 -235 0 0" 
-                        Width="120"
-                        Height="90">
-                    <Image Source="{StaticResource OutCSTWorkImage}"
-                           Stretch="Fill">
-                        <Image.Visibility>
-                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
-                                <Binding Path="Devices.Inputs.OutCstWorkDetect1.Value"/>
-                                <Binding Path="Devices.Inputs.OutCstWorkDetect2.Value"/>
-                                <Binding Path="Devices.Inputs.OutCstWorkDetect3.Value"/>
-                            </MultiBinding>
-                        </Image.Visibility>
-                    </Image>
-                </Border>
-                <!-- OUTCST Image overlay-->
-                <Border Margin="-1495 -230 0 0" 
-                        Width="145"
-                        Height="109">
-                    <Image Source="{StaticResource OutCSTImage}"
-                           Stretch="Fill">
-                        <Image.Visibility>
-                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
-                                <Binding Path="Devices.Inputs.OutCstDetect1.Value"/>
-                                <Binding Path="Devices.Inputs.OutCstDetect2.Value"/>
-                            </MultiBinding>
-                        </Image.Visibility>
-                    </Image>
-                </Border>
             </Grid>
-
-            <Canvas Grid.Row="2">
+            <Grid Grid.Row="5"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2">
                 <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
-                              Canvas.Top="1"
-                              Width="370"
-                              Height="270"
                               ItemsSource="{Binding CassetteList.CassetteIn.Cells}">
                     <ItemsControl.Template>
                         <ControlTemplate>
@@ -207,7 +144,162 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
-            </Canvas>
+            </Grid>
+            
+            <!-- Machine Image overlay-->
+            <Grid Grid.Row="2" 
+                  Grid.ColumnSpan="9"
+                  Grid.RowSpan="3">
+                <Image Source="{StaticResource AutoViewImage}"
+                       Stretch="Fill"/>
+            </Grid>
+            <Grid Grid.Row="2" 
+                  Grid.Column="1"
+                  Grid.RowSpan="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.2*"/>
+                    <RowDefinition Height="1.0*"/>
+                    <RowDefinition Height="1.27*"/>
+                </Grid.RowDefinitions>
+                <!-- InCSTWork Image overlay-->
+                <Border Grid.Row="2">
+                    <Image Source="{StaticResource InCSTWorkImage}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.InCstWorkDetect1.Value"/>
+                                <Binding Path="Devices.Inputs.InCstWorkDetect2.Value"/>
+                                <Binding Path="Devices.Inputs.InCstWorkDetect3.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+                <!-- Buffer Image overlay-->
+                <Border Grid.Row="1">
+                    <Image Source="{StaticResource BufferImage}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.BufferCstDetect1.Value"/>
+                                <Binding Path="Devices.Inputs.BufferCstDetect2.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+                <!-- OUTCSTWork Image overlay-->
+                <Border Grid.Row="0">
+                    <Image Source="{StaticResource OutCSTWorkImage}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.OutCstWorkDetect1.Value"/>
+                                <Binding Path="Devices.Inputs.OutCstWorkDetect2.Value"/>
+                                <Binding Path="Devices.Inputs.OutCstWorkDetect3.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="2" 
+                  Grid.RowSpan="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.2*"/>
+                    <RowDefinition Height="1.0*"/>
+                    <RowDefinition Height="1.27*"/>
+                </Grid.RowDefinitions>
+                <!-- InCST Image overlay-->
+                <Border Grid.Row="2">
+                    <Image Source="{StaticResource InCSTImage}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.InCstDetect1.Value"/>
+                                <Binding Path="Devices.Inputs.InCstDetect2.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+                <!-- OUTCST Image overlay-->
+                <Border Grid.Row="0">
+                    <Image Source="{StaticResource OutCSTImage}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.OutCstDetect1.Value"/>
+                                <Binding Path="Devices.Inputs.OutCstDetect2.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Column="2"
+                  Grid.Row="2"
+                  Grid.RowSpan="3"
+                  Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="1.2*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.1*"/>
+                    <RowDefinition/>
+                    <RowDefinition Height ="1.2*"/>
+                </Grid.RowDefinitions>
+                
+                <!-- VinylClean Image overlay-->
+                <Border Grid.Row="2">
+                    <Image Source="{StaticResource VinylCleanImageDetach}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.VinylCleanFixtureDetect.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+                <!-- FixtureAlign Image overlay-->
+                <Border Grid.Row="2"
+                        Grid.Column="1">
+                    <Image Source="{StaticResource AlignFixtureImageDetach}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.AlignFixtureDetect.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+                <!-- Detach Image overlay-->
+                <Border Grid.Row="1"
+                        Grid.Column="1">
+                    <Image Source="{StaticResource GlassDetach}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.AlignStageLGlassDettect1.Value"/>
+                                <Binding Path="Devices.Inputs.AlignStageLGlassDettect2.Value"/>
+                                <Binding Path="Devices.Inputs.AlignStageLGlassDettect3.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+                <!-- RemoveFilm Image overlay-->
+                <Border Grid.Row="0"
+                        Grid.Column="1">
+                    <Image Source="{StaticResource RemoveZoneImageDetach}"
+                           Stretch="Fill">
+                        <Image.Visibility>
+                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                <Binding Path="Devices.Inputs.RemoveZoneFixtureDetect.Value"/>
+                            </MultiBinding>
+                        </Image.Visibility>
+                    </Image>
+                </Border>
+            </Grid>
+
         </Grid>
 
         <UniformGrid Rows="9"
