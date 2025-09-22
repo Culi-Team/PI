@@ -58,6 +58,10 @@
     <None Remove="Resource\Image\03.Clean\ShuttleUnit.png" />
     <None Remove="Resource\Image\03.Clean\TransferRotation.png" />
     <None Remove="Resource\Image\03.Clean\WetClean.png" />
+    <None Remove="Resource\Image\03.Clean\AFCleanDetachLeft.png" />
+    <None Remove="Resource\Image\03.Clean\AFCleanDetachRight.png" />
+    <None Remove="Resource\Image\03.Clean\WetCleanDetachLeft.png" />
+    <None Remove="Resource\Image\03.Clean\WetCleanDetachRight.png" />
     <None Remove="Resource\Image\04.Unload\OutShuttle.png" />
     <None Remove="Resource\Image\04.Unload\UnloadRobot.png" />
     <None Remove="Resource\Image\04.Unload\UnloadStage.png" />
@@ -143,6 +147,10 @@
     <Resource Include="Resource\Image\03.Clean\ShuttleUnit.png" />
     <Resource Include="Resource\Image\03.Clean\TransferRotation.png" />
     <Resource Include="Resource\Image\03.Clean\WetClean.png" />
+    <Resource Include="Resource\Image\03.Clean\AFCleanDetachLeft.png" />
+    <Resource Include="Resource\Image\03.Clean\AFCleanDetachRight.png" />
+    <Resource Include="Resource\Image\03.Clean\WetCleanDetachLeft.png" />
+    <Resource Include="Resource\Image\03.Clean\WetCleanDetachRight.png" />
     <Resource Include="Resource\Image\04.Unload\OutShuttle.png" />
     <Resource Include="Resource\Image\04.Unload\UnloadRobot.png" />
     <Resource Include="Resource\Image\04.Unload\UnloadStage.png" />
