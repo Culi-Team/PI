@@ -42,12 +42,20 @@
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/Detach.png"/>
     <BitmapImage x:Key="AlignFixtureImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/AlignFixture.png"/>
+    <BitmapImage x:Key="AlignFixtureImageDetach" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/FixtureAlign.png"/>
+    <BitmapImage x:Key="GlassDetach" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/GlassDetach.png"/>
     <BitmapImage x:Key="LoadRobotImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png"/>
     <BitmapImage x:Key="RemoveZoneImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png"/>
+    <BitmapImage x:Key="RemoveZoneImageDetach" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveFilm.png"/>
     <BitmapImage x:Key="VinylCleanImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/VinylClean.png"/>
+    <BitmapImage x:Key="VinylCleanImageDetach" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/VinylCleanDt.png"/>
     
     <!-- 03. CLEAN IMAGES  -->
     <BitmapImage x:Key="GlassTransferImage" 

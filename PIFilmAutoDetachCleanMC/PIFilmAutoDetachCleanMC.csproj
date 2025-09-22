@@ -46,6 +46,10 @@
     <None Remove="Resource\Image\02.Detach\RemoveZone.png" />
     <None Remove="Resource\Image\02.Detach\TransferFixture.png" />
     <None Remove="Resource\Image\02.Detach\VinylClean.png" />
+    <None Remove="Resource\Image\02.Detach\VinylCleanDt.png" />
+    <None Remove="Resource\Image\02.Detach\FixtureAlign.png" />
+    <None Remove="Resource\Image\02.Detach\GlassDetach.png" />
+    <None Remove="Resource\Image\02.Detach\RemoveFilm.png" />
     <None Remove="Resource\Image\03.Clean\AFClean.png" />
     <None Remove="Resource\Image\03.Clean\AlignStage.png" />
     <None Remove="Resource\Image\03.Clean\GlassShuttleUnit.png" />
@@ -126,6 +130,10 @@
     <Resource Include="Resource\Image\02.Detach\RemoveZone.png" />
     <Resource Include="Resource\Image\02.Detach\TransferFixture.png" />
     <Resource Include="Resource\Image\02.Detach\VinylClean.png" />
+    <Resource Include="Resource\Image\02.Detach\VinylCleanDt.png" />
+    <Resource Include="Resource\Image\02.Detach\FixtureAlign.png" />
+    <Resource Include="Resource\Image\02.Detach\GlassDetach.png" />
+    <Resource Include="Resource\Image\02.Detach\RemoveFilm.png" />
     <Resource Include="Resource\Image\03.Clean\AFClean.png" />
     <Resource Include="Resource\Image\03.Clean\AlignStage.png" />
     <Resource Include="Resource\Image\03.Clean\GlassShuttleUnit.png" />
