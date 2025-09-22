@@ -66,6 +66,10 @@
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png"/>
     <BitmapImage x:Key="AFCleanImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png"/>
+    <BitmapImage x:Key="AFCleanImageDetachLeft" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFCleanDetachLeft.png"/>
+    <BitmapImage x:Key="AFCleanImageDetachRight" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFCleanDetachRight.png"/>
     <BitmapImage x:Key="AlignStageImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AlignStage.png"/>
     <BitmapImage x:Key="GlassShuttleUnitImage" 
@@ -74,6 +78,10 @@
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/ShuttleUnit.png"/>
     <BitmapImage x:Key="WetCleanImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png"/>
+    <BitmapImage x:Key="WetCleanImageDetachLeft" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetCleanDetachLeft.png"/>
+    <BitmapImage x:Key="WetCleanImageDetachRight" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetCleanDetachRight.png"/>
     <BitmapImage x:Key="GlassAlignImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/GlassAlignStage.png"/>
 
