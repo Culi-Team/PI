@@ -46,7 +46,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 
         [SingleRecipeDescription(Description = "UnWinder Torque", Unit = Unit.Percentage)]
         [SingleRecipeMinMax(Max = 100.0, Min = 0.0)]
-        public int UnwinderTorque
+        public int UnWinderTorque
 		{
 			get { return unwinderTorque; }
 			set { unwinderTorque = value; }

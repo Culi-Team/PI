@@ -7,6 +7,7 @@ using log4net;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 using PIFilmAutoDetachCleanMC.Process;
+using PIFilmAutoDetachCleanMC.Recipe;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,12 +22,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             INavigationService navigationService,
             CassetteList cassetteList,
             Devices devices,
+            RecipeSelector recipeSelector,
             DieHardK180Plasma plasma)
         {
             MachineStatus = machineStatus;
             _navigationService = navigationService;
             CassetteList = cassetteList;
             Devices = devices;
+            RecipeSelector = recipeSelector;
             Plasma = plasma;
             MachineStatus.PropertyChanged += MachineStatusOnPropertyChanged;
 
@@ -38,6 +41,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public MachineStatus MachineStatus { get; }
         public CassetteList CassetteList { get; }
         public Devices Devices { get; }
+        public RecipeSelector RecipeSelector { get; }
         public DieHardK180Plasma Plasma { get; }
 
         public bool IsInputStop

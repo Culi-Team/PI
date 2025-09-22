@@ -1,12 +1,11 @@
-﻿<UserControl x:Class="PIFilmAutoDetachCleanMC.Controls.PlasmaStatusView"
+﻿<UserControl x:Class="PIFilmAutoDetachCleanMC.Controls.CleanUnitStatusView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.Controls"
-             mc:Ignorable="d"
-             d:DesignHeight="450"
-             d:DesignWidth="800">
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <Style TargetType="Label">
             <Style.Setters>
@@ -30,6 +29,7 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*" />
@@ -37,49 +37,56 @@
         </Grid.ColumnDefinitions>
         <Border Grid.ColumnSpan="2"
                 Background="Beige">
-            <Label Content="PLASMA"
+            <Label Content="{Binding Name}"
                    FontWeight="Bold"
                    HorizontalContentAlignment="Center"
-                   FontSize="20" />
+                   FontSize="20"/>
         </Border>
         <TextBox Style="{StaticResource TextBoxWithNameLeftStyle}"
                  Grid.Row="1"
-                 Text="{Binding Voltage,Mode=OneWay,StringFormat='{}{0:0.###}'}"
-                 Tag="Voltage" />
+                 Text="{Binding CleanVolume,Mode=OneWay,StringFormat='{}{0:0.###}'}"
+                 Tag="Clean Volume" />
         <Label Grid.Column="1"
                Grid.Row="1"
-               Content="[KV]" />
+               Content="[mL]" />
 
         <TextBox Style="{StaticResource TextBoxWithNameLeftStyle}"
                  Grid.Row="2"
-                 Text="{Binding Power,Mode=OneWay,StringFormat='{}{0:0.###}'}"
-                 Tag="Power" />
+                 Text="{Binding WinderTorque,Mode=OneWay,StringFormat='{}{0:0.###}'}"
+                 Tag="Winder Torque" />
         <Label Grid.Column="1"
                Grid.Row="2"
-               Content="[kW]" />
+               Content="[%]" />
 
         <TextBox Style="{StaticResource TextBoxWithNameLeftStyle}"
                  Grid.Row="3"
-                 Text="{Binding N2FlowRate,Mode=OneWay,StringFormat='{}{0:0.###}'}"
-                 Tag="N2 Flow Rate" />
+                 Text="{Binding UnWinderTorque,Mode=OneWay,StringFormat='{}{0:0.###}'}"
+                 Tag="UnWinder Torque" />
         <Label Grid.Column="1"
                Grid.Row="3"
-               Content="[LPM]" />
+               Content="[%]" />
 
         <TextBox Style="{StaticResource TextBoxWithNameLeftStyle}"
                  Grid.Row="4"
-                 Text="{Binding CDAFlowRate,Mode=OneWay,StringFormat='{}{0:0.###}'}"
-                 Tag="CDA Flow Rate" />
+                 Text="{Binding CylinderPushPressure,Mode=OneWay,StringFormat='{}{0:0.###}'}"
+                 Tag="Pressure" />
         <Label Grid.Column="1"
                Grid.Row="4"
-               Content="[LPM]" />
+               Content="[mPa]" />
 
         <TextBox Style="{StaticResource TextBoxWithNameLeftStyle}"
                  Grid.Row="5"
-                 Text="{Binding Temperature,Mode=OneWay,StringFormat='{}{0:0.###}'}"
-                 Tag="Temperature" />
+                 Text="{Binding CleanHorizontalCount,Mode=OneWay,StringFormat='{}{0:0.###}'}"
+                 Tag="Clean Horizontal Count" />
         <Label Grid.Column="1"
                Grid.Row="5"
-               Content="[°C]" />
+               Content="" />
+        <TextBox Style="{StaticResource TextBoxWithNameLeftStyle}"
+                 Grid.Row="6"
+                 Text="{Binding CleanVerticalCount,Mode=OneWay,StringFormat='{}{0:0.###}'}"
+                 Tag="Clean Vertical Count" />
+        <Label Grid.Column="1"
+               Grid.Row="6"
+               Content="" />
     </Grid>
 </UserControl>

@@ -53,7 +53,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             {
                 return new RelayCommand(() =>
                 {
-                    UnWinder.SetTorque(((CleanRecipe)Recipe).UnwinderTorque);
+                    UnWinder.SetTorque(((CleanRecipe)Recipe).UnWinderTorque);
                 });
             }
         }

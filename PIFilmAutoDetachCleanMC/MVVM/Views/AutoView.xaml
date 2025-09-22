@@ -21,7 +21,6 @@
                         <TextBlock Text="{Binding}"
                                    FontWeight="Bold"
                                    FontSize="14"
-                                   Background="#00BAF5"
                                    Foreground="Black"
                                    VerticalAlignment="Center"/>
                     </DataTemplate>
@@ -312,6 +311,45 @@
                     BorderThickness="1"
                     Margin="5">
                 <control:PlasmaStatusView DataContext="{Binding Plasma}" />
+            </Border>
+            
+            <!--Clean Status View-->
+            <Border Grid.Row="0"
+                    Grid.Column="3"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2"
+                    BorderBrush="Gray"
+                    BorderThickness="1"
+                    Margin="5">
+                <control:CleanUnitStatusView DataContext="{Binding RecipeSelector.CurrentRecipe.WetCleanLeftRecipe}" />
+            </Border>
+            <Border Grid.Row="0"
+                    Grid.Column="5"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2"
+                    BorderBrush="Gray"
+                    BorderThickness="1"
+                    Margin="5">
+                <control:CleanUnitStatusView DataContext="{Binding RecipeSelector.CurrentRecipe.AfCleanLeftRecipe}" />
+            </Border>
+
+            <Border Grid.Row="5"
+                    Grid.Column="3"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2"
+                    BorderBrush="Gray"
+                    BorderThickness="1"
+                    Margin="5">
+                <control:CleanUnitStatusView DataContext="{Binding RecipeSelector.CurrentRecipe.WetCleanRightRecipe}" />
+            </Border>
+            <Border Grid.Row="5"
+                    Grid.Column="5"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2"
+                    BorderBrush="Gray"
+                    BorderThickness="1"
+                    Margin="5">
+                <control:CleanUnitStatusView DataContext="{Binding RecipeSelector.CurrentRecipe.AfCleanRightRecipe}" />
             </Border>
         </Grid>
 
