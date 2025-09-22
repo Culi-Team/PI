@@ -305,6 +305,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EFixtureAlignRobotPlaceFixtureToAlignStep.End:
                     Log.Debug("Robot Place Fixture To Align End");
+                    if (Parent?.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
                     Log.Info("Sequence Fixture Align");
                     Sequence = ESequence.FixtureAlign;
                     break;
