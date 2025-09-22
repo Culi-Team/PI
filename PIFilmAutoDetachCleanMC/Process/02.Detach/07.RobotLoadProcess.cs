@@ -643,7 +643,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPickFixtureFromCSTStep.Move_InCST_PickPositon:
                     Log.Debug("Move In Cassette Pick Position");
                     Log.Debug($"Send Robot Motion Command {ERobotCommand.S1_PICK}");
-                    if (SendCommand(ERobotCommand.S1_PICK, LowSpeed, HightSpeed, paras))
+                    if (SendCommand(ERobotCommand.S1_PICK, LowSpeed, HightSpeed, paras: null))
                     {
                         Step.RunStep++;
                         break;
