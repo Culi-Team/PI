@@ -162,8 +162,8 @@
 
     </UserControl.Resources>
     <Grid>
-        <TabControl ItemsSource="{Binding UnitTeachings}"
-                    SelectedItem="{Binding SelectedUnitTeaching, Mode=TwoWay}"
+        <TabControl ItemsSource="{Binding TeachingUnits}"
+                    SelectedItem="{Binding SelectedTeachingUnit, Mode=TwoWay}"
                     Margin="10"
                     BorderBrush="Gray"
                     BorderThickness="1">

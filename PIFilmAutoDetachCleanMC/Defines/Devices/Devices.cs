@@ -1,4 +1,5 @@
-﻿using EQX.Core.InOut;
+﻿using EQX.Core.Device.SpeedController;
+using EQX.Core.InOut;
 using EQX.Core.Motion;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
@@ -48,6 +49,14 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         #region Public Methods
 
         #region Get Cylinders
+        public ObservableCollection<ICylinder> GetInConveyorCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Cylinders.InCstStopperUpDown);
+
+            return cylinders;
+        }
+
         public ObservableCollection<ICylinder> GetInWorkConveyorCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
@@ -69,6 +78,13 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             cylinders.Add(Cylinders.OutCstTiltCylUpDown);
             cylinders.Add(Cylinders.OutCvSupportUpDown);
             cylinders.Add(Cylinders.OutCvSupportBufferUpDown);
+            return cylinders;
+        }
+
+        public ObservableCollection<ICylinder> GetOutConveyorCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Cylinders.OutCstStopperUpDown);
             return cylinders;
         }
 
@@ -193,27 +209,31 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         #endregion
 
         #region Get Inputs
-        // CSTLoadUnload Tab Inputs
+        public ObservableCollection<IDInput> GetInConveyorInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Inputs.InCstDetect1);
+            inputs.Add(Inputs.InCstDetect2);
+            inputs.Add(Inputs.InCstStopperUp);
+            inputs.Add(Inputs.InCstStopperDown);
+
+            return inputs;
+        }
         public ObservableCollection<IDInput> GetInWorkConveyorInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add In Cassette detection inputs (essential for teaching)
             inputs.Add(Inputs.InCstDetect1);
             inputs.Add(Inputs.InCstDetect2);
-            // Add In CV Support detection inputs (essential for teaching)
             inputs.Add(Inputs.InCvSupportUp);
             inputs.Add(Inputs.InCvSupportDown);
             inputs.Add(Inputs.InCvSupportBufferUp);
             inputs.Add(Inputs.InCvSupportBufferDown);
-            // Add In CST Fix cylinder detection inputs (essential for teaching)
             inputs.Add(Inputs.InCstFixCyl1Fw);
             inputs.Add(Inputs.InCstFixCyl1Bw);
             inputs.Add(Inputs.InCstFixCyl2Fw);
             inputs.Add(Inputs.InCstFixCyl2Bw);
-            // Add In CST Tilt cylinder detection inputs (essential for teaching)
             inputs.Add(Inputs.InCstTiltCylUp);
             inputs.Add(Inputs.InCstTiltCylDown);
-            // Add In CST Stopper detection inputs (essential for teaching)
             inputs.Add(Inputs.InCstStopperUp);
             inputs.Add(Inputs.InCstStopperDown);
 
@@ -223,37 +243,29 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetOutWorkConveyorInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add Out Cassette detection inputs (essential for teaching)
             inputs.Add(Inputs.OutCstDetect1);
             inputs.Add(Inputs.OutCstDetect2);
-            // Add Out CV Support detection inputs (essential for teaching)
             inputs.Add(Inputs.OutCvSupportUp);
             inputs.Add(Inputs.OutCvSupportDown);
             inputs.Add(Inputs.OutCvSupportBufferUp);
             inputs.Add(Inputs.OutCvSupportBufferDown);
-            // Add Out CST Fix cylinder detection inputs (essential for teaching)
             inputs.Add(Inputs.OutCstFixCyl1Fw);
             inputs.Add(Inputs.OutCstFixCyl1Bw);
             inputs.Add(Inputs.OutCstFixCyl2Fw);
             inputs.Add(Inputs.OutCstFixCyl2Bw);
-            // Add Out CST Tilt cylinder detection inputs (essential for teaching)
             inputs.Add(Inputs.OutCstTiltCylUp);
             inputs.Add(Inputs.OutCstTiltCylDown);
-            // Add Out CST Stopper detection inputs (essential for teaching)
             inputs.Add(Inputs.OutCstStopperUp);
             inputs.Add(Inputs.OutCstStopperDown);
 
             return inputs;
         }
 
-        // Detach Tab Inputs
         public ObservableCollection<IDInput> GetTransferFixtureInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add Transfer Fixture detection inputs
             inputs.Add(Inputs.TransferFixtureUp);
             inputs.Add(Inputs.TransferFixtureDown);
-            // Add Transfer Fixture clamp detection inputs
             inputs.Add(Inputs.TransferFixture11Clamp);
             inputs.Add(Inputs.TransferFixture11Unclamp);
             inputs.Add(Inputs.TransferFixture12Clamp);
@@ -269,18 +281,14 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetDetachInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add Detach fixture detection input
             inputs.Add(Inputs.DetachFixtureDetect);
-            // Add Detach glass shuttle vacuum inputs
             inputs.Add(Inputs.DetachGlassShtVac1);
             inputs.Add(Inputs.DetachGlassShtVac2);
             inputs.Add(Inputs.DetachGlassShtVac3);
-            // Add Detach cylinder detection inputs
             inputs.Add(Inputs.DetachCyl1Up);
             inputs.Add(Inputs.DetachCyl1Down);
             inputs.Add(Inputs.DetachCyl2Up);
             inputs.Add(Inputs.DetachCyl2Down);
-            // Add Detach fix fixture cylinder detection inputs
             inputs.Add(Inputs.DetachFixFixtureCyl11Fw);
             inputs.Add(Inputs.DetachFixFixtureCyl11Bw);
             inputs.Add(Inputs.DetachFixFixtureCyl12Fw);
@@ -297,13 +305,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetTransferShutterLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add Glass detection inputs
             inputs.Add(Inputs.AlignStageLGlassDettect1);
             inputs.Add(Inputs.AlignStageLGlassDettect2);
             inputs.Add(Inputs.AlignStageLGlassDettect3);
-            // Add Vacuum detection inputs
             inputs.Add(Inputs.TransferInShuttleLVac);
-            // Add Transfer In Shuttle Left rotate detection inputs
             inputs.Add(Inputs.TransferInShuttleL0Degree);
             inputs.Add(Inputs.TransferInShuttleL180Degree);
             return inputs;
@@ -312,19 +317,15 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetTransferShutterRightInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add Glass detection inputs
             inputs.Add(Inputs.AlignStageRGlassDetect1);
             inputs.Add(Inputs.AlignStageRGlassDetect2);
             inputs.Add(Inputs.AlignStageRGlassDetect3);
-            // Add Vacuum detection inputs
             inputs.Add(Inputs.TransferInShuttleRVac);
-            // Add Transfer In Shuttle Right rotate detection inputs
             inputs.Add(Inputs.TransferInShuttleR0Degree);
             inputs.Add(Inputs.TransferInShuttleR180Degree);
             return inputs;
         }
 
-        // Transfer Rotation Tab Inputs
         public ObservableCollection<IDInput> GetTransferRotationLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
@@ -332,7 +333,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.TrRotateLeftVac1);
             inputs.Add(Inputs.TrRotateLeftVac2);
             inputs.Add(Inputs.TrRotateLeftRotVac);
-            // Add Transfer Rotation Left cylinder detection inputs
             inputs.Add(Inputs.TrRotateLeft0Degree);
             inputs.Add(Inputs.TrRotateLeft180Degree);
             inputs.Add(Inputs.TrRotateLeftFw);
@@ -345,11 +345,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetTransferRotationRightInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add Vacuum detection inputs
             inputs.Add(Inputs.TrRotateRightVac1);
             inputs.Add(Inputs.TrRotateRightVac2);
             inputs.Add(Inputs.TrRotateRightRotVac);
-            // Add Transfer Rotation Right cylinder detection inputs
             inputs.Add(Inputs.TrRotateRight0Degree);
             inputs.Add(Inputs.TrRotateRight180Degree);
             inputs.Add(Inputs.TrRotateRightFw);
@@ -363,12 +361,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetUnloadTransferLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add Unload Transfer Left vacuum detection inputs
             inputs.Add(Inputs.UnloadTransferLVac);
-            // Add Unload Align vacuum detection inputs
             inputs.Add(Inputs.UnloadGlassAlignVac1);
             inputs.Add(Inputs.UnloadGlassAlignVac2);
-            // Add Unload Robot cylinder detection inputs
             inputs.Add(Inputs.UnloadRobotCyl1Up);
             inputs.Add(Inputs.UnloadRobotCyl1Down);
             inputs.Add(Inputs.UnloadRobotCyl2Up);
@@ -377,7 +372,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.UnloadRobotCyl3Down);
             inputs.Add(Inputs.UnloadRobotCyl4Up);
             inputs.Add(Inputs.UnloadRobotCyl4Down);
-            // Add Unload Align cylinder detection inputs
             inputs.Add(Inputs.UnloadAlignCyl1Up);
             inputs.Add(Inputs.UnloadAlignCyl1Down);
             inputs.Add(Inputs.UnloadAlignCyl2Up);
@@ -388,12 +382,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetUnloadTransferRightInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add Unload Transfer Right vacuum detection inputs
             inputs.Add(Inputs.UnloadTransferRVac);
-            // Add Unload Align vacuum detection inputs
             inputs.Add(Inputs.UnloadGlassAlignVac3);
             inputs.Add(Inputs.UnloadGlassAlignVac4);
-            // Add Unload Robot cylinder detection inputs
             inputs.Add(Inputs.UnloadRobotCyl1Up);
             inputs.Add(Inputs.UnloadRobotCyl1Down);
             inputs.Add(Inputs.UnloadRobotCyl2Up);
@@ -402,7 +393,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.UnloadRobotCyl3Down);
             inputs.Add(Inputs.UnloadRobotCyl4Up);
             inputs.Add(Inputs.UnloadRobotCyl4Down);
-            // Add Unload Align cylinder detection inputs
             inputs.Add(Inputs.UnloadAlignCyl3Up);
             inputs.Add(Inputs.UnloadAlignCyl3Down);
             inputs.Add(Inputs.UnloadAlignCyl4Up);
@@ -410,14 +400,11 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             return inputs;
         }
 
-        // Clean Tab Inputs
         public ObservableCollection<IDInput> GetWETCleanLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add WET Clean Left pusher cylinder detection inputs (essential for teaching)
             inputs.Add(Inputs.WetCleanPusherLeftUp);
             inputs.Add(Inputs.WetCleanPusherLeftDown);
-            // Add WET Clean Left brush cylinder detection inputs (essential for teaching)
             inputs.Add(Inputs.WetCleanBrushLeftUp);
             inputs.Add(Inputs.WetCleanBrushLeftDown);
             return inputs;
@@ -426,10 +413,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetWETCleanRightInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add WET Clean Right pusher cylinder detection inputs (essential for teaching)
             inputs.Add(Inputs.WetCleanPusherRightUp);
             inputs.Add(Inputs.WetCleanPusherRightDown);
-            // Add WET Clean Right brush cylinder detection inputs (essential for teaching)
             inputs.Add(Inputs.WetCleanBrushRightUp);
             inputs.Add(Inputs.WetCleanBrushRightDown);
             return inputs;
@@ -438,10 +423,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetAFCleanLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add AF Clean Left pusher cylinder detection inputs (essential for teaching)
             inputs.Add(Inputs.AfCleanPusherLeftUp);
             inputs.Add(Inputs.AfCleanPusherLeftDown);
-            // Add AF Clean Left brush cylinder detection inputs (essential for teaching)
             inputs.Add(Inputs.AfCleanBrushLeftUp);
             inputs.Add(Inputs.AfCleanBrushLeftDown);
             return inputs;
@@ -450,24 +433,19 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetAFCleanRightInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add AF Clean Right pusher cylinder detection inputs (essential for teaching)
             inputs.Add(Inputs.AfCleanPusherRightUp);
             inputs.Add(Inputs.AfCleanPusherRightDown);
-            // Add AF Clean Right brush cylinder detection inputs (essential for teaching)
             inputs.Add(Inputs.AfCleanBrushRightUp);
             inputs.Add(Inputs.AfCleanBrushRightDown);
             return inputs;
         }
 
-        // Glass Transfer Tab Inputs
         public ObservableCollection<IDInput> GetGlassTransferInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            // Add Glass Transfer vacuum detection inputs
             inputs.Add(Inputs.GlassTransferVac1);
             inputs.Add(Inputs.GlassTransferVac2);
             inputs.Add(Inputs.GlassTransferVac3);
-            // Add Glass Transfer cylinder detection inputs
             inputs.Add(Inputs.GlassTransferCyl1Up);
             inputs.Add(Inputs.GlassTransferCyl1Down);
             inputs.Add(Inputs.GlassTransferCyl2Up);
@@ -479,6 +457,13 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         #endregion
 
         #region GetOutputs
+        public ObservableCollection<IDOutput> GetInConveyorOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            outputs.Add(Outputs.InCstStopperUp);
+            outputs.Add(Outputs.InCstStopperDown);
+            return outputs;
+        }
         public ObservableCollection<IDOutput> GetInWorkConveyorOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
@@ -805,6 +790,17 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             motions.Add(MotionsInovance.OutShuttleRTAxis);
             motions.Add(MotionsInovance.AFCleanRFeedingAxis);
             return motions;
+        }
+        #endregion
+
+        #region GetRollers
+        public ObservableCollection<ISpeedController> GetInConveyorRollers()
+        {
+            ObservableCollection<ISpeedController> rollers = new ObservableCollection<ISpeedController>();
+            rollers.Add(SpeedControllerList.InConveyorRoller1);
+            rollers.Add(SpeedControllerList.InConveyorRoller2);
+            rollers.Add(SpeedControllerList.InConveyorRoller3);
+            return rollers;
         }
         #endregion
 

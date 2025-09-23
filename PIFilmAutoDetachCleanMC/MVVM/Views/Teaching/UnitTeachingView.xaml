@@ -110,10 +110,12 @@
                           Style="{StaticResource TextBlockHeaderGroupBox}">
                     <ScrollViewer VerticalScrollBarVisibility="Auto"
                                   HorizontalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding Motions}">
+                        <ItemsControl ItemsSource="{Binding Motions}"
+                                      x:Name="motionsList">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <ui:MovingView DataContext="{Binding }"/>
+                                    <ui:MovingView x:Name="motion"
+                                                   DataContext="{Binding }"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                             <ItemsControl.ItemsPanel>
