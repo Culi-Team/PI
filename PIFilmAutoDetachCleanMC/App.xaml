@@ -30,6 +30,7 @@
                     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
                     <cvt:CylinderButtonBrushConverter x:Key="CylinderButtonBrushConverter"/>
                     <cvt:DoubleToIntConveter x:Key="DoubleToIntConveter"/>
+                    <cvt:BooleanToBackgroundUnitInitConverter x:Key="BooleanToBackgroundUnitInitConverter"/>
                     <uiCvt:CylinderTypeToButtonNameConverter x:Key="CylinderTypeToButtonNameConverter"/>
                     <cvt:LanguageToDisplayNameConverter x:Key="LanguageToDisplayNameConverter"/>
                     <cvt:LanguageToFlagImageConverter x:Key="LanguageToFlagImageConverter"/>
