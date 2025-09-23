@@ -96,6 +96,15 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             return cylinders;
         }
 
+        public ObservableCollection<ICylinder> GetVinylCleanCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Cylinders.VinylCleanRollerFwBw);
+            cylinders.Add(Cylinders.VinylCleanPusherRollerUpDown);
+            cylinders.Add(Cylinders.VinylCleanFixtureClampUnclamp);
+            return cylinders;
+        }
+
         public ObservableCollection<ICylinder> GetTransferFixtureCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
@@ -279,6 +288,33 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.OutCstStopperUp);
             inputs.Add(Inputs.OutCstStopperDown);
 
+            return inputs;
+        }
+
+        public ObservableCollection<IDInput> GetOutConveyorInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Inputs.OutCstDetect1);
+            inputs.Add(Inputs.OutCstDetect2);
+            inputs.Add(Inputs.OutCstStopperUp);
+            inputs.Add(Inputs.OutCstStopperDown);
+            return inputs;
+        }
+
+        public ObservableCollection<IDInput> GetVinylCleanInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Inputs.VinylCleanFixtureDetect);
+            inputs.Add(Inputs.VinylCleanRunoffDetect);
+            inputs.Add(Inputs.VinylCleanFullDetect);
+            inputs.Add(Inputs.VinylCleanFixture1Clamp);
+            inputs.Add(Inputs.VinylCleanFixture2Clamp);
+            inputs.Add(Inputs.VinylCleanFixture1Unclamp);
+            inputs.Add(Inputs.VinylCleanFixture2Unclamp);
+            inputs.Add(Inputs.VinylCleanPusherRollerUp);
+            inputs.Add(Inputs.VinylCleanPusherRollerDown);
+            inputs.Add(Inputs.VinylCleanRollerFw);
+            inputs.Add(Inputs.VinylCleanRollerBw);
             return inputs;
         }
 
@@ -483,6 +519,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.InCstStopperDown);
             return outputs;
         }
+
         public ObservableCollection<IDOutput> GetInWorkConveyorOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
@@ -527,6 +564,26 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.OutCvSupportDown);
             outputs.Add(Outputs.OutCvSupportBufferUp);
             outputs.Add(Outputs.OutCvSupportBufferDown);
+            return outputs;
+        }
+
+        public ObservableCollection<IDOutput> GetOutConveyorOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            outputs.Add(Outputs.OutCstStopperUp);
+            outputs.Add(Outputs.OutCstStopperDown);
+            return outputs;
+        }
+
+        public ObservableCollection<IDOutput> GetVinylCleanOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            outputs.Add(Outputs.VinylCleanFixtureClamp);
+            outputs.Add(Outputs.VinylCleanFixtureUnclamp);
+            outputs.Add(Outputs.VinylCleanPusherRollerUp);
+            outputs.Add(Outputs.VinylCleanRollerFw);
+            outputs.Add(Outputs.VinylCleanRollerBw);
+            outputs.Add(Outputs.VinylCleanMotorOnOff);
             return outputs;
         }
 

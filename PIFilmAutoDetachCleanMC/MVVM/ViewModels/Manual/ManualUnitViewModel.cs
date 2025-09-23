@@ -1,4 +1,5 @@
-﻿using EQX.Core.Common;
+﻿using CommunityToolkit.Mvvm.Input;
+using EQX.Core.Common;
 using EQX.Core.InOut;
 using EQX.Core.Motion;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
@@ -23,6 +25,57 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
         public ManualUnitViewModel(string name)
         {
             Name = name;
+        }
+
+        public ICommand CylinderForwardCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((o) =>
+                {
+                    if (o is ICylinder cylinder == false) return;
+
+                    if (cylinder.CylinderType == ECylinderType.ForwardBackwardReverse ||
+                        cylinder.CylinderType == ECylinderType.UpDownReverse ||
+                        cylinder.CylinderType == ECylinderType.RightLeftReverse ||
+                        cylinder.CylinderType == ECylinderType.GripUngripReverse ||
+                        cylinder.CylinderType == ECylinderType.AlignUnalignReverse ||
+                        cylinder.CylinderType == ECylinderType.LockUnlockReverse ||
+                        cylinder.CylinderType == ECylinderType.FlipUnflipReverse ||
+                        cylinder.CylinderType == ECylinderType.ClampUnclampReverse
+                        )
+                    {
+                        cylinder.Backward();
+                        return;
+                    }
+                    cylinder.Forward();
+                });
+            }
+        }
+
+        public ICommand CylinderBackwardCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((o) =>
+                {
+                    if (o is ICylinder cylinder == false) return;
+
+                    if (cylinder.CylinderType == ECylinderType.ForwardBackwardReverse ||
+                        cylinder.CylinderType == ECylinderType.UpDownReverse ||
+                        cylinder.CylinderType == ECylinderType.RightLeftReverse ||
+                        cylinder.CylinderType == ECylinderType.GripUngripReverse ||
+                        cylinder.CylinderType == ECylinderType.AlignUnalignReverse ||
+                        cylinder.CylinderType == ECylinderType.LockUnlockReverse ||
+                        cylinder.CylinderType == ECylinderType.FlipUnflipReverse ||
+                        cylinder.CylinderType == ECylinderType.ClampUnclampReverse)
+                    {
+                        cylinder.Forward();
+                        return;
+                    }
+                    cylinder.Backward();
+                });
+            }
         }
     }
 }

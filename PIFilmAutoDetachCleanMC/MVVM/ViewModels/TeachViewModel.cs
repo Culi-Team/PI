@@ -1,45 +1,22 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using EQX.Core.Common;
-using EQX.Core.InOut;
-using EQX.Core.Motion;
-using EQX.InOut;
-using EQX.UI.Controls;
+﻿using EQX.Core.Common;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching;
 using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Input;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
     public class TeachViewModel : ViewModelBase
     {
         #region Properties
-        
-        public UnitTeachingViewModel CSTLoadUnitTeaching { get; }
-        public UnitTeachingViewModel CSTUnloadUnitTeaching { get; }
-        public UnitTeachingViewModel TransferFixtureUnitTeaching { get; }
-        public UnitTeachingViewModel DetachUnitTeaching { get; }
-        public UnitTeachingViewModel GlassTransferUnitTeaching { get; }
-        public UnitTeachingViewModel TransferInShuttleLeftUnitTeaching { get; }
-        public UnitTeachingViewModel TransferInShuttleRightUnitTeaching { get; }
-        public CleanUnitTeachingViewModel WETCleanLeftUnitTeaching { get; }
-        public CleanUnitTeachingViewModel WETCleanRightUnitTeaching { get; }
-        public UnitTeachingViewModel TransferRotationLeftUnitTeaching { get; }
-        public UnitTeachingViewModel TransferRotationRightUnitTeaching { get; }
-        public CleanUnitTeachingViewModel AFCleanLeftUnitTeaching { get; }
-        public CleanUnitTeachingViewModel AFCleanRightUnitTeaching { get; }
-        public UnitTeachingViewModel UnloadTransferLeftUnitTeaching { get; }
-        public UnitTeachingViewModel UnloadTransferRightUnitTeaching { get; }
 
         public Devices Devices { get; }
         public RecipeList RecipeList;
         public RecipeSelector RecipeSelector;
         public Processes Processes;
         public MachineStatus MachineStatus { get; }
-      
 
         public ObservableCollection<UnitTeachingViewModel> TeachingUnits { get; }
 
@@ -78,7 +55,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             MachineStatus = machineStatus;
 
             // Initialize Unit Teachings
-            CSTLoadUnitTeaching = new UnitTeachingViewModel("CST Load", recipeSelector);
+            UnitTeachingViewModel CSTLoadUnitTeaching = new UnitTeachingViewModel("CST Load", recipeSelector);
             CSTLoadUnitTeaching.Cylinders = Devices.GetInWorkConveyorCylinders();
             CSTLoadUnitTeaching.Motions = Devices.GetCSTLoadMotions();
             CSTLoadUnitTeaching.Inputs = Devices.GetInWorkConveyorInputs();
@@ -86,7 +63,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             CSTLoadUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe;
             CSTLoadUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("InputCassetteStageImage");
 
-            CSTUnloadUnitTeaching = new UnitTeachingViewModel("CST Unload", recipeSelector);
+            UnitTeachingViewModel CSTUnloadUnitTeaching = new UnitTeachingViewModel("CST Unload", recipeSelector);
             CSTUnloadUnitTeaching.Cylinders = Devices.GetOutWorkConveyorCylinders();
             CSTUnloadUnitTeaching.Motions = Devices.GetCSTUnloadMotions();
             CSTUnloadUnitTeaching.Inputs = Devices.GetOutWorkConveyorInputs();
@@ -94,7 +71,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             CSTUnloadUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe;
             CSTUnloadUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("InputCassetteStageImage");
 
-            TransferFixtureUnitTeaching = new UnitTeachingViewModel("Transfer Fixture", recipeSelector);
+            UnitTeachingViewModel TransferFixtureUnitTeaching = new UnitTeachingViewModel("Transfer Fixture", recipeSelector);
             TransferFixtureUnitTeaching.Cylinders = Devices.GetTransferFixtureCylinders();
             TransferFixtureUnitTeaching.Motions = Devices.GetTransferFixtureMotions();
             TransferFixtureUnitTeaching.Inputs = Devices.GetTransferFixtureInputs();
@@ -102,7 +79,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             TransferFixtureUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.TransferFixtureRecipe;
             TransferFixtureUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferFixtureImage");
 
-            DetachUnitTeaching = new UnitTeachingViewModel("Detach",recipeSelector);
+            UnitTeachingViewModel DetachUnitTeaching = new UnitTeachingViewModel("Detach",recipeSelector);
             DetachUnitTeaching.Cylinders = Devices.GetDetachCylinders();
             DetachUnitTeaching.Motions = Devices.GetDetachMotions();
             DetachUnitTeaching.Inputs = Devices.GetDetachInputs();
@@ -110,7 +87,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             DetachUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.DetachRecipe;
             DetachUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("DetachImage");
 
-            GlassTransferUnitTeaching = new UnitTeachingViewModel("Glass Transfer",recipeSelector);
+            UnitTeachingViewModel GlassTransferUnitTeaching = new UnitTeachingViewModel("Glass Transfer",recipeSelector);
             GlassTransferUnitTeaching.Cylinders = Devices.GetGlassTransferCylinders();
             GlassTransferUnitTeaching.Motions = Devices.GetGlassTransferMotions();
             GlassTransferUnitTeaching.Inputs = Devices.GetGlassTransferInputs();
@@ -119,7 +96,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             GlassTransferUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("GlassTransferImage");
 
 
-            TransferInShuttleLeftUnitTeaching = new UnitTeachingViewModel("Transfer In Shuttle Left", recipeSelector);
+            UnitTeachingViewModel TransferInShuttleLeftUnitTeaching = new UnitTeachingViewModel("Transfer In Shuttle Left", recipeSelector);
             TransferInShuttleLeftUnitTeaching.Cylinders = Devices.GetTransferInShuttleLeftCylinders();
             TransferInShuttleLeftUnitTeaching.Motions = Devices.GetTransferShutterLeftMotions();
             TransferInShuttleLeftUnitTeaching.Inputs = Devices.GetTransferShutterLeftInputs();
@@ -127,7 +104,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             TransferInShuttleLeftUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe;
             TransferInShuttleLeftUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage");
 
-            TransferInShuttleRightUnitTeaching = new UnitTeachingViewModel("Transfer In Shuttle Right", recipeSelector);
+            UnitTeachingViewModel TransferInShuttleRightUnitTeaching = new UnitTeachingViewModel("Transfer In Shuttle Right", recipeSelector);
             TransferInShuttleRightUnitTeaching.Cylinders = Devices.GetTransferInShuttleRightCylinders();
             TransferInShuttleRightUnitTeaching.Motions = Devices.GetTransferShutterRightMotions();
             TransferInShuttleRightUnitTeaching.Inputs = Devices.GetTransferShutterRightInputs();
@@ -135,7 +112,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             TransferInShuttleRightUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.TransferInShuttleRightRecipe;
             TransferInShuttleRightUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage");
 
-            WETCleanLeftUnitTeaching = new CleanUnitTeachingViewModel("WET Clean Left", recipeSelector);
+            CleanUnitTeachingViewModel WETCleanLeftUnitTeaching = new CleanUnitTeachingViewModel("WET Clean Left", recipeSelector);
             WETCleanLeftUnitTeaching.Cylinders = Devices.GetWETCleanLeftCylinders();
             WETCleanLeftUnitTeaching.Motions = Devices.GetWETCleanLeftMotions();
             WETCleanLeftUnitTeaching.Inputs = Devices.GetWETCleanLeftInputs();
@@ -146,7 +123,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             WETCleanLeftUnitTeaching.Regulator = Devices.Regulators.WetCleanLRegulator;
             WETCleanLeftUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
 
-            WETCleanRightUnitTeaching = new CleanUnitTeachingViewModel("WET Clean Right", recipeSelector);
+            CleanUnitTeachingViewModel WETCleanRightUnitTeaching = new CleanUnitTeachingViewModel("WET Clean Right", recipeSelector);
             WETCleanRightUnitTeaching.Cylinders = Devices.GetWETCleanRightCylinders();
             WETCleanRightUnitTeaching.Motions = Devices.GetWETCleanRightMotions();
             WETCleanRightUnitTeaching.Inputs = Devices.GetWETCleanRightInputs();
@@ -157,7 +134,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             WETCleanRightUnitTeaching.Regulator = Devices.Regulators.WetCleanRRegulator;
             WETCleanRightUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
 
-            TransferRotationLeftUnitTeaching = new UnitTeachingViewModel("Transfer Rotation Left", recipeSelector);
+            UnitTeachingViewModel TransferRotationLeftUnitTeaching = new UnitTeachingViewModel("Transfer Rotation Left", recipeSelector);
             TransferRotationLeftUnitTeaching.Cylinders = Devices.GetTransferRotationLeftCylinders();
             TransferRotationLeftUnitTeaching.Motions = Devices.GetTransferRotationLeftMotions();
             TransferRotationLeftUnitTeaching.Inputs = Devices.GetTransferRotationLeftInputs();
@@ -165,7 +142,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             TransferRotationLeftUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.TransferRotationLeftRecipe;
             TransferRotationLeftUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferRotationImage");
 
-            TransferRotationRightUnitTeaching = new UnitTeachingViewModel("Transfer Rotation Right", recipeSelector);
+            UnitTeachingViewModel TransferRotationRightUnitTeaching = new UnitTeachingViewModel("Transfer Rotation Right", recipeSelector);
             TransferRotationRightUnitTeaching.Cylinders = Devices.GetTransferRotationRightCylinders();
             TransferRotationRightUnitTeaching.Motions = Devices.GetTransferRotationRightMotions();
             TransferRotationRightUnitTeaching.Inputs = Devices.GetTransferRotationRightInputs();
@@ -173,7 +150,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             TransferRotationRightUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.TransferRotationRightRecipe;
             TransferRotationRightUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferRotationImage");
 
-            AFCleanLeftUnitTeaching = new CleanUnitTeachingViewModel("AF Clean Left", recipeSelector);
+            CleanUnitTeachingViewModel AFCleanLeftUnitTeaching = new CleanUnitTeachingViewModel("AF Clean Left", recipeSelector);
             AFCleanLeftUnitTeaching.Cylinders = Devices.GetAFCleanLeftCylinders();
             AFCleanLeftUnitTeaching.Motions = Devices.GetAFCleanLeftMotions();
             AFCleanLeftUnitTeaching.Inputs = Devices.GetAFCleanLeftInputs();
@@ -184,7 +161,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             AFCleanLeftUnitTeaching.Regulator = Devices.Regulators.AfCleanLRegulator;
             AFCleanLeftUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
 
-            AFCleanRightUnitTeaching = new CleanUnitTeachingViewModel("AF Clean Right", recipeSelector);
+            CleanUnitTeachingViewModel AFCleanRightUnitTeaching = new CleanUnitTeachingViewModel("AF Clean Right", recipeSelector);
             AFCleanRightUnitTeaching.Cylinders = Devices.GetAFCleanRightCylinders();
             AFCleanRightUnitTeaching.Motions = Devices.GetAFCleanRightMotions();
             AFCleanRightUnitTeaching.Inputs = Devices.GetAFCleanRightInputs();
@@ -195,7 +172,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             AFCleanRightUnitTeaching.Regulator = Devices.Regulators.AfCleanRRegulator;
             AFCleanRightUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
 
-            UnloadTransferLeftUnitTeaching = new UnitTeachingViewModel("Unload Transfer Left", recipeSelector);
+            UnitTeachingViewModel UnloadTransferLeftUnitTeaching = new UnitTeachingViewModel("Unload Transfer Left", recipeSelector);
             UnloadTransferLeftUnitTeaching.Cylinders = Devices.GetUnloadTransferLeftCylinders();
             UnloadTransferLeftUnitTeaching.Motions = Devices.GetUnloadTransferLeftMotions();
             UnloadTransferLeftUnitTeaching.Inputs = Devices.GetUnloadTransferLeftInputs();
@@ -203,7 +180,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             UnloadTransferLeftUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.UnloadTransferLeftRecipe;
             UnloadTransferLeftUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadTransferImage");
 
-            UnloadTransferRightUnitTeaching = new UnitTeachingViewModel("Unload Transfer Right", recipeSelector);
+            UnitTeachingViewModel UnloadTransferRightUnitTeaching = new UnitTeachingViewModel("Unload Transfer Right", recipeSelector);
             UnloadTransferRightUnitTeaching.Cylinders = Devices.GetUnloadTransferRightCylinders();
             UnloadTransferRightUnitTeaching.Motions = Devices.GetUnloadTransferRightMotions();
             UnloadTransferRightUnitTeaching.Inputs = Devices.GetUnloadTransferRightInputs();
