@@ -76,12 +76,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
-        public ConveyorManualUnitViewModel InConveyor { get; }
-        public ConveyorManualUnitViewModel InWorkConveyor { get; }
-        public ConveyorManualUnitViewModel BufferConveyor { get; }
-        public ConveyorManualUnitViewModel OutWorkConveyor { get; }
-        public ConveyorManualUnitViewModel OutConveyor { get; }
-
         public ObservableCollection<ManualUnitViewModel> ManualUnits { get; }
 
         public ManualUnitViewModel SelectedManualUnit
@@ -227,16 +221,34 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             MoveMainWindowTo(_activeScreen);
             _isViewOnly = false;
 
-            InConveyor =new ConveyorManualUnitViewModel("In Conveyor");
-            InConveyor.Cylinders = Devices.GetInConveyorCylinders();
-            InConveyor.Inputs = Devices.GetInConveyorInputs();
-            InConveyor.Outputs = Devices.GetInConveyorOutputs();
-            InConveyor.Rollers = Devices.GetInConveyorRollers();
-            InConveyor.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("InCassetteCVImage");
+            ConveyorManualUnitViewModel inConveyor = new ConveyorManualUnitViewModel("In Conveyor");
+            inConveyor.Cylinders = Devices.GetInConveyorCylinders();
+            inConveyor.Inputs = Devices.GetInConveyorInputs();
+            inConveyor.Outputs = Devices.GetInConveyorOutputs();
+            inConveyor.Rollers = Devices.GetInConveyorRollers();
+            inConveyor.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("InCassetteCVImage");
+
+            ConveyorManualUnitViewModel inWorkConveyor = new ConveyorManualUnitViewModel("In Work Conveyor");
+            inWorkConveyor.Cylinders = Devices.GetInWorkConveyorCylinders();
+            inWorkConveyor.Inputs = Devices.GetInWorkConveyorInputs();
+            inWorkConveyor.Outputs = Devices.GetInWorkConveyorOutputs();
+            inWorkConveyor.Rollers = Devices.GetInWorkConveyorRollers();
+            inWorkConveyor.Motions = Devices.GetCSTLoadMotions();
+            inWorkConveyor.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("LoadWorkCassetteStageImage");
+
+            ConveyorManualUnitViewModel bufferConveyor = new ConveyorManualUnitViewModel("Buffer Conveyor");
+            bufferConveyor.Cylinders = Devices.GetBufferConveyorCylinders();
+            bufferConveyor.Inputs = Devices.GetBufferConveyorInputs();
+            bufferConveyor.Outputs = Devices.GetBufferConveyorOutputs();
+            bufferConveyor.Rollers = Devices.GetBufferConveyorRollers();
+            bufferConveyor.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("BufferCVImage");
+
 
             ManualUnits = new ObservableCollection<ManualUnitViewModel>()
             {
-                InConveyor,
+                inConveyor,
+                inWorkConveyor,
+                bufferConveyor
             };
 
             SelectedManualUnit = ManualUnits.First();

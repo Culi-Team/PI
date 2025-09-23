@@ -69,6 +69,14 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             return cylinders;
         }
 
+        public ObservableCollection<ICylinder> GetBufferConveyorCylinders()
+        {
+            ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
+            cylinders.Add(Cylinders.BufferCvStopper1UpDown);
+            cylinders.Add(Cylinders.BufferCvStopper2UpDown);
+            return cylinders;
+        }
+
         public ObservableCollection<ICylinder> GetOutWorkConveyorCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
@@ -219,6 +227,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
 
             return inputs;
         }
+
         public ObservableCollection<IDInput> GetInWorkConveyorInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
@@ -237,6 +246,18 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.InCstStopperUp);
             inputs.Add(Inputs.InCstStopperDown);
 
+            return inputs;
+        }
+
+        public ObservableCollection<IDInput> GetBufferConveyorInputs()
+        {
+            ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Inputs.BufferCstDetect1);
+            inputs.Add(Inputs.BufferCstDetect2);
+            inputs.Add(Inputs.BufferCvStopper1Up);
+            inputs.Add(Inputs.BufferCvStopper1Down);
+            inputs.Add(Inputs.BufferCvStopper2Up);
+            inputs.Add(Inputs.BufferCvStopper2Down);
             return inputs;
         }
 
@@ -301,7 +322,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             return inputs;
         }
 
-        // Transfer Shutter Tab Inputs
         public ObservableCollection<IDInput> GetTransferShutterLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
@@ -357,7 +377,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             return inputs;
         }
 
-        // Unload Transfer Tab Inputs
         public ObservableCollection<IDInput> GetUnloadTransferLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
@@ -480,6 +499,16 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.InCvSupportBufferUp);
             outputs.Add(Outputs.InCvSupportBufferDown);
 
+            return outputs;
+        }
+
+        public ObservableCollection<IDOutput> GetBufferConveyorOutputs()
+        {
+            ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            outputs.Add(Outputs.BufferCvStopper1Up);
+            outputs.Add(Outputs.BufferCvStopper1Down);
+            outputs.Add(Outputs.BufferCvStopper2Up);
+            outputs.Add(Outputs.BufferCvStopper2Down);
             return outputs;
         }
 
@@ -800,6 +829,38 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             rollers.Add(SpeedControllerList.InConveyorRoller1);
             rollers.Add(SpeedControllerList.InConveyorRoller2);
             rollers.Add(SpeedControllerList.InConveyorRoller3);
+            return rollers;
+        }
+
+        public ObservableCollection<ISpeedController> GetInWorkConveyorRollers()
+        {
+            ObservableCollection<ISpeedController> rollers = new ObservableCollection<ISpeedController>();
+            rollers.Add(SpeedControllerList.InWorkConveyorRoller1);
+            rollers.Add(SpeedControllerList.InWorkConveyorRoller2);
+            return rollers;
+        }
+
+        public ObservableCollection<ISpeedController> GetBufferConveyorRollers()
+        {
+            ObservableCollection<ISpeedController> rollers = new ObservableCollection<ISpeedController>();
+            rollers.Add(SpeedControllerList.BufferConveyorRoller1);
+            rollers.Add(SpeedControllerList.BufferConveyorRoller2);
+            return rollers;
+        }
+
+        public ObservableCollection<ISpeedController> GetOutWorkConveyorRollers()
+        {
+            ObservableCollection<ISpeedController> rollers = new ObservableCollection<ISpeedController>();
+            rollers.Add(SpeedControllerList.OutWorkConveyorRoller1);
+            rollers.Add(SpeedControllerList.OutWorkConveyorRoller2);
+            return rollers;
+        }
+
+        public ObservableCollection<ISpeedController> GetOutConveyorRollers()
+        {
+            ObservableCollection<ISpeedController> rollers = new ObservableCollection<ISpeedController>();
+            rollers.Add(SpeedControllerList.OutConveyorRoller1);
+            rollers.Add(SpeedControllerList.OutConveyorRoller2);
             return rollers;
         }
         #endregion

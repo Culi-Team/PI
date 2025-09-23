@@ -69,7 +69,7 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="6*" />
-                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="1.5*" />
             </Grid.ColumnDefinitions>
 
             <GroupBox Header="Cylinder"
@@ -97,11 +97,11 @@
                             VerticalAlignment="Center">
                     <Button Content="Run"
                             Command="{Binding ConveyorRunCommand}"
-                            Width="150"
+                            Width="100"
                             Margin="0 0 10 0" />
                     <Button Content="Stop"
                             Command="{Binding ConveyorStopCommand}"
-                            Width="150"
+                            Width="100"
                             Margin="10 0 0 0" />
                 </StackPanel>
             </GroupBox>
