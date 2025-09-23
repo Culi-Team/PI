@@ -3,6 +3,7 @@ using EQX.Core.Common;
 using EQX.Core.Communication.Modbus;
 using EQX.Core.Display;
 using EQX.Core.InOut;
+using EQX.Core.Robot;
 using EQX.UI.Display;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -23,6 +24,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         #region Privates
         private readonly IModbusCommunication _rollerModbusCommunication;
         private readonly IModbusCommunication _torqueModbusCommunication;
+        private readonly IRobot _robotLoad;
+        private readonly IRobot _robotUnload;
         private ManualUnitViewModel selectedManualUnit;
         private readonly DisplayManager _displayManager = new();
         private readonly ViewOnlyOverlay _viewOnlyOverlay = new();
@@ -33,6 +36,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         #region Properties
         public Devices Devices { get; }
         public MachineStatus MachineStatus { get; }
+        public bool RobotLoadIsConnected => _robotLoad .IsConnected;
+        public bool RobotUnloadIsConnected => _robotUnload.IsConnected;
         public bool MotionsInovanceIsConnected => Devices.MotionsInovance.MotionControllerInovance.IsConnected;
         public bool MotionAjinIsConnected => Devices.MotionsAjin.All.All(m => m.IsConnected);
         public bool SpeedControllersIsConnected => Devices.SpeedControllerList.All.All(sc => sc.IsConnected);
@@ -210,13 +215,17 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             [FromKeyedServices("AFCleanLeftRecipe")] CleanRecipe afCleanLeftRecipe,
             [FromKeyedServices("AFCleanRightRecipe")] CleanRecipe afCleanRightRecipe,
             [FromKeyedServices("RollerModbusCommunication")] IModbusCommunication rollerModbusCommunication,
-            [FromKeyedServices("TorqueControllerModbusCommunication")] IModbusCommunication torqueModbusCommunication)
+            [FromKeyedServices("TorqueControllerModbusCommunication")] IModbusCommunication torqueModbusCommunication,
+            [FromKeyedServices("RobotLoad")] IRobot robotLoad,
+            [FromKeyedServices("RobotUnload")] IRobot robotUnload)
         {
             Devices = devices;
             MachineStatus = machineStatus;
             
             _rollerModbusCommunication = rollerModbusCommunication;
             _torqueModbusCommunication = torqueModbusCommunication;
+            _robotLoad = robotLoad;
+            _robotUnload = robotUnload;
             _displayManager.EnableExtend();
             _activeScreen = InteractiveScreen.Primary;
             MoveMainWindowTo(_activeScreen);

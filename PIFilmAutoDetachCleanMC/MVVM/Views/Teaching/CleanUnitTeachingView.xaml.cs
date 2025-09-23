@@ -117,7 +117,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views.Teaching
         {
             if (sender is Label label)
             {
-                DataEditor dataEditor = new DataEditor((double)label.Content, null);
+                DataEditor dataEditor = new DataEditor(Convert.ToDouble(label.Content), null);
                 if (dataEditor.ShowDialog() == true)
                 {
                     label.Content = dataEditor.NewValue;

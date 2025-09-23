@@ -13,6 +13,7 @@ using PIFilmAutoDetachCleanMC.Recipe;
 using log4net;
 using System.Runtime.CompilerServices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
+using EQX.Core.Robot;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -77,7 +78,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             [FromKeyedServices("TorqueControllerModbusCommunication")] IModbusCommunication torqueModbusCommnication,
             RecipeSelector recipeSelector,
             VirtualIO virtualIO,
-            CassetteList cassetteList)
+            CassetteList cassetteList,
+            [FromKeyedServices("RobotLoad")] IRobot robotLoad,
+            [FromKeyedServices("RobotUnload")] IRobot robotUnload)
         {
             _devices = devices;
             _processes = processes;
@@ -87,6 +90,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _recipeSelector = recipeSelector;
             _virtualIO = virtualIO;
             _cassetteList = cassetteList;
+            _robotLoad = robotLoad;
+            _robotUnload = robotUnload;
             _task = new Task(() => { });
             ErrorMessages = new List<string>();
 
@@ -178,7 +183,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _devices.MotionsInovance.All.ForEach(m => m.Connect());
 
                         _devices.SpeedControllerList.All.ForEach(s => s.Connect());
+
                         _devices.TorqueControllers.All.ForEach(t => t.Connect());
+
+                        _robotLoad.Connect();
+
+                        _robotUnload.Connect();
 
                         if (_devices.SpeedControllerList.All.Any(m => m.IsConnected == false))
                         {
@@ -202,6 +212,16 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         {
                             ErrorMessages.Add($"Motion device is not connected: " +
                                 $"{string.Join(", ", _devices.MotionsAjin.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
+                        }
+
+                        if(_robotLoad.IsConnected == false)
+                        {
+                            ErrorMessages.Add("Robot Load is not connected");
+                        }
+
+                        if (_robotUnload.IsConnected == false)
+                        {
+                            ErrorMessages.Add("Robot Unload is not connected");
                         }
 
                         _devices.MotionsInovance.All.ForEach(m => m.Initialization());
@@ -371,6 +391,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly RecipeSelector _recipeSelector;
         private readonly VirtualIO _virtualIO;
         private readonly CassetteList _cassetteList;
+        private readonly IRobot _robotLoad;
+        private readonly IRobot _robotUnload;
         private readonly Devices _devices;
         private readonly Processes _processes;
 
