@@ -54,7 +54,7 @@
         <!-- DataTemplates -->
         <DataTemplate DataType="{x:Type motion:MotionBase}">
             <Border Style="{StaticResource MontionControlStyle}">
-                <ui:MotionView Motion="{Binding}"/>
+                <ui:MotionView DataContext="{Binding}"/>
             </Border>
         </DataTemplate>
         <DataTemplate DataType="{x:Type inout:CylinderBase}">
@@ -318,7 +318,8 @@
                                             ItemsSource="{Binding Motions, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <UniformGrid Columns="4" VerticalAlignment="Top" />
+                                        <UniformGrid Columns="4"
+                                                     VerticalAlignment="Top" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                             </ItemsControl>
