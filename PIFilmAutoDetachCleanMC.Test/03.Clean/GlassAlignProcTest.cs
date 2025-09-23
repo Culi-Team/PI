@@ -39,6 +39,21 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
+            devices.MotionsInovance.MotionControllerInovance.Connect();
+
+            foreach (var motion in devices.MotionsAjin.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
+
+            foreach (var motion in devices.MotionsInovance.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
 
             _ = TestAppCommon.AppHost.Services.GetRequiredService<Processes>();
             var port = processKey == EProcess.GlassAlignRight
@@ -76,6 +91,21 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
+            devices.MotionsInovance.MotionControllerInovance.Connect();
+
+            foreach (var motion in devices.MotionsAjin.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
+
+            foreach (var motion in devices.MotionsInovance.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
 
             _ = TestAppCommon.AppHost.Services.GetRequiredService<Processes>();
             var port = processKey == EProcess.GlassAlignRight
@@ -113,6 +143,21 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
+            devices.MotionsInovance.MotionControllerInovance.Connect();
+
+            foreach (var motion in devices.MotionsAjin.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
+
+            foreach (var motion in devices.MotionsInovance.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
 
             _ = TestAppCommon.AppHost.Services.GetRequiredService<Processes>();
             var port = processKey == EProcess.GlassAlignRight
@@ -151,6 +196,21 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
+            devices.MotionsInovance.MotionControllerInovance.Connect();
+
+            foreach (var motion in devices.MotionsAjin.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
+
+            foreach (var motion in devices.MotionsInovance.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
 
             _ = TestAppCommon.AppHost.Services.GetRequiredService<Processes>();
             var port = processKey == EProcess.GlassAlignRight
@@ -189,6 +249,21 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
+            devices.MotionsInovance.MotionControllerInovance.Connect();
+
+            foreach (var motion in devices.MotionsAjin.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
+
+            foreach (var motion in devices.MotionsInovance.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
 
             _ = TestAppCommon.AppHost.Services.GetRequiredService<Processes>();
             var port = processKey == EProcess.GlassAlignRight
@@ -227,6 +302,21 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
+            devices.MotionsInovance.MotionControllerInovance.Connect();
+
+            foreach (var motion in devices.MotionsAjin.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
+
+            foreach (var motion in devices.MotionsInovance.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
 
             _ = TestAppCommon.AppHost.Services.GetRequiredService<Processes>();
             var port = processKey == EProcess.GlassAlignRight
@@ -265,6 +355,21 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
+            devices.MotionsInovance.MotionControllerInovance.Connect();
+
+            foreach (var motion in devices.MotionsAjin.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
+
+            foreach (var motion in devices.MotionsInovance.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
 
             _ = TestAppCommon.AppHost.Services.GetRequiredService<Processes>();
             var port = processKey == EProcess.GlassAlignRight
@@ -303,6 +408,21 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
+            devices.MotionsInovance.MotionControllerInovance.Connect();
+
+            foreach (var motion in devices.MotionsAjin.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
+
+            foreach (var motion in devices.MotionsInovance.All)
+            {
+                motion.Connect();
+                motion.Initialization();
+                motion.MotionOn();
+            }
 
             _ = TestAppCommon.AppHost.Services.GetRequiredService<Processes>();
             var port = processKey == EProcess.GlassAlignRight
