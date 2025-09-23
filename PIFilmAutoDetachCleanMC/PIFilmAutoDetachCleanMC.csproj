@@ -83,7 +83,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EQX.Core\EQX.Core\EQX.Core.csproj" />
     <ProjectReference Include="..\EQX.Device\EQX.Device\EQX.Device.csproj" />
-    <ProjectReference Include="..\EQX.InOut\EQX.InOut\EQX.InOut.csproj" />
+    <!-- <ProjectReference Include="..\EQX.InOut\EQX.InOut\EQX.InOut.csproj" /> -->
     <ProjectReference Include="..\EQX.Motion\EQX.Motion\EQX.Motion.csproj" />
     <ProjectReference Include="..\EQX.Process\EQX.Process\EQX.Process.csproj" />
     <ProjectReference Include="..\EQX.ThirdParty\EQX.ThirdParty\EQX.ThirdParty.csproj" />
@@ -168,6 +168,10 @@
     <Resource Include="Resource\Image\04.Unload\UnloadAlignDetach.png" />
     <Resource Include="Resource\Image\04.Unload\UnloadRobotDetach.png" />
     <Resource Include="Resource\Image\Machine.png" />
+    <Resource Include="Resource\Image\Flags\EngLish.png" />
+    <Resource Include="Resource\Image\Flags\Korea.png" />
+    <Resource Include="Resource\Image\Flags\VIETNAM.png" />
+    <Resource Include="Resource\Image\Flags\China.png" />
   </ItemGroup>
 
 </Project>

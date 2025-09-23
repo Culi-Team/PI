@@ -1,0 +1,39 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
+                    xmlns:language="clr-namespace:PIFilmAutoDetachCleanMC.Language">
+
+    <!-- Base Language Button Style -->
+    <Style x:Key="LanguageButtonBaseStyle" TargetType="ui:ImageRadioButton" BasedOn="{StaticResource {x:Type ui:ImageRadioButton}}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding LanguageService.CurrentLanguage}" Value="{x:Static language:SupportedLanguage.English}">
+                <Setter Property="Image" Value="{StaticResource USA_Flag}"/>
+                <Setter Property="DisabledImage" Value="{StaticResource USA_Flag}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding LanguageService.CurrentLanguage}" Value="{x:Static language:SupportedLanguage.Korean}">
+                <Setter Property="Image" Value="{StaticResource South_Korea_Flag}"/>
+                <Setter Property="DisabledImage" Value="{StaticResource South_Korea_Flag}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding LanguageService.CurrentLanguage}" Value="{x:Static language:SupportedLanguage.Vietnamese}">
+                <Setter Property="Image" Value="{StaticResource Vietnam_Flag}"/>
+                <Setter Property="DisabledImage" Value="{StaticResource Vietnam_Flag}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding LanguageService.CurrentLanguage}" Value="{x:Static language:SupportedLanguage.Chinese}">
+                <Setter Property="Image" Value="{StaticResource China_Flag}"/>
+                <Setter Property="DisabledImage" Value="{StaticResource China_Flag}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Main Language Button Style -->
+    <Style x:Key="LanguageButtonStyle" TargetType="ui:ImageRadioButton" BasedOn="{StaticResource LanguageButtonBaseStyle}"/>
+
+    <!-- Popup Language Button Style - No DataTriggers needed -->
+    <Style x:Key="LanguagePopupButtonStyle" TargetType="ui:ImageRadioButton" BasedOn="{StaticResource {x:Type ui:ImageRadioButton}}">
+        <Setter Property="Width" Value="120"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="FontSize" Value="12"/>
+    </Style>
+
+</ResourceDictionary>

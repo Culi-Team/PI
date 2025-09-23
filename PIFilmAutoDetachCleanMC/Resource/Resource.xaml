@@ -107,6 +107,15 @@
     <BitmapImage x:Key="UnloadAlignDetachImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadAlignDetach.png"/>
     
+    <!-- Flag Images for Language Selection -->
+    <BitmapImage x:Key="USA_Flag" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/Flags/EngLish.png"/>
+    <BitmapImage x:Key="South_Korea_Flag" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/Flags/Korea.png"/>
+    <BitmapImage x:Key="Vietnam_Flag" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/Flags/VIETNAM.png"/>
+    <BitmapImage x:Key="China_Flag" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/Flags/China.png"/>
 
     
 </ResourceDictionary>
