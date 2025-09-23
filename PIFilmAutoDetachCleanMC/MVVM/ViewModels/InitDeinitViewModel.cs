@@ -235,10 +235,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         MessageText = "Connect IO Devices";
                         _isSuccess = true;
 
-                        _isSuccess &= _devices.Inputs.Initialize();
-                        _isSuccess &= _devices.Outputs.Initialize();
-                        _isSuccess &= _devices.AnalogInputs.Initialize();
-
                         _isSuccess &= _devices.Inputs.Connect();
                         _isSuccess &= _devices.Outputs.Connect();
                         _isSuccess &= _devices.AnalogInputs.Connect();

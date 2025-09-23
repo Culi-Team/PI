@@ -15,6 +15,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public AnalogInputs([FromKeyedServices("AnalogInputDevice#1")] IAInputDevice aInputDevice)
         {
             _aInputDevice = aInputDevice;
+            Initialize();
         }
 
         public IAInput Laser => _aInputDevice.AnalogInputs.First(a => a.Id == (int)EAnalogInput.LASER);
