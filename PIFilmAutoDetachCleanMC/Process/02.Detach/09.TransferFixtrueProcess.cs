@@ -163,8 +163,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferFixtureOriginStep.CylUp:
                     Log.Debug("Cylinder Up");
-                    CylUpDown.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return CylUpDown.IsBackward; });
+                    CylUpDown.Forward();
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return CylUpDown.IsForward; });
                     Step.OriginStep++;
                     break;
                 case ETransferFixtureOriginStep.CylUp_Wait:
@@ -194,8 +194,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferFixtureOriginStep.End:
                     Log.Debug("Origin End");
-                    Step.OriginStep++;
                     ProcessStatus = EProcessStatus.OriginDone;
+                    Step.OriginStep++;
+                    break;
+                default:
+                    Wait(20);
                     break;
             }
             return true;
@@ -427,7 +430,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessUnloadStep.Cyl_Up:
                     Log.Debug("Transfer Fixture Cylinder Up");
                     CylUpDown.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => CylClamp1.IsForward);
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => CylUpDown.IsForward);
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessUnloadStep.Cyl_Up_Wait:
