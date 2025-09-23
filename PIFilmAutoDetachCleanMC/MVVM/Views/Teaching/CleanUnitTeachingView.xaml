@@ -149,7 +149,7 @@
                                            BorderBrush="LightGray"
                                            Cursor="Hand"
                                            BorderThickness="0.5"
-                                           Content="{Binding Recipe.WinderTorque,Mode=TwoWay}"
+                                           Content="{Binding Recipe.WinderTorque,Mode=TwoWay,Converter={StaticResource DoubleToIntConveter}}"
                                            MouseLeftButtonDown="Label_MouseLeftButtonDown"
                                            HorizontalContentAlignment="Center"
                                            VerticalContentAlignment="Center"
@@ -194,7 +194,7 @@
                                        BorderThickness="0.5"
                                        Cursor="Hand"
                                        MouseLeftButtonDown="Label_MouseLeftButtonDown"
-                                       Content="{Binding Recipe.UnWinderTorque,Mode=TwoWay}"
+                                       Content="{Binding Recipe.UnWinderTorque,Mode=TwoWay,Converter={StaticResource DoubleToIntConveter}}"
                                        HorizontalContentAlignment="Center"
                                        VerticalContentAlignment="Center"
                                        FontSize="14" />
