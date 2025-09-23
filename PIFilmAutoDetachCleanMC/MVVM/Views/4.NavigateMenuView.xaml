@@ -68,7 +68,7 @@
                 Image="{StaticResource image_user_change_selected}"/>-->
             
             <!-- Language Selection Button with Popup -->
-            <Grid>
+            <!--<Grid>
                 <ui:ImageRadioButton
                     GroupName="VMNavigateButton"
                     Content="{Binding LanguageService.CurrentLanguage, Converter={StaticResource LanguageToDisplayNameConverter}}"
@@ -102,7 +102,7 @@
                         </ItemsControl>
                     </Border>
                 </Popup>
-            </Grid>
+            </Grid>-->
             
             <ui:ImageRadioButton
                 GroupName="VMNavigateButton"
