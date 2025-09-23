@@ -6,6 +6,7 @@ using System.Windows;
 using PIFilmAutoDetachCleanMC.Extensions;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
 using PIFilmAutoDetachCleanMC.MVVM.Views;
+using PIFilmAutoDetachCleanMC.Converters;
 using EQX.UI.Converters;
 
 namespace PIFilmAutoDetachCleanMC
@@ -24,6 +25,7 @@ namespace PIFilmAutoDetachCleanMC
                 .AddViews()
                 .AddViewModels()
                 .AddStores()
+                .AddLanguageService()
                 .AddMachineDescriptions()
                 .AddIODevices()
                 .AddProcessIO()
@@ -47,6 +49,12 @@ namespace PIFilmAutoDetachCleanMC
 
             var converter = AppHost.Services.GetRequiredService<CellStatusToColorConverter>();
             Application.Current.Resources.Add(nameof(CellStatusToColorConverter), converter);
+
+            var languageConverter = AppHost.Services.GetRequiredService<LanguageToDisplayNameConverter>();
+            Application.Current.Resources.Add(nameof(LanguageToDisplayNameConverter), languageConverter);
+
+            var flagConverter = AppHost.Services.GetRequiredService<LanguageToFlagImageConverter>();
+            Application.Current.Resources.Add(nameof(LanguageToFlagImageConverter), flagConverter);
 
             Window window = AppHost.Services.GetRequiredService<MainWindowView>();
             window.DataContext = AppHost.Services.GetRequiredService<MainWindowViewModel>();

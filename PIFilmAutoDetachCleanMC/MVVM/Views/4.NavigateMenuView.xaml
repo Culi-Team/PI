@@ -7,6 +7,7 @@
              mc:Ignorable="d"
              xmlns:vm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels"
              xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
+             xmlns:language="clr-namespace:PIFilmAutoDetachCleanMC.Language"
              d:DataContext="{d:DesignInstance Type=vm:NavigateMenuViewModel}"
              d:DesignHeight="70" d:DesignWidth="800">
 
@@ -65,6 +66,44 @@
                 Content="{DynamicResource str_UserGroup}"
                 DisabledImage="{StaticResource image_user_change_normal_dark}"
                 Image="{StaticResource image_user_change_selected}"/>-->
+            
+            <!-- Language Selection Button with Popup -->
+            <Grid>
+                <ui:ImageRadioButton
+                    GroupName="VMNavigateButton"
+                    Content="{Binding LanguageService.CurrentLanguage, Converter={StaticResource LanguageToDisplayNameConverter}}"
+                    Command="{Binding ToggleLanguageMenuCommand}"
+                    Style="{StaticResource LanguageButtonStyle}" Margin="0,4,0,4"/>
+                
+                <Popup Name="LanguagePopup"
+                       Placement="Bottom"
+                       IsOpen="{Binding IsLanguageMenuOpen}"
+                       AllowsTransparency="True"
+                       Focusable="False"
+                       PopupAnimation="Slide">
+                    <Border Background="White"
+                            BorderThickness="1"
+                            BorderBrush="Gray"
+                            CornerRadius="3"
+                            MinWidth="120">
+                        <ItemsControl ItemsSource="{Binding LanguageService.AvailableLanguages}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ui:ImageRadioButton
+                                        GroupName="LanguageSelection"
+                                        Content="{Binding Converter={StaticResource LanguageToDisplayNameConverter}}"
+                                        Command="{Binding DataContext.LanguageSwitchCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Image="{Binding Converter={StaticResource LanguageToFlagImageConverter}}"
+                                        DisabledImage="{Binding Converter={StaticResource LanguageToFlagImageConverter}}"
+                                        Style="{StaticResource LanguagePopupButtonStyle}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+                </Popup>
+            </Grid>
+            
             <ui:ImageRadioButton
                 GroupName="VMNavigateButton"
                 Content="Log"

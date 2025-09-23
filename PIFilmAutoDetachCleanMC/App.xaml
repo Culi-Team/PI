@@ -22,11 +22,14 @@
                 <ResourceDictionary Source="/Resource/Resource.xaml" />
                 <ResourceDictionary Source="/Styles/DataGridCellStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/TextBlockHeaderGroupBoxStyle.xaml"/>
+                <ResourceDictionary Source="/Styles/LanguageButtonStyle.xaml"/>
 
                 <ResourceDictionary>
                     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
                     <cvt:CylinderButtonBrushConverter x:Key="CylinderButtonBrushConverter"/>
                     <uiCvt:CylinderTypeToButtonNameConverter x:Key="CylinderTypeToButtonNameConverter"/>
+                    <cvt:LanguageToDisplayNameConverter x:Key="LanguageToDisplayNameConverter"/>
+                    <cvt:LanguageToFlagImageConverter x:Key="LanguageToFlagImageConverter"/>
                 </ResourceDictionary>
 
                 <ResourceDictionary Source="/Resource/Template/CylinderControlDataTemplate.xaml" />

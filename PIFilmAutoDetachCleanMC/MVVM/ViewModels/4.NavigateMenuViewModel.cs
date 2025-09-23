@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Common;
+using PIFilmAutoDetachCleanMC.Language;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
     {
         #region Command(s)
         public ObservableCollection<NavigationButton> NavigationButtons { get; set; }
+        
+        public LanguageService LanguageService => _languageService;
 
         public IRelayCommand AutoNavigate
         {
@@ -114,15 +117,40 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 });
             }
         }
+
+        public IRelayCommand<SupportedLanguage> LanguageSwitchCommand => 
+            new RelayCommand<SupportedLanguage>(language =>
+            {
+                _languageService.CurrentLanguage = language;
+                IsLanguageMenuOpen = false;
+            });
+
+        public IRelayCommand ToggleLanguageMenuCommand => 
+            new RelayCommand(() => IsLanguageMenuOpen = !IsLanguageMenuOpen);
+
+        public bool IsLanguageMenuOpen
+        {
+            get => _isLanguageMenuOpen;
+            set
+            {
+                if (_isLanguageMenuOpen != value)
+                {
+                    _isLanguageMenuOpen = value;
+                    OnPropertyChanged(nameof(IsLanguageMenuOpen));
+                }
+            }
+        }
         #endregion
 
         public NavigateMenuViewModel(INavigationService navigationService,
             UserStore userStore,
-            ViewModelProvider viewModelProvider)
+            ViewModelProvider viewModelProvider,
+            LanguageService languageService)
         {
             _navigationService = navigationService;
             _userStore = userStore;
             _viewModelProvider = viewModelProvider;
+            _languageService = languageService;
 
             // TODO: Remove this
             _userStore.Permission = EPermission.Admin;
@@ -167,6 +195,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly INavigationService _navigationService;
         private readonly UserStore _userStore;
         private readonly ViewModelProvider _viewModelProvider;
+        private readonly LanguageService _languageService;
+        private bool _isLanguageMenuOpen;
         #endregion
     }
 }
