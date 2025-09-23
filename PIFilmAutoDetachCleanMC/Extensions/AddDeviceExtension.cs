@@ -374,7 +374,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
-#if SIMULATION
+#if !SIMULATION
                 services.AddKeyedSingleton<IRobot, RobotSimulation>("RobotLoad", (services, obj) =>
                 {
                     return new RobotSimulation(1, "Kuka Robot Load");
@@ -386,7 +386,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 #else
                 services.AddKeyedSingleton<IRobot, RobotKukaTcp>("RobotLoad",(services,obj) =>
                 {
-                    return new RobotKukaTcp(1, "Kuka Robot","192.168.1.100");
+                    return new RobotKukaTcp(1, "Kuka Robot","192.168.1.191");
                 });
                 services.AddKeyedSingleton<IRobot, RobotKukaTcp>("RobotUnload",(services,obj) =>
                 {

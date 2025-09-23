@@ -3,10 +3,85 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="1200" d:DesignWidth="1900">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="0 5"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
+
+    <DockPanel>
+        <ui:LogDisplayer
+            DockPanel.Dock="Right"
+            Width="600"/>
+
+        <Expander
+            DockPanel.Dock="Top"
+            Header="ROBOT TEST"
+            IsExpanded="True">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <UniformGrid Columns="2">
+                    <Label Content="Robot Command Number"  HorizontalAlignment="Center"/>
+                    <TextBox Text="{Binding RobotCommandNumber}"/>
+
+                    <Label Content="Robot Low Speed"  HorizontalAlignment="Center"/>
+                    <TextBox Text="{Binding RobotLowSpeed}"/>
+
+                    <Label Content="Robot High Speed"  HorizontalAlignment="Center"/>
+                    <TextBox Text="{Binding RobotHighSpeed}"/>
+                    
+                    <Label Content="Index X" HorizontalAlignment="Center"/>
+                    <TextBox Text="{Binding IndexX}"/>
+
+                    <Label Content="Index Y" HorizontalAlignment="Center"/>
+                    <TextBox Text="{Binding IndexY}"/>
+                    
+                </UniformGrid>
+
+                <UniformGrid Columns="2"
+                             Grid.Column="1">
+                    <Button
+                        Content="Select Model"
+                        Margin="5"
+                        Command="{Binding RobotModelSelect}"/>
+
+                    <Button
+                        Content="Send Motion Command"
+                        Margin="5"
+                        Command="{Binding RobotMotionCommand}"/>
+
+                    <Button
+                        Content="Send Motion Parameters Command"
+                        Margin="5"
+                        Command="{Binding RobotMotionParameterCommand}"/>
+
+                    <Button
+                        Content="PCPGMStart Command"
+                        Margin="5"
+                        Command="{Binding PCPGMStartCommand}"/>
+
+                    <Button
+                        Content="Connect"
+                        Margin="5"
+                        Command="{Binding RobotConnect}"/>
+
+                    <Button
+                        Content="Disconnect"
+                        Margin="5"
+                        Command="{Binding RobotDisconnect}"/>
+                </UniformGrid>
+            </Grid>
+        </Expander>
+    </DockPanel>
 </UserControl>

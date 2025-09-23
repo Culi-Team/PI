@@ -637,13 +637,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Index_Initiation:
-                    //TODO: Index Initiation
-
+                    //TODO: Index Initiation by sensor 
+                    
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Move_InCST_PickPositon:
+                    string colIndex = "1";
+                    string[] paras = { "1", colIndex, "0", "0", "0", "0", "0", "0" };
+
                     Log.Debug("Move In Cassette Pick Position");
-                    Log.Debug($"Send Robot Motion Command {ERobotCommand.S1_PICK}");
-                    if (SendCommand(ERobotCommand.S1_PICK, LowSpeed, HightSpeed, paras: null))
+                    Log.Debug($"Send Robot Motion Command {ERobotCommand.S1_PICKUP}");
+                    if (SendCommand(ERobotCommand.S1_PICKUP, LowSpeed, HightSpeed, paras))
                     {
                         Step.RunStep++;
                         break;

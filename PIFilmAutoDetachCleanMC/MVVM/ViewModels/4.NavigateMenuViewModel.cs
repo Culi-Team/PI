@@ -173,6 +173,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             NavigationButtons.Add(new NavigationButton { Label = "Manual", Command = ManualNavigate, ImageKey = "image_manual_selected", DisabledImageKey = "image_manual_normal_dark" });
             NavigationButtons.Add(new NavigationButton { Label = "Data", Command = DataNavigate, ImageKey = "image_data_selected", DisabledImageKey = "image_data_normal" });
             NavigationButtons.Add(new NavigationButton { Label = "Teach", Command = TeachNavigate, ImageKey = "image_teach_selected", DisabledImageKey = "image_teach_normal" });
+            NavigationButtons.Add(new NavigationButton { Label = "Dev", Command = DevNavigate, ImageKey = "square_auto_seleted", DisabledImageKey = "square_auto_normal" });
 
             if (_userStore.Permission == EPermission.Admin)
             {
