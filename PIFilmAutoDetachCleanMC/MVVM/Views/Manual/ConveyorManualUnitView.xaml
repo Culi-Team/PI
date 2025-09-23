@@ -96,9 +96,11 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
                     <Button Content="Run"
+                            Command="{Binding ConveyorRunCommand}"
                             Width="150"
                             Margin="0 0 10 0" />
                     <Button Content="Stop"
+                            Command="{Binding ConveyorStopCommand}"
                             Width="150"
                             Margin="10 0 0 0" />
                 </StackPanel>

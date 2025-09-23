@@ -5,6 +5,8 @@
              xmlns:views="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
              xmlns:cvt="clr-namespace:PIFilmAutoDetachCleanMC.Converters"
              xmlns:uiCvt="clr-namespace:EQX.UI.Converters;assembly=EQX.UI"
+             xmlns:manualViews="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views.Manual"
+             xmlns:manualVM="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual"
              xmlns:teachingVM="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching"
              xmlns:teachingViews="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views.Teaching"
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC">
@@ -74,6 +76,12 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type teachingVM:CleanUnitTeachingViewModel}">
                 <teachingViews:CleanUnitTeachingView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type manualVM:ConveyorManualUnitViewModel}">
+                <manualViews:ConveyorManualUnitView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type manualVM:ManualUnitViewModel}">
+                <manualViews:ManualUnitView />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

@@ -41,20 +41,20 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public MachineStatus MachineStatus { get; }
       
 
-        public ObservableCollection<UnitTeachingViewModel> UnitTeachings { get; }
+        public ObservableCollection<UnitTeachingViewModel> TeachingUnits { get; }
 
-        private UnitTeachingViewModel selectedUnitTeaching;
+        private UnitTeachingViewModel selectedTeachingUnit;
 
-        public UnitTeachingViewModel SelectedUnitTeaching
+        public UnitTeachingViewModel SelectedTeachingUnit
         {
             get 
             {
-                return selectedUnitTeaching; 
+                return selectedTeachingUnit; 
             }
             set 
             {
-                selectedUnitTeaching = value;
-                OnPropertyChanged(nameof(SelectedUnitTeaching));
+                selectedTeachingUnit = value;
+                OnPropertyChanged(nameof(SelectedTeachingUnit));
             }
         }
 
@@ -62,7 +62,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         public void SelectedUnitTeachingOnChanged()
         {
-            OnPropertyChanged(nameof(SelectedUnitTeaching));
+            OnPropertyChanged(nameof(SelectedTeachingUnit));
         }
 
         public TeachViewModel(Devices devices,
@@ -201,7 +201,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             UnloadTransferLeftUnitTeaching.Inputs = Devices.GetUnloadTransferLeftInputs();
             UnloadTransferLeftUnitTeaching.Outputs = Devices.GetUnloadTransferLeftOutputs();
             UnloadTransferLeftUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.UnloadTransferLeftRecipe;
-            UnloadTransferLeftUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferFixtureImage");
+            UnloadTransferLeftUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadTransferImage");
 
             UnloadTransferRightUnitTeaching = new UnitTeachingViewModel("Unload Transfer Right", recipeSelector);
             UnloadTransferRightUnitTeaching.Cylinders = Devices.GetUnloadTransferRightCylinders();
@@ -209,10 +209,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             UnloadTransferRightUnitTeaching.Inputs = Devices.GetUnloadTransferRightInputs();
             UnloadTransferRightUnitTeaching.Outputs = Devices.GetUnloadTransferRightOutputs();
             UnloadTransferRightUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.UnloadTransferRightRecipe;
-            UnloadTransferRightUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferFixtureImage");
+            UnloadTransferRightUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadTransferImage");
 
 
-            UnitTeachings = new ObservableCollection<UnitTeachingViewModel>()
+            TeachingUnits = new ObservableCollection<UnitTeachingViewModel>()
             {
                 CSTLoadUnitTeaching,
                 CSTUnloadUnitTeaching,
@@ -236,9 +236,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 UnloadTransferRightUnitTeaching
             };
 
-            SelectedUnitTeaching = UnitTeachings.First();
+            SelectedTeachingUnit = TeachingUnits.First();
         }
-
     }
 
 }

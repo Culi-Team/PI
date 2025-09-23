@@ -51,9 +51,8 @@
                                                   RecognizesAccessKey="True" />
                             </Border>
                         </Grid>
-
-                        <!-- Main Tab-->
                         <ControlTemplate.Triggers>
+                            <!-- Trạng thái đã chọn (Selected) - Tab chính -->
                             <Trigger Property="IsSelected"
                                      Value="True">
                                 <Setter TargetName="Border"
@@ -68,6 +67,7 @@
                                         Value="#1976D2" />
                             </Trigger>
 
+                            <!-- Trạng thái hover (IsMouseOver) - Tab chính -->
                             <Trigger Property="IsMouseOver"
                                      Value="True">
                                 <Setter TargetName="Border"
@@ -80,6 +80,7 @@
                                         Value="#2196F3" />
                             </Trigger>
 
+                            <!-- Trạng thái bình thường - Tab chính -->
                             <Trigger Property="IsSelected"
                                      Value="False">
                                 <Setter TargetName="Border"
@@ -92,6 +93,7 @@
                                         Value="#E0E0E0" />
                             </Trigger>
 
+                            <!-- Hiệu ứng khi focus - Tab chính -->
                             <Trigger Property="IsKeyboardFocused"
                                      Value="True">
                                 <Setter TargetName="Border"
@@ -105,9 +107,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <!-- Style Main TabControl (Left) -->
-        <Style x:Key="MainTabControlStyle"
-               TargetType="{x:Type TabControl}">
+
+        <Style TargetType="{x:Type TabControl}">
             <Setter Property="ItemContainerStyle"
                     Value="{StaticResource AutoWidthTabItemStyle}" />
             <Setter Property="Template">
@@ -120,7 +121,7 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <!-- Header tab -->
+                            <!-- Header trong cột tab -->
                             <Border Grid.Column="0"
                                     Grid.Row="0"
                                     Background="Transparent"
@@ -157,443 +158,24 @@
             </Setter>
         </Style>
 
-        <!-- Style Sub TabControl (TOP) -->
-        <Style x:Key="SubTabControlStyle"
-               TargetType="{x:Type TabControl}">
-            <Setter Property="ItemContainerStyle"
-                    Value="{StaticResource AutoWidthTabItemStyle}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TabControl">
-                        <Grid ClipToBounds="True"
-                              KeyboardNavigation.TabNavigation="Local">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="5*" />
-                                <RowDefinition Height="90*" />
-                            </Grid.RowDefinitions>
-
-                            <!-- Tabs -->
-                            <UniformGrid x:Name="HeaderPanel"
-                                         IsItemsHost="True" />
-
-                            <!-- Content -->
-                            <Border Grid.Row="1"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    KeyboardNavigation.DirectionalNavigation="Contained">
-                                <ContentPresenter x:Name="PART_SelectedContentHost"
-                                                  ContentSource="SelectedContent"
-                                                  Margin="{TemplateBinding Padding}" />
-                            </Border>
-                        </Grid>
-
-                        <ControlTemplate.Triggers>
-                            <!-- Top -->
-                            <Trigger Property="TabStripPlacement"
-                                     Value="Top">
-                                <Setter TargetName="HeaderPanel"
-                                        Property="Rows"
-                                        Value="1" />
-                            </Trigger>
-
-                            <!-- Bottom -->
-                            <Trigger Property="TabStripPlacement"
-                                     Value="Bottom">
-                                <Setter TargetName="HeaderPanel"
-                                        Property="Rows"
-                                        Value="1" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </UserControl.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="8*" />
-            <ColumnDefinition Width="2*" />
-        </Grid.ColumnDefinitions>
+        <TabControl ItemsSource="{Binding ManualUnits}"
+                    SelectedItem="{Binding SelectedManualUnit, Mode=TwoWay}"
+                    Margin="10"
+                    BorderBrush="Gray"
+                    BorderThickness="1">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding Name}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
 
-        <TabControl Grid.Column="0"
-                    TabStripPlacement="Left"
-                    Style="{StaticResource MainTabControlStyle}">
-            <TabItem Header="CSTLoadUnload"
-                     Width="200">
-                <TabControl Style="{StaticResource SubTabControlStyle}">
-                    <TabItem Header="In Conveyor">
-                        <local:ManualUnitView Motions="{Binding InConveyorMotions}"
-                                              Cylinders="{Binding InConveyorCylinders}"
-                                              Inputs="{Binding InConveyorInputs}"
-                                              Outputs="{Binding InConveyorOutputs}"
-                                              SpeedControllers="{Binding InConveyorSpeedControllers}"
-                                              ManualImage="{StaticResource InCassetteCVImage}" />
-                    </TabItem>
-                    <TabItem Header="In Work Conveyor">
-                        <local:ManualUnitView Motions="{Binding InWorkConveyorMotions}"
-                                              Cylinders="{Binding InWorkConveyorCylinders}"
-                                              Inputs="{Binding InWorkConveyorInputs}"
-                                              Outputs="{Binding InWorkConveyorOutputs}"
-                                              ManualImage="{StaticResource LoadWorkCassetteStageImage}" />
-                    </TabItem>
-                    <TabItem Header="Buffer Conveyor">
-                        <local:ManualUnitView Motions="{Binding BufferConveyorMotions}"
-                                              Cylinders="{Binding BufferConveyorCylinders}"
-                                              Inputs="{Binding BufferConveyorInputs}"
-                                              Outputs="{Binding BufferConveyorOutputs}"
-                                              SpeedControllers="{Binding BufferConveyorSpeedControllers}"
-                                              ManualImage="{StaticResource BufferCVImage}" />
-                    </TabItem>
-                    <TabItem Header="Out Work Conveyor">
-                        <local:ManualUnitView Motions="{Binding OutWorkConveyorMotions}"
-                                              Cylinders="{Binding OutWorkConveyorCylinders}"
-                                              Inputs="{Binding OutWorkConveyorInputs}"
-                                              Outputs="{Binding OutWorkConveyorOutputs}"
-                                              ManualImage="{StaticResource LoadWorkCassetteStageImage}" />
-                    </TabItem>
-                    <TabItem Header="Out Conveyor">
-                        <local:ManualUnitView Motions="{Binding OutConveyorMotions}"
-                                              Cylinders="{Binding OutConveyorCylinders}"
-                                              Inputs="{Binding OutConveyorInputs}"
-                                              Outputs="{Binding OutConveyorOutputs}"
-                                              SpeedControllers="{Binding OutConveyorSpeedControllers}"
-                                              ManualImage="{StaticResource OutCassetteCVImage}" />
-                    </TabItem>
-                </TabControl>
-            </TabItem>
-            <TabItem Header="Detach"
-                     Width="200">
-                <TabControl Style="{StaticResource SubTabControlStyle}">
-                    <TabItem Header="Vinyl Clean">
-                        <local:ManualUnitView Motions="{Binding VinylCleanMotions}"
-                                              Cylinders="{Binding VinylCleanCylinders}"
-                                              Inputs="{Binding VinylCleanInputs}"
-                                              Outputs="{Binding VinylCleanOutputs}"
-                                              ManualImage="{StaticResource VinylCleanImage}" />
-                    </TabItem>
-                    <TabItem Header="Robot Load">
-                        <local:ManualUnitView Motions="{Binding RobotLoadMotions}"
-                                              Cylinders="{Binding RobotLoadCylinders}"
-                                              Inputs="{Binding RobotLoadInputs}"
-                                              Outputs="{Binding RobotLoadOutputs}"
-                                              ManualImage="{StaticResource LoadRobotImage}" />
-                    </TabItem>
-                    <TabItem Header="Fixture Align">
-                        <local:ManualUnitView Motions="{Binding FixtureAlignMotions}"
-                                              Cylinders="{Binding FixtureAlignCylinders}"
-                                              Inputs="{Binding FixtureAlignInputs}"
-                                              Outputs="{Binding FixtureAlignOutputs}"
-                                              ManualImage="{StaticResource AlignFixtureImage}" />
-                    </TabItem>
-                    <TabItem Header="Transfer Fixture">
-                        <local:ManualUnitView Motions="{Binding TransferFixtureMotions}"
-                                              Cylinders="{Binding TransferFixtureCylinders}"
-                                              Inputs="{Binding TransferFixtureInputs}"
-                                              Outputs="{Binding TransferFixtureOutputs}"
-                                              ManualImage="{StaticResource TransferFixtureImage}" />
-                    </TabItem>
-                    <TabItem Header="Remove Film">
-                        <local:ManualUnitView Motions="{Binding RemoveFilmMotions}"
-                                              Cylinders="{Binding RemoveFilmCylinders}"
-                                              Inputs="{Binding RemoveFilmInputs}"
-                                              Outputs="{Binding RemoveFilmOutputs}"
-                                              ManualImage="{StaticResource RemoveZoneImage}" />
-                    </TabItem>
-                    <TabItem Header="Detach">
-                        <local:ManualUnitView Motions="{Binding DetachMotions}"
-                                              Cylinders="{Binding DetachCylinders}"
-                                              Inputs="{Binding DetachInputs}"
-                                              Outputs="{Binding DetachOutputs}"
-                                              ManualImage="{StaticResource DetachImage}" />
-                    </TabItem>
-                </TabControl>
-            </TabItem>
-            <TabItem Header="Clean"
-                     Width="200">
-                <TabControl Style="{StaticResource SubTabControlStyle}">
-                    <TabItem Header="Glass Transfer">
-                        <local:ManualUnitView Motions="{Binding GlassTransferMotions}"
-                                              Cylinders="{Binding GlassTransferCylinders}"
-                                              Inputs="{Binding GlassTransferInputs}"
-                                              Outputs="{Binding GlassTransferOutputs}"
-                                              ManualImage="{StaticResource GlassShuttleUnitImage}" />
-                    </TabItem>
-                    <TabItem Header="Glass Align">
-                        <local:ManualUnitView Motions="{Binding GlassAlignMotions}"
-                                              Cylinders="{Binding GlassAlignCylinders}"
-                                              Inputs="{Binding GlassAlignInputs}"
-                                              Outputs="{Binding GlassAlignOutputs}"
-                                              ManualImage="{StaticResource GlassAlignImage}" />
-
-                    </TabItem>
-                    <TabItem Header="Transfer In Shuttle Left">
-                        <local:ManualUnitView Motions="{Binding TransferInShuttleLeftMotions}"
-                                              Cylinders="{Binding TransferInShuttleLeftCylinders}"
-                                              Inputs="{Binding TransferInShuttleLeftInputs}"
-                                              Outputs="{Binding TransferInShuttleLeftOutputs}"
-                                              ManualImage="{StaticResource TransferShutterImage}" />
-                    </TabItem>
-                    <TabItem Header="Transfer In Shuttle Right">
-                        <local:ManualUnitView Motions="{Binding TransferInShuttleRightMotions}"
-                                              Cylinders="{Binding TransferInShuttleRightCylinders}"
-                                              Inputs="{Binding TransferInShuttleRightInputs}"
-                                              Outputs="{Binding TransferInShuttleRightOutputs}"
-                                              ManualImage="{StaticResource TransferShutterImage}" />
-                    </TabItem>
-                    <TabItem Header="Wet Clean Left">
-                        <local:ManualUnitView Motions="{Binding WetCleanLeftMotions}"
-                                              Cylinders="{Binding WetCleanLeftCylinders}"
-                                              Inputs="{Binding WetCleanLeftInputs}"
-                                              Outputs="{Binding WetCleanLeftOutputs}"
-                                              ManualImage="{StaticResource WetCleanImage}" />
-                    </TabItem>
-                    <TabItem Header="Wet Clean Right">
-                        <local:ManualUnitView Motions="{Binding WetCleanRightMotions}"
-                                              Cylinders="{Binding WetCleanRightCylinders}"
-                                              Inputs="{Binding WetCleanRightInputs}"
-                                              Outputs="{Binding WetCleanRightOutputs}"
-                                              ManualImage="{StaticResource WetCleanImage}" />
-                    </TabItem>
-                    <TabItem Header="AF Clean Left">
-                        <local:ManualUnitView Motions="{Binding AfCleanLeftMotions}"
-                                              Cylinders="{Binding AfCleanLeftCylinders}"
-                                              Inputs="{Binding AfCleanLeftInputs}"
-                                              Outputs="{Binding AfCleanLeftOutputs}"
-                                              ManualImage="{StaticResource AFCleanImage}" />
-                    </TabItem>
-                    <TabItem Header="AF Clean Right">
-                        <local:ManualUnitView Motions="{Binding AfCleanRightMotions}"
-                                              Cylinders="{Binding AfCleanRightCylinders}"
-                                              Inputs="{Binding AfCleanRightInputs}"
-                                              Outputs="{Binding AfCleanRightOutputs}"
-                                              ManualImage="{StaticResource AFCleanImage}" />
-                    </TabItem>
-                    <TabItem Header="Transfer Rotation Left">
-                        <local:ManualUnitView Motions="{Binding TransferRotationLeftMotions}"
-                                              Cylinders="{Binding TransferRotationLeftCylinders}"
-                                              Inputs="{Binding TransferRotationLeftInputs}"
-                                              Outputs="{Binding TransferRotationLeftOutputs}"
-                                              ManualImage="{StaticResource TransferRotationImage}" />
-                    </TabItem>
-                    <TabItem Header="Transfer Rotation Right">
-                        <local:ManualUnitView Motions="{Binding TransferRotationRightMotions}"
-                                              Cylinders="{Binding TransferRotationRightCylinders}"
-                                              Inputs="{Binding TransferRotationRightInputs}"
-                                              Outputs="{Binding TransferRotationRightOutputs}"
-                                              ManualImage="{StaticResource TransferRotationImage}" />
-                    </TabItem>
-                </TabControl>
-            </TabItem>
-            <TabItem Header="Unload"
-                     Width="200">
-                <TabControl Style="{StaticResource SubTabControlStyle}">
-                    <TabItem Header="Unload Transfer Left">
-                        <local:ManualUnitView Motions="{Binding UnloadTransferLeftMotions}"
-                                              Cylinders="{Binding UnloadTransferLeftCylinders}"
-                                              Inputs="{Binding UnloadTransferLeftInputs}"
-                                              Outputs="{Binding UnloadTransferLeftOutputs}"
-                                              ManualImage="{StaticResource UnloadTransferImage}" />
-                    </TabItem>
-                    <TabItem Header="Unload Transfer Right">
-                        <local:ManualUnitView Motions="{Binding UnloadTransferRightMotions}"
-                                              Cylinders="{Binding UnloadTransferRightCylinders}"
-                                              Inputs="{Binding UnloadTransferRightInputs}"
-                                              Outputs="{Binding UnloadTransferRightOutputs}"
-                                              ManualImage="{StaticResource UnloadTransferImage}" />
-                    </TabItem>
-                    <TabItem Header="Unload Align">
-                        <local:ManualUnitView Motions="{Binding UnloadAlignMotions}"
-                                              Cylinders="{Binding UnloadAlignCylinders}"
-                                              Inputs="{Binding UnloadAlignInputs}"
-                                              Outputs="{Binding UnloadAlignOutputs}"
-                                              ManualImage="{StaticResource UnloadAlignImage}" />
-                    </TabItem>
-                    <TabItem Header="Robot Unload">
-                        <local:ManualUnitView Motions="{Binding RobotUnloadMotions}"
-                                              Cylinders="{Binding RobotUnloadCylinders}"
-                                              Inputs="{Binding RobotUnloadInputs}"
-                                              Outputs="{Binding RobotUnloadOutputs}"
-                                              ManualImage="{StaticResource LoadRobotImage}" />
-                    </TabItem>
-                </TabControl>
-            </TabItem>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding}" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
         </TabControl>
-
-        <DockPanel Grid.Column="1">
-            <GroupBox Header="SPEED CONTROL"
-                      DockPanel.Dock="Top">
-                <StackPanel Orientation="Vertical">
-                    <Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Ellipse Width="26"
-                                     Height="26"
-                                     Fill="{Binding SpeedControllersIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                     Stroke="{StaticResource PrimaryBorderBrush}"
-                                     StrokeThickness="1"
-                                     Margin="0 0 5 0" />
-                            <uiControls:ImageButton Grid.Column="1"
-                                                    Content="Speed Controllers"
-                                                    Command="{Binding SpeedControllerConnectCommand}"
-                                                    Height="40"
-                                                    Margin="0 5 0 0" />
-                        </Grid>
-
-                    </Grid>
-                </StackPanel>
-            </GroupBox>
-            <GroupBox Header="TORQUE CONTROL"
-                      DockPanel.Dock="Top">
-                <StackPanel Orientation="Vertical">
-                    <Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Ellipse Width="26"
-                                     Height="26"
-                                     Fill="{Binding TorqueControllersIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                     Stroke="{StaticResource PrimaryBorderBrush}"
-                                     StrokeThickness="1"
-                                     Margin="0 0 5 0" />
-                            <uiControls:ImageButton Grid.Column="1"
-                                                    Content="Torque Controllers"
-                                                    Command="{Binding TorqueControllerConnectCommand}"
-                                                    Height="40"
-                                                    Margin="0 5 0 0" />
-                        </Grid>
-
-                    </Grid>
-                </StackPanel>
-            </GroupBox>
-
-            <GroupBox Header="MOTION"
-                      DockPanel.Dock="Top">
-                <StackPanel Orientation="Vertical">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Ellipse Width="26"
-                                 Height="26"
-                                 Fill="{Binding MotionsInovanceIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                 Stroke="{StaticResource PrimaryBorderBrush}"
-                                 StrokeThickness="1"
-                                 Margin="0 0 5 0" />
-                        <uiControls:ImageButton Grid.Column="1"
-                                                Content="Motions Inovance"
-                                                Command="{Binding MotionInovanceConnectCommand}"
-                                                Height="40"
-                                                Margin="0 5 0 0" />
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Ellipse Width="26"
-                                 Height="26"
-                                 Fill="{Binding MotionAjinIsConnected, Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                 Stroke="{StaticResource PrimaryBorderBrush}"
-                                 StrokeThickness="1"
-                                 Margin="0 0 5 0" />
-                        <uiControls:ImageButton Grid.Column="1"
-                                                Content="Motion Ajin"
-                                                Command="{Binding MotionAjinConnectCommand}"
-                                                Height="40"
-                                                Margin="0 5 0 0" />
-                    </Grid>
-                </StackPanel>
-            </GroupBox>
-            <GroupBox Header="ROBOT"
-                      DockPanel.Dock="Top">
-                <StackPanel Orientation="Vertical">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Ellipse Width="26"
-                                 Height="26"
-                                 Fill="{Binding RobotLoadIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                 Stroke="{StaticResource PrimaryBorderBrush}"
-                                 StrokeThickness="1"
-                                 Margin="0 0 5 0" />
-                        <uiControls:ImageButton Grid.Column="1"
-                                                Content="Robot Load"
-                                                Command="{Binding RobotLoadConnectCommand}"
-                                                Height="40"
-                                                Margin="0 5 0 0" />
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Ellipse Width="26"
-                                 Height="26"
-                                 Fill="{Binding RobotUnloadIsConnected, Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                 Stroke="{StaticResource PrimaryBorderBrush}"
-                                 StrokeThickness="1"
-                                 Margin="0 0 5 0" />
-                        <uiControls:ImageButton Grid.Column="1"
-                                                Content="Robot Unload"
-                                                Command="{Binding RobotUnloadConnectCommand}"
-                                                Height="40"
-                                                Margin="0 5 0 0" />
-                    </Grid>
-                </StackPanel>
-            </GroupBox>
-            <GroupBox Header="DISPLAY SCREEN"
-                      DockPanel.Dock="Top">
-                <StackPanel Orientation="Vertical">
-                    <UniformGrid Columns="2">
-                        <Button Content="Main Screen"
-                                Command="{Binding SetPrimaryInteractiveCommand}">
-                            <Button.Style>
-                                <Style TargetType="Button"
-                                       BasedOn="{StaticResource {x:Type Button}}">
-                                    <Setter Property="Background"
-                                            Value="LightGray" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ActiveScreen}"
-                                                     Value="{x:Static vmm:InteractiveScreen.Primary}">
-                                            <Setter Property="Background"
-                                                    Value="LightGreen" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                        <Button Content="Second Screen"
-                                Command="{Binding SetSecondaryInteractiveCommand}">
-                            <Button.Style>
-                                <Style TargetType="Button"
-                                       BasedOn="{StaticResource {x:Type Button}}">
-                                    <Setter Property="Background"
-                                            Value="LightGray" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ActiveScreen}"
-                                                     Value="{x:Static vmm:InteractiveScreen.Secondary}">
-                                            <Setter Property="Background"
-                                                    Value="LightGreen" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                    </UniformGrid>
-                    <CheckBox Content="View Only"
-                              IsChecked="{Binding IsViewOnly}" />
-                </StackPanel>
-            </GroupBox>
-
-
-        </DockPanel>
     </Grid>
 </UserControl>
