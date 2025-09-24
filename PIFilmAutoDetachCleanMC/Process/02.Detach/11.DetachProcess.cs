@@ -134,16 +134,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
-        public override bool PreProcess()
-        {
-            if (FlagFixtureTransferDone)
-            {
-                Log.Debug("Clear Flag Detach Done");
-                FlagDetachDone = false;
-            }
-
-            return base.PreProcess();
-        }
 
         public override bool ProcessToRun()
         {

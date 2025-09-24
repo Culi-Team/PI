@@ -313,6 +313,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 {
                     case EHandleStep.Start:
                         MessageText = "Deinit Start";
+                        MessageText = "Stop Processes";
+                        _processes.ProcessesStop();
+                        Thread.Sleep(500);
                         _step++;
                         break;
                     case EHandleStep.FileSystemHandle:
@@ -352,6 +355,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _step++;
                         break;
                     case EHandleStep.ProcessHandle:
+                        
                         _step++;
                         break;
                     case EHandleStep.CassetteHandle:

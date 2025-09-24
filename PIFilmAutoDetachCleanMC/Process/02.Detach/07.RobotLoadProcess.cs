@@ -718,7 +718,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Move_InCST_ReadyPositon_Wait:
                     Log.Debug("Move In Cassette Ready Position Wait");
-                    if (_robotLoad.ReadResponse((int)(_commonRecipe.MotionMoveTimeOut * 1000.0), RobotHelpers.MotionRspComplete(ERobotCommand.S1_PP_RDY)))
+                    if (_robotLoad.ReadResponse((int)(_commonRecipe.MotionMoveTimeOut), RobotHelpers.MotionRspComplete(ERobotCommand.S1_PP_RDY)))
                     {
                         Log.Debug($"Robot Move Motion Command {ERobotCommand.S1_PP_RDY} Done");
                         Step.RunStep++;

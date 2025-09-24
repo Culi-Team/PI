@@ -23,6 +23,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly TransferFixtureRecipe _transferFixtureRecipe;
         private readonly IDInputDevice _transferFixtureInput;
         private readonly IDOutputDevice _transferFixtureOutput;
+        private readonly IDOutputDevice _detachOutput;
 
         private IMotion TransferFixtureYAxis => _devices.MotionsInovance.FixtureTransferYAxis;
         private Inputs Inputs => _devices.Inputs;
@@ -106,13 +107,15 @@ namespace PIFilmAutoDetachCleanMC.Process
             CommonRecipe commonRecipe,
             TransferFixtureRecipe transferFixtureRecipe,
             [FromKeyedServices("TransferFixtureInput")] IDInputDevice transferFixtureInput,
-            [FromKeyedServices("TransferFixtureOutput")] IDOutputDevice transferFixtureOutput)
+            [FromKeyedServices("TransferFixtureOutput")] IDOutputDevice transferFixtureOutput,
+            [FromKeyedServices("DetachOutput")] IDOutputDevice detachOutput)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
             _transferFixtureRecipe = transferFixtureRecipe;
             _transferFixtureInput = transferFixtureInput;
             _transferFixtureOutput = transferFixtureOutput;
+            _detachOutput = detachOutput;
         }
         #endregion
 
@@ -336,6 +339,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         //Wait Align Fixture and Detach Ready
                         break;
                     }
+                    _detachOutput[(int)EDetachProcessOutput.DETACH_DONE] = false;
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessLoadStep.Check_Y_Position:

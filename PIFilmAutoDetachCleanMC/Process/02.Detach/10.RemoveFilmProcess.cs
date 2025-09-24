@@ -611,8 +611,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Parent.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
-                    Log.Info("Sequence Robot Pick From Remove Zone");
-                    Sequence = ESequence.RobotPickFixtureFromRemoveZone;
+                    Log.Info("Sequence Remove Film Throw");
+                    Sequence = ESequence.RemoveFilmThrow;
                     break;
             }
         }

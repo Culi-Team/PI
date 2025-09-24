@@ -102,6 +102,12 @@ namespace PIFilmAutoDetachCleanMC.Process
             RootProcess.Start();
             RootProcess.Childs?.All(p => p.Start());
         }
+
+        public void ProcessesStop()
+        {
+            RootProcess.Stop();
+            RootProcess.Childs?.All(p => p.Stop());
+        }
         #region Privates
         private readonly MachineStatus _machineStatus;
         #endregion
