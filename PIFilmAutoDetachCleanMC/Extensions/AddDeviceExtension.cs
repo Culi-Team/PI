@@ -388,9 +388,9 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 {
                     return new RobotKukaTcp(1, "Kuka Robot","192.168.1.100");
                 });
-                services.AddKeyedSingleton<IRobot, RobotKukaTcp>("RobotUnload",(services,obj) =>
+                services.AddKeyedSingleton<IRobot, RobotSimulation>("RobotUnload", (services, obj) =>
                 {
-                    return new RobotKukaTcp(2, "Kuka Robot","192.168.1.200");
+                    return new RobotSimulation(2, "Kuka Robot Unload");
                 });
 #endif
             });

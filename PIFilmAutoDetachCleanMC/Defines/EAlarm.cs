@@ -41,7 +41,7 @@
         RobotLoad_No_Ready_Response,
         RobotLoad_SetModel_Fail,
         RobotLoad_MoveMotionCommand_Timeout,
-        Robot_SendMotionCommand_Fail,
+        RobotLoad_SendMotionCommand_Fail,
 
 
         //Align Fixture
