@@ -1164,8 +1164,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Move_OutCSTPlacePosition:
+                    paras = new string[]
+                    {
+                        CurrentInWorkCSTFixtureIndex.ToString(),
+                        "1",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        "0"
+                    };
+
                     Log.Debug("Robot Move Out Cassette Place Position");
-                    if (SendCommand(ERobotCommand.S5_RDY_PP, LowSpeed, HightSpeed))
+                    if (SendCommand(ERobotCommand.S5_RDY_PP, LowSpeed, HightSpeed, paras))
                     {
                         Step.RunStep++;
                         break;
