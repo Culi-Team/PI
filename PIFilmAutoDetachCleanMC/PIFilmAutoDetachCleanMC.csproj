@@ -168,6 +168,8 @@
     <Resource Include="Resource\Image\04.Unload\UnloadAlignDetach.png" />
     <Resource Include="Resource\Image\04.Unload\UnloadRobotDetach.png" />
     <Resource Include="Resource\Image\Machine.png" />
+    <Resource Include="Resource\Image\AlertImage.png" />
+    <Resource Include="Resource\Image\05.Alarm\MainAir.png" />
     <Resource Include="Resource\Image\Flags\EngLish.png" />
     <Resource Include="Resource\Image\Flags\Korea.png" />
     <Resource Include="Resource\Image\Flags\VIETNAM.png" />
