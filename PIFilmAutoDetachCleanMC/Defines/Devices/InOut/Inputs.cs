@@ -221,9 +221,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput AlignStageLVac1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_STAGE_L_VAC_1);
         public IDInput AlignStageLVac2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_STAGE_L_VAC_2);
         public IDInput AlignStageLVac3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_STAGE_L_VAC_3);
-        public IDInput AlignStageLGlassDettect1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_STAGE_L_GLASS_DETTECT_1);
-        public IDInput AlignStageLGlassDettect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_STAGE_L_GLASS_DETTECT_2);
-        public IDInput AlignStageLGlassDettect3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_STAGE_L_GLASS_DETTECT_3);
+        public IDInput AlignStageLGlassDetect1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_STAGE_L_GLASS_DETECT_1);
+        public IDInput AlignStageLGlassDetect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_STAGE_L_GLASS_DETECT_2);
+        public IDInput AlignStageLGlassDetect3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_STAGE_L_GLASS_DETECT_3);
         public IDInput AlignStageLBrushCylUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_STAGE_L_BRUSH_CYL_UP);
         public IDInput AlignStageLBrushCylDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_STAGE_L_BRUSH_CYL_DOWN);
         public IDInput AlignStageL1Align => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ALIGN_STAGE_L_1_ALIGN);

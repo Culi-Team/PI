@@ -39,9 +39,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder AlignCyl2 => port == EPort.Left ? _devices.Cylinders.AlignStageL2AlignUnalign : _devices.Cylinders.AlignStageR2AlignUnalign;
         private ICylinder AlignCyl3 => port == EPort.Left ? _devices.Cylinders.AlignStageL3AlignUnalign : _devices.Cylinders.AlignStageR3AlignUnalign;
 
-        private bool IsGlass1Detect => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect1.Value : _devices.Inputs.AlignStageRGlassDetect1.Value;
-        private bool IsGlass2Detect => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect2.Value : _devices.Inputs.AlignStageRGlassDetect2.Value;
-        private bool IsGlass3Detect => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect3.Value : _devices.Inputs.AlignStageRGlassDetect3.Value;
+        private bool IsGlass1Detect => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect1.Value : _devices.Inputs.AlignStageRGlassDetect1.Value;
+        private bool IsGlass2Detect => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect2.Value : _devices.Inputs.AlignStageRGlassDetect2.Value;
+        private bool IsGlass3Detect => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect3.Value : _devices.Inputs.AlignStageRGlassDetect3.Value;
         private bool IsGlassDetect => IsGlass1Detect || IsGlass2Detect || IsGlass3Detect;
 
         private bool IsAlign => AlignCyl1.IsForward && AlignCyl2.IsForward && AlignCyl3.IsForward;
@@ -451,9 +451,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Vacuum Off");
                     VacOnOff(false);
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect1 : _devices.Inputs.AlignStageRGlassDetect1, true);
-                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect2 : _devices.Inputs.AlignStageRGlassDetect2, true);
-                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect3 : _devices.Inputs.AlignStageRGlassDetect3, true);
+                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect1 : _devices.Inputs.AlignStageRGlassDetect1, true);
+                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect2 : _devices.Inputs.AlignStageRGlassDetect2, true);
+                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect3 : _devices.Inputs.AlignStageRGlassDetect3, true);
 #endif
                     Wait(_commonRecipe.VacDelay);
                     Step.RunStep++;
@@ -465,9 +465,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect1 : _devices.Inputs.AlignStageRGlassDetect1, false);
-                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect2 : _devices.Inputs.AlignStageRGlassDetect2, false);
-                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect3 : _devices.Inputs.AlignStageRGlassDetect3, false);
+                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect1 : _devices.Inputs.AlignStageRGlassDetect1, false);
+                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect2 : _devices.Inputs.AlignStageRGlassDetect2, false);
+                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect3 : _devices.Inputs.AlignStageRGlassDetect3, false);
 #endif
                     Log.Debug("Glass Align Done");
                     Step.RunStep++;
@@ -514,9 +514,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Transfer In Shuttle Pick Start");
                     Step.RunStep++;
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect1 : _devices.Inputs.AlignStageRGlassDetect1, true);
-                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect2 : _devices.Inputs.AlignStageRGlassDetect2, true);
-                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDettect3 : _devices.Inputs.AlignStageRGlassDetect3, true);
+                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect1 : _devices.Inputs.AlignStageRGlassDetect1, true);
+                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect2 : _devices.Inputs.AlignStageRGlassDetect2, true);
+                    SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect3 : _devices.Inputs.AlignStageRGlassDetect3, true);
 #endif
                     break;
                 case EGlassAlignTransferInShuttlePickStep.Vacuum_Off:

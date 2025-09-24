@@ -311,9 +311,9 @@
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
-                                <Binding Path="Devices.Inputs.AlignStageLGlassDettect1.Value"/>
-                                <Binding Path="Devices.Inputs.AlignStageLGlassDettect2.Value"/>
-                                <Binding Path="Devices.Inputs.AlignStageLGlassDettect3.Value"/>
+                                <Binding Path="Devices.Inputs.AlignStageLGlassDetect1.Value"/>
+                                <Binding Path="Devices.Inputs.AlignStageLGlassDetect2.Value"/>
+                                <Binding Path="Devices.Inputs.AlignStageLGlassDetect3.Value"/>
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>

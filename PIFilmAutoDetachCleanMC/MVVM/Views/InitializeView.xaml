@@ -15,7 +15,7 @@
                 <Setter Property="BorderBrush"
                         Value="Green" />
                 <Setter Property="BorderThickness"
-                        Value="3" />
+                        Value="2" />
                 <Setter Property="HorizontalContentAlignment"
                         Value="Center" />
                 <Setter Property="VerticalContentAlignment"
@@ -30,6 +30,8 @@
                         Value="160" />
                 <Setter Property="Height"
                         Value="80" />
+                <Setter Property="Cursor"
+                        Value="Hand"/>
                 <EventSetter Event="PreviewMouseDown"
                              Handler="Label_PreviewMouseDown" />
             </Style.Setters>

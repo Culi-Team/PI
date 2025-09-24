@@ -134,14 +134,15 @@
                                            HorizontalAlignment="Center" />
                             </Border>
 
-                            <!-- Tab items -->
-                            <UniformGrid Columns="1"
-                                         Rows="20"
-                                         IsItemsHost="True"
-                                         Grid.Column="0"
-                                         Grid.Row="1" />
+                            <!-- Tab headers -->
+                            <ScrollViewer Grid.Column="0"
+                                          Grid.Row="1"
+                                          VerticalScrollBarVisibility="Auto"
+                                          CanContentScroll="True">
+                                <ItemsPresenter />
+                            </ScrollViewer>
 
-                            <!-- Content area -->
+                            <!-- Content -->
                             <Border Grid.Column="1"
                                     Grid.Row="0"
                                     Grid.RowSpan="2"
@@ -156,13 +157,20 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="1" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="6*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid>
             <TabControl ItemsSource="{Binding ManualUnits}"
@@ -358,5 +366,5 @@
             </GroupBox>
         </DockPanel>
     </Grid>
-    
+
 </UserControl>
