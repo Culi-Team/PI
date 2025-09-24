@@ -80,6 +80,11 @@
                         Content="Disconnect"
                         Margin="5"
                         Command="{Binding RobotDisconnect}"/>
+                    
+                    <Button
+                        Content="Stop"
+                        Margin="5"
+                        Command="{Binding RobotStopCommand}"/>
                 </UniformGrid>
             </Grid>
         </Expander>

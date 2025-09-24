@@ -5,6 +5,7 @@
         public static string PCPGMStart => string.Format("PCPGMSTART,0\r\n");
         public static string HomePositionCheck => string.Format("HomePositionCheck,0\r\n");
         public static string SeqHomeCheck => string.Format("SeqHomeCheck,0\r\n");
+        public static string RobotStop => string.Format("stop,0\r\n");
 
         public static string SetModel(int model)
         {

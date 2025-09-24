@@ -96,6 +96,17 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
+        public ICommand RobotStopCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _robotLoad.SendCommand(RobotHelpers.RobotStop);
+                });
+            }
+        }
+
         public int RobotLowSpeed { get; set; }
         public int RobotHighSpeed { get; set; }
         public int IndexX { get; set; }
