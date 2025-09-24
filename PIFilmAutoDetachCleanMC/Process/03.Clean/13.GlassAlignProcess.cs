@@ -242,27 +242,61 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.GlassTransferPlace:
                     Sequence_GlassTransferPlace();
                     break;
-                case ESequence.AlignGlass:
-                    Sequence_AlignGlass();
+                case ESequence.AlignGlassLeft:
+                    if(port == EPort.Left)
+                    {
+                        Sequence_AlignGlass();
+                    }
                     break;
-                case ESequence.TransferInShuttlePick:
-                    Sequence_TransferInShuttlePick();
+                case ESequence.AlignGlassRight:
+                    if(port == EPort.Right)
+                    {
+                        Sequence_AlignGlass();
+                    }
                     break;
-                case ESequence.WETCleanLoad:
+                case ESequence.TransferInShuttleLeftPick:
+                    if(port == EPort.Left)
+                    {
+                        Sequence_TransferInShuttlePick();
+                    }
                     break;
-                case ESequence.WETClean:
+                case ESequence.TransferInShuttleRightPick:
+                    if (port == EPort.Right)
+                    {
+                        Sequence_TransferInShuttlePick();
+                    }
                     break;
-                case ESequence.WETCleanUnload:
+                case ESequence.WETCleanLeftLoad:
                     break;
-                case ESequence.TransferRotation:
+                case ESequence.WETCleanRightLoad:
                     break;
-                case ESequence.AFCleanLoad:
+                case ESequence.WETCleanLeft:
                     break;
-                case ESequence.AFClean:
+                case ESequence.WETCleanRight:
                     break;
-                case ESequence.AFCleanUnload:
+                case ESequence.WETCleanLeftUnload:
                     break;
-                case ESequence.UnloadTransferPlace:
+                case ESequence.WETCleanRightUnload:
+                    break;
+                case ESequence.TransferRotationLeft:
+                    break;
+                case ESequence.TransferRotationRight:
+                    break;
+                case ESequence.AFCleanLeftLoad:
+                    break;
+                case ESequence.AFCleanRightLoad:
+                    break;
+                case ESequence.AFCleanLeft:
+                    break;
+                case ESequence.AFCleanRight:
+                    break;
+                case ESequence.AFCleanLeftUnload:
+                    break;
+                case ESequence.AFCleanRightUnload:
+                    break;
+                case ESequence.UnloadTransferLeftPlace:
+                    break;
+                case ESequence.UnloadTransferRightPlace:
                     break;
                 case ESequence.UnloadAlignGlass:
                     break;
@@ -339,7 +373,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if(IsVacDetect || IsGlassDetect)
                     {
                         Log.Info("Sequence Align Glass");
-                        Sequence = ESequence.AlignGlass;
+                        Sequence = port == EPort.Left ?  ESequence.AlignGlassLeft : ESequence.AlignGlassRight;
                     }
                     Step.RunStep++;
                     break;
@@ -403,7 +437,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Info("Sequence Align Glass");
-                    Sequence = ESequence.AlignGlass;
+                    Sequence = port == EPort.Left ? ESequence.AlignGlassLeft : ESequence.AlignGlassRight;
                     break;
             }
         }
@@ -501,7 +535,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Info("Sequence Transfer In Shuttle Pick");
-                    Sequence = ESequence.TransferInShuttlePick;
+                    Sequence = port == EPort.Left ? ESequence.TransferInShuttleLeftPick : ESequence.TransferInShuttleRightPick;
                     break;
             }
         }

@@ -123,6 +123,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Button Content="{Binding .,Converter={StaticResource EnumDescriptionConverter}}"
+                                    FontSize="14"
                                     Command="{Binding DataContext.SemiAutoCommand, RelativeSource={RelativeSource AncestorType={x:Type views:ManualView}}}"
                                     CommandParameter="{Binding .}"/>
                         </DataTemplate>

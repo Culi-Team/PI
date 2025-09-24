@@ -244,27 +244,61 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.GlassTransferPlace:
                     break;
-                case ESequence.AlignGlass:
+                case ESequence.AlignGlassLeft:
                     break;
-                case ESequence.TransferInShuttlePick:
+                case ESequence.AlignGlassRight:
                     break;
-                case ESequence.WETCleanLoad:
+                case ESequence.TransferInShuttleLeftPick:
                     break;
-                case ESequence.WETClean:
+                case ESequence.TransferInShuttleRightPick:
                     break;
-                case ESequence.WETCleanUnload:
+                case ESequence.WETCleanLeftLoad:
                     break;
-                case ESequence.TransferRotation:
+                case ESequence.WETCleanRightLoad:
                     break;
-                case ESequence.AFCleanLoad:
+                case ESequence.WETCleanLeft:
                     break;
-                case ESequence.AFClean:
+                case ESequence.WETCleanRight:
                     break;
-                case ESequence.AFCleanUnload:
-                    Sequence_AFCleanUnload();
+                case ESequence.WETCleanLeftUnload:
                     break;
-                case ESequence.UnloadTransferPlace:
-                    Sequence_UnloadTransferPlace();
+                case ESequence.WETCleanRightUnload:
+                    break;
+                case ESequence.TransferRotationLeft:
+                    break;
+                case ESequence.TransferRotationRight:
+                    break;
+                case ESequence.AFCleanLeftLoad:
+                    break;
+                case ESequence.AFCleanRightLoad:
+                    break;
+                case ESequence.AFCleanLeft:
+                    break;
+                case ESequence.AFCleanRight:
+                    break;
+                case ESequence.AFCleanLeftUnload:
+                    if (port == EPort.Left)
+                    {
+                        Sequence_AFCleanUnload();
+                    }
+                    break;
+                case ESequence.AFCleanRightUnload:
+                    if (port == EPort.Right)
+                    {
+                        Sequence_AFCleanUnload();
+                    }
+                    break;
+                case ESequence.UnloadTransferLeftPlace:
+                    if (port == EPort.Left)
+                    {
+                        Sequence_UnloadTransferPlace();
+                    }
+                    break;
+                case ESequence.UnloadTransferRightPlace:
+                    if (port == EPort.Right)
+                    {
+                        Sequence_UnloadTransferPlace();
+                    }
                     break;
                 case ESequence.UnloadAlignGlass:
                     break;
@@ -290,11 +324,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferProcessToRunStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(Recipe.ZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => ZAxis.IsOnPosition(Recipe.ZAxisReadyPosition));
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(Recipe.ZAxisReadyPosition));
                     Step.ToRunStep++;
                     break;
                 case EUnloadTransferProcessToRunStep.ZAxis_Move_ReadyPosition_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseAlarm((int)(port == EPort.Left ? EAlarm.UnloadTransferLeft_ZAxis_MoveReadyPosition_Fail :
                                                         EAlarm.UnloadTransferRight_ZAxis_MoveReadyPosition_Fail));
@@ -306,7 +340,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferProcessToRunStep.YAxis_Move_ReadyPosition:
                     Log.Debug("Y Axis Move Ready Position");
                     YAxis.MoveAbs(Recipe.YAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => YAxis.IsOnPosition(Recipe.YAxisReadyPosition));
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisReadyPosition));
                     Step.ToRunStep++;
                     break;
                 case EUnloadTransferProcessToRunStep.YAxis_Move_ReadyPosition_Wait:
@@ -350,14 +384,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (IsVacDetect)
                     {
                         Log.Info("Sequence Unload Transfer Place");
-                        Sequence = ESequence.UnloadTransferPlace;
+                        Sequence = port == EPort.Left ? ESequence.UnloadTransferLeftPlace : ESequence.UnloadTransferRightPlace;
                         break;
                     }
                     Step.RunStep++;
                     break;
                 case EUnloadTransferAutoRunStep.End:
                     Log.Info("Sequence AF Clean Unload");
-                    Sequence = ESequence.AFCleanUnload;
+                    Sequence = port == EPort.Left ? ESequence.AFCleanLeftUnload : ESequence.AFCleanRightUnload;
                     break;
             }
         }
@@ -459,7 +493,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Info("Sequence Unload Transfer Place");
-                    Sequence = ESequence.UnloadTransferPlace;
+                    Sequence = port == EPort.Left ? ESequence.UnloadTransferLeftPlace : ESequence.UnloadTransferRightPlace;
                     break;
             }
         }
@@ -484,7 +518,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferPlaceStep.UnloadAlign_GlassVacCheck:
                     Log.Debug("Set Flag Unloading");
                     FlagUnloadTransferUnloading = true;
-                    if(UnloadAlignVac1.Value == false)
+                    if (UnloadAlignVac1.Value == false)
                     {
 #if SIMULATION
                         SimulationInputSetter.SetSimModbusInput(UnloadAlignVac1, true);
@@ -492,7 +526,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep++;
                         break;
                     }
-                    if(UnloadAlignVac2.Value == false)
+                    if (UnloadAlignVac2.Value == false)
                     {
 #if SIMULATION
                         SimulationInputSetter.SetSimModbusInput(UnloadAlignVac2, true);
@@ -500,7 +534,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition2;
                         break;
                     }
-                    if(UnloadAlignVac3.Value == false)
+                    if (UnloadAlignVac3.Value == false)
                     {
 #if SIMULATION
                         SimulationInputSetter.SetSimModbusInput(UnloadAlignVac3, true);
@@ -508,7 +542,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition3;
                         break;
                     }
-                    if(UnloadAlignVac4.Value == false)
+                    if (UnloadAlignVac4.Value == false)
                     {
 #if SIMULATION
                         SimulationInputSetter.SetSimModbusInput(UnloadAlignVac4, true);
@@ -521,11 +555,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition1:
                     Log.Debug("YAxis Move Place Position 1");
                     YAxis.MoveAbs(Recipe.YAxisPlacePosition1);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => YAxis.IsOnPosition(Recipe.YAxisPlacePosition1));
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisPlacePosition1));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition1_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseAlarm((int)(port == EPort.Left ? EAlarm.UnloadTransferLeft_YAxis_MovePlacePosition1_Fail :
                                                         EAlarm.UnloadTransferRight_YAxis_MovePlacePosition1_Fail));
@@ -585,7 +619,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferPlaceStep.ZAxis_Move_PlacePosition:
                     Log.Debug("Z Axis Move Place Position");
                     ZAxis.MoveAbs(Recipe.ZAxisPlacePosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => ZAxis.IsOnPosition(Recipe.ZAxisPlacePosition));
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(Recipe.ZAxisPlacePosition));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.ZAxis_Move_PlacePosition_Wait:
@@ -610,11 +644,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferPlaceStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(Recipe.ZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => ZAxis.IsOnPosition(Recipe.ZAxisReadyPosition));
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(Recipe.ZAxisReadyPosition));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.ZAxis_Move_ReadyPosition_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseAlarm((int)(port == EPort.Left ? EAlarm.UnloadTransferLeft_ZAxis_MoveReadyPosition_Fail :
                                                         EAlarm.UnloadTransferRight_ZAxis_MoveReadyPosition_Fail));
@@ -626,15 +660,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferPlaceStep.YAxis_Move_ReadyPosition:
                     Log.Debug("Y Axis Move Ready Position");
                     YAxis.MoveAbs(Recipe.YAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => YAxis.IsOnPosition(Recipe.YAxisReadyPosition));
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisReadyPosition));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.YAxis_Move_ReadyPosition_Wait:
-                    if(WaitTimeOutOccurred) 
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseAlarm((int)(port == EPort.Left ? EAlarm.UnloadTransferLeft_YAxis_MoveReadyPosition_Fail :
                                                         EAlarm.UnloadTransferRight_YAxis_MoveReadyPosition_Fail));
-                        break; 
+                        break;
                     }
                     Log.Debug("Y Axis Move Ready Position Done");
                     Log.Debug("Clear Flag Unloading");
@@ -648,7 +682,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.Wait_UnloadAlignPlaceDoneReceived:
-                    if(FlagUnloadAlignPlaceDoneReceived == false)
+                    if (FlagUnloadAlignPlaceDoneReceived == false)
                     {
                         break;
                     }
@@ -665,7 +699,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Info("Sequence AF Clean Unload");
-                    Sequence = ESequence.AFCleanUnload;
+                    Sequence = port == EPort.Left ? ESequence.AFCleanLeftUnload : ESequence.AFCleanRightUnload;
                     break;
             }
         }

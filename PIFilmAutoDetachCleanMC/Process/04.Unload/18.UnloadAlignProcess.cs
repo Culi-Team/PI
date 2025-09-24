@@ -212,25 +212,28 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.GlassTransferPlace:
                     break;
-                case ESequence.AlignGlass:
+                case ESequence.AlignGlassLeft:
                     break;
-                case ESequence.TransferInShuttlePick:
+                case ESequence.TransferInShuttleLeftPick:
                     break;
-                case ESequence.WETCleanLoad:
+                case ESequence.WETCleanLeftLoad:
                     break;
-                case ESequence.WETClean:
+                case ESequence.WETCleanLeft:
                     break;
-                case ESequence.WETCleanUnload:
+                case ESequence.WETCleanLeftUnload:
                     break;
-                case ESequence.TransferRotation:
+                case ESequence.TransferRotationLeft:
                     break;
-                case ESequence.AFCleanLoad:
+                case ESequence.AFCleanLeftLoad:
                     break;
-                case ESequence.AFClean:
+                case ESequence.AFCleanLeft:
                     break;
-                case ESequence.AFCleanUnload:
+                case ESequence.AFCleanLeftUnload:
                     break;
-                case ESequence.UnloadTransferPlace:
+                case ESequence.UnloadTransferLeftPlace:
+                    Sequence_UnloadTransferPlace();
+                    break;
+                case ESequence.UnloadTransferRightPlace:
                     Sequence_UnloadTransferPlace();
                     break;
                 case ESequence.UnloadAlignGlass:
@@ -320,7 +323,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EUnloadAlignAutoRunStep.End:
                     Log.Info("Sequence Unload Transfer Place");
-                    Sequence = ESequence.UnloadTransferPlace;
+                    Sequence = ESequence.UnloadTransferLeftPlace;
                     break;
             }
         }
@@ -458,7 +461,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     Log.Info("Sequence Unload Transfer Place");
-                    Sequence = ESequence.UnloadTransferPlace;
+                    Sequence = ESequence.UnloadTransferLeftPlace;
                     break;
             }
         }
@@ -516,6 +519,5 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
         #endregion
-
     }
 }

@@ -38,6 +38,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private bool Is3MPrepareDone { get; set; } = false;
 
+        private EPort port => cleanType == EClean.WETCleanLeft || cleanType == EClean.AFCleanLeft ? EPort.Left : EPort.Right;
         private EClean cleanType
         {
             get
@@ -606,31 +607,93 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.GlassTransferPlace:
                     break;
-                case ESequence.AlignGlass:
+                case ESequence.AlignGlassLeft:
                     break;
-                case ESequence.TransferInShuttlePick:
+                case ESequence.AlignGlassRight:
                     break;
-                case ESequence.WETCleanLoad:
-                    Sequence_Load();
+                case ESequence.TransferInShuttleLeftPick:
                     break;
-                case ESequence.WETClean:
-                    Sequence_Clean();
+                case ESequence.TransferInShuttleRightPick:
                     break;
-                case ESequence.WETCleanUnload:
-                    Sequence_Unload();
+                case ESequence.WETCleanLeftLoad:
+                    if (cleanType == EClean.WETCleanLeft)
+                    {
+                        Sequence_Load();
+                    }
                     break;
-                case ESequence.TransferRotation:
+                case ESequence.WETCleanRightLoad:
+                    if (cleanType == EClean.WETCleanRight)
+                    {
+                        Sequence_Load();
+                    }
                     break;
-                case ESequence.AFCleanLoad:
-                    Sequence_Load();
+                case ESequence.WETCleanLeft:
+                    if (cleanType == EClean.WETCleanLeft)
+                    {
+                        Sequence_Clean();
+                    }
                     break;
-                case ESequence.AFClean:
-                    Sequence_Clean();
+                case ESequence.WETCleanRight:
+                    if (cleanType == EClean.WETCleanRight)
+                    {
+                        Sequence_Clean();
+                    }
                     break;
-                case ESequence.AFCleanUnload:
-                    Sequence_Unload();
+                case ESequence.WETCleanLeftUnload:
+                    if (cleanType == EClean.WETCleanLeft)
+                    {
+                        Sequence_Unload();
+                    }
                     break;
-                case ESequence.UnloadTransferPlace:
+                case ESequence.WETCleanRightUnload:
+                    if (cleanType == EClean.WETCleanRight)
+                    {
+                        Sequence_Unload();
+                    }
+                    break;
+                case ESequence.TransferRotationLeft:
+                    break;
+                case ESequence.TransferRotationRight:
+                    break;
+                case ESequence.AFCleanLeftLoad:
+                    if (cleanType == EClean.AFCleanLeft)
+                    {
+                        Sequence_Load();
+                    }
+                    break;
+                case ESequence.AFCleanRightLoad:
+                    if (cleanType == EClean.AFCleanRight)
+                    {
+                        Sequence_Load();
+                    }
+                    break;
+                case ESequence.AFCleanLeft:
+                    if (cleanType == EClean.AFCleanLeft)
+                    {
+                        Sequence_Clean();
+                    }
+                    break;
+                case ESequence.AFCleanRight:
+                    if (cleanType == EClean.AFCleanRight)
+                    {
+                        Sequence_Clean();
+                    }
+                    break;
+                case ESequence.AFCleanLeftUnload:
+                    if (cleanType == EClean.AFCleanLeft)
+                    {
+                        Sequence_Unload();
+                    }
+                    break;
+                case ESequence.AFCleanRightUnload:
+                    if (cleanType == EClean.AFCleanRight)
+                    {
+                        Sequence_Unload();
+                    }
+                    break;
+                case ESequence.UnloadTransferLeftPlace:
+                    break;
+                case ESequence.UnloadTransferRightPlace:
                     break;
                 case ESequence.UnloadAlignGlass:
                     break;
@@ -723,12 +786,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                         if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                         {
                             Log.Info("Sequence WET Clean");
-                            Sequence = ESequence.WETClean;
+                            if (cleanType == EClean.WETCleanLeft)
+                            {
+                                Sequence = ESequence.WETCleanLeft;
+                                break;
+                            }
+                            Sequence = ESequence.WETCleanRight;
                             break;
                         }
 
                         Log.Info("Sequence AF Clean");
-                        Sequence = ESequence.AFClean;
+                        if (cleanType == EClean.AFCleanLeft)
+                        {
+                            Sequence = ESequence.AFCleanLeft;
+                            break;
+                        }
+                        Sequence = ESequence.AFCleanRight;
                         break;
                     }
                     Step.RunStep++;
@@ -737,11 +810,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
                         Log.Info("Sequence WET Clean Load");
-                        Sequence = ESequence.WETCleanLoad;
+                        Sequence = port == EPort.Left ? ESequence.WETCleanLeftLoad : ESequence.WETCleanRightLoad;
                         break;
                     }
                     Log.Info("Sequence AF Clean Load");
-                    Sequence = ESequence.AFCleanLoad;
+                    Sequence = port == EPort.Left ? ESequence.AFCleanLeftLoad : ESequence.AFCleanRightLoad;
                     break;
             }
         }
@@ -872,11 +945,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
                         Log.Info("Sequence WET Clean");
-                        Sequence = ESequence.WETClean;
+                        Sequence = port == EPort.Left ? ESequence.WETCleanLeft : ESequence.WETCleanRight;
                         break;
                     }
                     Log.Info("Sequence AF Clean");
-                    Sequence = ESequence.AFClean;
+                    Sequence = port == EPort.Left ? ESequence.AFCleanLeft : ESequence.AFCleanRight;
                     break;
             }
         }
@@ -1180,11 +1253,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
                         Log.Info("Sequence WET Clean Unload");
-                        Sequence = ESequence.WETCleanUnload;
+                        Sequence = port == EPort.Left ? ESequence.WETCleanLeftUnload : ESequence.WETCleanRightUnload;
                         break;
                     }
                     Log.Info("Sequence AF Clean Unload");
-                    Sequence = ESequence.AFCleanUnload;
+                    Sequence = port == EPort.Left ? ESequence.AFCleanLeftUnload : ESequence.AFCleanRightUnload;
                     break;
             }
         }
@@ -1311,11 +1384,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
                         Log.Info("Sequence WET Clean Load");
-                        Sequence = ESequence.WETCleanLoad;
+                        Sequence = port == EPort.Left ? ESequence.WETCleanLeftLoad : ESequence.WETCleanRightLoad;
                         break;
                     }
                     Log.Info("Sequence AF Clean Load");
-                    Sequence = ESequence.AFCleanLoad;
+                    Sequence = port == EPort.Left ? ESequence.AFCleanLeftLoad : ESequence.AFCleanRightLoad;
                     break;
             }
         }

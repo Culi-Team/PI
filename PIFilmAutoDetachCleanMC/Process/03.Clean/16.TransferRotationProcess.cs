@@ -280,28 +280,69 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.GlassTransferPlace:
                     break;
-                case ESequence.AlignGlass:
+                case ESequence.AlignGlassLeft:
                     break;
-                case ESequence.TransferInShuttlePick:
+                case ESequence.AlignGlassRight:
                     break;
-                case ESequence.WETCleanLoad:
+                case ESequence.TransferInShuttleLeftPick:
                     break;
-                case ESequence.WETClean:
+                case ESequence.TransferInShuttleRightPick:
                     break;
-                case ESequence.WETCleanUnload:
-                    Sequence_WETCleanUnload();
+                case ESequence.WETCleanLeftLoad:
                     break;
-                case ESequence.TransferRotation:
-                    Sequence_TransferRotation();
+                case ESequence.WETCleanRightLoad:
                     break;
-                case ESequence.AFCleanLoad:
-                    Sequence_AFCleanLoad();
+                case ESequence.WETCleanLeft:
                     break;
-                case ESequence.AFClean:
+                case ESequence.WETCleanRight:
                     break;
-                case ESequence.AFCleanUnload:
+                case ESequence.WETCleanLeftUnload:
+                    if (port == EPort.Left)
+                    {
+                        Sequence_WETCleanUnload();
+                    }
                     break;
-                case ESequence.UnloadTransferPlace:
+                case ESequence.WETCleanRightUnload:
+                    if (port == EPort.Right)
+                    {
+                        Sequence_WETCleanUnload();
+                    }
+                    break;
+                case ESequence.TransferRotationLeft:
+                    if (port == EPort.Left)
+                    {
+                        Sequence_TransferRotation();
+                    }
+                    break;
+                case ESequence.TransferRotationRight:
+                    if (port == EPort.Right)
+                    {
+                        Sequence_TransferRotation();
+                    }
+                    break;
+                case ESequence.AFCleanLeftLoad:
+                    if (port == EPort.Left)
+                    {
+                        Sequence_AFCleanLoad();
+                    }
+                    break;
+                case ESequence.AFCleanRightLoad:
+                    if (port == EPort.Right)
+                    {
+                        Sequence_AFCleanLoad();
+                    }
+                    break;
+                case ESequence.AFCleanLeft:
+                    break;
+                case ESequence.AFCleanRight:
+                    break;
+                case ESequence.AFCleanLeftUnload:
+                    break;
+                case ESequence.AFCleanRightUnload:
+                    break;
+                case ESequence.UnloadTransferLeftPlace:
+                    break;
+                case ESequence.UnloadTransferRightPlace:
                     break;
                 case ESequence.UnloadAlignGlass:
                     break;
@@ -387,20 +428,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (GlassVac1.Value || GlassRotVac.Value)
                     {
                         Log.Info("Sequence Transfer Rotation");
-                        Sequence = ESequence.TransferRotation;
+                        Sequence = port == EPort.Left ? ESequence.TransferRotationLeft : ESequence.TransferRotationRight;
                         break;
                     }
                     if (GlassVac2.Value)
                     {
                         Log.Info("Sequence AF Clean Load");
-                        Sequence = ESequence.AFCleanLoad;
+                        Sequence = port == EPort.Left ? ESequence.AFCleanLeftLoad : ESequence.AFCleanRightLoad;
                         break;
                     }
                     Step.RunStep++;
                     break;
                 case ETransferRotationAutoRunStep.End:
                     Log.Info("Sequence WET Clean Unload");
-                    Sequence = ESequence.WETCleanUnload;
+                    Sequence = port == EPort.Left ? ESequence.WETCleanLeftUnload : ESequence.WETCleanRightUnload;
                     break;
             }
         }
@@ -503,7 +544,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Info("Sequence Transfer Rotation");
-                    Sequence = ESequence.TransferRotation;
+                    Sequence = port == EPort.Left ? ESequence.TransferRotationLeft : ESequence.TransferRotationRight;
                     break;
             }
         }
@@ -691,7 +732,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Info("Sequence AF Clean Load");
-                    Sequence = ESequence.AFCleanLoad;
+                    Sequence = port == EPort.Left ? ESequence.AFCleanLeftLoad : ESequence.AFCleanRightLoad;
                     break;
             }
         }
@@ -787,7 +828,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     Log.Info("Sequence WET Clean Unload");
-                    Sequence = ESequence.WETCleanUnload;
+                    Sequence = port == EPort.Left ? ESequence.WETCleanLeftUnload : ESequence.WETCleanRightUnload;
                     break;
             }
         }

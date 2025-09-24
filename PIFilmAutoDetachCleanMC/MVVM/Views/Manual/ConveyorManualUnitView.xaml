@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views.Manual"
              mc:Ignorable="d"
+             xmlns:views="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
              x:Name="root"
              xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              d:DesignHeight="450"
@@ -134,7 +135,22 @@
                       Grid.Row="1"
                       Header="SemiAuto"
                       Style="{StaticResource TextBlockHeaderGroupBox}">
-
+                <ItemsControl ItemsSource="{Binding SemiAutoSequences}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding .,Converter={StaticResource EnumDescriptionConverter}}"
+                                    FontSize="14"
+                                    Command="{Binding DataContext.SemiAutoCommand, RelativeSource={RelativeSource AncestorType={x:Type views:ManualView}}}"
+                                    CommandParameter="{Binding .}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="1"
+                                         VerticalAlignment="Top" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
             </GroupBox>
         </Grid>
     </Grid>

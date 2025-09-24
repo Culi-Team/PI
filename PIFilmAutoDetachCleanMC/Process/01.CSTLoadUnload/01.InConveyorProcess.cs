@@ -155,16 +155,26 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.RemoveFilm:
                 case ESequence.GlassTransferPick:
                 case ESequence.GlassTransferPlace:
-                case ESequence.AlignGlass:
-                case ESequence.TransferInShuttlePick:
-                case ESequence.WETCleanLoad:
-                case ESequence.WETClean:
-                case ESequence.WETCleanUnload:
-                case ESequence.TransferRotation:
-                case ESequence.AFCleanLoad:
-                case ESequence.AFClean:
-                case ESequence.AFCleanUnload:
-                case ESequence.UnloadTransferPlace:
+                case ESequence.AlignGlassLeft:
+                case ESequence.AlignGlassRight:
+                case ESequence.TransferInShuttleLeftPick:
+                case ESequence.TransferInShuttleRightPick:
+                case ESequence.WETCleanLeftLoad:
+                case ESequence.WETCleanRightLoad:
+                case ESequence.WETCleanLeft:
+                case ESequence.WETCleanRight:
+                case ESequence.WETCleanLeftUnload:
+                case ESequence.WETCleanRightUnload:
+                case ESequence.TransferRotationLeft:
+                case ESequence.TransferRotationRight:
+                case ESequence.AFCleanLeftLoad:
+                case ESequence.AFCleanRightLoad:
+                case ESequence.AFCleanLeft:
+                case ESequence.AFCleanRight:
+                case ESequence.AFCleanLeftUnload:
+                case ESequence.AFCleanRightUnload:
+                case ESequence.UnloadTransferLeftPlace:
+                case ESequence.UnloadTransferRightPlace:
                 case ESequence.UnloadAlignGlass:
                 case ESequence.UnloadRobotPick:
                 case ESequence.UnloadRobotPlasma:

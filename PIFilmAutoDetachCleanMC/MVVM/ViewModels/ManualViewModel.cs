@@ -5,6 +5,7 @@ using EQX.Core.Display;
 using EQX.Core.InOut;
 using EQX.Core.Robot;
 using EQX.Core.Sequence;
+using EQX.UI.Controls;
 using EQX.UI.Display;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -195,7 +196,26 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand<object>((o) =>
                 {
+                    if (Devices.MotionsAjin.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
+                    {
+                        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_TurnOnAllMotionsFirst"], (string)Application.Current.Resources["str_Confirm"]);
+                        return;
+                    }
+
+                    if (Devices.MotionsInovance.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
+                    {
+                        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_TurnOnAllMotionsFirst"], (string)Application.Current.Resources["str_Confirm"]);
+                        return;
+                    }
+
+                    if (MachineStatus.OriginDone == false)
+                    {
+                        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_MachineNeedToBeOriginBeforeRun"]);
+                        return;
+                    }
+
                     if (o is ESequence sequence == false) return;
+
                     _processes.RootProcess.Sequence = sequence;
 
                     foreach (var process in _processes.RootProcess.Childs!)
@@ -262,6 +282,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             inConveyor.Outputs = Devices.GetInConveyorOutputs();
             inConveyor.Rollers = Devices.GetInConveyorRollers();
             inConveyor.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("InCassetteCVImage");
+            inConveyor.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.InConveyorLoad,
+                ESequence.InWorkCSTLoad
+            };
 
             ConveyorManualUnitViewModel inWorkConveyor = new ConveyorManualUnitViewModel("In Work Conveyor");
             inWorkConveyor.Cylinders = Devices.GetInWorkConveyorCylinders();
@@ -270,6 +295,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             inWorkConveyor.Rollers = Devices.GetInWorkConveyorRollers();
             inWorkConveyor.Motions = Devices.GetCSTLoadMotions();
             inWorkConveyor.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("LoadWorkCassetteStageImage");
+            inWorkConveyor.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.InWorkCSTLoad,
+                ESequence.CSTTilt,
+                ESequence.InWorkCSTUnLoad
+            };
 
             ConveyorManualUnitViewModel bufferConveyor = new ConveyorManualUnitViewModel("Buffer Conveyor");
             bufferConveyor.Cylinders = Devices.GetBufferConveyorCylinders();
@@ -277,6 +308,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             bufferConveyor.Outputs = Devices.GetBufferConveyorOutputs();
             bufferConveyor.Rollers = Devices.GetBufferConveyorRollers();
             bufferConveyor.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("BufferCVImage");
+            bufferConveyor.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.InWorkCSTUnLoad,
+                ESequence.OutWorkCSTLoad
+            };
 
             ConveyorManualUnitViewModel outWorkConveyor = new ConveyorManualUnitViewModel("Out Work Conveyor");
             outWorkConveyor.Cylinders = Devices.GetOutWorkConveyorCylinders();
@@ -285,6 +321,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             outWorkConveyor.Rollers = Devices.GetOutWorkConveyorRollers();
             outWorkConveyor.Motions = Devices.GetCSTUnloadMotions();
             outWorkConveyor.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("LoadWorkCassetteStageImage");
+            outWorkConveyor.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.OutWorkCSTLoad,
+                ESequence.CSTTilt,
+                ESequence.OutWorkCSTUnLoad
+            };
 
             ConveyorManualUnitViewModel outConveyor = new ConveyorManualUnitViewModel("Out Conveyor");
             outConveyor.Cylinders = Devices.GetOutConveyorCylinders();
@@ -292,23 +334,36 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             outConveyor.Outputs = Devices.GetOutConveyorOutputs();
             outConveyor.Rollers = Devices.GetOutConveyorRollers();
             outConveyor.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("OutCassetteCVImage");
+            outConveyor.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.OutWorkCSTUnLoad,
+                ESequence.OutConveyorUnload
+            };
 
             ManualUnitViewModel robotLoadUnit = new ManualUnitViewModel("Robot Load");
             robotLoadUnit.Cylinders = Devices.GetRobotLoadCylinders();
             robotLoadUnit.Inputs = Devices.GetRobotLoadInputs();
             robotLoadUnit.Outputs = Devices.GetRobotLoadOutputs();
             robotLoadUnit.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("LoadRobotImage");
+            robotLoadUnit.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.RobotPickFixtureFromCST,
+                ESequence.RobotPlaceFixtureToVinylClean,
+                ESequence.RobotPlaceFixtureToAlign,
+                ESequence.RobotPickFixtureFromRemoveZone,
+                ESequence.RobotPlaceFixtureToOutWorkCST
+            };
 
             ManualUnitViewModel vinylClean = new ManualUnitViewModel("Vinyl Clean");
             vinylClean.Cylinders = Devices.GetVinylCleanCylinders();
             vinylClean.Inputs = Devices.GetVinylCleanInputs();
             vinylClean.Outputs = Devices.GetVinylCleanOutputs();
             vinylClean.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("VinylCleanImage");
-            vinylClean.SemiAutoSequences = new ObservableCollection<ESequence>() 
+            vinylClean.SemiAutoSequences = new ObservableCollection<ESequence>()
             {
                 ESequence.RobotPlaceFixtureToVinylClean,
                 ESequence.VinylClean,
-                ESequence.RobotPickFixtureFromVinylClean 
+                ESequence.RobotPickFixtureFromVinylClean
             };
 
             ManualUnitViewModel transferFixture = new ManualUnitViewModel("Transfer Fixture");
@@ -317,11 +372,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             transferFixture.Outputs = Devices.GetTransferFixtureOutputs();
             transferFixture.Motions = Devices.GetTransferFixtureMotions();
             transferFixture.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferFixtureImage");
+            transferFixture.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.TransferFixtureLoad,
+                ESequence.TransferFixtureUnload,
+            };
 
             ManualUnitViewModel fixtureAlign = new ManualUnitViewModel("Fixture Align");
             fixtureAlign.Cylinders = Devices.GetFixtureAlignCylinders();
             fixtureAlign.Inputs = Devices.GetFixtureAlignInputs();
             fixtureAlign.Outputs = Devices.GetFixtureAlignOutputs();
+            fixtureAlign.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AlignFixtureImage");
+            fixtureAlign.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.RobotPlaceFixtureToAlign,
+                ESequence.FixtureAlign
+            };
 
             ManualUnitViewModel detach = new ManualUnitViewModel("Detach");
             detach.Cylinders = Devices.GetDetachCylinders();
@@ -329,11 +395,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             detach.Inputs = Devices.GetDetachInputs();
             detach.Outputs = Devices.GetDetachOutputs();
             detach.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("DetachImage");
+            detach.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.Detach,
+                ESequence.DetachUnload
+            };
 
             ManualUnitViewModel removeFilm = new ManualUnitViewModel("Remove Film");
             removeFilm.Cylinders = Devices.GetRemoveFilmCylinders();
             removeFilm.Inputs = Devices.GetRemoveFilmInputs();
             removeFilm.Outputs = Devices.GetRemoveFilmOutputs();
+            removeFilm.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("RemoveZoneImage");
+            removeFilm.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.RemoveFilm,
+                ESequence.RemoveFilmThrow
+            };
 
             ManualUnitViewModel glassTransfer = new ManualUnitViewModel("Glass Transfer");
             glassTransfer.Cylinders = Devices.GetGlassTransferCylinders();
@@ -341,6 +418,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             glassTransfer.Inputs = Devices.GetGlassTransferInputs();
             glassTransfer.Outputs = Devices.GetGlassTransferOutputs();
             glassTransfer.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("GlassTransferImage");
+            glassTransfer.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.GlassTransferPick,
+                ESequence.GlassTransferPlace,
+            };
 
             ManualUnitViewModel transferInShuttleLeft = new ManualUnitViewModel("Transfer In Shuttle Left");
             transferInShuttleLeft.Cylinders = Devices.GetTransferInShuttleLeftCylinders();
@@ -348,13 +430,21 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             transferInShuttleLeft.Inputs = Devices.GetTransferShutterLeftInputs();
             transferInShuttleLeft.Outputs = Devices.GetTransferShutterLeftOutputs();
             transferInShuttleLeft.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage");
+            transferInShuttleLeft.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.TransferInShuttleLeftPick,
+                ESequence.WETCleanLeftLoad,
+            };
 
             ManualUnitViewModel glassAlignLeft = new ManualUnitViewModel("Glass Align Left");
             glassAlignLeft.Cylinders = Devices.GetGlassAlignLeftCylinders();
             glassAlignLeft.Inputs = Devices.GetGlassAlignLeftInputs();
             glassAlignLeft.Outputs = Devices.GetGlassAlignLeftOutputs();
             glassAlignLeft.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AlignStageImage");
-
+            glassAlignLeft.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.AlignGlassLeft,
+            };
 
             ManualUnitViewModel transferInShuttleRight = new ManualUnitViewModel("Transfer In Shuttle Right");
             transferInShuttleRight.Cylinders = Devices.GetTransferInShuttleRightCylinders();
@@ -362,12 +452,21 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             transferInShuttleRight.Inputs = Devices.GetTransferShutterRightInputs();
             transferInShuttleRight.Outputs = Devices.GetTransferShutterRightOutputs();
             transferInShuttleRight.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage");
+            transferInShuttleRight.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.TransferInShuttleRightPick,
+                ESequence.WETCleanRightLoad,
+            };
 
             ManualUnitViewModel glassAlignRight = new ManualUnitViewModel("Glass Align Right");
             glassAlignRight.Cylinders = Devices.GetGlassAlignRightCylinders();
             glassAlignRight.Inputs = Devices.GetGlassAlignRightInputs();
             glassAlignRight.Outputs = Devices.GetGlassAlignRightOutputs();
             glassAlignRight.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AlignStageImage");
+            glassAlignRight.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.AlignGlassRight,
+            };
 
             ManualUnitViewModel wetCleanLeft = new ManualUnitViewModel("WET Clean Left");
             wetCleanLeft.Cylinders = Devices.GetWETCleanLeftCylinders();
@@ -375,6 +474,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             wetCleanLeft.Inputs = Devices.GetWETCleanLeftInputs();
             wetCleanLeft.Outputs = Devices.GetWETCleanLeftOutputs();
             wetCleanLeft.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
+            wetCleanLeft.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.WETCleanLeftLoad,
+                ESequence.WETCleanLeft,
+            };
 
             ManualUnitViewModel wetCleanRight = new ManualUnitViewModel("WET Clean Right");
             wetCleanRight.Cylinders = Devices.GetWETCleanRightCylinders();
@@ -382,6 +486,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             wetCleanRight.Inputs = Devices.GetWETCleanRightInputs();
             wetCleanRight.Outputs = Devices.GetWETCleanRightOutputs();
             wetCleanRight.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
+            wetCleanRight.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.WETCleanRightLoad,
+                ESequence.WETCleanRight,
+            };
 
             ManualUnitViewModel transferRotationLeft = new ManualUnitViewModel("Transfer Rotation Left");
             transferRotationLeft.Cylinders = Devices.GetTransferRotationLeftCylinders();
@@ -389,6 +498,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             transferRotationLeft.Inputs = Devices.GetTransferRotationLeftInputs();
             transferRotationLeft.Outputs = Devices.GetTransferRotationLeftOutputs();
             transferRotationLeft.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferRotationImage");
+            transferRotationLeft.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.WETCleanLeftUnload,
+                ESequence.AFCleanLeftLoad,
+            };
 
             ManualUnitViewModel transferRotationRight = new ManualUnitViewModel("Transfer Rotation Right");
             transferRotationRight.Cylinders = Devices.GetTransferRotationRightCylinders();
@@ -396,6 +510,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             transferRotationRight.Inputs = Devices.GetTransferRotationRightInputs();
             transferRotationRight.Outputs = Devices.GetTransferRotationRightOutputs();
             transferRotationRight.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferRotationImage");
+            transferRotationRight.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.WETCleanRightUnload,
+                ESequence.AFCleanRightLoad,
+            };
 
             ManualUnitViewModel afCleanLeft = new ManualUnitViewModel("AF Clean Left");
             afCleanLeft.Cylinders = Devices.GetAFCleanLeftCylinders();
@@ -403,6 +522,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             afCleanLeft.Inputs = Devices.GetAFCleanLeftInputs();
             afCleanLeft.Outputs = Devices.GetAFCleanLeftOutputs();
             afCleanLeft.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
+            afCleanLeft.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.AFCleanLeftLoad,
+                ESequence.AFCleanLeft,
+            };
 
             ManualUnitViewModel afCleanRight = new ManualUnitViewModel("AF Clean Right");
             afCleanRight.Cylinders = Devices.GetAFCleanRightCylinders();
@@ -410,6 +534,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             afCleanRight.Inputs = Devices.GetAFCleanRightInputs();
             afCleanRight.Outputs = Devices.GetAFCleanRightOutputs();
             afCleanRight.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
+            afCleanRight.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.AFCleanRightLoad,
+                ESequence.AFCleanRight,
+            };
 
             ManualUnitViewModel unloadTransferLeft = new ManualUnitViewModel("Unload Transfer Left");
             unloadTransferLeft.Cylinders = Devices.GetUnloadTransferLeftCylinders();
@@ -417,6 +546,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             unloadTransferLeft.Inputs = Devices.GetUnloadTransferLeftInputs();
             unloadTransferLeft.Outputs = Devices.GetUnloadTransferLeftOutputs();
             unloadTransferLeft.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadTransferImage");
+            unloadTransferLeft.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.AFCleanLeftUnload,
+                ESequence.UnloadTransferLeftPlace,
+            };
 
             ManualUnitViewModel unloadTransferRight = new ManualUnitViewModel("Unload Transfer Right");
             unloadTransferRight.Cylinders = Devices.GetUnloadTransferRightCylinders();
@@ -424,18 +558,33 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             unloadTransferRight.Inputs = Devices.GetUnloadTransferRightInputs();
             unloadTransferRight.Outputs = Devices.GetUnloadTransferRightOutputs();
             unloadTransferRight.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadTransferImage");
+            unloadTransferRight.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.AFCleanRightUnload,
+                ESequence.UnloadTransferRightPlace,
+            };
 
             ManualUnitViewModel unloadAlign = new ManualUnitViewModel("Unload Align");
             unloadAlign.Cylinders = Devices.GetUnloadAlignCylinders();
             unloadAlign.Inputs = Devices.GetUnloadAlignInputs();
             unloadAlign.Outputs = Devices.GetUnloadAlignOutputs();
             unloadAlign.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadStageImage");
+            unloadAlign.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.UnloadAlignGlass,
+            };
 
             ManualUnitViewModel unloadRobotUnit = new ManualUnitViewModel("Unload Robot");
             unloadRobotUnit.Cylinders = Devices.GetUnloadRobotCylinders();
             unloadRobotUnit.Inputs = Devices.GetUnloadRobotInputs();
             unloadRobotUnit.Outputs = Devices.GetUnloadRobotOutputs();
             unloadRobotUnit.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadRobotImage");
+            unloadRobotUnit.SemiAutoSequences = new ObservableCollection<ESequence>()
+            {
+                ESequence.UnloadRobotPick,
+                ESequence.UnloadRobotPlasma,
+                ESequence.UnloadRobotPlace,
+            };
 
             ManualUnits = new ObservableCollection<ManualUnitViewModel>()
             {

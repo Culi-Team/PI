@@ -27,21 +27,21 @@ namespace PIFilmAutoDetachCleanMC.Defines
         [Description("Out Conveyor Unload")]
         OutConveyorUnload,
 
-        [Description("Robot Pick")]
+        [Description("Pick From CST")]
         RobotPickFixtureFromCST,
-        [Description("Robot Place")]
+        [Description("Place To Vinyl Clean")]
         RobotPlaceFixtureToVinylClean,
         [Description("Vinyl Clean")]
         VinylClean,
-        [Description("Robot Pick")]
+        [Description("Pick From Vinyl Clean")]
         RobotPickFixtureFromVinylClean,
-        [Description("Robot Place")]
+        [Description("Place To Align")]
         RobotPlaceFixtureToAlign,
         [Description("Fixture Align")]
         FixtureAlign,
-        [Description("Robot Pick")]
+        [Description("Pick From Remove Zone")]
         RobotPickFixtureFromRemoveZone,
-        [Description("Robot Place")]
+        [Description("Place To Out CST")]
         RobotPlaceFixtureToOutWorkCST,
 
         [Description("Transfer Fixture Load")]
@@ -63,30 +63,50 @@ namespace PIFilmAutoDetachCleanMC.Defines
         GlassTransferPlace,
 
         [Description("Glass Align")]
-        AlignGlass,
+        AlignGlassLeft,
+        [Description("Glass Align")]
+        AlignGlassRight,
 
         [Description("Transfer In Shuttle Pick")]
-        TransferInShuttlePick,
+        TransferInShuttleLeftPick,
+        [Description("Transfer In Shuttle Pick")]
+        TransferInShuttleRightPick,
 
         [Description("WET Clean Load")]
-        WETCleanLoad,
+        WETCleanLeftLoad,
+        [Description("WET Clean Load")]
+        WETCleanRightLoad,
         [Description("WET Clean")]
-        WETClean,
+        WETCleanLeft,
+        [Description("WET Clean")]
+        WETCleanRight,
         [Description("WET Clean Unload")]
-        WETCleanUnload,
+        WETCleanLeftUnload,
+        [Description("WET Clean Unload")]
+        WETCleanRightUnload,
 
         [Description("Transfer Rotation")]
-        TransferRotation,
+        TransferRotationLeft,
+        [Description("Transfer Rotation")]
+        TransferRotationRight,
 
         [Description("AF Clean Load")]
-        AFCleanLoad,
+        AFCleanLeftLoad,
+        [Description("AF Clean Load")]
+        AFCleanRightLoad,
         [Description("AF Clean")]
-        AFClean,
+        AFCleanLeft,
+        [Description("AF Clean")]
+        AFCleanRight,
         [Description("AF Clean Unload")]
-        AFCleanUnload,
+        AFCleanLeftUnload,
+        [Description("AF Clean Unload")]
+        AFCleanRightUnload,
 
         [Description("Unload Transfer Place")]
-        UnloadTransferPlace,
+        UnloadTransferLeftPlace,
+        [Description("Unload Transfer Place")]
+        UnloadTransferRightPlace,
 
         [Description("Unload Align")]
         UnloadAlignGlass,
