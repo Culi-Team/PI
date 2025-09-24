@@ -32,6 +32,7 @@
         TransferFixtureUnload,
         DetachUnload,
         RemoveFilm,
+        RemoveFilmThrow,
 
         GlassTransferPick,
         GlassTransferPlace,

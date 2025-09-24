@@ -225,7 +225,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.FixtureAlign:
                     break;
                 case ESequence.RobotPickFixtureFromRemoveZone:
-                    Sequence_RobotPickFromRemoveZone();
                     break;
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
                     break;
@@ -240,6 +239,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.RemoveFilm:
                     Sequence_RemoveFilm();
+                    break;
+                case ESequence.RemoveFilmThrow:
+                    Sequence_RemoveFilmThrow();
                     break;
                 case ESequence.GlassTransferPick:
                     break;
@@ -596,21 +598,21 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private void Sequence_RobotPickFromRemoveZone()
+        private void Sequence_RemoveFilmThrow()
         {
-            switch ((ERemoveFilmProcessRobotPickStep)Step.RunStep)
+            switch ((ERemoveFilmThrowStep)Step.RunStep)
             {
-                case ERemoveFilmProcessRobotPickStep.Start:
+                case ERemoveFilmThrowStep.Start:
                     Log.Debug("Robot Pick From Remove Zone Start");
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown1_Down:
+                case ERemoveFilmThrowStep.Cyl_UpDown1_Down:
                     Log.Debug("Cylinder UpDown1 Down");
                     UpDownCyl1.Forward();
                     Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl1.IsForward);
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown1_Down_Wait:
+                case ERemoveFilmThrowStep.Cyl_UpDown1_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder1_Down_Fail);
@@ -619,13 +621,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder UpDown1 Down Done");
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRobotPickStep.Cyl_UnClamp:
+                case ERemoveFilmThrowStep.Cyl_UnClamp:
                     Log.Debug("Cylinder UnClamp");
                     CylClampUnClamp(false);
                     Wait(_commonRecipe.CylinderMoveTimeout, () => ClampCyl1.IsBackward && ClampCyl2.IsBackward && ClampCyl3.IsBackward);
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRobotPickStep.Cyl_UnClamp_Wait:
+                case ERemoveFilmThrowStep.Cyl_UnClamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.RemoveFilm_ClampCylinder_UnClamp_Fail);
@@ -634,13 +636,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder UnClamp Done");
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Down_1st:
+                case ERemoveFilmThrowStep.Cyl_UpDown2_Down_1st:
                     Log.Debug("Cylinder UpDown2 Down 1st");
                     UpDownCyl2.Forward();
                     Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl2.IsForward);
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Down_1st_Wait:
+                case ERemoveFilmThrowStep.Cyl_UpDown2_Down_1st_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder2_Down_Fail);
@@ -649,13 +651,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder UpDown2 Down 1st Done");
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Up_1st:
+                case ERemoveFilmThrowStep.Cyl_UpDown2_Up_1st:
                     Log.Debug("Cylinder UpDown2 Up 1st");
                     UpDownCyl2.Backward();
                     Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl2.IsBackward);
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Up_1st_Wait:
+                case ERemoveFilmThrowStep.Cyl_UpDown2_Up_1st_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder2_Up_Fail);
@@ -664,13 +666,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder UpDown2 Up 1st Done");
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Down_2nd:
+                case ERemoveFilmThrowStep.Cyl_UpDown2_Down_2nd:
                     Log.Debug("Cylinder UpDown2 Down 2nd");
                     UpDownCyl2.Forward();
                     Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl2.IsForward);
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Down_2nd_Wait:
+                case ERemoveFilmThrowStep.Cyl_UpDown2_Down_2nd_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder2_Down_Fail);
@@ -679,13 +681,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder UpDown2 Down 2nd Done");
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Up_2nd:
+                case ERemoveFilmThrowStep.Cyl_UpDown2_Up_2nd:
                     Log.Debug("Cylinder UpDown2 Up 2nd");
                     UpDownCyl2.Backward();
                     Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl2.IsBackward);
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown2_Up_2nd_Wait:
+                case ERemoveFilmThrowStep.Cyl_UpDown2_Up_2nd_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder2_Up_Fail);
@@ -694,13 +696,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder UpDown2 Up 2nd Done");
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown1_Up:
+                case ERemoveFilmThrowStep.Cyl_UpDown1_Up:
                     Log.Debug("Cylinder UpDown1 Up");
                     UpDownCyl1.Backward();
                     Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl1.IsBackward);
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRobotPickStep.Cyl_UpDown1_Up_Wait:
+                case ERemoveFilmThrowStep.Cyl_UpDown1_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder1_Up_Fail);
@@ -710,7 +712,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     Log.Debug("Wait Remove Film Unload Done");
                     break;
-                case ERemoveFilmProcessRobotPickStep.Wait_RemoveFilmUnloadDone:
+                case ERemoveFilmThrowStep.Wait_RemoveFilmUnloadDone:
                     if (FlagRemoveFilmUnloadDone == false)
                     {
                         Wait(20);
@@ -718,11 +720,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRobotPickStep.End:
+                case ERemoveFilmThrowStep.End:
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
                     Log.Info("Sequence Transfer Fixture Unload");

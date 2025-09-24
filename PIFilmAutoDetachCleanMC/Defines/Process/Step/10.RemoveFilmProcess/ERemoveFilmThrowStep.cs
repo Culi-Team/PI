@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum ERemoveFilmProcessRobotPickStep
+    public enum ERemoveFilmThrowStep
     {
         Start,
         Cyl_UpDown1_Down,
