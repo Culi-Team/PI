@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
 using PIFilmAutoDetachCleanMC.Process;
+using PIFilmAutoDetachCleanMC.Services;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -18,6 +19,10 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddSingleton<ProcessInitSelect>();
                 services.AddSingleton<ICellColorRepository,CellColorRepository>();
                 services.AddSingleton<CellStatusToColorConverter>();
+
+                services.AddKeyedScoped<IAlertService, AlarmService>("AlarmService");
+                services.AddKeyedScoped<IAlertService, WarningService>("WarningService");
+
                 services.AddKeyedScoped("BlinkTimer", (s, o) => { return new ActionAssignableTimer(500); });
             });
 

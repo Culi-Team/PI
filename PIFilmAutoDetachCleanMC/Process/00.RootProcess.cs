@@ -1,6 +1,8 @@
-﻿using EQX.Core.Sequence;
+﻿using EQX.Core.Common;
+using EQX.Core.Sequence;
 using EQX.Process;
 using EQX.UI.Controls;
+using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using System.Windows;
@@ -16,6 +18,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly MachineStatus _machineStatus;
         private int raisedAlarmCode = -1;
         private int raisedWarningCode = -1;
+        private readonly IAlertService _alarmService;
+
+        private readonly IAlertService _warningService;
         private readonly object _lockAlarm = new object();
 
         private bool DoorSensor
@@ -70,10 +75,14 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         #region Constructor
         public RootProcess(Devices devices,
-            MachineStatus machineStatus)
+            MachineStatus machineStatus,
+            [FromKeyedServices("AlarmService")] IAlertService alarmService,
+            [FromKeyedServices("WarningService")] IAlertService warningService)
         {
             _devices = devices;
             _machineStatus = machineStatus;
+            _alarmService = alarmService;
+            _warningService = warningService;
 
             this.ProcessModeUpdated += ProcessModeUpdatedHandler;
 
@@ -187,7 +196,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                 ProcessMode = EProcessMode.Alarm;
                 Log.Info("ToAlarm Done, Alarm");
-                //AlertNotifyView.ShowDialog(_alarmService.GetById(raisedAlarmCode));
+                AlertNotifyView.ShowDialog(_alarmService.GetById(raisedAlarmCode));
                 raisedAlarmCode = -1;
             }
             else
@@ -208,7 +217,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _devices.Outputs.Lamp_Alarm();
                 ProcessMode = EProcessMode.Warning;
                 Log.Info("ToWarning Done, Warning");
-                //AlertNotifyView.ShowDialog(_warningService.GetById(raisedWarningCode), true);
+                AlertNotifyView.ShowDialog(_warningService.GetById(raisedWarningCode), true);
                 raisedWarningCode = -1;
             }
             else
