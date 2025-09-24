@@ -18,14 +18,22 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public int WinderTorque
 		{
 			get { return winderTorque; }
-			set { winderTorque = value; }
+			set 
+			{
+                OnRecipeChanged(winderTorque, value);
+                winderTorque = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Vinyl Length Per Cleaning", Unit = Unit.mm)]
         public double VinylLengthPerCleaning
 		{
 			get { return vinylLengthPerCleaning; }
-			set { vinylLengthPerCleaning = value; }
+			set 
+			{
+                OnRecipeChanged(vinylLengthPerCleaning, value);
+                vinylLengthPerCleaning = value; 
+			}
 		}
 	}
 }

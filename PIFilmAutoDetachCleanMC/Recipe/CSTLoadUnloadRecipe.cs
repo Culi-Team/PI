@@ -1,5 +1,6 @@
 ﻿using EQX.Core.Recipe;
 using EQX.Core.Units;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +21,19 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private double outCstTAxisLoadPosition;
         private double outCstTAxisWorkPosition;
 
+		[JsonIgnore]
+		public EventHandler CassetteSizeChanged;
+
         [SingleRecipeDescription(Description = "Conveyor Speed", Unit = Unit.RevolutionsPerMinute)]
         [SingleRecipeMinMax(Max = 5000, Min = 200)]
         public uint ConveyorSpeed
 		{
 			get { return conveyorSpeed; }
-			set { conveyorSpeed = value; }
+			set 
+			{
+                OnRecipeChanged(conveyorSpeed, value);
+                conveyorSpeed = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Conveyor Acceleration", Unit = Unit.RevolutionsPerMinutePerSecond)]
@@ -33,7 +41,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public uint ConveyorAcc
 		{
 			get { return conveyorAcc; }
-			set { conveyorAcc = value; }
+			set 
+			{
+                OnRecipeChanged(conveyorAcc, value);
+                conveyorAcc = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Conveyor Deceleration", Unit = Unit.RevolutionsPerMinutePerSecond)]
@@ -41,7 +53,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public uint ConveyorDec
 		{
 			get { return conveyorDec; }
-			set { conveyorDec = value; }
+			set 
+			{
+                OnRecipeChanged(conveyorDec, value);
+                conveyorDec = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Cassette Rows", Unit = Unit.ETC)]
@@ -49,7 +65,13 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public int CasetteRows
         {
 			get { return casetteRows; }
-			set { casetteRows = value; }
+			set 
+			{
+                OnRecipeChanged(casetteRows, value);
+                casetteRows = value; 
+
+				CassetteSizeChanged?.Invoke(this, EventArgs.Empty);
+            }
 		}
 
         [SingleRecipeDescription(Description = "Cassette Pitch", Unit = Unit.mm)]
@@ -57,7 +79,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public uint Pitch
 		{
 			get { return pitch; }
-			set { pitch = value; }
+			set 
+			{
+                OnRecipeChanged(pitch, value);
+                pitch = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "In Cassette T Axis Load Position", Unit = Unit.mm)]
@@ -65,7 +91,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double InCstTAxisLoadPosition
 		{
 			get { return inCstTAxisLoadPosition; }
-			set { inCstTAxisLoadPosition = value; }
+			set 
+			{
+                OnRecipeChanged(inCstTAxisLoadPosition, value);
+                inCstTAxisLoadPosition = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "In Cassette T Axis Work Position", Unit = Unit.mm)]
@@ -73,7 +103,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double InCstTAxisWorkPosition
 		{
 			get { return inCstTAxisWorkPosition; }
-			set { inCstTAxisWorkPosition = value; }
+			set 
+			{
+                OnRecipeChanged(inCstTAxisWorkPosition, value);
+                inCstTAxisWorkPosition = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Out Cassette T Axis Load Position", Unit = Unit.mm)]
@@ -81,7 +115,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double OutCstTAxisLoadPosition
 		{
 			get { return outCstTAxisLoadPosition; }
-			set { outCstTAxisLoadPosition = value; }
+			set 
+			{
+                OnRecipeChanged(outCstTAxisLoadPosition, value);
+                outCstTAxisLoadPosition = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Out Cassette T Axis Work Position", Unit = Unit.mm)]
@@ -89,7 +127,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double OutCstTAxisWorkPosition
 		{
 			get { return outCstTAxisWorkPosition; }
-			set { outCstTAxisWorkPosition = value; }
+			set 
+			{
+                OnRecipeChanged(outCstTAxisWorkPosition, value);
+                outCstTAxisWorkPosition = value; 
+			}
 		}
 	}
 }

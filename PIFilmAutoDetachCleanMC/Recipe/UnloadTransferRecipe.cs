@@ -25,7 +25,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double YAxisReadyPosition
 		{
 			get { return yAxisReadyPosition; }
-			set { yAxisReadyPosition = value; }
+			set 
+            {
+                OnRecipeChanged(yAxisReadyPosition, value);
+                yAxisReadyPosition = value; 
+            }
 		}
 
         [SingleRecipeDescription(Description = "Z Axis Ready Position", Unit = Unit.mm)]
@@ -33,7 +37,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double ZAxisReadyPosition
 		{
 			get { return zAxisReadyPositionn; }
-			set { zAxisReadyPositionn = value; }
+			set 
+            {
+                OnRecipeChanged(zAxisReadyPositionn, value);
+                zAxisReadyPositionn = value; 
+            }
 		}
 
         [SingleRecipeDescription(Description = "Y Axis Pick Position", Unit = Unit.mm)]
@@ -41,7 +49,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double YAxisPickPosition
 		{
 			get { return yAxisPickPosition; }
-			set { yAxisPickPosition = value; }
+			set 
+            {
+                OnRecipeChanged(yAxisPickPosition, value);
+                yAxisPickPosition = value; 
+            }
 		}
 
         [SingleRecipeDescription(Description = "Z Axis Pick Position", Unit = Unit.mm)]
@@ -49,7 +61,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double ZAxisPickPosition
 		{
 			get { return zAxisPickPosition; }
-			set { zAxisPickPosition = value; }
+			set 
+            {
+                OnRecipeChanged(zAxisPickPosition, value);
+                zAxisPickPosition = value; 
+            }
 		}
 
         [SingleRecipeDescription(Description = "Y Axis Place Position 1", Unit = Unit.mm)]
@@ -57,7 +73,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double YAxisPlacePosition1
 		{
 			get { return yAxisPlacePosition1; }
-			set { yAxisPlacePosition1 = value; }
+			set 
+            {
+                OnRecipeChanged(yAxisPlacePosition1, value);
+                yAxisPlacePosition1 = value; 
+            }
 		}
 
         [SingleRecipeDescription(Description = "Y Axis Place Position 2", Unit = Unit.mm)]
@@ -65,7 +85,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double YAxisPlacePosition2
         {
             get { return yAxisPlacePosition2; }
-            set { yAxisPlacePosition2 = value; }
+            set 
+            {
+                OnRecipeChanged(yAxisPlacePosition2, value);
+                yAxisPlacePosition2 = value; 
+            }
         }
 
         [SingleRecipeDescription(Description = "Y Axis Place Position 3", Unit = Unit.mm)]
@@ -73,7 +97,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double YAxisPlacePosition3
         {
             get { return yAxisPlacePosition3; }
-            set { yAxisPlacePosition3 = value; }
+            set 
+            {
+                OnRecipeChanged(yAxisPlacePosition3, value);
+                yAxisPlacePosition3 = value;
+            }
         }
 
         [SingleRecipeDescription(Description = "Y Axis Place Position 4", Unit = Unit.mm)]
@@ -81,7 +109,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double YAxisPlacePosition4
         {
             get { return yAxisPlacePosition4; }
-            set { yAxisPlacePosition4 = value; }
+            set 
+            {
+                OnRecipeChanged(yAxisPlacePosition4, value);
+                yAxisPlacePosition4 = value; 
+            }
         }
 
         [SingleRecipeDescription(Description = "Z Axis Place Position", Unit = Unit.mm)]
@@ -89,7 +121,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double ZAxisPlacePosition
 		{
 			get { return zAxisPlacePosition; }
-			set { zAxisPlacePosition = value; }
+			set 
+            {
+                OnRecipeChanged(zAxisPlacePosition, value);
+                zAxisPlacePosition = value; 
+            }
 		}
 
 	}

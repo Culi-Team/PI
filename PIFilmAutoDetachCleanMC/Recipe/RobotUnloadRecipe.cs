@@ -18,7 +18,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public int RobotSpeed
 		{
 			get { return robotSpeed; }
-			set { robotSpeed = value; }
+			set 
+			{
+                OnRecipeChanged(robotSpeed, value);
+                robotSpeed = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Robot Plasma Speed", Unit = Unit.mmPerSecond)]
@@ -26,7 +30,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public int RobotPlasmaSpeed
 		{
 			get { return robotPlasmaSpeed; }
-			set { robotPlasmaSpeed = value; }
+			set 
+			{
+                OnRecipeChanged(robotPlasmaSpeed, value);
+                robotPlasmaSpeed = value; 
+			}
 		}
 
 	}

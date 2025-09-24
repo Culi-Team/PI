@@ -33,6 +33,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             Plasma = plasma;
             MachineStatus.PropertyChanged += MachineStatusOnPropertyChanged;
 
+            RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.CassetteSizeChanged += CassetteSizeChanged_Handler;
+
             Log = LogManager.GetLogger("AutoVM");
         }
         #endregion
@@ -78,6 +80,20 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 OnPropertyChanged(nameof(MachineRunModeDisplay));
             }
+        }
+
+        private void CassetteSizeChanged_Handler(object? sender, EventArgs e)
+        {
+            if (sender is CSTLoadUnloadRecipe cstLoadUnloadRecipe == false) return;
+            CassetteList.CassetteIn.Rows = cstLoadUnloadRecipe.CasetteRows;
+            CassetteList.CassetteIn.Columns = 1;
+            CassetteList.CassetteIn.GenerateCells();
+
+            CassetteList.CassetteOut.Rows = cstLoadUnloadRecipe.CasetteRows;
+            CassetteList.CassetteOut.Columns = 1;
+            CassetteList.CassetteOut.GenerateCells();
+
+            CassetteList.SubscribeCellClickedEvent();
         }
 
         #region Commands

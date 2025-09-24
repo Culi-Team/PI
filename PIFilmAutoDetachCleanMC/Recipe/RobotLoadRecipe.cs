@@ -14,7 +14,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public int Model
         {
             get { return model; }
-            set { model = value; }
+            set 
+            {
+                model = value;
+                OnRecipeChanged(model, value);
+            }
         }
 
         [SingleRecipeDescription(Description = "Robot Speed Low", Unit = Unit.mmPerSecond)]
@@ -22,7 +26,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public int RobotSpeedLow
         {
             get { return robotSpeedLow; }
-            set { robotSpeedLow = value; }
+            set 
+            {
+                robotSpeedLow = value;
+                OnRecipeChanged(robotSpeedLow, value);
+            }
         }
 
         [SingleRecipeDescription(Description = "Robot Speed High", Unit = Unit.mmPerSecond)]
@@ -30,7 +38,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public int RobotSpeedHigh
         {
             get { return robotSpeedHigh; }
-            set { robotSpeedHigh = value; }
+            set 
+            {
+                robotSpeedHigh = value;
+                OnRecipeChanged(robotSpeedHigh, value);
+            }
         }
 
     }

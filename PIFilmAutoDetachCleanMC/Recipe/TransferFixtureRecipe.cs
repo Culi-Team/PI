@@ -18,7 +18,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double TransferFixtureYAxisLoadPosition
 		{
 			get { return transferFixtureYAxisLoadPosition; }
-			set { transferFixtureYAxisLoadPosition = value; }
+			set 
+			{
+                OnRecipeChanged(transferFixtureYAxisLoadPosition, value);
+                transferFixtureYAxisLoadPosition = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Transfer Fixture Y Axis Unload Position", Unit = Unit.mm)]
@@ -26,7 +30,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double TransferFixtureYAxisUnloadPosition
 		{
 			get { return transferFixtureYAxisUnloadPosition; }
-			set { transferFixtureYAxisUnloadPosition = value; }
+			set 
+			{
+                OnRecipeChanged(transferFixtureYAxisUnloadPosition, value);
+                transferFixtureYAxisUnloadPosition = value; 
+			}
 		}
 
 	}

@@ -23,7 +23,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double ZAxisReadyPosition
 		{
 			get { return zAxisReadyPosition; }
-			set { zAxisReadyPosition = value; }
+			set 
+			{
+                OnRecipeChanged(zAxisReadyPosition, value);
+                zAxisReadyPosition = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Z Axis Pick Position", Unit = Unit.mm)]
@@ -31,7 +35,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double ZAxisPickPosition
 		{
 			get { return zAxisPickPosition; }
-			set { zAxisPickPosition = value; }
+			set 
+			{
+                OnRecipeChanged(zAxisPickPosition, value);
+                zAxisPickPosition = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Z Axis Transfer Before Rotate Position", Unit = Unit.mm)]
@@ -39,7 +47,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double ZAxisTransferBeforeRotatePosition
 		{
 			get { return zAxisTransferBeforeRotatePosition; }
-			set { zAxisTransferBeforeRotatePosition = value; }
+			set 
+			{
+                OnRecipeChanged(zAxisTransferBeforeRotatePosition, value);
+                zAxisTransferBeforeRotatePosition = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Z Axis Transfer After Rotate Position", Unit = Unit.mm)]
@@ -47,7 +59,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double ZAxisTransferAfterRotatePosition
 		{
 			get { return zAxisTransferAfterRotatePosition; }
-			set { zAxisTransferAfterRotatePosition = value; }
+			set 
+			{
+                OnRecipeChanged(zAxisTransferAfterRotatePosition, value);
+                zAxisTransferAfterRotatePosition = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Z Axis Place Position", Unit = Unit.mm)]
@@ -55,14 +71,22 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double ZAxisPlacePosition
 		{
 			get { return zAxisPlacePosition; }
-			set { zAxisPlacePosition = value; }
+			set 
+			{
+                OnRecipeChanged(zAxisPlacePosition, value);
+                zAxisPlacePosition = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Rotation", Unit = Unit.ETC)]
         public bool IsUseRotation
 		{
 			get { return isUseRotation; }
-			set { isUseRotation = value; }
+			set 
+			{
+                OnRecipeChanged(isUseRotation, value);
+                isUseRotation = value;
+			}
 		}
 	}
 }

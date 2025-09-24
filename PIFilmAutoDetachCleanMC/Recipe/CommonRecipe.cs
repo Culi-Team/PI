@@ -19,28 +19,44 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public int CylinderMoveTimeout
 		{
 			get { return cylinderMoveTimeout; }
-			set { cylinderMoveTimeout = value; }
+			set 
+			{
+				OnRecipeChanged(cylinderMoveTimeout, value);
+                cylinderMoveTimeout = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Motion Origin Timeout", Unit = Unit.MilliSecond)]
         public int MotionOriginTimeout
 		{
 			get { return motionOriginTimeout; }
-			set { motionOriginTimeout = value; }
+			set 
+			{
+                OnRecipeChanged(motionOriginTimeout, value);
+                motionOriginTimeout = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Motion Move Timeout", Unit = Unit.MilliSecond)]
         public int MotionMoveTimeOut
 		{
 			get { return motionMoveTimeout; }
-			set { motionMoveTimeout = value; }
+			set 
+			{
+                OnRecipeChanged(motionMoveTimeout, value);
+                motionMoveTimeout = value; 
+			}
 		}
 
         [SingleRecipeDescription(Description = "Vacuum Delay", Unit = Unit.MilliSecond)]
         public int VacDelay
 		{
 			get { return vacDelay; }
-			set { vacDelay = value; }
+			set 
+			{
+                OnRecipeChanged(vacDelay, value);
+                vacDelay = value; 
+			}
 		}
 
 

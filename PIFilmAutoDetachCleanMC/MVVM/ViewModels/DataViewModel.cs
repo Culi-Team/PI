@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using log4net;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -41,6 +42,27 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _vinylCleanEncoder = vinylCleanEncoder;
             _configuration = configuration;
             CassetteList = cassetteList;
+
+            Log = LogManager.GetLogger("Data");
+
+            RecipeSelector.CurrentRecipe.CommonRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.RobotLoadRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.VinylCleanRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.TransferFixtureRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.DetachRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.GlassTransferRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.WetCleanLeftRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.WetCleanRightRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.TransferRotationLeftRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.TransferRotationRightRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.AfCleanLeftRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.AfCleanRightRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.UnloadTransferRightRecipe.RecipeChanged += RecipeChanged_Handler;
+            RecipeSelector.CurrentRecipe.RobotUnloadRecipe.RecipeChanged += RecipeChanged_Handler;
         }
 
         public ObservableCollection<IMotion> AllMotions
@@ -184,15 +206,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         private void SaveMotionConfigurations()
         {
-            // Lưu cấu hình Motion Inovance
             var inovanceConfigPath = _configuration["Files:MotionInovanceParaConfigFile"];
             if (!string.IsNullOrEmpty(inovanceConfigPath))
             {
-                // Đọc file config hiện tại để giữ nguyên các giá trị khác
                 var existingInovanceParams = JsonConvert.DeserializeObject<List<MotionInovanceParameter>>(
                     File.ReadAllText(inovanceConfigPath)) ?? new List<MotionInovanceParameter>();
 
-                // Cập nhật chỉ 3 giá trị: Velocity, Acceleration, Deceleration
                 for (int i = 0; i < _motionsInovance.All.Count && i < existingInovanceParams.Count; i++)
                 {
                     existingInovanceParams[i].Velocity = _motionsInovance.All[i].Parameter.Velocity;
@@ -204,15 +223,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 File.WriteAllText(inovanceConfigPath, inovanceJson);
             }
 
-            // Lưu cấu hình Motion Ajin
             var ajinConfigPath = _configuration["Files:MotionAjinParaConfigFile"];
             if (!string.IsNullOrEmpty(ajinConfigPath))
             {
-                // Đọc file config hiện tại để giữ nguyên các giá trị khác
                 var existingAjinParams = JsonConvert.DeserializeObject<List<MotionAjinParameter>>(
                     File.ReadAllText(ajinConfigPath)) ?? new List<MotionAjinParameter>();
 
-                // Cập nhật chỉ 3 giá trị: Velocity, Acceleration, Deceleration
                 for (int i = 0; i < _motionAjin.All.Count && i < existingAjinParams.Count; i++)
                 {
                     existingAjinParams[i].Velocity = _motionAjin.All[i].Parameter.Velocity;
@@ -223,6 +239,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 var ajinJson = JsonConvert.SerializeObject(existingAjinParams, Formatting.Indented);
                 File.WriteAllText(ajinConfigPath, ajinJson);
             }
+        }
+
+        private void RecipeChanged_Handler(object oldValue, object newValue, string? propertyName = null)
+        {
+            Log.Info($"{propertyName} value updated : {oldValue} -> {newValue}");
         }
     }
 }
