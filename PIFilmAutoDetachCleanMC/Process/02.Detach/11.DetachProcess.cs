@@ -136,7 +136,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Override Methods
         public override bool PreProcess()
         {
-            if(FlagFixtureTransferDone)
+            if (FlagFixtureTransferDone)
             {
                 Log.Debug("Clear Flag Detach Done");
                 FlagDetachDone = false;
@@ -151,23 +151,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EDetachProcessToRunStep.Start:
                     Log.Debug("To Run Start");
-                    Step.ToRunStep++;
-                    break;
-                case EDetachProcessToRunStep.ZAxis_Move_ReadyPosition:
-                    Log.Debug("Z Axis Move Ready Position");
-                    DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisReadyPosition);
-                    ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisReadyPosition) &&
-                                                               ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisReadyPosition));
-                    Step.ToRunStep++;
-                    break;
-                case EDetachProcessToRunStep.ZAxis_Move_ReadyPosition_Wait:
-                    if(WaitTimeOutOccurred)
-                    {
-                        //Timeout ALARM
-                        break;
-                    }
-                    Log.Debug("Z Axis Move Ready Position Done");
                     Step.ToRunStep++;
                     break;
                 case EDetachProcessToRunStep.Clear_Flags:
@@ -282,6 +265,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
+                    Sequence_Ready();
                     break;
                 case ESequence.InWorkCSTLoad:
                     break;
@@ -357,6 +341,38 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Private Methods
+        private void Sequence_Ready()
+        {
+            switch ((EDetachReadyStep)Step.RunStep)
+            {
+                case EDetachReadyStep.Start:
+                    Log.Debug("Initialize Start");
+                    Step.RunStep++;
+                    break;
+                case EDetachReadyStep.ZAxis_Move_ReadyPosition:
+                    Log.Debug("Z Axis Move Ready Position");
+                    DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisReadyPosition);
+                    ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisReadyPosition) &&
+                                                               ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisReadyPosition));
+                    Step.ToRunStep++;
+                    break;
+                case EDetachReadyStep.ZAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Ready Position Done");
+                    Step.ToRunStep++;
+                    break;
+                case EDetachReadyStep.End:
+                    Log.Debug("Initialize End");
+                    Sequence = ESequence.Stop;
+                    break;
+            }
+        }
+
         private void Sequence_AutoRun()
         {
             switch ((EDetachAutoRunStep)Step.RunStep)
@@ -712,7 +728,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachStep.Cyl_Detach1_Up_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.Detach_DetachCylinder1_Up_Fail);
                         break;
@@ -723,11 +739,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachStep.Cyl_Detach2_Up:
                     Log.Debug("Cylinder Detach 2 Up");
                     DetachCyl2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout,() => DetachCyl2.IsBackward);
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => DetachCyl2.IsBackward);
                     Step.RunStep++;
                     break;
                 case EDetachStep.Cyl_Detach2_Up_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.Detach_DetachCylinder2_Up_Fail);
                         break;
@@ -876,7 +892,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Glass Transfer Pick Done");
                     break;
                 case EDetachProcessGlassTransferPickStep.Wait_GlassTransferPickDone:
-                    if(FlagGlassTransferPickDone == false)
+                    if (FlagGlassTransferPickDone == false)
                     {
                         Wait(20);
                         break;
@@ -900,6 +916,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
             }
         }
+
         #endregion
     }
 }

@@ -9,18 +9,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ERemoveFilmProcessToRunStep
     {
         Start,
-        Cyl_Up,
-        Cyl_Up_Wait,
-
-        Cyl_Puhser_Down,
-        Cyl_Pusher_Down_Wait,
-
-        Cyl_Backward,
-        Cyl_Backward_Wait,
-
-        Cyl_UnClamp,
-        Cyl_UnClamp_Wait,
-
         Clear_Flags,
         End
     }

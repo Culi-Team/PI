@@ -9,8 +9,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EDetachProcessToRunStep
     {
         Start,
-        ZAxis_Move_ReadyPosition,
-        ZAxis_Move_ReadyPosition_Wait,
+        
         Clear_Flags,
         End
     }

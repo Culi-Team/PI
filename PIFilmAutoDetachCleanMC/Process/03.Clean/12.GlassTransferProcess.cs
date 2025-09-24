@@ -179,36 +179,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("To Run Start");
                     Step.ToRunStep++;
                     break;
-                case EGlassTransferToRunStep.ZAxis_Move_ReadyPosition:
-                    Log.Debug("Z Axis Move Ready Position");
-                    ZAxis.MoveAbs(_glassTransferRecipe.ZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(_glassTransferRecipe.ZAxisReadyPosition));
-                    Step.ToRunStep++;
-                    break;
-                case EGlassTransferToRunStep.ZAxis_Move_ReadyPosition_Wait:
-                    if(WaitTimeOutOccurred)
-                    {
-                        //Timeout ALARM
-                        break;
-                    }
-                    Log.Debug("Z Axis Move Ready Position Done");
-                    Step.ToRunStep++;
-                    break;
-                case EGlassTransferToRunStep.YAxis_Move_ReadyPosition:
-                    Log.Debug("Y Axis Move Ready Position");
-                    YAxis.MoveAbs(_glassTransferRecipe.YAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut,() => YAxis.IsOnPosition(_glassTransferRecipe.YAxisReadyPosition));
-                    Step.ToRunStep++;
-                    break;
-                case EGlassTransferToRunStep.YAxis_Move_ReadyPosition_Wait:
-                    if(WaitTimeOutOccurred)
-                    {
-                        //Timeout ALARM
-                        break;
-                    }
-                    Log.Debug("Y Axis Move Ready Position Done");
-                    Step.ToRunStep++;
-                    break;
                 case EGlassTransferToRunStep.Clear_Flag:
                     Log.Debug("Clear Flag");
                     ((VirtualOutputDevice<EGlassTransferProcessOutput>)_glassTransferOutput).Clear();
@@ -302,6 +272,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
+                    Sequence_Ready();
                     break;
                 case ESequence.InWorkCSTLoad:
                     break;
@@ -403,6 +374,50 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private void Sequence_Ready()
+        {
+            switch ((EGlassTransferReadyStep)Step.RunStep)
+            {
+                case EGlassTransferReadyStep.Start:
+                    Log.Debug("Initialize Start");
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferReadyStep.ZAxis_Move_ReadyPosition:
+                    Log.Debug("Z Axis Move Ready Position");
+                    ZAxis.MoveAbs(_glassTransferRecipe.ZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(_glassTransferRecipe.ZAxisReadyPosition));
+                    Step.ToRunStep++;
+                    break;
+                case EGlassTransferReadyStep.ZAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Ready Position Done");
+                    Step.ToRunStep++;
+                    break;
+                case EGlassTransferReadyStep.YAxis_Move_ReadyPosition:
+                    Log.Debug("Y Axis Move Ready Position");
+                    YAxis.MoveAbs(_glassTransferRecipe.YAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(_glassTransferRecipe.YAxisReadyPosition));
+                    Step.ToRunStep++;
+                    break;
+                case EGlassTransferReadyStep.YAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout ALARM
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Ready Position Done");
+                    Step.ToRunStep++;
+                    break;
+                case EGlassTransferReadyStep.End:
+                    Log.Debug("Initialize End");
+                    Sequence = ESequence.Stop;
+                    break;
+            }
+        }
         private void Sequence_AutoRun()
         {
             switch ((EGlassTransferAutoRunStep)Step.RunStep)

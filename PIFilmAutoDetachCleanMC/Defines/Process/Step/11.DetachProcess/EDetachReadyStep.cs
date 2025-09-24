@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum ETransferInShuttleProcessToRunStep
+    public enum EDetachReadyStep
     {
         Start,
-        
-        Clear_Flags,
+        ZAxis_Move_ReadyPosition,
+        ZAxis_Move_ReadyPosition_Wait,
         End
     }
 }

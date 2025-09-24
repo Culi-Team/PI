@@ -203,6 +203,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
+                    Sequence_Ready();
                     break;
                 case ESequence.InWorkCSTLoad:
                     break;
@@ -321,38 +322,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("To Run Start");
                     Step.ToRunStep++;
                     break;
-                case EUnloadTransferProcessToRunStep.ZAxis_Move_ReadyPosition:
-                    Log.Debug("Z Axis Move Ready Position");
-                    ZAxis.MoveAbs(Recipe.ZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(Recipe.ZAxisReadyPosition));
-                    Step.ToRunStep++;
-                    break;
-                case EUnloadTransferProcessToRunStep.ZAxis_Move_ReadyPosition_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.UnloadTransferLeft_ZAxis_MoveReadyPosition_Fail :
-                                                        EAlarm.UnloadTransferRight_ZAxis_MoveReadyPosition_Fail));
-                        break;
-                    }
-                    Log.Debug("Z Axis Move Ready Position Done");
-                    Step.ToRunStep++;
-                    break;
-                case EUnloadTransferProcessToRunStep.YAxis_Move_ReadyPosition:
-                    Log.Debug("Y Axis Move Ready Position");
-                    YAxis.MoveAbs(Recipe.YAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisReadyPosition));
-                    Step.ToRunStep++;
-                    break;
-                case EUnloadTransferProcessToRunStep.YAxis_Move_ReadyPosition_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.UnloadTransferLeft_YAxis_MoveReadyPosition_Fail :
-                                                        EAlarm.UnloadTransferRight_YAxis_MoveReadyPosition_Fail));
-                        break;
-                    }
-                    Log.Debug("Y Axis Move Ready Position Done");
-                    Step.ToRunStep++;
-                    break;
                 case EUnloadTransferProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
                     ((VirtualOutputDevice<EUnloadTransferProcessOutput>)Outputs).Clear();
@@ -372,6 +341,53 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Private Methods
+        private void Sequence_Ready()
+        {
+            switch ((EUnloadTransferReadyStep)Step.RunStep)
+            {
+                case EUnloadTransferReadyStep.Start:
+                    Log.Debug("Initialize Start");
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferReadyStep.ZAxis_Move_ReadyPosition:
+                    Log.Debug("Z Axis Move Ready Position");
+                    ZAxis.MoveAbs(Recipe.ZAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(Recipe.ZAxisReadyPosition));
+                    Step.ToRunStep++;
+                    break;
+                case EUnloadTransferReadyStep.ZAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.UnloadTransferLeft_ZAxis_MoveReadyPosition_Fail :
+                                                        EAlarm.UnloadTransferRight_ZAxis_MoveReadyPosition_Fail));
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Ready Position Done");
+                    Step.ToRunStep++;
+                    break;
+                case EUnloadTransferReadyStep.YAxis_Move_ReadyPosition:
+                    Log.Debug("Y Axis Move Ready Position");
+                    YAxis.MoveAbs(Recipe.YAxisReadyPosition);
+                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisReadyPosition));
+                    Step.ToRunStep++;
+                    break;
+                case EUnloadTransferReadyStep.YAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.UnloadTransferLeft_YAxis_MoveReadyPosition_Fail :
+                                                        EAlarm.UnloadTransferRight_YAxis_MoveReadyPosition_Fail));
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Ready Position Done");
+                    Step.ToRunStep++;
+                    break;
+                case EUnloadTransferReadyStep.End:
+                    Log.Debug("Initialize End");
+                    Sequence = ESequence.Stop;
+                    break;
+            }
+        }
+
         private void Sequence_AutoRun()
         {
             switch ((EUnloadTransferAutoRunStep)Step.RunStep)
