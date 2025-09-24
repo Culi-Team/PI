@@ -25,7 +25,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.InWorkConveyor)]
-        [InlineData(EProcess.OutWorkConveyor)]
 
         public async Task InWorkCVProc_SeqOrigin_Test(EProcess processKey)
         {
@@ -76,7 +75,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.InWorkConveyor)]
         [InlineData(EProcess.OutWorkConveyor)]
 
         public async Task OutWorkCVProc_SeqOrigin_Test(EProcess processKey)
@@ -129,7 +127,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.InWorkConveyor)]
-        [InlineData(EProcess.OutWorkConveyor)]
 
         public async Task InWorkCVProc_SeqLoad_Test(EProcess processKey)
         {
@@ -181,7 +178,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.InWorkConveyor)]
         [InlineData(EProcess.OutWorkConveyor)]
 
         public async Task OutWorkCVProc_SeqLoad_Test(EProcess processKey)
@@ -235,7 +231,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.InWorkConveyor)]
-        [InlineData(EProcess.OutWorkConveyor)]
 
         public async Task InWorkCVProc_SeqUnLoad_Test(EProcess processKey)
         {
@@ -288,7 +283,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.InWorkConveyor)]
         [InlineData(EProcess.OutWorkConveyor)]
 
         public async Task OutWorkCVProc_SeqUnLoad_Test(EProcess processKey)
@@ -342,7 +336,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.InWorkConveyor)]
-        [InlineData(EProcess.OutWorkConveyor)]
 
         public async Task InWorkCVProc_SeqTilt_Test(EProcess processKey)
         {
@@ -394,7 +387,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.InWorkConveyor)]
         [InlineData(EProcess.OutWorkConveyor)]
 
         public async Task OutWorkCVProc_SeqTilt_Test(EProcess processKey)

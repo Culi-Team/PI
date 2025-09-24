@@ -101,7 +101,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.UnloadTransferPlace;
+            process.Sequence = ESequence.UnloadTransferLeftPlace;
 
             // Assert
             //await Task.Delay(600000);

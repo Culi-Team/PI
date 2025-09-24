@@ -24,9 +24,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.WETCleanLeft)]
-        [InlineData(EProcess.WETCleanRight)]
-        [InlineData(EProcess.AFCleanRight)]
-        [InlineData(EProcess.AFCleanLeft)]
         public async Task WETCleanLeftProc_SeqOrigin_Test(EProcess processKey)
         {
             // Arrange
@@ -77,10 +74,7 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.WETCleanLeft)]
         [InlineData(EProcess.WETCleanRight)]
-        [InlineData(EProcess.AFCleanRight)]
-        [InlineData(EProcess.AFCleanLeft)]
         public async Task WETCleanRightProc_SeqOrigin_Test(EProcess processKey)
         {
             // Arrange
@@ -131,10 +125,7 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.WETCleanLeft)]
-        [InlineData(EProcess.WETCleanRight)]
         [InlineData(EProcess.AFCleanRight)]
-        [InlineData(EProcess.AFCleanLeft)]
         public async Task AFCleanRightProc_SeqOrigin_Test(EProcess processKey)
         {
             // Arrange
@@ -185,9 +176,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.WETCleanLeft)]
-        [InlineData(EProcess.WETCleanRight)]
-        [InlineData(EProcess.AFCleanRight)]
         [InlineData(EProcess.AFCleanLeft)]
         public async Task AFCleanLeftProc_SeqOrigin_Test(EProcess processKey)
         {
@@ -240,9 +228,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.WETCleanLeft)]
-        [InlineData(EProcess.WETCleanRight)]
-        [InlineData(EProcess.AFCleanRight)]
-        [InlineData(EProcess.AFCleanLeft)]
         public async Task WETCleanLeftProc_SeqLoad_Test(EProcess processKey)
         {
             // Arrange
@@ -285,7 +270,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.WETCleanLoad;
+            process.Sequence = ESequence.WETCleanLeftLoad;
 
             // Assert
             //await Task.Delay(600000);
@@ -294,10 +279,7 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.WETCleanLeft)]
         [InlineData(EProcess.WETCleanRight)]
-        [InlineData(EProcess.AFCleanRight)]
-        [InlineData(EProcess.AFCleanLeft)]
         public async Task WETCleanRightProc_SeqLoad_Test(EProcess processKey)
         {
             // Arrange
@@ -340,7 +322,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.WETCleanLoad;
+            process.Sequence = ESequence.WETCleanRightLoad;
 
             // Assert
             //await Task.Delay(600000);
@@ -349,9 +331,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.WETCleanLeft)]
-        [InlineData(EProcess.WETCleanRight)]
-        [InlineData(EProcess.AFCleanRight)]
         [InlineData(EProcess.AFCleanLeft)]
         public async Task AFCleanLeftProc_SeqLoad_Test(EProcess processKey)
         {
@@ -395,7 +374,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.AFCleanLoad;
+            process.Sequence = ESequence.AFCleanLeftLoad;
 
             // Assert
             //await Task.Delay(600000);
@@ -404,10 +383,7 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.WETCleanLeft)]
-        [InlineData(EProcess.WETCleanRight)]
         [InlineData(EProcess.AFCleanRight)]
-        [InlineData(EProcess.AFCleanLeft)]
         public async Task AFCleanRightProc_SeqLoad_Test(EProcess processKey)
         {
             // Arrange
@@ -450,7 +426,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.AFCleanLoad;
+            process.Sequence = ESequence.AFCleanRightLoad;
 
             // Assert
             //await Task.Delay(600000);
@@ -460,9 +436,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.WETCleanLeft)]
-        [InlineData(EProcess.WETCleanRight)]
-        [InlineData(EProcess.AFCleanRight)]
-        [InlineData(EProcess.AFCleanLeft)]
         public async Task WETCleanLeftProc_SeqClean_Test(EProcess processKey)
         {
             // Arrange
@@ -505,7 +478,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.WETClean;
+            process.Sequence = ESequence.WETCleanLeft;
 
             // Assert
             await Task.Delay(600000);
@@ -514,10 +487,7 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.WETCleanLeft)]
         [InlineData(EProcess.WETCleanRight)]
-        [InlineData(EProcess.AFCleanRight)]
-        [InlineData(EProcess.AFCleanLeft)]
         public async Task WETCleanRightProc_SeqClean_Test(EProcess processKey)
         {
             // Arrange
@@ -560,7 +530,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.WETClean;
+            process.Sequence = ESequence.WETCleanRight;
 
             // Assert
             await Task.Delay(600000);
@@ -569,10 +539,7 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.WETCleanLeft)]
-        [InlineData(EProcess.WETCleanRight)]
         [InlineData(EProcess.AFCleanRight)]
-        [InlineData(EProcess.AFCleanLeft)]
         public async Task AFCleanRightProc_SeqClean_Test(EProcess processKey)
         {
             // Arrange
@@ -615,7 +582,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.AFClean;
+            process.Sequence = ESequence.AFCleanRight;
 
             // Assert
             await Task.Delay(600000);
@@ -624,9 +591,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.WETCleanLeft)]
-        [InlineData(EProcess.WETCleanRight)]
-        [InlineData(EProcess.AFCleanRight)]
         [InlineData(EProcess.AFCleanLeft)]
         public async Task AFCleanLeftProc_SeqClean_Test(EProcess processKey)
         {
@@ -670,7 +634,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.AFClean;
+            process.Sequence = ESequence.AFCleanLeft;
 
             // Assert
             await Task.Delay(600000);
@@ -680,9 +644,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.WETCleanLeft)]
-        [InlineData(EProcess.WETCleanRight)]
-        [InlineData(EProcess.AFCleanRight)]
-        [InlineData(EProcess.AFCleanLeft)]
         public async Task WETCleanLeftProc_SeqUnload_Test(EProcess processKey)
         {
             // Arrange
@@ -725,7 +686,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.WETCleanUnload;
+            process.Sequence = ESequence.WETCleanLeftUnload;
 
             // Assert
             //await Task.Delay(600000);
@@ -734,10 +695,7 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.WETCleanLeft)]
         [InlineData(EProcess.WETCleanRight)]
-        [InlineData(EProcess.AFCleanRight)]
-        [InlineData(EProcess.AFCleanLeft)]
         public async Task WETCleanRightProc_SeqUnload_Test(EProcess processKey)
         {
             // Arrange
@@ -780,7 +738,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.WETCleanUnload;
+            process.Sequence = ESequence.WETCleanRightUnload;
 
             // Assert
             //await Task.Delay(600000);
@@ -789,9 +747,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.WETCleanLeft)]
-        [InlineData(EProcess.WETCleanRight)]
-        [InlineData(EProcess.AFCleanRight)]
         [InlineData(EProcess.AFCleanLeft)]
         public async Task AFCleanLeftProc_SeqUnload_Test(EProcess processKey)
         {
@@ -835,7 +790,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.AFCleanUnload;
+            process.Sequence = ESequence.AFCleanLeftUnload;
 
             // Assert
             //await Task.Delay(600000);
@@ -844,10 +799,7 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.WETCleanLeft)]
-        [InlineData(EProcess.WETCleanRight)]
         [InlineData(EProcess.AFCleanRight)]
-        [InlineData(EProcess.AFCleanLeft)]
         public async Task AFCleanRightProc_SeqUnload_Test(EProcess processKey)
         {
             // Arrange
@@ -890,7 +842,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.AFCleanUnload;
+            process.Sequence = ESequence.AFCleanRightUnload;
 
             // Assert
             //await Task.Delay(600000);

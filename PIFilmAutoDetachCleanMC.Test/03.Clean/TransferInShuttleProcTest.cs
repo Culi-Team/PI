@@ -23,7 +23,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.TransferInShuttleRight)]
         [InlineData(EProcess.TransferInShuttleLeft)]
         public async Task TransferInShuttleLeftProc_SeqOrigin_Test(EProcess processKey)
         {
@@ -76,7 +75,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.TransferInShuttleRight)]
-        [InlineData(EProcess.TransferInShuttleLeft)]
         public async Task TransferInShuttleRightProc_SeqOrigin_Test(EProcess processKey)
         {
             // Arrange
@@ -127,7 +125,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.TransferInShuttleRight)]
         [InlineData(EProcess.TransferInShuttleLeft)]
         public async Task TransferInShuttleLeftProc_SeqTransferInShuttlePick_Test(EProcess processKey)
         {
@@ -171,7 +168,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.TransferInShuttlePick;
+            process.Sequence = ESequence.TransferInShuttleLeftPick;
 
             // Assert
             //await Task.Delay(600000);
@@ -181,7 +178,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.TransferInShuttleRight)]
-        [InlineData(EProcess.TransferInShuttleLeft)]
         public async Task TransferInShuttleRightProc_SeqTransferInShuttlePick_Test(EProcess processKey)
         {
             // Arrange
@@ -224,7 +220,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.TransferInShuttlePick;
+            process.Sequence = ESequence.TransferInShuttleRightPick;
 
             // Assert
             //await Task.Delay(600000);
@@ -233,7 +229,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.TransferInShuttleRight)]
         [InlineData(EProcess.TransferInShuttleLeft)]
         public async Task TransferInShuttleLeftProc_SeqWETCleanLoad_Test(EProcess processKey)
         {
@@ -277,7 +272,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.WETCleanLoad;
+            process.Sequence = ESequence.WETCleanLeftLoad;
 
             // Assert
             //await Task.Delay(600000);
@@ -287,7 +282,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.TransferInShuttleRight)]
-        [InlineData(EProcess.TransferInShuttleLeft)]
         public async Task TransferInShuttleRightProc_SeqWETCleanLoad_Test(EProcess processKey)
         {
             // Arrange
@@ -330,7 +324,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.WETCleanLoad;
+            process.Sequence = ESequence.WETCleanRightLoad;
 
             // Assert
             //await Task.Delay(600000);

@@ -23,7 +23,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.TransferRotationRight)]
         [InlineData(EProcess.TransferRotationLeft)]
         public async Task TransferRotationLeftProc_SeqOrigin_Test(EProcess processKey)
         {
@@ -75,7 +74,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.TransferRotationRight)]
         [InlineData(EProcess.TransferRotationLeft)]
         public async Task TransferRotationRightProc_SeqOrigin_Test(EProcess processKey)
         {
@@ -128,7 +126,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.TransferRotationLeft)]
-        [InlineData(EProcess.TransferRotationRight)]
         public async Task TransferRotationLeftProc_SeqWETCleanUnLoad_Test(EProcess processKey)
         {
             // Arrange
@@ -171,7 +168,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.WETCleanUnload;
+            process.Sequence = ESequence.WETCleanLeftUnload;
 
             // Assert
             //await Task.Delay(600000);
@@ -180,7 +177,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.TransferRotationLeft)]
         [InlineData(EProcess.TransferRotationRight)]
         public async Task TransferRotationRightProc_SeqWETCleanUnLoad_Test(EProcess processKey)
         {
@@ -224,7 +220,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.WETCleanUnload;
+            process.Sequence = ESequence.WETCleanRightUnload;
 
             // Assert
             //await Task.Delay(600000);
@@ -234,7 +230,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.TransferRotationLeft)]
-        [InlineData(EProcess.TransferRotationRight)]
         public async Task TransferRotationLeftProc_SeqTransferRotation_Test(EProcess processKey)
         {
             // Arrange
@@ -277,7 +272,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.TransferRotation;
+            process.Sequence = ESequence.TransferRotationLeft;
 
             // Assert
             //await Task.Delay(600000);
@@ -286,7 +281,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.TransferRotationLeft)]
         [InlineData(EProcess.TransferRotationRight)]
         public async Task TransferRotationRightProc_SeqTransferRotation_Test(EProcess processKey)
         {
@@ -330,7 +324,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.TransferRotation;
+            process.Sequence = ESequence.TransferRotationRight;
 
             // Assert
             //await Task.Delay(600000);
@@ -340,7 +334,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.TransferRotationLeft)]
-        [InlineData(EProcess.TransferRotationRight)]
         public async Task TransferRotationLeftProc_SeqAFCleanLoad_Test(EProcess processKey)
         {
             // Arrange
@@ -383,7 +376,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.AFCleanLoad;
+            process.Sequence = ESequence.AFCleanLeftLoad;
 
             // Assert
             //await Task.Delay(600000);
@@ -392,7 +385,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.TransferRotationLeft)]
         [InlineData(EProcess.TransferRotationRight)]
         public async Task TransferRotationRightProc_SeqAFCleanLoad_Test(EProcess processKey)
         {
@@ -436,7 +428,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.AFCleanLoad;
+            process.Sequence = ESequence.AFCleanRightLoad;
 
             // Assert
             //await Task.Delay(600000);

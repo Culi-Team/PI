@@ -24,7 +24,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.GlassAlignLeft)]
-        [InlineData(EProcess.GlassAlignRight)]
         public async Task GlassAlignLeftProc_SeqOrigin_Test(EProcess processKey)
         {
             // Arrange
@@ -75,7 +74,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.GlassAlignLeft)]
         [InlineData(EProcess.GlassAlignRight)]
         public async Task GlassAlignRightProc_SeqOrigin_Test(EProcess processKey)
         {
@@ -128,7 +126,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.GlassAlignLeft)]
-        [InlineData(EProcess.GlassAlignRight)]
         public async Task GlassAlignLeftProc_SeqGlassTransferPlace_Test(EProcess processKey)
         {
             // Arrange
@@ -180,7 +177,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.GlassAlignLeft)]
         [InlineData(EProcess.GlassAlignRight)]
         public async Task GlassAlignRightProc_SeqGlassTransferPlace_Test(EProcess processKey)
         {
@@ -233,7 +229,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.GlassAlignLeft)]
         [InlineData(EProcess.GlassAlignRight)]
         public async Task GlassAlignRightProc_SeqAlignGlass_Test(EProcess processKey)
         {
@@ -277,7 +272,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.AlignGlass;
+            process.Sequence = ESequence.AlignGlassRight;
 
             // Assert
             //await Task.Delay(600000);
@@ -287,7 +282,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.GlassAlignLeft)]
-        [InlineData(EProcess.GlassAlignRight)]
         public async Task GlassAlignLeftProc_SeqAlignGlass_Test(EProcess processKey)
         {
             // Arrange
@@ -330,7 +324,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.AlignGlass;
+            process.Sequence = ESequence.AlignGlassLeft;
 
             // Assert
             //await Task.Delay(600000);
@@ -340,7 +334,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.GlassAlignLeft)]
-        [InlineData(EProcess.GlassAlignRight)]
         public async Task GlassAlignLeftProc_SeqTransferInShuttlePick_Test(EProcess processKey)
         {
             // Arrange
@@ -383,7 +376,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.TransferInShuttlePick;
+            process.Sequence = ESequence.TransferInShuttleLeftPick;
 
             // Assert
             //await Task.Delay(600000);
@@ -392,7 +385,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.GlassAlignLeft)]
         [InlineData(EProcess.GlassAlignRight)]
         public async Task GlassAlignRightProc_SeqTransferInShuttlePick_Test(EProcess processKey)
         {
@@ -436,7 +428,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.TransferInShuttlePick;
+            process.Sequence = ESequence.TransferInShuttleRightPick;
 
             // Assert
             //await Task.Delay(600000);

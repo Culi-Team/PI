@@ -24,7 +24,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.UnloadTransferLeft)]
-        [InlineData(EProcess.UnloadTransferRight)]
         public async Task UnloadTransferLeftProc_SeqOrigin_Test(EProcess processKey)
         {
             // Arrange
@@ -75,7 +74,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.UnloadTransferLeft)]
         [InlineData(EProcess.UnloadTransferRight)]
         public async Task UnloadTransferRightProc_SeqOrigin_Test(EProcess processKey)
         {
@@ -127,7 +125,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.UnloadTransferLeft)]
         [InlineData(EProcess.UnloadTransferRight)]
         public async Task UnloadTransferRightProc_SeqAFCleanUnload_Test(EProcess processKey)
         {
@@ -171,7 +168,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.AFCleanUnload;
+            process.Sequence = ESequence.AFCleanLeftUnload;
 
             // Assert
             //await Task.Delay(600000);
@@ -181,7 +178,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.UnloadTransferLeft)]
-        [InlineData(EProcess.UnloadTransferRight)]
         public async Task UnloadTransferLeftProc_SeqAFCleanUnload_Test(EProcess processKey)
         {
             // Arrange
@@ -224,7 +220,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.AFCleanUnload;
+            process.Sequence = ESequence.AFCleanRightUnload;
 
             // Assert
             //await Task.Delay(600000);
@@ -233,7 +229,6 @@ namespace PIFilmAutoDetachCleanMC.Test
         }
 
         [Theory]
-        [InlineData(EProcess.UnloadTransferLeft)]
         [InlineData(EProcess.UnloadTransferRight)]
         public async Task UnloadTransferRightProc_SeqUnloadTransferPlace_Test(EProcess processKey)
         {
@@ -277,7 +272,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.UnloadTransferPlace;
+            process.Sequence = ESequence.UnloadTransferRightPlace;
 
             // Assert
             //await Task.Delay(600000);
@@ -287,7 +282,6 @@ namespace PIFilmAutoDetachCleanMC.Test
 
         [Theory]
         [InlineData(EProcess.UnloadTransferLeft)]
-        [InlineData(EProcess.UnloadTransferRight)]
         public async Task UnloadTransferLeftProc_SeqUnloadTransferPlace_Test(EProcess processKey)
         {
             // Arrange
@@ -330,7 +324,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             // Act
             process.Start();
             process.ProcessMode = EProcessMode.Run;
-            process.Sequence = ESequence.UnloadTransferPlace;
+            process.Sequence = ESequence.UnloadTransferLeftPlace;
 
             // Assert
             //await Task.Delay(600000);
