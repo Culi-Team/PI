@@ -2,6 +2,7 @@
 using EQX.Core.Common;
 using EQX.Core.InOut;
 using EQX.Core.Motion;
+using PIFilmAutoDetachCleanMC.Defines;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,6 +20,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
         public ObservableCollection<IMotion> Motions { get; set; }
         public ObservableCollection<IDInput> Inputs { get; set; }
         public ObservableCollection<IDOutput> Outputs { get; set; }
+
+        public ObservableCollection<ESequence> SemiAutoSequences { get; set; }
         public string Name { get; init; }
         public ImageSource Image { get; set; }
 

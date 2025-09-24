@@ -4,6 +4,7 @@ using EQX.Core.Communication.Modbus;
 using EQX.Core.Display;
 using EQX.Core.InOut;
 using EQX.Core.Robot;
+using EQX.Core.Sequence;
 using EQX.UI.Display;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -26,6 +27,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly IModbusCommunication _torqueModbusCommunication;
         private readonly IRobot _robotLoad;
         private readonly IRobot _robotUnload;
+        private readonly Processes _processes;
         private ManualUnitViewModel selectedManualUnit;
         private readonly DisplayManager _displayManager = new();
         private readonly ViewOnlyOverlay _viewOnlyOverlay = new();
@@ -176,6 +178,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 () => !IsViewOnly);
             }
         }
+
         public IRelayCommand SetSecondaryInteractiveCommand
         {
             get
@@ -183,6 +186,26 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 return new RelayCommand(
                 () => ActiveScreen = InteractiveScreen.Secondary,
                 () => !IsViewOnly);
+            }
+        }
+
+        public ICommand SemiAutoCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((o) =>
+                {
+                    if (o is ESequence sequence == false) return;
+                    _processes.RootProcess.Sequence = sequence;
+
+                    foreach (var process in _processes.RootProcess.Childs!)
+                    {
+                        process.ProcessStatus = EProcessStatus.None;
+                        process.Sequence = sequence;
+                    }
+
+                    _processes.RootProcess.ProcessMode = EProcessMode.ToRun;
+                });
             }
         }
         #endregion
@@ -217,7 +240,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             [FromKeyedServices("RollerModbusCommunication")] IModbusCommunication rollerModbusCommunication,
             [FromKeyedServices("TorqueControllerModbusCommunication")] IModbusCommunication torqueModbusCommunication,
             [FromKeyedServices("RobotLoad")] IRobot robotLoad,
-            [FromKeyedServices("RobotUnload")] IRobot robotUnload)
+            [FromKeyedServices("RobotUnload")] IRobot robotUnload,
+            Processes processes)
         {
             Devices = devices;
             MachineStatus = machineStatus;
@@ -226,6 +250,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _torqueModbusCommunication = torqueModbusCommunication;
             _robotLoad = robotLoad;
             _robotUnload = robotUnload;
+            _processes = processes;
             _displayManager.EnableExtend();
             _activeScreen = InteractiveScreen.Primary;
             MoveMainWindowTo(_activeScreen);
@@ -279,6 +304,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             vinylClean.Inputs = Devices.GetVinylCleanInputs();
             vinylClean.Outputs = Devices.GetVinylCleanOutputs();
             vinylClean.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("VinylCleanImage");
+            vinylClean.SemiAutoSequences = new ObservableCollection<ESequence>() 
+            {
+                ESequence.RobotPlaceFixtureToVinylClean,
+                ESequence.VinylClean,
+                ESequence.RobotPickFixtureFromVinylClean 
+            };
 
             ManualUnitViewModel transferFixture = new ManualUnitViewModel("Transfer Fixture");
             transferFixture.Cylinders = Devices.GetGlassTransferCylinders();
