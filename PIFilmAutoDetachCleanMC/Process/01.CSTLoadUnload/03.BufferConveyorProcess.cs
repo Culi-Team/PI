@@ -136,6 +136,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
+                    Sequence = ESequence.Stop;
                     break;
                 case ESequence.InConveyorLoad:
                     break;

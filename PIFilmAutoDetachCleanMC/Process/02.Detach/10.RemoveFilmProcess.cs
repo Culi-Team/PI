@@ -337,7 +337,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ERemoveFilmReadyStep)Step.RunStep)
             {
                 case ERemoveFilmReadyStep.Start:
-                    Log.Debug("Remove Film Process Ready Start");
+                    Log.Debug("Initialize Start");
                     Step.RunStep++;
                     break;
                 case ERemoveFilmReadyStep.Cyl_Up:
@@ -403,6 +403,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ERemoveFilmReadyStep.End:
+                    Log.Debug("Initialize End");
                     Sequence = ESequence.Stop;
                     break;
                 default:

@@ -93,6 +93,14 @@ namespace PIFilmAutoDetachCleanMC.Process
             set { _originDone = value; }
         }
 
+        private bool initializeDone;
+
+        public bool InitializeDone
+        {
+            get { return initializeDone; }
+            set { initializeDone = value; }
+        }
+
         public ESemiSequence SemiAutoSequence
         {
             get => (ESemiSequence)_SemiAutoSequence;
