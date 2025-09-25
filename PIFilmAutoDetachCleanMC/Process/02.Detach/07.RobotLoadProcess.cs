@@ -672,7 +672,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
-                    Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Move_InCST_PickPosition_Wait:
                     Log.Debug("Move In Cassette Pick Position Wait");
@@ -723,7 +722,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
-                    Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Move_InCST_ReadyPositon_Wait:
                     Log.Debug("Move In Cassette Ready Position Wait");
@@ -787,7 +785,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
-                    Step.RunStep++;
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.Move_VinylClean_PickPlacePosition_Wait:
                     Log.Debug("Move Vinyl Clean Pick Place Position Wait");
@@ -865,7 +862,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
-                    Step.RunStep++;
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.Move_VinylClean_ReadyPosition_Wait:
                     Log.Debug("Move Vinyl Clean Ready Position Wait");
@@ -984,7 +980,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
-                    Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToAlignStep.Move_FixtureAlignPlacePosition_Wait:
                     Log.Debug("Robot Move To Fixture Align Place Position Wait");
@@ -1031,7 +1026,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
-                    Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToAlignStep.Move_FixtureAlignReadyPosition_Wait:
                     Log.Debug("Robot Move To Fixture Align Ready Position Wait");
@@ -1080,7 +1074,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
-                    Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromRemoveZoneStep.Move_RemoveZonePickPosition_Wait:
                     Log.Debug("Robot Move Remove Zone Pick Position Wait");
@@ -1127,7 +1120,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
-                    Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromRemoveZoneStep.Move_RemoveZoneReadyPosition_Wait:
                     Log.Debug("Robot Move Remove Zone Ready Wait");
@@ -1201,7 +1193,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
-                    Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Move_OutCSTPlacePosition_Wait:
                     Log.Debug("Robot Move Out Cassette Place Position Wait");
@@ -1248,7 +1239,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
-                    Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Move_OutCSTReadyPosition_Wait:
                     Log.Debug("Robot Move Out Cassette Ready Position Wait");

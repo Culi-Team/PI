@@ -507,6 +507,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Wait(1000);
                     Step.RunStep++;
                     break;
+                case EUnloadRobotPlaceStep.VacuumOff:
+                    Log.Debug("Vacuum Off");
+                    VacuumOnOff(false);
+                    Step.RunStep++;
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(GlassVac1, false);
+                    SimulationInputSetter.SetSimModbusInput(GlassVac2, false);
+                    SimulationInputSetter.SetSimModbusInput(GlassVac3, false);
+                    SimulationInputSetter.SetSimModbusInput(GlassVac4, false);
+
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadRobotDetect1, false);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadRobotDetect2, false);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadRobotDetect3, false);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadRobotDetect4, false);
+#endif
+                    break;
                 case EUnloadRobotPlaceStep.End:
                     Log.Debug("Unload Robot Place End");
                     if (Parent?.Sequence != ESequence.AutoRun)

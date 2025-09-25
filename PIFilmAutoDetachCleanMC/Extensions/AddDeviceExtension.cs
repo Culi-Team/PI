@@ -9,11 +9,9 @@ using Newtonsoft.Json;
 using System.IO;
 using PIFilmAutoDetachCleanMC.Defines;
 using EQX.Motion.ByVendor.Inovance;
-using System.IO.Ports;
 using EQX.Core.Communication.Modbus;
 using EQX.Core.Device.SpeedController;
 using EQX.Device.SpeedController;
-using EQX.InOut.ByVendor.Inovance;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using EQX.Core.Device.Regulator;
@@ -29,7 +27,6 @@ using EQX.Core.Communication;
 using EQX.Core.Device.SyringePump;
 using EQX.Device.SyringePump;
 using EQX.InOut.InOut.Analog;
-using EQX.InOut.ByVendor.Ajinextek;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
