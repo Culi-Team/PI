@@ -299,9 +299,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.FixtureAlignLoadFail);
                         break;
                     }
-#if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.AlignFixtureDetect, false);
-#endif
                     Step.RunStep++;
                     break;
                 case EFixtureAlignRobotPlaceFixtureToAlignStep.End:
@@ -416,6 +413,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.AlignFixtureDetect, false);
+#endif
                     Log.Debug("Set Flag Transfer Fixture Done Received");
                     FlagTransferFixtureDoneReceive = true;
                     Step.RunStep++;

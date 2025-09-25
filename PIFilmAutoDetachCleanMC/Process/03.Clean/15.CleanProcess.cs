@@ -1061,7 +1061,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     _devices.MotionsAjin.CleanHorizontal(cleanType, XAxisCleanHorizontalPosition, YAxisCleanHorizontalPosition, 50, 10, cleanRecipe.CleanHorizontalCount);
                     Wait(_commonRecipe.MotionMoveTimeOut, () => _devices.MotionsAjin.IsContiMotioning(cleanType) == false);
 #else
-                    Thread.Sleep(3000);
+                    Thread.Sleep(100);
 #endif
                     Step.RunStep++;
                     break;
@@ -1199,7 +1199,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     _devices.MotionsAjin.CleanVertical(cleanType,XAxisCleanVerticalPosition,YAxisCleanVerticalPosition,cleanRecipe.CleanVerticalCount);
                     Wait(_commonRecipe.MotionMoveTimeOut, () => _devices.MotionsAjin.IsContiMotioning(cleanType));
 #else
-                    Wait(3000);
+                    Thread.Sleep(100);
 #endif
                     Step.RunStep++;
                     break;

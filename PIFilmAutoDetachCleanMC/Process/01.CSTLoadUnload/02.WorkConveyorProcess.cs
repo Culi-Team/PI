@@ -730,7 +730,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EWorkConveyorProcessLoadStep.Reset_Cassette_Status:
                     Log.Debug("Reset Cassette Status");
-                    //Cassette.Cells.ToList().ForEach(c => c.Status = ETrayCellStatus.Ready);
+                    Cassette.Cells.ToList().ForEach(c => c.Status = ETrayCellStatus.Ready);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Conveyor_Stop:
@@ -873,7 +873,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorUnloadStep.Conveyor_Run:
                     ConveyorRunInOut(false);
 #if SIMULATION
-                    Wait(3000);
+                    Wait(1000);
                     if (port == EPort.Right)
                     {
                         SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect1, false);

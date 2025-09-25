@@ -1,5 +1,6 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Sequence;
+using EQX.InOut;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -311,7 +312,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.Robot_Move_PickPosition_Wait:
-                    Wait(2000);
+                    Wait(1000);
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.Cylinder_Down:
@@ -332,6 +333,17 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotUnloadPickStep.Vacuum_On:
                     Log.Debug("Vacuum On");
                     VacuumOnOff(true);
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(GlassVac1, true);
+                    SimulationInputSetter.SetSimModbusInput(GlassVac2, true);
+                    SimulationInputSetter.SetSimModbusInput(GlassVac3, true);
+                    SimulationInputSetter.SetSimModbusInput(GlassVac4, true);
+
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadRobotDetect1, true);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadRobotDetect2, true);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadRobotDetect3, true);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadRobotDetect4, true);
+#endif
                     Wait(_commonRecipe.VacDelay, () => GlassVac1.Value && GlassVac2.Value && GlassVac3.Value && GlassVac4.Value);
                     Step.RunStep++;
                     break;
@@ -375,7 +387,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.Robot_Move_ReadyPlasmaPosition_Wait:
-                    Wait(2000);
+                    Wait(1000);
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.End:
@@ -453,7 +465,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPlasmaStep.Robot_Move_PlasmaPosition_Wait:
-                    Wait(2000);
+                    Wait(1000);
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPlasmaStep.End:
@@ -477,6 +489,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EUnloadRobotPlaceStep.Start:
                     Log.Debug("Unload Robot Place Start");
+                    Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.Wait_MachineRequestPlace:
                     if (_devices.Inputs.RobotUnload.Value == false)
@@ -491,7 +504,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.Robot_Move_PlacePosition_Wait:
-                    Wait(2000);
+                    Wait(1000);
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.End:

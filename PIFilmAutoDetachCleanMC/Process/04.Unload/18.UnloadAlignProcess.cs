@@ -314,7 +314,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadAlignAutoRunStep.GlassVac_Check:
-                    if (IsGlassVac)
+                    if (IsGlassVac || IsGlassDetect)
                     {
                         Log.Info("Sequence Unload Align Glass");
                         Sequence = ESequence.UnloadAlignGlass;

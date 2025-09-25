@@ -1,6 +1,7 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Robot;
 using EQX.Core.Sequence;
+using EQX.InOut;
 using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly Devices _devices;
         private readonly IDInputDevice _robotLoadInput;
         private readonly IDOutputDevice _robotLoadOutput;
+        private readonly IDOutputDevice _removeFilmOutput;
         private readonly CassetteList _cassetteList;
         private int CurrentInWorkCSTFixtureIndex = -1;
         private int CurrentOutWorkCSTFixtureIndex = -1;
@@ -48,7 +50,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _robotLoad.SendCommand(RobotHelpers.MotionCommands(command, lowSpeed, highSpeed, paras));
             }
 
-            return _robotLoad.ReadResponse(2000, RobotHelpers.MotionRspStart(command));
+            return _robotLoad.ReadResponse(5000, RobotHelpers.MotionRspStart(command));
         }
         #endregion
 
@@ -201,6 +203,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             Devices devices,
             [FromKeyedServices("RobotLoadInput")] IDInputDevice robotLoadInput,
             [FromKeyedServices("RobotLoadOutput")] IDOutputDevice robotLoadOutput,
+            [FromKeyedServices("RemoveFilmOutput")] IDOutputDevice removeFilmOutput,
             CassetteList cassetteList)
         {
             _robotLoad = robotLoad;
@@ -209,6 +212,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             _devices = devices;
             _robotLoadInput = robotLoadInput;
             _robotLoadOutput = robotLoadOutput;
+            _removeFilmOutput = removeFilmOutput;
             _cassetteList = cassetteList;
         }
         #endregion
@@ -409,13 +413,18 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadAutoRunStep.Check_Flag_RemoveFilm:
-                    if (FlagRemoveFilmRequestUnload)
+                    if(_devices.Inputs.RemoveZoneFixtureDetect.Value)
                     {
-                        Log.Debug("Clear Flag Remove Film Unload Done");
-                        FlagRemoveFilmUnloadDone = false;
+                        if (FlagRemoveFilmRequestUnload)
+                        {
+                            _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_REQ_UNLOAD] = false;
+                            Log.Debug("Clear Flag Remove Film Unload Done");
+                            FlagRemoveFilmUnloadDone = false;
 
-                        Log.Info("Sequence Robot Pick Fixture From Remove Zone");
-                        Sequence = ESequence.RobotPickFixtureFromRemoveZone;
+                            Log.Info("Sequence Robot Pick Fixture From Remove Zone");
+                            Sequence = ESequence.RobotPickFixtureFromRemoveZone;
+                            break;
+                        }
                         break;
                     }
                     Step.RunStep++;
@@ -924,10 +933,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     else
                     {
-                        if (FlagRemoveFilmRequestUnload)
+                        if(_devices.Inputs.RemoveZoneFixtureDetect.Value)
                         {
-                            Log.Info("Sequence Robot Pick Fixture From Remove Zone");
-                            Sequence = ESequence.RobotPickFixtureFromRemoveZone;
+                            if (FlagRemoveFilmRequestUnload)
+                            {
+                                _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_REQ_UNLOAD] = false;
+                                Log.Info("Sequence Robot Pick Fixture From Remove Zone");
+                                Sequence = ESequence.RobotPickFixtureFromRemoveZone;
+                                break;
+                            }
                             break;
                         }
                         if (FlagVinylCleanRequestUnload)
@@ -1129,6 +1143,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPickFixtureFromRemoveZoneStep.Set_FlagRemoveZoneUnloadDone:
                     Log.Debug("Set Flag Remove Zone Unload Done");
                     FlagRemoveFilmUnloadDone = true;
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.RemoveZoneFixtureDetect, false);
+#endif
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromRemoveZoneStep.End:

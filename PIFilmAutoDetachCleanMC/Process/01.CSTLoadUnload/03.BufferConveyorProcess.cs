@@ -285,13 +285,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.OutWorkCSTLoad;
                         break;
                     }
-                    if(BufferDetect1.Value == true && BufferStopper1.IsBackward)
+                    if (BufferDetect1.Value == true && BufferStopper1.IsBackward)
                     {
                         Log.Info("Sequence In Work CST Unload");
                         Sequence = ESequence.InWorkCSTUnLoad;
                         break;
                     }
-                    if(BufferDetect2.Value == true && BufferStopper2.IsBackward)
+                    if (BufferDetect2.Value == true && BufferStopper2.IsBackward)
                     {
                         RaiseWarning((int)EWarning.BufferConveyor_CST_Position_Error);
                         break;
@@ -313,11 +313,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EBufferConveyorInWorkCSTUnloadStep.Stopper1_Down:
                     Log.Debug("Stopper 1 Down");
                     BufferStopper1.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout,() => BufferStopper1.IsBackward);
+                    Wait(_commonRecipe.CylinderMoveTimeout, () => BufferStopper1.IsBackward);
                     Step.RunStep++;
                     break;
                 case EBufferConveyorInWorkCSTUnloadStep.Stopper1_Down_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.BufferConveyor_Stopper1_Down_Fail);
                         break;
@@ -332,7 +332,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EBufferConveyorInWorkCSTUnloadStep.Stopper2_Up_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.BufferConveyor_Stopper2_Up_Fail);
                         break;
@@ -341,7 +341,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EBufferConveyorInWorkCSTUnloadStep.CSTDetect_Check:
-                    if(BufferDetect1.Value == true && BufferDetect2.Value == false)
+                    if (BufferDetect1.Value == true && BufferDetect2.Value == false)
                     {
                         Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.Conveyor_Run;
                         break;
@@ -351,16 +351,17 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.Conveyor_Stop;
                         break;
                     }
-                    if(BufferDetect1.Value == false && BufferDetect2.Value == true)
+                    if (BufferDetect1.Value == false && BufferDetect2.Value == true)
                     {
                         RaiseWarning((int)EWarning.BufferConveyor_CST_Position_Error);
                         break;
                     }
+                    Log.Debug("Set Flag Buffer Conveyor Ready");
                     FlagBufferConveyorReady = true;
                     Step.RunStep++;
                     break;
                 case EBufferConveyorInWorkCSTUnloadStep.Wait_InWorkCSTRequestCSTOut:
-                    if(FlagInWorkConveyorRequestCSTOut == false)
+                    if (FlagInWorkConveyorRequestCSTOut == false)
                     {
                         Wait(20);
                         break;
@@ -371,14 +372,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                     ConveyorRunStop(true);
 #if SIMULATION
                     Wait(2000);
-                    SimulationInputSetter.SetSimModbusInput(BufferDetect1,true);
-                    SimulationInputSetter.SetSimModbusInput(BufferDetect2,true);
+                    SimulationInputSetter.SetSimModbusInput(BufferDetect1, true);
+                    SimulationInputSetter.SetSimModbusInput(BufferDetect2, true);
 #endif
                     Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.CSTDetect_Check;
                     break;
                 case EBufferConveyorInWorkCSTUnloadStep.Conveyor_Stop:
                     Log.Debug("Conveyor Stop");
                     ConveyorRunStop(false);
+                    Log.Debug("Clear Flag Buffer Conveyor Ready");
                     FlagBufferConveyorReady = false;
                     Step.RunStep++;
                     break;
@@ -405,7 +407,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EBufferConveyorOutWorkCSTLoadStep.Wait_OutWorkConveyorRequestCSTIn:
-                    if(FlagOutWorkConveyorRequestCSTIn == false)
+                    if (FlagOutWorkConveyorRequestCSTIn == false)
                     {
                         Wait(20);
                         break;
@@ -419,7 +421,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EBufferConveyorOutWorkCSTLoadStep.Stopper2_Down_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.BufferConveyor_Stopper2_Down_Fail);
                         break;
@@ -434,7 +436,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EBufferConveyorOutWorkCSTLoadStep.Wait_OutWorkConveyorLoadDone:
-                    if(FlagOutWorkConveyorRequestCSTIn == true)
+                    if (FlagOutWorkConveyorRequestCSTIn == true)
                     {
                         Wait(20);
                         break;
@@ -462,7 +464,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void ConveyorRunStop(bool bRun)
         {
-            if(bRun)
+            if (bRun)
             {
                 BufferRoller1.Start();
                 BufferRoller2.Start();

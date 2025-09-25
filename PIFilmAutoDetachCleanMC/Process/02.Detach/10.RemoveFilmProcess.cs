@@ -1,5 +1,6 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Sequence;
+using EQX.InOut;
 using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
@@ -449,6 +450,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
+#if SIMULATION
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.RemoveZoneFixtureDetect, true);
+#endif
                     Log.Debug("Clear Flag Remove Film Done");
                     FlagRemoveFilmDone = false;
 

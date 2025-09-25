@@ -303,7 +303,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Conveyor Run");
                     ConveyorRunStop(true);
 #if SIMULATION
-                    Wait(3000);
+                    Wait(1000);
                     SimulationInputSetter.SetSimModbusInput(CST_Det1, false);
                     SimulationInputSetter.SetSimModbusInput(CST_Det2, false);
 
