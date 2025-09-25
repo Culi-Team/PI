@@ -211,5 +211,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         //Robot Unload
         RobotUnload = 26000,
+        RobotUnload_Cylinder_Up_Fail,
+        RobotUnload_Cylinder_Down_Fail,
+        RobotUnload_Vacuum_On_Fail,
+        RobotUnload_Pick_Fail,
     }
 }

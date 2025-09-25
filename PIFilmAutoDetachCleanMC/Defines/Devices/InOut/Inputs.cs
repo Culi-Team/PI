@@ -69,6 +69,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput BufferCvStopper2Down => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.BUFFER_CV_STOPPER_2_DOWN);
         public IDInput BufferCstDetect1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.BUFFER_CST_DETECT_1);
         public IDInput BufferCstDetect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.BUFFER_CST_DETECT_2);
+        public IDInput RobotUnload => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.SPARE_IN22);
         public IDInput EmoLoadR => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.EMO_LOAD_R);
         public IDInput EmoLoadL => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.EMO_LOAD_L);
         public IDInput InCvSupportUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_CV_SUPPORT_UP);

@@ -60,6 +60,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         private readonly IDOutputDevice _unloadTransferRightOutput;
         private readonly IDInputDevice _unloadAlignInput;
         private readonly IDOutputDevice _unloadAlignOutput;
+        private readonly IDInputDevice _robotUnloadInput;
+        private readonly IDOutputDevice _robotUnloadOutput;
 
         public VirtualIO([FromKeyedServices("InConveyorInput")] IDInputDevice inConveyorInput,
                          [FromKeyedServices("InWorkConveyorInput")] IDInputDevice inWorkConveyorInput,
@@ -109,7 +111,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
                          [FromKeyedServices("UnloadTransferRightInput")] IDInputDevice unloadTransferRightInput,
                          [FromKeyedServices("UnloadTransferRightOutput")] IDOutputDevice unloadTransferRightOutput,
                          [FromKeyedServices("UnloadAlignInput")] IDInputDevice unloadAlignInput,
-                         [FromKeyedServices("UnloadAlignOutput")] IDOutputDevice unloadAlignOutput)
+                         [FromKeyedServices("UnloadAlignOutput")] IDOutputDevice unloadAlignOutput,
+                         [FromKeyedServices("RobotUnloadInput")] IDInputDevice robotUnloadInput,
+                         [FromKeyedServices("RobotUnloadOutput")] IDOutputDevice robotUnloadOutput)
         {
             _inConveyorInput = inConveyorInput;
             _inWorkConveyorInput = inWorkConveyorInput;
@@ -162,6 +166,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
             _unloadTransferRightOutput = unloadTransferRightOutput;
             _unloadAlignInput = unloadAlignInput;
             _unloadAlignOutput = unloadAlignOutput;
+
+            _robotUnloadInput = robotUnloadInput;
+            _robotUnloadOutput = robotUnloadOutput;
         }
 
         public void Initialize()
@@ -233,6 +240,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
             _unloadAlignInput.Initialize();
             _unloadAlignOutput.Initialize();
+
+            _robotUnloadInput.Initialize();
+            _robotUnloadOutput.Initialize();
         }
 
         public void Mappings()
@@ -457,6 +467,14 @@ namespace PIFilmAutoDetachCleanMC.Defines
                     _unloadTransferLeftOutput, (int)EUnloadTransferProcessOutput.UNLOAD_TRANSFER_PLACE_DONE);
             ((VirtualInputDevice<EUnloadAlignProcessInput>)_unloadAlignInput).Mapping((int)EUnloadAlignProcessInput.UNLOAD_TRANSFER_RIGHT_PLACE_DONE,
                     _unloadTransferRightOutput, (int)EUnloadTransferProcessOutput.UNLOAD_TRANSFER_PLACE_DONE);
+            ((VirtualInputDevice<EUnloadAlignProcessInput>)_unloadAlignInput).Mapping((int)EUnloadAlignProcessInput.ROBOT_UNLOAD_PICK_DONE,
+                    _robotUnloadOutput, (int)ERobotUnloadProcessOutput.ROBOT_UNLOAD_PICK_DONE);
+
+            //Robot Unload Input Mapping
+            ((VirtualInputDevice<ERobotUnloadProcessInput>)_robotUnloadInput).Mapping((int)ERobotUnloadProcessInput.UNLOAD_ALIGN_REQ_ROBOT_UNLOAD,
+                    _unloadAlignOutput, (int)EUnloadAlignProcessOutput.UNLOAD_ALIGN_REQ_ROBOT_UNLOAD);
+            ((VirtualInputDevice<ERobotUnloadProcessInput>)_robotUnloadInput).Mapping((int)ERobotUnloadProcessInput.UNLOAD_ALIGN_UNLOAD_DONE_RECEIVED,
+                    _unloadAlignOutput, (int)EUnloadAlignProcessOutput.ROBOT_UNLOAD_DONE_RECEIVED);
         }
     }
 }

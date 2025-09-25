@@ -110,7 +110,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _unloadAlignInput[(int)EUnloadAlignProcessInput.ROBOT_UNLOAD_DONE];
+                return _unloadAlignInput[(int)EUnloadAlignProcessInput.ROBOT_UNLOAD_PICK_DONE];
             }
         }
         #endregion

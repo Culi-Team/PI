@@ -91,6 +91,9 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
                 services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EUnloadAlignProcessInput>>("UnloadAlignInput");
                 services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EUnloadAlignProcessOutput>>("UnloadAlignOutput");
+
+                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ERobotUnloadProcessInput>>("RobotUnloadInput");
+                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ERobotUnloadProcessOutput>>("RobotUnloadOutput");
 #else
 
                 services.AddKeyedSingleton<IDInputDevice>("InConveyorInput", (services, _) =>
@@ -215,8 +218,12 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     VirtualDeviceRegistry.GetOrAddInputDevice<EUnloadAlignProcessInput>("UnloadAlignInput"));
                 services.AddKeyedSingleton<IDOutputDevice>("UnloadAlignOutput", (services, _) =>
                     VirtualDeviceRegistry.GetOrAddOutputDevice<EUnloadAlignProcessOutput>("UnloadAlignOutput"));
-#endif
 
+                services.AddKeyedSingleton<IDInputDevice>("RobotUnloadInput", (services, _) =>
+                    VirtualDeviceRegistry.GetOrAddInputDevice<ERobotUnloadProcessInput>("RobotUnloadInput"));
+                services.AddKeyedSingleton<IDOutputDevice>("RobotUnloadOutput", (services, _) =>
+                    VirtualDeviceRegistry.GetOrAddOutputDevice<ERobotUnloadProcessOutput>("RobotUnloadOutput"));
+#endif
                 services.AddSingleton<VirtualIO>();
 
             });
