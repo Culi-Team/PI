@@ -1224,7 +1224,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Move_OutCSTReadyPosition:
                     Log.Debug("Robot Move Out Cassette Ready Position");
-                    if (SendCommand(ERobotCommand.S5_PP_RDY, LowSpeed, HightSpeed))
+                    if (SendCommand(ERobotCommand.S5_PP_RDY, LowSpeed, HightSpeed, paras))
                     {
                         Step.RunStep++;
                         break;
