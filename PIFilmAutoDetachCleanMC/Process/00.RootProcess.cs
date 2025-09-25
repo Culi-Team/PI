@@ -264,6 +264,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ERootProcessToOriginStep.DoorSensorCheck:
+                    if (_machineStatus.IsByPassMode)
+                    {
+                        Log.Warn("ByPass mode active - skipping door sensor check during origin.");
+                        Step.OriginStep++;
+                        break;
+                    }
                     if (DoorSensor == false)
                     {
                         //WARNING
@@ -274,11 +280,23 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ERootProcessToOriginStep.DoorLock:
+                    if (_machineStatus.IsByPassMode)
+                    {
+                        Log.Warn("ByPass mode active - skipping door lock during origin.");
+                        Step.OriginStep++;
+                        break;
+                    }
                     _devices.Outputs.DoorOpen.Value = false;
                     Step.OriginStep++;
                     break;
                 case ERootProcessToOriginStep.DoorLatchCheck:
-                    if(DoorLatch == false)
+                    if (_machineStatus.IsByPassMode)
+                    {
+                        Log.Warn("ByPass mode active - skipping door latch check during origin.");
+                        Step.OriginStep++;
+                        break;
+                    }
+                    if (DoorLatch == false)
                     {
                         RaiseWarning((int)EWarning.DoorNotSafetyLock);
                         break;
@@ -338,6 +356,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ERootProcessToRunStep.DoorSensorCheck:
+                    if (_machineStatus.IsByPassMode)
+                    {
+                        Log.Warn("ByPass mode active - skipping door sensor check during run.");
+                        Step.ToRunStep++;
+                        break;
+                    }
                     if (DoorSensor == false)
                     {
                         RaiseWarning((int)EWarning.DoorOpen);
@@ -347,11 +371,23 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ERootProcessToRunStep.DoorLock:
+                    if (_machineStatus.IsByPassMode)
+                    {
+                        Log.Warn("ByPass mode active - skipping door lock during run.");
+                        Step.ToRunStep++;
+                        break;
+                    }
                     _devices.Outputs.DoorOpen.Value = false;
                     Step.ToRunStep++;
                     break;
                 case ERootProcessToRunStep.DoorLatchCheck:
-                    if(DoorLatch == false)
+                    if (_machineStatus.IsByPassMode)
+                    {
+                        Log.Warn("ByPass mode active - skipping door latch check during run.");
+                        Step.ToRunStep++;
+                        break;
+                    }
+                    if (DoorLatch == false)
                     {
                         RaiseWarning((int)EWarning.DoorNotSafetyLock);
                         break;

@@ -18,21 +18,30 @@ namespace PIFilmAutoDetachCleanMC.Process
         private int _SemiAutoSequence;
         private int _OPCommand;
 
+        public bool IsByPassMode => _machineRunMode == EMachineRunMode.ByPass;
+        public bool IsDryRunMode => _machineRunMode == EMachineRunMode.DryRun;
         public EMachineRunMode MachineRunMode
-		{
-			get 
-			{
-				return _machineRunMode; 
-			}
-			set 
-			{
-				_machineRunMode = value;
-				OnPropertyChanged(nameof(MachineRunModeDisplay)); 
-			}
-		}
-
-		public string MachineRunModeDisplay
         {
+            get
+            {
+                return _machineRunMode;
+            }
+            set
+            {
+                if (_machineRunMode == value)
+                {
+                    return;
+                }
+
+                _machineRunMode = value;
+                OnPropertyChanged(nameof(MachineRunMode));
+                OnPropertyChanged(nameof(MachineRunModeDisplay));
+                OnPropertyChanged(nameof(IsByPassMode));
+                OnPropertyChanged(nameof(IsDryRunMode));
+            }
+        }
+        public string MachineRunModeDisplay 
+        { 
             get
             {
                 return _machineRunMode.ToString();

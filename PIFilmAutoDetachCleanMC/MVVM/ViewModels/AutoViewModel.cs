@@ -196,7 +196,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_AreYouSureYouWantToStartMachine"], (string)Application.Current.Resources["str_Confirm"]) == false)
+                    var messageKey = "str_AreYouSureYouWantToStartMachine";
+
+                    if (MachineStatus.IsDryRunMode)
+                    {
+                        messageKey = "str_AreYouSureYouWantToStartMachineDryRun";
+                    }
+                    else if (MachineStatus.IsByPassMode)
+                    {
+                        messageKey = "str_AreYouSureYouWantToStartMachineByPass";
+                    }
+
+                    if (MessageBoxEx.ShowDialog((string)Application.Current.Resources[messageKey], (string)Application.Current.Resources["str_Confirm"]) == false)
                     {
                         return;
                     }
