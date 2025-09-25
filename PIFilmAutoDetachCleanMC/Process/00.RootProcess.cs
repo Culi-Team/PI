@@ -207,7 +207,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             if (!_lightCurtainMutedByByPass)
             {
-                return
+                return;
             }
 
             _lightCurtainMutedByByPass = false;
