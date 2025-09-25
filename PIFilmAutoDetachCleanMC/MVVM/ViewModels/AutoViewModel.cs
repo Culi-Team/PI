@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Common;
 using EQX.Core.Sequence;
-using EQX.Motion;
 using EQX.UI.Controls;
 using log4net;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
@@ -10,7 +9,6 @@ using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
@@ -143,12 +141,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     if (IsInputStop == false)
                     {
                         IsInputStop = true;
-                        LogManager.GetLogger("ENABLE STOP INTPUT!");
+                        Log.Debug("ENABLE STOP INTPUT!");
                     }
                     else
                     {
                         IsInputStop = false;
-                        LogManager.GetLogger("DISABLE STOP INTPUT!");
+                        Log.Debug("DISABLE STOP INTPUT!");
                     }
                 });
             }
@@ -163,12 +161,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     if (IsOutputStop == false)
                     {
                         IsOutputStop = true;
-                        LogManager.GetLogger("ENABLE STOP OUTPUT!");
+                        Log.Debug("ENABLE STOP OUTPUT!");
                     }
                     else
                     {
                         IsOutputStop = false;
-                        LogManager.GetLogger("DISABLE STOP OUTPUT!");
+                        Log.Debug("DISABLE STOP OUTPUT!");
                     }
                 });
             }
