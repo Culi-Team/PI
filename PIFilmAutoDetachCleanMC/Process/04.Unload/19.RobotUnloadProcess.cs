@@ -97,7 +97,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotUnloadOriginStep.Cylinder_Up:
                     Log.Debug("Cylinders Up");
                     CylinderContact(false);
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => IsCylindersUp);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsCylindersUp);
                     Step.OriginStep++;
                     break;
                 case ERobotUnloadOriginStep.Cylinder_Up_Wait:
@@ -318,7 +318,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotUnloadPickStep.Cylinder_Down:
                     Log.Debug("Cylinders Down");
                     CylinderContact(true);
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => IsCylindersDown);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsCylindersDown);
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.Cylinder_Down_Wait:
@@ -344,7 +344,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadRobotDetect3, true);
                     SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadRobotDetect4, true);
 #endif
-                    Wait(_commonRecipe.VacDelay, () => GlassVac1.Value && GlassVac2.Value && GlassVac3.Value && GlassVac4.Value);
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => GlassVac1.Value && GlassVac2.Value && GlassVac3.Value && GlassVac4.Value);
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.Vacuum_On_Wait:
@@ -423,7 +423,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                         case EPlasmaPrepareStep.Air_Valve_Open:
                             _plasma.AirOpenClose(true);
-                            await Task.Delay(500); 
+                            await Task.Delay(500);
                             plasmaPrepareStep++;
                             break;
 
@@ -436,7 +436,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         case EPlasmaPrepareStep.End:
                             Log.Debug("Plasma Prepare End");
                             IsPlasmaPrepare = true;
-                            running = false; 
+                            running = false;
                             break;
                     }
                 }

@@ -141,7 +141,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Unclamp");
                     CylClamp1.Backward();
                     CylClamp2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return CylClamp1.IsBackward && CylClamp2.IsBackward; });
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return CylClamp1.IsBackward && CylClamp2.IsBackward; });
                     Step.OriginStep++;
                     break;
                 case ETransferFixtureOriginStep.Unclamp_Wait:
@@ -167,7 +167,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureOriginStep.CylUp:
                     Log.Debug("Cylinder Up");
                     CylUpDown.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return CylUpDown.IsForward; });
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return CylUpDown.IsForward; });
                     Step.OriginStep++;
                     break;
                 case ETransferFixtureOriginStep.CylUp_Wait:
@@ -183,7 +183,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureOriginStep.YAxis_Origin:
                     Log.Debug("Fixture Transfer Y Axis Origin Start");
                     TransferFixtureYAxis.SearchOrigin();
-                    Wait(_commonRecipe.MotionOriginTimeout, () => { return TransferFixtureYAxis.Status.IsHomeDone; });
+                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => { return TransferFixtureYAxis.Status.IsHomeDone; });
                     Step.OriginStep++;
                     break;
                 case ETransferFixtureOriginStep.YAxis_Origin_Wait:
@@ -353,7 +353,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessLoadStep.Cyl_Up:
                     Log.Debug("Transfer Fixture Cylinder Up");
                     CylUpDown.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return CylUpDown.IsForward; });
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return CylUpDown.IsForward; });
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessLoadStep.Cyl_Up_Wait:
@@ -368,7 +368,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessLoadStep.YAxis_Move_LoadPosition:
                     Log.Debug("Transfer Fixture Y Axis move Load Position");
                     TransferFixtureYAxis.MoveAbs(_transferFixtureRecipe.TransferFixtureYAxisLoadPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => { return TransferFixtureYAxis.IsOnPosition(_transferFixtureRecipe.TransferFixtureYAxisLoadPosition); });
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => { return TransferFixtureYAxis.IsOnPosition(_transferFixtureRecipe.TransferFixtureYAxisLoadPosition); });
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessLoadStep.YAxis_Move_LoadPosition_Wait:
@@ -383,7 +383,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessLoadStep.Cyl_Down:
                     Log.Debug("Transfer Fixture Cylinder Up");
                     CylUpDown.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return CylUpDown.IsBackward; });
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return CylUpDown.IsBackward; });
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessLoadStep.Cyl_Down_Wait:
@@ -399,7 +399,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Transfer Fixture Cylinder Clamp");
                     CylClamp1.Forward();
                     CylClamp2.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return CylClamp1.IsForward && CylClamp2.IsForward; });
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return CylClamp1.IsForward && CylClamp2.IsForward; });
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessLoadStep.Cyl_Clamp_Wait:
@@ -435,7 +435,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessUnloadStep.Cyl_Up:
                     Log.Debug("Transfer Fixture Cylinder Up");
                     CylUpDown.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => CylUpDown.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => CylUpDown.IsForward);
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessUnloadStep.Cyl_Up_Wait:
@@ -459,7 +459,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessUnloadStep.YAxis_Move_UnloadPosition:
                     Log.Debug("Transfer Fixture Y Axis Move Unload Position");
                     TransferFixtureYAxis.MoveAbs(_transferFixtureRecipe.TransferFixtureYAxisUnloadPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => TransferFixtureYAxis.IsOnPosition(_transferFixtureRecipe.TransferFixtureYAxisUnloadPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => TransferFixtureYAxis.IsOnPosition(_transferFixtureRecipe.TransferFixtureYAxisUnloadPosition));
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessUnloadStep.YAxis_Move_UnloadPosition_Wait:
@@ -474,7 +474,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessUnloadStep.Cyl_Down:
                     Log.Debug("Transfer Fixture Cylinder Down");
                     CylUpDown.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => CylUpDown.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => CylUpDown.IsBackward);
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessUnloadStep.Cyl_Down_Wait:
@@ -490,7 +490,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Transfer Fixture Cylinder UnClamp");
                     CylClamp1.Backward();
                     CylClamp2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => CylClamp1.IsBackward && CylClamp2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => CylClamp1.IsBackward && CylClamp2.IsBackward);
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessUnloadStep.Cyl_UnClamp_Wait:

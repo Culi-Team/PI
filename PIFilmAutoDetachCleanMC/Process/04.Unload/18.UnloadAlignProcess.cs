@@ -140,7 +140,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadAlignOriginStep.Cyl_Align_Down:
                     Log.Debug("Cylinder Align Down");
                     AlignUnalign(false);
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => IsUnalign);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsUnalign);
                     Step.OriginStep++;
                     break;
                 case EUnloadAlignOriginStep.Cyl_Align_Down_Wait:
@@ -342,7 +342,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadAlignStep.Cyl_Align_Up:
                     Log.Debug("Cylinder Align Up");
                     AlignUnalign(true);
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => IsAlign);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsAlign);
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.Cyl_Align_Up_Wait:
@@ -357,7 +357,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadAlignStep.Vacuum_Off_Align:
                     Log.Debug("Vacuum Off");
                     VacOnOff(false);
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.Vacuum_On:
@@ -369,7 +369,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimModbusInput(GlassDetect3, true);
                     SimulationInputSetter.SetSimModbusInput(GlassDetect4, true);
 #endif
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.GlassDetect_Check:
@@ -383,7 +383,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadAlignStep.Cyl_Align_Down:
                     Log.Debug("Cylinder Align Down");
                     AlignUnalign(false);
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => IsAlign == false);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsAlign == false);
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.Cyl_Align_Down_Wait:
@@ -426,7 +426,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimModbusInput(GlassVac3, false);
                     SimulationInputSetter.SetSimModbusInput(GlassVac4, false);
 #endif
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case EUnloadAlignRobotPickStep.Set_FlagRequestRobotUnload:

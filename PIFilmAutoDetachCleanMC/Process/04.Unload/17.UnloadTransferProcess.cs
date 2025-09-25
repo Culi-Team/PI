@@ -152,7 +152,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferOriginStep.ZAxis_Origin:
                     Log.Debug("Z Axis Origin Start");
                     ZAxis.SearchOrigin();
-                    Wait(_commonRecipe.MotionOriginTimeout, () => { return ZAxis.Status.IsHomeDone; });
+                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => { return ZAxis.Status.IsHomeDone; });
                     Step.OriginStep++;
                     break;
                 case EUnloadTransferOriginStep.ZAxis_Origin_Wait:
@@ -168,7 +168,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferOriginStep.YAxis_Origin:
                     Log.Debug("Y Axis Origin Start");
                     YAxis.SearchOrigin();
-                    Wait(_commonRecipe.MotionOriginTimeout, () => { return YAxis.Status.IsHomeDone; });
+                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => { return YAxis.Status.IsHomeDone; });
                     Step.OriginStep++;
                     break;
                 case EUnloadTransferOriginStep.YAxis_Origin_Wait:
@@ -352,7 +352,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferReadyStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(Recipe.ZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(Recipe.ZAxisReadyPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(Recipe.ZAxisReadyPosition));
                     Step.ToRunStep++;
                     break;
                 case EUnloadTransferReadyStep.ZAxis_Move_ReadyPosition_Wait:
@@ -368,7 +368,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferReadyStep.YAxis_Move_ReadyPosition:
                     Log.Debug("Y Axis Move Ready Position");
                     YAxis.MoveAbs(Recipe.YAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisReadyPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(Recipe.YAxisReadyPosition));
                     Step.ToRunStep++;
                     break;
                 case EUnloadTransferReadyStep.YAxis_Move_ReadyPosition_Wait:
@@ -423,7 +423,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferAFCleanUnloadStep.YAxis_Move_PickPositon:
                     Log.Debug("Y Axis Move Pick Position");
                     YAxis.MoveAbs(Recipe.YAxisPickPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisPickPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(Recipe.YAxisPickPosition));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferAFCleanUnloadStep.YAxis_Move_PickPosition_Wait:
@@ -448,7 +448,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferAFCleanUnloadStep.ZAxis_Move_PickPosition:
                     Log.Debug("Z Axis Move Pick Position");
                     ZAxis.MoveAbs(Recipe.ZAxisPickPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(Recipe.ZAxisPickPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(Recipe.ZAxisPickPosition));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferAFCleanUnloadStep.ZAxis_Move_PickPositon_Wait:
@@ -467,13 +467,13 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimModbusInput(GlassVac, true);
 #endif
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferAFCleanUnloadStep.ZAxis_Move_ReadyPositon:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(Recipe.ZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(Recipe.ZAxisReadyPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(Recipe.ZAxisReadyPosition));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferAFCleanUnloadStep.ZAxis_Move_ReadyPositon_Wait:
@@ -571,7 +571,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition1:
                     Log.Debug("YAxis Move Place Position 1");
                     YAxis.MoveAbs(Recipe.YAxisPlacePosition1);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisPlacePosition1));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(Recipe.YAxisPlacePosition1));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition1_Wait:
@@ -587,7 +587,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition2:
                     Log.Debug("YAxis Move Place Position 2");
                     YAxis.MoveAbs(Recipe.YAxisPlacePosition2);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisPlacePosition2));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(Recipe.YAxisPlacePosition2));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition2_Wait:
@@ -603,7 +603,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition3:
                     Log.Debug("YAxis Move Place Position 3");
                     YAxis.MoveAbs(Recipe.YAxisPlacePosition3);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisPlacePosition3));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(Recipe.YAxisPlacePosition3));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition3_Wait:
@@ -619,7 +619,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition4:
                     Log.Debug("YAxis Move Place Position 4");
                     YAxis.MoveAbs(Recipe.YAxisPlacePosition4);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisPlacePosition4));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(Recipe.YAxisPlacePosition4));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition4_Wait:
@@ -635,7 +635,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferPlaceStep.ZAxis_Move_PlacePosition:
                     Log.Debug("Z Axis Move Place Position");
                     ZAxis.MoveAbs(Recipe.ZAxisPlacePosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(Recipe.ZAxisPlacePosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(Recipe.ZAxisPlacePosition));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.ZAxis_Move_PlacePosition_Wait:
@@ -654,13 +654,13 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimModbusInput(GlassVac, false);
 #endif
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(Recipe.ZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(Recipe.ZAxisReadyPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(Recipe.ZAxisReadyPosition));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.ZAxis_Move_ReadyPosition_Wait:
@@ -676,7 +676,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferPlaceStep.YAxis_Move_ReadyPosition:
                     Log.Debug("Y Axis Move Ready Position");
                     YAxis.MoveAbs(Recipe.YAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(Recipe.YAxisReadyPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(Recipe.YAxisReadyPosition));
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.YAxis_Move_ReadyPosition_Wait:

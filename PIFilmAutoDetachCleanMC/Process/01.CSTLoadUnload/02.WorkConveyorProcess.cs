@@ -210,7 +210,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorOriginStep.Cyl_Tilt_Down:
                     Log.Debug("Cylinder Tilt Down");
                     TiltCylinder.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => TiltCylinder.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => TiltCylinder.IsBackward);
                     Step.OriginStep++;
                     break;
                 case EWorkConveyorOriginStep.Cyl_Tilt_Down_Wait:
@@ -227,7 +227,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Support CV Down");
                     CVSupportCyl1.Backward();
                     CVSupportCyl2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => CVSupportCyl1.IsBackward && CVSupportCyl2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => CVSupportCyl1.IsBackward && CVSupportCyl2.IsBackward);
                     Step.OriginStep++;
                     break;
                 case EWorkConveyorOriginStep.SupportCV_Down_Wait:
@@ -243,7 +243,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorOriginStep.TAxis_Origin:
                     Log.Debug("T Axis Origin");
                     TAxis.SearchOrigin();
-                    Wait(_commonRecipe.MotionOriginTimeout, () => TAxis.Status.IsHomeDone);
+                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => TAxis.Status.IsHomeDone);
                     Step.OriginStep++;
                     break;
                 case EWorkConveyorOriginStep.TAxis_Origin_Wait:
@@ -260,7 +260,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Fix Backward");
                     FixCylinder1.Backward();
                     FixCylinder2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => FixCylinder1.IsBackward && FixCylinder2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FixCylinder1.IsBackward && FixCylinder2.IsBackward);
                     Step.OriginStep++;
                     break;
                 case EWorkConveyorOriginStep.Cyl_Fix_Backward_Wait:
@@ -475,7 +475,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Support Conveyor Down");
                     CVSupportCyl1.Backward();
                     CVSupportCyl2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => CVSupportCyl1.IsBackward && CVSupportCyl2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => CVSupportCyl1.IsBackward && CVSupportCyl2.IsBackward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorTiltStep.Cyl_SupportCV_Down_Wait:
@@ -492,7 +492,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Fix Forward");
                     FixCylinder1.Forward();
                     FixCylinder2.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => FixCylinder1.IsForward && FixCylinder2.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FixCylinder1.IsForward && FixCylinder2.IsForward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorTiltStep.Cyl_Fix_Forward_Wait:
@@ -508,7 +508,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorTiltStep.TAxis_Move_WorkPosition:
                     Log.Debug("T Axis Move Work Position");
                     TAxis.MoveAbs(TAxisWorkPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => TAxis.IsOnPosition(TAxisWorkPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => TAxis.IsOnPosition(TAxisWorkPosition));
                     Step.RunStep++;
                     break;
                 case EWorkConveyorTiltStep.TAxis_Move_WorkPosition_Wait:
@@ -524,7 +524,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorTiltStep.Cyl_Tilt_Up:
                     Log.Debug("Cylinder Tilt Up");
                     TiltCylinder.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => TiltCylinder.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => TiltCylinder.IsForward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorTiltStep.Cyl_Tilt_Up_Wait:
@@ -646,7 +646,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorProcessLoadStep.Cyl_Tilt_Down:
                     Log.Debug("Cylinder Tilt Down");
                     TiltCylinder.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => TiltCylinder.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => TiltCylinder.IsBackward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Cyl_Tilt_Down_Wait:
@@ -662,7 +662,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorProcessLoadStep.TAxis_Move_LoadPosition:
                     Log.Debug("T Axis Move Load Position");
                     TAxis.MoveAbs(TAxisLoadPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => TAxis.IsOnPosition(TAxisLoadPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => TAxis.IsOnPosition(TAxisLoadPosition));
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.TAxis_Move_MoveLoadPosition_Wait:
@@ -679,7 +679,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Fix Backward");
                     FixCylinder1.Backward();
                     FixCylinder2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => FixCylinder1.IsBackward && FixCylinder2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FixCylinder1.IsBackward && FixCylinder2.IsBackward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Cyl_Fix_Backward_Wait:
@@ -695,7 +695,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorProcessLoadStep.Support_CV_Up:
                     Log.Debug("Support Conveyor In Up");
                     CVSupportCyl1.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => CVSupportCyl1.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => CVSupportCyl1.IsForward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Support_CV_Up_Wait:
@@ -763,7 +763,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorUnloadStep.Cyl_Tilt_Down:
                     Log.Debug("Cylinder Tilt Down");
                     TiltCylinder.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => TiltCylinder.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => TiltCylinder.IsBackward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Cyl_Tilt_Down_Wait:
@@ -780,7 +780,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Support Conveyor Down");
                     CVSupportCyl1.Backward();
                     CVSupportCyl2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => CVSupportCyl1.IsBackward && CVSupportCyl2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => CVSupportCyl1.IsBackward && CVSupportCyl2.IsBackward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Support_CV_Down_Wait:
@@ -796,7 +796,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorUnloadStep.TAxis_MoveLoadPosition:
                     Log.Debug("T Axis Move Load Position");
                     TAxis.MoveAbs(TAxisLoadPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => TAxis.IsOnPosition(TAxisLoadPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => TAxis.IsOnPosition(TAxisLoadPosition));
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.TAxis_MoveLoadPosition_Wait:
@@ -813,7 +813,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Support Conveyor Up");
                     CVSupportCyl1.Forward();
                     CVSupportCyl2.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => CVSupportCyl1.IsForward && CVSupportCyl2.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => CVSupportCyl1.IsForward && CVSupportCyl2.IsForward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Support_CV_Up_Wait:
@@ -830,7 +830,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Fix Backward");
                     FixCylinder1.Backward();
                     FixCylinder2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => FixCylinder1.IsBackward && FixCylinder2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FixCylinder1.IsBackward && FixCylinder2.IsBackward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Cyl_Fix_Backward_Wait:

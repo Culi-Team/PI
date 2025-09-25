@@ -167,7 +167,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttleOriginStep.ZAxis_Origin:
                     Log.Debug("Transfer In Shuttle Z Axis Origin Start");
                     ZAxis.SearchOrigin();
-                    Wait(_commonRecipe.MotionOriginTimeout, () => { return ZAxis.Status.IsHomeDone; });
+                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => { return ZAxis.Status.IsHomeDone; });
                     Step.OriginStep++;
                     break;
                 case ETransferInShuttleOriginStep.ZAxis_Origin_Wait:
@@ -182,7 +182,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttleOriginStep.YAxis_Origin:
                     Log.Debug("Transfer In Shuttle Y Axis Origin Start");
                     YAxis.SearchOrigin();
-                    Wait(_commonRecipe.MotionOriginTimeout, () => { return YAxis.Status.IsHomeDone; });
+                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => { return YAxis.Status.IsHomeDone; });
                     Step.OriginStep++;
                     break;
                 case ETransferInShuttleOriginStep.YAxis_Origin_Wait:
@@ -366,7 +366,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttleReadyStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(ZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisReadyPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisReadyPosition));
                     Step.ToRunStep++;
                     break;
                 case ETransferInShuttleReadyStep.ZAxis_Move_ReadyPosition_Wait:
@@ -382,7 +382,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttleReadyStep.YAxis_Move_ReadyPosition:
                     Log.Debug("Y Axis Move Ready Position");
                     YAxis.MoveAbs(YAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(YAxisReadyPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisReadyPosition));
                     Step.ToRunStep++;
                     break;
                 case ETransferInShuttleReadyStep.YAxis_Move_ReadyPosition_Wait:
@@ -436,7 +436,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePlaceStep.YAxis_Move_PlacePosition:
                     Log.Debug("Y Axis Move Place Position");
                     YAxis.MoveAbs(YAxisPlacePosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(YAxisPlacePosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisPlacePosition));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePlaceStep.YAxis_Move_PlacePosition_Wait:
@@ -452,7 +452,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePlaceStep.Cyl_Rotate_180D:
                     Log.Debug("Cylinder Rotate 180 Degree");
                     RotCyl.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => RotCyl.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => RotCyl.IsForward);
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePlaceStep.Cyl_Rotate_180D_Wait:
@@ -477,7 +477,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePlaceStep.ZAxis_Move_PlacePosition:
                     Log.Debug("Z Axis Move Place Position");
                     ZAxis.MoveAbs(ZAxisPlacePosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisPlacePosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisPlacePosition));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePlaceStep.ZAxis_Move_PlacePosition_Wait:
@@ -493,13 +493,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePlaceStep.Vacuum_Off:
                     Log.Debug("Vacuum Off");
                     GlassVac.Value = false;
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePlaceStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(ZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisReadyPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisReadyPosition));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePlaceStep.ZAxis_Move_ReadyPosition_Wait:
@@ -551,7 +551,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.Cyl_Rotate_0D:
                     Log.Debug("Cylinder Rotate 0 Degree");
                     RotCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => RotCyl.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => RotCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.Cyl_Rotate_0D_Wait:
@@ -606,7 +606,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.YAxis_Move_PickPosition1:
                     Log.Debug("Y Axis Move Pick Position 1");
                     YAxis.MoveAbs(YAxisPickPosition1);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(YAxisPickPosition1));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisPickPosition1));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.YAxis_Move_PickPosition1_Wait:
@@ -622,7 +622,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.YAxis_Move_PickPosition2:
                     Log.Debug("Y Axis Move Pick Position 2");
                     YAxis.MoveAbs(YAxisPickPosition2);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(YAxisPickPosition2));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisPickPosition2));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.YAxis_Move_PickPosition2_Wait:
@@ -638,7 +638,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.YAxis_Move_PickPosition3:
                     Log.Debug("Y Axis Move Pick Position 3");
                     YAxis.MoveAbs(YAxisPickPosition3);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(YAxisPickPosition3));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisPickPosition3));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.YAxis_Move_PickPosition3_Wait:
@@ -654,7 +654,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.ZAxis_Move_PickPosition:
                     Log.Debug("Z Axis Move Pick Position");
                     ZAxis.MoveAbs(ZAxisPickPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisPickPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisPickPosition));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.ZAxis_Move_PickPosition_Wait:
@@ -670,13 +670,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.Vacuum_On:
                     Log.Debug("Vacuum On");
                     GlassVac.Value = true;
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(ZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisReadyPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisReadyPosition));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.ZAxis_Move_ReadyPosition_Wait:
@@ -692,7 +692,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.YAxis_Move_ReadyPosition:
                     Log.Debug("Y Axis Move Ready Position");
                     YAxis.MoveAbs(YAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => YAxis.IsOnPosition(YAxisReadyPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisReadyPosition));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.YAxis_Move_ReadyPosition_Wait:

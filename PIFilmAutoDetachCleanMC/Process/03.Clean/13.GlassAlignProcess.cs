@@ -83,7 +83,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                if(port == EPort.Left)
+                if (port == EPort.Left)
                 {
                     _glassAlignLeftOutput[(int)EGlassAlignProcessOutput.GLASS_ALIGN_PICK_DONE_RECEIVED] = value;
                 }
@@ -97,7 +97,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                if(port == EPort.Left)
+                if (port == EPort.Left)
                 {
                     return _glassAlignLeftInput[(int)EGlassAlignProcessInput.GLASS_TRANSFER_PLACE_DONE];
                 }
@@ -110,7 +110,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                if( port == EPort.Left)
+                if (port == EPort.Left)
                 {
                     return _glassAlignLeftInput[(int)EGlassAlignProcessInput.TRANSFER_IN_SHUTTLE_PICK_DONE];
                 }
@@ -164,7 +164,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassAlignOriginStep.Cyl_Align_Down:
                     Log.Debug("Cylinder Align Down");
                     AlignUnAlign(false);
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => IsUnalign);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsUnalign);
                     Step.OriginStep++;
                     break;
                 case EGlassAlignOriginStep.Cyl_Align_Down_Wait:
@@ -244,19 +244,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_GlassTransferPlace();
                     break;
                 case ESequence.AlignGlassLeft:
-                    if(port == EPort.Left)
+                    if (port == EPort.Left)
                     {
                         Sequence_AlignGlass();
                     }
                     break;
                 case ESequence.AlignGlassRight:
-                    if(port == EPort.Right)
+                    if (port == EPort.Right)
                     {
                         Sequence_AlignGlass();
                     }
                     break;
                 case ESequence.TransferInShuttleLeftPick:
-                    if(port == EPort.Left)
+                    if (port == EPort.Left)
                     {
                         Sequence_TransferInShuttlePick();
                     }
@@ -371,10 +371,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EGlassAlignAutoRunStep.GlassVacDetect_Check:
-                    if(IsVacDetect || IsGlassDetect)
+                    if (IsVacDetect || IsGlassDetect)
                     {
                         Log.Info("Sequence Align Glass");
-                        Sequence = port == EPort.Left ?  ESequence.AlignGlassLeft : ESequence.AlignGlassRight;
+                        Sequence = port == EPort.Left ? ESequence.AlignGlassLeft : ESequence.AlignGlassRight;
                     }
                     Step.RunStep++;
                     break;
@@ -384,7 +384,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
             }
         }
-        
+
         private void Sequence_GlassTransferPlace()
         {
             switch ((EGlassAlignGlassTransferPlaceStep)Step.RunStep)
@@ -398,11 +398,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassAlignGlassTransferPlaceStep.Cyl_Align_Down:
                     Log.Debug("Cylinder Align Down");
                     AlignUnAlign(false);
-                    Wait(_commonRecipe.CylinderMoveTimeout,() => IsUnalign);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsUnalign);
                     Step.RunStep++;
                     break;
                 case EGlassAlignGlassTransferPlaceStep.Cyl_Align_Down_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_AlignCylinder_Down_Fail :
                                                           EWarning.GlassAlignRight_AlignCylinder_Down_Fail));
@@ -418,7 +418,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EGlassAlignGlassTransferPlaceStep.Wait_GlassTransferPlace_Done:
-                    if(FlagGlassTransferPlaceDone == false)
+                    if (FlagGlassTransferPlaceDone == false)
                     {
                         Wait(20);
                         break;
@@ -459,7 +459,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac2 : _devices.Inputs.AlignStageRVac2, true);
                     SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac3 : _devices.Inputs.AlignStageRVac3, true);
 #endif
-                    Wait(_commonRecipe.VacDelay, () => IsVacDetect);
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Cyl_Align_Up:
@@ -470,11 +470,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac2 : _devices.Inputs.AlignStageRVac2, false);
                     SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac3 : _devices.Inputs.AlignStageRVac3, false);
 #endif
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => IsAlign);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsAlign);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Cyl_Align_Up_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_AlignCylinder_Up_Fail : EWarning.GlassAlignRight_AlignCylinder_Up_Fail));
                         break;
@@ -490,7 +490,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect2 : _devices.Inputs.AlignStageRGlassDetect2, true);
                     SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect3 : _devices.Inputs.AlignStageRGlassDetect3, true);
 #endif
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Wait_GlassDetect:
@@ -510,17 +510,17 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassAlignStep.Vacuum_On_2nd:
                     Log.Debug("Vacuum On");
                     VacOnOff(true);
-                    Wait(_commonRecipe.VacDelay, () => IsVacDetect);
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Cyl_Align_Down:
                     Log.Debug("Cylinder Align Down");
                     AlignUnAlign(false);
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => IsUnalign);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsUnalign);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Cyl_Align_Down_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_AlignCylinder_Down_Fail : EWarning.GlassAlignRight_AlignCylinder_Down_Fail));
                         break;
@@ -557,7 +557,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassAlignTransferInShuttlePickStep.Vacuum_Off:
                     Log.Debug("Vacuum Off");
                     VacOnOff(false);
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case EGlassAlignTransferInShuttlePickStep.Glass_Detect_Check:
@@ -580,7 +580,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Transfer In Shuttle Pick Done");
                     break;
                 case EGlassAlignTransferInShuttlePickStep.Wait_TransferInShuttlePickDone:
-                    if(FlagTransferInShuttlePickDone == false)
+                    if (FlagTransferInShuttlePickDone == false)
                     {
                         Wait(20);
                         break;

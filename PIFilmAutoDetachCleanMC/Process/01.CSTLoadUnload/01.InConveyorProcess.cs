@@ -90,7 +90,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EConveyorOriginStep.CstStopper_Up:
                     Log.Debug("Cassette Stopper Up");
                     StopperCylinder.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => StopperCylinder.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => StopperCylinder.IsForward);
                     Step.OriginStep++;
                     break;
                 case EConveyorOriginStep.CstStopper_Up_Wait:
@@ -277,7 +277,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Down:
                     Log.Debug("Stopper Down");
                     StopperCylinder.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => StopperCylinder.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => StopperCylinder.IsBackward);
                     Step.RunStep++;
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Down_Wait:
@@ -338,7 +338,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Up:
                     Log.Debug("Stopper Up");
                     StopperCylinder.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => StopperCylinder.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => StopperCylinder.IsForward);
                     Step.RunStep++;
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Up_Wait:
@@ -375,7 +375,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EInConveyorLoadStep.Stopper_Up:
                     Log.Debug("Stopper Up");
                     StopperCylinder.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => StopperCylinder.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => StopperCylinder.IsBackward);
                     Step.RunStep++;
                     break;
                 case EInConveyorLoadStep.Stopper_Up_Wait:

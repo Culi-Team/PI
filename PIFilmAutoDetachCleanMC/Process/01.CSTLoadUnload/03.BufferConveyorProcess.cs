@@ -97,7 +97,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Stopper Down");
                     BufferStopper1.Backward();
                     BufferStopper2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => BufferStopper1.IsBackward && BufferStopper2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => BufferStopper1.IsBackward && BufferStopper2.IsBackward);
                     Step.OriginStep++;
                     break;
                 case EBufferConveyorOriginStep.Stopper_Cylinder_Down_Wait:
@@ -313,7 +313,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EBufferConveyorInWorkCSTUnloadStep.Stopper1_Down:
                     Log.Debug("Stopper 1 Down");
                     BufferStopper1.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => BufferStopper1.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => BufferStopper1.IsBackward);
                     Step.RunStep++;
                     break;
                 case EBufferConveyorInWorkCSTUnloadStep.Stopper1_Down_Wait:
@@ -328,7 +328,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EBufferConveyorInWorkCSTUnloadStep.Stopper2_Up:
                     Log.Debug("Stopper 2 Up");
                     BufferStopper2.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => BufferStopper2.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => BufferStopper2.IsForward);
                     Step.RunStep++;
                     break;
                 case EBufferConveyorInWorkCSTUnloadStep.Stopper2_Up_Wait:
@@ -417,7 +417,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EBufferConveyorOutWorkCSTLoadStep.Stopper2_Down:
                     Log.Debug("Stopper 2 Down");
                     BufferStopper2.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => BufferStopper2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => BufferStopper2.IsBackward);
                     Step.RunStep++;
                     break;
                 case EBufferConveyorOutWorkCSTLoadStep.Stopper2_Down_Wait:

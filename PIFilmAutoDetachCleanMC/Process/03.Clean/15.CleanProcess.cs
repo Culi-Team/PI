@@ -447,7 +447,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanOriginStep.PushCyl_Up:
                     Log.Debug("Push Cylinder Up");
                     PushCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return PushCyl.IsBackward; });
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return PushCyl.IsBackward; });
                     Step.OriginStep++;
                     break;
                 case ECleanOriginStep.PushCyl_Up_Wait:
@@ -477,7 +477,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     YAxis.SearchOrigin();
                     TAxis.SearchOrigin();
                     FeedingAxis.SearchOrigin();
-                    Wait(_commonRecipe.MotionOriginTimeout, () => { return XAxis.Status.IsHomeDone && YAxis.Status.IsHomeDone && TAxis.Status.IsHomeDone && FeedingAxis.Status.IsHomeDone; });
+                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => { return XAxis.Status.IsHomeDone && YAxis.Status.IsHomeDone && TAxis.Status.IsHomeDone && FeedingAxis.Status.IsHomeDone; });
                     Step.OriginStep++;
                     break;
                 case ECleanOriginStep.AxisOrigin_Wait:
@@ -853,7 +853,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     XAxis.MoveAbs(XAxisLoadPosition);
                     YAxis.MoveAbs(YAxisLoadPosition);
                     TAxis.MoveAbs(TAxisLoadPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => XAxis.IsOnPosition(XAxisLoadPosition) && YAxis.IsOnPosition(YAxisLoadPosition) && TAxis.IsOnPosition(TAxisLoadPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => XAxis.IsOnPosition(XAxisLoadPosition) && YAxis.IsOnPosition(YAxisLoadPosition) && TAxis.IsOnPosition(TAxisLoadPosition));
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.AxisMoveLoadPosition_Wait:
@@ -933,7 +933,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimModbusInput(VacDetect, true);
 #endif
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.End:
@@ -978,7 +978,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     XAxis.MoveAbs(XAxisCleanHorizontalPosition);
                     YAxis.MoveAbs(YAxisCleanHorizontalPosition);
                     TAxis.MoveAbs(TAxisCleanHorizontalPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => XAxis.IsOnPosition(XAxisCleanHorizontalPosition) &&
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => XAxis.IsOnPosition(XAxisCleanHorizontalPosition) &&
                                                                YAxis.IsOnPosition(YAxisCleanHorizontalPosition) &&
                                                                TAxis.IsOnPosition(TAxisCleanHorizontalPosition));
                     Step.RunStep++;
@@ -1033,7 +1033,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanStep.CylPusher_Down_CleanHorizontal:
                     Log.Debug("Cylinder Pusher Down");
                     PushCyl.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => PushCyl.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PushCyl.IsForward);
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.CylPusher_Down_CleanHorizontal_Wait:
@@ -1059,7 +1059,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     FeedingAxis.MoveJog(cleanRecipe.RFeedingAxisCleaningSpeed, true);
 #if !SIMULATION
                     _devices.MotionsAjin.CleanHorizontal(cleanType, XAxisCleanHorizontalPosition, YAxisCleanHorizontalPosition, 50, 10, cleanRecipe.CleanHorizontalCount);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => _devices.MotionsAjin.IsContiMotioning(cleanType) == false);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _devices.MotionsAjin.IsContiMotioning(cleanType) == false);
 #else
                     Thread.Sleep(100);
 #endif
@@ -1086,7 +1086,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanStep.CylPusher_Up_CleanHorizontal:
                     Log.Debug("Cylinder Pusher Up");
                     PushCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => PushCyl.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PushCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.CylPusherUp_CleanHorizontal_Wait:
@@ -1117,7 +1117,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     XAxis.MoveAbs(XAxisCleanVerticalPosition);
                     YAxis.MoveAbs(YAxisCleanVerticalPosition);
                     TAxis.MoveAbs(TAxisCleanVerticalPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => XAxis.IsOnPosition(XAxisCleanVerticalPosition) &&
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => XAxis.IsOnPosition(XAxisCleanVerticalPosition) &&
                                                                YAxis.IsOnPosition(YAxisCleanVerticalPosition) &&
                                                                TAxis.IsOnPosition(TAxisCleanVerticalPosition));
                     Step.RunStep++;
@@ -1172,7 +1172,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanStep.CylPusher_Down_CleanVertical:
                     Log.Debug("Cylinder Pusher Down");
                     PushCyl.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => PushCyl.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PushCyl.IsForward);
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.CylPusher_Down_CleanVertical_Wait:
@@ -1197,7 +1197,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Clean Vertical");
 #if !SIMULATION
                     _devices.MotionsAjin.CleanVertical(cleanType,XAxisCleanVerticalPosition,YAxisCleanVerticalPosition,cleanRecipe.CleanVerticalCount);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => _devices.MotionsAjin.IsContiMotioning(cleanType));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _devices.MotionsAjin.IsContiMotioning(cleanType));
 #else
                     Thread.Sleep(100);
 #endif
@@ -1223,7 +1223,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanStep.CylPusher_Up_CleanVertical:
                     Log.Debug("Cylinder Pusher Up");
                     PushCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => PushCyl.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PushCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.CylPusher_Up_CleanVertical_Wait:
@@ -1293,7 +1293,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     XAxis.MoveAbs(XAxisUnloadPosition);
                     YAxis.MoveAbs(YAxisUnloadPosition);
                     TAxis.MoveAbs(TAxisUnloadPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => XAxis.IsOnPosition(XAxisUnloadPosition) &&
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => XAxis.IsOnPosition(XAxisUnloadPosition) &&
                                                                YAxis.IsOnPosition(YAxisUnloadPosition) &&
                                                                TAxis.IsOnPosition(TAxisUnloadPosition));
                     Step.RunStep++;
@@ -1353,7 +1353,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimModbusInput(VacDetect, false);
 #endif
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case ECleanProcessUnloadStep.Set_FlagRequestUnload:

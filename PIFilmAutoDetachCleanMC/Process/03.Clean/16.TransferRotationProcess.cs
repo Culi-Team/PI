@@ -170,7 +170,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationOriginStep.ZAxis_Origin:
                     Log.Debug("Z Axis Origin Start");
                     ZAxis.SearchOrigin();
-                    Wait(_commonRecipe.MotionOriginTimeout, () => { return ZAxis.Status.IsHomeDone; });
+                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => { return ZAxis.Status.IsHomeDone; });
                     Step.OriginStep++;
                     break;
                 case ETransferRotationOriginStep.ZAxis_Origin_Wait:
@@ -186,7 +186,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationOriginStep.TransferRotation_Cyl_Backward:
                     Log.Debug("Transfer Rotation Cylinder Backward");
                     TransferCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return TransferCyl.IsBackward; });
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return TransferCyl.IsBackward; });
                     Step.OriginStep++;
                     break;
                 case ETransferRotationOriginStep.TransferRotation_Cyl_Backward_Wait:
@@ -202,7 +202,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationOriginStep.TransferRotation_0Degree:
                     Log.Debug("Transfer Rotation to 0 Degree");
                     RotateCyl.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => { return RotateCyl.IsForward; });
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return RotateCyl.IsForward; });
                     Step.OriginStep++;
                     break;
                 case ETransferRotationOriginStep.TransferRotation_0Degree_Wait:
@@ -395,7 +395,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationReadyStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(ZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisReadyPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisReadyPosition));
                     Step.ToRunStep++;
                     break;
                 case ETransferRotationReadyStep.ZAxis_Move_ReadyPosition_Wait:
@@ -411,7 +411,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationReadyStep.Cyl_Up:
                     Log.Debug("Cylinder Up");
                     UpDownCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => UpDownCyl.IsBackward);
                     Step.ToRunStep++;
                     break;
                 case ETransferRotationReadyStep.Cyl_Up_Wait:
@@ -487,7 +487,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationWETCleanUnloadStep.ZAxis_Move_PickPosition:
                     Log.Debug("Z Axis Move Pick Position");
                     ZAxis.MoveAbs(ZAxisPickPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisPickPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisPickPosition));
                     Step.RunStep++;
                     break;
                 case ETransferRotationWETCleanUnloadStep.ZAxis_Move_PickPositionWait:
@@ -506,7 +506,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimModbusInput(GlassVac1, true);
 #endif
-                    Wait(_commonRecipe.VacDelay, () => GlassVac1.Value);
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => GlassVac1.Value);
                     Step.RunStep++;
                     break;
                 case ETransferRotationWETCleanUnloadStep.Vacuum_On_Wait:
@@ -520,7 +520,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationWETCleanUnloadStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(ZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisReadyPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisReadyPosition));
                     Step.RunStep++;
                     break;
                 case ETransferRotationWETCleanUnloadStep.ZAxis_Move_ReadyPositionWait:
@@ -575,7 +575,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationStep.TransferCyl_Forward:
                     Log.Debug("Transfer Cylinder Forward");
                     TransferCyl.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => TransferCyl.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => TransferCyl.IsForward);
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.TransferCyl_Forward_Wait:
@@ -591,7 +591,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationStep.ZAxis_Move_TransferBeforeRotatePosition:
                     Log.Debug("Z Axis Move Transfer Before Rotate Position");
                     ZAxis.MoveAbs(ZAxisTransferBeforeRotatePosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisTransferBeforeRotatePosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisTransferBeforeRotatePosition));
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.ZAxis_Move_TransferBeforeRotatePosition_Wait:
@@ -610,7 +610,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimModbusInput(GlassRotVac, true);
 #endif
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassVac1_Off:
@@ -619,7 +619,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimModbusInput(GlassVac1, false);
 #endif
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassRotVac_On_Check:
@@ -634,7 +634,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(ZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisReadyPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisReadyPosition));
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.ZAxis_Move_ReadyPosition_Wait:
@@ -650,7 +650,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationStep.Cyl_Rotate_180D:
                     Log.Debug("Cylinder Rotate 180 Degree");
                     RotateCyl.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => RotateCyl.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => RotateCyl.IsForward);
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.Cyl_Rotate_180D_Wait:
@@ -666,7 +666,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationStep.Cyl_Down:
                     Log.Debug("Cylinder Down");
                     UpDownCyl.Forward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => UpDownCyl.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => UpDownCyl.IsForward);
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.Cyl_Down_Wait:
@@ -682,7 +682,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationStep.ZAxis_Move_TransferAfterRotatePositon:
                     Log.Debug("Z Axis Move Transfer After Rotate Position");
                     ZAxis.MoveAbs(ZAxisTransferAfterRotatePosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisTransferAfterRotatePosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisTransferAfterRotatePosition));
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.ZAxis_Move_TransferAfterRotatePositon_Wait:
@@ -701,7 +701,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimModbusInput(GlassVac2, true);
 #endif
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassRotVac_Off:
@@ -710,7 +710,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimModbusInput(GlassRotVac, false);
 #endif
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassVac2_On_Check:
@@ -725,7 +725,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationStep.Cyl_Backward:
                     Log.Debug("Cylinder Backward");
                     TransferCyl.Backward();
-                    Wait(_commonRecipe.CylinderMoveTimeout, () => TransferCyl.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => TransferCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.Cyl_Backward_Wait:
@@ -778,7 +778,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationAFCleanLoad.ZAxis_Move_PlacePosition:
                     Log.Debug("Z Axis Move Place Position");
                     ZAxis.MoveAbs(ZAxisPlacePosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisPlacePosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisPlacePosition));
                     Step.RunStep++;
                     break;
                 case ETransferRotationAFCleanLoad.ZAxis_Move_PlacePosition_Wait:
@@ -797,13 +797,13 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimModbusInput(GlassVac2, false);
 #endif
-                    Wait(_commonRecipe.VacDelay);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case ETransferRotationAFCleanLoad.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(ZAxisReadyPosition);
-                    Wait(_commonRecipe.MotionMoveTimeOut, () => ZAxis.IsOnPosition(ZAxisReadyPosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisReadyPosition));
                     Step.RunStep++;
                     break;
                 case ETransferRotationAFCleanLoad.ZAxis_Move_ReadyPosition_Wait:

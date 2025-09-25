@@ -10,13 +10,13 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 {
     public class CommonRecipe : RecipeBase
     {
-		private int cylinderMoveTimeout;
-        private int motionOriginTimeout;
-        private int motionMoveTimeout;
-        private int vacDelay;
+		private double cylinderMoveTimeout;
+        private double motionOriginTimeout;
+        private double motionMoveTimeout;
+        private double vacDelay;
 
-        [SingleRecipeDescription(Description = "Cylinder Move Timeout", Unit = Unit.MilliSecond)]
-        public int CylinderMoveTimeout
+        [SingleRecipeDescription(Description = "Cylinder Move Timeout", Unit = Unit.Second)]
+        public double CylinderMoveTimeout
 		{
 			get { return cylinderMoveTimeout; }
 			set 
@@ -26,8 +26,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 			}
 		}
 
-        [SingleRecipeDescription(Description = "Motion Origin Timeout", Unit = Unit.MilliSecond)]
-        public int MotionOriginTimeout
+        [SingleRecipeDescription(Description = "Motion Origin Timeout", Unit = Unit.Second)]
+        public double MotionOriginTimeout
 		{
 			get { return motionOriginTimeout; }
 			set 
@@ -37,8 +37,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 			}
 		}
 
-        [SingleRecipeDescription(Description = "Motion Move Timeout", Unit = Unit.MilliSecond)]
-        public int MotionMoveTimeOut
+        [SingleRecipeDescription(Description = "Motion Move Timeout", Unit = Unit.Second)]
+        public double MotionMoveTimeOut
 		{
 			get { return motionMoveTimeout; }
 			set 
@@ -48,8 +48,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 			}
 		}
 
-        [SingleRecipeDescription(Description = "Vacuum Delay", Unit = Unit.MilliSecond)]
-        public int VacDelay
+        [SingleRecipeDescription(Description = "Vacuum Delay", Unit = Unit.Second)]
+        public double VacDelay
 		{
 			get { return vacDelay; }
 			set 
