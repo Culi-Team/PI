@@ -83,9 +83,9 @@ namespace PIFilmAutoDetachCleanMC.Services
                         {
                             Id = enumId,
                             Message = enumValue.ToString(),
-                            AlertOverviewSource = "/PIFilmAutoDetachCleanMC;component/Resources/Images/PictureName.jpg",
+                            AlertOverviewSource = "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
                             AlertOverviewHighlightRectangle = new Rectangle(0, 0, 0, 0),
-                            AlertDetailviewSource = "/PIFilmAutoDetachCleanMC;component/Resources/Images/PictureName.jpg",
+                            AlertDetailviewSource = "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
                             AlertDetailviewHighlightRectangle = new Rectangle(0, 0, 0, 0),
                             TroubleshootingSteps = new List<string> { "Fix problem" }
                         });

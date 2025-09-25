@@ -60,6 +60,10 @@
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/VinylClean.png"/>
     <BitmapImage x:Key="VinylCleanImageDetach" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/VinylCleanDt.png"/>
+    <BitmapImage x:Key="TransferFixture2" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/TransferFixture2.png"/>
+    <BitmapImage x:Key="VinylClean2" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/VinylClean2.png"/>
     
     <!-- 03. CLEAN IMAGES  -->
     <BitmapImage x:Key="GlassTransferImage" 
@@ -96,6 +100,8 @@
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetCleanDetachRight.png"/>
     <BitmapImage x:Key="GlassAlignImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/GlassAlignStage.png"/>
+    <BitmapImage x:Key="Clean" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/Clean.png"/>
 
     <!-- 04. UNLOAD IMAGES  -->
     <BitmapImage x:Key="UnloadTransferImage" 
