@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _glassAlignLeftOutput;
         private readonly IDInputDevice _glassAlignRightInput;
         private readonly IDOutputDevice _glassAlignRightOutput;
+        private readonly MachineStatus _machineStatus;
 
         private IDOutput AlignStageVac1 => port == EPort.Left ? _devices.Outputs.AlignStageLVac1OnOff : _devices.Outputs.AlignStageRVac1OnOff;
         private IDOutput AlignStageVac2 => port == EPort.Left ? _devices.Outputs.AlignStageLVac2OnOff : _devices.Outputs.AlignStageRVac2OnOff;
@@ -39,9 +41,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder AlignCyl2 => port == EPort.Left ? _devices.Cylinders.AlignStageL2AlignUnalign : _devices.Cylinders.AlignStageR2AlignUnalign;
         private ICylinder AlignCyl3 => port == EPort.Left ? _devices.Cylinders.AlignStageL3AlignUnalign : _devices.Cylinders.AlignStageR3AlignUnalign;
 
-        private bool IsGlass1Detect => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect1.Value : _devices.Inputs.AlignStageRGlassDetect1.Value;
-        private bool IsGlass2Detect => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect2.Value : _devices.Inputs.AlignStageRGlassDetect2.Value;
-        private bool IsGlass3Detect => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect3.Value : _devices.Inputs.AlignStageRGlassDetect3.Value;
+        private bool IsGlass1Detect => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLGlassDetect1) : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRGlassDetect1);
+        private bool IsGlass2Detect => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLGlassDetect2) : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRGlassDetect2);
+        private bool IsGlass3Detect => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLGlassDetect3) : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRGlassDetect3);
         private bool IsGlassDetect => IsGlass1Detect || IsGlass2Detect || IsGlass3Detect;
 
         private bool IsAlign => AlignCyl1.IsForward && AlignCyl2.IsForward && AlignCyl3.IsForward;
@@ -138,6 +140,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Constructor
         public GlassAlignProcess(Devices devices,
             CommonRecipe commonRecipe,
+            MachineStatus machineStatus,
             [FromKeyedServices("GlassAlignLeftInput")] IDInputDevice glassAlignLeftInput,
             [FromKeyedServices("GlassAlignLeftOutput")] IDOutputDevice glassAlignLeftOutput,
             [FromKeyedServices("GlassAlignRightInput")] IDInputDevice glassAlignRightInput,
@@ -145,6 +148,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
+            _machineStatus = machineStatus;
             _glassAlignLeftInput = glassAlignLeftInput;
             _glassAlignLeftOutput = glassAlignLeftOutput;
             _glassAlignRightInput = glassAlignRightInput;

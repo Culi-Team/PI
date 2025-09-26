@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly CommonRecipe _commonRecipe;
         private readonly IDInputDevice _removeFilmInput;
         private readonly IDOutputDevice _removeFilmOutput;
+        private readonly MachineStatus _machineStatus;
 
         private ICylinder FixCyl1 => _devices.Cylinders.RemoveZoneFixCyl1FwBw;
         private ICylinder FixCyl2 => _devices.Cylinders.RemoveZoneFixCyl2FwBw;
@@ -37,17 +39,19 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder PusherCyl1 => _devices.Cylinders.RemoveZonePusherCyl1UpDown;
         private ICylinder PusherCyl2 => _devices.Cylinders.RemoveZonePusherCyl2UpDown;
 
-        private bool IsFixtureDetect => _devices.Inputs.RemoveZoneFixtureDetect.Value;
+        private bool IsFixtureDetect => _machineStatus.IsSatisfied(_devices.Inputs.RemoveZoneFixtureDetect);
         #endregion
 
         #region Contructor
         public RemoveFilmProcess(Devices devices,
             CommonRecipe commonRecipe,
+            MachineStatus machineStatus,
             [FromKeyedServices("RemoveFilmInput")] IDInputDevice removeFilmInput,
             [FromKeyedServices("RemoveFilmOutput")] IDOutputDevice removeFilmOutput)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
+            _machineStatus = machineStatus;
             _removeFilmInput = removeFilmInput;
             _removeFilmOutput = removeFilmOutput;
         }

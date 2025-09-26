@@ -8,6 +8,7 @@ using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,26 +25,29 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly CommonRecipe _commonRecipe;
         private readonly IDInputDevice _outConveyorInput;
         private readonly IDOutputDevice _outConveyorOutput;
+        private readonly MachineStatus _machineStatus;
         #endregion
 
         #region Constructor
         public OutConveyorProcess(Devices devices,
             CSTLoadUnloadRecipe cstLoadUnloadRecipe,
             CommonRecipe commonRecipe,
+            MachineStatus machineStatus,
             [FromKeyedServices("OutConveyorInput")]IDInputDevice outConveyorInput,
             [FromKeyedServices("OutConveyorOutput")]IDOutputDevice outConveyorOutput)
         {
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
             _commonRecipe = commonRecipe;
+            _machineStatus = machineStatus;
             _outConveyorInput = outConveyorInput;
             _outConveyorOutput = outConveyorOutput;
         }
         #endregion
 
         #region Inputs
-        private IDInput CSTDetect1 => _devices.Inputs.OutCstDetect1;
-        private IDInput CSTDetect2 => _devices.Inputs.OutCstDetect2;
+        private bool CSTDetect1 => _machineStatus.IsSatisfied(_devices.Inputs.OutCstDetect1);
+        private bool CSTDetect2 => _machineStatus.IsSatisfied(_devices.Inputs.OutCstDetect2);
         private IDInput OutCompleteButton => _devices.Inputs.OutCompleteButton;
         private IDInput OutMutingButton => _devices.Inputs.OutMutingButton;
         private IDInput OutCSTLightCurtain => _devices.Inputs.OutCstLightCurtainAlarmDetect;
@@ -271,7 +275,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EOutConveyorAutoRunStep.CSTDetect_Check:
-                    if (CSTDetect1.Value || CSTDetect2.Value)
+                    if (CSTDetect1 || CSTDetect2)
                     {
                         Log.Info("Sequence Out CST Unload");
                         Sequence = ESequence.OutConveyorUnload;
@@ -310,12 +314,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EOutConveyorUnloadStep.CSTDetect_Check:
-                    if(CSTDetect1.Value == true && CSTDetect2.Value == false)
+                    if(CSTDetect1 == true && CSTDetect2 == false)
                     {
                         Step.RunStep++;
                         break;
                     }
-                    if(CSTDetect1.Value == true && CSTDetect2.Value == true)
+                    if(CSTDetect1 == true && CSTDetect2 == true)
                     {
                         Step.RunStep = (int)EOutConveyorUnloadStep.Conveyor_Stop;
                         break;
@@ -330,7 +334,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EOutConveyorUnloadStep.Wait_CSTUnload:
-                    if(CSTDetect1.Value == false && CSTDetect2.Value == false)
+                    if(CSTDetect1 == false && CSTDetect2 == false)
                     {
                         Step.RunStep++;
                         break;
@@ -394,7 +398,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EOutConveyorProcessOutWorkCSTUnloadStep.Wait_OutWorkCSTUnloadDone:
-                    if(CSTDetect1.Value == true && CSTDetect2.Value == true)
+                    if(CSTDetect1 == true && CSTDetect2 == true)
                     {
                         Step.RunStep++;
                         break;

@@ -6,6 +6,7 @@ using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,20 +20,22 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Private
         private readonly Devices _devices;
         private readonly CSTLoadUnloadRecipe _cstLoadUnloadRecipe;
+        private readonly MachineStatus _machineStatus;
         #endregion
 
         #region Constructor
-        public OutWorkConveyorProcess(Devices devices, CSTLoadUnloadRecipe cstLoadUnloadRecipe)
+        public OutWorkConveyorProcess(Devices devices, CSTLoadUnloadRecipe cstLoadUnloadRecipe, MachineStatus machineStatus)
         {
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
+            _machineStatus = machineStatus;
         }
         #endregion
 
         #region Inputs
-        private IDInput Detect1 => _devices.Inputs.OutCstWorkDetect1;
-        private IDInput Detect2 => _devices.Inputs.OutCstWorkDetect2;
-        private IDInput Detect3 => _devices.Inputs.OutCstWorkDetect3;
+        private bool Detect1 => _machineStatus.IsSatisfied(_devices.Inputs.OutCstWorkDetect1);
+        private bool Detect2 => _machineStatus.IsSatisfied(_devices.Inputs.OutCstWorkDetect2);
+        private bool Detect3 => _machineStatus.IsSatisfied(_devices.Inputs.OutCstWorkDetect3);
 
         #endregion
 

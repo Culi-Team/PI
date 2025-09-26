@@ -12,6 +12,8 @@ using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
+using System.Windows.Markup;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
@@ -28,6 +30,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _outWorkConveyorOutput;
         private readonly ActionAssignableTimer _blinkTimer;
         private readonly CassetteList _cassetteList;
+        private readonly MachineStatus _machineStatus;
         private const string OutLightCurtainMutingActionKey = "OutLightCurtainMutingAction";
 
         private IDInputDevice Inputs => port == EPort.Right ? _inWorkConveyorInput : _outWorkConveyorInput;
@@ -45,6 +48,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         public WorkConveyorProcess(Devices devices,
             CSTLoadUnloadRecipe cstLoadUnloadRecipe,
             CommonRecipe commonRecipe,
+            MachineStatus machineStatus,
             [FromKeyedServices("InWorkConveyorInput")] IDInputDevice inWorkConveyorInput,
             [FromKeyedServices("InWorkConveyorOutput")] IDOutputDevice inWorkConveyorOutput,
             [FromKeyedServices("OutWorkConveyorInput")] IDInputDevice outWorkConveyorInput,
@@ -55,6 +59,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
             _commonRecipe = commonRecipe;
+            _machineStatus = machineStatus;
             _inWorkConveyorInput = inWorkConveyorInput;
             _inWorkConveyorOutput = inWorkConveyorOutput;
             _outWorkConveyorInput = outWorkConveyorInput;
@@ -65,13 +70,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Inputs
-        private IDInput Detect1 => port == EPort.Right ? _devices.Inputs.InCstWorkDetect1 :
-                                                         _devices.Inputs.OutCstWorkDetect1;
-        private IDInput Detect2 => port == EPort.Right ? _devices.Inputs.InCstWorkDetect2 :
-                                                         _devices.Inputs.OutCstWorkDetect2;
-        private IDInput Detect3 => port == EPort.Right ? _devices.Inputs.InCstWorkDetect3 :
-                                                        _devices.Inputs.OutCstWorkDetect3;
-        private IDInput Detect4 => _devices.Inputs.InCstWorkDetect4;
+        private bool Detect1 => port == EPort.Right ? _machineStatus.IsSatisfied(_devices.Inputs.InCstWorkDetect1) :
+                                                         _machineStatus.IsSatisfied(_devices.Inputs.OutCstWorkDetect1);
+        private bool Detect2 => port == EPort.Right ? _machineStatus.IsSatisfied(_devices.Inputs.InCstWorkDetect2) :
+                                                         _machineStatus.IsSatisfied(_devices.Inputs.OutCstWorkDetect2);
+        private bool Detect3 => port == EPort.Right ? _machineStatus.IsSatisfied(_devices.Inputs.InCstWorkDetect3) :
+                                                         _machineStatus.IsSatisfied(_devices.Inputs.OutCstWorkDetect3);
+        private bool Detect4 => _machineStatus.IsSatisfied(_devices.Inputs.InCstWorkDetect4);
 
         private bool IsCassetteDetect
         {
@@ -79,11 +84,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 if (port == EPort.Right) // InWorkConveyor
                 {
-                    return Detect1.Value && Detect2.Value && Detect3.Value && Detect4.Value;
+                    return Detect1 && Detect2 && Detect3 && Detect4;
                 }
                 else // OutWorkConveyor
                 {
-                    return Detect1.Value && Detect2.Value && Detect3.Value;
+                    return Detect1 && Detect2 && Detect3;
                 }
             }
         }
@@ -94,9 +99,9 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 if (port == EPort.Right)
                 {
-                    return Detect1.Value == false && Detect2.Value == false && Detect3.Value == false && Detect4.Value == false;
+                    return Detect1 == false && Detect2 == false && Detect3 == false && Detect4 == false;
                 }
-                return Detect1.Value == false && Detect2.Value == false && Detect3.Value == false;
+                return Detect1 == false && Detect2 == false && Detect3 == false;
             }
         }
 

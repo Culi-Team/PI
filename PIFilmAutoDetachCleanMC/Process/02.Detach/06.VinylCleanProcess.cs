@@ -35,8 +35,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder PusherCyl => _devices.Cylinders.VinylCleanPusherRollerUpDown;
 
         private IDOutput MotorOnOff => _devices.Outputs.VinylCleanMotorOnOff;
-        private bool IsUnWinderFullDetect => _devices.Inputs.VinylCleanFullDetect.Value;
-        private bool IsWinderRunOffDetect => _devices.Inputs.VinylCleanRunoffDetect.Value;
+        private bool IsUnWinderFullDetect => _machineStatus.IsSatisfied(_devices.Inputs.VinylCleanFullDetect);
+        private bool IsWinderRunOffDetect => _machineStatus.IsSatisfied(_devices.Inputs.VinylCleanRunoffDetect);
         #endregion
 
         #region Flags
@@ -299,7 +299,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EVinylCleanProcessVinylCleanStep)Step.RunStep)
             {
                 case EVinylCleanProcessVinylCleanStep.Start:
-#if !SIMULATION
+#if SIMULATION
                     SimulationInputSetter.SetSimModbusInput(_devices.Inputs.VinylCleanFixtureDetect,true);
 #endif
                     Log.Debug("Vinyl Clean Start");
@@ -311,7 +311,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.VinylCleanFixtureNotDetect);
                         break;
                     }
-#if !SIMULATION
+#if SIMULATION
                     SimulationInputSetter.SetSimModbusInput(_devices.Inputs.VinylCleanFixtureDetect, false);
 #endif
                     Step.RunStep++;

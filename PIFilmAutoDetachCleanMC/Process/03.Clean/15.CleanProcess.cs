@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _afCleanLeftOutput;
         private readonly IDInputDevice _afCleanRightInput;
         private readonly IDOutputDevice _afCleanRightOutput;
+        private readonly MachineStatus _machineStatus;
 
         private bool Is3MPrepareDone { get; set; } = false;
 
@@ -204,61 +206,61 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private IDInput FeedingRollerDetect
+        private bool FeedingRollerDetect
         {
             get
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftFeedingRollerDetect,
-                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightFeedingRollerDetect,
-                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftFeedingRollerDetect,
-                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightFeedingRollerDetect,
+                    EClean.WETCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanLeftFeedingRollerDetect),
+                    EClean.WETCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanRightFeedingRollerDetect),
+                    EClean.AFCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanLeftFeedingRollerDetect),
+                    EClean.AFCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanRightFeedingRollerDetect),
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
         }
 
-        private IDInput WiperCleanDetect1
+        private bool WiperCleanDetect1
         {
             get
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftWiperCleanDetect1,
-                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightWiperCleanDetect1,
-                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftWiperCleanDetect1,
-                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightWiperCleanDetect1,
+                    EClean.WETCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanLeftWiperCleanDetect1),
+                    EClean.WETCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanRightWiperCleanDetect1),
+                    EClean.AFCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanLeftWiperCleanDetect1),
+                    EClean.AFCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanRightWiperCleanDetect1),
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
         }
 
-        private IDInput WiperCleanDetect2
+        private bool WiperCleanDetect2
         {
             get
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftWiperCleanDetect2,
-                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightWiperCleanDetect2,
-                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftWiperCleanDetect2,
-                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightWiperCleanDetect2,
+                    EClean.WETCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanLeftWiperCleanDetect2),
+                    EClean.WETCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanRightWiperCleanDetect2),
+                    EClean.AFCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanLeftWiperCleanDetect2),
+                    EClean.AFCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanRightWiperCleanDetect2),
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
         }
 
-        private IDInput WiperCleanDetect3
+        private bool WiperCleanDetect3
         {
             get
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftWiperCleanDetect3,
-                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightWiperCleanDetect3,
-                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftWiperCleanDetect3,
-                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightWiperCleanDetect3,
+                    EClean.WETCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanLeftWiperCleanDetect3),
+                    EClean.WETCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanRightWiperCleanDetect3),
+                    EClean.AFCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanLeftWiperCleanDetect3),
+                    EClean.AFCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanRightWiperCleanDetect3),
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -272,10 +274,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftPumpLeakDetect.Value || _devices.Inputs.WetCleanLeftAlcoholLeakDetect.Value,
-                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightPumpLeakDetect.Value || _devices.Inputs.WetCleanRightAlcoholLeakDetect.Value,
-                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftPumpLeakDetect.Value || _devices.Inputs.AfCleanLeftAlcoholLeakDetect.Value,
-                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightPumpLeakDetect.Value || _devices.Inputs.AfCleanRightAlcoholLeakDetect.Value,
+                    EClean.WETCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanLeftPumpLeakDetect) || _machineStatus.IsSatisfied(_devices.Inputs.WetCleanLeftAlcoholLeakDetect),
+                    EClean.WETCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanRightPumpLeakDetect) || _machineStatus.IsSatisfied(_devices.Inputs.WetCleanRightAlcoholLeakDetect),
+                    EClean.AFCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanLeftPumpLeakDetect) || _machineStatus.IsSatisfied(_devices.Inputs.AfCleanLeftAlcoholLeakDetect),
+                    EClean.AFCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanRightPumpLeakDetect) || _machineStatus.IsSatisfied(_devices.Inputs.AfCleanRightAlcoholLeakDetect),
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -405,6 +407,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Constructor
         public CleanProcess(Devices devices,
             CommonRecipe commonRecipe,
+            MachineStatus machineStatus,
             [FromKeyedServices("WETCleanLeftRecipe")] CleanRecipe wetCleanLeftRecipe,
             [FromKeyedServices("WETCleanRightRecipe")] CleanRecipe wetCleanRightRecipe,
             [FromKeyedServices("AFCleanLeftRecipe")] CleanRecipe afCleanLeftRecipe,
@@ -420,6 +423,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
+            _machineStatus = machineStatus;
             _wetCleanLeftRecipe = wetCleanLeftRecipe;
             _wetCleanRightRecipe = wetCleanRightRecipe;
             _afCleanLeftRecipe = afCleanLeftRecipe;
@@ -719,7 +723,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ECleanProcessToRunStep.FeedingRollerDetect_Check:
                     Log.Debug("Feeding Roller Detect Check");
-                    if (FeedingRollerDetect.Value == false)
+                    if (FeedingRollerDetect == false)
                     {
                         EWarning? warning = cleanType switch
                         {
@@ -737,7 +741,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ECleanProcessToRunStep.Wiper_Check:
                     Log.Debug("Wiper Clean Detect Check");
-                    if (WiperCleanDetect1.Value == false || WiperCleanDetect2.Value == false || WiperCleanDetect3.Value == false)
+                    if (WiperCleanDetect1 == false || WiperCleanDetect2 == false || WiperCleanDetect3 == false)
                     {
                         EWarning? warning = cleanType switch
                         {

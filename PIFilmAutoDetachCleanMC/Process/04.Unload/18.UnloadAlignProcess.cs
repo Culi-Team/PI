@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly CommonRecipe _commonRecipe;
         private readonly IDInputDevice _unloadAlignInput;
         private readonly IDOutputDevice _unloadAlignOutput;
+        private readonly MachineStatus _machineStatus;
 
         private ICylinder AlignCyl1 => _devices.Cylinders.UnloadAlignCyl1UpDown;
         private ICylinder AlignCyl2 => _devices.Cylinders.UnloadAlignCyl2UpDown;
@@ -40,10 +42,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDInput GlassVac3 => _devices.Inputs.UnloadGlassAlignVac3;
         private IDInput GlassVac4 => _devices.Inputs.UnloadGlassAlignVac4;
 
-        private IDInput GlassDetect1 => _devices.Inputs.UnloadGlassDetect1;
-        private IDInput GlassDetect2 => _devices.Inputs.UnloadGlassDetect2;
-        private IDInput GlassDetect3 => _devices.Inputs.UnloadGlassDetect3;
-        private IDInput GlassDetect4 => _devices.Inputs.UnloadGlassDetect4;
+        private bool GlassDetect1 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassDetect1);
+        private bool GlassDetect2 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassDetect2);
+        private bool GlassDetect3 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassDetect3);
+        private bool GlassDetect4 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassDetect4);
 
         private bool IsGlassVac1 => _devices.Inputs.UnloadGlassAlignVac1.Value;
         private bool IsGlassVac2 => _devices.Inputs.UnloadGlassAlignVac2.Value;
@@ -118,11 +120,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Constructor
         public UnloadAlignProcess(Devices devices,
             CommonRecipe commonRecipe,
+            MachineStatus machineStatus,
             [FromKeyedServices("UnloadAlignInput")] IDInputDevice unloadAlignInput,
             [FromKeyedServices("UnloadAlignOutput")] IDOutputDevice unloadAlignOutput)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
+            _machineStatus = machineStatus;
             _unloadAlignInput = unloadAlignInput;
             _unloadAlignOutput = unloadAlignOutput;
         }
@@ -364,10 +368,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Vacuum On");
                     VacOnOff(true);
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(GlassDetect1, true);
-                    SimulationInputSetter.SetSimModbusInput(GlassDetect2, true);
-                    SimulationInputSetter.SetSimModbusInput(GlassDetect3, true);
-                    SimulationInputSetter.SetSimModbusInput(GlassDetect4, true);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect1, true);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect2, true);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect3, true);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect4, true);
 #endif
                     Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
@@ -441,10 +445,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(GlassDetect1, false);
-                    SimulationInputSetter.SetSimModbusInput(GlassDetect2, false);
-                    SimulationInputSetter.SetSimModbusInput(GlassDetect3, false);
-                    SimulationInputSetter.SetSimModbusInput(GlassDetect4, false);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect1, false);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect2, false);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect3, false);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect4, false);
 #endif
                     Log.Debug("Clear Flag Request Robot Unload");
                     FlagUnloadAlignRequestRobotUnload = false;

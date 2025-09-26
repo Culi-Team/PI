@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
@@ -17,6 +18,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDInputDevice _robotUnloadInput;
         private readonly IDOutputDevice _robotUnloadOutput;
         private readonly DieHardK180Plasma _plasma;
+        private readonly MachineStatus _machineStatus;
 
         private bool IsPlasmaPrepare { get; set; } = false;
 
@@ -38,10 +40,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool IsCylindersUp => Cyl1.IsBackward && Cyl2.IsBackward && Cyl3.IsBackward && Cyl4.IsBackward;
         private bool IsCylindersDown => Cyl1.IsForward && Cyl2.IsForward && Cyl3.IsForward && Cyl4.IsForward;
 
-        private bool GlassDetect1 => _devices.Inputs.UnloadRobotDetect1.Value;
-        private bool GlassDetect2 => _devices.Inputs.UnloadRobotDetect2.Value;
-        private bool GlassDetect3 => _devices.Inputs.UnloadRobotDetect3.Value;
-        private bool GlassDetect4 => _devices.Inputs.UnloadRobotDetect4.Value;
+        private bool GlassDetect1 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotDetect1);
+        private bool GlassDetect2 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotDetect2);
+        private bool GlassDetect3 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotDetect3);
+        private bool GlassDetect4 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotDetect4);
         #endregion
 
         #region Flags
@@ -73,12 +75,14 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Constructor
         public RobotUnloadProcess(Devices devices,
             CommonRecipe commonRecipe,
+            MachineStatus machineStatus,
             [FromKeyedServices("RobotUnloadInput")] IDInputDevice robotUnloadInput,
             [FromKeyedServices("RobotUnloadOutput")] IDOutputDevice robotUnloadOutput,
             DieHardK180Plasma plasma)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
+            _machineStatus = machineStatus;
             _robotUnloadInput = robotUnloadInput;
             _robotUnloadOutput = robotUnloadOutput;
             _plasma = plasma;

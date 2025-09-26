@@ -98,6 +98,7 @@ namespace PIFilmAutoDetachCleanMC.Services.DryRunServices
                 EInput.AF_CLEAN_LEFT_WIPER_CLEAN_DETECT_2,
                 EInput.AF_CLEAN_LEFT_WIPER_CLEAN_DETECT_3,
                 EInput.AF_CLEAN_LEFT_ALCOHOL_LEAK_DETECT,
+                //Out Shuttle
                 EInput.OUT_SHUTTLE_GLASS_COATING_DETECT_1,
                 EInput.OUT_SHUTTLE_GLASS_COATING_DETECT_2,
                 //Unload Stage

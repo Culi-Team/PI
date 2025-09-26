@@ -9,6 +9,7 @@ using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,26 +26,29 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly CommonRecipe _commonRecipe;
         private readonly IDInputDevice _bufferConveyorInput;
         private readonly IDOutputDevice _bufferConveyorOutput;
+        private readonly MachineStatus _machineStatus;
         #endregion
 
         #region Constructor
         public BufferConveyorProcess(Devices devices,
             CSTLoadUnloadRecipe cstLoadUnloadRecipe,
             CommonRecipe commonRecipe,
+            MachineStatus machineStatus,
             [FromKeyedServices("BufferConveyorInput")] IDInputDevice bufferConveyorInput,
             [FromKeyedServices("BufferConveyorOutput")] IDOutputDevice bufferConveyorOutput)
         {
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
             _commonRecipe = commonRecipe;
+            _machineStatus = machineStatus;
             _bufferConveyorInput = bufferConveyorInput;
             _bufferConveyorOutput = bufferConveyorOutput;
         }
         #endregion
 
         #region Inputs
-        private IDInput BufferDetect1 => _devices.Inputs.BufferCstDetect1;
-        private IDInput BufferDetect2 => _devices.Inputs.BufferCstDetect2;
+        private bool BufferDetect1 => _machineStatus.IsSatisfied(_devices.Inputs.BufferCstDetect1);
+        private bool BufferDetect2 => _machineStatus.IsSatisfied(_devices.Inputs.BufferCstDetect2);
 
         #endregion
 
@@ -273,25 +277,25 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EBufferConveyorAutoRunStep.CSTDetect_Check:
-                    if (BufferDetect1.Value == false && BufferDetect2.Value == false)
+                    if (BufferDetect1 == false && BufferDetect2 == false)
                     {
                         Log.Info("Sequence In Work CST Unload");
                         Sequence = ESequence.InWorkCSTUnLoad;
                         break;
                     }
-                    if (BufferDetect1.Value == true && BufferDetect2.Value == true)
+                    if (BufferDetect1 == true && BufferDetect2 == true)
                     {
                         Log.Info("Sequence Out Work CST Load");
                         Sequence = ESequence.OutWorkCSTLoad;
                         break;
                     }
-                    if (BufferDetect1.Value == true && BufferStopper1.IsBackward)
+                    if (BufferDetect1 == true && BufferStopper1.IsBackward)
                     {
                         Log.Info("Sequence In Work CST Unload");
                         Sequence = ESequence.InWorkCSTUnLoad;
                         break;
                     }
-                    if (BufferDetect2.Value == true && BufferStopper2.IsBackward)
+                    if (BufferDetect2 == true && BufferStopper2.IsBackward)
                     {
                         RaiseWarning((int)EWarning.BufferConveyor_CST_Position_Error);
                         break;
@@ -341,17 +345,17 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EBufferConveyorInWorkCSTUnloadStep.CSTDetect_Check:
-                    if (BufferDetect1.Value == true && BufferDetect2.Value == false)
+                    if (BufferDetect1 == true && BufferDetect2 == false)
                     {
                         Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.Conveyor_Run;
                         break;
                     }
-                    if (BufferDetect1.Value == true && BufferDetect2.Value == true)
+                    if (BufferDetect1 == true && BufferDetect2 == true)
                     {
                         Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.Conveyor_Stop;
                         break;
                     }
-                    if (BufferDetect1.Value == false && BufferDetect2.Value == true)
+                    if (BufferDetect1 == false && BufferDetect2 == true)
                     {
                         RaiseWarning((int)EWarning.BufferConveyor_CST_Position_Error);
                         break;
@@ -372,8 +376,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     ConveyorRunStop(true);
 #if SIMULATION
                     Wait(2000);
-                    SimulationInputSetter.SetSimModbusInput(BufferDetect1, true);
-                    SimulationInputSetter.SetSimModbusInput(BufferDetect2, true);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.BufferCstDetect1, true);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.BufferCstDetect2, true);
 #endif
                     Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.CSTDetect_Check;
                     break;

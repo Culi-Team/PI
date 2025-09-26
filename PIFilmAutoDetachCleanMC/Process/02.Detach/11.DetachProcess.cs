@@ -25,8 +25,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly DetachRecipe _detachRecipe;
         private readonly IDInputDevice _detachInput;
         private readonly IDOutputDevice _detachOutput;
+        private readonly MachineStatus _machineStatus;
         private MachineStatus MachineStatus => _devices.MachineStatus;
-
         private IMotion DetachGlassZAxis => _devices.MotionsInovance.DetachGlassZAxis;
         private IMotion ShuttleTransferXAxis => _devices.MotionsInovance.ShuttleTransferXAxis;
         private IMotion ShuttleTransferZAxis => _devices.MotionsAjin.ShuttleTransferZAxis;
@@ -40,7 +40,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder FixCyl1 => _devices.Cylinders.DetachFixFixtureCyl1FwBw;
         private ICylinder FixCyl2 => _devices.Cylinders.DetachFixFixtureCyl2FwBw;
 
-        private bool IsFixtureDetect => _devices.Inputs.DetachFixtureDetect.Value;
+        private bool IsFixtureDetect => _machineStatus.IsSatisfied(_devices.Inputs.DetachFixtureDetect);
 
         private bool IsGlassShuttleVac1 => _devices.Inputs.DetachGlassShtVac1.Value;
         private bool IsGlassShuttleVac2 => _devices.Inputs.DetachGlassShtVac2.Value;
@@ -124,12 +124,14 @@ namespace PIFilmAutoDetachCleanMC.Process
         public DetachProcess(Devices devices,
                             CommonRecipe commonRecipe,
                             DetachRecipe detachRecipe,
+                            MachineStatus machineStatus,
                             [FromKeyedServices("DetachInput")] IDInputDevice detachInput,
                             [FromKeyedServices("DetachOutput")] IDOutputDevice detachOutput)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
             _detachRecipe = detachRecipe;
+            _machineStatus = machineStatus;
             _detachInput = detachInput;
             _detachOutput = detachOutput;
         }

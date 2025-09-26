@@ -9,6 +9,7 @@ using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly CommonRecipe _commonRecipe;
         private readonly IDInputDevice _inConveyorInput;
         private readonly ActionAssignableTimer _blinkTimer;
+        private readonly MachineStatus _machineStatus;
 
         private const string InLightCurtainnMutingActionKey = "InLightCurtainMutingAction";
         #endregion
@@ -33,20 +35,22 @@ namespace PIFilmAutoDetachCleanMC.Process
         public InConveyorProcess(Devices devices,
             CSTLoadUnloadRecipe cstLoadUnloadRecipe,
             CommonRecipe commonRecipe,
+            MachineStatus machineStatus,
             [FromKeyedServices("InConveyorInput")] IDInputDevice inConveyorInput,
             [FromKeyedServices("BlinkTimer")] ActionAssignableTimer blinkTimer)
         {
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
             _commonRecipe = commonRecipe;
+            _machineStatus = machineStatus;
             _inConveyorInput = inConveyorInput;
             _blinkTimer = blinkTimer;
         }
         #endregion
 
         #region Inputs
-        private IDInput CST_Det1 => _devices.Inputs.InCstDetect1;
-        private IDInput CST_Det2 => _devices.Inputs.InCstDetect2;
+        private bool CST_Det1 => _machineStatus.IsSatisfied(_devices.Inputs.InCstDetect1);
+        private bool CST_Det2 => _machineStatus.IsSatisfied(_devices.Inputs.InCstDetect2);
         private IDInput InCompleteButton => _devices.Inputs.InCompleteButton;
         private IDInput InMutingButton => _devices.Inputs.InMutingButton;
         #endregion
@@ -238,13 +242,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EInConveyorAutoRunStep.CSTDetect_Check:
-                    if (CST_Det2.Value && StopperCylinder.IsForward)
+                    if (CST_Det2 && StopperCylinder.IsForward)
                     {
                         Log.Info("Sequence In Work CST Load");
                         Sequence = ESequence.InWorkCSTLoad;
                         break;
                     }
-                    if (CST_Det2.Value && StopperCylinder.IsBackward)
+                    if (CST_Det2 && StopperCylinder.IsBackward)
                     {
                         RaiseWarning((int)EWarning.InConveyor_CST_Position_Error);
                         break;
@@ -304,8 +308,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     ConveyorRunStop(true);
 #if SIMULATION
                     Wait(1000);
-                    SimulationInputSetter.SetSimModbusInput(CST_Det1, false);
-                    SimulationInputSetter.SetSimModbusInput(CST_Det2, false);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstDetect1, false);
+                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstDetect2, false);
 
                     SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect1, true);
                     SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect2, true);
@@ -388,12 +392,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EInConveyorLoadStep.CSTDetect_Check:
-                    if (CST_Det2.Value)
+                    if (CST_Det2)
                     {
                         Step.RunStep = (int)EInConveyorLoadStep.Conveyor_Stop;
                         break;
                     }
-                    if (CST_Det1.Value)
+                    if (CST_Det1)
                     {
                         Step.RunStep++;
                         break;
