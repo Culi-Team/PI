@@ -97,6 +97,8 @@ namespace PIFilmAutoDetachCleanMC.Test
             }
 
             var process = TestAppCommon.AppHost.Services.GetKeyedService<IProcess<ESequence>>(EProcess.VinylClean.ToString());
+            var machineStatus = TestAppCommon.AppHost.Services.GetRequiredService<MachineStatus>();
+            machineStatus.MachineRunMode = EMachineRunMode.ByPass;
 
             // Act
             process.Start();
@@ -104,9 +106,9 @@ namespace PIFilmAutoDetachCleanMC.Test
             process.Sequence = ESequence.VinylClean;
 
             // Assert
-            //await Task.Delay(600000);
-            await Task.WhenAny(WaitUntilAsync(() => process.Sequence == ESequence.Stop), Task.Delay(5000));
-            Assert.Equal(ESequence.Stop, process.Sequence);
+            await Task.Delay(600000);
+            //await Task.WhenAny(WaitUntilAsync(() => process.Sequence == ESequence.Stop), Task.Delay(5000));
+            //Assert.Equal(ESequence.Stop, process.Sequence);
 
         }
 

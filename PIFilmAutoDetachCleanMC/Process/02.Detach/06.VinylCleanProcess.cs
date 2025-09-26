@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +26,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly VinylCleanRecipe _vinylCleanRecipe;
         private readonly IDInputDevice _vinylCleanInput;
         private readonly IDOutputDevice _vinylCleanOutput;
+        private readonly MachineStatus _machineStatus;
 
-        private bool IsFixtureDetect => _devices.Inputs.VinylCleanFixtureDetect.Value;
+        private bool IsFixtureDetect => _machineStatus.IsSatisfied(_devices.Inputs.VinylCleanFixtureDetect);
         private ICylinder FixtureClampCyl => _devices.Cylinders.VinylCleanFixtureClampUnclamp;
 
         private ICylinder RollerFwBwCyl => _devices.Cylinders.VinylCleanRollerFwBw;
@@ -92,6 +94,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             Devices devices,
             CommonRecipe commonRecipe,
             VinylCleanRecipe vinylCleanRecipe,
+            MachineStatus machineStatus,
             [FromKeyedServices("VinylCleanInput")] IDInputDevice vinylCleanInput,
             [FromKeyedServices("VinylCleanOutput")] IDOutputDevice vinylCleanOutput)
         {
@@ -99,6 +102,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             _devices = devices;
             _commonRecipe = commonRecipe;
             _vinylCleanRecipe = vinylCleanRecipe;
+            _machineStatus = machineStatus;
             _vinylCleanInput = vinylCleanInput;
             _vinylCleanOutput = vinylCleanOutput;
         }
@@ -295,7 +299,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EVinylCleanProcessVinylCleanStep)Step.RunStep)
             {
                 case EVinylCleanProcessVinylCleanStep.Start:
-#if SIMULATION
+#if !SIMULATION
                     SimulationInputSetter.SetSimModbusInput(_devices.Inputs.VinylCleanFixtureDetect,true);
 #endif
                     Log.Debug("Vinyl Clean Start");
@@ -307,7 +311,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.VinylCleanFixtureNotDetect);
                         break;
                     }
-#if SIMULATION
+#if !SIMULATION
                     SimulationInputSetter.SetSimModbusInput(_devices.Inputs.VinylCleanFixtureDetect, false);
 #endif
                     Step.RunStep++;
