@@ -8,6 +8,7 @@ namespace PIFilmAutoDetachCleanMC.Services.DryRunServices
 {
     public enum DryRunBypassGroup
     {
-        SensorDetect
+        SensorDetect,
+        SensorVacuum
     }
 }

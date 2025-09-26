@@ -4,6 +4,7 @@ using EQX.Core.Motion;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
+using PIFilmAutoDetachCleanMC.Process;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,7 +24,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             TorqueControllerList torqueControllers,
             SpeedControllerList speedControllerList,
             Regulators regulators,
-            AnalogInputs analogInputs)
+            AnalogInputs analogInputs,
+            MachineStatus machineStatus)
         {
             Inputs = inputs;
             Outputs = outputs;
@@ -34,6 +36,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             SpeedControllerList = speedControllerList;
             Regulators = regulators;
             AnalogInputs = analogInputs;
+            MachineStatus = machineStatus;
         }
 
         public Inputs Inputs { get; }
@@ -45,6 +48,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public SpeedControllerList SpeedControllerList { get; }
         public Regulators Regulators { get; }
         public AnalogInputs AnalogInputs { get; }
+        public MachineStatus MachineStatus { get; }
 
         #region Public Methods
 

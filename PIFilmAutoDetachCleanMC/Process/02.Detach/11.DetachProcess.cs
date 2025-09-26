@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly DetachRecipe _detachRecipe;
         private readonly IDInputDevice _detachInput;
         private readonly IDOutputDevice _detachOutput;
+        private MachineStatus MachineStatus => _devices.MachineStatus;
 
         private IMotion DetachGlassZAxis => _devices.MotionsInovance.DetachGlassZAxis;
         private IMotion ShuttleTransferXAxis => _devices.MotionsInovance.ShuttleTransferXAxis;
@@ -438,7 +440,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachUnloadStep.Vacuum_Check:
-                    if (!IsGlassShuttleVacAll)
+                    if (!MachineStatus.ShouldBypassVacuum(new[]
+                    {
+                        _devices.Inputs.DetachGlassShtVac1,
+                        _devices.Inputs.DetachGlassShtVac2,
+                        _devices.Inputs.DetachGlassShtVac3
+                    }) && !IsGlassShuttleVacAll)
                     {
                         RaiseWarning((int)EWarning.DetachFail);
                         break;
@@ -626,7 +633,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimModbusInput(_devices.Inputs.DetachGlassShtVac3, true);
 
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait(MachineStatus.GetVacuumDelay(
+                        _commonRecipe.VacDelay,
+                        new[]
+                        {
+                            _devices.Inputs.DetachGlassShtVac1,
+                            _devices.Inputs.DetachGlassShtVac2,
+                            _devices.Inputs.DetachGlassShtVac3
+                        }));
                     Step.RunStep++;
                     break;
                 case EDetachStep.ZAxis_Move_ReadyDetachPosition_2nd:

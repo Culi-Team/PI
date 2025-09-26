@@ -1,17 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EQX.Core.Common;
+using EQX.Core.InOut;
 using EQX.Core.Process;
 using EQX.Core.Sequence;
 using EQX.InOut.InOut;
 using PIFilmAutoDetachCleanMC.Defines;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
+using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
@@ -28,6 +29,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private int _OPCommand;
 
         private readonly DryRunBypassProfile _dryRunProfile;
+        public const int DryRunVacuumDurationMilliseconds = 1000;
 
         public bool IsByPassMode => _machineRunMode == EMachineRunMode.ByPass;
         public bool IsDryRunMode => _machineRunMode == EMachineRunMode.DryRun;
@@ -152,5 +154,27 @@ namespace PIFilmAutoDetachCleanMC.Process
 
             return ShouldBypass((EInput)inputId);
         }
+
+        public bool ShouldBypassVacuum(EInput input)
+        {
+            return ShouldBypass(input) && _dryRunProfile.IsInputInGroup(input, DryRunBypassGroup.SensorVacuum);
+        }
+
+        public bool ShouldBypassVacuum(IDInput input)
+        {
+            if (input is null)
+            {
+                return false;
+            }
+
+            if (!Enum.IsDefined(typeof(EInput), input.Id))
+            {
+                return false;
+            }
+
+            return ShouldBypassVacuum((EInput)input.Id);
+        }
+
+        public int DryRunVacuumDuration => DryRunVacuumDurationMilliseconds;
     }
 }
