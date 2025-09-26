@@ -32,13 +32,13 @@ public enum FilterState
 public class SourceItem : INotifyPropertyChanged
 {
     private bool _isSelected;
-    
+
     public string Name { get; set; }
     public string Value { get; set; }
     public Brush Color { get; set; }
-    
-    public bool IsSelected 
-    { 
+
+    public bool IsSelected
+    {
         get => _isSelected;
         set
         {
@@ -49,11 +49,11 @@ public class SourceItem : INotifyPropertyChanged
             }
         }
     }
-    
+
     public override string ToString() => Name;
-    
+
     public event PropertyChangedEventHandler PropertyChanged;
-    
+
     protected virtual void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -102,7 +102,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             {
                 if (LogTreeView.SelectedItem is FileSystemNode selectedNode && !selectedNode.IsDirectory)
                 {
-                    currentLogEntries = viewModel.LoadLogEntries(selectedNode.Path);
+                    currentLogEntries = SafeLoadLogEntries(selectedNode.Path);
                     LogDataGrid.ItemsSource = currentLogEntries;
                     InitializeFilterSourceComboBox();
                 }
@@ -114,25 +114,16 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             }
             catch (Exception ex)
             {
-                //MessageBox.Show($"Error loading log file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                if (LogTreeView.SelectedItem is FileSystemNode selectedNode && !selectedNode.IsDirectory)
-                {
-                    currentLogEntries = viewModel.LoadLogEntries(selectedNode.Path);
-                    LogDataGrid.ItemsSource = currentLogEntries;
-                    InitializeFilterSourceComboBox();
-                }
-                else
-                {
-                    LogDataGrid.ItemsSource = null;
-                    FilterSourceComboBox.ItemsSource = null;
-                }
             }
         }
 
         private void InitializeFilterSourceComboBox()
         {
             var sourceItems = new List<SourceItem> { new SourceItem { Name = "All", Value = "All", IsSelected = true } };
-            
+
+            sourceItems.Add(new SourceItem { Name = "Kuka Robot Load", Value = "Kuka Robot Load", IsSelected = false });
+            sourceItems.Add(new SourceItem { Name = "Kuka Robot Unload", Value = "Kuka Robot Unload", IsSelected = false });
+
             sourceItems.AddRange(Enum.GetValues<EProcess>()
                 .Select(process => new SourceItem { Name = process.ToString(), Value = process.ToString(), IsSelected = false }));
 
@@ -155,15 +146,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
 
             var checkbox = sender as CheckBox;
             var sourceItem = checkbox?.DataContext as SourceItem;
-            
+
             if (sourceItem == null) return;
 
             // Xử lý logic chọn/bỏ chọn
             ProcessSelectionLogic(sourceItem, sourceItems);
-            
+
             // Kiểm tra trường hợp đặc biệt: All + items khác
             HandleSpecialCase(sourceItems);
-            
+
             // Refresh UI và cập nhật hiển thị
             RefreshUI(sourceItems);
             ApplyFilter();
@@ -196,7 +187,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         {
             var allItem = sourceItems.FirstOrDefault(s => s.Value == "All");
             var otherSelectedItems = sourceItems.Where(s => s.IsSelected && s.Value != "All").ToList();
-            
+
             if (allItem?.IsSelected == true && otherSelectedItems.Any())
                 allItem.IsSelected = false;
         }
@@ -211,7 +202,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         {
             var selectedSources = sourceItems.Where(s => s.IsSelected).ToList();
             var hasAllSelected = selectedSources.Any(s => s.Value == "All");
-            
+
             return selectedSources.Count switch
             {
                 _ when hasAllSelected => FilterState.AllSelected,
@@ -224,36 +215,36 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         private void UpdateComboBoxDisplay(List<SourceItem> sourceItems)
         {
             var filterState = GetFilterState(sourceItems);
-            
+
             // Lưu vị trí scroll hiện tại
             double scrollOffset = 0;
             if (scrollViewer != null)
             {
                 scrollOffset = scrollViewer.VerticalOffset;
             }
-            
+
             // Cập nhật hiển thị ComboBox - không hiển thị Multi và None
             switch (filterState)
             {
                 case FilterState.AllSelected:
                     FilterSourceComboBox.SelectedItem = sourceItems.First(s => s.Value == "All");
                     break;
-                    
+
                 case FilterState.MultipleSelected:
                     // Hiển thị item đầu tiên được chọn thay vì "Multi"
                     FilterSourceComboBox.SelectedItem = sourceItems.First(s => s.IsSelected && s.Value != "All");
                     break;
-                    
+
                 case FilterState.SingleSelected:
                     FilterSourceComboBox.SelectedItem = sourceItems.First(s => s.IsSelected);
                     break;
-                    
+
                 case FilterState.NoneSelected:
                     // Hiển thị "All" khi không có item nào được chọn
                     FilterSourceComboBox.SelectedItem = sourceItems.First(s => s.Value == "All");
                     break;
             }
-            
+
             // Khôi phục vị trí scroll sau khi cập nhật SelectedItem
             if (scrollViewer != null && scrollOffset > 0)
             {
@@ -276,16 +267,16 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             {
                 var entry = item as LogEntry;
                 var selectedFilterType = FilterTypeComboBox.SelectedItem as LogLevelItem;
-                
+
                 // Filter theo Type
                 bool filterTypeMatch = selectedFilterType?.Value == "ALL" || entry.Type == selectedFilterType?.Value;
-                
+
                 // Filter theo Source
                 bool filterSourceMatch = GetSourceFilterMatch(entry);
-                
+
                 return filterTypeMatch && filterSourceMatch;
             };
-            
+
             LogDataGrid.ItemsSource = collectionView;
         }
 
@@ -295,7 +286,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
 
             var selectedSources = sourceItems.Where(s => s.IsSelected && s.Value != "Multi" && s.Value != "None").ToList();
             var filterState = GetFilterState(selectedSources);
-            
+
             return filterState switch
             {
                 FilterState.AllSelected => true,
@@ -312,19 +303,44 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
             {
                 var child = VisualTreeHelper.GetChild(parent, i);
-                
+
                 // Tìm ScrollViewer trong Popup của ComboBox
                 if (child is ScrollViewer scrollViewer)
                 {
                     return scrollViewer;
                 }
-                
+
                 // Đệ quy tìm trong các child elements
                 var result = FindScrollViewer(child);
                 if (result != null)
                     return result;
             }
             return null;
+        }
+
+        private List<LogEntry> SafeLoadLogEntries(string path)
+        {
+            if (DataContext is not LogViewModel viewModel) return new List<LogEntry>();
+
+            int retryCount = 0;
+            const int maxRetry = 50;
+            const int delayMs = 100;
+
+            while (true)
+            {
+                try
+                {
+                    return viewModel.LoadLogEntries(path);
+                }
+                catch (System.Xml.XmlException ex)
+                {
+                    retryCount++;
+                    if (retryCount >= maxRetry)
+                        MessageBox.Show(ex.Message);
+
+                    System.Threading.Thread.Sleep(delayMs);
+                }
+            }
         }
     }
 }
