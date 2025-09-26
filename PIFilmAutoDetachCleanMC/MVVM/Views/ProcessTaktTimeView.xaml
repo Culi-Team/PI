@@ -91,7 +91,7 @@
                 </Border>
 
                 <!-- ItemsControl -->
-                <ItemsControl ItemsSource="{Binding ProcessTakTimeItems}" 
+                <ItemsControl ItemsSource="{Binding ProcessTaktTimeItems}" 
                               ItemTemplate="{StaticResource ProcessItemTemplate}"/>
 
             </StackPanel>

@@ -10,7 +10,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
     /// <summary>
     /// Process Item for DataTemplate
     /// </summary>
-    public class ProcessTakTime
+    public class ProcessTaktTimeItem
     {
         public string ProcessName { get; set; }
         public double CurrentTime { get; set; }
@@ -24,21 +24,21 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
     public class ProcessTaktTimeViewModel : ViewModelBase
     {
         private readonly ProcessTaktTime _taktTime;
-        private readonly ObservableCollection<ProcessTakTime> _processTakTime;
+        private readonly ObservableCollection<ProcessTaktTimeItem> _processTaktTime;
 
         public ProcessTaktTimeViewModel(ProcessTaktTime taktTime)
         {
             _taktTime = taktTime;
-            _processTakTime = new ObservableCollection<ProcessTakTime>();
+            _processTaktTime = new ObservableCollection<ProcessTaktTimeItem>();
             ResetTaktTimeAllCommand = new RelayCommand(() => ResetTaktTimeAll());
             InitializeProcessItems();
         }
 
-        public ObservableCollection<ProcessTakTime> ProcessTakTimeItems => _processTakTime;
+        public ObservableCollection<ProcessTaktTimeItem> ProcessTaktTimeItems => _processTaktTime;
 
         private void InitializeProcessItems()
         {
-            _processTakTime.Clear();
+            _processTaktTime.Clear();
             
             // Add processes in order according to EProcess.cs (excluding Root)
             var processes = new[]
@@ -73,7 +73,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
             foreach (var (processType, processName) in processes)
             {
-                _processTakTime.Add(new ProcessTakTime
+                _processTaktTime.Add(new ProcessTaktTimeItem
                 { 
                     ProcessName = processName,
                     CurrentTime = _taktTime.GetCurrentTime(processType) / 1000.0,
