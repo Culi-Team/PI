@@ -555,15 +555,16 @@
                         Background="{Binding IsOutputStop, Converter={StaticResource InputOutputStopConverter}}" />
             </UniformGrid>
             <UniformGrid Columns="2">
-                <Border BorderBrush="Gray"
+                <Button BorderBrush="Gray"
                         Margin="2 0 0 0"
-                        BorderThickness="1">
-                    <TextBlock  Text="T/T"
-                                FontWeight="Bold"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Background="White" />
-                </Border>
+                        BorderThickness="1"
+                        Background="White"
+                        Click="TaktTimeButton_Click">
+                    <TextBlock Text="T/T"
+                               FontWeight="Bold"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center" />
+                </Button>
 
                 <Border BorderBrush="Gray"
                         BorderThickness="1"

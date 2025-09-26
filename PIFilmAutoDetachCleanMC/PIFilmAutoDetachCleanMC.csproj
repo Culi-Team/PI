@@ -118,6 +118,7 @@
 
   <ItemGroup>
     <Folder Include="Defines\Process\Step\04.OutWorkConveyorProcess\" />
+    <Folder Include="Process\ProcessTakTime\" />
   </ItemGroup>
 
   <ItemGroup>

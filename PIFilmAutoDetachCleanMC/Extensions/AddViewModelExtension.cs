@@ -36,6 +36,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddViewModel<LogViewModel>();
                 services.AddViewModel<LoginViewModel>();
                 services.AddViewModel<DevViewModel>();
+                services.AddViewModel<ProcessTaktTimeViewModel>();
 
                 services.AddSingleton<ViewModelNavigationStore>();
                 services.AddTransient<ViewModelProvider>();

@@ -1,6 +1,7 @@
 ﻿using EQX.UI.Interlock;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
+using PIFilmAutoDetachCleanMC.Process;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,21 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         private void AutoView_Unloaded(object sender, RoutedEventArgs e)
         {
             _inputs.DoorLock7R.ValueChanged -= DoorLock7R_ValueChanged;
+        }
+
+        private void TaktTimeButton_Click(object sender, RoutedEventArgs e)
+        {
+            var taktTime = App.AppHost!.Services.GetRequiredService<ProcessTaktTime>();
+            var popup = new Window
+            {
+                Width = 800,
+                Height = 600,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                WindowStyle = WindowStyle.None,
+                ResizeMode = ResizeMode.CanResize,
+                Content = new ProcessTaktTimeView(taktTime)
+            };
+            popup.ShowDialog();
         }
 
     }

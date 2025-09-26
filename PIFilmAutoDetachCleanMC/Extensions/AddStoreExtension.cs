@@ -19,6 +19,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddSingleton<ProcessInitSelect>();
                 services.AddSingleton<ICellColorRepository,CellColorRepository>();
                 services.AddSingleton<CellStatusToColorConverter>();
+                services.AddSingleton<ProcessTaktTime>();
 
                 services.AddKeyedScoped<IAlertService, AlarmService>("AlarmService");
                 services.AddKeyedScoped<IAlertService, WarningService>("WarningService");
