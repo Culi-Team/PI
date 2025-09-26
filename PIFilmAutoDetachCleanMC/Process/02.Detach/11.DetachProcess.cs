@@ -349,7 +349,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisReadyPosition);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisReadyPosition) &&
                                                                ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisReadyPosition));
-                    Step.ToRunStep++;
+                    Step.RunStep++;
                     break;
                 case EDetachReadyStep.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -358,7 +358,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");
-                    Step.ToRunStep++;
+                    Step.RunStep++;
                     break;
                 case EDetachReadyStep.End:
                     Log.Debug("Initialize End");

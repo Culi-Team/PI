@@ -114,7 +114,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading log file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show($"Error loading log file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (LogTreeView.SelectedItem is FileSystemNode selectedNode && !selectedNode.IsDirectory)
+                {
+                    currentLogEntries = viewModel.LoadLogEntries(selectedNode.Path);
+                    LogDataGrid.ItemsSource = currentLogEntries;
+                    InitializeFilterSourceComboBox();
+                }
+                else
+                {
+                    LogDataGrid.ItemsSource = null;
+                    FilterSourceComboBox.ItemsSource = null;
+                }
             }
         }
 

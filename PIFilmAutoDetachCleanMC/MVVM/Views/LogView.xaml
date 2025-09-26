@@ -87,6 +87,7 @@
             </GroupBox>
             <DataGrid x:Name="LogDataGrid"
                       Grid.Row="1"
+                      FontSize="13"
                       AutoGenerateColumns="False"
                       CanUserResizeColumns="False"
                       CanUserSortColumns="False"
@@ -133,7 +134,7 @@
                     <DataGridTextColumn Header="Source"
                                         IsReadOnly="True"
                                         Binding="{Binding Source}"
-                                        Width="150" />
+                                        Width="200" />
                     <DataGridTextColumn Header="Description"
                                         IsReadOnly="True"
                                         Binding="{Binding Description}"

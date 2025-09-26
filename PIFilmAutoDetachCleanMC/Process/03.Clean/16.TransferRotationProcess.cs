@@ -396,7 +396,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(ZAxisReadyPosition);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisReadyPosition));
-                    Step.ToRunStep++;
+                    Step.RunStep++;
                     break;
                 case ETransferRotationReadyStep.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -406,13 +406,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");
-                    Step.ToRunStep++;
+                    Step.RunStep++;
                     break;
                 case ETransferRotationReadyStep.Cyl_Up:
                     Log.Debug("Cylinder Up");
                     UpDownCyl.Backward();
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => UpDownCyl.IsBackward);
-                    Step.ToRunStep++;
+                    Step.RunStep++;
                     break;
                 case ETransferRotationReadyStep.Cyl_Up_Wait:
                     if (WaitTimeOutOccurred)
@@ -422,7 +422,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Cylinder Up Done");
-                    Step.ToRunStep++;
+                    Step.RunStep++;
                     break;
                 case ETransferRotationReadyStep.End:
                     Log.Debug("Initialize End");

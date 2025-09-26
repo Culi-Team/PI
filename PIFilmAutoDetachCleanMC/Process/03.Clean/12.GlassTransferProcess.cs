@@ -386,7 +386,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(_glassTransferRecipe.ZAxisReadyPosition);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(_glassTransferRecipe.ZAxisReadyPosition));
-                    Step.ToRunStep++;
+                    Step.RunStep++;
                     break;
                 case EGlassTransferReadyStep.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -395,13 +395,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");
-                    Step.ToRunStep++;
+                    Step.RunStep++;
                     break;
                 case EGlassTransferReadyStep.YAxis_Move_ReadyPosition:
                     Log.Debug("Y Axis Move Ready Position");
                     YAxis.MoveAbs(_glassTransferRecipe.YAxisReadyPosition);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(_glassTransferRecipe.YAxisReadyPosition));
-                    Step.ToRunStep++;
+                    Step.RunStep++;
                     break;
                 case EGlassTransferReadyStep.YAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -410,7 +410,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Y Axis Move Ready Position Done");
-                    Step.ToRunStep++;
+                    Step.RunStep++;
                     break;
                 case EGlassTransferReadyStep.End:
                     Log.Debug("Initialize End");

@@ -25,6 +25,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _robotLoadOutput;
         private readonly IDOutputDevice _removeFilmOutput;
         private readonly CassetteList _cassetteList;
+        private readonly ProcessInitSelect _processInitSelect;
         private int CurrentInWorkCSTFixtureIndex = -1;
         private int CurrentOutWorkCSTFixtureIndex = -1;
         private string[] paras = new string[8] { "0", "0", "0", "0", "0", "0", "0", "0" };
@@ -204,7 +205,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             [FromKeyedServices("RobotLoadInput")] IDInputDevice robotLoadInput,
             [FromKeyedServices("RobotLoadOutput")] IDOutputDevice robotLoadOutput,
             [FromKeyedServices("RemoveFilmOutput")] IDOutputDevice removeFilmOutput,
-            CassetteList cassetteList)
+            CassetteList cassetteList,
+            ProcessInitSelect processInitSelect)
         {
             _robotLoad = robotLoad;
             _commonRecipe = commonRecipe;
@@ -214,6 +216,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             _robotLoadOutput = robotLoadOutput;
             _removeFilmOutput = removeFilmOutput;
             _cassetteList = cassetteList;
+            _processInitSelect = processInitSelect;
         }
         #endregion
 
@@ -451,6 +454,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ERobotLoadReadyStep)Step.RunStep)
             {
                 case ERobotLoadReadyStep.Start:
+                    if(_processInitSelect.IsRobotLoadInit == false)
+                    {
+                        Sequence = ESequence.Stop;
+                        break;
+                    }
                     Log.Debug("Ready Start");
                     Step.RunStep++;
                     break;
@@ -528,12 +536,17 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadReadyStep.RobotProgramStart_Check:
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(ProACT, true);
+#endif
                     if (!ProACT.Value)
                     {
                         RaiseWarning((int)EWarning.RobotLoad_Programing_Not_Running);
                         break;
                     }
-
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(ProACT, false);
+#endif
                     Step.RunStep++;
                     break;
                 case ERobotLoadReadyStep.SendPGMStart:
