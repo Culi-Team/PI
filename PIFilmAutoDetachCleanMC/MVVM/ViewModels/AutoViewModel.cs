@@ -21,7 +21,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             CassetteList cassetteList,
             Devices devices,
             RecipeSelector recipeSelector,
-            DieHardK180Plasma plasma)
+            DieHardK180Plasma plasma,
+            ProcessTaktTime processTaktTime)
         {
             MachineStatus = machineStatus;
             _navigationService = navigationService;
@@ -29,6 +30,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             Devices = devices;
             RecipeSelector = recipeSelector;
             Plasma = plasma;
+            _processTaktTime = processTaktTime;
             MachineStatus.PropertyChanged += MachineStatusOnPropertyChanged;
 
             RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.CassetteSizeChanged += CassetteSizeChanged_Handler;
@@ -43,6 +45,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public Devices Devices { get; }
         public RecipeSelector RecipeSelector { get; }
         public DieHardK180Plasma Plasma { get; }
+        public double MachineMaxTaktTime => _processTaktTime.GetMaxTaktTime() / 1000.0;
+        public double MachineMinTaktTime => _processTaktTime.GetMinTaktTime() / 1000.0;
+        public double MachineAverageTaktTime => _processTaktTime.GetAverageTaktTimeAll() / 1000.0;
 
         public bool IsInputStop
         {
@@ -230,6 +235,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         #region Privates
         private readonly INavigationService _navigationService;
+        private readonly ProcessTaktTime _processTaktTime;
         private bool _isInputStop;
         private bool _isOutputStop;
         #endregion

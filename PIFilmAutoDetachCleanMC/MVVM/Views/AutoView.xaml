@@ -569,11 +569,39 @@
                 <Border BorderBrush="Gray"
                         BorderThickness="1"
                         Margin="2 0 0 0">
-                    <TextBlock  Text="{Binding TaktTime}"
+                    <!--<TextBlock  Text="{Binding TaktTime}"
                                 FontWeight="Bold"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
-                                Background="White" />
+                                Background="White" />-->
+                    <UniformGrid Rows="3" >
+                        <!-- Max TaktTime -->
+                        <Border Background="#FFD08770" CornerRadius="3" Padding="8,4" Margin="0,0,0,2">
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Max: " Foreground="White" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding MachineMaxTaktTime, StringFormat='{}{0:F2} s'}" 
+                                               Foreground="White" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <!-- Min TaktTime -->
+                        <Border Background="#FFA3BE8C" CornerRadius="3" Padding="8,4" Margin="0,0,0,2">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Min: " Foreground="White" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding MachineMinTaktTime, StringFormat='{}{0:F2} s'}" 
+                                               Foreground="White" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Average TaktTime -->
+                        <Border Background="#FF88C0D0" CornerRadius="3" Padding="8,4">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Avg: " Foreground="White" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding MachineAverageTaktTime, StringFormat='{}{0:F2} s'}" 
+                                               Foreground="White" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Border>
+                    </UniformGrid>
                 </Border>
 
             </UniformGrid>

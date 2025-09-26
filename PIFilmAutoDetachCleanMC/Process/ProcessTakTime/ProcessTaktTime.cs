@@ -114,6 +114,38 @@ namespace PIFilmAutoDetachCleanMC.Process
             _processes.Clear();
             _startTimes.Clear();
         }
+        public double GetMaxTaktTime()
+        {
+            if (_processes.IsEmpty) return 0;
+            
+            return _processes.Values.Max(p => p.TotalTime);
+        }
+        public double GetMinTaktTime()
+        {
+            if (_processes.IsEmpty) return 0;
+            
+            return _processes.Values.Min(p => p.TotalTime);
+        }
+        public double GetAverageTaktTimeAll()
+        {
+            if (_processes.IsEmpty) return 0;
+            
+            var totalTime = _processes.Values.Sum(p => p.TotalTime);
+            var totalCount = _processes.Values.Sum(p => p.Count);
+            
+            return totalCount > 0 ? totalTime / totalCount : 0;
+        }
+        public MachineTaktTimeInfo GetMachineTaktTimeInfo()
+        {
+            return new MachineTaktTimeInfo
+            {
+                MaxTaktTime = GetMaxTaktTime(),
+                MinTaktTime = GetMinTaktTime(),
+                AverageTaktTime = GetAverageTaktTimeAll(),
+                TotalProcesses = _processes.Count,
+                TotalRuns = _processes.Values.Sum(p => p.Count)
+            };
+        }
         #endregion
 
         #region Public Class
@@ -122,6 +154,15 @@ namespace PIFilmAutoDetachCleanMC.Process
             public double TotalTime { get; set; }
             public int Count { get; set; }
             public double LastTime { get; set; }
+        }
+
+        public class MachineTaktTimeInfo
+        {
+            public double MaxTaktTime { get; set; }
+            public double MinTaktTime { get; set; }
+            public double AverageTaktTime { get; set; }
+            public int TotalProcesses { get; set; }
+            public int TotalRuns { get; set; }
         }
         #endregion
 
