@@ -881,22 +881,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Wait(1000);
                     if (port == EPort.Right)
                     {
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect1, false);
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect2, false);
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect3, false);
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.InCstWorkDetect4, false);
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkDetect1, false);
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkDetect2, false);
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkDetect3, false);
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkDetect4, false);
 
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.BufferCstDetect1, true);
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.BufferCstDetect2, true);
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.BufferCstDetect1, true);
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.BufferCstDetect2, true);
                     }
                     else
                     {
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstWorkDetect1, false);
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstWorkDetect2, false);
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstWorkDetect3, false);
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.OutCstWorkDetect1, false);
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.OutCstWorkDetect2, false);
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.OutCstWorkDetect3, false);
 
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstDetect1, true);
-                        SimulationInputSetter.SetSimModbusInput(_devices.Inputs.OutCstDetect2, true);
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.OutCstDetect1, true);
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.OutCstDetect2, true);
                     }
 #endif
                     Step.RunStep++;

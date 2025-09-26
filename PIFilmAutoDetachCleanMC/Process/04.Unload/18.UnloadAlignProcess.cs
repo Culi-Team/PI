@@ -368,10 +368,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Vacuum On");
                     VacOnOff(true);
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect1, true);
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect2, true);
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect3, true);
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect4, true);
+                    SimulationInputSetter.SetSimInput(GlassDetect1, true);
+                    SimulationInputSetter.SetSimInput(GlassDetect2, true);
+                    SimulationInputSetter.SetSimInput(GlassDetect3, true);
+                    SimulationInputSetter.SetSimInput(GlassDetect4, true);
 #endif
                     Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
@@ -425,10 +425,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Vacuum Off");
                     VacOnOff(false);
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(GlassVac1, false);
-                    SimulationInputSetter.SetSimModbusInput(GlassVac2, false);
-                    SimulationInputSetter.SetSimModbusInput(GlassVac3, false);
-                    SimulationInputSetter.SetSimModbusInput(GlassVac4, false);
+                    SimulationInputSetter.SetSimInput(GlassVac1, false);
+                    SimulationInputSetter.SetSimInput(GlassVac2, false);
+                    SimulationInputSetter.SetSimInput(GlassVac3, false);
+                    SimulationInputSetter.SetSimInput(GlassVac4, false);
 #endif
                     Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
@@ -445,10 +445,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect1, false);
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect2, false);
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect3, false);
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.UnloadGlassDetect4, false);
+                    SimulationInputSetter.SetSimModbusInput(GlassDetect1, false);
+                    SimulationInputSetter.SetSimModbusInput(GlassDetect2, false);
+                    SimulationInputSetter.SetSimModbusInput(GlassDetect3, false);
+                    SimulationInputSetter.SetSimModbusInput(GlassDetect4, false);
 #endif
                     Log.Debug("Clear Flag Request Robot Unload");
                     FlagUnloadAlignRequestRobotUnload = false;

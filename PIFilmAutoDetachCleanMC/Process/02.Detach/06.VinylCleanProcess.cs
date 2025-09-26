@@ -300,7 +300,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EVinylCleanProcessVinylCleanStep.Start:
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.VinylCleanFixtureDetect,true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.VinylCleanFixtureDetect,true);
 #endif
                     Log.Debug("Vinyl Clean Start");
                     Step.RunStep++;
@@ -312,7 +312,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.VinylCleanFixtureDetect, false);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.VinylCleanFixtureDetect, false);
 #endif
                     Step.RunStep++;
                     break;

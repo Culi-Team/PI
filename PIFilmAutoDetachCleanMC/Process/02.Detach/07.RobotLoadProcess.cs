@@ -1136,7 +1136,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Set Flag Remove Zone Unload Done");
                     FlagRemoveFilmUnloadDone = true;
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.RemoveZoneFixtureDetect, false);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.RemoveZoneFixtureDetect, false);
 #endif
                     Step.RunStep++;
                     break;

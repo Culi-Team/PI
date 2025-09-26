@@ -453,9 +453,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.DetachGlassShtVac1, false);
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.DetachGlassShtVac2, false);
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.DetachGlassShtVac3, false);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac1, false);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac2, false);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac3, false);
 #endif
                     Log.Debug("Glass Shuttle Vacuum Check Done");
                     Step.RunStep++;
@@ -630,9 +630,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Glass Shuttle Vacuum On");
                     GlassShuttleVacOnOff(true);
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.DetachGlassShtVac1, true);
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.DetachGlassShtVac2, true);
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.DetachGlassShtVac3, true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac1, true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac2, true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac3, true);
 
 #endif
                     Wait(MachineStatus.GetVacuumDelay(

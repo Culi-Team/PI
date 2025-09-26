@@ -146,7 +146,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
 #if SIMULATION
-                services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new SimulationInputDeviceClientModbus<EInput>() { Id = 1, Name = "InDevice1", MaxPin = 500 }; });
+                services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new SimulationInputDevice_ClientMMF<EInput>() { Id = 1, Name = "InDevice1", MaxPin = 500 }; });
 #else
                 services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) =>
                 {

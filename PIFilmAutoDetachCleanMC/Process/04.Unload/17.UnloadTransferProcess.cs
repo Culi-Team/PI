@@ -465,7 +465,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Vacuum On");
                     GlassVacOnOff.Value = true;
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(GlassVac, true);
+                    SimulationInputSetter.SetSimInput(GlassVac, true);
 #endif
                     Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
@@ -537,7 +537,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (UnloadAlignVac1.Value == false)
                     {
 #if SIMULATION
-                        SimulationInputSetter.SetSimModbusInput(UnloadAlignVac1, true);
+                        SimulationInputSetter.SetSimInput(UnloadAlignVac1, true);
 #endif
                         Step.RunStep++;
                         break;
@@ -545,7 +545,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (UnloadAlignVac2.Value == false)
                     {
 #if SIMULATION
-                        SimulationInputSetter.SetSimModbusInput(UnloadAlignVac2, true);
+                        SimulationInputSetter.SetSimInput(UnloadAlignVac2, true);
 #endif
                         Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition2;
                         break;
@@ -553,7 +553,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (UnloadAlignVac3.Value == false)
                     {
 #if SIMULATION
-                        SimulationInputSetter.SetSimModbusInput(UnloadAlignVac3, true);
+                        SimulationInputSetter.SetSimInput(UnloadAlignVac3, true);
 #endif
                         Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition3;
                         break;
@@ -561,7 +561,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (UnloadAlignVac4.Value == false)
                     {
 #if SIMULATION
-                        SimulationInputSetter.SetSimModbusInput(UnloadAlignVac4, true);
+                        SimulationInputSetter.SetSimInput(UnloadAlignVac4, true);
 #endif
                         Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition4;
                         break;
@@ -652,7 +652,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Vacuum Off");
                     GlassVacOnOff.Value = false;
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(GlassVac, false);
+                    SimulationInputSetter.SetSimInput(GlassVac, false);
 #endif
                     Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;

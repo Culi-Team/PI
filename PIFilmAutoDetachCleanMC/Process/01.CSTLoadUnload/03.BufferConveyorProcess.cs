@@ -376,8 +376,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     ConveyorRunStop(true);
 #if SIMULATION
                     Wait(2000);
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.BufferCstDetect1, true);
-                    SimulationInputSetter.SetSimModbusInput(_devices.Inputs.BufferCstDetect2, true);
+                    SimulationInputSetter.SetSimInput(BufferDetect1, true);
+                    SimulationInputSetter.SetSimInput(BufferDetect2, true);
 #endif
                     Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.CSTDetect_Check;
                     break;
@@ -437,6 +437,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Conveyor Run");
                     ConveyorRunStop(true);
                     Log.Debug("Wait Out Work Conveyor Load Done");
+#if SIMULATION
+                    Thread.Sleep(1000);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.OutCstWorkDetect1, true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.OutCstWorkDetect2, true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.OutCstWorkDetect3, true);
+
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.BufferCstDetect1, false);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.BufferCstDetect2, false);
+#endif
                     Step.RunStep++;
                     break;
                 case EBufferConveyorOutWorkCSTLoadStep.Wait_OutWorkConveyorLoadDone:

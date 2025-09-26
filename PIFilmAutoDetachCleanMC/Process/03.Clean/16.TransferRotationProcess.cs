@@ -504,7 +504,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Vacuum On");
                     GlassVac1OnOff.Value = true;
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(GlassVac1, true);
+                    SimulationInputSetter.SetSimInput(GlassVac1, true);
 #endif
                     Wait((int)(_commonRecipe.VacDelay * 1000), () => GlassVac1.Value);
                     Step.RunStep++;
@@ -608,7 +608,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Glass Rotation Vacuum On");
                     GlassRotateVacOnOff.Value = true;
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(GlassRotVac, true);
+                    SimulationInputSetter.SetSimInput(GlassRotVac, true);
 #endif
                     Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
@@ -617,7 +617,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Glass Vacuum 1 Off");
                     GlassVac1OnOff.Value = false;
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(GlassVac1, false);
+                    SimulationInputSetter.SetSimInput(GlassVac1, false);
 #endif
                     Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
@@ -699,7 +699,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Glass Vacuum 2 On");
                     GlassVac2OnOff.Value = true;
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(GlassVac2, true);
+                    SimulationInputSetter.SetSimInput(GlassVac2, true);
 #endif
                     Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
@@ -708,7 +708,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Glass Rotation Vacuum Off");
                     GlassRotateVacOnOff.Value = false;
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(GlassRotVac, false);
+                    SimulationInputSetter.SetSimInput(GlassRotVac, false);
 #endif
                     Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
@@ -795,7 +795,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Glass Vacuum 2 Off");
                     GlassVac2OnOff.Value = false;
 #if SIMULATION
-                    SimulationInputSetter.SetSimModbusInput(GlassVac2, false);
+                    SimulationInputSetter.SetSimInput(GlassVac2, false);
 #endif
                     Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;

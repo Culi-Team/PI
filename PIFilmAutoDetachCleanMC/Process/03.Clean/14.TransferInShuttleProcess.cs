@@ -578,7 +578,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (IsGlassDetect1)
                     {
 #if SIMULATION
-                        SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect1 : _devices.Inputs.AlignStageRGlassDetect1, false);
+                        SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect1 : _devices.Inputs.AlignStageRGlassDetect1, false);
 #endif
                         Log.Debug("Transfer In Shuttle Pick Glass 1");
                         Step.RunStep++;
@@ -587,7 +587,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (IsGlassDetect2)
                     {
 #if SIMULATION
-                        SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect2 : _devices.Inputs.AlignStageRGlassDetect2, false);
+                        SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect2 : _devices.Inputs.AlignStageRGlassDetect2, false);
 #endif
                         Log.Debug("Transfer In Shuttle Pick Glass 2");
                         Step.RunStep = (int)ETransferInShuttlePickStep.YAxis_Move_PickPosition2;
@@ -596,7 +596,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (IsGlassDetect3)
                     {
 #if SIMULATION
-                        SimulationInputSetter.SetSimModbusInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect3 : _devices.Inputs.AlignStageRGlassDetect3, false);
+                        SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect3 : _devices.Inputs.AlignStageRGlassDetect3, false);
 #endif
                         Log.Debug("Transfer In Shuttle Pick Glass 3");
                         Step.RunStep = (int)ETransferInShuttlePickStep.YAxis_Move_PickPosition3;
