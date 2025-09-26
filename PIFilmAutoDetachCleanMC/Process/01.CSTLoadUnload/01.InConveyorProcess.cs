@@ -308,8 +308,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     ConveyorRunStop(true);
 #if SIMULATION
                     Wait(1000);
-                    SimulationInputSetter.SetSimInput(CST_Det1, false);
-                    SimulationInputSetter.SetSimInput(CST_Det2, false);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.InCstDetect1, false);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.InCstDetect2, false);
 
                     SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkDetect1, true);
                     SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkDetect2, true);

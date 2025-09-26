@@ -376,8 +376,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     ConveyorRunStop(true);
 #if SIMULATION
                     Wait(2000);
-                    SimulationInputSetter.SetSimInput(BufferDetect1, true);
-                    SimulationInputSetter.SetSimInput(BufferDetect2, true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.BufferCstDetect1, true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.BufferCstDetect2, true);
 #endif
                     Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.CSTDetect_Check;
                     break;
