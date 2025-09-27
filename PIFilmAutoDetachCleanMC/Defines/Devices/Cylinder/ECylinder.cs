@@ -129,5 +129,17 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         UnloadAlignCyl2UpDown,
         UnloadAlignCyl3UpDown,
         UnloadAlignCyl4UpDown,
+
+        //In Shuttle
+        InShuttleR1AlignUnalign,
+        InShuttleL1AlignUnalign,
+        InShuttleR2AlignUnalign,
+        InShuttleL2AlignUnalign,
+
+        //OutShuttle
+        OutShuttleR1AlignUnalign,
+        OutShuttleL1AlignUnalign,
+        OutShuttleR2AlignUnalign,
+        OutShuttleL2AlignUnalign
     }
 }

@@ -152,6 +152,18 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
         public ICylinder UnloadGlassAlignVac3OnOff { get; }
         public ICylinder UnloadGlassAlignVac4OnOff { get; }
 
+        //In Shuttle
+        public ICylinder InShuttleR1AlignUnalign { get; }
+        public ICylinder InShuttleR2AlignUnalign { get; }
+        public ICylinder InShuttleL1AlignUnalign { get; }
+        public ICylinder InShuttleL2AlignUnalign { get; }
+
+        //Out Shuttle
+        public ICylinder OutShuttleR1AlignUnalign { get; }
+        public ICylinder OutShuttleR2AlignUnalign { get; }
+        public ICylinder OutShuttleL1AlignUnalign { get; }
+        public ICylinder OutShuttleL2AlignUnalign { get; }
+
         public Cylinders(ICylinderFactory cylinderFactory, Inputs inputs, Outputs outputs)
         {
             _cylinderFactory = cylinderFactory;
@@ -598,6 +610,47 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                 .SetIdentity((int)ECylinder.UnloadAlignCyl4UpDown, ECylinder.UnloadAlignCyl4UpDown.ToString());
             UnloadAlignCyl4UpDown.CylinderType = ECylinderType.UpDown;
 
+            //In Shuttle
+            InShuttleL1AlignUnalign = _cylinderFactory
+                .Create(new List<IDInput> { _inputs.InShuttleLAlign1FW }, new List<IDInput> { _inputs.InShuttleLAlign1BW }, _outputs.InShuttleLAlignFw, _outputs.InShuttleLAlignBw)
+                .SetIdentity((int)ECylinder.InShuttleL1AlignUnalign, ECylinder.InShuttleL1AlignUnalign.ToString());
+            InShuttleL1AlignUnalign.CylinderType = ECylinderType.AlignUnalign;
+
+            InShuttleL2AlignUnalign = _cylinderFactory
+                .Create(new List<IDInput> { _inputs.InShuttleLAlign2FW }, new List<IDInput> { _inputs.InShuttleLAlign2BW }, _outputs.InShuttleLAlignFw, _outputs.InShuttleLAlignBw)
+                .SetIdentity((int)ECylinder.InShuttleL2AlignUnalign, ECylinder.InShuttleL2AlignUnalign.ToString());
+            InShuttleL2AlignUnalign.CylinderType = ECylinderType.AlignUnalign;
+
+            InShuttleR1AlignUnalign = _cylinderFactory
+                .Create(new List<IDInput> { _inputs.InShuttleRAlign1FW }, new List<IDInput> { _inputs.InShuttleRAlign1BW }, _outputs.InShuttleRAlignFw, _outputs.InShuttleRAlignBw)
+                .SetIdentity((int)ECylinder.InShuttleR1AlignUnalign, ECylinder.InShuttleR1AlignUnalign.ToString());
+            InShuttleR1AlignUnalign.CylinderType = ECylinderType.AlignUnalign;
+
+            InShuttleR2AlignUnalign = _cylinderFactory
+                .Create(new List<IDInput> { _inputs.InShuttleRAlign2FW }, new List<IDInput> { _inputs.InShuttleRAlign2BW }, _outputs.InShuttleRAlignFw, _outputs.InShuttleRAlignBw)
+                .SetIdentity((int)ECylinder.InShuttleR2AlignUnalign, ECylinder.InShuttleR2AlignUnalign.ToString());
+            InShuttleR2AlignUnalign.CylinderType = ECylinderType.AlignUnalign;
+
+            //Out Shuttle
+            OutShuttleL1AlignUnalign = _cylinderFactory
+                .Create(new List<IDInput> { _inputs.OutShuttleLAlign1FW }, new List<IDInput> { _inputs.OutShuttleLAlign1BW }, _outputs.OutShuttleLAlignFw, _outputs.OutShuttleLAlignBw)
+                .SetIdentity((int)ECylinder.OutShuttleL1AlignUnalign, ECylinder.OutShuttleL1AlignUnalign.ToString());
+            OutShuttleL1AlignUnalign.CylinderType = ECylinderType.AlignUnalign;
+
+            OutShuttleL2AlignUnalign = _cylinderFactory
+                .Create(new List<IDInput> { _inputs.OutShuttleLAlign2FW }, new List<IDInput> { _inputs.OutShuttleLAlign2BW }, _outputs.OutShuttleLAlignFw, _outputs.OutShuttleLAlignBw)
+                .SetIdentity((int)ECylinder.OutShuttleL2AlignUnalign, ECylinder.OutShuttleL2AlignUnalign.ToString());
+            OutShuttleL2AlignUnalign.CylinderType = ECylinderType.AlignUnalign;
+
+            OutShuttleR1AlignUnalign = _cylinderFactory
+                .Create(new List<IDInput> { _inputs.OutShuttleRAlign1FW }, new List<IDInput> { _inputs.OutShuttleRAlign1BW }, _outputs.OutShuttleRAlignFw, _outputs.OutShuttleRAlignBw)
+                .SetIdentity((int)ECylinder.OutShuttleR1AlignUnalign, ECylinder.OutShuttleR1AlignUnalign.ToString());
+            OutShuttleR1AlignUnalign.CylinderType = ECylinderType.AlignUnalign;
+
+            OutShuttleR2AlignUnalign = _cylinderFactory
+                .Create(new List<IDInput> { _inputs.OutShuttleRAlign2FW }, new List<IDInput> { _inputs.OutShuttleRAlign2BW }, _outputs.OutShuttleRAlignFw, _outputs.OutShuttleRAlignBw)
+                .SetIdentity((int)ECylinder.InShuttleR2AlignUnalign, ECylinder.InShuttleR2AlignUnalign.ToString());
+            OutShuttleR2AlignUnalign.CylinderType = ECylinderType.AlignUnalign;
         }
 
         private readonly ICylinderFactory _cylinderFactory;
