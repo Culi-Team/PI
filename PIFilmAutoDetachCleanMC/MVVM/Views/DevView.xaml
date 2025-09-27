@@ -6,6 +6,8 @@
              xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
              mc:Ignorable="d" 
+             xmlns:vm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels"
+             d:DataContext="{d:DesignInstance Type={x:Type vm:DevViewModel}}"
              d:DesignHeight="1200" d:DesignWidth="1900">
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBox}">

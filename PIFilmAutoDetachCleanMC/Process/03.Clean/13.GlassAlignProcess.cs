@@ -337,7 +337,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EGlassAlignProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
-                    ((VirtualOutputDevice<EGlassAlignProcessOutput>)_glassAlignRightOutput).Clear();
+                    if(port == EPort.Left)
+                    {
+                        ((VirtualOutputDevice<EGlassAlignProcessOutput>)_glassAlignLeftOutput).Clear();
+                    }
+                    else
+                    {
+                        ((VirtualOutputDevice<EGlassAlignProcessOutput>)_glassAlignRightOutput).Clear();
+                    }
                     Step.ToRunStep++;
                     break;
                 case EGlassAlignProcessToRunStep.End:

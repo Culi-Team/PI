@@ -522,25 +522,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPickStep.Vacuum_On:
                     Log.Debug("Vacuum On");
                     VacOnOff(true);
-                    Wait(_machineStatus.GetVacuumDelay(_commonRecipe.VacDelay, GlassTransferVacuumInputs));
+                    Wait((int)_commonRecipe.VacDelay * 1000,() => IsVacDetect  || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EGlassTransferPickStep.Vacuum_On_Wait:
-                    if (!WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
+                        //Timeout
                         break;
                     }
 
-                    _machineStatus.ReleaseVacuumOutputsIfBypassed(GlassTransferVacuumInputs,
-                        GlassVac1,
-                        GlassVac2,
-                        GlassVac3);
-
-                    if (!_machineStatus.ShouldBypassVacuum(GlassTransferVacuumInputs) && !IsVacDetect)
-                    {
-                        Wait(20);
-                        break;
-                    }
                     Step.RunStep++;
                     break;
                 case EGlassTransferPickStep.ZAxis_Move_ReadyPosition:

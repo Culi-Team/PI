@@ -122,6 +122,13 @@ namespace PIFilmAutoDetachCleanMC.Process
             GlassShuttleVac1.Value = onOff;
             GlassShuttleVac2.Value = onOff;
             GlassShuttleVac3.Value = onOff;
+
+#if SIMULATION
+            SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac1, onOff);
+            SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac2, onOff);
+            SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac3, onOff);
+
+#endif
         }
         #endregion
 
@@ -609,11 +616,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisDetach1Position);
                     ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisDetach1Position);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
-                        () =>
-                        {
-                            return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetach1Position) &&
-                                         ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetach1Position);
-                        });
+                        () => DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetach1Position)
+                              && ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetach1Position));
                     Step.RunStep++;
                     break;
                 case EDetachStep.ZAxis_Move_Detach1Position_Wait:
@@ -629,15 +633,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachStep.Vacuum_On:
                     Log.Debug("Glass Shuttle Vacuum On");
                     GlassShuttleVacOnOff(true);
-#if SIMULATION
-                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac1, true);
-                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac2, true);
-                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac3, true);
-
-#endif
-                    Wait(_machineStatus.GetVacuumDelay(
-                        _commonRecipe.VacDelay,
-                        GlassShuttleVacuumInputs));
+                    Wait((int)_commonRecipe.VacDelay * 1000, () => IsGlassShuttleVacAll || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EDetachStep.Vacuum_On_Wait:
@@ -646,11 +642,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         //Timeout
                         break;
                     }
-
-                    _machineStatus.ReleaseVacuumOutputsIfBypassed(GlassShuttleVacuumInputs,
-                        GlassShuttleVac1,
-                        GlassShuttleVac2,
-                        GlassShuttleVac3);
                     Step.RunStep++;
                     break;
                 case EDetachStep.ZAxis_Move_ReadyDetachPosition_2nd:
