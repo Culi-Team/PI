@@ -8,7 +8,7 @@ namespace PIFilmAutoDetachCleanMC.Process
     public class ProcessTaktTime
     {
         #region Private Fields
-        private readonly ConcurrentDictionary<EProcess, ProcessInfo> _processes = new();
+        private readonly ConcurrentDictionary<EProcess, ProcessTaktTimeInfo> _processes = new();
         private readonly ConcurrentDictionary<EProcess, DateTime> _startTimes = new();
         #endregion
 
@@ -20,29 +20,25 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         public void StopProcess(EProcess processType)
         {
-            if (_startTimes.TryGetValue(processType, out var startTime))
-            {
-                var executionTime = (DateTime.Now - startTime).TotalMilliseconds;
-                
-                _processes.AddOrUpdate(processType, 
-                    new ProcessInfo { TotalTime = executionTime, Count = 1, LastTime = executionTime },
-                    (key, existing) => new ProcessInfo 
-                    { 
-                        TotalTime = existing.TotalTime + executionTime, 
-                        Count = existing.Count + 1,
-                        LastTime = executionTime
-                    });
-                
-                _startTimes.TryRemove(processType, out _);
-            }
+            if (!_startTimes.TryRemove(processType, out var startTime)) return;
+
+            var executionTime = (DateTime.Now - startTime).TotalMilliseconds;
+            
+            _processes.AddOrUpdate(processType, 
+                new ProcessTaktTimeInfo { TotalTime = executionTime, Count = 1, LastTime = executionTime },
+                (key, existing) => new ProcessTaktTimeInfo
+                { 
+                    TotalTime = existing.TotalTime + executionTime, 
+                    Count = existing.Count + 1,
+                    LastTime = executionTime
+                });
         }
+
         public double GetAverageTime(EProcess processType)
         {
-            if (_processes.TryGetValue(processType, out var info))
-            {
-                return info.Count > 0 ? info.TotalTime / info.Count : 0;
-            }
-            return 0;
+            return _processes.TryGetValue(processType, out var info) && info.Count > 0 
+                ? info.TotalTime / info.Count 
+                : 0;
         }
 
         public double GetTotalTime(EProcess processType)
@@ -57,11 +53,9 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         public double GetCurrentTime(EProcess processType)
         {
-            if (_startTimes.TryGetValue(processType, out var startTime))
-            {
-                return (DateTime.Now - startTime).TotalMilliseconds;
-            }
-            return 0;
+            return _startTimes.TryGetValue(processType, out var startTime) 
+                ? (DateTime.Now - startTime).TotalMilliseconds 
+                : 0;
         }
 
         public double GetLastTime(EProcess processType)
@@ -114,18 +108,17 @@ namespace PIFilmAutoDetachCleanMC.Process
             _processes.Clear();
             _startTimes.Clear();
         }
+
         public double GetMaxTaktTime()
         {
-            if (_processes.IsEmpty) return 0;
-            
-            return _processes.Values.Max(p => p.TotalTime);
+            return _processes.IsEmpty ? 0 : _processes.Values.Max(p => p.TotalTime);
         }
+
         public double GetMinTaktTime()
         {
-            if (_processes.IsEmpty) return 0;
-            
-            return _processes.Values.Min(p => p.TotalTime);
+            return _processes.IsEmpty ? 0 : _processes.Values.Min(p => p.TotalTime);
         }
+
         public double GetAverageTaktTimeAll()
         {
             if (_processes.IsEmpty) return 0;
@@ -135,9 +128,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             
             return totalCount > 0 ? totalTime / totalCount : 0;
         }
-        public MachineTaktTimeInfo GetMachineTaktTimeInfo()
+
+        public ProcessTaktTimeInfo GetMachineTaktTimeInfo()
         {
-            return new MachineTaktTimeInfo
+            return new ProcessTaktTimeInfo
             {
                 MaxTaktTime = GetMaxTaktTime(),
                 MinTaktTime = GetMinTaktTime(),
@@ -154,24 +148,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             public double TotalTime { get; set; }
             public int Count { get; set; }
             public double LastTime { get; set; }
-        }
-
-        public class MachineTaktTimeInfo
-        {
             public double MaxTaktTime { get; set; }
             public double MinTaktTime { get; set; }
             public double AverageTaktTime { get; set; }
             public int TotalProcesses { get; set; }
             public int TotalRuns { get; set; }
-        }
-        #endregion
-
-        #region Private Class
-        private class ProcessInfo
-        {
-            public double TotalTime { get; set; }
-            public int Count { get; set; }
-            public double LastTime { get; set; }
         }
         #endregion
     }
