@@ -13,6 +13,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_Align_Up_Wait,
         Vacuum_Off_Align,
         Vacuum_On,
+        Vacuum_On_Wait,
         GlassDetect_Check,
         Cyl_Align_Down,
         Cyl_Align_Down_Wait,

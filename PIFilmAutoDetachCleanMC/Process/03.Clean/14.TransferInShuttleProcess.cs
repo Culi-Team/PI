@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,16 +28,20 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _transferInShuttleLeftOutput;
         private readonly IDInputDevice _transferInShuttleRightInput;
         private readonly IDOutputDevice _transferInShuttleRightOutput;
+        private readonly MachineStatus _machineStatus;
 
         private IDInputDevice Inputs => port == EPort.Left ? _transferInShuttleLeftInput : _transferInShuttleRightInput;
         private IDOutputDevice Outputs => port == EPort.Left ? _transferInShuttleLeftOutput : _transferInShuttleRightOutput;
 
-        private bool IsGlassDetect1 => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect1.Value
-                                                            : _devices.Inputs.AlignStageRGlassDetect1.Value;
-        private bool IsGlassDetect2 => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect2.Value
-                                                            : _devices.Inputs.AlignStageRGlassDetect2.Value;
-        private bool IsGlassDetect3 => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect3.Value
-                                                            : _devices.Inputs.AlignStageRGlassDetect3.Value;
+        private bool IsGlassDetect1 => port == EPort.Left
+            ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLGlassDetect1)
+            : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRGlassDetect1);
+        private bool IsGlassDetect2 => port == EPort.Left
+            ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLGlassDetect2)
+            : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRGlassDetect2);
+        private bool IsGlassDetect3 => port == EPort.Left
+            ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLGlassDetect3)
+            : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRGlassDetect3);
 
         private EPort port => Name == EProcess.TransferInShuttleLeft.ToString() ? EPort.Left : EPort.Right;
 
@@ -52,8 +57,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         public ICylinder RotCyl => port == EPort.Left ? _devices.Cylinders.TransferInShuttleLRotate
                                                        : _devices.Cylinders.TransferInShuttleRRotate;
 
-        private bool IsVacDetect => port == EPort.Left ? _devices.Inputs.TransferInShuttleLVac.Value
-                                                        : _devices.Inputs.TransferInShuttleRVac.Value;
+        private IDInput GlassVacuumInput => port == EPort.Left
+            ? _devices.Inputs.TransferInShuttleLVac
+            : _devices.Inputs.TransferInShuttleRVac;
+
+        private IEnumerable<IDInput> GlassVacuumInputs => new[] { GlassVacuumInput };
+
+        private bool IsVacDetect => _machineStatus.IsSatisfied(GlassVacuumInput);
 
         private double YAxisReadyPosition => port == EPort.Left ? _transferInShuttleLeftRecipe.YAxisReadyPosition
                                                                     : _transferInShuttleRightRecipe.YAxisReadyPosition;
@@ -137,6 +147,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Constructor
         public TransferInShuttleProcess(Devices devices,
             CommonRecipe commonRecipe,
+            MachineStatus machineStatus,
             [FromKeyedServices("TransferInShuttleLeftRecipe")] TransferInShuttleRecipe transferInShuttleLeftRecipe,
             [FromKeyedServices("TransferInShuttleRightRecipe")] TransferInShuttleRecipe transferInShuttleRightRecipe,
             [FromKeyedServices("TransferInShuttleLeftInput")] IDInputDevice transferInShuttleLeftInput,
@@ -146,6 +157,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
+            _machineStatus = machineStatus;
             _transferInShuttleLeftRecipe = transferInShuttleLeftRecipe;
             _transferInShuttleRightRecipe = transferInShuttleRightRecipe;
             _transferInShuttleLeftInput = transferInShuttleLeftInput;
@@ -670,7 +682,17 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.Vacuum_On:
                     Log.Debug("Vacuum On");
                     GlassVac.Value = true;
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait(_machineStatus.GetVacuumDelay(_commonRecipe.VacDelay, GlassVacuumInputs));
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttlePickStep.Vacuum_On_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Time out
+                        break;
+                    }
+
+                    _machineStatus.ReleaseVacuumOutputsIfBypassed(GlassVacuumInputs, GlassVac);
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.ZAxis_Move_ReadyPosition:

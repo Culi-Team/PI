@@ -26,7 +26,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDInputDevice _detachInput;
         private readonly IDOutputDevice _detachOutput;
         private readonly MachineStatus _machineStatus;
-        private MachineStatus MachineStatus => _devices.MachineStatus;
         private IMotion DetachGlassZAxis => _devices.MotionsInovance.DetachGlassZAxis;
         private IMotion ShuttleTransferXAxis => _devices.MotionsInovance.ShuttleTransferXAxis;
         private IMotion ShuttleTransferZAxis => _devices.MotionsAjin.ShuttleTransferZAxis;
@@ -42,14 +41,20 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private bool IsFixtureDetect => _machineStatus.IsSatisfied(_devices.Inputs.DetachFixtureDetect);
 
-        private bool IsGlassShuttleVac1 => _devices.Inputs.DetachGlassShtVac1.Value;
-        private bool IsGlassShuttleVac2 => _devices.Inputs.DetachGlassShtVac2.Value;
-        private bool IsGlassShuttleVac3 => _devices.Inputs.DetachGlassShtVac3.Value;
+        private bool IsGlassShuttleVac1 => _machineStatus.IsSatisfied(_devices.Inputs.DetachGlassShtVac1);
+        private bool IsGlassShuttleVac2 => _machineStatus.IsSatisfied(_devices.Inputs.DetachGlassShtVac2);
+        private bool IsGlassShuttleVac3 => _machineStatus.IsSatisfied(_devices.Inputs.DetachGlassShtVac3);
         private bool IsGlassShuttleVacAll => IsGlassShuttleVac1 && IsGlassShuttleVac2 && IsGlassShuttleVac3;
 
         private IDOutput GlassShuttleVac1 => _devices.Outputs.DetachGlassShtVac1OnOff;
         private IDOutput GlassShuttleVac2 => _devices.Outputs.DetachGlassShtVac2OnOff;
         private IDOutput GlassShuttleVac3 => _devices.Outputs.DetachGlassShtVac3OnOff;
+        private IEnumerable<IDInput> GlassShuttleVacuumInputs => new[]
+        {
+            _devices.Inputs.DetachGlassShtVac1,
+            _devices.Inputs.DetachGlassShtVac2,
+            _devices.Inputs.DetachGlassShtVac3,
+        };
         #endregion
 
         #region Flags
@@ -442,12 +447,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachUnloadStep.Vacuum_Check:
-                    if (!MachineStatus.ShouldBypassVacuum(new[]
-                    {
-                        _devices.Inputs.DetachGlassShtVac1,
-                        _devices.Inputs.DetachGlassShtVac2,
-                        _devices.Inputs.DetachGlassShtVac3
-                    }) && !IsGlassShuttleVacAll)
+                    if (!_machineStatus.ShouldBypassVacuum(GlassShuttleVacuumInputs) && !IsGlassShuttleVacAll)
                     {
                         RaiseWarning((int)EWarning.DetachFail);
                         break;
@@ -635,14 +635,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac3, true);
 
 #endif
-                    Wait(MachineStatus.GetVacuumDelay(
+                    Wait(_machineStatus.GetVacuumDelay(
                         _commonRecipe.VacDelay,
-                        new[]
-                        {
-                            _devices.Inputs.DetachGlassShtVac1,
-                            _devices.Inputs.DetachGlassShtVac2,
-                            _devices.Inputs.DetachGlassShtVac3
-                        }));
+                        GlassShuttleVacuumInputs));
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.Vacuum_On_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        //Timeout
+                        break;
+                    }
+
+                    _machineStatus.ReleaseVacuumOutputsIfBypassed(GlassShuttleVacuumInputs,
+                        GlassShuttleVac1,
+                        GlassShuttleVac2,
+                        GlassShuttleVac3);
                     Step.RunStep++;
                     break;
                 case EDetachStep.ZAxis_Move_ReadyDetachPosition_2nd:

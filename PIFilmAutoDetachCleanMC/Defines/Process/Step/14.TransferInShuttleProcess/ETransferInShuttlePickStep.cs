@@ -28,6 +28,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         ZAxis_Move_PickPosition_Wait,
 
         Vacuum_On,
+        Vacuum_On_Wait,
+
         ZAxis_Move_ReadyPosition,
         ZAxis_Move_ReadyPosition_Wait,
 

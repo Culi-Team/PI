@@ -11,6 +11,7 @@ using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Robot;
 using PIFilmAutoDetachCleanMC.Defines.Process.Step._07.RobotLoadProcess;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
@@ -25,7 +26,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _robotLoadOutput;
         private readonly IDOutputDevice _removeFilmOutput;
         private readonly CassetteList _cassetteList;
+        private readonly MachineStatus _machineStatus;
         private readonly ProcessInitSelect _processInitSelect;
+
         private int CurrentInWorkCSTFixtureIndex = -1;
         private int CurrentOutWorkCSTFixtureIndex = -1;
         private string[] paras = new string[8] { "0", "0", "0", "0", "0", "0", "0", "0" };
@@ -202,6 +205,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             CommonRecipe commonRecipe,
             RobotLoadRecipe robotLoadRecipe,
             Devices devices,
+            MachineStatus machineStatus,
             [FromKeyedServices("RobotLoadInput")] IDInputDevice robotLoadInput,
             [FromKeyedServices("RobotLoadOutput")] IDOutputDevice robotLoadOutput,
             [FromKeyedServices("RemoveFilmOutput")] IDOutputDevice removeFilmOutput,
@@ -212,6 +216,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             _commonRecipe = commonRecipe;
             _robotLoadRecipe = robotLoadRecipe;
             _devices = devices;
+            _machineStatus = machineStatus;
             _robotLoadInput = robotLoadInput;
             _robotLoadOutput = robotLoadOutput;
             _removeFilmOutput = removeFilmOutput;
@@ -942,7 +947,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     else
                     {
-                        if(_devices.Inputs.RemoveZoneFixtureDetect.Value)
+                        if(_machineStatus.IsSatisfied(_devices.Inputs.RemoveZoneFixtureDetect))
                         {
                             if (FlagRemoveFilmRequestUnload)
                             {

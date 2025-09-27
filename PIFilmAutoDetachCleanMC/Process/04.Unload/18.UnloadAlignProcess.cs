@@ -42,22 +42,26 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDInput GlassVac3 => _devices.Inputs.UnloadGlassAlignVac3;
         private IDInput GlassVac4 => _devices.Inputs.UnloadGlassAlignVac4;
 
+        private IEnumerable<IDInput> AlignVacuumInputs => new[]
+        {
+            GlassVac1,
+            GlassVac2,
+            GlassVac3,
+            GlassVac4,
+        };
+
         private bool GlassDetect1 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassDetect1);
         private bool GlassDetect2 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassDetect2);
         private bool GlassDetect3 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassDetect3);
         private bool GlassDetect4 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassDetect4);
 
-        private bool IsGlassVac1 => _devices.Inputs.UnloadGlassAlignVac1.Value;
-        private bool IsGlassVac2 => _devices.Inputs.UnloadGlassAlignVac2.Value;
-        private bool IsGlassVac3 => _devices.Inputs.UnloadGlassAlignVac3.Value;
-        private bool IsGlassVac4 => _devices.Inputs.UnloadGlassAlignVac4.Value;
+        private bool IsGlassVac1 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassAlignVac1);
+        private bool IsGlassVac2 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassAlignVac2);
+        private bool IsGlassVac3 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassAlignVac3);
+        private bool IsGlassVac4 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassAlignVac4);
         private bool IsGlassVac => IsGlassVac1 && IsGlassVac2 && IsGlassVac3 && IsGlassVac4;
 
-        private bool IsGlassDetect1 => _devices.Inputs.UnloadGlassDetect1.Value;
-        private bool IsGlassDetect2 => _devices.Inputs.UnloadGlassDetect2.Value;
-        private bool IsGlassDetect3 => _devices.Inputs.UnloadGlassDetect3.Value;
-        private bool IsGlassDetect4 => _devices.Inputs.UnloadGlassDetect4.Value;
-        private bool IsGlassDetect => IsGlassDetect1 && IsGlassDetect2 && IsGlassDetect3 && IsGlassDetect4;
+        private bool IsGlassDetect => GlassDetect1 && GlassDetect2 && GlassDetect3 && GlassDetect4;
         #endregion
 
         #region Flags
@@ -318,7 +322,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadAlignAutoRunStep.GlassVac_Check:
-                    if (IsGlassVac || IsGlassDetect)
+                    if (_machineStatus.ShouldBypassVacuum(AlignVacuumInputs) || IsGlassVac || IsGlassDetect)
                     {
                         Log.Info("Sequence Unload Align Glass");
                         Sequence = ESequence.UnloadAlignGlass;
@@ -373,7 +377,26 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassDetect3, true);
                     SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassDetect4, true);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait(_machineStatus.GetVacuumDelay(_commonRecipe.VacDelay, AlignVacuumInputs));
+                    Step.RunStep++;
+                    break;
+                case EUnloadAlignStep.Vacuum_On_Wait:
+                    if (!WaitTimeOutOccurred)
+                    {
+                        break;
+                    }
+
+                    _machineStatus.ReleaseVacuumOutputsIfBypassed(AlignVacuumInputs,
+                        AlignVac1,
+                        AlignVac2,
+                        AlignVac3,
+                        AlignVac4);
+
+                    if (!_machineStatus.ShouldBypassVacuum(AlignVacuumInputs) && !IsGlassVac)
+                    {
+                        Wait(20);
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.GlassDetect_Check:
@@ -481,7 +504,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EUnloadAlignUnloadTransferPlaceStep.GlassVac_Check:
                     Log.Debug("Glass Vacuum Check");
-                    if (IsGlassVac)
+                    if (_machineStatus.ShouldBypassVacuum(AlignVacuumInputs) || IsGlassVac)
                     {
                         Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.End;
                         break;

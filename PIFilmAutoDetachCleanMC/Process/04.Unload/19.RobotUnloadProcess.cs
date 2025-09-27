@@ -27,10 +27,24 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDOutput GlassVacOnOff3 => _devices.Outputs.UnloadRobotVac3OnOff;
         private IDOutput GlassVacOnOff4 => _devices.Outputs.UnloadRobotVac4OnOff;
 
-        private IDInput GlassVac1 => _devices.Inputs.UnloadRobotVac1;
-        private IDInput GlassVac2 => _devices.Inputs.UnloadRobotVac2;
-        private IDInput GlassVac3 => _devices.Inputs.UnloadRobotVac3;
-        private IDInput GlassVac4 => _devices.Inputs.UnloadRobotVac4;
+        private bool GlassVac1 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotVac1);
+        private bool GlassVac2 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotVac2);
+        private bool GlassVac3 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotVac3);
+        private bool GlassVac4 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotVac4);
+
+        private IEnumerable<IDInput> RobotVacuumInputs => new[]
+        {
+            _devices.Inputs.UnloadRobotVac1,
+            _devices.Inputs.UnloadRobotVac2,
+            _devices.Inputs.UnloadRobotVac3,
+            _devices.Inputs.UnloadRobotVac4
+        };
+
+        private bool AreRobotVacuumsActive =>
+            GlassVac1 == true &&
+            GlassVac2 == true &&
+            GlassVac3 == true &&
+            GlassVac4 == true;
 
         private ICylinder Cyl1 => _devices.Cylinders.UnloadRobotCyl1UpDown;
         private ICylinder Cyl2 => _devices.Cylinders.UnloadRobotCyl2UpDown;
@@ -278,7 +292,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadAutoRunStep.GlassVac_Check:
-                    if (GlassVac1.Value || GlassVac2.Value || GlassVac3.Value || GlassVac4.Value)
+                    if (GlassVac1 || GlassVac2 || GlassVac3 || GlassVac4)
                     {
                         PlasmaPrepare();
                         Log.Info("Sequence Unload Robot Plasma");
@@ -338,21 +352,32 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Vacuum On");
                     VacuumOnOff(true);
 #if SIMULATION
-                    SimulationInputSetter.SetSimInput(GlassVac1, true);
-                    SimulationInputSetter.SetSimInput(GlassVac2, true);
-                    SimulationInputSetter.SetSimInput(GlassVac3, true);
-                    SimulationInputSetter.SetSimInput(GlassVac4, true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac1, true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac2, true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac3, true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac4, true);
 
                     SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect1, true);
                     SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect2, true);
                     SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect3, true);
                     SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect4, true);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000), () => GlassVac1.Value && GlassVac2.Value && GlassVac3.Value && GlassVac4.Value);
+                    Wait(_machineStatus.GetVacuumDelay(_commonRecipe.VacDelay, RobotVacuumInputs));
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.Vacuum_On_Wait:
                     if (WaitTimeOutOccurred)
+                    {
+                        break;
+                    }
+
+                    _machineStatus.ReleaseVacuumOutputsIfBypassed(RobotVacuumInputs,
+                        GlassVacOnOff1,
+                        GlassVacOnOff2,
+                        GlassVacOnOff3,
+                        GlassVacOnOff4);
+
+                    if (!_machineStatus.ShouldBypassVacuum(RobotVacuumInputs) && !AreRobotVacuumsActive)
                     {
                         RaiseWarning((int)EWarning.RobotUnload_Vacuum_On_Fail);
                         break;
@@ -516,10 +541,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     VacuumOnOff(false);
                     Step.RunStep++;
 #if SIMULATION
-                    SimulationInputSetter.SetSimInput(GlassVac1, false);
-                    SimulationInputSetter.SetSimInput(GlassVac2, false);
-                    SimulationInputSetter.SetSimInput(GlassVac3, false);
-                    SimulationInputSetter.SetSimInput(GlassVac4, false);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac1, false);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac2, false);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac3, false);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac4, false);
 
                     SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect1, false);
                     SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect2, false);

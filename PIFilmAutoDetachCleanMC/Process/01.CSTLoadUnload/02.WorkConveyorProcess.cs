@@ -111,9 +111,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 if (port == EPort.Right)
                 {
-                    return _devices.Inputs.BufferCstDetect1.Value && _devices.Inputs.BufferCstDetect2.Value;
+                    return _machineStatus.IsSatisfied(_devices.Inputs.BufferCstDetect1)
+                        && _machineStatus.IsSatisfied(_devices.Inputs.BufferCstDetect2);
                 }
-                return _devices.Inputs.OutCstDetect1.Value && _devices.Inputs.OutCstDetect2.Value;
+                return _machineStatus.IsSatisfied(_devices.Inputs.OutCstDetect1)
+                    && _machineStatus.IsSatisfied(_devices.Inputs.OutCstDetect2);
             }
         }
 

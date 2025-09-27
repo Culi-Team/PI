@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
+using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly GlassTransferRecipe _glassTransferRecipe;
         private readonly IDInputDevice _glassTransferInput;
         private readonly IDOutputDevice _glassTransferOutput;
+        private readonly MachineStatus _machineStatus;
 
         private EPort currentPlacePort;
 
@@ -39,9 +41,20 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool IsCylinderUp => CylinderUpDown1.IsBackward && CylinderUpDown2.IsBackward && CylinderUpDown3.IsBackward;
         private bool IsCylinderDown => CylinderUpDown1.IsForward && CylinderUpDown2.IsForward && CylinderUpDown3.IsForward;
 
-        private bool IsVac1Detect => _devices.Inputs.GlassTransferVac1.Value;
-        private bool IsVac2Detect => _devices.Inputs.GlassTransferVac2.Value;
-        private bool IsVac3Detect => _devices.Inputs.GlassTransferVac3.Value;
+        private bool GlassTransferVac1 => _machineStatus.IsSatisfied(_devices.Inputs.GlassTransferVac1);
+        private bool GlassTransferVac2 => _machineStatus.IsSatisfied(_devices.Inputs.GlassTransferVac2);
+        private bool GlassTransferVac3 => _machineStatus.IsSatisfied(_devices.Inputs.GlassTransferVac3);
+
+        private IEnumerable<IDInput> GlassTransferVacuumInputs => new[]
+        {
+            _devices.Inputs.GlassTransferVac1,
+            _devices.Inputs.GlassTransferVac2,
+            _devices.Inputs.GlassTransferVac3
+        };
+
+        private bool IsVac1Detect => GlassTransferVac1 == true;
+        private bool IsVac2Detect => GlassTransferVac2 == true;
+        private bool IsVac3Detect => GlassTransferVac3 == true;
 
         private bool IsVacDetect => IsVac1Detect && IsVac2Detect && IsVac3Detect;
 
@@ -158,12 +171,14 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Constructor
         public GlassTransferProcess(Devices devices,
             CommonRecipe commonRecipe,
+            MachineStatus machineStatus,
             GlassTransferRecipe glassTransferRecipe,
             [FromKeyedServices("GlassTransferInput")] IDInputDevice glassTransferInput,
             [FromKeyedServices("GlassTransferOutput")] IDOutputDevice glassTransferOutput)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
+            _machineStatus = machineStatus;
             _glassTransferRecipe = glassTransferRecipe;
             _glassTransferInput = glassTransferInput;
             _glassTransferOutput = glassTransferOutput;
@@ -507,7 +522,25 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPickStep.Vacuum_On:
                     Log.Debug("Vacuum On");
                     VacOnOff(true);
-                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect);
+                    Wait(_machineStatus.GetVacuumDelay(_commonRecipe.VacDelay, GlassTransferVacuumInputs));
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferPickStep.Vacuum_On_Wait:
+                    if (!WaitTimeOutOccurred)
+                    {
+                        break;
+                    }
+
+                    _machineStatus.ReleaseVacuumOutputsIfBypassed(GlassTransferVacuumInputs,
+                        GlassVac1,
+                        GlassVac2,
+                        GlassVac3);
+
+                    if (!_machineStatus.ShouldBypassVacuum(GlassTransferVacuumInputs) && !IsVacDetect)
+                    {
+                        Wait(20);
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case EGlassTransferPickStep.ZAxis_Move_ReadyPosition:
