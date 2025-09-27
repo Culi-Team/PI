@@ -53,10 +53,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         public IDOutput GlassRotateVacOnOff => port == EPort.Left ? _devices.Outputs.TrRotateLeftRotVacOnOff :
                                                       _devices.Outputs.TrRotateRightRotVacOnOff;
 
-        private IEnumerable<IDInput> GlassVac1Inputs => new[] { port == EPort.Left ? _devices.Inputs.TrRotateLeftVac1 : _devices.Inputs.TrRotateRightVac1 };
-        private IEnumerable<IDInput> GlassVac2Inputs => new[] { port == EPort.Left ? _devices.Inputs.TrRotateLeftVac2 : _devices.Inputs.TrRotateRightVac2 };
-        private IEnumerable<IDInput> GlassRotVacInputs => new[] { port == EPort.Left ? _devices.Inputs.TrRotateLeftRotVac : _devices.Inputs.TrRotateRightRotVac };
-
         public bool GlassVac1 => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.TrRotateLeftVac1) :
                                                       _machineStatus.IsSatisfied(_devices.Inputs.TrRotateRightVac1);
 
@@ -515,21 +511,13 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftVac1 : _devices.Inputs.TrRotateRightVac1 , true);
 #endif
-                    Wait(_machineStatus.GetVacuumDelay(_commonRecipe.VacDelay, GlassVac1Inputs));
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => GlassVac1 || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ETransferRotationWETCleanUnloadStep.Vacuum_On_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         //Timeout ALARM
-                        break;
-                    }
-
-                    _machineStatus.ReleaseVacuumOutputsIfBypassed(GlassVac1Inputs, GlassVac1OnOff);
-
-                    if (!_machineStatus.ShouldBypassVacuum(GlassVac1Inputs) && GlassVac1 != true)
-                    {
-                        Wait(20);
                         break;
                     }
                     Step.RunStep++;
@@ -627,20 +615,12 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftRotVac : _devices.Inputs.TrRotateRightRotVac, true);
 #endif
-                    Wait(_machineStatus.GetVacuumDelay(_commonRecipe.VacDelay, GlassRotVacInputs));
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => GlassRotateVacOnOff.Value || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassRotVac_On_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        break;
-                    }
-
-                    _machineStatus.ReleaseVacuumOutputsIfBypassed(GlassRotVacInputs, GlassRotateVacOnOff);
-
-                    if (!_machineStatus.ShouldBypassVacuum(GlassRotVacInputs) && GlassRotVac != true)
-                    {
-                        Wait(20);
                         break;
                     }
                     Step.RunStep++;
@@ -655,7 +635,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassRotVac_On_Check:
-                    if (!_machineStatus.ShouldBypassVacuum(GlassRotVacInputs) && GlassRotVac != true)
+                    if (GlassRotVac != true)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_RotateVac_Check_Fail :
                                                           EWarning.TransferRotationRight_RotateVac_Check_Fail));
@@ -733,23 +713,15 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftVac2 : _devices.Inputs.TrRotateRightVac2, true);
 #endif
-                    Wait(_machineStatus.GetVacuumDelay(_commonRecipe.VacDelay, GlassVac2Inputs));
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => GlassVac2OnOff.Value || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassVac2_On_Wait:
-                    if (!WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
+                        //Timeout
                         break;
                     }
-
-                    _machineStatus.ReleaseVacuumOutputsIfBypassed(GlassVac2Inputs, GlassVac2OnOff);
-
-                    if (!_machineStatus.ShouldBypassVacuum(GlassVac2Inputs) && GlassVac2 != true)
-                    {
-                        Wait(20);
-                        break;
-                    }
-
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassRotVac_Off:
@@ -762,7 +734,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassVac2_On_Check:
-                    if (!_machineStatus.ShouldBypassVacuum(GlassVac2Inputs) && GlassVac2 != true)
+                    if (GlassVac2 != true)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_GlassVacAfterRotate_Check_Fail :
                                                           EWarning.TransferRotationRight_GlassVacAfterRotate_Check_Fail));

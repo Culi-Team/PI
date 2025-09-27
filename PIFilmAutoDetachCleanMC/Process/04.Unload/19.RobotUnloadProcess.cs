@@ -31,21 +31,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool GlassVac2 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotVac2);
         private bool GlassVac3 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotVac3);
         private bool GlassVac4 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotVac4);
-
-        private IEnumerable<IDInput> RobotVacuumInputs => new[]
-        {
-            _devices.Inputs.UnloadRobotVac1,
-            _devices.Inputs.UnloadRobotVac2,
-            _devices.Inputs.UnloadRobotVac3,
-            _devices.Inputs.UnloadRobotVac4
-        };
-
-        private bool AreRobotVacuumsActive =>
-            GlassVac1 == true &&
-            GlassVac2 == true &&
-            GlassVac3 == true &&
-            GlassVac4 == true;
-
         private ICylinder Cyl1 => _devices.Cylinders.UnloadRobotCyl1UpDown;
         private ICylinder Cyl2 => _devices.Cylinders.UnloadRobotCyl2UpDown;
         private ICylinder Cyl3 => _devices.Cylinders.UnloadRobotCyl3UpDown;
@@ -362,22 +347,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect3, true);
                     SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect4, true);
 #endif
-                    Wait(_machineStatus.GetVacuumDelay(_commonRecipe.VacDelay, RobotVacuumInputs));
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => (GlassVac1 && GlassVac2 && GlassVac3 && GlassVac4) || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.Vacuum_On_Wait:
                     if (WaitTimeOutOccurred)
-                    {
-                        break;
-                    }
-
-                    _machineStatus.ReleaseVacuumOutputsIfBypassed(RobotVacuumInputs,
-                        GlassVacOnOff1,
-                        GlassVacOnOff2,
-                        GlassVacOnOff3,
-                        GlassVacOnOff4);
-
-                    if (!_machineStatus.ShouldBypassVacuum(RobotVacuumInputs) && !AreRobotVacuumsActive)
                     {
                         RaiseWarning((int)EWarning.RobotUnload_Vacuum_On_Fail);
                         break;

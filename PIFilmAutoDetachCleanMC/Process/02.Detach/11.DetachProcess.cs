@@ -49,12 +49,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDOutput GlassShuttleVac1 => _devices.Outputs.DetachGlassShtVac1OnOff;
         private IDOutput GlassShuttleVac2 => _devices.Outputs.DetachGlassShtVac2OnOff;
         private IDOutput GlassShuttleVac3 => _devices.Outputs.DetachGlassShtVac3OnOff;
-        private IEnumerable<IDInput> GlassShuttleVacuumInputs => new[]
-        {
-            _devices.Inputs.DetachGlassShtVac1,
-            _devices.Inputs.DetachGlassShtVac2,
-            _devices.Inputs.DetachGlassShtVac3,
-        };
         #endregion
 
         #region Flags
@@ -454,7 +448,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachUnloadStep.Vacuum_Check:
-                    if (!_machineStatus.ShouldBypassVacuum(GlassShuttleVacuumInputs) && !IsGlassShuttleVacAll)
+                    if (!IsGlassShuttleVacAll)
                     {
                         RaiseWarning((int)EWarning.DetachFail);
                         break;

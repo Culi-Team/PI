@@ -45,13 +45,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool GlassTransferVac2 => _machineStatus.IsSatisfied(_devices.Inputs.GlassTransferVac2);
         private bool GlassTransferVac3 => _machineStatus.IsSatisfied(_devices.Inputs.GlassTransferVac3);
 
-        private IEnumerable<IDInput> GlassTransferVacuumInputs => new[]
-        {
-            _devices.Inputs.GlassTransferVac1,
-            _devices.Inputs.GlassTransferVac2,
-            _devices.Inputs.GlassTransferVac3
-        };
-
         private bool IsVac1Detect => GlassTransferVac1 == true;
         private bool IsVac2Detect => GlassTransferVac2 == true;
         private bool IsVac3Detect => GlassTransferVac3 == true;

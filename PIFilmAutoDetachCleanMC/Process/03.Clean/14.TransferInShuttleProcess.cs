@@ -61,8 +61,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             ? _devices.Inputs.TransferInShuttleLVac
             : _devices.Inputs.TransferInShuttleRVac;
 
-        private IEnumerable<IDInput> GlassVacuumInputs => new[] { GlassVacuumInput };
-
         private bool IsVacDetect => _machineStatus.IsSatisfied(GlassVacuumInput);
 
         private double YAxisReadyPosition => port == EPort.Left ? _transferInShuttleLeftRecipe.YAxisReadyPosition
@@ -682,7 +680,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.Vacuum_On:
                     Log.Debug("Vacuum On");
                     GlassVac.Value = true;
-                    Wait(_machineStatus.GetVacuumDelay(_commonRecipe.VacDelay, GlassVacuumInputs));
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => GlassVac.Value || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.Vacuum_On_Wait:
@@ -691,8 +689,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         //Time out
                         break;
                     }
-
-                    _machineStatus.ReleaseVacuumOutputsIfBypassed(GlassVacuumInputs, GlassVac);
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.ZAxis_Move_ReadyPosition:

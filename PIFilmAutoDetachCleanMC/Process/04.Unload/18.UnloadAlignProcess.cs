@@ -42,14 +42,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDInput GlassVac3 => _devices.Inputs.UnloadGlassAlignVac3;
         private IDInput GlassVac4 => _devices.Inputs.UnloadGlassAlignVac4;
 
-        private IEnumerable<IDInput> AlignVacuumInputs => new[]
-        {
-            GlassVac1,
-            GlassVac2,
-            GlassVac3,
-            GlassVac4,
-        };
-
         private bool GlassDetect1 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassDetect1);
         private bool GlassDetect2 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassDetect2);
         private bool GlassDetect3 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassDetect3);
@@ -322,7 +314,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadAlignAutoRunStep.GlassVac_Check:
-                    if (_machineStatus.ShouldBypassVacuum(AlignVacuumInputs) || IsGlassVac || IsGlassDetect)
+                    if (IsGlassVac || IsGlassDetect)
                     {
                         Log.Info("Sequence Unload Align Glass");
                         Sequence = ESequence.UnloadAlignGlass;
@@ -377,24 +369,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassDetect3, true);
                     SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassDetect4, true);
 #endif
-                    Wait(_machineStatus.GetVacuumDelay(_commonRecipe.VacDelay, AlignVacuumInputs));
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => (AlignVac1.Value && AlignVac2.Value && AlignVac3.Value && AlignVac4.Value) || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.Vacuum_On_Wait:
-                    if (!WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
-                        break;
-                    }
-
-                    _machineStatus.ReleaseVacuumOutputsIfBypassed(AlignVacuumInputs,
-                        AlignVac1,
-                        AlignVac2,
-                        AlignVac3,
-                        AlignVac4);
-
-                    if (!_machineStatus.ShouldBypassVacuum(AlignVacuumInputs) && !IsGlassVac)
-                    {
-                        Wait(20);
+                        //Timeout
                         break;
                     }
                     Step.RunStep++;
@@ -504,7 +485,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EUnloadAlignUnloadTransferPlaceStep.GlassVac_Check:
                     Log.Debug("Glass Vacuum Check");
-                    if (_machineStatus.ShouldBypassVacuum(AlignVacuumInputs) || IsGlassVac)
+                    if (IsGlassVac)
                     {
                         Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.End;
                         break;

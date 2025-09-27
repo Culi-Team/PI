@@ -36,13 +36,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool AlignStageVac2Sensor => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLVac2) : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRVac2);
         private bool AlignStageVac3Sensor => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLVac3) : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRVac3);
 
-        private IEnumerable<IDInput> AlignStageVacuumInputs => new[]
-        {
-            port == EPort.Left ? _devices.Inputs.AlignStageLVac1 : _devices.Inputs.AlignStageRVac1,
-            port == EPort.Left ? _devices.Inputs.AlignStageLVac2 : _devices.Inputs.AlignStageRVac2,
-            port == EPort.Left ? _devices.Inputs.AlignStageLVac3 : _devices.Inputs.AlignStageRVac3,
-        };
-
         private bool IsVacDetect1 => AlignStageVac1Sensor == true;
         private bool IsVacDetect2 => AlignStageVac2Sensor == true;
         private bool IsVacDetect3 => AlignStageVac3Sensor == true;
@@ -481,9 +474,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac2 : _devices.Inputs.AlignStageRVac2, true);
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac3 : _devices.Inputs.AlignStageRVac3, true);
 #endif
-                    Wait(_machineStatus.GetVacuumDelay(
-                        _commonRecipe.VacDelay,
-                        AlignStageVacuumInputs));
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Vacuum_On_1st_Wait:
@@ -492,10 +483,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         //Timeout
                         break;
                     }
-                    _machineStatus.ReleaseVacuumOutputsIfBypassed(AlignStageVacuumInputs,
-                        AlignStageVac1,
-                        AlignStageVac2,
-                        AlignStageVac3);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Cyl_Align_Up:
@@ -546,9 +533,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassAlignStep.Vacuum_On_2nd:
                     Log.Debug("Vacuum On");
                     VacOnOff(true);
-                    Wait(_machineStatus.GetVacuumDelay(
-                        _commonRecipe.VacDelay,
-                        AlignStageVacuumInputs));
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Vacuum_On_2nd_Wait:
@@ -557,10 +542,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         //Timeout
                         break;
                     }
-                    _machineStatus.ReleaseVacuumOutputsIfBypassed(AlignStageVacuumInputs,
-                        AlignStageVac1,
-                        AlignStageVac2,
-                        AlignStageVac3);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Cyl_Align_Down:
