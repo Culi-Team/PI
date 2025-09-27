@@ -205,10 +205,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     {
                         messageKey = "str_AreYouSureYouWantToStartMachineDryRun";
                     }
-                    else if (MachineStatus.IsByPassMode)
-                    {
-                        messageKey = "str_AreYouSureYouWantToStartMachineByPass";
-                    }
+                    //else if (MachineStatus.IsByPassMode)
+                    //{
+                    //    messageKey = "str_AreYouSureYouWantToStartMachineByPass";
+                    //}
 
                     if (MessageBoxEx.ShowDialog((string)Application.Current.Resources[messageKey], (string)Application.Current.Resources["str_Confirm"]) == false)
                     {

@@ -108,27 +108,39 @@ namespace PIFilmAutoDetachCleanMC.Process
                 CheckRealTimeAlarmStatus();
             }
 
-            if (_machineStatus.IsByPassMode)
-            {
-                EnsureByPassLightCurtainMuting();
-            }
-            else
-            {
-                ReleaseByPassLightCurtainMuting();
-            }
+            //if (_machineStatus.IsByPassMode)
+            //{
+            //    EnsureByPassLightCurtainMuting();
+            //}
+            //else
+            //{
+            //    ReleaseByPassLightCurtainMuting();
+            //}
 
             if (ProcessMode == EProcessMode.ToOrigin || ProcessMode == EProcessMode.Origin || ProcessMode == EProcessMode.ToRun || ProcessMode == EProcessMode.Run)
             {
-                if (!_machineStatus.IsByPassMode)
+                //if (!_machineStatus.IsByPassMode)
+                //{
+                //    if (!IsLightCurtainLeftDetect)
+                //    {
+                //        RaiseAlarm((int)EAlarm.LightCurtainLeftDetected);
+                //    }
+                //    if (!IsLightCurtainRightDetect)
+                //    {
+                //        RaiseAlarm(alarmId: (int)EAlarm.LightCurtainRightDetected);
+                //    }
+                //}
+                if (!IsLightCurtainLeftDetect)
                 {
-                    if (!IsLightCurtainLeftDetect)
-                    {
-                        RaiseAlarm((int)EAlarm.LightCurtainLeftDetected);
-                    }
-                    if (!IsLightCurtainRightDetect)
-                    {
-                        RaiseAlarm(alarmId: (int)EAlarm.LightCurtainRightDetected);
-                    }
+                    RaiseAlarm((int)EAlarm.LightCurtainLeftDetected);
+                }
+                if (!IsLightCurtainRightDetect)
+                {
+                    RaiseAlarm(alarmId: (int)EAlarm.LightCurtainRightDetected);
+                }
+                if (IsAutoMode == false || IsManualMode == true)
+                {
+                    RaiseWarning((int)EWarning.ManualModeSwitch);
                 }
             }
 
@@ -192,28 +204,28 @@ namespace PIFilmAutoDetachCleanMC.Process
             return base.PreProcess();
         }
 
-        private void EnsureByPassLightCurtainMuting()
-        {
-            if (!_lightCurtainMutedByByPass)
-            {
-                _lightCurtainMutedByByPass = true;
-                Log.Warn("ByPass mode active - forcing light curtain muting outputs");
-            }
+        //private void EnsureByPassLightCurtainMuting()
+        //{
+        //    if (!_lightCurtainMutedByByPass)
+        //    {
+        //        _lightCurtainMutedByByPass = true;
+        //        Log.Warn("ByPass mode active - forcing light curtain muting outputs");
+        //    }
 
-            SetLightCurtainMutingOutputs(true);
-        }
+        //    SetLightCurtainMutingOutputs(true);
+        //}
 
-        private void ReleaseByPassLightCurtainMuting()
-        {
-            if (!_lightCurtainMutedByByPass)
-            {
-                return;
-            }
+        //private void ReleaseByPassLightCurtainMuting()
+        //{
+        //    if (!_lightCurtainMutedByByPass)
+        //    {
+        //        return;
+        //    }
 
-            _lightCurtainMutedByByPass = false;
-            Log.Info("ByPass mode released - returning light curtain muting outputs to normal control.");
-            SetLightCurtainMutingOutputs(false);
-        }
+        //    _lightCurtainMutedByByPass = false;
+        //    Log.Info("ByPass mode released - returning light curtain muting outputs to normal control.");
+        //    SetLightCurtainMutingOutputs(false);
+        //}
 
         private void SetLightCurtainMutingOutputs(bool value)
         {
@@ -304,12 +316,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ERootProcessToOriginStep.DoorSensorCheck:
-                    if (_machineStatus.IsByPassMode)
-                    {
-                        Log.Warn("ByPass mode active - skipping door sensor check during origin.");
-                        Step.OriginStep++;
-                        break;
-                    }
+                    //if (_machineStatus.IsByPassMode)
+                    //{
+                    //    Log.Warn("ByPass mode active - skipping door sensor check during origin.");
+                    //    Step.OriginStep++;
+                    //    break;
+                    //}
                     if (DoorSensor == false)
                     {
                         //WARNING
@@ -320,22 +332,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ERootProcessToOriginStep.DoorLock:
-                    if (_machineStatus.IsByPassMode)
-                    {
-                        Log.Warn("ByPass mode active - skipping door lock during origin.");
-                        Step.OriginStep++;
-                        break;
-                    }
+                    //if (_machineStatus.IsByPassMode)
+                    //{
+                    //    Log.Warn("ByPass mode active - skipping door lock during origin.");
+                    //    Step.OriginStep++;
+                    //    break;
+                    //}
                     _devices.Outputs.DoorOpen.Value = false;
                     Step.OriginStep++;
                     break;
                 case ERootProcessToOriginStep.DoorLatchCheck:
-                    if (_machineStatus.IsByPassMode)
-                    {
-                        Log.Warn("ByPass mode active - skipping door latch check during origin.");
-                        Step.OriginStep++;
-                        break;
-                    }
+                    //if (_machineStatus.IsByPassMode)
+                    //{
+                    //    Log.Warn("ByPass mode active - skipping door latch check during origin.");
+                    //    Step.OriginStep++;
+                    //    break;
+                    //}
                     if (DoorLatch == false)
                     {
                         RaiseWarning((int)EWarning.DoorNotSafetyLock);
@@ -396,12 +408,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ERootProcessToRunStep.DoorSensorCheck:
-                    if (_machineStatus.IsByPassMode)
-                    {
-                        Log.Warn("ByPass mode active - skipping door sensor check during run.");
-                        Step.ToRunStep++;
-                        break;
-                    }
+                    //if (_machineStatus.IsByPassMode)
+                    //{
+                    //    Log.Warn("ByPass mode active - skipping door sensor check during run.");
+                    //    Step.ToRunStep++;
+                    //    break;
+                    //}
                     if (DoorSensor == false)
                     {
                         RaiseWarning((int)EWarning.DoorOpen);
@@ -411,22 +423,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ERootProcessToRunStep.DoorLock:
-                    if (_machineStatus.IsByPassMode)
-                    {
-                        Log.Warn("ByPass mode active - skipping door lock during run.");
-                        Step.ToRunStep++;
-                        break;
-                    }
+                    //if (_machineStatus.IsByPassMode)
+                    //{
+                    //    Log.Warn("ByPass mode active - skipping door lock during run.");
+                    //    Step.ToRunStep++;
+                    //    break;
+                    //}
                     _devices.Outputs.DoorOpen.Value = false;
                     Step.ToRunStep++;
                     break;
                 case ERootProcessToRunStep.DoorLatchCheck:
-                    if (_machineStatus.IsByPassMode)
-                    {
-                        Log.Warn("ByPass mode active - skipping door latch check during run.");
-                        Step.ToRunStep++;
-                        break;
-                    }
+                    //if (_machineStatus.IsByPassMode)
+                    //{
+                    //    Log.Warn("ByPass mode active - skipping door latch check during run.");
+                    //    Step.ToRunStep++;
+                    //    break;
+                    //}
                     if (DoorLatch == false)
                     {
                         RaiseWarning((int)EWarning.DoorNotSafetyLock);

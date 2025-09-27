@@ -31,7 +31,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly DryRunBypassProfile _dryRunProfile;
         public const int DryRunVacuumDurationMilliseconds = 1000;
 
-        public bool IsByPassMode => _machineRunMode == EMachineRunMode.ByPass;
+        //public bool IsByPassMode => _machineRunMode == EMachineRunMode.ByPass;
         public bool IsDryRunMode => _machineRunMode == EMachineRunMode.DryRun;
         public IReadOnlyCollection<DryRunBypassGroup> DryRunBypassGroups => _dryRunProfile.EnabledGroups;
         public IReadOnlyCollection<EInput> ActiveDryRunBypasses => _dryRunProfile.ActiveInputs;
@@ -51,7 +51,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _machineRunMode = value;
                 OnPropertyChanged(nameof(MachineRunMode));
                 OnPropertyChanged(nameof(MachineRunModeDisplay));
-                OnPropertyChanged(nameof(IsByPassMode));
+                //OnPropertyChanged(nameof(IsByPassMode));
                 OnPropertyChanged(nameof(IsDryRunMode));
             }
         }
