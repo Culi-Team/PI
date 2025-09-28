@@ -1,6 +1,7 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
+using EQX.InOut;
 using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
@@ -364,6 +365,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             GlassVac1.Value = bOnOff;
             GlassVac2.Value = bOnOff;
             GlassVac3.Value = bOnOff;
+#if SIMULATION
+            SimulationInputSetter.SetSimInput(_devices.Inputs.GlassTransferVac1, bOnOff);
+            SimulationInputSetter.SetSimInput(_devices.Inputs.GlassTransferVac2, bOnOff);
+            SimulationInputSetter.SetSimInput(_devices.Inputs.GlassTransferVac3, bOnOff);
+#endif
         }
 
         private void CylUpDown(bool bUpDown)

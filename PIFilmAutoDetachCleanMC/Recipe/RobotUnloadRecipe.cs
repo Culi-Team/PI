@@ -1,41 +1,51 @@
 ﻿using EQX.Core.Recipe;
 using EQX.Core.Units;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Recipe
 {
     public class RobotUnloadRecipe : RecipeBase
     {
-		private int robotSpeed;
+        private int robotHighSpeed;
+        private int robotLowSpeed;
         private int robotPlasmaSpeed;
-
-        [SingleRecipeDescription(Description = "Robot Speed", Unit = Unit.mmPerSecond)]
-        [SingleRecipeMinMax(Max = 100, Min = 1)]
-        public int RobotSpeed
-		{
-			get { return robotSpeed; }
-			set 
-			{
-                OnRecipeChanged(robotSpeed, value);
-                robotSpeed = value; 
-			}
-		}
 
         [SingleRecipeDescription(Description = "Robot Plasma Speed", Unit = Unit.mmPerSecond)]
         [SingleRecipeMinMax(Max = 100, Min = 1)]
         public int RobotPlasmaSpeed
-		{
-			get { return robotPlasmaSpeed; }
-			set 
-			{
+        {
+            get { return robotPlasmaSpeed; }
+            set
+            {
                 OnRecipeChanged(robotPlasmaSpeed, value);
-                robotPlasmaSpeed = value; 
-			}
-		}
+                robotPlasmaSpeed = value;
+            }
+        }
 
-	}
+        [SingleRecipeDescription(Description = "Robot Speed Low", Unit = Unit.mmPerSecond)]
+        [SingleRecipeMinMax(Max = 100, Min = 1)]
+        public int RobotSpeedLow
+        {
+            get { return robotLowSpeed; }
+            set
+            {
+                robotLowSpeed = value;
+                OnRecipeChanged(robotLowSpeed, value);
+            }
+        }
+
+        [SingleRecipeDescription(Description = "Robot Speed High", Unit = Unit.mmPerSecond)]
+        [SingleRecipeMinMax(Max = 100, Min = 1)]
+        public int RobotSpeedHigh
+        {
+            get { return robotHighSpeed; }
+            set
+            {
+                robotHighSpeed = value;
+                OnRecipeChanged(robotHighSpeed, value);
+            }
+        }
+
+
+
+    }
 }

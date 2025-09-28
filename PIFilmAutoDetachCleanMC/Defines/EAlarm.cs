@@ -244,5 +244,9 @@
 
         //Robot Unload
         RobotUnload = 26000,
+        RobotUnload_No_Ready_Response,
+        RobotUnload_SetModel_Fail,
+        RobotUnload_MoveMotionCommand_Timeout,
+        RobotUnload_SendMotionCommand_Fail,
     }
 }

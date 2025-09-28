@@ -375,6 +375,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             AlignStageVac1.Value = bOnOff;
             AlignStageVac2.Value = bOnOff;
             AlignStageVac3.Value = bOnOff;
+#if SIMULATION
+            SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac1 : _devices.Inputs.AlignStageRVac1, bOnOff);
+            SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac2 : _devices.Inputs.AlignStageRVac2, bOnOff);
+            SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac3 : _devices.Inputs.AlignStageRVac3, bOnOff);
+#endif
         }
 
         private void Sequence_AutoRun()

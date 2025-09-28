@@ -54,7 +54,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _robotLoad.SendCommand(RobotHelpers.MotionCommands(command, lowSpeed, highSpeed, paras));
             }
 
-            Wait(5000, () => _robotLoad.ReadResponse() == RobotHelpers.MotionRspStart(command));
+            Wait(5000, () => _robotLoad.ReadResponse(RobotHelpers.MotionRspStart(command)));
             return !WaitTimeOutOccurred;
         }
         #endregion
@@ -619,7 +619,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug($"Send Robot Motion Command {ERobotCommand.HOME}");
                     if (SendCommand(ERobotCommand.HOME, 10, 20))
                     {
-                        Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotLoad.ReadResponse() == RobotHelpers.MotionRspComplete(ERobotCommand.HOME));
+                        Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.HOME)));
                         Step.RunStep++;
                         break;
                     }
@@ -686,7 +686,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug($"Send Robot Motion Command {ERobotCommand.S1_RDY_PP}");
                     if (SendCommand(ERobotCommand.S1_RDY_PP, LowSpeed, HightSpeed, paras))
                     {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse() == RobotHelpers.MotionRspComplete(ERobotCommand.S1_RDY_PP));
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S1_RDY_PP)));
                         Step.RunStep++;
                         break;
                     }
@@ -736,7 +736,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Move In Cassette Ready Position");
                     if (SendCommand(ERobotCommand.S1_PP_RDY, LowSpeed, HightSpeed, paras))
                     {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse() == RobotHelpers.MotionRspComplete(ERobotCommand.S1_PP_RDY));
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S1_PP_RDY)));
                         Step.RunStep++;
                         break;
                     }
@@ -800,7 +800,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Move Vinyl Clean Pick Place Position");
                     if (SendCommand(ERobotCommand.S2_RDY_PP, LowSpeed, HightSpeed))
                     {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse() == RobotHelpers.MotionRspComplete(ERobotCommand.S2_RDY_PP));
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S2_RDY_PP)));
                         Step.RunStep++;
                         break;
                     }
@@ -875,7 +875,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Move Vinyl Clean Ready Position");
                     if (SendCommand(ERobotCommand.S2_PP_RDY, LowSpeed, HightSpeed))
                     {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse() == RobotHelpers.MotionRspComplete(ERobotCommand.S2_PP_RDY));
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S2_PP_RDY)));
                         Step.RunStep++;
                         break;
                     }
@@ -992,7 +992,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Robot Move To Fixture Align Place Position");
                     if (SendCommand(ERobotCommand.S3_RDY_PP, LowSpeed, HightSpeed))
                     {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse() == RobotHelpers.MotionRspComplete(ERobotCommand.S3_RDY_PP));
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S3_RDY_PP)));
                         Step.RunStep++;
                         break;
                     }
@@ -1038,7 +1038,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Robot Move To Fixture Align Ready Position");
                     if (SendCommand(ERobotCommand.S3_PP_RDY, LowSpeed, HightSpeed))
                     {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse() == RobotHelpers.MotionRspComplete(ERobotCommand.S3_PP_RDY));
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S3_PP_RDY)));
                         Step.RunStep++;
                         break;
                     }
@@ -1086,7 +1086,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Robot Move Remove Zone Pick Position");
                     if (SendCommand(ERobotCommand.S4_RDY_PP, LowSpeed, HightSpeed))
                     {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse() == RobotHelpers.MotionRspComplete(ERobotCommand.S4_RDY_PP));
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S4_RDY_PP)));
                         Step.RunStep++;
                         break;
                     }
@@ -1132,7 +1132,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Robot Move Remove Zone Ready Position");
                     if (SendCommand(ERobotCommand.S4_PP_RDY, LowSpeed, HightSpeed))
                     {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse() == RobotHelpers.MotionRspComplete(ERobotCommand.S4_PP_RDY));
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S4_PP_RDY)));
                         Step.RunStep++;
                         break;
                     }
@@ -1206,7 +1206,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Robot Move Out Cassette Place Position");
                     if (SendCommand(ERobotCommand.S5_RDY_PP, LowSpeed, HightSpeed, paras))
                     {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),() => _robotLoad.ReadResponse() == RobotHelpers.MotionRspComplete(ERobotCommand.S5_RDY_PP));
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),() => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S5_RDY_PP)));
                         Step.RunStep++;
                         break;
                     }
@@ -1252,7 +1252,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Robot Move Out Cassette Ready Position");
                     if (SendCommand(ERobotCommand.S5_PP_RDY, LowSpeed, HightSpeed, paras))
                     {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse() == RobotHelpers.MotionRspComplete(ERobotCommand.S5_PP_RDY));
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S5_PP_RDY)));
                         Step.RunStep++;
                         break;
                     }

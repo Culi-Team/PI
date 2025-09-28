@@ -15,6 +15,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Robot_Move_PlacePosition_Wait,
 
         VacuumOff,
+
+        Robot_Move_ReadyPlacePosition,
+        Robot_Move_ReadyPlacePosition_Wait,
+
         End
     }
 }
