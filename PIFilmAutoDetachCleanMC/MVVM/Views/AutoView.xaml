@@ -544,8 +544,15 @@
             <Button Content="Origin"
                     Background="LightBlue"
                     Command="{Binding OriginCommand}" />
-            <Button Content="Production Info"
-                    Background="LightGreen" />
+            <!--<Button Content="Production Info"
+                    Background="LightGreen" />-->
+            
+            <!-- PRODUCT INFORMATION LABEL -->
+            <Label
+                Style="{StaticResource HeaderLabelStyle}"
+                Content="{DynamicResource str_ProductInformation}"
+                Margin="0 5 0 0"/>
+            
             <UniformGrid Columns="2">
                 <Button Content="Input Stop"
                         Command="{Binding InputStopCommand}"
@@ -554,7 +561,7 @@
                         Command="{Binding OutputStopCommand}"
                         Background="{Binding IsOutputStop, Converter={StaticResource InputOutputStopConverter}}" />
             </UniformGrid>
-            <UniformGrid Columns="2">
+            <!--<UniformGrid Columns="2">
                 <Button BorderBrush="Gray"
                         Margin="2 0 0 0"
                         BorderThickness="1"
@@ -569,13 +576,13 @@
                 <Border BorderBrush="Gray"
                         BorderThickness="1"
                         Margin="2 0 0 0">
-                    <!--<TextBlock  Text="{Binding TaktTime}"
+                    --><!--<TextBlock  Text="{Binding TaktTime}"
                                 FontWeight="Bold"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
                                 Background="White" />-->
-                    <UniformGrid Rows="3" >
-                        <!-- Max TaktTime -->
+                    <!--<UniformGrid Rows="3" >
+                        --><!-- Max TaktTime --><!--
                         <Border Background="#FFD08770" CornerRadius="3" Padding="8,4" Margin="0,0,0,2">
                             <StackPanel Orientation="Horizontal" >
                                 <TextBlock Text="Max: " Foreground="White" FontWeight="Bold"/>
@@ -584,7 +591,7 @@
                             </StackPanel>
                         </Border>
                         
-                        <!-- Min TaktTime -->
+                        --><!-- Min TaktTime --><!--
                         <Border Background="#FFA3BE8C" CornerRadius="3" Padding="8,4" Margin="0,0,0,2">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Min: " Foreground="White" FontWeight="Bold"/>
@@ -593,7 +600,7 @@
                             </StackPanel>
                         </Border>
 
-                        <!-- Average TaktTime -->
+                        --><!-- Average TaktTime --><!--
                         <Border Background="#FF88C0D0" CornerRadius="3" Padding="8,4">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Avg: " Foreground="White" FontWeight="Bold"/>
@@ -601,10 +608,10 @@
                                                Foreground="White" FontWeight="Bold"/>
                             </StackPanel>
                         </Border>
-                    </UniformGrid>
+                    </UniformGrid>--><!--
                 </Border>
 
-            </UniformGrid>
+            </UniformGrid>-->
             <Button Content="Start"
                     Command="{Binding StartCommand}"
                     Background="LightGray" />
