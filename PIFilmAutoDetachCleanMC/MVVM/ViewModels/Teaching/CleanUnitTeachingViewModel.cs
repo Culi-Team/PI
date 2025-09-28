@@ -2,6 +2,8 @@
 using EQX.Core.Device.Regulator;
 using EQX.Core.Device.SyringePump;
 using EQX.Core.TorqueController;
+using EQX.Device.SyringePump;
+using log4net;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,24 @@ using System.Windows.Input;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
 {
+    public enum ESyringePumpTestStep
+    {
+        Fill,
+        Fill_Wait,
+        DispensePort1,
+        DispensePort1_Wait,
+        DispensePort2,
+        DispensePort2_Wait,
+        DispensePort3,
+        DispensePort3_Wait,
+        DispensePort4,
+        DispensePort4_Wait,
+        DispensePort5,
+        DispensePort5_Wait,
+        DispensePort6,
+        DispensePort6_Wait,
+        End
+    }
     public class CleanUnitTeachingViewModel : UnitTeachingViewModel
     {
         public CleanUnitTeachingViewModel(string name, RecipeSelector recipeSelector) : base(name, recipeSelector)
@@ -101,5 +121,199 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 });
             }
         }
+
+        public ICommand SyringePumpRunTestCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    int delay = 50;
+                    ILog log = LogManager.GetLogger(SyringePump.Name);
+                    isSyringePumpRunTest = true;
+                    int step = 0;
+                    Thread thread = new Thread(() =>
+                    {
+                        while (isSyringePumpRunTest)
+                        {
+                            switch ((ESyringePumpTestStep)step)
+                            {
+                                case ESyringePumpTestStep.Fill:
+                                    SyringePump.SetSpeed(1);
+                                    Thread.Sleep(300);
+                                    SyringePump.SetAcceleration(20);
+                                    Thread.Sleep(300);
+                                    SyringePump.SetDeccelation(20);
+                                    Thread.Sleep(300);
+
+                                    log.Info("Fill");
+                                    SyringePump.Fill(1.0);
+                                    Thread.Sleep(delay);
+                                    step++;
+                                    break;
+                                case ESyringePumpTestStep.Fill_Wait:
+                                    if (SyringePump.IsReady == false)
+                                    {
+                                        Thread.Sleep(100);
+                                        break;
+                                    }
+                                    step++;
+                                    break;
+                                case ESyringePumpTestStep.DispensePort1:
+                                    if ((Recipe as CleanRecipe).UsePort1 == false)
+                                    {
+                                        step = (int)ESyringePumpTestStep.DispensePort2;
+                                        break;
+                                    }
+
+                                    log.Info("Dispense Port 1");
+                                    SyringePump.Dispense((Recipe as CleanRecipe).CleanVolume, 1);
+                                    Thread.Sleep(delay);
+                                    step++;
+                                    break;
+                                case ESyringePumpTestStep.DispensePort1_Wait:
+                                    if (SyringePump.IsReady == false)
+                                    {
+                                        Thread.Sleep(100);
+                                        break;
+                                    }
+                                    step++;
+                                    break;
+                                case ESyringePumpTestStep.DispensePort2:
+                                    if ((Recipe as CleanRecipe).UsePort2 == false)
+                                    {
+                                        step = (int)ESyringePumpTestStep.DispensePort3;
+                                        break;
+                                    }
+
+                                    log.Info("Dispense Port 2");
+                                    SyringePump.Dispense((Recipe as CleanRecipe).CleanVolume, 2);
+                                    Thread.Sleep(delay);
+                                    step++;
+                                    break;
+                                case ESyringePumpTestStep.DispensePort2_Wait:
+                                    if (SyringePump.IsReady == false)
+                                    {
+                                        Thread.Sleep(100);
+                                        break;
+                                    }
+                                    step++;
+                                    break;
+                                case ESyringePumpTestStep.DispensePort3:
+                                    if ((Recipe as CleanRecipe).UsePort3 == false)
+                                    {
+                                        step = (int)ESyringePumpTestStep.DispensePort4;
+                                        break;
+                                    }
+
+                                    log.Info("Dispense Port 3");
+                                    SyringePump.Dispense((Recipe as CleanRecipe).CleanVolume, 3);
+                                    Thread.Sleep(delay);
+                                    step++;
+                                    break;
+                                case ESyringePumpTestStep.DispensePort3_Wait:
+                                    if (SyringePump.IsReady == false)
+                                    {
+                                        Thread.Sleep(100);
+                                        break;
+                                    }
+                                    step++;
+                                    break;
+                                case ESyringePumpTestStep.DispensePort4:
+                                    if ((Recipe as CleanRecipe).UsePort4 == false)
+                                    {
+                                        step = (int)ESyringePumpTestStep.DispensePort5;
+                                        break;
+                                    }
+
+                                    log.Info("Dispense Port 4");
+                                    SyringePump.Dispense((Recipe as CleanRecipe).CleanVolume, 4);
+                                    Thread.Sleep(delay);
+                                    step++;
+                                    break;
+                                case ESyringePumpTestStep.DispensePort4_Wait:
+                                    if (SyringePump.IsReady == false)
+                                    {
+                                        Thread.Sleep(100);
+                                        break;
+                                    }
+                                    step++;
+                                    break;
+                                case ESyringePumpTestStep.DispensePort5:
+                                    if ((Recipe as CleanRecipe).UsePort5 == false)
+                                    {
+                                        step = (int)ESyringePumpTestStep.DispensePort6;
+                                        break;
+                                    }
+
+                                    log.Info("Dispense Port 5");
+                                    SyringePump.Dispense((Recipe as CleanRecipe).CleanVolume, 5);
+                                    Thread.Sleep(delay);
+                                    step++;
+                                    break;
+                                case ESyringePumpTestStep.DispensePort5_Wait:
+                                    if (SyringePump.IsReady == false)
+                                    {
+                                        Thread.Sleep(100);
+                                        break;
+                                    }
+                                    step++;
+                                    break;
+                                case ESyringePumpTestStep.DispensePort6:
+                                    if ((Recipe as CleanRecipe).UsePort6 == false)
+                                    {
+                                        step++;
+                                        break;
+                                    }
+
+                                    log.Info("Dispense Port 6");
+                                    SyringePump.Dispense((Recipe as CleanRecipe).CleanVolume, 6);
+                                    Thread.Sleep(delay);
+                                    step++;
+                                    break;
+                                case ESyringePumpTestStep.DispensePort6_Wait:
+                                    if (SyringePump.IsReady == false)
+                                    {
+                                        Thread.Sleep(100);
+                                        break;
+                                    }
+                                    step++;
+                                    break;
+                                case ESyringePumpTestStep.End:
+                                    isSyringePumpRunTest = false;
+                                    break;
+                            }
+                        }
+
+                    });
+                    thread.Start();
+                });
+            }
+        }
+
+        public ICommand SyringePumpStopCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    isSyringePumpRunTest = false;
+                    SyringePump.Stop();
+                });
+            }
+        }
+
+        public ICommand SyringePumpInitializeCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    SyringePump.Initialize();
+                });
+            }
+        }
+
+        private bool isSyringePumpRunTest = false;
     }
 }

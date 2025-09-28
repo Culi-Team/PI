@@ -27,6 +27,8 @@ using EQX.Core.Communication;
 using EQX.Core.Device.SyringePump;
 using EQX.Device.SyringePump;
 using EQX.InOut.InOut.Analog;
+using EQX.InOut.ByVendor.Ajinextek;
+using EQX.InOut.ByVendor.Inovance;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -328,7 +330,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             {
                 services.AddKeyedSingleton<SerialCommunicator>("SyringePumpSerialCommunicator", (ser, obj) =>
                 {
-                    return new SerialCommunicator(1, "SyringePumpSerialCommunicator", "COM7", 9600);
+                    return new SerialCommunicator(1, "SyringePumpSerialCommunicator", "COM7", 38400);
                 });
 
                 services.AddKeyedSingleton<ISyringePump, PSD4SyringePump>("WETCleanLeftSyringePump", (ser, obj) =>

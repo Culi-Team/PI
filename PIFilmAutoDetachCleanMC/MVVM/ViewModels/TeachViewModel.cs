@@ -117,6 +117,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             WETCleanLeftUnitTeaching.Motions = Devices.GetWETCleanLeftMotions();
             WETCleanLeftUnitTeaching.Inputs = Devices.GetWETCleanLeftInputs();
             WETCleanLeftUnitTeaching.Outputs = Devices.GetWETCleanLeftOutputs();
+            WETCleanLeftUnitTeaching.SyringePump = Devices.SyringePumps.WetCleanLeftSyringePump;
             WETCleanLeftUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.WetCleanLeftRecipe;
             WETCleanLeftUnitTeaching.Winder = Devices.TorqueControllers.WETCleanLeftWinder;
             WETCleanLeftUnitTeaching.UnWinder = Devices.TorqueControllers.WETCleanLeftUnWinder;
@@ -128,6 +129,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             WETCleanRightUnitTeaching.Motions = Devices.GetWETCleanRightMotions();
             WETCleanRightUnitTeaching.Inputs = Devices.GetWETCleanRightInputs();
             WETCleanRightUnitTeaching.Outputs = Devices.GetWETCleanRightOutputs();
+            WETCleanRightUnitTeaching.SyringePump = Devices.SyringePumps.WetCleanRightSyringePump;
             WETCleanRightUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.WetCleanRightRecipe;
             WETCleanRightUnitTeaching.Winder = Devices.TorqueControllers.WETCleanRightWinder;
             WETCleanRightUnitTeaching.UnWinder = Devices.TorqueControllers.WETCleanRightUnWinder;
@@ -155,6 +157,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             AFCleanLeftUnitTeaching.Motions = Devices.GetAFCleanLeftMotions();
             AFCleanLeftUnitTeaching.Inputs = Devices.GetAFCleanLeftInputs();
             AFCleanLeftUnitTeaching.Outputs = Devices.GetAFCleanLeftOutputs();
+            AFCleanLeftUnitTeaching.SyringePump = Devices.SyringePumps.AfCleanLeftSyringePump;
             AFCleanLeftUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.AfCleanLeftRecipe;
             AFCleanLeftUnitTeaching.Winder = Devices.TorqueControllers.AFCleanLeftWinder;
             AFCleanLeftUnitTeaching.UnWinder = Devices.TorqueControllers.AFCleanLeftUnWinder;
@@ -166,6 +169,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             AFCleanRightUnitTeaching.Motions = Devices.GetAFCleanRightMotions();
             AFCleanRightUnitTeaching.Inputs = Devices.GetAFCleanRightInputs();
             AFCleanRightUnitTeaching.Outputs = Devices.GetAFCleanRightOutputs();
+            AFCleanRightUnitTeaching.SyringePump = Devices.SyringePumps.AfCleanRightSyringePump;
             AFCleanRightUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.AfCleanRightRecipe;
             AFCleanRightUnitTeaching.Winder = Devices.TorqueControllers.AFCleanRightWinder;
             AFCleanRightUnitTeaching.UnWinder = Devices.TorqueControllers.AFCleanRightUnWinder;

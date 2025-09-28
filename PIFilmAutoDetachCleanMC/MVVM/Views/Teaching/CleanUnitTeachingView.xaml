@@ -270,6 +270,64 @@
                     Grid.Row="1">
                 <GroupBox Header="Syringe Pump"
                           Style="{StaticResource TextBlockHeaderGroupBox}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Border BorderBrush="LightGray"
+                                Margin="0 0 5 0"
+                                BorderThickness="1">
+                            <UniformGrid Columns="2">
+                                <CheckBox IsChecked="{Binding Recipe.UsePort1}"
+                                          Content="Port 1"/>
+                                <CheckBox IsChecked="{Binding Recipe.UsePort2}"
+                                          Content="Port 2" />
+                                <CheckBox IsChecked="{Binding Recipe.UsePort3}"
+                                          Content="Port 3" />
+                                <CheckBox IsChecked="{Binding Recipe.UsePort4}"
+                                          Content="Port 4" />
+                                <CheckBox IsChecked="{Binding Recipe.UsePort5}"
+                                          Content="Port 5" />
+                                <CheckBox IsChecked="{Binding Recipe.UsePort6}"
+                                          Content="Port 6" />
+                            </UniformGrid>
+                        </Border>
+                        <Border BorderBrush="LightGray"
+                                BorderThickness="1"
+                                Margin="5 0 0 0"
+                                Grid.Column="1">
+                            <UniformGrid Rows="3">
+                                <UniformGrid Columns="3"
+                                             VerticalAlignment="Center">
+                                    <Label Content="Volume"
+                                           VerticalContentAlignment="Center"/>
+                                    <Label Margin="0 2 2 2"
+                                           BorderBrush="LightGray"
+                                           Cursor="Hand"
+                                           BorderThickness="0.5"
+                                           Content="{Binding Recipe.CleanVolume,Mode=TwoWay}"
+                                           MouseLeftButtonDown="Label_MouseLeftButtonDown"
+                                           HorizontalContentAlignment="Center"
+                                           VerticalContentAlignment="Center"
+                                           FontSize="14" />
+                                    <Label Content="[mL]"
+                                           VerticalContentAlignment="Center"/>
+                                </UniformGrid>
+
+                                <UniformGrid VerticalAlignment="Center">
+                                    <Button Content="Run Test"
+                                            Command="{Binding SyringePumpRunTestCommand}"/>
+                                    <Button Content="Stop"
+                                            Command="{Binding SyringePumpStopCommand}"/>
+                                </UniformGrid>
+                                <UniformGrid VerticalAlignment="Center">
+                                    <Button Content="Initialize"
+                                            Command="{Binding SyringePumpInitializeCommand}"/>
+                                </UniformGrid>
+                            </UniformGrid>
+                        </Border>
+                    </Grid>
                 </GroupBox>
             </Border>
 

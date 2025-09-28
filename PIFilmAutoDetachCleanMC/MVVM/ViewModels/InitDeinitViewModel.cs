@@ -14,6 +14,7 @@ using log4net;
 using System.Runtime.CompilerServices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 using EQX.Core.Robot;
+using EQX.Core.Communication;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -80,7 +81,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             VirtualIO virtualIO,
             CassetteList cassetteList,
             [FromKeyedServices("RobotLoad")] IRobot robotLoad,
-            [FromKeyedServices("RobotUnload")] IRobot robotUnload)
+            [FromKeyedServices("RobotUnload")] IRobot robotUnload,
+            [FromKeyedServices("SyringePumpSerialCommunicator")] SerialCommunicator syringePumpSerialCommunicator)
         {
             _devices = devices;
             _processes = processes;
@@ -92,6 +94,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _cassetteList = cassetteList;
             _robotLoad = robotLoad;
             _robotUnload = robotUnload;
+            _syringePumpSerialCommunicator = syringePumpSerialCommunicator;
             _task = new Task(() => { });
             ErrorMessages = new List<string>();
 
@@ -168,6 +171,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         if (_torqueModbusCommnication.Connect() == false)
                         {
                             ErrorMessages.Add("Torque Controller Connect Fail");
+                        }
+
+                        if(_syringePumpSerialCommunicator.Connect() == false)
+                        {
+                            ErrorMessages.Add("Syringe Pump Connect Fail");
                         }
                         _step++;
                         break;
@@ -393,6 +401,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly CassetteList _cassetteList;
         private readonly IRobot _robotLoad;
         private readonly IRobot _robotUnload;
+        private readonly SerialCommunicator _syringePumpSerialCommunicator;
         private readonly Devices _devices;
         private readonly Processes _processes;
 
