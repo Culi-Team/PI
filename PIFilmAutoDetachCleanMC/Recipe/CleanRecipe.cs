@@ -18,6 +18,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private int cleanVerticalCount;
         private double cylinderPushPressure;
 
+        private double rFeedingAxisForwardDistance;
+        private double rFeedingAxisBackwardDistance;
         private double rFeedingAxisCleaningSpeed;
 
         private bool usePort1;
@@ -119,6 +121,30 @@ namespace PIFilmAutoDetachCleanMC.Recipe
                 cylinderPushPressure = value; 
             }
         }
+
+
+        [SingleRecipeDescription(Description = "R Feeding Axis Forward Distance", Unit = Unit.mm)]
+        public double RFeedingAxisForwardDistance
+        {
+            get { return rFeedingAxisForwardDistance; }
+            set 
+            {
+                OnRecipeChanged(rFeedingAxisForwardDistance, value);
+                rFeedingAxisForwardDistance = value; 
+            }
+        }
+
+        [SingleRecipeDescription(Description = "R Feeding Axis Backward Distance", Unit = Unit.mm)]
+        public double RFeedingAxisBackwardDistance
+        {
+            get { return rFeedingAxisBackwardDistance; }
+            set 
+            {
+                OnRecipeChanged(rFeedingAxisBackwardDistance, value);
+                rFeedingAxisBackwardDistance = value; 
+            }
+        }
+
 
         [SingleRecipeDescription(Description = "R Feeding Axis Cleaning Speed", Unit = Unit.mmPerSecond)]
         public double RFeedingAxisCleaningSpeed

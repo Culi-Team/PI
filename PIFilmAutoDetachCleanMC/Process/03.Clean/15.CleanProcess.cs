@@ -1,4 +1,5 @@
 ﻿using EQX.Core.Device.Regulator;
+using EQX.Core.Device.SyringePump;
 using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
@@ -171,6 +172,21 @@ namespace PIFilmAutoDetachCleanMC.Process
                     EClean.WETCleanRight => _devices.Regulators.WetCleanRRegulator,
                     EClean.AFCleanLeft => _devices.Regulators.AfCleanLRegulator,
                     EClean.AFCleanRight => _devices.Regulators.AfCleanRRegulator,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+        }
+
+        private ISyringePump SyringePump
+        {
+            get
+            {
+                return cleanType switch
+                {
+                    EClean.WETCleanLeft => _devices.SyringePumps.WetCleanLeftSyringePump,
+                    EClean.WETCleanRight => _devices.SyringePumps.WetCleanRightSyringePump,
+                    EClean.AFCleanLeft => _devices.SyringePumps.AfCleanLeftSyringePump,
+                    EClean.AFCleanRight => _devices.SyringePumps.AfCleanRightSyringePump,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -1400,8 +1416,229 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void Sequence_Prepare3M()
         {
-            Log.Debug("Prepare 3M");
-            Is3MPrepareDone = true;
+            int prepare3MStep = 0;
+            int StepWaitTime = 0;
+            double feedingAxisCurrentPos = 0.0;
+
+            bool prepare3MRun = true;
+            Thread prepare3MThread = new Thread(() =>
+            {
+                while (prepare3MRun && ProcessMode == EProcessMode.Run)
+                {
+                    switch ((ECleanProcessPrepare3MStep)prepare3MStep)
+                    {
+                        case ECleanProcessPrepare3MStep.Start:
+                            Log.Debug("Prepare 3M Start");
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.UnWinder_Stop:
+                            Log.Debug("UnWinder Stop");
+                            UnWinder.Stop();
+                            prepare3MStep++;
+                            Thread.Sleep(100);
+                            break;
+                        case ECleanProcessPrepare3MStep.Feeding_Forward:
+                            Log.Debug("R Feeding Axis Move Forward");
+                            feedingAxisCurrentPos = FeedingAxis.Status.ActualPosition;
+                            FeedingAxis.MoveInc(cleanRecipe.RFeedingAxisForwardDistance);
+                            StepWaitTime = Environment.TickCount;
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Feeding_Forward_Wait:
+                            if (Environment.TickCount - StepWaitTime > _commonRecipe.MotionMoveTimeOut)
+                            {
+                                EAlarm? alarm = cleanType switch
+                                {
+                                    EClean.WETCleanLeft => EAlarm.WETCleanLeft_RFeedingAxis_MoveForward_Fail,
+                                    EClean.WETCleanRight => EAlarm.WETCleanRight_RFeedingAxis_MoveForward_Fail,
+                                    EClean.AFCleanLeft => EAlarm.AFCleanLeft_RFeedingAxis_MoveForward_Fail,
+                                    EClean.AFCleanRight => EAlarm.AFCleanRight_RFeedingAxis_MoveForward_Fail,
+                                    _ => null
+                                };
+                                RaiseAlarm((int)alarm!);
+                                break;
+                            }
+                            if (FeedingAxis.IsOnPosition(feedingAxisCurrentPos + cleanRecipe.RFeedingAxisForwardDistance) == false)
+                            {
+                                Thread.Sleep(10);
+                                break;
+                            }
+                            Log.Debug("R Feeding Axis Move Forward Done");
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.UnWinder_Run:
+                            Log.Debug("UnWinder Run");
+                            UnWinder.Run();
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Dispense_Port1:
+                            if (cleanRecipe.UsePort1 == false)
+                            {
+                                prepare3MStep = (int)ECleanProcessPrepare3MStep.Dispense_Port2;
+                                break;
+                            }
+                            Log.Debug("Dispense Port 1");
+                            SyringePump.Dispense(cleanRecipe.CleanVolume, 1);
+                            Thread.Sleep(100);
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Dispense_Port1_Wait:
+                            if (SyringePump.IsReady == false)
+                            {
+                                Thread.Sleep(100);
+                                break;
+                            }
+                            Log.Debug("Dispense Port 1 Done");
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Dispense_Port2:
+                            if (cleanRecipe.UsePort2 == false)
+                            {
+                                prepare3MStep = (int)ECleanProcessPrepare3MStep.Dispense_Port3;
+                                break;
+                            }
+                            Log.Debug("Dispense Port 2");
+                            SyringePump.Dispense(cleanRecipe.CleanVolume, 2);
+                            Thread.Sleep(100);
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Dispense_Port2_Wait:
+                            if (SyringePump.IsReady == false)
+                            {
+                                Thread.Sleep(100);
+                                break;
+                            }
+                            Log.Debug("Dispense Port 2 Done");
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Dispense_Port3:
+                            if (cleanRecipe.UsePort3 == false)
+                            {
+                                prepare3MStep = (int)ECleanProcessPrepare3MStep.Dispense_Port4;
+                                break;
+                            }
+                            Log.Debug("Dispense Port 3");
+                            SyringePump.Dispense(cleanRecipe.CleanVolume, 3);
+                            Thread.Sleep(100);
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Dispense_Port3_Wait:
+                            if (SyringePump.IsReady == false)
+                            {
+                                Thread.Sleep(100);
+                                break;
+                            }
+                            Log.Debug("Dispense Port 3 Done");
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Dispense_Port4:
+                            if (cleanRecipe.UsePort4 == false)
+                            {
+                                prepare3MStep = (int)ECleanProcessPrepare3MStep.Dispense_Port5;
+                                break;
+                            }
+                            Log.Debug("Dispense Port 4");
+                            SyringePump.Dispense(cleanRecipe.CleanVolume, 4);
+                            Thread.Sleep(100);
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Dispense_Port4_Wait:
+                            if (SyringePump.IsReady == false)
+                            {
+                                Thread.Sleep(100);
+                                break;
+                            }
+                            Log.Debug("Dispense Port 4 Done");
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Dispense_Port5:
+                            if (cleanRecipe.UsePort5 == false)
+                            {
+                                prepare3MStep = (int)ECleanProcessPrepare3MStep.Dispense_Port6;
+                                break;
+                            }
+                            Log.Debug("Dispense Port 5");
+                            SyringePump.Dispense(cleanRecipe.CleanVolume, 5);
+                            Thread.Sleep(100);
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Dispense_Port5_Wait:
+                            if (SyringePump.IsReady == false)
+                            {
+                                Thread.Sleep(100);
+                                break;
+                            }
+                            Log.Debug("Dispense Port 5 Done");
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Dispense_Port6:
+                            if (cleanRecipe.UsePort6 == false)
+                            {
+                                prepare3MStep = (int)ECleanProcessPrepare3MStep.Winder_Stop;
+                                break;
+                            }
+                            Log.Debug("Dispense Port 6");
+                            SyringePump.Dispense(cleanRecipe.CleanVolume, 6);
+                            Thread.Sleep(100);
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Dispense_Port6_Wait:
+                            if (SyringePump.IsReady == false)
+                            {
+                                Thread.Sleep(100);
+                                break;
+                            }
+                            Log.Debug("Dispense Port 6 Done");
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Winder_Stop:
+                            Log.Debug("Winder Stop");
+                            Winder.Stop();
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Feeding_Backward:
+                            Log.Debug("R Feeding Axis Move Backward");
+                            feedingAxisCurrentPos = FeedingAxis.Status.ActualPosition;
+                            FeedingAxis.MoveInc(cleanRecipe.RFeedingAxisBackwardDistance * -1.0);
+                            StepWaitTime = Environment.TickCount;
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Feeding_Backward_Wait:
+                            if (Environment.TickCount - StepWaitTime > _commonRecipe.MotionMoveTimeOut)
+                            {
+                                EAlarm? alarm = cleanType switch
+                                {
+                                    EClean.WETCleanLeft => EAlarm.WETCleanLeft_RFeedingAxis_MoveBackward_Fail,
+                                    EClean.WETCleanRight => EAlarm.WETCleanRight_RFeedingAxis_MoveBackward_Fail,
+                                    EClean.AFCleanLeft => EAlarm.AFCleanLeft_RFeedingAxis_MoveBackward_Fail,
+                                    EClean.AFCleanRight => EAlarm.AFCleanRight_RFeedingAxis_MoveBackward_Fail,
+                                    _ => null
+                                };
+                                RaiseAlarm((int)alarm!);
+                                break;
+                            }
+                            if (FeedingAxis.IsOnPosition(feedingAxisCurrentPos - cleanRecipe.RFeedingAxisBackwardDistance) == false)
+                            {
+                                Thread.Sleep(10);
+                                break;
+                            }
+                            Log.Debug("R Feeding Axis Move Backward Done");
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Winder_Run:
+                            Log.Debug("Winder Run");
+                            Winder.Run();
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.End:
+                            Log.Debug("Prepare 3M End");
+                            prepare3MRun = false;
+                            Is3MPrepareDone = true;
+                            break;
+                    }
+                }
+            });
+            prepare3MThread.Start();
         }
         #endregion
     }

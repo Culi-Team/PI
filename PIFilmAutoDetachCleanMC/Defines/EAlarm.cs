@@ -129,6 +129,8 @@
         WETCleanLeft_XAxis_MoveUnloadPosition_Fail,
         WETCleanLeft_YAxis_MoveUnloadPosition_Fail,
         WETCleanLeft_TAxis_MoveUnloadPosition_Fail,
+        WETCleanLeft_RFeedingAxis_MoveForward_Fail,
+        WETCleanLeft_RFeedingAxis_MoveBackward_Fail,
 
         //WET Clean Right
         WETCleanRight = 18000,
@@ -150,6 +152,8 @@
         WETCleanRight_XAxis_MoveUnloadPosition_Fail,
         WETCleanRight_YAxis_MoveUnloadPosition_Fail,
         WETCleanRight_TAxis_MoveUnloadPosition_Fail,
+        WETCleanRight_RFeedingAxis_MoveForward_Fail,
+        WETCleanRight_RFeedingAxis_MoveBackward_Fail,
 
         //Transfer Rotation Left
         TransferRotationLeft = 19000,
@@ -189,6 +193,8 @@
         AFCleanLeft_XAxis_MoveUnloadPosition_Fail,
         AFCleanLeft_YAxis_MoveUnloadPosition_Fail,
         AFCleanLeft_TAxis_MoveUnloadPosition_Fail,
+        AFCleanLeft_RFeedingAxis_MoveForward_Fail,
+        AFCleanLeft_RFeedingAxis_MoveBackward_Fail,
 
         //AF Clean Right
         AFCleanRight = 22000,
@@ -210,6 +216,8 @@
         AFCleanRight_XAxis_MoveUnloadPosition_Fail,
         AFCleanRight_YAxis_MoveUnloadPosition_Fail,
         AFCleanRight_TAxis_MoveUnloadPosition_Fail,
+        AFCleanRight_RFeedingAxis_MoveForward_Fail,
+        AFCleanRight_RFeedingAxis_MoveBackward_Fail,
 
         //Unload Glass Left
         UnloadTransferLeft = 23000,
