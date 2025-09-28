@@ -129,7 +129,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 return new RelayCommand(() =>
                 {
                     int delay = 50;
-                    ILog log = LogManager.GetLogger(SyringePump.Name);
                     isSyringePumpRunTest = true;
                     int step = 0;
                     Thread thread = new Thread(() =>
@@ -146,7 +145,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                     SyringePump.SetDeccelation(20);
                                     Thread.Sleep(300);
 
-                                    log.Info("Fill");
                                     SyringePump.Fill(1.0);
                                     Thread.Sleep(delay);
                                     step++;
@@ -166,7 +164,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                         break;
                                     }
 
-                                    log.Info("Dispense Port 1");
                                     SyringePump.Dispense((Recipe as CleanRecipe).CleanVolume, 1);
                                     Thread.Sleep(delay);
                                     step++;
@@ -186,7 +183,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                         break;
                                     }
 
-                                    log.Info("Dispense Port 2");
                                     SyringePump.Dispense((Recipe as CleanRecipe).CleanVolume, 2);
                                     Thread.Sleep(delay);
                                     step++;
@@ -206,7 +202,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                         break;
                                     }
 
-                                    log.Info("Dispense Port 3");
                                     SyringePump.Dispense((Recipe as CleanRecipe).CleanVolume, 3);
                                     Thread.Sleep(delay);
                                     step++;
@@ -226,7 +221,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                         break;
                                     }
 
-                                    log.Info("Dispense Port 4");
                                     SyringePump.Dispense((Recipe as CleanRecipe).CleanVolume, 4);
                                     Thread.Sleep(delay);
                                     step++;
@@ -246,7 +240,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                         break;
                                     }
 
-                                    log.Info("Dispense Port 5");
                                     SyringePump.Dispense((Recipe as CleanRecipe).CleanVolume, 5);
                                     Thread.Sleep(delay);
                                     step++;
@@ -266,7 +259,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                         break;
                                     }
 
-                                    log.Info("Dispense Port 6");
                                     SyringePump.Dispense((Recipe as CleanRecipe).CleanVolume, 6);
                                     Thread.Sleep(delay);
                                     step++;

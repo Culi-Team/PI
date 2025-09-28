@@ -298,7 +298,7 @@
                                 Margin="5 0 0 0"
                                 Grid.Column="1">
                             <UniformGrid Rows="3">
-                                <UniformGrid Columns="3"
+                                <UniformGrid Columns="4"
                                              VerticalAlignment="Center">
                                     <Label Content="Volume"
                                            VerticalContentAlignment="Center"/>
@@ -313,6 +313,8 @@
                                            FontSize="14" />
                                     <Label Content="[mL]"
                                            VerticalContentAlignment="Center"/>
+                                    <Button Content="Save"
+                                            Command="{Binding SaveCommand}"/>
                                 </UniformGrid>
 
                                 <UniformGrid VerticalAlignment="Center">
