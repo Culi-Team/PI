@@ -9,6 +9,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EUnloadRobotPlaceStep
     {
         Start,
+
+        CheckOutputStopValue,
+
         Wait_MachineRequestPlace,
 
         Robot_Move_PlacePosition,

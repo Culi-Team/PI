@@ -51,32 +51,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public DieHardK180Plasma Plasma { get; }
         public CWorkData WorkData { get; }
 
-        public bool IsInputStop
-        {
-            get => _isInputStop;
-            set
-            {
-                if (_isInputStop != value)
-                {
-                    _isInputStop = value;
-                    OnPropertyChanged(nameof(IsInputStop));
-                }
-            }
-        }
-
-        public bool IsOutputStop
-        {
-            get => _isOutputStop;
-            set
-            {
-                if (_isOutputStop != value)
-                {
-                    _isOutputStop = value;
-                    OnPropertyChanged(nameof(IsOutputStop));
-                }
-            }
-        }
-
         public string MachineRunModeDisplay => MachineStatus.MachineRunModeDisplay;
         #endregion
 
@@ -146,14 +120,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (IsInputStop == false)
+                    if (MachineStatus.IsInputStop == false)
                     {
-                        IsInputStop = true;
+                        MachineStatus.IsInputStop = true;
                         Log.Debug("ENABLE STOP INTPUT!");
                     }
                     else
                     {
-                        IsInputStop = false;
+                        MachineStatus.IsInputStop = false;
                         Log.Debug("DISABLE STOP INTPUT!");
                     }
                 });
@@ -166,14 +140,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (IsOutputStop == false)
+                    if (MachineStatus.IsOutputStop == false)
                     {
-                        IsOutputStop = true;
+                        MachineStatus.IsOutputStop = true;
                         Log.Debug("ENABLE STOP OUTPUT!");
                     }
                     else
                     {
-                        IsOutputStop = false;
+                        MachineStatus.IsOutputStop = false;
                         Log.Debug("DISABLE STOP OUTPUT!");
                     }
                 });

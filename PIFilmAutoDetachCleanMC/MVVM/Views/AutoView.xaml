@@ -636,11 +636,14 @@
             </Border>
 
             <UniformGrid Grid.Row="6"
+                         Margin="0 10 0 10"
                          Columns="2">
                 <Button Content="Input Stop"
+                        FontSize="18"
                         Command="{Binding InputStopCommand}"
                         Background="{Binding IsInputStop, Converter={StaticResource InputOutputStopConverter}}" />
                 <Button Content="Output Stop"
+                        FontSize="18"
                         Command="{Binding OutputStopCommand}"
                         Background="{Binding IsOutputStop, Converter={StaticResource InputOutputStopConverter}}" />
             </UniformGrid>

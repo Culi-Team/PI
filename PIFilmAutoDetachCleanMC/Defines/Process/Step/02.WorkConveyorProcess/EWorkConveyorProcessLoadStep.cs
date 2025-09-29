@@ -22,6 +22,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Support_CV_Up,
         Support_CV_Up_Wait,
 
+        CheckInputStopValue,
+
         Conveyor_Run,
 
         Set_FlagRequestCassetteIn,

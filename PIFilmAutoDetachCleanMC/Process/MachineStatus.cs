@@ -27,7 +27,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private EProcessMode currentProcessMode;
         private int _SemiAutoSequence;
         private int _OPCommand;
-
+        private bool _originDone;
+        private bool initializeDone;
+        private bool isInputStop;
+        private bool isOutputStop;
         private readonly DryRunBypassProfile _dryRunProfile;
         public const int DryRunVacuumDurationMilliseconds = 1000;
 
@@ -109,20 +112,28 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool _originDone;
-
         public bool OriginDone
         {
             get { return _originDone; }
             set { _originDone = value; }
         }
 
-        private bool initializeDone;
-
         public bool InitializeDone
         {
             get { return initializeDone; }
             set { initializeDone = value; }
+        }
+
+        public bool IsInputStop
+        {
+            get { return isInputStop; }
+            set { isInputStop = value; OnPropertyChanged(); }
+        }
+
+        public bool IsOutputStop
+        {
+            get { return isOutputStop; }
+            set { isOutputStop = value; OnPropertyChanged(); }
         }
 
         public ESemiSequence SemiAutoSequence
@@ -153,26 +164,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
 
             return ShouldBypass((EInput)inputId);
-        }
-
-        public bool ShouldBypassVacuum(EInput input)
-        {
-            return ShouldBypass(input) && _dryRunProfile.IsInputInGroup(input, DryRunBypassGroup.SensorVacuum);
-        }
-
-        public bool ShouldBypassVacuum(IDInput input)
-        {
-            if (input is null)
-            {
-                return false;
-            }
-
-            if (!Enum.IsDefined(typeof(EInput), input.Id))
-            {
-                return false;
-            }
-
-            return ShouldBypassVacuum((EInput)input.Id);
         }
 
         public int DryRunVacuumDuration => DryRunVacuumDurationMilliseconds;

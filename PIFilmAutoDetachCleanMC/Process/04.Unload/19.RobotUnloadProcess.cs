@@ -589,6 +589,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Unload Robot Place Start");
                     Step.RunStep++;
                     break;
+                case EUnloadRobotPlaceStep.CheckOutputStopValue:
+                    if(_machineStatus.IsOutputStop == true)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
                 case EUnloadRobotPlaceStep.Wait_MachineRequestPlace:
                     if (_devices.Inputs.RobotUnload.Value == false)
                     {
