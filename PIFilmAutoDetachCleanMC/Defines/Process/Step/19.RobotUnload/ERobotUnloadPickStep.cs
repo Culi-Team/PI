@@ -9,11 +9,15 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ERobotUnloadPickStep
     {
         Start,
-        Robot_MoveBack_ReadyPickPosition,
-        Robot_MoveBack_ReadyPickPosition_Wait,
+
+        Robot_Move_ReadyPickPosition,
+        Robot_Move_ReadyPickPosition_Wait,
+
         Wait_UnloadAlignRequestUnload,
+
         Robot_Move_PickPosition,
         Robot_Move_PickPosition_Wait,
+
         Cylinder_Down,
         Cylinder_Down_Wait,
         Vacuum_On,
@@ -24,8 +28,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Set_FlagRobotPickDone,
         Wait_UnloadAlign_PickDoneReceived,
 
-        Robot_Move_ReadyPickPosition,
-        Robot_Move_ReadyPickPosition_Wait,
+        Robot_MoveBack_ReadyPickPosition,
+        Robot_MoveBack_ReadyPickPosition_Wait,
 
         Plasma_Prepare,
         
