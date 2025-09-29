@@ -3,6 +3,7 @@ using EQX.UI.Converters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PIFilmAutoDetachCleanMC.Defines;
+using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
 using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Services;
@@ -19,7 +20,12 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddSingleton<ProcessInitSelect>();
                 services.AddSingleton<ICellColorRepository,CellColorRepository>();
                 services.AddSingleton<CellStatusToColorConverter>();
-                services.AddSingleton<ProcessTaktTime>();
+                services.AddSingleton<AppSettings>();
+
+                // Add ProductData services
+                services.AddSingleton<CCountData>();
+                services.AddSingleton<CTaktTime>();
+                services.AddSingleton<CWorkData>();
 
                 services.AddKeyedScoped<IAlertService, AlarmService>("AlarmService");
                 services.AddKeyedScoped<IAlertService, WarningService>("WarningService");

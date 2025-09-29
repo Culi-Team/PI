@@ -3,8 +3,10 @@ using EQX.Core.Common;
 using EQX.Core.Sequence;
 using EQX.UI.Controls;
 using log4net;
+using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
+using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System.ComponentModel;
@@ -22,7 +24,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             Devices devices,
             RecipeSelector recipeSelector,
             DieHardK180Plasma plasma,
-            ProcessTaktTime processTaktTime)
+            AppSettings appSettings,
+            CWorkData workData)
         {
             MachineStatus = machineStatus;
             _navigationService = navigationService;
@@ -30,7 +33,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             Devices = devices;
             RecipeSelector = recipeSelector;
             Plasma = plasma;
-            _processTaktTime = processTaktTime;
+            _appSettings = appSettings;
+            WorkData = workData;
             MachineStatus.PropertyChanged += MachineStatusOnPropertyChanged;
 
             RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.CassetteSizeChanged += CassetteSizeChanged_Handler;
@@ -45,9 +49,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public Devices Devices { get; }
         public RecipeSelector RecipeSelector { get; }
         public DieHardK180Plasma Plasma { get; }
-        public double MachineMaxTaktTime => _processTaktTime.GetMaxTaktTime() / 1000.0;
-        public double MachineMinTaktTime => _processTaktTime.GetMinTaktTime() / 1000.0;
-        public double MachineAverageTaktTime => _processTaktTime.GetAverageTaktTimeAll() / 1000.0;
+        public CWorkData WorkData { get; }
 
         public bool IsInputStop
         {
@@ -235,9 +237,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         #region Privates
         private readonly INavigationService _navigationService;
-        private readonly ProcessTaktTime _processTaktTime;
         private bool _isInputStop;
         private bool _isOutputStop;
+        private readonly AppSettings _appSettings;
         #endregion
 
     }

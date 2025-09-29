@@ -446,7 +446,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.Robot_MoveBack_ReadyPickPosition:
-                    Log.Debug("Robot MoveBack Ready Pick Position");
+                    Log.Debug("Robot Move Back Ready Pick Position");
                     if (SendCommand(ERobotCommand.S1_PP_RDY, LowSpeed, HightSpeed))
                     {
                         Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S1_PP_RDY)));

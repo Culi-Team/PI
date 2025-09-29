@@ -306,6 +306,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 _robotLoadOutput, (int)ERobotLoadProcessOutput.FIXTURE_ALIGN_LOAD_DONE);
             ((VirtualInputDevice<EFixtureAlignProcessInput>)_fixtureAlignInput).Mapping((int)EFixtureAlignProcessInput.FIXTURE_TRANSFER_DONE,
                 _transferFixtureOutput, (int)ETransferFixtureProcessOutput.FIXTURE_TRANSFER_DONE);
+            ((VirtualInputDevice<EFixtureAlignProcessInput>)_fixtureAlignInput).Mapping((int)EFixtureAlignProcessInput.TRANSFER_FIXTURE_ALIGN_DONE_RECEIVED,
+                _transferFixtureOutput, (int)ETransferFixtureProcessOutput.TRANSFER_FIXTURE_ALIGN_DONE_RECEIVED);
 
             //Remove Film Input Mapping
             ((VirtualInputDevice<ERemoveFilmProcessInput>)_removeFilmInput).Mapping((int)ERemoveFilmProcessInput.REMOVE_FILM_UNLOAD_DONE,

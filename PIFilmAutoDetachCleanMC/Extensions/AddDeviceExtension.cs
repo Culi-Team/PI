@@ -220,7 +220,12 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
                     for (int i = 0; i < torqueCtlList.Count; i++)
                     {
+#if SIMULATION
+                        list.Add(new SimulationTorqueController(torqueCtlIndex[i], torqueCtlList[i]));
+#else
                         list.Add(new DX3000TorqueController(torqueCtlIndex[i], torqueCtlList[i], modbusCommunication));
+
+#endif
                     }
 
                     return new TorqueControllerList(list);
@@ -333,25 +338,41 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     return new SerialCommunicator(1, "SyringePumpSerialCommunicator", "COM7", 38400);
                 });
 
-                services.AddKeyedSingleton<ISyringePump, PSD4SyringePump>("WETCleanLeftSyringePump", (ser, obj) =>
+                services.AddKeyedSingleton<ISyringePump>("WETCleanLeftSyringePump", (ser, obj) =>
                 {
                     var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
+#if SIMULATION
+                    return new SimulationSyringePump("WETCleanLeftSyringePump", 1);
+#else
                     return new PSD4SyringePump("WETCleanLeftSyringePump", 1, serialCommunicator, 1.0);
+#endif
                 });
-                services.AddKeyedSingleton<ISyringePump, PSD4SyringePump>("WETCleanRightSyringePump", (ser, obj) =>
+                services.AddKeyedSingleton<ISyringePump>("WETCleanRightSyringePump", (ser, obj) =>
                 {
                     var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
+#if SIMULATION
+                return new SimulationSyringePump("WETCleanRightSyringePump", 2);
+#else
                     return new PSD4SyringePump("WETCleanRightSyringePump", 1, serialCommunicator, 1.0);
+#endif
                 });
-                services.AddKeyedSingleton<ISyringePump, PSD4SyringePump>("AFCleanLeftSyringePump", (ser, obj) =>
+                services.AddKeyedSingleton<ISyringePump>("AFCleanLeftSyringePump", (ser, obj) =>
                 {
                     var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
+#if SIMULATION
+                return new SimulationSyringePump("AFCleanLeftSyringePump", 3);
+#else
                     return new PSD4SyringePump("AFCleanLeftSyringePump", 1, serialCommunicator, 1.0);
+#endif
                 });
-                services.AddKeyedSingleton<ISyringePump, PSD4SyringePump>("AFCleanRightSyringePump", (ser, obj) =>
+                services.AddKeyedSingleton<ISyringePump>("AFCleanRightSyringePump", (ser, obj) =>
                 {
                     var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
+#if SIMULATION
+                    return new SimulationSyringePump("AFCleanRightSyringePump", 4);
+#else
                     return new PSD4SyringePump("AFCleanLeftSyringePump", 1, serialCommunicator, 1.0);
+#endif
                 });
 
                 services.AddSingleton<SyringePumps>();
@@ -373,7 +394,12 @@ namespace PIFilmAutoDetachCleanMC.Extensions
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
-#if !SIMULATION
+#if SIMULATION
+                //services.AddKeyedSingleton<IRobot, RobotKukaTcp>("RobotLoad", (services, obj) =>
+                //{
+                //    return new RobotKukaTcp(1, "Kuka Robot Load", "192.168.1.100");
+                //});
+
                 services.AddKeyedSingleton<IRobot, RobotSimulation>("RobotLoad", (services, obj) =>
                 {
                     return new RobotSimulation(1, "Kuka Robot Load");
@@ -383,13 +409,9 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     return new RobotSimulation(2, "Kuka Robot Unload");
                 });
 #else
-                //services.AddKeyedSingleton<IRobot, RobotKukaTcp>("RobotLoad",(services,obj) =>
-                //{
-                //    return new RobotKukaTcp(1, "Kuka Robot Load","192.168.1.100");
-                //});
-                services.AddKeyedSingleton<IRobot, RobotSimulation>("RobotLoad", (services, obj) =>
+                services.AddKeyedSingleton<IRobot, RobotKukaTcp>("RobotLoad", (services, obj) =>
                 {
-                    return new RobotSimulation(1, "Kuka Robot Load");
+                    return new RobotKukaTcp(1, "Kuka Robot Load", "192.168.1.100");
                 });
 
                 services.AddKeyedSingleton<IRobot, RobotKukaTcp>("RobotUnload", (services, obj) =>
