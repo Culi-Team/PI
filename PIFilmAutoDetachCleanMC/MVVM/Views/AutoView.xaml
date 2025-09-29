@@ -41,10 +41,28 @@
             <Setter Property="StrokeThickness"
                     Value="2" />
         </Style>
+        <Style x:Key="DoorIndicatorRectangleStyle"
+               TargetType="Rectangle">
+            <Setter Property="HorizontalAlignment"
+                    Value="Stretch" />
+            <Setter Property="VerticalAlignment"
+                    Value="Stretch" />
+            <Setter Property="RadiusX"
+                    Value="2" />
+            <Setter Property="RadiusY"
+                    Value="2" />
+            <Setter Property="Stroke"
+                    Value="Black" />
+            <Setter Property="StrokeThickness"
+                    Value="1" />
+            <Setter Property="Margin"
+                    Value="0" />
+        </Style>
 
         <cvt:InputOutputStopConverter x:Key="InputOutputStopConverter" />
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <cvt:BooleanOrToVisibilityConverter x:Key="BooleanOrToVisibilityConverter" />
+        <cvt:DoorStatusToBrushConverter x:Key="DoorStatusToBrushConverter" />
     </UserControl.Resources>
     <Grid Margin="10 0 0 0">
         <Grid.ColumnDefinitions>
@@ -144,6 +162,165 @@
                   Grid.RowSpan="3">
                 <Image Source="{StaticResource AutoViewImage}"
                        Stretch="Fill" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="17*" />
+                        <RowDefinition Height="420*" />
+                        <RowDefinition Height="17*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="361*" />
+                        <ColumnDefinition Width="149*" />
+                        <ColumnDefinition Width="390*" />
+                        <ColumnDefinition Width="110*" />
+                        <ColumnDefinition Width="101*" />
+                        <ColumnDefinition Width="110*" />
+                        <ColumnDefinition Width="115*" />
+                        <ColumnDefinition Width="302*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Left Door Indicators -->
+                    <Rectangle
+                               Grid.Column="0" Grid.Row="0"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                        <Rectangle.Fill>
+                            <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
+                                <Binding Path="Devices.Inputs.DoorLock1L.Value" />
+                                <Binding Path="Devices.Inputs.DoorLatch1L.Value" />
+                            </MultiBinding>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle Grid.Column="1" Grid.Row="0"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                        <Rectangle.Fill>
+                            <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
+                                <Binding Path="Devices.Inputs.DoorLock2L.Value" />
+                                <Binding Path="Devices.Inputs.DoorLatch2L.Value" />
+                            </MultiBinding>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle
+                               Grid.Column="3" Grid.Row="0"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                        <Rectangle.Fill>
+                            <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
+                                <Binding Path="Devices.Inputs.DoorLock3L.Value" />
+                                <Binding Path="Devices.Inputs.DoorLatch3L.Value" />
+                            </MultiBinding>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle
+                               Grid.Column="4" Grid.Row="0"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                        <Rectangle.Fill>
+                            <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
+                                <Binding Path="Devices.Inputs.DoorLock4L.Value" />
+                                <Binding Path="Devices.Inputs.DoorLatch4L.Value" />
+                            </MultiBinding>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle
+                               Grid.Column="5" Grid.Row="0"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                        <Rectangle.Fill>
+                            <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
+                                <Binding Path="Devices.Inputs.DoorLock5L.Value" />
+                                <Binding Path="Devices.Inputs.DoorLatch5L.Value" />
+                            </MultiBinding>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle
+                               Grid.Column="6" Grid.Row="0"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                        <Rectangle.Fill>
+                            <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
+                                <Binding Path="Devices.Inputs.DoorLock6L.Value" />
+                                <Binding Path="Devices.Inputs.DoorLatch6L.Value" />
+                            </MultiBinding>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle
+                               Grid.Column="7" Grid.Row="0"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                        <Rectangle.Fill>
+                            <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
+                                <Binding Path="Devices.Inputs.DoorLock7L.Value" />
+                                <Binding Path="Devices.Inputs.DoorLatch7L.Value" />
+                            </MultiBinding>
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <!-- Right Door Indicators -->
+                    <Rectangle
+                               Grid.Column="0" Grid.Row="2"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                        <Rectangle.Fill>
+                            <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
+                                <Binding Path="Devices.Inputs.DoorLock1R.Value" />
+                                <Binding Path="Devices.Inputs.DoorLatch1R.Value" />
+                            </MultiBinding>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle Grid.Column="1" Grid.Row="2"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                        <Rectangle.Fill>
+                            <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
+                                <Binding Path="Devices.Inputs.DoorLock2R.Value" />
+                                <Binding Path="Devices.Inputs.DoorLatch2R.Value" />
+                            </MultiBinding>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle
+                               Grid.Column="3" Grid.Row="2"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                        <Rectangle.Fill>
+                            <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
+                                <Binding Path="Devices.Inputs.DoorLock3R.Value" />
+                                <Binding Path="Devices.Inputs.DoorLatch3R.Value" />
+                            </MultiBinding>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle
+                               Grid.Column="4" Grid.Row="2"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                        <Rectangle.Fill>
+                            <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
+                                <Binding Path="Devices.Inputs.DoorLock4R.Value" />
+                                <Binding Path="Devices.Inputs.DoorLatch4R.Value" />
+                            </MultiBinding>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle
+                               Grid.Column="5" Grid.Row="2"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                        <Rectangle.Fill>
+                            <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
+                                <Binding Path="Devices.Inputs.DoorLock5R.Value" />
+                                <Binding Path="Devices.Inputs.DoorLatch5R.Value" />
+                            </MultiBinding>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle
+                               Grid.Column="6" Grid.Row="2"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                        <Rectangle.Fill>
+                            <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
+                                <Binding Path="Devices.Inputs.DoorLock6R.Value" />
+                                <Binding Path="Devices.Inputs.DoorLatch6R.Value" />
+                            </MultiBinding>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle
+                               Grid.Column="7" Grid.Row="2"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                        <Rectangle.Fill>
+                            <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
+                                <Binding Path="Devices.Inputs.DoorLock7R.Value" />
+                                <Binding Path="Devices.Inputs.DoorLatch7R.Value" />
+                            </MultiBinding>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Grid>
             </Grid>
 
             <Grid Grid.Row="2"
