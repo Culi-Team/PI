@@ -21,25 +21,10 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddSingleton<ProcessInitSelect>();
                 services.AddSingleton<ICellColorRepository,CellColorRepository>();
                 services.AddSingleton<CellStatusToColorConverter>();
-                
-                services.AddSingleton<AppSettings>((serviceProvider) =>
-                {
-                    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-                    var appSettings = new AppSettings();
-                    configuration.GetSection("Folders").Bind(appSettings.Folders);
-                    configuration.GetSection("Files").Bind(appSettings.Files);
-                    return appSettings;
-                });
 
                 services.AddSingleton<CCountData>();
                 services.AddSingleton<CTaktTime>();
-                services.AddSingleton<CWorkData>((serviceProvider) => 
-                {
-                    var countData = serviceProvider.GetRequiredService<CCountData>();
-                    var taktTime = serviceProvider.GetRequiredService<CTaktTime>();
-                    var appSettings = serviceProvider.GetRequiredService<AppSettings>();
-                    return new CWorkData(countData, taktTime, appSettings);
-                });
+                services.AddSingleton<CWorkData>();
 
                 services.AddKeyedScoped<IAlertService, AlarmService>("AlarmService");
                 services.AddKeyedScoped<IAlertService, WarningService>("WarningService");

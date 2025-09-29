@@ -24,7 +24,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             Devices devices,
             RecipeSelector recipeSelector,
             DieHardK180Plasma plasma,
-            AppSettings appSettings,
             CWorkData workData)
         {
             MachineStatus = machineStatus;
@@ -33,7 +32,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             Devices = devices;
             RecipeSelector = recipeSelector;
             Plasma = plasma;
-            _appSettings = appSettings;
             WorkData = workData;
             MachineStatus.PropertyChanged += MachineStatusOnPropertyChanged;
 
@@ -249,10 +247,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         #region Privates
         private readonly INavigationService _navigationService;
-        private bool _isInputStop;
-        private bool _isOutputStop;
-        private readonly AppSettings _appSettings;
         #endregion
-
     }
 }

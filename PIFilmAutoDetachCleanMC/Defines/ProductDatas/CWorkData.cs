@@ -4,26 +4,29 @@ using System;
 using System.IO;
 using System.Linq;
 using PIFilmAutoDetachCleanMC.Helpers;
+using Microsoft.Extensions.Configuration;
 
 namespace PIFilmAutoDetachCleanMC.Defines.ProductDatas
 {
     public class CWorkData : ObservableObject
     {
-        private readonly AppSettings _appSettings;
+        private readonly IConfiguration _configuration;
+        private string CountDataFolder => _configuration.GetValue<string>("Folders : CountDataFolder") ?? "";
 
         public CWorkData(CCountData countData,
             CTaktTime taktTime,
-            AppSettings appSettings)
+            IConfiguration configuration)
         {
             CountData = countData;
             TaktTime = taktTime;
-            _appSettings = appSettings;
+            _configuration = configuration;
         }
         public CWorkData()
         {
             CountData = new CCountData();
             TaktTime = new CTaktTime();
         }
+
         public CCountData CountData { get; }
         public CTaktTime TaktTime { get; }
 
@@ -70,7 +73,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.ProductDatas
         {
             get
             {
-                string directoryPath = Path.Combine(_appSettings.Folders.CountDataFolder, $"{DateTime.Now:yyyy-MM}");
+                string directoryPath = Path.Combine(CountDataFolder, $"{DateTime.Now:yyyy-MM}");
                 Directory.CreateDirectory(directoryPath);
 
                 return DefaulWorkDataFile.Replace(".json", $"_{WorkDataFileIndex}.json");
@@ -81,7 +84,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.ProductDatas
         {
             get
             {
-                string folderPath = Path.Combine(_appSettings.Folders.CountDataFolder, $"{DateTime.Now:yyyy-MM}", $"{DateTime.Now:yyyy-MM-dd}");
+                string folderPath = Path.Combine(CountDataFolder, $"{DateTime.Now:yyyy-MM}", $"{DateTime.Now:yyyy-MM-dd}");
 
                 if (!Directory.Exists(folderPath))
                 {
@@ -91,12 +94,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.ProductDatas
                 return Path.Combine(folderPath, $"Count_{DateTime.Now:yyyy-MM-dd}.json");
             }
         }
-               
+
         private int WorkDataFileIndex
         {
             get
             {
-                string directoryPath = Path.Combine(_appSettings.Folders.CountDataFolder, $"{DateTime.Now:yyyy-MM}", $"{DateTime.Now:yyyy-MM-dd}");
+                string directoryPath = Path.Combine(CountDataFolder, $"{DateTime.Now:yyyy-MM}", $"{DateTime.Now:yyyy-MM-dd}");
                 if (!Directory.Exists(directoryPath)) return 0;
 
                 string[] filePaths = Directory.GetFiles(directoryPath, $"Count_{DateTime.Now:yyyy-MM-dd}*.json");
@@ -110,7 +113,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.ProductDatas
                     return index;
                 }
 
-                return 0; 
+                return 0;
             }
         }
     }
