@@ -11,7 +11,9 @@ namespace PIFilmAutoDetachCleanMC.Helpers
     {
         public static void Copy(this CCountData countData, CCountData newCountData)
         {
-            countData.OK = newCountData.OK;
+            countData.Left = newCountData.Left;
+            countData.Right = newCountData.Right;
+
         }
 
         public static void Copy(this CTaktTime taktTime, CTaktTime newTaktTime)

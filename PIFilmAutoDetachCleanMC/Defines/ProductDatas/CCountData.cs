@@ -14,18 +14,30 @@ namespace PIFilmAutoDetachCleanMC.Defines.ProductDatas
         {
             get
             {
-                return OK;
+                return Left + Right;
             }
         }
 
-        public uint OK
+        public uint Left
         {
-            get { return _OK; }
+            get { return _left; }
             set
             {
-                if (_OK == value) return;
+                if (_left == value) return;
 
-                _OK = value;
+                _left = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Total));
+            }
+        }
+        public uint Right
+        {
+            get { return _right; }
+            set
+            {
+                if (_right == value) return;
+
+                _right = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(Total));
             }
@@ -35,11 +47,13 @@ namespace PIFilmAutoDetachCleanMC.Defines.ProductDatas
 
         public void Reset()
         {
-            OK = 0;
+            Left = 0;
+            Right = 0;
         }
 
         #region Privates
-        private uint _OK = 0;
+        private uint _left = 0;
+        private uint _right = 0;
         #endregion
     }
 }

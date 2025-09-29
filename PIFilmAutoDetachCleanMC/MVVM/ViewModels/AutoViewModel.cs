@@ -233,6 +233,21 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 });
             }
         }
+
+        public ICommand ResetWorkDataCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    if (MessageBoxEx.ShowDialog("Are you sure you want to reset work data?", "Confirm Reset") == true)
+                    {
+                        WorkData.Reset();
+                        Log.Debug("Work Data Reset");
+                    }
+                });
+            }
+        }
         #endregion
 
         #region Privates

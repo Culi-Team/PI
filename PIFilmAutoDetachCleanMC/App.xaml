@@ -9,6 +9,7 @@
              xmlns:manualVM="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual"
              xmlns:teachingVM="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching"
              xmlns:teachingViews="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views.Teaching"
+             xmlns:productDatas="clr-namespace:PIFilmAutoDetachCleanMC.Defines.ProductDatas"
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC">
     <Application.Resources>
         <ResourceDictionary>
@@ -88,6 +89,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type manualVM:ManualUnitViewModel}">
                 <manualViews:ManualUnitView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type productDatas:CWorkData}">
+                <views:ProductInformationView />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

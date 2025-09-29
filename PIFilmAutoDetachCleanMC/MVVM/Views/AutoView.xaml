@@ -10,8 +10,8 @@
              xmlns:vm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels"
              d:DataContext="{d:DesignInstance Type={x:Type vm:AutoViewModel}}"
              xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
-             d:DesignHeight="450"
-             d:DesignWidth="800">
+             d:DesignHeight="1060"
+             d:DesignWidth="1920">
     <UserControl.Resources>
         <Style TargetType="GroupBox"
                x:Key="TextBlockHeaderGroupBox">
@@ -145,7 +145,7 @@
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
             </Grid>
-            
+
             <!-- Machine Image overlay-->
             <Grid Grid.Row="2" 
                   Grid.ColumnSpan="9"
@@ -153,7 +153,7 @@
                 <Image Source="{StaticResource AutoViewImage}"
                        Stretch="Fill"/>
             </Grid>
-            
+
             <Grid Grid.Row="2" 
                   Grid.Column="1"
                   Grid.RowSpan="3">
@@ -249,7 +249,7 @@
                     <RowDefinition/>
                     <RowDefinition Height ="1.2*"/>
                 </Grid.RowDefinitions>
-                
+
                 <!-- VinylClean Image overlay-->
                 <Border Grid.Row="2">
                     <Image Source="{StaticResource VinylCleanImageDetach}"
@@ -478,7 +478,7 @@
                     </Image>
                 </Border>
             </Grid>
-            
+
             <!--Plasma Status View-->
             <Border Grid.Row="0"
                     Grid.Column="7"
@@ -489,7 +489,7 @@
                     Margin="5">
                 <control:PlasmaStatusView DataContext="{Binding Plasma}" />
             </Border>
-            
+
             <!--Clean Status View-->
             <Border Grid.Row="0"
                     Grid.Column="3"
@@ -530,30 +530,47 @@
             </Border>
         </Grid>
 
-        <UniformGrid Rows="9"
-                     Grid.Column="1">
-            <Button Content="{Binding MachineStatus.MachineRunModeDisplay}"
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" 
+                    Content="{Binding MachineStatus.MachineRunModeDisplay}"
                     Background="LightBlue"
                     Command="{Binding SelectRunModeCommand}" />
-            <Button Content="IO Monitoring"
+            
+            <Button Grid.Row="1" 
+                    Content="IO Monitoring"
                     Command="{Binding IOMonitoringNavigate}"
                     Background="LightBlue" />
-            <Button Content="Initialize"
+            
+            <Button Grid.Row="2" Content="Initialize"
                     Background="LightBlue"
                     Command="{Binding InitializeNavigate}" />
-            <Button Content="Origin"
+            
+            <Button Grid.Row="3" 
+                    Content="Origin"
                     Background="LightBlue"
                     Command="{Binding OriginCommand}" />
-            <!--<Button Content="Production Info"
-                    Background="LightGreen" />-->
             
-            <!-- PRODUCT INFORMATION LABEL -->
-            <Label
-                Style="{StaticResource HeaderLabelStyle}"
-                Content="{DynamicResource str_ProductInformation}"
-                Margin="0 5 0 0"/>
-            
-            <UniformGrid Columns="2">
+             <!-- PRODUCT INFORMATION -->
+            <Border Grid.Row="4" 
+                    Grid.RowSpan="2"
+                    Margin="1"
+                    Background="MintCream">
+                <ContentControl Content="{Binding WorkData}" />
+            </Border>
+
+            <UniformGrid Grid.Row="6" 
+                         Columns="2">
                 <Button Content="Input Stop"
                         Command="{Binding InputStopCommand}"
                         Background="{Binding IsInputStop, Converter={StaticResource InputOutputStopConverter}}" />
@@ -561,64 +578,17 @@
                         Command="{Binding OutputStopCommand}"
                         Background="{Binding IsOutputStop, Converter={StaticResource InputOutputStopConverter}}" />
             </UniformGrid>
-            <!--<UniformGrid Columns="2">
-                <Button BorderBrush="Gray"
-                        Margin="2 0 0 0"
-                        BorderThickness="1"
-                        Background="White"
-                        Click="TaktTimeButton_Click">
-                    <TextBlock Text="T/T"
-                               FontWeight="Bold"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center" />
-                </Button>
 
-                <Border BorderBrush="Gray"
-                        BorderThickness="1"
-                        Margin="2 0 0 0">
-                    --><!--<TextBlock  Text="{Binding TaktTime}"
-                                FontWeight="Bold"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Background="White" />-->
-                    <!--<UniformGrid Rows="3" >
-                        --><!-- Max TaktTime --><!--
-                        <Border Background="#FFD08770" CornerRadius="3" Padding="8,4" Margin="0,0,0,2">
-                            <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="Max: " Foreground="White" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding MachineMaxTaktTime, StringFormat='{}{0:F2} s'}" 
-                                               Foreground="White" FontWeight="Bold"/>
-                            </StackPanel>
-                        </Border>
-                        
-                        --><!-- Min TaktTime --><!--
-                        <Border Background="#FFA3BE8C" CornerRadius="3" Padding="8,4" Margin="0,0,0,2">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Min: " Foreground="White" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding MachineMinTaktTime, StringFormat='{}{0:F2} s'}" 
-                                               Foreground="White" FontWeight="Bold"/>
-                            </StackPanel>
-                        </Border>
-
-                        --><!-- Average TaktTime --><!--
-                        <Border Background="#FF88C0D0" CornerRadius="3" Padding="8,4">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Avg: " Foreground="White" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding MachineAverageTaktTime, StringFormat='{}{0:F2} s'}" 
-                                               Foreground="White" FontWeight="Bold"/>
-                            </StackPanel>
-                        </Border>
-                    </UniformGrid>--><!--
-                </Border>
-
-            </UniformGrid>-->
-            <Button Content="Start"
+            <Button Grid.Row="7" 
+                    Content="Start"
                     Command="{Binding StartCommand}"
                     Background="LightGray" />
-            <Button Content="Stop"
+            
+            <Button Grid.Row="8" 
+                    Content="Stop"
                     Command="{Binding StopCommand}"
                     Background="OrangeRed" />
-        </UniformGrid>
+        </Grid>
 
     </Grid>
 </UserControl>
