@@ -1,5 +1,6 @@
 ﻿using EQX.Core.Common;
 using EQX.UI.Converters;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -20,12 +21,25 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddSingleton<ProcessInitSelect>();
                 services.AddSingleton<ICellColorRepository,CellColorRepository>();
                 services.AddSingleton<CellStatusToColorConverter>();
-                services.AddSingleton<AppSettings>();
+                
+                services.AddSingleton<AppSettings>((serviceProvider) =>
+                {
+                    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+                    var appSettings = new AppSettings();
+                    configuration.GetSection("Folders").Bind(appSettings.Folders);
+                    configuration.GetSection("Files").Bind(appSettings.Files);
+                    return appSettings;
+                });
 
-                // Add ProductData services
                 services.AddSingleton<CCountData>();
                 services.AddSingleton<CTaktTime>();
-                services.AddSingleton<CWorkData>();
+                services.AddSingleton<CWorkData>((serviceProvider) => 
+                {
+                    var countData = serviceProvider.GetRequiredService<CCountData>();
+                    var taktTime = serviceProvider.GetRequiredService<CTaktTime>();
+                    var appSettings = serviceProvider.GetRequiredService<AppSettings>();
+                    return new CWorkData(countData, taktTime, appSettings);
+                });
 
                 services.AddKeyedScoped<IAlertService, AlarmService>("AlarmService");
                 services.AddKeyedScoped<IAlertService, WarningService>("WarningService");
