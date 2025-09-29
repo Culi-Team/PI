@@ -144,6 +144,7 @@
     <Resource Include="Resource\Image\02.Detach\TransferFixture2.png" />
     <Resource Include="Resource\Image\02.Detach\VinylClean.png" />
     <Resource Include="Resource\Image\02.Detach\VinylCleanDt.png" />
+    <Resource Include="Resource\Image\02.Detach\VinylClean2.png" />
     <Resource Include="Resource\Image\02.Detach\FixtureAlign.png" />
     <Resource Include="Resource\Image\02.Detach\GlassDetach.png" />
     <Resource Include="Resource\Image\02.Detach\RemoveFilm.png" />
@@ -170,6 +171,10 @@
     <Resource Include="Resource\Image\04.Unload\UnloadStage.png" />
     <Resource Include="Resource\Image\04.Unload\UnloadAlignStage.png" />
     <Resource Include="Resource\Image\04.Unload\UnloadAlignDetach.png" />
+    <Resource Include="Resource\Image\04.Unload\UnloadAlignDetach_1.png" />
+    <Resource Include="Resource\Image\04.Unload\UnloadAlignDetach_2.png" />
+    <Resource Include="Resource\Image\04.Unload\UnloadAlignDetach_3.png" />
+    <Resource Include="Resource\Image\04.Unload\UnloadAlignDetach_4.png" />
     <Resource Include="Resource\Image\04.Unload\UnloadRobotDetach.png" />
     <Resource Include="Resource\Image\Machine.png" />
     <Resource Include="Resource\Image\AlertImage.png" />

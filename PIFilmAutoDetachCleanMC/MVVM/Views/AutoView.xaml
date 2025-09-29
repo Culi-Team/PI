@@ -441,20 +441,71 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <!--Unload Glass Image overlay-->
-                <Border Grid.Column="1"
-                        Grid.Row="1">
-                    <Image Source="{StaticResource UnloadAlignDetachImage}"
+                <Grid Grid.Column="1"
+                      Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.27*"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="1.1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.15*"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="1.65*"/>
+                    </Grid.RowDefinitions>
+                    <!--Image 1-->
+                    <Border Grid.Column="1"
+                        Grid.Row="4">
+                        <Image Source="{StaticResource UnloadAlignDetachImage_1 }"
                            Stretch="Fill">
-                        <Image.Visibility>
-                            <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
-                                <Binding Path="Devices.Inputs.UnloadGlassDetect1.Value" />
-                                <Binding Path="Devices.Inputs.UnloadGlassDetect2.Value" />
-                                <Binding Path="Devices.Inputs.UnloadGlassDetect3.Value" />
-                                <Binding Path="Devices.Inputs.UnloadGlassDetect4.Value" />
-                            </MultiBinding>
-                        </Image.Visibility>
-                    </Image>
-                </Border>
+                            <Image.Visibility>
+                                <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                    <Binding Path="Devices.Inputs.UnloadGlassDetect1.Value" />
+                                </MultiBinding>
+                            </Image.Visibility>
+                        </Image>
+                    </Border>
+                    <!--Image 2-->
+                    <Border Grid.Column="1"
+                        Grid.Row="3">
+                        <Image Source="{StaticResource UnloadAlignDetachImage_2 }"
+                           Stretch="Fill">
+                            <Image.Visibility>
+                                <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                    <Binding Path="Devices.Inputs.UnloadGlassDetect2.Value" />
+                                </MultiBinding>
+                            </Image.Visibility>
+                        </Image>
+                    </Border>
+                    <!--Image 3-->
+                    <Border Grid.Column="1"
+                        Grid.Row="2">
+                        <Image Source="{StaticResource UnloadAlignDetachImage_3 }"
+                           Stretch="Fill">
+                            <Image.Visibility>
+                                <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                    <Binding Path="Devices.Inputs.UnloadGlassDetect3.Value" />
+                                </MultiBinding>
+                            </Image.Visibility>
+                        </Image>
+                    </Border>
+                    <!--Image 4-->
+                    <Border Grid.Column="1"
+                        Grid.Row="1">
+                        <Image Source="{StaticResource UnloadAlignDetachImage_4 }"
+                           Stretch="Fill">
+                            <Image.Visibility>
+                                <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                                    <Binding Path="Devices.Inputs.UnloadGlassDetect4.Value" />
+                                </MultiBinding>
+                            </Image.Visibility>
+                        </Image>
+                    </Border>
+                </Grid>
+
                 <!--Unload Robot Glass Image overlay-->
                 <Border Grid.Column="2">
                     <Image Source="{StaticResource UnloadRobotDetachImage}"
