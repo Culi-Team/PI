@@ -137,8 +137,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
             cylinders.Add(Cylinders.RemoveZoneFixCyl1FwBw);
             cylinders.Add(Cylinders.RemoveZoneFixCyl2FwBw);
-            cylinders.Add(Cylinders.RemoveZoneCyl1ClampUnclamp);  
-            cylinders.Add(Cylinders.RemoveZoneCyl2ClampUnclamp);  
+            cylinders.Add(Cylinders.RemoveZoneCyl1ClampUnclamp);
+            cylinders.Add(Cylinders.RemoveZoneCyl2ClampUnclamp);
             cylinders.Add(Cylinders.RemoveZoneCyl3ClampUnclamp);
             cylinders.Add(Cylinders.RemoveZonePusherCyl1UpDown);
             cylinders.Add(Cylinders.RemoveZonePusherCyl2UpDown);
@@ -638,6 +638,20 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.WetCleanPusherLeftDown);
             inputs.Add(Inputs.WetCleanBrushLeftUp);
             inputs.Add(Inputs.WetCleanBrushLeftDown);
+            inputs.Add(Inputs.InShuttleLAlign1FW);
+            inputs.Add(Inputs.InShuttleLAlign1BW);
+            inputs.Add(Inputs.InShuttleLAlign2FW);
+            inputs.Add(Inputs.InShuttleLAlign2BW);
+            inputs.Add(Inputs.InShuttleLVac);
+            inputs.Add(Inputs.WetCleanLeftAlcoholLeakDetect);
+            inputs.Add(Inputs.WetCleanLeftPumpLeakDetect);
+            inputs.Add(Inputs.WetCleanLeftAlcoholPumpDetect);
+            inputs.Add(Inputs.WetCleanLeftDoorLock);
+            inputs.Add(Inputs.WetCleanLeftFeedingRollerDetect);
+            inputs.Add(Inputs.WetCleanLeftWiperCleanDetect1);
+            inputs.Add(Inputs.WetCleanLeftWiperCleanDetect2);
+            inputs.Add(Inputs.WetCleanLeftWiperCleanDetect3);
+
             return inputs;
         }
 
@@ -648,6 +662,19 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.WetCleanPusherRightDown);
             inputs.Add(Inputs.WetCleanBrushRightUp);
             inputs.Add(Inputs.WetCleanBrushRightDown);
+            inputs.Add(Inputs.InShuttleRAlign1FW);
+            inputs.Add(Inputs.InShuttleRAlign1BW);
+            inputs.Add(Inputs.InShuttleRAlign2FW);
+            inputs.Add(Inputs.InShuttleRAlign2BW);
+            inputs.Add(Inputs.InShuttleRVac);
+            inputs.Add(Inputs.WetCleanRightAlcoholLeakDetect);
+            inputs.Add(Inputs.WetCleanRightPumpLeakDetect);
+            inputs.Add(Inputs.WetCleanRightAlcoholPumpDetect);
+            inputs.Add(Inputs.WetCleanRightDoorLock);
+            inputs.Add(Inputs.WetCleanRightFeedingRollerDetect);
+            inputs.Add(Inputs.WetCleanRightWiperCleanDetect1);
+            inputs.Add(Inputs.WetCleanRightWiperCleanDetect2);
+            inputs.Add(Inputs.WetCleanRightWiperCleanDetect3);
             return inputs;
         }
 
@@ -658,6 +685,19 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.AfCleanPusherLeftDown);
             inputs.Add(Inputs.AfCleanBrushLeftUp);
             inputs.Add(Inputs.AfCleanBrushLeftDown);
+            inputs.Add(Inputs.OutShuttleLAlign1FW);
+            inputs.Add(Inputs.OutShuttleLAlign1BW);
+            inputs.Add(Inputs.OutShuttleLAlign2FW);
+            inputs.Add(Inputs.OutShuttleLAlign2BW);
+            inputs.Add(Inputs.OutShuttleLVac);
+            inputs.Add(Inputs.AfCleanLeftAlcoholLeakDetect);
+            inputs.Add(Inputs.AfCleanLeftPumpLeakDetect);
+            inputs.Add(Inputs.AfCleanLeftAlcoholPumpDetect);
+            inputs.Add(Inputs.AfCleanLeftDoorLock);
+            inputs.Add(Inputs.AfCleanLeftFeedingRollerDetect);
+            inputs.Add(Inputs.AfCleanLeftWiperCleanDetect1);
+            inputs.Add(Inputs.AfCleanLeftWiperCleanDetect2);
+            inputs.Add(Inputs.AfCleanLeftWiperCleanDetect3);
             return inputs;
         }
 
@@ -668,6 +708,19 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.AfCleanPusherRightDown);
             inputs.Add(Inputs.AfCleanBrushRightUp);
             inputs.Add(Inputs.AfCleanBrushRightDown);
+            inputs.Add(Inputs.OutShuttleRAlign1FW);
+            inputs.Add(Inputs.OutShuttleRAlign1BW);
+            inputs.Add(Inputs.OutShuttleRAlign2FW);
+            inputs.Add(Inputs.OutShuttleRAlign2BW);
+            inputs.Add(Inputs.OutShuttleRVac);
+            inputs.Add(Inputs.AfCleanRightAlcoholLeakDetect);
+            inputs.Add(Inputs.AfCleanRightPumpLeakDetect);
+            inputs.Add(Inputs.AfCleanRightAlcoholPumpDetect);
+            inputs.Add(Inputs.AfCleanRightDoorLock);
+            inputs.Add(Inputs.AfCleanRightFeedingRollerDetect);
+            inputs.Add(Inputs.AfCleanRightWiperCleanDetect1);
+            inputs.Add(Inputs.AfCleanRightWiperCleanDetect2);
+            inputs.Add(Inputs.AfCleanRightWiperCleanDetect3);
             return inputs;
         }
 

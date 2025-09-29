@@ -87,7 +87,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 		}
 
         [SingleRecipeDescription(Description = "In Cassette T Axis Load Position", Unit = Unit.mm)]
-		[SinglePositionTeaching(Motion = "T Axis")]
+		[SinglePositionTeaching(Motion = "TAxis")]
         public double InCstTAxisLoadPosition
 		{
 			get { return inCstTAxisLoadPosition; }
@@ -99,7 +99,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 		}
 
         [SingleRecipeDescription(Description = "In Cassette T Axis Work Position", Unit = Unit.mm)]
-        [SinglePositionTeaching(Motion = "T Axis")]
+        [SinglePositionTeaching(Motion = "TAxis")]
         public double InCstTAxisWorkPosition
 		{
 			get { return inCstTAxisWorkPosition; }
@@ -111,7 +111,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 		}
 
         [SingleRecipeDescription(Description = "Out Cassette T Axis Load Position", Unit = Unit.mm)]
-        [SinglePositionTeaching(Motion = "T Axis")]
+        [SinglePositionTeaching(Motion = "TAxis")]
         public double OutCstTAxisLoadPosition
 		{
 			get { return outCstTAxisLoadPosition; }
@@ -123,7 +123,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 		}
 
         [SingleRecipeDescription(Description = "Out Cassette T Axis Work Position", Unit = Unit.mm)]
-        [SinglePositionTeaching(Motion = "T Axis")]
+        [SinglePositionTeaching(Motion = "TAxis")]
         public double OutCstTAxisWorkPosition
 		{
 			get { return outCstTAxisWorkPosition; }

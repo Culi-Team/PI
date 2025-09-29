@@ -19,7 +19,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 
 
         [SingleRecipeDescription(Description = "Z Axis Ready Position", Unit = Unit.mm)]
-		[SinglePositionTeaching(Motion = "Z Axis")]
+		[SinglePositionTeaching(Motion = "ZAxis")]
         public double ZAxisReadyPosition
 		{
 			get { return zAxisReadyPosition; }
@@ -31,7 +31,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 		}
 
         [SingleRecipeDescription(Description = "Z Axis Pick Position", Unit = Unit.mm)]
-		[SinglePositionTeaching(Motion = "Z Axis")]
+		[SinglePositionTeaching(Motion = "ZAxis")]
         public double ZAxisPickPosition
 		{
 			get { return zAxisPickPosition; }
@@ -43,7 +43,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 		}
 
         [SingleRecipeDescription(Description = "Z Axis Transfer Before Rotate Position", Unit = Unit.mm)]
-		[SinglePositionTeaching(Motion = "Z Axis")]
+		[SinglePositionTeaching(Motion = "ZAxis")]
         public double ZAxisTransferBeforeRotatePosition
 		{
 			get { return zAxisTransferBeforeRotatePosition; }
@@ -55,7 +55,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 		}
 
         [SingleRecipeDescription(Description = "Z Axis Transfer After Rotate Position", Unit = Unit.mm)]
-		[SinglePositionTeaching(Motion = "Z Axis")]
+		[SinglePositionTeaching(Motion = "ZAxis")]
         public double ZAxisTransferAfterRotatePosition
 		{
 			get { return zAxisTransferAfterRotatePosition; }
@@ -67,7 +67,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 		}
 
         [SingleRecipeDescription(Description = "Z Axis Place Position", Unit = Unit.mm)]
-		[SinglePositionTeaching(Motion = "Z Axis")]
+		[SinglePositionTeaching(Motion = "ZAxis")]
         public double ZAxisPlacePosition
 		{
 			get { return zAxisPlacePosition; }

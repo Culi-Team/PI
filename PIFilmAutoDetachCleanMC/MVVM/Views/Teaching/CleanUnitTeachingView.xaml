@@ -65,7 +65,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition Width="1.2*"/>
+                <ColumnDefinition Width="1.2*" />
             </Grid.ColumnDefinitions>
             <ScrollViewer Grid.Column="0"
                           Grid.ColumnSpan="2">
@@ -85,95 +85,98 @@
                 <ColumnDefinition Width="1.2*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="1.5*" />
             </Grid.RowDefinitions>
 
             <!--Cylinder and Pressure-->
-            <Border Grid.Column="0">
-                <UniformGrid Rows="2">
-                    <GroupBox Header="Cylinder"
-                              Style="{StaticResource TextBlockHeaderGroupBox}">
-                        <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                      HorizontalScrollBarVisibility="Auto">
-                            <ItemsControl ItemsSource="{Binding Cylinders}"
-                                          ItemTemplate="{StaticResource CylinderControlDataTemplate}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <UniformGrid Rows="1"
-                                                     VerticalAlignment="Top" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
-                        </ScrollViewer>
-                    </GroupBox>
+            <GroupBox Header="Cylinder"
+                      Grid.ColumnSpan="2"
+                      Style="{StaticResource TextBlockHeaderGroupBox}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Cylinders}"
+                                  ItemTemplate="{StaticResource CylinderControlDataTemplate}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="1"
+                                             VerticalAlignment="Top" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+            </GroupBox>
+            <GroupBox Header="Regulator"
+                      Grid.Row="1"
+                      Style="{StaticResource TextBlockHeaderGroupBox}">
+                <StackPanel VerticalAlignment="Center">
+                    <UniformGrid Rows="1">
+                        <Label Content="Pressure"
+                               FontSize="14" />
+                        <Label Content="{Binding Recipe.CylinderPushPressure,Mode=TwoWay}"
+                               MouseLeftButtonDown="Label_MouseLeftButtonDown"
+                               VerticalContentAlignment="Center"
+                               Cursor="Hand"
+                               BorderBrush="LightGray"
+                               BorderThickness="0.5"
+                               HorizontalContentAlignment="Center" />
+                        <Button Content="Set"
+                                FontSize="14"
+                                Command="{Binding SetPressureCommand}" />
+                        <Button Content="Save"
+                                FontSize="14"
+                                Command="{Binding SaveCommand}" />
+                    </UniformGrid>
 
-                    <GroupBox Header="Regulator"
-                              Style="{StaticResource TextBlockHeaderGroupBox}">
-                        <StackPanel VerticalAlignment="Center">
-                            <UniformGrid Rows="1">
-                                <Label Content="Pressure"
-                                       FontSize="14" />
-                                <Label Content="{Binding Recipe.CylinderPushPressure,Mode=TwoWay}"
-                                       MouseLeftButtonDown="Label_MouseLeftButtonDown"
-                                       VerticalContentAlignment="Center"
-                                       Cursor="Hand"
-                                       BorderBrush="LightGray"
-                                       BorderThickness="0.5"
-                                       HorizontalContentAlignment="Center" />
-                                <Button Content="Set" FontSize="14" Command="{Binding SetPressureCommand}"/>
-                                <Button Content="Save" FontSize="14" Command="{Binding SaveCommand}"/>
-                            </UniformGrid>
-
-                        </StackPanel>
-                    </GroupBox>
-                </UniformGrid>
-            </Border>
+                </StackPanel>
+            </GroupBox>
 
             <!--Torque-->
-            <Border Grid.Column="1">
+            <Border Grid.Column="1"
+                    Grid.Row="1">
                 <UniformGrid Columns="2">
                     <GroupBox Header="Winder Torque"
-                                  Style="{StaticResource TextBlockHeaderGroupBox}"
-                                  Margin="0 0 2 0">
+                              Style="{StaticResource TextBlockHeaderGroupBox}"
+                              Margin="0 0 2 0">
                         <UniformGrid Rows="3">
                             <UniformGrid Columns="2">
                                 <Label Content="Torque (%)"
-                                           VerticalContentAlignment="Center"
-                                           BorderThickness="1"
-                                           FontSize="14"
-                                           FontWeight="SemiBold"
-                                           BorderBrush="LightGray"
-                                           Margin="0 2 2 2" />
+                                       VerticalContentAlignment="Center"
+                                       BorderThickness="1"
+                                       FontSize="14"
+                                       FontWeight="SemiBold"
+                                       BorderBrush="LightGray"
+                                       Margin="0 2 2 2" />
                                 <Label Margin="0 2 2 2"
-                                           BorderBrush="LightGray"
-                                           Cursor="Hand"
-                                           BorderThickness="0.5"
-                                           Content="{Binding Recipe.WinderTorque,Mode=TwoWay,Converter={StaticResource DoubleToIntConveter}}"
-                                           MouseLeftButtonDown="Label_MouseLeftButtonDown"
-                                           HorizontalContentAlignment="Center"
-                                           VerticalContentAlignment="Center"
-                                           FontSize="14" />
+                                       BorderBrush="LightGray"
+                                       Cursor="Hand"
+                                       BorderThickness="0.5"
+                                       Content="{Binding Recipe.WinderTorque,Mode=TwoWay,Converter={StaticResource DoubleToIntConveter}}"
+                                       MouseLeftButtonDown="Label_MouseLeftButtonDown"
+                                       HorizontalContentAlignment="Center"
+                                       VerticalContentAlignment="Center"
+                                       FontSize="14" />
                             </UniformGrid>
                             <UniformGrid Columns="2">
                                 <Button Content="Set"
                                         FontSize="14"
                                         Command="{Binding WinderSetTorqueCommand}"
-                                            Margin="0 2 2 2" />
+                                        Margin="0 2 2 2" />
                                 <Button Content="Save"
                                         FontSize="14"
                                         Command="{Binding SaveCommand}"
-                                            Margin="0 2 2 2" />
+                                        Margin="0 2 2 2" />
                             </UniformGrid>
                             <UniformGrid Columns="2">
                                 <Button Content="Run"
                                         FontSize="14"
                                         Command="{Binding WinderRunCommand}"
-                                            Margin="0 2 2 2" />
+                                        Margin="0 2 2 2" />
                                 <Button Content="Stop"
                                         FontSize="14"
                                         Command="{Binding WinderStopCommand}"
-                                            Margin="0 2 2 2" />
+                                        Margin="0 2 2 2" />
                             </UniformGrid>
                         </UniformGrid>
                     </GroupBox>
@@ -203,21 +206,21 @@
                                 <Button Content="Set"
                                         FontSize="14"
                                         Command="{Binding UnWinderSetTorqueCommand}"
-                                            Margin="0 2 2 2" />
+                                        Margin="0 2 2 2" />
                                 <Button Content="Save"
                                         FontSize="14"
                                         Command="{Binding SaveCommand}"
-                                            Margin="0 2 2 2" />
+                                        Margin="0 2 2 2" />
                             </UniformGrid>
                             <UniformGrid Columns="2">
                                 <Button Content="Run"
                                         FontSize="14"
                                         Command="{Binding UnWinderRunCommand}"
-                                            Margin="0 2 2 2" />
+                                        Margin="0 2 2 2" />
                                 <Button Content="Stop"
                                         FontSize="14"
                                         Command="{Binding UnWinderStopCommand}"
-                                            Margin="0 2 2 2" />
+                                        Margin="0 2 2 2" />
                             </UniformGrid>
                         </UniformGrid>
                     </GroupBox>
@@ -226,7 +229,8 @@
             </Border>
 
             <!--Inout-->
-            <Border Grid.Column="2">
+            <Border Grid.Column="2"
+                    Grid.RowSpan="2">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -235,28 +239,28 @@
                         </Grid.ColumnDefinitions>
                         <!-- Input Section -->
                         <GroupBox Header="Input"
-              Grid.Column="0"
-              Style="{StaticResource TextBlockHeaderGroupBox}">
+                                  Grid.Column="0"
+                                  Style="{StaticResource TextBlockHeaderGroupBox}">
                             <ItemsControl ItemsSource="{Binding Inputs}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <ui:DInputView Width="300"
-                                       FontSize="11"
-                                       DataContext="{Binding }" />
+                                                       FontSize="11"
+                                                       DataContext="{Binding }" />
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </GroupBox>
                         <!-- Output Section -->
                         <GroupBox Header="Output"
-              Grid.Column="1"
-              Style="{StaticResource TextBlockHeaderGroupBox}">
+                                  Grid.Column="1"
+                                  Style="{StaticResource TextBlockHeaderGroupBox}">
                             <ItemsControl ItemsSource="{Binding Outputs}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <ui:DOutputView Width="300"
-                                        FontSize="11"
-                                        DataContext="{Binding }" />
+                                                        FontSize="11"
+                                                        DataContext="{Binding }" />
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
@@ -267,7 +271,7 @@
 
             <!--Syring Pump-->
             <Border Grid.Column="2"
-                    Grid.Row="1">
+                    Grid.Row="2">
                 <GroupBox Header="Syringe Pump"
                           Style="{StaticResource TextBlockHeaderGroupBox}">
                     <Grid>
@@ -280,7 +284,7 @@
                                 BorderThickness="1">
                             <UniformGrid Columns="2">
                                 <CheckBox IsChecked="{Binding Recipe.UsePort1}"
-                                          Content="Port 1"/>
+                                          Content="Port 1" />
                                 <CheckBox IsChecked="{Binding Recipe.UsePort2}"
                                           Content="Port 2" />
                                 <CheckBox IsChecked="{Binding Recipe.UsePort3}"
@@ -301,7 +305,7 @@
                                 <UniformGrid Columns="4"
                                              VerticalAlignment="Center">
                                     <Label Content="Volume"
-                                           VerticalContentAlignment="Center"/>
+                                           VerticalContentAlignment="Center" />
                                     <Label Margin="0 2 2 2"
                                            BorderBrush="LightGray"
                                            Cursor="Hand"
@@ -312,20 +316,20 @@
                                            VerticalContentAlignment="Center"
                                            FontSize="14" />
                                     <Label Content="[mL]"
-                                           VerticalContentAlignment="Center"/>
+                                           VerticalContentAlignment="Center" />
                                     <Button Content="Save"
-                                            Command="{Binding SaveCommand}"/>
+                                            Command="{Binding SaveCommand}" />
                                 </UniformGrid>
 
                                 <UniformGrid VerticalAlignment="Center">
                                     <Button Content="Run Test"
-                                            Command="{Binding SyringePumpRunTestCommand}"/>
+                                            Command="{Binding SyringePumpRunTestCommand}" />
                                     <Button Content="Stop"
-                                            Command="{Binding SyringePumpStopCommand}"/>
+                                            Command="{Binding SyringePumpStopCommand}" />
                                 </UniformGrid>
                                 <UniformGrid VerticalAlignment="Center">
                                     <Button Content="Initialize"
-                                            Command="{Binding SyringePumpInitializeCommand}"/>
+                                            Command="{Binding SyringePumpInitializeCommand}" />
                                 </UniformGrid>
                             </UniformGrid>
                         </Border>
@@ -334,7 +338,7 @@
             </Border>
 
             <!--Motion-->
-            <Border Grid.Row="1"
+            <Border Grid.Row="2"
                     Grid.ColumnSpan="2">
                 <GroupBox Header="Motions"
                           Style="{StaticResource TextBlockHeaderGroupBox}">
