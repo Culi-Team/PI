@@ -27,28 +27,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <!--<Style TargetType="{x:Type Button}">
-            <Setter Property="Margin"
-                    Value="1 1 0 1" />
-            <Setter Property="FontWeight"
-                    Value="SemiBold" />
-            <Setter Property="FontSize"
-                    Value="14" />
-            <Setter Property="Cursor"
-                    Value="Hand" />
-        </Style>-->
-        <Style TargetType="{x:Type ui:InterlockButton}"
-               BasedOn="{StaticResource {x:Type ui:InterlockButton}}">
-            <Setter Property="Margin"
-                    Value="1 1 0 1" />
-            <Setter Property="FontWeight"
-                    Value="SemiBold" />
-            <Setter Property="FontSize"
-                    Value="14" />
-            <Setter Property="Cursor"
-                    Value="Hand" />
-        </Style>
-
         <!-- Signal Ellipse Style -->
         <Style x:Key="SignalEllipseStyle"
                TargetType="Ellipse">
@@ -599,16 +577,17 @@
 
                     <UniformGrid Columns="2"
                                  Margin="0 20 0 10 ">
-                        <ui:ImageButton Content="Door Open" 
-                                FontSize="20"/>
-                        <ui:ImageButton Content="Buzzer Off" 
-                                FontSize="20"/>
+                        <ui:ImageButton Content="Door Open"
+                                        FontSize="20" />
+                        <ui:ImageButton Content="Buzzer Off"
+                                        FontSize="20" />
                     </UniformGrid>
                 </UniformGrid>
             </Border>
         </Grid>
 
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1"
+              Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
@@ -620,25 +599,33 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Button Grid.Row="0"
-                    Content="{Binding MachineStatus.MachineRunModeDisplay}"
-                    Background="LightBlue"
-                    Command="{Binding SelectRunModeCommand}" />
+            <ui:ImageButton Grid.Row="0"
+                            Image="/EQX.UI;component/Resources/Images/model_change_Selected.png"
+                            Content="{Binding MachineStatus.MachineRunModeDisplay}"
+                            Background="LightBlue"
+                            FontSize="18"
+                            Command="{Binding SelectRunModeCommand}" />
 
-            <Button Grid.Row="1"
-                    Content="IO Monitoring"
-                    Command="{Binding IOMonitoringNavigate}"
-                    Background="LightBlue" />
+            <ui:ImageButton Grid.Row="1"
+                            Image="/EQX.UI;component/Resources/Images/IO_selected.png"
+                            Content="IO Monitoring"
+                            FontSize="18"
+                            Command="{Binding IOMonitoringNavigate}"
+                            Background="LightBlue" />
 
-            <Button Grid.Row="2"
-                    Content="Initialize"
-                    Background="LightBlue"
-                    Command="{Binding InitializeNavigate}" />
+            <ui:ImageButton Grid.Row="2"
+                            Image="/EQX.UI;component/Resources/Images/idling_selected.png"
+                            Content="Initialize"
+                            FontSize="18"
+                            Background="LightBlue"
+                            Command="{Binding InitializeNavigate}" />
 
-            <Button Grid.Row="3"
-                    Content="Origin"
-                    Background="LightBlue"
-                    Command="{Binding OriginCommand}" />
+            <ui:ImageButton Grid.Row="3"
+                            Image="/EQX.UI;component/Resources/Images/return_origin_selected.png"
+                            Content="Origin"
+                            FontSize="18"
+                            Background="LightBlue"
+                            Command="{Binding OriginCommand}" />
 
             <!-- PRODUCT INFORMATION -->
             <Border Grid.Row="4"
@@ -658,15 +645,17 @@
                         Background="{Binding IsOutputStop, Converter={StaticResource InputOutputStopConverter}}" />
             </UniformGrid>
 
-            <Button Grid.Row="7"
-                    Content="Start"
-                    Command="{Binding StartCommand}"
-                    Background="LightGray" />
+            <ui:ImageButton Grid.Row="7"
+                            Image="/EQX.UI;component/Resources/Images/start_selected.png"
+                            Content="Start"
+                            FontSize="18"
+                            Command="{Binding StartCommand}" />
 
-            <Button Grid.Row="8"
-                    Content="Stop"
-                    Command="{Binding StopCommand}"
-                    Background="OrangeRed" />
+            <ui:ImageButton Grid.Row="8"
+                            Image="/EQX.UI;component/Resources/Images/stop_selected.png"
+                            Content="Stop"
+                            FontSize="18"
+                            Command="{Binding StopCommand}" />
         </Grid>
 
     </Grid>
