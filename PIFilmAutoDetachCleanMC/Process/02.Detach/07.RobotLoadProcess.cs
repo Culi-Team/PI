@@ -10,6 +10,7 @@ using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Robot;
 using PIFilmAutoDetachCleanMC.Defines.Process.Step._07.RobotLoadProcess;
+using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 using PIFilmAutoDetachCleanMC.Recipe;
 using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 
@@ -28,7 +29,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly CassetteList _cassetteList;
         private readonly MachineStatus _machineStatus;
         private readonly ProcessInitSelect _processInitSelect;
-
+        private readonly CWorkData _workData;
         private int CurrentInWorkCSTFixtureIndex = -1;
         private int CurrentOutWorkCSTFixtureIndex = -1;
         private string[] paras = new string[8] { "0", "0", "0", "0", "0", "0", "0", "0" };
@@ -218,7 +219,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             [FromKeyedServices("RobotLoadOutput")] IDOutputDevice robotLoadOutput,
             [FromKeyedServices("RemoveFilmOutput")] IDOutputDevice removeFilmOutput,
             CassetteList cassetteList,
-            ProcessInitSelect processInitSelect)
+            ProcessInitSelect processInitSelect,
+            CWorkData workData)
         {
             _robotLoad = robotLoad;
             _commonRecipe = commonRecipe;
@@ -230,6 +232,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             _removeFilmOutput = removeFilmOutput;
             _cassetteList = cassetteList;
             _processInitSelect = processInitSelect;
+            _workData = workData;
         }
         #endregion
 
@@ -414,6 +417,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ERobotLoadAutoRunStep.Start:
                     Log.Debug("Auto Run Start");
+                    _workData.TaktTime.TaktTimeCounter = Environment.TickCount;
                     Step.RunStep++;
                     break;
                 case ERobotLoadAutoRunStep.Check_Flag_VinylCleanRequestFixture:
@@ -953,7 +957,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     else
                     {
-                        if(_machineStatus.IsSatisfied(_devices.Inputs.RemoveZoneFixtureDetect))
+                        if (_machineStatus.IsSatisfied(_devices.Inputs.RemoveZoneFixtureDetect))
                         {
                             if (FlagRemoveFilmRequestUnload)
                             {
@@ -993,7 +997,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.RunStep++;
                     break;
-          
+
                 case ERobotLoadPlaceFixtureToAlignStep.Move_FixtureAlignPlacePosition:
                     Log.Debug("Robot Move To Fixture Align Place Position");
                     if (SendCommand(ERobotCommand.S3_RDY_PP, LowSpeed, HightSpeed))
@@ -1255,7 +1259,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Robot Move Out Cassette Place Position");
                     if (SendCommand(ERobotCommand.S5_RDY_PP, LowSpeed, HightSpeed, paras))
                     {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),() => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S5_RDY_PP)));
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S5_RDY_PP)));
                         Step.RunStep++;
                         break;
                     }
@@ -1338,7 +1342,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.End:
-                    Log.Debug("Robot Place Fixture To Out CST Done");
+                    Log.Debug("Robot Place Fixture To Out CST End");
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
@@ -1364,6 +1368,16 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                         Log.Info("Sequence Robot Pick Fixture From In Cassette");
                         Sequence = ESequence.RobotPickFixtureFromCST;
+                        break;
+                    }
+                    if (FlagRemoveFilmRequestUnload)
+                    {
+                        _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_REQ_UNLOAD] = false;
+                        Log.Debug("Clear Flag Remove Film Unload Done");
+                        FlagRemoveFilmUnloadDone = false;
+
+                        Log.Info("Sequence Robot Pick Fixture From Remove Zone");
+                        Sequence = ESequence.RobotPickFixtureFromRemoveZone;
                         break;
                     }
                     break;

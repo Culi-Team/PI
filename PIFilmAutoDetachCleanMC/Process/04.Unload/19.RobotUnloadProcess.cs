@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Robot;
+using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 using PIFilmAutoDetachCleanMC.Recipe;
 using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 
@@ -22,6 +23,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDInputDevice _robotUnloadInput;
         private readonly IDOutputDevice _robotUnloadOutput;
         private readonly DieHardK180Plasma _plasma;
+        private readonly CWorkData _workData;
         private readonly MachineStatus _machineStatus;
 
 
@@ -104,7 +106,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             [FromKeyedServices("RobotUnloadInput")] IDInputDevice robotUnloadInput,
             [FromKeyedServices("RobotUnloadOutput")] IDOutputDevice robotUnloadOutput,
             [FromKeyedServices("RobotUnload")] IRobot robotUnload,
-            DieHardK180Plasma plasma)
+            DieHardK180Plasma plasma,
+            CWorkData workData)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
@@ -114,6 +117,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             _robotUnloadOutput = robotUnloadOutput;
             _robotUnload = robotUnload;
             _plasma = plasma;
+            _workData = workData;
         }
         #endregion
 
@@ -658,7 +662,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Parent.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
-
+                    _workData.TaktTime.SetTaktTime();
                     Log.Info("Sequence Unload Robot Pick");
                     Sequence = ESequence.UnloadRobotPick;
                     break;

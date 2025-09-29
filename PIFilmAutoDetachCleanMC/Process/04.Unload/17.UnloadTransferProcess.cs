@@ -7,6 +7,7 @@ using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
+using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _unloadTransferLeftOutput;
         private readonly IDInputDevice _unloadTransferRightInput;
         private readonly IDOutputDevice _unloadTransferRightOutput;
+        private readonly CWorkData _workData;
 
         private IMotion YAxis => port == EPort.Left ? _devices.MotionsInovance.GlassUnloadLYAxis :
                                                   _devices.MotionsInovance.GlassUnloadRYAxis;
@@ -127,7 +129,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             [FromKeyedServices("UnloadTransferLeftInput")] IDInputDevice unloadTransferLeftInput,
             [FromKeyedServices("UnloadTransferLeftOutput")] IDOutputDevice unloadTransferLeftOutput,
             [FromKeyedServices("UnloadTransferRightInput")] IDInputDevice unloadTransferRightInput,
-            [FromKeyedServices("UnloadTransferRightOutput")] IDOutputDevice unloadTransferRightOutput)
+            [FromKeyedServices("UnloadTransferRightOutput")] IDOutputDevice unloadTransferRightOutput,
+            CWorkData workData)
         {
             _devices = devices;
             _commonRecipe = commonRecipe;
@@ -137,6 +140,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             _unloadTransferLeftOutput = unloadTransferLeftOutput;
             _unloadTransferRightInput = unloadTransferRightInput;
             _unloadTransferRightOutput = unloadTransferRightOutput;
+            _workData = workData;
         }
         #endregion
 
@@ -713,6 +717,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.Stop;
                         Parent.ProcessMode = EProcessMode.ToStop;
                         break;
+                    }
+                    if (port == EPort.Left)
+                    {
+                        _workData.CountData.Left += 1;
+                    }
+                    else
+                    {
+                        _workData.CountData.Right += 1;
                     }
                     Log.Info("Sequence AF Clean Unload");
                     Sequence = port == EPort.Left ? ESequence.AFCleanLeftUnload : ESequence.AFCleanRightUnload;

@@ -58,10 +58,10 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.5*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.2*" />
+            <ColumnDefinition Width="1.5*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1.8*" />
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0"
                Grid.Column="0"
@@ -70,16 +70,16 @@
                Foreground="White"
                FontWeight="Bold"
                FontSize="14"
-               Content="{DynamicResource str_ProductInformation}"/>
+               Content="{DynamicResource str_ProductInformation}" />
         <Label Grid.Row="1"
                Grid.RowSpan="2"
                Content="{DynamicResource str_Total}"
                Background="#b0c4de"
-               FontSize="18" />
+               FontSize="14" />
         <Border Grid.Column="1"
                 Grid.Row="1"
                 Grid.RowSpan="2">
-            <TextBlock Text="{Binding CountData.Total}"/>
+            <TextBlock Text="{Binding CountData.Total}" />
         </Border>
 
         <Label Grid.Column="2"
@@ -108,39 +108,40 @@
                 Grid.Row="3"
                 Background="#b0c4de">
             <TextBlock Text="{DynamicResource str_CycleCurrent}"
-                           TextWrapping="Wrap"
-                           TextAlignment="Center" />
+                       TextWrapping="Wrap"
+                       FontSize="14"
+                       TextAlignment="Center" />
         </Border>
         <Border Grid.Column="1"
                 Grid.Row="3"
-                Grid.RowSpan="2" >
-            <TextBlock Text="{Binding TaktTime.CycleCurrent}"/>
+                Grid.RowSpan="2">
+            <TextBlock Text="{Binding TaktTime.CycleCurrent}" />
         </Border>
         <Label Background="#c0c0c0"
                FontSize="16"
                Grid.Column="2"
                Grid.Row="3"
                Foreground="Green"
-               Content="Ave"/>
+               Content="Ave" />
         <Border Grid.Row="3"
-                Grid.Column="3" >
-            <TextBlock Text="{Binding TaktTime.Average, StringFormat=N2}"/>
+                Grid.Column="3">
+            <TextBlock Text="{Binding TaktTime.Average, StringFormat=N2}" />
         </Border>
-        
+
         <Label Background="#c0c0c0"
-                   FontSize="16"
-                   Grid.Column="2"
-                   Grid.Row="4"
-                   Foreground="Red"
-                   Content="Max" />
+               FontSize="16"
+               Grid.Column="2"
+               Grid.Row="4"
+               Foreground="Red"
+               Content="Max" />
         <Border Grid.Column="3"
-                Grid.Row="4" >
-            <TextBlock Text="{Binding TaktTime.Maximum, StringFormat=N2}"/>
+                Grid.Row="4">
+            <TextBlock Text="{Binding TaktTime.Maximum, StringFormat=N2}" />
         </Border>
         <Border Grid.Row="5"
                 Grid.ColumnSpan="4">
             <Button Content="{DynamicResource str_Reset}"
-                    Click="Button_Reset_Click"/>
+                    Click="Button_Reset_Click" />
         </Border>
     </Grid>
 </UserControl>
