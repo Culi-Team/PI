@@ -38,6 +38,28 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cassette
             CassetteOut = new Tray<ETrayCellStatus>("CassetteOut");
         }
 
+
+        private void ResetCassetteStatus(ITray<ETrayCellStatus> cassette)
+        {
+            if (cassette.Cells.Any(c => c.Status != ETrayCellStatus.Ready))
+            {
+                cassette.SetAllCell(ETrayCellStatus.Ready);
+            }
+            else
+            {
+                cassette.SetAllCell(ETrayCellStatus.Skip);
+            }
+        }
+
+        public void ResetCSTOut()
+        {
+            ResetCassetteStatus(CassetteOut);
+        }
+        public void ResetCSTIn()
+        {
+            ResetCassetteStatus(CassetteIn);
+        }
+
         public void RecipeUpdateHandle()
         {
             CassetteIn.Rows = _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.CasetteRows;

@@ -248,6 +248,28 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 });
             }
         }
+
+        public ICommand ResetCSTOutCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    CassetteList.ResetCSTOut();
+                });
+            }
+        }
+
+        public ICommand ResetCSTInCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    CassetteList.ResetCSTIn();
+                });
+            }
+        }
         #endregion
 
         #region Privates
