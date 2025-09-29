@@ -85,16 +85,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
-        public IRelayCommand LogoutNavigate
+        public IRelayCommand UserNavigate => new RelayCommand(() =>
         {
-            get
-            {
-                return new RelayCommand(() =>
-                {
-                    _navigationService.NavigateTo<LoginViewModel>();
-                });
-            }
-        }
+            _navigationService.NavigateTo<LoginViewModel>();
+        });
 
         public IRelayCommand DevNavigate
         {
@@ -140,6 +134,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 }
             }
         }
+
+        public string CurrentUserLabel
+        {
+            get => _currentUserLabel;
+            private set => SetProperty(ref _currentUserLabel, value);
+        }
         #endregion
 
         public NavigateMenuViewModel(INavigationService navigationService,
@@ -153,43 +153,57 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _languageService = languageService;
 
             // TODO: Remove this
-            _userStore.Permission = EPermission.Admin;
 
             _userStore.UserChanged += _userStore_UserChanged;
             UpdateNavigationButtons();
+            UpdateCurrentUserLabel();
         }
 
         private void UpdateNavigationButtons()
         {
-            NavigationButtons = new ObservableCollection<NavigationButton>();
-
-            NavigationButtons.Add(new NavigationButton { Label = "Auto", Command = AutoNavigate, ImageKey = "image_auto_selected", DisabledImageKey = "image_auto_normal_dark" });
-
-            if (_userStore.Permission == EPermission.Operator)
+            var buttons = new ObservableCollection<NavigationButton>
             {
-                return;
+                new NavigationButton { Label = "Auto", Command = AutoNavigate, ImageKey = "image_auto_selected", DisabledImageKey = "image_auto_normal_dark" }
+            };
+
+            if (_userStore.Permission != EPermission.Operator)
+            {
+                buttons.Add(new NavigationButton { Label = "Manual", Command = ManualNavigate, ImageKey = "image_manual_selected", DisabledImageKey = "image_manual_normal_dark" });
+                buttons.Add(new NavigationButton { Label = "Data", Command = DataNavigate, ImageKey = "image_data_selected", DisabledImageKey = "image_data_normal" });
+                buttons.Add(new NavigationButton { Label = "Teach", Command = TeachNavigate, ImageKey = "image_teach_selected", DisabledImageKey = "image_teach_normal" });
             }
 
-            NavigationButtons.Add(new NavigationButton { Label = "Manual", Command = ManualNavigate, ImageKey = "image_manual_selected", DisabledImageKey = "image_manual_normal_dark" });
-            NavigationButtons.Add(new NavigationButton { Label = "Data", Command = DataNavigate, ImageKey = "image_data_selected", DisabledImageKey = "image_data_normal" });
-            NavigationButtons.Add(new NavigationButton { Label = "Teach", Command = TeachNavigate, ImageKey = "image_teach_selected", DisabledImageKey = "image_teach_normal" });
-            NavigationButtons.Add(new NavigationButton { Label = "Dev", Command = DevNavigate, ImageKey = "square_auto_seleted", DisabledImageKey = "square_auto_normal" });
-
-            if (_userStore.Permission == EPermission.Admin)
-            {
-                return;
-            }
             if (_userStore.Permission == EPermission.SuperUser)
             {
-                NavigationButtons.Add(new NavigationButton { Label = "Dev", Command = DevNavigate, ImageKey = "image_exit_normal_light", DisabledImageKey = "image_exit_normal_dark" });
-
-                return;
+                buttons.Add(new NavigationButton { Label = "Dev", Command = DevNavigate, ImageKey = "square_auto_seleted", DisabledImageKey = "square_auto_normal" });
             }
+
+            NavigationButtons = buttons;
+            OnPropertyChanged(nameof(NavigationButtons));
+        }
+
+        private void UpdateCurrentUserLabel()
+        {
+            var permissionLabel = _userStore.Permission switch
+            {
+                EPermission.SuperUser => "SuperUser",
+                EPermission.Operator => "Operator",
+                _ => "Admin"
+            };
+
+            CurrentUserLabel = $"{_userStore.UserName} ({permissionLabel})";
         }
 
         private void _userStore_UserChanged()
         {
             UpdateNavigationButtons();
+            UpdateCurrentUserLabel();
+        }
+
+        public override void Dispose()
+        {
+            _userStore.UserChanged -= _userStore_UserChanged;
+            base.Dispose();
         }
 
         #region Privates
@@ -198,6 +212,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly ViewModelProvider _viewModelProvider;
         private readonly LanguageService _languageService;
         private bool _isLanguageMenuOpen;
+        private string _currentUserLabel = string.Empty;
         #endregion
     }
 }

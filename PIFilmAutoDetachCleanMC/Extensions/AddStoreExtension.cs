@@ -8,6 +8,7 @@ using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
 using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Services;
+using PIFilmAutoDetachCleanMC.Services.User;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -18,6 +19,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
                 services.AddSingleton<UserStore>();
+                services.AddSingleton<IUserAccountService, UserAccountService>();
                 services.AddSingleton<ProcessInitSelect>();
                 services.AddSingleton<ICellColorRepository,CellColorRepository>();
                 services.AddSingleton<CellStatusToColorConverter>();

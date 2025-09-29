@@ -3,10 +3,81 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:PIFilmAutoDetachCleanMC.Controls"
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding LoginCommand}" Key="Enter" />
+    </UserControl.InputBindings>
+    <Grid Background="#ffffff">
+        <Grid.Resources>
+            <Style x:Key="LoginButtonStyle" TargetType="Button">
+                <Setter Property="Margin" Value="0,12,0,0" />
+                <Setter Property="Padding" Value="18,8" />
+                <Setter Property="Background" Value="#f4f4f4" />
+                <Setter Property="BorderBrush" Value="#cfcfcf" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Foreground" Value="#333" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="4">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#e5e5e5" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.6" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="320">
+            <Border Background="#ffffff"
+                    BorderBrush="#d5d5d5"
+                    BorderThickness="1"
+                    CornerRadius="6"
+                    Padding="24">
+                <Border.Effect>
+                    <DropShadowEffect Color="#33000000" BlurRadius="12" ShadowDepth="3" />
+                </Border.Effect>
+                <StackPanel>
+                    <TextBlock Text="User Group" Foreground="#333" Margin="0,0,0,6" />
+                    <ComboBox ItemsSource="{Binding AvailableUsers}"
+                              SelectedItem="{Binding SelectedUser}"
+                              Margin="0,0,0,12" />
+
+                    <TextBlock Text="Password" Foreground="#333" Margin="0,12,0,6" />
+                    <PasswordBox controls:PasswordBoxAssistant.BindPassword="True"
+                                 controls:PasswordBoxAssistant.BoundPassword="{Binding LoginPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,0,0,12" />
+
+                    <Button Content="Log In"
+                            Command="{Binding LoginCommand}"
+                            Style="{StaticResource LoginButtonStyle}" />
+                    <Button Content="Log Out"
+                            Command="{Binding LogoutCommand}"
+                            Style="{StaticResource LoginButtonStyle}" />
+
+                    <TextBlock Text="{Binding LoginMessage}"
+                               Margin="0,12,0,0"
+                               Foreground="#b35c00"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
     </Grid>
 </UserControl>

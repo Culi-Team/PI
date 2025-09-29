@@ -60,12 +60,12 @@
         <StackPanel Orientation="Horizontal"
                 DockPanel.Dock="Right"
                 Grid.Column="2">
-            <!--<ui:ImageRadioButton
+            <ui:ImageRadioButton
                 GroupName="VMNavigateButton"
-                Command="{Binding LogoutNavigate}"
-                Content="{DynamicResource str_UserGroup}"
+                Content="{Binding CurrentUserLabel}"
+                Command="{Binding UserNavigate}"
                 DisabledImage="{StaticResource image_user_change_normal_dark}"
-                Image="{StaticResource image_user_change_selected}"/>-->
+                Image="{StaticResource image_user_change_selected}"/>
             
             <!-- Language Selection Button with Popup -->
             <!--<Grid>
