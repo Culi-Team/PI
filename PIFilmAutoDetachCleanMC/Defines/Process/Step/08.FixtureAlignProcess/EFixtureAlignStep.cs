@@ -16,7 +16,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_UnAlign,
         Cyl_UnAlign_Wait,
         SetFlagAlignDone,
-        Wait_TransferFixtureAlignDoneReceived,
         End,
     }
 }

@@ -362,6 +362,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     Log.Debug($"Robot Move Motion Command {ERobotCommand.S1_RDY} Done");
+                    Log.Debug("Wait Unload Align Request Unload");
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.Wait_UnloadAlignRequestUnload:
@@ -502,12 +503,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                             break;
 
                         case EPlasmaPrepareStep.Air_Valve_Open:
+                            Log.Debug("Plasma Air Valve Open");
                             _plasma.AirOpenClose(true);
                             await Task.Delay(500);
                             plasmaPrepareStep++;
                             break;
 
                         case EPlasmaPrepareStep.Plasma_On:
+                            Log.Debug("Plasma On");
                             _plasma.PlasmaOnOff(true);
                             await Task.Delay(500);
                             plasmaPrepareStep++;

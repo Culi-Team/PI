@@ -36,19 +36,18 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private bool FlagFixtureAlignLoadDoneReceived
+        {
+            set
+            {
+                _fixtureAlignOutput[(int)EFixtureAlignProcessOutput.FIXTURE_ALIGN_LOAD_DONE_RECEIVED] = value;
+            }
+        }
         private bool FlagFixtureAlignLoadDone
         {
             get
             {
                 return _fixtureAlignInput[(int)EFixtureAlignProcessInput.FIXTURE_ALIGN_LOAD_DONE];
-            }
-        }
-
-        private bool FlagTransferFixtureAlignDoneReceived
-        {
-            get
-            {
-                return _fixtureAlignInput[(int)EFixtureAlignProcessInput.TRANSFER_FIXTURE_ALIGN_DONE_RECEIVED];
             }
         }
 
@@ -280,6 +279,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EFixtureAlignRobotPlaceFixtureToAlignStep.Start:
                     Log.Debug("Robot Place Fixture To Align Start");
+                    Log.Debug("Clear Flag Fixture Align Load Done Received");
+                    FlagFixtureAlignLoadDoneReceived = false;
                     Step.RunStep++;
                     break;
                 case EFixtureAlignRobotPlaceFixtureToAlignStep.SetFlagRequestFixture:
@@ -296,6 +297,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Clear Flag Request Load");
                     FlagFixtureAlignReqLoad = false;
+
+                    Log.Debug("Set Flag Fixture Align Load Done Received");
+                    FlagFixtureAlignLoadDoneReceived = true;
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(_devices.Inputs.AlignFixtureDetect, true);
 #endif
@@ -389,15 +393,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     FlagFixtureAlignDone = true;
                     Step.RunStep++;
                     break;
-                case EFixtureAlignStep.Wait_TransferFixtureAlignDoneReceived:
-                    if (FlagTransferFixtureAlignDoneReceived == false)
-                    {
-                        break;
-                    }
-                    Log.Debug("Clear Flag Align Done");
-                    FlagFixtureAlignDone = false;
-                    Step.RunStep++;
-                    break;
                 case EFixtureAlignStep.End:
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
@@ -431,6 +426,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
+                    Log.Debug("Clear Flag Fixture Align Done");
+                    FlagFixtureAlignDone = false;
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(_devices.Inputs.AlignFixtureDetect, false);
 #endif

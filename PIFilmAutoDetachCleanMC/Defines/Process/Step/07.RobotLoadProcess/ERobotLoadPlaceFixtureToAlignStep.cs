@@ -21,7 +21,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Move_FixtureAlignReadyPosition_Wait,
 
         Set_FlagFixtureAlignLoadDone,
+        Wait_FixtureAlignLoadDoneReceived,
 
-        End
+        End,
+        Wait_NextSequence
     }
 }

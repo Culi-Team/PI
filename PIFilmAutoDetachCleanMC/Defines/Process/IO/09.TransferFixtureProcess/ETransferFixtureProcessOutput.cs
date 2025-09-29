@@ -9,6 +9,5 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ETransferFixtureProcessOutput
     {
         FIXTURE_TRANSFER_DONE,
-        TRANSFER_FIXTURE_ALIGN_DONE_RECEIVED,
     }
 }

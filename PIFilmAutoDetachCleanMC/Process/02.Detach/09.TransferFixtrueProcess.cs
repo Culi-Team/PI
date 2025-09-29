@@ -69,13 +69,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagTransferFixtureAlignDoneReceived
-        {
-            set
-            {
-                _transferFixtureOutput[(int)ETransferFixtureProcessOutput.TRANSFER_FIXTURE_ALIGN_DONE_RECEIVED] = value;
-            }
-        }
         private bool FlagRemoveFilmDone
         {
             get
@@ -337,7 +330,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessLoadStep.Start:
                     Log.Debug("Fixture Transfer Load Start");
                     Step.RunStep++;
-                    FlagTransferFixtureAlignDoneReceived = false;
                     Log.Debug("Wait Align and Detach Done");
                     break;
                 case ETransferFixtureProcessLoadStep.Wait_Align_And_Detach_Done:
@@ -347,8 +339,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
-                    Log.Debug("Set Flag Transfer Fixture Align Done Received");
-                    FlagTransferFixtureAlignDoneReceived = true;
                     _detachOutput[(int)EDetachProcessOutput.DETACH_DONE] = false;
                     Step.RunStep++;
                     break;
