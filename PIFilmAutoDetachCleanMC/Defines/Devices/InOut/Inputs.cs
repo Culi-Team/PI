@@ -43,7 +43,14 @@ namespace PIFilmAutoDetachCleanMC.Defines
             {
                 input.RaiseValueUpdated();
             }
+
+            OnPropertyChanged(nameof(IsSwitchKeyAutoMode));
+            OnPropertyChanged(nameof(IsSwitchKeyManualMode));
         }
+
+        public bool IsSwitchKeyAutoMode => AutoModeSwitchL.Value && AutoModeSwitchR.Value;
+
+        public bool IsSwitchKeyManualMode => ManualModeSwitchL.Value || ManualModeSwitchR.Value;
 
         public List<IDInput> All => _dInputDevice.Inputs;
 

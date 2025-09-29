@@ -547,23 +547,63 @@
                     Grid.Row="5"
                     Margin="6"
                     Grid.ColumnSpan="2"
+                    Grid.RowSpan="2"
                     BorderBrush="Gray"
                     BorderThickness="1">
-                <UniformGrid Rows="2">
-                    <Label Content="PROCESS MODE"
-                           HorizontalContentAlignment="Center"
-                           VerticalContentAlignment="Center"
-                           FontSize="20"
-                           Margin="0 0 0 5"
-                           FontWeight="Bold"
-                           Background="Beige" />
-                    <Label Content="{Binding MachineStatus.CurrentProcessMode}"
-                           FontSize="20"
-                           FontWeight="Bold"
-                           HorizontalContentAlignment="Center"
-                           VerticalContentAlignment="Center"
-                           Typography.Capitals="AllPetiteCaps"
-                           Background="AliceBlue" />
+                <UniformGrid Rows="3">
+                    <UniformGrid Rows="2">
+                        <Label Content="PROCESS MODE"
+                               HorizontalContentAlignment="Center"
+                               VerticalContentAlignment="Center"
+                               FontSize="20"
+                               Margin="0 0 0 5"
+                               FontWeight="Bold"
+                               Background="Beige" />
+                        <Label Content="{Binding MachineStatus.CurrentProcessMode}"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               HorizontalContentAlignment="Center"
+                               VerticalContentAlignment="Center"
+                               Typography.Capitals="AllPetiteCaps"
+                               Background="AliceBlue" />
+                    </UniformGrid>
+
+                    <UniformGrid Rows="2"
+                                 Margin="0 5 0 0">
+                        <Label Content="SWITCH KEY MODE"
+                               Background="Beige"
+                               FontSize="20"
+                               Margin="0 0 0 5"
+                               HorizontalContentAlignment="Center"
+                               VerticalContentAlignment="Center"
+                               FontWeight="Bold" />
+                        <UniformGrid Columns="2">
+                            <Label Content="AUTO"
+                                   FontSize="16"
+                                   Background="{Binding Devices.Inputs.IsSwitchKeyAutoMode,Converter={StaticResource BoolToBrushConverter}}"
+                                   BorderBrush="Gray"
+                                   BorderThickness="1"
+                                   FontWeight="SemiBold"
+                                   HorizontalContentAlignment="Center"
+                                   VerticalContentAlignment="Center" />
+                            <Label Content="MANUAL"
+                                   FontSize="16"
+                                   Background="{Binding Devices.Inputs.IsSwitchKeyManualMode,Converter={StaticResource BoolToBrushConverter}}"
+                                   BorderBrush="Gray"
+                                   BorderThickness="1"
+                                   FontWeight="SemiBold"
+                                   HorizontalContentAlignment="Center"
+                                   VerticalContentAlignment="Center" />
+                        </UniformGrid>
+                    </UniformGrid>
+
+                    <UniformGrid Columns="2"
+                                 Margin="0 20 0 10 ">
+                        <ui:ImageButton Content="Door Open" 
+                                FontSize="20"/>
+                        <ui:ImageButton Content="Buzzer Off" 
+                                FontSize="20"/>
+                    </UniformGrid>
                 </UniformGrid>
             </Border>
         </Grid>

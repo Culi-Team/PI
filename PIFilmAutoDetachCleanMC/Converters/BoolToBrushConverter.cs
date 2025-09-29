@@ -8,8 +8,12 @@ namespace PIFilmAutoDetachCleanMC.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool isActive = (bool)value;
-            return isActive ? Brushes.Lime : Brushes.Tomato; 
+            if(value is bool bValue)
+            {
+                return bValue ? Brushes.LightGreen : Brushes.White;
+            }
+
+            return Binding.DoNothing;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

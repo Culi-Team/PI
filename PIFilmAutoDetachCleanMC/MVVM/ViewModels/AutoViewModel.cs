@@ -76,6 +76,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 }
             }
         }
+
         public string MachineRunModeDisplay => MachineStatus.MachineRunModeDisplay;
         #endregion
 
