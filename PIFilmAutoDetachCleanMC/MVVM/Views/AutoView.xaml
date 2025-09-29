@@ -59,10 +59,21 @@
                     Value="0" />
         </Style>
 
+        <Style x:Key="EmergencyIndicatorImageStyle"
+               TargetType="Image">
+            <Setter Property="Width"
+                    Value="28" />
+            <Setter Property="Height"
+                    Value="28" />
+            <Setter Property="RenderOptions.BitmapScalingMode"
+                    Value="HighQuality" />
+        </Style>
+
         <cvt:InputOutputStopConverter x:Key="InputOutputStopConverter" />
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <cvt:BooleanOrToVisibilityConverter x:Key="BooleanOrToVisibilityConverter" />
         <cvt:DoorStatusToBrushConverter x:Key="DoorStatusToBrushConverter" />
+        <cvt:EmergencyStatusToImageConverter x:Key="EmergencyStatusToImageConverter" />
     </UserControl.Resources>
     <Grid Margin="10 0 0 0">
         <Grid.ColumnDefinitions>
@@ -162,6 +173,44 @@
                   Grid.RowSpan="3">
                 <Image Source="{StaticResource AutoViewImage}"
                        Stretch="Fill" />
+                <Canvas x:Name="EmergencyOverlay" Background="Transparent" Panel.ZIndex="1">
+                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}" Canvas.Left="146" Canvas.Top="13" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Image.Source>
+                            <Binding Path="Devices.Inputs.EmoLoadL.Value"
+                                     Converter="{StaticResource EmergencyStatusToImageConverter}" />
+                        </Image.Source>
+                    </Image>
+                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}" Canvas.Left="146" Canvas.Top="360">
+                        <Image.Source>
+                            <Binding Path="Devices.Inputs.EmoLoadR.Value"
+                                     Converter="{StaticResource EmergencyStatusToImageConverter}" />
+                        </Image.Source>
+                    </Image>
+                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}" Canvas.Left="746">
+                        <Image.Source>
+                            <Binding Path="Devices.Inputs.OpLEmo.Value"
+                                     Converter="{StaticResource EmergencyStatusToImageConverter}" />
+                        </Image.Source>
+                    </Image>
+                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}" Canvas.Left="746" Canvas.Top="360">
+                        <Image.Source>
+                            <Binding Path="Devices.Inputs.OpREmo.Value"
+                                     Converter="{StaticResource EmergencyStatusToImageConverter}" />
+                        </Image.Source>
+                    </Image>
+                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}" Canvas.Left="1535" Canvas.Top="13" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Image.Source>
+                            <Binding Path="Devices.Inputs.EmoUnloadL.Value"
+                                     Converter="{StaticResource EmergencyStatusToImageConverter}" />
+                        </Image.Source>
+                    </Image>
+                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}" Canvas.Left="1535" Canvas.Top="360" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Image.Source>
+                            <Binding Path="Devices.Inputs.EmoUnloadR.Value"
+                                     Converter="{StaticResource EmergencyStatusToImageConverter}" />
+                        </Image.Source>
+                    </Image>
+                </Canvas>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="17*" />
