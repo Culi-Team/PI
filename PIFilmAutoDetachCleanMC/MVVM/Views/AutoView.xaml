@@ -855,11 +855,13 @@
                     <UniformGrid Columns="2"
                                  Margin="0 20 0 10 ">
                         <ui:ImageButton Content="Buzzer Off"
+                                        Image="/EQX.UI;component/Resources/Images/alarm_selected.png"
                                         Command="{Binding BuzzerOffCommand}"
                                         FontSize="20" />
                         <ui:ImageButton Content="Door Open"
                                         Visibility="{Binding UserStore.CurrentUser.Permission,Converter={StaticResource UserPermissionToVisibilityConverter}}"
                                         Command="{Binding DoorOpenCommand}"
+                                        Image="/EQX.UI;component/Resources/Images/lock_selected.png"
                                         FontSize="20" />
                         
                     </UniformGrid>
