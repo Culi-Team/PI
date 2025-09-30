@@ -854,10 +854,14 @@
 
                     <UniformGrid Columns="2"
                                  Margin="0 20 0 10 ">
-                        <ui:ImageButton Content="Door Open"
-                                        FontSize="20" />
                         <ui:ImageButton Content="Buzzer Off"
+                                        Command="{Binding BuzzerOffCommand}"
                                         FontSize="20" />
+                        <ui:ImageButton Content="Door Open"
+                                        Visibility="{Binding UserStore.CurrentUser.Permission,Converter={StaticResource UserPermissionToVisibilityConverter}}"
+                                        Command="{Binding DoorOpenCommand}"
+                                        FontSize="20" />
+                        
                     </UniformGrid>
                 </UniformGrid>
             </Border>
@@ -918,11 +922,11 @@
                 <Button Content="Input Stop"
                         FontSize="18"
                         Command="{Binding InputStopCommand}"
-                        Background="{Binding IsInputStop, Converter={StaticResource InputOutputStopConverter}}" />
+                        Background="{Binding MachineStatus.IsInputStop, Converter={StaticResource InputOutputStopConverter}}" />
                 <Button Content="Output Stop"
                         FontSize="18"
                         Command="{Binding OutputStopCommand}"
-                        Background="{Binding IsOutputStop, Converter={StaticResource InputOutputStopConverter}}" />
+                        Background="{Binding MachineStatus.IsOutputStop, Converter={StaticResource InputOutputStopConverter}}" />
             </UniformGrid>
 
             <ui:ImageButton Grid.Row="7"

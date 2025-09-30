@@ -24,7 +24,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             Devices devices,
             RecipeSelector recipeSelector,
             DieHardK180Plasma plasma,
-            CWorkData workData)
+            CWorkData workData,
+            UserStore userStore)
         {
             MachineStatus = machineStatus;
             _navigationService = navigationService;
@@ -33,6 +34,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             RecipeSelector = recipeSelector;
             Plasma = plasma;
             WorkData = workData;
+            UserStore = userStore;
             MachineStatus.PropertyChanged += MachineStatusOnPropertyChanged;
 
             RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.CassetteSizeChanged += CassetteSizeChanged_Handler;
@@ -48,6 +50,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public RecipeSelector RecipeSelector { get; }
         public DieHardK180Plasma Plasma { get; }
         public CWorkData WorkData { get; }
+        public UserStore UserStore { get; }
 
         public string MachineRunModeDisplay => MachineStatus.MachineRunModeDisplay;
         #endregion
@@ -240,6 +243,28 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 return new RelayCommand(() =>
                 {
                     CassetteList.ResetCSTIn();
+                });
+            }
+        }
+
+        public ICommand DoorOpenCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    Devices.Outputs.DoorOpen.Value = true;
+                });
+            }
+        }
+
+        public ICommand BuzzerOffCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    Devices.Outputs.TowerBuzzer.Value = false;
                 });
             }
         }

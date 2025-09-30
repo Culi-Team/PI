@@ -191,7 +191,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 _ => "Admin"
             };
 
-            CurrentUserLabel = $"{_userStore.UserName} ({permissionLabel})";
+            CurrentUserLabel = $"{permissionLabel}";
         }
 
         private void _userStore_UserChanged()

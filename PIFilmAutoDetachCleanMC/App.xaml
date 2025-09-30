@@ -33,6 +33,7 @@
                     <cvt:DoubleToIntConveter x:Key="DoubleToIntConveter"/>
                     <cvt:BoolToBrushConverter x:Key="BoolToBrushConverter"/>
                     <cvt:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+                    <cvt:UserPermissionToVisibilityConverter x:Key="UserPermissionToVisibilityConverter"/>
                     <cvt:BooleanToBackgroundUnitInitConverter x:Key="BooleanToBackgroundUnitInitConverter"/>
                     <uiCvt:CylinderTypeToButtonNameConverter x:Key="CylinderTypeToButtonNameConverter"/>
                     <cvt:LanguageToDisplayNameConverter x:Key="LanguageToDisplayNameConverter"/>
