@@ -106,6 +106,10 @@
     <!-- 04. UNLOAD IMAGES  -->
     <BitmapImage x:Key="UnloadTransferImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/OutShuttle.png"/>
+    <BitmapImage x:Key="UnloadTransferRightImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/OutShuttleRightDetach.png"/>
+    <BitmapImage x:Key="UnloadTransferLeftImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/OutShuttleLeftDetach.png"/>
     <BitmapImage x:Key="UnloadRobotImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png"/>
     <BitmapImage x:Key="UnloadRobotDetachImage" 
