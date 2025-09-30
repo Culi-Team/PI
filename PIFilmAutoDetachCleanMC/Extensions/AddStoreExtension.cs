@@ -19,7 +19,6 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
                 services.AddSingleton<UserStore>();
-                services.AddSingleton<IUserAccountService, UserAccountService>();
                 services.AddSingleton<ProcessInitSelect>();
                 services.AddSingleton<ICellColorRepository,CellColorRepository>();
                 services.AddSingleton<CellStatusToColorConverter>();

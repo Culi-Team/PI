@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         public LoginView()
         {
             InitializeComponent();
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(this.DataContext is LoginViewModel loginViewModel)
+            {
+                loginViewModel.LoginCommand.Execute(passwordBox.Password);
+            }
         }
     }
 }

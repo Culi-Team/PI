@@ -19,8 +19,6 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddSingleton<IConfiguration>(configuration);
 
                 #region Configue Log
-
-
                 FileInfo fileInfo = new FileInfo(configuration.GetValue<string>("Files:LogConfigFile"));
                 XmlConfigurator.ConfigureAndWatch(fileInfo);
                 #endregion
