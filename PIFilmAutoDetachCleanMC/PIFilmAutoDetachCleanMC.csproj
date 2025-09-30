@@ -8,6 +8,7 @@
     <UseWPF>true</UseWPF>
     <Configurations>Debug;Release;Simulation</Configurations>
     <BaseOutputPath></BaseOutputPath>
+    <ApplicationIcon>TopIcon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Simulation|AnyCPU'">
@@ -74,6 +75,10 @@
     <None Remove="Resource\Image\04.Unload\UnloadAlignDetach.png" />
     <None Remove="Resource\Image\04.Unload\UnloadRobotDetach.png" />
     <None Remove="Resource\Image\Machine.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="TopIcon.ico" />
   </ItemGroup>
 
   <ItemGroup>

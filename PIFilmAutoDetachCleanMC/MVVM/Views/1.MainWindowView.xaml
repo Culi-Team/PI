@@ -10,6 +10,8 @@
         WindowStartupLocation="CenterOwner"
         Width="1920"
         Height="1080"
+        ShowInTaskbar="True"
+        Icon="/EQX.UI;component/Resources/Images/TopIcon.ico"
         AllowsTransparency="True"
         WindowState="Maximized"
         d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel}"
