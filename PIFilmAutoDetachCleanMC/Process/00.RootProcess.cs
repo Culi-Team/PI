@@ -704,6 +704,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                         return;
                     }
 
+                    if (_machineStatus.InitializeDone == false)
+                    {
+                        MessageBoxEx.ShowDialog("Machine Need To Be Initialize");
+                        _machineStatus.OPCommand = EOperationCommand.None;
+                        return;
+                    }
+
                     Sequence = ESequence.AutoRun;
 
                     foreach (var process in Childs!)
@@ -790,6 +797,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 if (this.IsInAlarmMode()) return;
 
+                _machineStatus.InitializeDone = false;
+
                 Log.Error($"{alarmSource} raising alarm [#{(int)(EAlarm)alarmId}] {(EAlarm)alarmId}");
                 raisedAlarmCode = alarmId;
                 ProcessMode = EProcessMode.ToAlarm;
@@ -803,6 +812,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 if (this.IsInWarningMode() || this.IsInAlarmMode()) return;
 
                 Log.Warn($"{warningSource} raising warning [#{(int)(EWarning)warningId}] {(EWarning)warningId}");
+
+                _machineStatus.InitializeDone = false;
 
                 raisedWarningCode = warningId;
                 ProcessMode = EProcessMode.ToWarning;
