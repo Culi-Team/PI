@@ -39,6 +39,7 @@
             <PasswordBox VerticalContentAlignment="Center"
                          HorizontalContentAlignment="Center"
                          Name="passwordBox"
+                         PreviewMouseDown="passwordBox_PreviewMouseDown"
                          Height="40">
                 <PasswordBox.Style>
                     <Style TargetType="{x:Type PasswordBox}">

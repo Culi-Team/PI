@@ -12,14 +12,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
     {
         private readonly UserStore _userStore;
         private readonly INavigationService _navigationService;
-        private string _loginMessage;
         private ObservableCollection<string> accesses;
-
-        public string LoginMessage
-        {
-            get { return _loginMessage; }
-            set { _loginMessage = value; }
-        }
 
         public ObservableCollection<string> Accesses
         {

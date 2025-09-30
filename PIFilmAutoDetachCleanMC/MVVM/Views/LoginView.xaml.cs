@@ -1,4 +1,5 @@
-﻿using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
+﻿using EQX.UI.Controls;
+using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             {
                 loginViewModel.LoginCommand.Execute(passwordBox.Password);
             }
+        }
+
+        private void passwordBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            VirtualKeyboard virtualKeyboard = new VirtualKeyboard();
+            if(virtualKeyboard.ShowDialog() == true)
+            {
+                passwordBox.Password = virtualKeyboard.InputText;
+            }    
         }
     }
 }
