@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum ECleanProcessToRunStep
+    public enum ECleanPreProcessStep
     {
         Start,
-        FeedingRollerDetect_Check,
-        Wiper_Check,
-        Set_Pressure,
-        Clear_Flags,
+        Wiper_Detect_Check,
+        PumpLeak_Detect_Check,
+        AlcoholLeak_Detect_Check,
         End
     }
 }

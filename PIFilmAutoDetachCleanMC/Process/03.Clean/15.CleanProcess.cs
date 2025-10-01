@@ -284,16 +284,31 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private bool IsVacDetect => VacDetect.Value;
 
-        private bool IsLeakDetect
+        private bool IsPumpLeakDetect
         {
             get
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanLeftPumpLeakDetect) || _machineStatus.IsSatisfied(_devices.Inputs.WetCleanLeftAlcoholLeakDetect),
-                    EClean.WETCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanRightPumpLeakDetect) || _machineStatus.IsSatisfied(_devices.Inputs.WetCleanRightAlcoholLeakDetect),
-                    EClean.AFCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanLeftPumpLeakDetect) || _machineStatus.IsSatisfied(_devices.Inputs.AfCleanLeftAlcoholLeakDetect),
-                    EClean.AFCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanRightPumpLeakDetect) || _machineStatus.IsSatisfied(_devices.Inputs.AfCleanRightAlcoholLeakDetect),
+                    EClean.WETCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanLeftPumpLeakDetect),
+                    EClean.WETCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanRightPumpLeakDetect),
+                    EClean.AFCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanLeftPumpLeakDetect),
+                    EClean.AFCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanRightPumpLeakDetect),
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+        }
+
+        private bool IsAlcoholLeakDetect
+        {
+            get
+            {
+                return cleanType switch
+                {
+                    EClean.WETCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanLeftAlcoholLeakDetect),
+                    EClean.WETCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.WetCleanRightAlcoholLeakDetect),
+                    EClean.AFCleanLeft => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanLeftAlcoholLeakDetect),
+                    EClean.AFCleanRight => _machineStatus.IsSatisfied(_devices.Inputs.AfCleanRightAlcoholLeakDetect),
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -456,6 +471,72 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
+        public override bool PreProcess()
+        {
+            if(ProcessMode != EProcessMode.Run) return base.PreProcess();
+
+            switch ((ECleanPreProcessStep)Step.PreProcessStep)
+            {
+                case ECleanPreProcessStep.Start:
+                    Step.PreProcessStep++;
+                    break;
+                case ECleanPreProcessStep.Wiper_Detect_Check:
+                    if(WiperCleanDetect1 == false ||  WiperCleanDetect2 == false || WiperCleanDetect3 == false)
+                    {
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_WiperClean_NotDetect,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_WiperClean_NotDetect,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_WiperClean_NotDetect,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_WiperClean_NotDetect,
+                            _ => null
+                        };
+
+                        RaiseWarning((int)warning!);
+                        break;
+                    }
+                    break;
+                case ECleanPreProcessStep.PumpLeak_Detect_Check:
+                    if(IsPumpLeakDetect)
+                    {
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_PumpLeak_Detect,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_PumpLeak_Detect,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_PumpLeak_Detect,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_PumpLeak_Detect,
+                            _ => null
+                        };
+                        RaiseWarning((int)warning!);
+                        break;
+                    }
+                    Step.PreProcessStep++;
+                    break;
+                case ECleanPreProcessStep.AlcoholLeak_Detect_Check:
+                    if(IsAlcoholLeakDetect)
+                    {
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_AlcoholLeak_Detect,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_AlcoholLeak_Detect,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_AlcoholLeak_Detect,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_AlcoholLeak_Detect,
+                            _ => null
+                        };
+                        RaiseWarning((int)warning!);
+                        break;
+                    }
+                    Step.PreProcessStep++;
+                    break;
+                case ECleanPreProcessStep.End:
+                    Step.PreProcessStep = (int)ECleanPreProcessStep.Start;
+                    break;
+                default:
+                    break;
+            }
+            return base.PreProcess();
+        }
+
         public override bool ProcessOrigin()
         {
             switch ((ECleanOriginStep)Step.OriginStep)
@@ -564,6 +645,29 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Y Axis Origin Done");
                     Log.Debug("T Axis Origin Done");
                     Log.Debug("Feeding Axis Origin Done");
+                    Step.OriginStep++;
+                    break;
+                case ECleanOriginStep.SyringePump_Origin:
+                    Log.Debug("Syringe Pump Oriign");
+                    SyringePump.Initialize();
+                    Thread.Sleep(100);
+                    Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => SyringePump.IsReady);
+                    Step.OriginStep++;
+                    break;
+                case ECleanOriginStep.SyringePump_Origin_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        EAlarm? alarm = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EAlarm.WETCleanLeft_SyringePump_Origin_Fail,
+                            EClean.WETCleanRight => EAlarm.WETCleanRight_SyringePump_Origin_Fail,
+                            EClean.AFCleanLeft => EAlarm.AFCleanLeft_SyringePump_Origin_Fail,
+                            EClean.AFCleanRight => EAlarm.AFCleanRight_SyringePump_Origin_Fail,
+                            _ => null
+                        };
+                        RaiseAlarm((int)alarm!);
+                        break;
+                    }
                     Step.OriginStep++;
                     break;
                 case ECleanOriginStep.End:
@@ -771,6 +875,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)warning!);
                         break;
                     }
+                    Step.ToRunStep++;
+                    break;
+                case ECleanProcessToRunStep.Set_Pressure:
+                    Log.Debug($"Set Pressure : {cleanRecipe.CylinderPushPressure}");
+                    Regulator.SetPressure(cleanRecipe.CylinderPushPressure);
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.Clear_Flags:

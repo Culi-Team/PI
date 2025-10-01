@@ -13,6 +13,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         PushCyl_Up_Wait,
         AxisOrigin,
         AxisOrigin_Wait,
+        SyringePump_Origin,
+        SyringePump_Origin_Wait,
         End
     }
 }
