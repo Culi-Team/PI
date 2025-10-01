@@ -258,7 +258,13 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
                 <DataGrid Grid.Row="0"
+                          Grid.Column="1"
                           ItemsSource="{Binding AllMotions}"
                           x:Name="MotionDataGrid"
                           Style="{StaticResource DataViewDataGridStyle}">
@@ -299,7 +305,7 @@
                                     <TextBox Text="{Binding Parameter.Velocity, StringFormat={}{0:0.000}}"
                                              MouseUp="EditSpeed_Click"
                                              Tag="Velocity"
-                                             ToolTip="mm/s"
+                                             ToolTip="[mm/s]"
                                              Style="{StaticResource TextBoxWithNumberLeftStyle}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -313,7 +319,7 @@
                                     <TextBox Text="{Binding Parameter.Acceleration, StringFormat={}{0:0.000}}"
                                              MouseUp="EditSpeed_Click"
                                              Tag="Acceleration"
-                                             ToolTip="mm/s²"
+                                             ToolTip="[mm/s²]"
                                              Style="{StaticResource TextBoxWithNumberLeftStyle}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -327,7 +333,7 @@
                                     <TextBox Text="{Binding Parameter.Deceleration, StringFormat={}{0:0.000}}"
                                              MouseUp="EditSpeed_Click"
                                              Tag="Deceleration"
-                                             ToolTip="mm/s²"
+                                             ToolTip="[mm/s²]"
                                              Style="{StaticResource TextBoxWithNumberLeftStyle}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -336,8 +342,9 @@
                 </DataGrid>
                 
                 <StackPanel Grid.Row="1" 
+                            Grid.Column="1"
                             Orientation="Horizontal" 
-                            HorizontalAlignment="Right" 
+                            HorizontalAlignment="Center" 
                             Margin="5">
                     <ui:ImageButton Content="{DynamicResource str_Save}"
                                     Command="{Binding SaveMotionConfigCommand}"
