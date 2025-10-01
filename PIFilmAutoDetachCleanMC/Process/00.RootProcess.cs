@@ -22,7 +22,6 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private readonly IAlertService _warningService;
         private readonly object _lockAlarm = new object();
-        private bool _lightCurtainMutedByByPass;
 
         private bool DoorSensor
         {
@@ -108,28 +107,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 CheckRealTimeAlarmStatus();
             }
 
-            //if (_machineStatus.IsByPassMode)
-            //{
-            //    EnsureByPassLightCurtainMuting();
-            //}
-            //else
-            //{
-            //    ReleaseByPassLightCurtainMuting();
-            //}
-
             if (ProcessMode == EProcessMode.ToOrigin || ProcessMode == EProcessMode.Origin || ProcessMode == EProcessMode.ToRun || ProcessMode == EProcessMode.Run)
             {
-                //if (!_machineStatus.IsByPassMode)
-                //{
-                //    if (!IsLightCurtainLeftDetect)
-                //    {
-                //        RaiseAlarm((int)EAlarm.LightCurtainLeftDetected);
-                //    }
-                //    if (!IsLightCurtainRightDetect)
-                //    {
-                //        RaiseAlarm(alarmId: (int)EAlarm.LightCurtainRightDetected);
-                //    }
-                //}
                 if (!IsLightCurtainLeftDetect)
                 {
                     RaiseAlarm((int)EAlarm.LightCurtainLeftDetected);
@@ -202,37 +181,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             // 3. HANDLE USER OPERATION COMMAND
             HandleOPCommand(command);
             return base.PreProcess();
-        }
-
-        //private void EnsureByPassLightCurtainMuting()
-        //{
-        //    if (!_lightCurtainMutedByByPass)
-        //    {
-        //        _lightCurtainMutedByByPass = true;
-        //        Log.Warn("ByPass mode active - forcing light curtain muting outputs");
-        //    }
-
-        //    SetLightCurtainMutingOutputs(true);
-        //}
-
-        //private void ReleaseByPassLightCurtainMuting()
-        //{
-        //    if (!_lightCurtainMutedByByPass)
-        //    {
-        //        return;
-        //    }
-
-        //    _lightCurtainMutedByByPass = false;
-        //    Log.Info("ByPass mode released - returning light curtain muting outputs to normal control.");
-        //    SetLightCurtainMutingOutputs(false);
-        //}
-
-        private void SetLightCurtainMutingOutputs(bool value)
-        {
-            _devices.Outputs.InCstLightCurtainMuting1.Value = value;
-            _devices.Outputs.InCstLightCurtainMuting2.Value = value;
-            _devices.Outputs.OutCstLightCurtainMuting1.Value = value;
-            _devices.Outputs.OutCstLightCurtainMuting2.Value = value;
         }
 
         public override bool ProcessToAlarm()
@@ -308,7 +256,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ERootProcessToOriginStep.AutoMode_Check:
-                    if(IsAutoMode == false || IsManualMode == true)
+                    if (IsAutoMode == false || IsManualMode == true)
                     {
                         RaiseWarning((int)EWarning.ManualModeSwitch);
                         break;
@@ -400,7 +348,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ERootProcessToRunStep.AutoMode_Check:
-                    if(IsAutoMode == false || IsManualMode == true)
+                    if (IsAutoMode == false || IsManualMode == true)
                     {
                         RaiseWarning((int)EWarning.ManualModeSwitch);
                         break;
@@ -600,7 +548,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         }
 
-               //private EOperationCommand GetUserCommand()
+        //private EOperationCommand GetUserCommand()
         //{
         //    if (_systemState.CommandState.HMICommand == EOperationCommand.Stop ||
         //        _devices.Inputs.StopSW.Value == true)
