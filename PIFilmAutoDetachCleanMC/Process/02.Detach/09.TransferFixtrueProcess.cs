@@ -24,6 +24,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDInputDevice _transferFixtureInput;
         private readonly IDOutputDevice _transferFixtureOutput;
         private readonly IDOutputDevice _detachOutput;
+        private readonly MachineStatus _machineStatus;
 
         private IMotion TransferFixtureYAxis => _devices.MotionsInovance.FixtureTransferYAxis;
         private Inputs Inputs => _devices.Inputs;
@@ -106,6 +107,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         public TransferFixtrueProcess(Devices devices,
             CommonRecipe commonRecipe,
             TransferFixtureRecipe transferFixtureRecipe,
+            MachineStatus machineStatus,
             [FromKeyedServices("TransferFixtureInput")] IDInputDevice transferFixtureInput,
             [FromKeyedServices("TransferFixtureOutput")] IDOutputDevice transferFixtureOutput,
             [FromKeyedServices("DetachOutput")] IDOutputDevice detachOutput)
@@ -113,6 +115,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             _devices = devices;
             _commonRecipe = commonRecipe;
             _transferFixtureRecipe = transferFixtureRecipe;
+            _machineStatus = machineStatus;
             _transferFixtureInput = transferFixtureInput;
             _transferFixtureOutput = transferFixtureOutput;
             _detachOutput = detachOutput;
@@ -132,6 +135,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Fixture Detect Check");
                     if (IsFixtureDetect1 || IsFixtureDetect2)
                     {
+                        if (_machineStatus.IsDryRunMode)
+                        {
+                            Step.RunStep++;
+                            break;
+                        }
                         RaiseWarning((int)EWarning.TransferFixtureOriginFixtureDetect);
                         break;
                     }

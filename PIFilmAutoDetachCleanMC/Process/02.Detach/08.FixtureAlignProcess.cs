@@ -355,6 +355,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EFixtureAlignStep.TiltCheck:
                     if (IsFixtureTiltDetect)
                     {
+                        if (_machineStatus.IsDryRunMode)
+                        {
+                            Step.RunStep++;
+                            break;
+                        }
                         RaiseWarning((int)EWarning.FixtureAlignTiltDetect);
                         break;
                     }
@@ -365,6 +370,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EFixtureAlignStep.ReverseCheck:
                     if (IsFixtureReverseDetect)
                     {
+                        if (_machineStatus.IsDryRunMode)
+                        {
+                            Step.RunStep++;
+                            break;
+                        }
                         RaiseWarning((int)EWarning.FixtureAlignReverseDetect);
                         break;
                     }

@@ -248,6 +248,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadOriginStep.Fixture_Detect_Check:
                     if (IsFixtureDetect)
                     {
+                        if (_machineStatus.IsDryRunMode)
+                        {
+                            Step.RunStep++;
+                            break;
+                        }
                         RaiseWarning((int)EWarning.RobotLoadOriginFixtureDetect);
                         break;
                     }

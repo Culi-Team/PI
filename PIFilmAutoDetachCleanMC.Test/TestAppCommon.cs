@@ -18,6 +18,7 @@ namespace PIFilmAutoDetachCleanMC.Test
                 .AddIODevices()
                 .AddProcessIO()
                 .AddMotionDevices()
+                .AddSyringePumpDevices()
                 .AddCylinderDevices()
                 .AddRegulatorDevices()
                 .AddRobotDevices()
