@@ -11,6 +11,7 @@
         DoorOpen = 3,
         LightCurtainLeftDetected = 4,
         LightCurtainRightDetected = 5,
+        EmergencyStopActivated = 6,
 
         //InConveyor
         InConveyor = 1000,

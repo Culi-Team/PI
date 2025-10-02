@@ -71,6 +71,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool IsLightCurtainLeftDetect => _devices.Inputs.OutCstLightCurtainAlarmDetect.Value;
         private bool IsLightCurtainRightDetect => _devices.Inputs.InCstLightCurtainAlarmDetect.Value;
         private bool IsMainAirSupplied => _devices.Inputs.MainAir1.Value && _devices.Inputs.MainAir2.Value && _devices.Inputs.MainAir3.Value;
+        private bool IsEmergencyStopActive =>
+            _devices.Inputs.EmoLoadL.Value ||
+            _devices.Inputs.EmoLoadR.Value ||
+            _devices.Inputs.OpLEmo.Value ||
+            _devices.Inputs.OpREmo.Value ||
+            _devices.Inputs.EmoUnloadL.Value ||
+            _devices.Inputs.EmoUnloadR.Value;
         #endregion
 
         #region Constructor
@@ -540,6 +547,12 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void CheckRealTimeAlarmStatus()
         {
+            if (IsEmergencyStopActive)
+            {
+                RaiseAlarm((int)EAlarm.EmergencyStopActivated);
+                return;
+            }
+
             if (IsMainAirSupplied == false)
             {
                 RaiseAlarm((int)EAlarm.MainAirNotSupplied);
