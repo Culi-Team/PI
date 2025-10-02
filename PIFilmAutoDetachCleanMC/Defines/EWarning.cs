@@ -119,6 +119,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         RemoveFilm_PusherCylinder2_Down_Fail,
         RemoveFilm_ClampCylinder_Clamp_Fail,
         RemoveFilm_ClampCylinder_UnClamp_Fail,
+        RemoveFilm_Full_Tape,
 
         //Glass Transfer
         GlassTransfer = 12000,

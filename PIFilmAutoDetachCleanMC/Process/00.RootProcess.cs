@@ -548,6 +548,12 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void CheckRealTimeAlarmStatus()
         {
+            if (_devices.Inputs.RemoveZoneFullTapeDetect.Value)
+            {
+                RaiseWarning((int)EWarning.RemoveFilm_Full_Tape);
+                return;
+            }
+
             if (!IsPowerMCOn)
             {
                 RaiseAlarm((int)EAlarm.PowerMCOff);
@@ -565,7 +571,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 RaiseAlarm((int)EAlarm.MainAirNotSupplied);
                 return;
             }
-
         }
 
         //private EOperationCommand GetUserCommand()
