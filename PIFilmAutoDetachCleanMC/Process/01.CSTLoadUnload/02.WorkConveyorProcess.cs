@@ -4,6 +4,7 @@ using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
 using EQX.Core.Units;
+using EQX.Device.SpeedController;
 using EQX.InOut;
 using EQX.InOut.Virtual;
 using EQX.Process;
@@ -193,15 +194,15 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Rollers
-        private ISpeedController RollerSupport1 => port == EPort.Right ? _devices.SpeedControllerList.SupportConveyor1Roller :
+        private SD201SSpeedController RollerSupport1 => port == EPort.Right ? _devices.SpeedControllerList.SupportConveyor1Roller :
                                                                         _devices.SpeedControllerList.SupportConveyor3Roller;
 
-        private ISpeedController RollerSupport2 => port == EPort.Right ? _devices.SpeedControllerList.SupportConveyor2Roller :
+        private SD201SSpeedController RollerSupport2 => port == EPort.Right ? _devices.SpeedControllerList.SupportConveyor2Roller :
                                                                         _devices.SpeedControllerList.SupportConveyor4Roller;
 
-        private ISpeedController Roller1 => port == EPort.Right ? _devices.SpeedControllerList.InWorkConveyorRoller1 :
+        private SD201SSpeedController Roller1 => port == EPort.Right ? _devices.SpeedControllerList.InWorkConveyorRoller1 :
                                                                  _devices.SpeedControllerList.OutWorkConveyorRoller1;
-        private ISpeedController Roller2 => port == EPort.Right ? _devices.SpeedControllerList.InWorkConveyorRoller2 :
+        private SD201SSpeedController Roller2 => port == EPort.Right ? _devices.SpeedControllerList.InWorkConveyorRoller2 :
                                                                  _devices.SpeedControllerList.OutWorkConveyorRoller2;
         #endregion
 

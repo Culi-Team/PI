@@ -19,7 +19,6 @@ using EQX.Device.Regulator;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
 using EQX.InOut.InOut;
 using EQX.Core.TorqueController;
-using EQX.Motion.Torque;
 using EQX.Core.Robot;
 using EQX.Motion.Robot;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
@@ -29,6 +28,7 @@ using EQX.Device.SyringePump;
 using EQX.InOut.InOut.Analog;
 using EQX.InOut.ByVendor.Ajinextek;
 using EQX.InOut.ByVendor.Inovance;
+using EQX.Device.Torque;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -216,16 +216,12 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     var torqueCtlList = Enum.GetNames(typeof(ETorqueController)).ToList();
                     var torqueCtlIndex = (int[])Enum.GetValues(typeof(ETorqueController));
 
-                    var list = new List<ITorqueController>();
+                    var list = new List<DX3000TorqueController>();
 
                     for (int i = 0; i < torqueCtlList.Count; i++)
                     {
-#if SIMULATION
-                        list.Add(new SimulationTorqueController(torqueCtlIndex[i], torqueCtlList[i]));
-#else
                         list.Add(new DX3000TorqueController(torqueCtlIndex[i], torqueCtlList[i], modbusCommunication));
 
-#endif
                     }
 
                     return new TorqueControllerList(list);
@@ -251,15 +247,12 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     var speedCtlList = Enum.GetNames(typeof(ESpeedController)).ToList();
                     var speedCtlIndex = (int[])Enum.GetValues(typeof(ESpeedController));
 
-                    var speedcontrollerList = new List<ISpeedController>();
+                    var speedcontrollerList = new List<SD201SSpeedController>();
 
                     for (int i = 0; i < speedCtlList.Count; i++)
                     {
-#if SIMULATION
-                        speedcontrollerList.Add(new SimulationSpeedController(speedCtlIndex[i], speedCtlList[i]));
-#else
-                        speedcontrollerList.Add(new SD201SSpeedController(speedCtlIndex[i], speedCtlList[i]) { ModbusCommunication = modbusCommunication });
-#endif
+
+                        speedcontrollerList.Add(new SD201SSpeedController(speedCtlIndex[i], speedCtlList[i],modbusCommunication));
                     }
                     return new SpeedControllerList(speedcontrollerList);
                 });

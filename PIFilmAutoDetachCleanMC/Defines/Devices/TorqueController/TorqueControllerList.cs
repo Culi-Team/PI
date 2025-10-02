@@ -1,6 +1,6 @@
 ﻿using EQX.Core.Communication.Modbus;
 using EQX.Core.TorqueController;
-using EQX.Motion.Torque;
+using EQX.Device.Torque;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,20 +12,20 @@ namespace PIFilmAutoDetachCleanMC.Defines
 {
     public class TorqueControllerList
     {
-        public List<ITorqueController> All { get; }
-        public TorqueControllerList(List<ITorqueController> torqueControllerList)
+        public List<DX3000TorqueController> All { get; }
+        public TorqueControllerList(List<DX3000TorqueController> torqueControllerList)
         {
             All = torqueControllerList;
         }
 
-        public ITorqueController VinylCleanWinder => All.First(m => m.Id == (int)ETorqueController.VinylClean_Winder);
-        public ITorqueController WETCleanLeftWinder => All.First(m => m.Id == (int)ETorqueController.WETClean_Left_Winder);
-        public ITorqueController WETCleanLeftUnWinder => All.First(m => m.Id == (int)ETorqueController.WETClean_Left_UnWinder);
-        public ITorqueController WETCleanRightWinder => All.First(m => m.Id == (int)ETorqueController.WETClean_Right_Winder);
-        public ITorqueController WETCleanRightUnWinder => All.First(m => m.Id == (int)ETorqueController.WETClean_Right_UnWinder);
-        public ITorqueController AFCleanLeftWinder => All.First(m => m.Id == (int)ETorqueController.AFClean_Left_Winder);
-        public ITorqueController AFCleanLeftUnWinder => All.First(m => m.Id == (int)ETorqueController.AFClean_Left_UnWinder);
-        public ITorqueController AFCleanRightWinder => All.First(m => m.Id == (int)ETorqueController.AFClean_Right_Winder);
-        public ITorqueController AFCleanRightUnWinder => All.First(m => m.Id == (int)ETorqueController.AFClean_Right_UnWinder);
+        public DX3000TorqueController VinylCleanWinder => All.First(m => m.Id == (int)ETorqueController.VinylClean_Winder);
+        public DX3000TorqueController WETCleanLeftWinder => All.First(m => m.Id == (int)ETorqueController.WETClean_Left_Winder);
+        public DX3000TorqueController WETCleanLeftUnWinder => All.First(m => m.Id == (int)ETorqueController.WETClean_Left_UnWinder);
+        public DX3000TorqueController WETCleanRightWinder => All.First(m => m.Id == (int)ETorqueController.WETClean_Right_Winder);
+        public DX3000TorqueController WETCleanRightUnWinder => All.First(m => m.Id == (int)ETorqueController.WETClean_Right_UnWinder);
+        public DX3000TorqueController AFCleanLeftWinder => All.First(m => m.Id == (int)ETorqueController.AFClean_Left_Winder);
+        public DX3000TorqueController AFCleanLeftUnWinder => All.First(m => m.Id == (int)ETorqueController.AFClean_Left_UnWinder);
+        public DX3000TorqueController AFCleanRightWinder => All.First(m => m.Id == (int)ETorqueController.AFClean_Right_Winder);
+        public DX3000TorqueController AFCleanRightUnWinder => All.First(m => m.Id == (int)ETorqueController.AFClean_Right_UnWinder);
     }
 }

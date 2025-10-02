@@ -2,7 +2,9 @@
 using EQX.Core.Device.Regulator;
 using EQX.Core.Device.SyringePump;
 using EQX.Core.TorqueController;
+using EQX.Device.SpeedController;
 using EQX.Device.SyringePump;
+using EQX.Device.Torque;
 using log4net;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System;
@@ -40,8 +42,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             Name = name;
         }
 
-        public ITorqueController Winder { get; set; }
-        public ITorqueController UnWinder { get; set; }
+        public DX3000TorqueController Winder { get; set; }
+        public DX3000TorqueController UnWinder { get; set; }
         public ISyringePump SyringePump { get; set; }
         public IRegulator Regulator { get; set; }
 

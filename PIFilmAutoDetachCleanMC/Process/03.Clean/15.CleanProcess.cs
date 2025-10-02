@@ -4,6 +4,7 @@ using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Core.Sequence;
 using EQX.Core.TorqueController;
+using EQX.Device.Torque;
 using EQX.InOut;
 using EQX.InOut.Virtual;
 using EQX.Process;
@@ -57,7 +58,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private ITorqueController UnWinder
+        private DX3000TorqueController UnWinder
         {
             get
             {
@@ -72,7 +73,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private ITorqueController Winder
+        private DX3000TorqueController Winder
         {
             get
             {

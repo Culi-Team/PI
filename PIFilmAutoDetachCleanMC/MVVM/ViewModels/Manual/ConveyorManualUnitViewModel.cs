@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Device.SpeedController;
 using EQX.Core.InOut;
+using EQX.Device.SpeedController;
 using EQX.UI.Controls;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
         {
         }
 
-        public ObservableCollection<ISpeedController> Rollers { get; set; }
+        public ObservableCollection<SD201SSpeedController> Rollers { get; set; }
 
         public ICommand ConveyorRunCommand
         {

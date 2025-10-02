@@ -1,6 +1,7 @@
 ﻿using EQX.Core.Device.SpeedController;
 using EQX.Core.InOut;
 using EQX.Core.Motion;
+using EQX.Device.SpeedController;
 using EQX.Process;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
@@ -51,9 +52,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Rollers
-        private ISpeedController RollerSup => _devices.SpeedControllerList.SupportConveyor4Roller;
-        private ISpeedController Roller1 => _devices.SpeedControllerList.OutWorkConveyorRoller1;
-        private ISpeedController Roller2 => _devices.SpeedControllerList.OutWorkConveyorRoller2;
+        private SD201SSpeedController RollerSup => _devices.SpeedControllerList.SupportConveyor4Roller;
+        private SD201SSpeedController Roller1 => _devices.SpeedControllerList.OutWorkConveyorRoller1;
+        private SD201SSpeedController Roller2 => _devices.SpeedControllerList.OutWorkConveyorRoller2;
         #endregion
     }
 }

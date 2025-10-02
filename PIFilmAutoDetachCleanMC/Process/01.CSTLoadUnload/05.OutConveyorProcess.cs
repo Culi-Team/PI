@@ -1,6 +1,7 @@
 ﻿using EQX.Core.Device.SpeedController;
 using EQX.Core.InOut;
 using EQX.Core.Sequence;
+using EQX.Device.SpeedController;
 using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
@@ -65,8 +66,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Rollers
-        private ISpeedController Roller1 => _devices.SpeedControllerList.OutConveyorRoller1;
-        private ISpeedController Roller2 => _devices.SpeedControllerList.OutConveyorRoller2;
+        private SD201SSpeedController Roller1 => _devices.SpeedControllerList.OutConveyorRoller1;
+        private SD201SSpeedController Roller2 => _devices.SpeedControllerList.OutConveyorRoller2;
 
         #endregion
 
