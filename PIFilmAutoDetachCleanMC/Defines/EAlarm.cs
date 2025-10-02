@@ -12,6 +12,7 @@
         LightCurtainLeftDetected = 4,
         LightCurtainRightDetected = 5,
         EmergencyStopActivated = 6,
+        PowerMCOff = 7,
 
         //InConveyor
         InConveyor = 1000,

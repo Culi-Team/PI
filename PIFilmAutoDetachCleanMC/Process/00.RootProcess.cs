@@ -78,6 +78,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             _devices.Inputs.OpREmo.Value ||
             _devices.Inputs.EmoUnloadL.Value ||
             _devices.Inputs.EmoUnloadR.Value;
+        private bool IsPowerMCOn => _devices.Inputs.PowerMCOn1.Value && _devices.Inputs.PowerMCOn2.Value;
         #endregion
 
         #region Constructor
@@ -547,6 +548,12 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void CheckRealTimeAlarmStatus()
         {
+            if (!IsPowerMCOn)
+            {
+                RaiseAlarm((int)EAlarm.PowerMCOff);
+                return;
+            }
+
             if (IsEmergencyStopActive)
             {
                 RaiseAlarm((int)EAlarm.EmergencyStopActivated);
