@@ -3,6 +3,8 @@
     <!-- 00. AUTO VIEW IMAGES  -->
     <BitmapImage x:Key="AutoViewImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png"/>
+    <BitmapImage x:Key="InitializeImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png"/>
     <BitmapImage x:Key="AlertImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/AlertImage.png"/>
     <BitmapImage x:Key="MainAir" 

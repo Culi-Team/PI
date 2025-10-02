@@ -75,6 +75,8 @@
     <None Remove="Resource\Image\04.Unload\UnloadAlignDetach.png" />
     <None Remove="Resource\Image\04.Unload\UnloadRobotDetach.png" />
     <None Remove="Resource\Image\Machine.png" />
+    <None Remove="Resource\Image\InitializeImage.png" />
+	
   </ItemGroup>
 
   <ItemGroup>
@@ -184,6 +186,7 @@
     <Resource Include="Resource\Image\04.Unload\UnloadAlignDetach_4.png" />
     <Resource Include="Resource\Image\04.Unload\UnloadRobotDetach.png" />
     <Resource Include="Resource\Image\Machine.png" />
+    <Resource Include="Resource\Image\InitializeImage.png" />
     <Resource Include="Resource\Image\AlertImage.png" />
     <Resource Include="Resource\Image\05.Alarm\MainAir.png" />
     <Resource Include="Resource\Image\Flags\EngLish.png" />
