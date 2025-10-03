@@ -945,7 +945,7 @@
                                         Image="/EQX.UI;component/Resources/Images/alarm_selected.png"
                                         Command="{Binding BuzzerOffCommand}"
                                         FontSize="20" />
-                        <ui:ImageButton Content="Door Open"
+                        <ui:ImageButton Content="{Binding Devices.Outputs.DoorOpen.Value,Converter={StaticResource BooleanOnOffToContentConverter},ConverterParameter=Door}"
                                         Visibility="{Binding UserStore.Permission,Converter={StaticResource UserPermissionToVisibilityConverter}}"
                                         Command="{Binding DoorOpenCommand}"
                                         Image="/EQX.UI;component/Resources/Images/lock_selected.png"

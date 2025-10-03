@@ -42,6 +42,7 @@
                     <uiCvt:CylinderTypeToButtonNameConverter x:Key="CylinderTypeToButtonNameConverter"/>
                     <cvt:LanguageToDisplayNameConverter x:Key="LanguageToDisplayNameConverter"/>
                     <cvt:LanguageToFlagImageConverter x:Key="LanguageToFlagImageConverter"/>
+                    <cvt:BooleanOnOffToContentConverter x:Key="BooleanOnOffToContentConverter"/>
                 </ResourceDictionary>
 
                 <ResourceDictionary Source="/Resource/Template/CylinderControlDataTemplate.xaml" />

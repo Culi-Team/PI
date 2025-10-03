@@ -248,7 +248,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    Devices.Outputs.DoorOpen.Value = true;
+                    bool currentValue = Devices.Outputs.DoorOpen.Value;
+                    Devices.Outputs.DoorOpen.Value = !currentValue;
                 });
             }
         }
