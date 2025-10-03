@@ -109,6 +109,21 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
+        public override bool PreProcess()
+        {
+            if(ProcessMode != EProcessMode.Run) return base.PreProcess();
+
+            if(IsUnWinderFullDetect)
+            {
+                RaiseWarning((int)EWarning.Vinylclean_Full_Detect);
+            }
+
+            if(IsWinderRunOffDetect)
+            {
+                RaiseWarning((int)EWarning.Vinylclean_Vinyl_Not_Detect);
+            }
+            return base.PreProcess();
+        }
         public override bool ProcessOrigin()
         {
             switch ((EVinylCleanOriginStep)Step.OriginStep)

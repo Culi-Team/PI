@@ -65,6 +65,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         VinylClean_PusherCylinder_Down_Fail,
         VinylClean_RollerBwFwCylinder_Backward_Fail,
         VinylClean_RollerBwFwCylinder_Forward_Fail,
+        Vinylclean_Full_Detect,
+        Vinylclean_Vinyl_Not_Detect,
 
         //Robot Load
         RobotLoad = 7000,

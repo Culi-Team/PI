@@ -32,7 +32,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    Processes.RootProcess.Childs.ToList().ForEach(p => p.IsOriginOrInitSelected = true);
+                    Processes.RootProcess.Childs!.ToList().ForEach(p => p.IsOriginOrInitSelected = true);
                 });
             }
         }
@@ -43,7 +43,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    Processes.RootProcess.Childs.ToList().ForEach(p => p.IsOriginOrInitSelected = false);
+                    Processes.RootProcess.Childs!.ToList().ForEach(p => p.IsOriginOrInitSelected = false);
                 });
             }
         }
