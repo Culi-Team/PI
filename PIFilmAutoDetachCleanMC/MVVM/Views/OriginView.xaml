@@ -25,10 +25,10 @@
                     </Grid.RowDefinitions>
                     <Label Content="{Binding Name}"
                            FontWeight="Bold"
-                           Background="WhiteSmoke"
+                           Background="#616161"
                            FontSize="14"
                            HorizontalContentAlignment="Center"
-                           Foreground="Black" />
+                           Foreground="White" />
                     <Label Content="{Binding IsAlarm,Converter={StaticResource ProcessAlarmStatusToLabelContentConverter}}"
                            Grid.Row="1"
                            HorizontalContentAlignment="Center"

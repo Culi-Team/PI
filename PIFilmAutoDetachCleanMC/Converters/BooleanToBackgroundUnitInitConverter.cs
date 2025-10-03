@@ -15,7 +15,7 @@ namespace PIFilmAutoDetachCleanMC.Converters
         {
             if(value is bool bValue)
             {
-                return bValue ? Brushes.Yellow : Brushes.LightGray;
+                return bValue ? Brushes.Lime : Brushes.LightGray;
             }
 
             return Binding.DoNothing;
