@@ -25,8 +25,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _removeFilmOutput;
         private readonly MachineStatus _machineStatus;
 
-        private ICylinder FixCyl1 => _devices.Cylinders.RemoveZoneFixCyl1FwBw;
-        private ICylinder FixCyl2 => _devices.Cylinders.RemoveZoneFixCyl2FwBw;
+        private ICylinder FixCyl1_1 => _devices.Cylinders.RemoveZoneFixCyl1_1FwBw;
+        private ICylinder FixCyl1_2 => _devices.Cylinders.RemoveZoneFixCyl1_2FwBw;
+        private ICylinder FixCyl2_1 => _devices.Cylinders.RemoveZoneFixCyl2_1FwBw;
+        private ICylinder FixCyl2_2 => _devices.Cylinders.RemoveZoneFixCyl2_2FwBw;
 
         private ICylinder TransferCyl => _devices.Cylinders.RemoveZoneTrCylFwBw;
         private ICylinder UpDownCyl1 => _devices.Cylinders.RemoveZoneZCyl1UpDown;
@@ -40,8 +42,28 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder PusherCyl2 => _devices.Cylinders.RemoveZonePusherCyl2UpDown;
 
         private bool IsFixtureDetect => _machineStatus.IsSatisfied(_devices.Inputs.RemoveZoneFixtureDetect);
+
+        private bool IsFixCylinderBw => FixCyl1_1.IsBackward && FixCyl2_1.IsBackward && FixCyl2_1.IsBackward && FixCyl2_2.IsBackward;
+        private bool IsFixCylinderFw => FixCyl1_1.IsForward && FixCyl2_1.IsForward && FixCyl2_1.IsForward && FixCyl2_2.IsForward;
         #endregion
 
+        private void FixCylinderFwBw(bool isForward)
+        {
+            if (isForward)
+            {
+                FixCyl1_1.Forward();
+                FixCyl1_2.Forward();
+                FixCyl2_1.Forward();
+                FixCyl2_2.Forward();
+            }
+            else
+            {
+                FixCyl1_1.Backward();
+                FixCyl1_2.Backward();
+                FixCyl2_1.Backward();
+                FixCyl2_2.Backward();
+            }
+        }
         #region Contructor
         public RemoveFilmProcess(Devices devices,
             CommonRecipe commonRecipe,
@@ -109,9 +131,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERemoveFilmProcessOriginStep.Fix_Cyl_Backward:
                     Log.Debug("Remove Film Process Fix Cylinder Backward");
-                    FixCyl1.Backward();
-                    FixCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FixCyl1.IsBackward && FixCyl2.IsBackward);
+                    FixCylinderFwBw(false);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsFixCylinderBw);
                     Step.OriginStep++;
                     break;
                 case ERemoveFilmProcessOriginStep.Fix_Cyl_Backward_Wait:
@@ -427,9 +448,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERemoveFilmProcessTransferFixtureUnloadStep.Cyl_Fix_Backward:
                     Log.Debug("Fix Cylinder Backward");
-                    FixCyl1.Backward();
-                    FixCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FixCyl1.IsBackward && FixCyl2.IsBackward);
+                    FixCylinderFwBw(false);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsFixCylinderBw);
                     Step.RunStep++;
                     break;
                 case ERemoveFilmProcessTransferFixtureUnloadStep.Cyl_Fix_Backward_Done:
@@ -489,9 +509,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERemoveFilmProcessRemoveStep.Fix_Cyl_Forward:
                     Log.Debug("Fix Cylinder Forward");
-                    FixCyl1.Forward();
-                    FixCyl2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FixCyl1.IsForward && FixCyl2.IsForward);
+                    FixCylinderFwBw(true);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsFixCylinderFw);
                     Step.RunStep++;
                     break;
                 case ERemoveFilmProcessRemoveStep.Fix_Cyl_Forward_Wait:

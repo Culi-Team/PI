@@ -52,19 +52,24 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
 
         // Vinyl Clean
         VinylCleanRollerFwBw,
-        VinylCleanFixtureClampUnclamp,
+        VinylCleanFixture1ClampUnclamp,
+        VinylCleanFixture2ClampUnclamp,
         VinylCleanPusherRollerUpDown,
 
         // Transfer Y Fixture
         TransferFixtureUpDown,
-        TransferFixture1ClampUnclamp,
-        TransferFixture2ClampUnclamp,
+        TransferFixture1_1ClampUnclamp,
+        TransferFixture1_2ClampUnclamp,
+        TransferFixture2_1ClampUnclamp,
+        TransferFixture2_2ClampUnclamp,
 
         // Detach Glass
         DetachCyl1UpDown,
         DetachCyl2UpDown,
-        DetachFixFixtureCyl1FwBw,
-        DetachFixFixtureCyl2FwBw,
+        DetachFixFixtureCyl1_1FwBw,
+        DetachFixFixtureCyl1_2FwBw,
+        DetachFixFixtureCyl2_1FwBw,
+        DetachFixFixtureCyl2_2FwBw,
 
         // Remove Zone
         RemoveZoneTrCylFwBw,
@@ -75,8 +80,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         RemoveZoneCyl3ClampUnclamp,
         RemoveZonePusherCyl1UpDown,
         RemoveZonePusherCyl2UpDown,
-        RemoveZoneFixCyl1FwBw,
-        RemoveZoneFixCyl2FwBw,
+        RemoveZoneFixCyl1_1FwBw,
+        RemoveZoneFixCyl1_2FwBw,
+        RemoveZoneFixCyl2_1FwBw,
+        RemoveZoneFixCyl2_2FwBw,
 
         // In Shuttle (rotate 0°/180°)
         TransferInShuttleLRotate,
@@ -102,8 +109,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         WetCleanPusherLeftUpDown,
         WetCleanBrushRightUpDown,
         WetCleanBrushLeftUpDown,
-        WetCleanRightClampUnclamp,
-        WetCleanLeftClampUnclamp,
+        WetCleanRight1ClampUnclamp,
+        WetCleanRight2ClampUnclamp,
+        WetCleanLeft1ClampUnclamp,
+        WetCleanLeft2ClampUnclamp,
 
 
         // Transfer Rotate
@@ -119,8 +128,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         AFCleanPusherLeftUpDown,
         AFCleanBrushRightUpDown,
         AFCleanBrushLeftUpDown,
-        AFCleanRightClampUnclamp,
-        AFCleanLeftClampUnclamp,
+        AFCleanRight1ClampUnclamp,
+        AFCleanRight2ClampUnclamp,
+        AFCleanLeft1ClampUnclamp,
+        AFCleanLeft2ClampUnclamp,
 
         // Robot 2 Unload
         UnloadRobotCyl1UpDown,

@@ -30,12 +30,35 @@ namespace PIFilmAutoDetachCleanMC.Process
         private Inputs Inputs => _devices.Inputs;
         private Outputs Outputs => _devices.Outputs;
         private ICylinder CylUpDown => _devices.Cylinders.TransferFixtureUpDown;
-        private ICylinder CylClamp1 => _devices.Cylinders.TransferFixture1ClampUnclamp;
-        private ICylinder CylClamp2 => _devices.Cylinders.TransferFixture2ClampUnclamp;
+        private ICylinder CylClamp1_1 => _devices.Cylinders.TransferFixture1_1ClampUnclamp;
+        private ICylinder CylClamp1_2 => _devices.Cylinders.TransferFixture1_2ClampUnclamp;
+        private ICylinder CylClamp2_1 => _devices.Cylinders.TransferFixture2_1ClampUnclamp;
+        private ICylinder CylClamp2_2 => _devices.Cylinders.TransferFixture2_1ClampUnclamp;
 
-        private bool IsFixtureDetect1 => !CylClamp1.IsBackward && !CylClamp1.IsForward;
-        private bool IsFixtureDetect2 => !CylClamp2.IsBackward && !CylClamp2.IsForward;
+        private bool IsFixtureDetect1 => !CylClamp1_1.IsBackward && !CylClamp1_1.IsForward && !CylClamp1_2.IsBackward && !CylClamp1_2.IsForward;
+        private bool IsFixtureDetect2 => !CylClamp2_1.IsBackward && !CylClamp2_1.IsForward && !CylClamp2_2.IsBackward && !CylClamp2_2.IsForward;
+
+        private bool IsClamp => CylClamp1_1.IsForward && CylClamp1_2.IsForward && CylClamp2_1.IsForward && CylClamp2_2.IsForward;
+        private bool IsUnClamp => CylClamp1_1.IsBackward && CylClamp1_2.IsBackward && CylClamp2_1.IsBackward && CylClamp2_2.IsBackward;
         #endregion
+
+        private void ClampUnClamp(bool bClamp)
+        {
+            if (bClamp)
+            {
+                CylClamp1_1.Forward();
+                CylClamp1_2.Forward();
+                CylClamp2_1.Forward();
+                CylClamp2_2.Forward();
+            }
+            else
+            {
+                CylClamp1_1.Backward();
+                CylClamp1_2.Backward();
+                CylClamp2_1.Backward();
+                CylClamp2_2.Backward();
+            }
+        }
 
         #region Flags
         private bool FlagDetachProcessOriginDone
@@ -147,9 +170,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferFixtureOriginStep.Unclamp:
                     Log.Debug("Unclamp");
-                    CylClamp1.Backward();
-                    CylClamp2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return CylClamp1.IsBackward && CylClamp2.IsBackward; });
+                    ClampUnClamp(false);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsUnClamp);
                     Step.OriginStep++;
                     break;
                 case ETransferFixtureOriginStep.Unclamp_Wait:
@@ -405,9 +427,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferFixtureProcessLoadStep.Cyl_Clamp:
                     Log.Debug("Transfer Fixture Cylinder Clamp");
-                    CylClamp1.Forward();
-                    CylClamp2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return CylClamp1.IsForward && CylClamp2.IsForward; });
+                    ClampUnClamp(true);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClamp);
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessLoadStep.Cyl_Clamp_Wait:
@@ -496,9 +517,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferFixtureProcessUnloadStep.Cyl_UnClamp:
                     Log.Debug("Transfer Fixture Cylinder UnClamp");
-                    CylClamp1.Backward();
-                    CylClamp2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => CylClamp1.IsBackward && CylClamp2.IsBackward);
+                    ClampUnClamp(false);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsUnClamp);
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessUnloadStep.Cyl_UnClamp_Wait:
