@@ -550,17 +550,20 @@ namespace PIFilmAutoDetachCleanMC.Process
             if (!IsPowerMCOn)
             {
                 RaiseAlarm((int)EAlarm.PowerMCOff);
+                Childs!.ToList().ForEach(p => p.IsAlarm = true);
                 return;
             }
 
             if (IsEmergencyStopActive)
             {
+                Childs!.ToList().ForEach(p => p.IsAlarm = true);
                 RaiseAlarm((int)EAlarm.EmergencyStopActivated);
                 return;
             }
 
             if (IsMainAirSupplied == false)
             {
+                Childs!.ToList().ForEach(p => p.IsAlarm = true);
                 RaiseAlarm((int)EAlarm.MainAirNotSupplied);
                 return;
             }
