@@ -9,11 +9,6 @@ using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
 using PIFilmAutoDetachCleanMC.Services.DryRunServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
@@ -112,6 +107,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         public override bool PreProcess()
         {
             if (ProcessMode != EProcessMode.Run) return base.PreProcess();
+
+            if (_machineStatus.IsDryRunMode)
+            {
+                return base.PreProcess();
+            }
 
             if (IsUnWinderFullDetect)
             {
