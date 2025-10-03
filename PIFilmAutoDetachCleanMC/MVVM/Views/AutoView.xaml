@@ -416,8 +416,20 @@
                     <RowDefinition Height="1.27*" />
                 </Grid.RowDefinitions>
                 <!-- InCSTWork Image overlay-->
-                <Border Grid.Row="2">
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.35*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="0.9*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.35*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.22*"/>
+                    </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource InCSTWorkImage}"
+                           Grid.Column="1"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -427,10 +439,22 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
                 <!-- Buffer Image overlay-->
-                <Border Grid.Row="1">
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.37*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="0.4*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.34*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.23*"/>
+                    </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource BufferImage}"
+                           Grid.Column="1"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -439,10 +463,22 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
                 <!-- OUTCSTWork Image overlay-->
-                <Border Grid.Row="0">
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.45*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="0.15*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource OutCSTWorkImage}"
+                           Grid.Column="1"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -452,7 +488,7 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
             </Grid>
 
             <Grid Grid.Row="2"
@@ -463,8 +499,20 @@
                     <RowDefinition Height="1.27*" />
                 </Grid.RowDefinitions>
                 <!-- InCST Image overlay-->
-                <Border Grid.Row="2">
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.13*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="0.6*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.6*"/>
+                    </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource InCSTImage}"
+                           Grid.Column="1"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -473,10 +521,22 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
                 <!-- OUTCST Image overlay-->
-                <Border Grid.Row="0">
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.49*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="0.17*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.33*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.7*"/>
+                    </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource OutCSTImage}"
+                           Grid.Column="1"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -485,7 +545,7 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
             </Grid>
 
             <Grid Grid.Column="2"
@@ -504,8 +564,20 @@
                 </Grid.RowDefinitions>
 
                 <!-- VinylClean Image overlay-->
-                <Border Grid.Row="2">
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2.1*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1.5*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.45*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.13*"/>
+                    </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource VinylCleanImageDetach}"
+                           Grid.Column="1"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -513,11 +585,20 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
                 <!-- FixtureAlign Image overlay-->
-                <Border Grid.Row="2"
+                <Grid Grid.Row="2"
                         Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="0.65*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.57*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource AlignFixtureImageDetach}"
+                           Grid.Column="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -525,11 +606,23 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
                 <!-- Detach Image overlay-->
-                <Border Grid.Row="1"
+                <Grid Grid.Row="1"
                         Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.22*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="0.2*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.65*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.05*"/>
+                    </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource GlassDetach}"
+                           Grid.Column="1"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -537,11 +630,21 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
                 <!-- RemoveFilm Image overlay-->
-                <Border Grid.Row="0"
+                <Grid Grid.Row="0"
                         Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1.9*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.56*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource RemoveZoneImageDetach}"
+                           Grid.Column="1"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -549,7 +652,33 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="3"
+                  Grid.Column="4">
+                <!--Glass Align Detach Image overlay-->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.75*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="0.95*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.9*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1.55*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="{StaticResource AlignStageDetachImage}"
+                           Grid.Column="1"
+                           Grid.Row="1"
+                           Stretch="Fill">
+                    <Image.Visibility>
+                        <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
+                            <Binding Path="Devices.Inputs.DetachGlassShtVac1.Value" />
+                            <Binding Path="Devices.Inputs.DetachGlassShtVac2.Value" />
+                            <Binding Path="Devices.Inputs.DetachGlassShtVac3.Value" />
+                        </MultiBinding>
+                    </Image.Visibility>
+                </Image>
             </Grid>
             <Grid Grid.Row="2"
                   Grid.Column="4"
@@ -558,9 +687,21 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <!-- Glass Align Detach Image overlay-->
-                <Border>
+                <!-- Glass Align Detach Left Image overlay-->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="0.77*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.4*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource AlignStageDetachLeftImage}"
+                           Grid.Column="1"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -570,10 +711,22 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
-                <!-- Glass Align Detach Image overlay-->
-                <Border Grid.Row="1">
+                </Grid>
+                <!-- Glass Align Detach Right Image overlay-->
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.55*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="2.15*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.4*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource AlignStageDetachRightImage}"
+                           Grid.Column="1"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -583,7 +736,7 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
             </Grid>
             <Grid Grid.Column="5"
                   Grid.Row="2"
@@ -600,8 +753,15 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <!--Wet Clean Left Image overlay-->
-                <Border Grid.Column="1">
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="0.45*"/>
+                    </Grid.RowDefinitions>
                     <Image Source="{StaticResource WetCleanImageDetachLeft}"
+                           Grid.Column="1"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -610,10 +770,17 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
                 <!--AF Clean Left Image overlay-->
-                <Border Grid.Column="3">
+                <Grid Grid.Column="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="0.45*"/>
+                    </Grid.RowDefinitions>
                     <Image Source="{StaticResource AFCleanImageDetachLeft}"
+                           Grid.Column="1"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -622,11 +789,18 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
                 <!--Wet Clean Left Image overlay-->
-                <Border Grid.Column="1"
+                <Grid Grid.Column="1"
                         Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.33*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="0.35*"/>
+                    </Grid.RowDefinitions>
                     <Image Source="{StaticResource WetCleanImageDetachRight}"
+                           Grid.Column="1"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -635,11 +809,18 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
                 <!--AF Clean Left Image overlay-->
-                <Border Grid.Column="3"
+                <Grid Grid.Column="3"
                         Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.33*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="0.35*"/>
+                    </Grid.RowDefinitions>
                     <Image Source="{StaticResource AFCleanImageDetachRight}"
+                           Grid.Column="1"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -648,7 +829,7 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
             </Grid>
             <Grid Grid.Row="2"
                   Grid.Column="6"
@@ -662,8 +843,18 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <!--TransferRotation Detach Left Image overlay-->
-                <Border>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4.5*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.25*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="0.2*"/>
+                    </Grid.RowDefinitions>
                     <Image Source="{StaticResource TransferRotationDetachLeftImage}"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -672,10 +863,20 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
                 <!--TransferRotation Detach Right Image overlay-->
-                <Border Grid.Row="1">
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4.5*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.08*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1.35*"/>
+                    </Grid.RowDefinitions>
                     <Image Source="{StaticResource TransferRotationDetachRightImage}"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -684,7 +885,7 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
             </Grid>
 
             <Grid Grid.Row="2"
@@ -772,8 +973,20 @@
                 </Grid>
 
                 <!--Unload Robot Glass Image overlay-->
-                <Border Grid.Column="2">
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.12*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.14*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2.1*"/>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
                     <Image Source="{StaticResource UnloadRobotDetachImage}"
+                           Grid.Column="1"
+                           Grid.Row="1"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -784,7 +997,7 @@
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
-                </Border>
+                </Grid>
                 <!--Unload Transfer Right Image overlay-->
                 <Grid Grid.Row="2"
                       Grid.Column="1">

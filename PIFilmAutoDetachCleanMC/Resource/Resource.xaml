@@ -86,6 +86,8 @@
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFCleanDetachRight.png"/>
     <BitmapImage x:Key="AlignStageImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AlignStage.png"/>
+        <BitmapImage x:Key="AlignStageDetachImage" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/GlassAlignStageDetach.png"/>
     <BitmapImage x:Key="AlignStageDetachLeftImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/GlassAlignStageDetachLeft.png"/>
     <BitmapImage x:Key="AlignStageDetachRightImage" 
