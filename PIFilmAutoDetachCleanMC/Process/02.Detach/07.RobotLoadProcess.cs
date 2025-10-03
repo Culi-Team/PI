@@ -28,7 +28,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _removeFilmOutput;
         private readonly CassetteList _cassetteList;
         private readonly MachineStatus _machineStatus;
-        private readonly ProcessInitSelect _processInitSelect;
         private readonly CWorkData _workData;
         private int CurrentInWorkCSTFixtureIndex = -1;
         private int CurrentOutWorkCSTFixtureIndex = -1;
@@ -219,7 +218,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             [FromKeyedServices("RobotLoadOutput")] IDOutputDevice robotLoadOutput,
             [FromKeyedServices("RemoveFilmOutput")] IDOutputDevice removeFilmOutput,
             CassetteList cassetteList,
-            ProcessInitSelect processInitSelect,
             CWorkData workData)
         {
             _robotLoad = robotLoad;
@@ -231,7 +229,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             _robotLoadOutput = robotLoadOutput;
             _removeFilmOutput = removeFilmOutput;
             _cassetteList = cassetteList;
-            _processInitSelect = processInitSelect;
             _workData = workData;
         }
         #endregion
@@ -476,11 +473,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ERobotLoadReadyStep)Step.RunStep)
             {
                 case ERobotLoadReadyStep.Start:
-                    if (_processInitSelect.IsRobotLoadInit == false)
-                    {
-                        Sequence = ESequence.Stop;
-                        break;
-                    }
                     Log.Debug("Ready Start");
                     Step.RunStep++;
                     break;

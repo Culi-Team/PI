@@ -111,19 +111,20 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Override Methods
         public override bool PreProcess()
         {
-            if(ProcessMode != EProcessMode.Run) return base.PreProcess();
+            if (ProcessMode != EProcessMode.Run) return base.PreProcess();
 
-            if(IsUnWinderFullDetect)
+            if (IsUnWinderFullDetect)
             {
                 RaiseWarning((int)EWarning.Vinylclean_Full_Detect);
             }
 
-            if(IsWinderRunOffDetect)
+            if (IsWinderRunOffDetect)
             {
                 RaiseWarning((int)EWarning.Vinylclean_Vinyl_Not_Detect);
             }
             return base.PreProcess();
         }
+
         public override bool ProcessOrigin()
         {
             switch ((EVinylCleanOriginStep)Step.OriginStep)
@@ -294,7 +295,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessAutoRunStep.FixtureDetect_Check:
-                    if(IsFixtureDetect)
+                    if (IsFixtureDetect)
                     {
                         Log.Info("Sequence Vinyl Clean");
                         Sequence = ESequence.VinylClean;
@@ -315,13 +316,13 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EVinylCleanProcessVinylCleanStep.Start:
 #if SIMULATION
-                    SimulationInputSetter.SetSimInput(_devices.Inputs.VinylCleanFixtureDetect,true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.VinylCleanFixtureDetect, true);
 #endif
                     Log.Debug("Vinyl Clean Start");
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessVinylCleanStep.FixtureDetect_Check:
-                    if(IsFixtureDetect == false)
+                    if (IsFixtureDetect == false)
                     {
                         RaiseWarning((int)EWarning.VinylCleanFixtureNotDetect);
                         break;
@@ -334,11 +335,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessVinylCleanStep.Cyl_Clamp:
                     Log.Debug("Vinyl Clean Cylinder Clamp");
                     FixtureClampCyl.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,() => FixtureClampCyl.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FixtureClampCyl.IsForward);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessVinylCleanStep.Cyl_Clamp_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.VinylClean_FixtureCylinder_Clamp_Fail);
                         break;
@@ -349,11 +350,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessVinylCleanStep.Cyl_Pusher_Up:
                     Log.Debug("Vinyl Clean Cylinder Pusher Up");
                     PusherCyl.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,() => PusherCyl.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PusherCyl.IsForward);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessVinylCleanStep.Cyl_Pusher_Up_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.VinylClean_PusherCylinder_Up_Fail);
                         break;
@@ -364,11 +365,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessVinylCleanStep.Cyl_Forward:
                     Log.Debug("Vinyl Clean Cylinder Forward");
                     RollerFwBwCyl.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,() => RollerFwBwCyl.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => RollerFwBwCyl.IsForward);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessVinylCleanStep.Cyl_Forward_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.VinylClean_RollerBwFwCylinder_Forward_Fail);
                         break;
@@ -379,11 +380,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessVinylCleanStep.Cyl_Pusher_Down:
                     Log.Debug("Vinyl Clean Cylinder Pusher Down");
                     PusherCyl.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,() => PusherCyl.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PusherCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessVinylCleanStep.Cyl_Pusher_Down_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.VinylClean_PusherCylinder_Down_Fail);
                         break;
@@ -394,11 +395,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessVinylCleanStep.Cyl_Backward:
                     Log.Debug("Vinyl Clean Cylinder Backward");
                     RollerFwBwCyl.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,() => RollerFwBwCyl.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => RollerFwBwCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessVinylCleanStep.Cyl_Backward_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.VinylClean_RollerBwFwCylinder_Backward_Fail);
                         break;
@@ -436,11 +437,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessRobotPickFixtureFromVinylClean.Cyl_UnClamp:
                     Log.Debug("Vinyl Clean Cylinder UnClamp");
                     FixtureClampCyl.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,() => FixtureClampCyl.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FixtureClampCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPickFixtureFromVinylClean.Cyl_UnClamp_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.VinylClean_FixtureCylinder_UnClamp_Fail);
                         break;
@@ -455,7 +456,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Vinyl Clean Unload Done");
                     break;
                 case EVinylCleanProcessRobotPickFixtureFromVinylClean.Wait_VinylCleanUnloadDone:
-                    if(FlagVinylCleanUnloadDone == false)
+                    if (FlagVinylCleanUnloadDone == false)
                     {
                         Wait(20);
                         break;
@@ -496,11 +497,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_UnClamp:
                     Log.Debug("Vinyl Clean Cylinder UnClamp");
                     FixtureClampCyl.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,() => FixtureClampCyl.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FixtureClampCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_UnClamp_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.VinylClean_FixtureCylinder_UnClamp_Fail);
                         break;
@@ -511,11 +512,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_Pusher_Down:
                     Log.Debug("Vinyl Clean Cylinder Pusher Down");
                     PusherCyl.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,() => PusherCyl.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PusherCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_Pusher_Down_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.VinylClean_PusherCylinder_Down_Fail);
                         break;
@@ -526,11 +527,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_Backward:
                     Log.Debug("Vinyl Clean Cylinder Backward");
                     RollerFwBwCyl.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,() => RollerFwBwCyl.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => RollerFwBwCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_Backward_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.VinylClean_RollerBwFwCylinder_Backward_Fail);
                         break;
@@ -553,7 +554,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Motor_UnWinder_Run_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         //Timeout ALARM
                         break;
@@ -573,7 +574,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Fixture Load Done");
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Wait_FixtureLoadDone:
-                    if(FlagVinylCleanLoadDone == false)
+                    if (FlagVinylCleanLoadDone == false)
                     {
                         Wait(20);
                         break;
