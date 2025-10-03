@@ -32,54 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Resource\Image\01.CSTLoadUnload\BufferCV.png" />
-    <None Remove="Resource\Image\01.CSTLoadUnload\InCassetteCV.png" />
-    <None Remove="Resource\Image\01.CSTLoadUnload\InputCassetteStage.png" />
-    <None Remove="Resource\Image\01.CSTLoadUnload\OutCassetteCV.png" />
-    <None Remove="Resource\Image\01.CSTLoadUnload\OutputCassetteStage.png" />
-    <None Remove="Resource\Image\01.CSTLoadUnload\RollerCVSupport1.png" />
-    <None Remove="Resource\Image\01.CSTLoadUnload\RollerCVSupport2.png" />
-    <None Remove="Resource\Image\01.CSTLoadUnload\RollerCVSupport3.png" />
-    <None Remove="Resource\Image\01.CSTLoadUnload\RollerCVSupport4.png" />
-    <None Remove="Resource\Image\02.Detach\AlignFixture.png" />
-    <None Remove="Resource\Image\02.Detach\Detach.png" />
-    <None Remove="Resource\Image\02.Detach\LoadRobot.png" />
-    <None Remove="Resource\Image\02.Detach\RemoveZone.png" />
-    <None Remove="Resource\Image\02.Detach\TransferFixture.png" />
-    <None Remove="Resource\Image\02.Detach\TransferFixture2.png" />
-    <None Remove="Resource\Image\02.Detach\VinylClean.png" />
-    <None Remove="Resource\Image\02.Detach\VinylCleanDt.png" />
-    <None Remove="Resource\Image\02.Detach\FixtureAlign.png" />
-    <None Remove="Resource\Image\02.Detach\GlassDetach.png" />
-    <None Remove="Resource\Image\02.Detach\RemoveFilm.png" />
-    <None Remove="Resource\Image\03.Clean\AFClean.png" />
-    <None Remove="Resource\Image\03.Clean\AlignStage.png" />
-    <None Remove="Resource\Image\03.Clean\Clean.png" />
-    <None Remove="Resource\Image\03.Clean\GlassShuttleUnit.png" />
-    <None Remove="Resource\Image\03.Clean\GlassTransfer.png" />
-    <None Remove="Resource\Image\03.Clean\InShuttle.png" />
-    <None Remove="Resource\Image\03.Clean\ShuttleUnit.png" />
-    <None Remove="Resource\Image\03.Clean\TransferRotation.png" />
-    <None Remove="Resource\Image\03.Clean\WetClean.png" />
-    <None Remove="Resource\Image\03.Clean\AFCleanDetachLeft.png" />
-    <None Remove="Resource\Image\03.Clean\AFCleanDetachRight.png" />
-    <None Remove="Resource\Image\03.Clean\WetCleanDetachLeft.png" />
-    <None Remove="Resource\Image\03.Clean\WetCleanDetachRight.png" />
-    <None Remove="Resource\Image\03.Clean\TransferRotationDetachLeft.png" />
-    <None Remove="Resource\Image\03.Clean\TransferRotationDetachRight.png" />
-    <None Remove="Resource\Image\03.Clean\GlassAlignStageDetachLeft.png" />
-    <None Remove="Resource\Image\03.Clean\GlassAlignStageDetachRight.png" />
-    <None Remove="Resource\Image\04.Unload\OutShuttle.png" />
-    <None Remove="Resource\Image\04.Unload\UnloadRobot.png" />
-    <None Remove="Resource\Image\04.Unload\UnloadStage.png" />
-    <None Remove="Resource\Image\04.Unload\UnloadAlignDetach.png" />
-    <None Remove="Resource\Image\04.Unload\UnloadRobotDetach.png" />
-    <None Remove="Resource\Image\Machine.png" />
-    <None Remove="Resource\Image\InitializeImage.png" />
-	
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="TopIcon.ico" />
   </ItemGroup>
 
@@ -173,6 +125,7 @@
     <Resource Include="Resource\Image\03.Clean\TransferRotationDetachRight.png" />
     <Resource Include="Resource\Image\03.Clean\GlassAlignStageDetachLeft.png" />
     <Resource Include="Resource\Image\03.Clean\GlassAlignStageDetachRight.png" />
+    <Resource Include="Resource\Image\03.Clean\GlassAlignStageDetach.png" />
     <Resource Include="Resource\Image\04.Unload\OutShuttle.png" />
     <Resource Include="Resource\Image\04.Unload\OutShuttleLeftDetach.png" />
     <Resource Include="Resource\Image\04.Unload\OutShuttleRightDetach.png" />
