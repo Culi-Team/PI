@@ -446,6 +446,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EFixtureAlignTransferStep.End:
+                    Log.Debug("Transfer Fixture Load End");
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;

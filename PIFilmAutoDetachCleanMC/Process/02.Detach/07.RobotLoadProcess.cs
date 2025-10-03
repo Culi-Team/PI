@@ -1103,7 +1103,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_REQ_UNLOAD] = false;
                             Log.Debug("Clear Flag Remove Film Unload Done");
                             FlagRemoveFilmUnloadDone = false;
-
+                    
                             Log.Info("Sequence Robot Pick Fixture From Remove Zone");
                             Sequence = ESequence.RobotPickFixtureFromRemoveZone;
                             break;

@@ -25,11 +25,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 XDocument doc = XDocument.Load(stream);
-                // xử lý doc
-                // Lấy tất cả node <entry> trong <activity>
                 var entries = doc.Element("activity")?.Elements("entry") ?? Enumerable.Empty<XElement>();
 
-                // Chuyển các node <entry> thành danh sách LogEntry
                 return entries.Select(entry => new LogEntry
                 {
                     Time = entry.Element("time")?.Value,
@@ -67,7 +64,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             try
             {
-                foreach (var dir in Directory.GetDirectories(path))
+                foreach (var dir in Directory.GetDirectories(path).OrderByDescending(d => d))
                 {
                     var dirInfo = new DirectoryInfo(dir);
                     var dirNode = new FileSystemNode
