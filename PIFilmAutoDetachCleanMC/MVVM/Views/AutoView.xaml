@@ -134,7 +134,7 @@
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
             </Grid>
-            <!--In CST index--> 
+            <!--In CST index-->
             <Grid Grid.Row="5"
                   Grid.RowSpan="2"
                   Grid.ColumnSpan="2">
@@ -180,38 +180,56 @@
                   Grid.ColumnSpan="9"
                   Grid.RowSpan="3"
                   Panel.ZIndex="2">
-                <Canvas x:Name="EmergencyOverlay" Background="Transparent">
-                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}" Canvas.Left="146" Canvas.Top="13" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Canvas x:Name="EmergencyOverlay"
+                        Background="Transparent">
+                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}"
+                           Canvas.Left="146"
+                           Canvas.Top="13"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center">
                         <Image.Source>
                             <Binding Path="Devices.Inputs.EmoLoadL.Value"
                                      Converter="{StaticResource EmergencyStatusToImageConverter}" />
                         </Image.Source>
                     </Image>
-                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}" Canvas.Left="146" Canvas.Top="360">
+                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}"
+                           Canvas.Left="146"
+                           Canvas.Top="360">
                         <Image.Source>
                             <Binding Path="Devices.Inputs.EmoLoadR.Value"
                                      Converter="{StaticResource EmergencyStatusToImageConverter}" />
                         </Image.Source>
                     </Image>
-                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}" Canvas.Left="746">
+                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}"
+                           Canvas.Left="746">
                         <Image.Source>
                             <Binding Path="Devices.Inputs.OpLEmo.Value"
                                      Converter="{StaticResource EmergencyStatusToImageConverter}" />
                         </Image.Source>
                     </Image>
-                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}" Canvas.Left="746" Canvas.Top="360">
+                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}"
+                           Canvas.Left="746"
+                           Canvas.Top="360">
                         <Image.Source>
                             <Binding Path="Devices.Inputs.OpREmo.Value"
                                      Converter="{StaticResource EmergencyStatusToImageConverter}" />
                         </Image.Source>
                     </Image>
-                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}" Canvas.Left="1535" Canvas.Top="13" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}"
+                           Canvas.Left="1535"
+                           Canvas.Top="13"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top">
                         <Image.Source>
                             <Binding Path="Devices.Inputs.EmoUnloadL.Value"
                                      Converter="{StaticResource EmergencyStatusToImageConverter}" />
                         </Image.Source>
                     </Image>
-                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}" Canvas.Left="1535" Canvas.Top="360" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Image Style="{StaticResource EmergencyIndicatorImageStyle}"
+                           Canvas.Left="1535"
+                           Canvas.Top="360"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top">
                         <Image.Source>
                             <Binding Path="Devices.Inputs.EmoUnloadR.Value"
                                      Converter="{StaticResource EmergencyStatusToImageConverter}" />
@@ -239,13 +257,13 @@
                         <ColumnDefinition Width="101*" />
                         <ColumnDefinition Width="110*" />
                         <ColumnDefinition Width="115*" />
-                        <ColumnDefinition Width="302*"/>
+                        <ColumnDefinition Width="302*" />
                     </Grid.ColumnDefinitions>
 
                     <!-- Left Door Indicators -->
-                    <Rectangle
-               Grid.Column="0" Grid.Row="0"
-               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                    <Rectangle Grid.Column="0"
+                               Grid.Row="0"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
                         <Rectangle.Fill>
                             <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                 <Binding Path="Devices.Inputs.DoorLock1L.Value" />
@@ -253,8 +271,9 @@
                             </MultiBinding>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Rectangle Grid.Column="1" Grid.Row="0"
-               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                    <Rectangle Grid.Column="1"
+                               Grid.Row="0"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
                         <Rectangle.Fill>
                             <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                 <Binding Path="Devices.Inputs.DoorLock2L.Value" />
@@ -262,9 +281,9 @@
                             </MultiBinding>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Rectangle
-               Grid.Column="3" Grid.Row="0"
-               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                    <Rectangle Grid.Column="3"
+                               Grid.Row="0"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
                         <Rectangle.Fill>
                             <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                 <Binding Path="Devices.Inputs.DoorLock3L.Value" />
@@ -272,9 +291,9 @@
                             </MultiBinding>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Rectangle
-               Grid.Column="4" Grid.Row="0"
-               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                    <Rectangle Grid.Column="4"
+                               Grid.Row="0"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
                         <Rectangle.Fill>
                             <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                 <Binding Path="Devices.Inputs.DoorLock4L.Value" />
@@ -282,9 +301,9 @@
                             </MultiBinding>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Rectangle
-               Grid.Column="5" Grid.Row="0"
-               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                    <Rectangle Grid.Column="5"
+                               Grid.Row="0"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
                         <Rectangle.Fill>
                             <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                 <Binding Path="Devices.Inputs.DoorLock5L.Value" />
@@ -292,9 +311,9 @@
                             </MultiBinding>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Rectangle
-               Grid.Column="6" Grid.Row="0"
-               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                    <Rectangle Grid.Column="6"
+                               Grid.Row="0"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
                         <Rectangle.Fill>
                             <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                 <Binding Path="Devices.Inputs.DoorLock6L.Value" />
@@ -302,9 +321,9 @@
                             </MultiBinding>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Rectangle
-               Grid.Column="7" Grid.Row="0"
-               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                    <Rectangle Grid.Column="7"
+                               Grid.Row="0"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
                         <Rectangle.Fill>
                             <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                 <Binding Path="Devices.Inputs.DoorLock7L.Value" />
@@ -314,9 +333,9 @@
                     </Rectangle>
 
                     <!-- Right Door Indicators -->
-                    <Rectangle
-               Grid.Column="0" Grid.Row="2"
-               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                    <Rectangle Grid.Column="0"
+                               Grid.Row="2"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
                         <Rectangle.Fill>
                             <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                 <Binding Path="Devices.Inputs.DoorLock1R.Value" />
@@ -324,8 +343,9 @@
                             </MultiBinding>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Rectangle Grid.Column="1" Grid.Row="2"
-               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                    <Rectangle Grid.Column="1"
+                               Grid.Row="2"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
                         <Rectangle.Fill>
                             <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                 <Binding Path="Devices.Inputs.DoorLock2R.Value" />
@@ -333,9 +353,9 @@
                             </MultiBinding>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Rectangle
-               Grid.Column="3" Grid.Row="2"
-               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                    <Rectangle Grid.Column="3"
+                               Grid.Row="2"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
                         <Rectangle.Fill>
                             <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                 <Binding Path="Devices.Inputs.DoorLock3R.Value" />
@@ -343,9 +363,9 @@
                             </MultiBinding>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Rectangle
-               Grid.Column="4" Grid.Row="2"
-               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                    <Rectangle Grid.Column="4"
+                               Grid.Row="2"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
                         <Rectangle.Fill>
                             <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                 <Binding Path="Devices.Inputs.DoorLock4R.Value" />
@@ -353,9 +373,9 @@
                             </MultiBinding>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Rectangle
-               Grid.Column="5" Grid.Row="2"
-               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                    <Rectangle Grid.Column="5"
+                               Grid.Row="2"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
                         <Rectangle.Fill>
                             <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                 <Binding Path="Devices.Inputs.DoorLock5R.Value" />
@@ -363,9 +383,9 @@
                             </MultiBinding>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Rectangle
-               Grid.Column="6" Grid.Row="2"
-               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                    <Rectangle Grid.Column="6"
+                               Grid.Row="2"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
                         <Rectangle.Fill>
                             <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                 <Binding Path="Devices.Inputs.DoorLock6R.Value" />
@@ -373,9 +393,9 @@
                             </MultiBinding>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Rectangle
-               Grid.Column="7" Grid.Row="2"
-               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                    <Rectangle Grid.Column="7"
+                               Grid.Row="2"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
                         <Rectangle.Fill>
                             <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                 <Binding Path="Devices.Inputs.DoorLock7R.Value" />
@@ -397,7 +417,7 @@
                 </Grid.RowDefinitions>
                 <!-- InCSTWork Image overlay-->
                 <Border Grid.Row="2">
-                    <Image Source="{StaticResource InCSTWorkImage}" 
+                    <Image Source="{StaticResource InCSTWorkImage}"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -685,21 +705,21 @@
                 <Grid Grid.Column="1"
                       Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.27*"/>
+                        <ColumnDefinition Width="0.27*" />
                         <ColumnDefinition />
-                        <ColumnDefinition Width="1.1*"/>
+                        <ColumnDefinition Width="1.1*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1.15*"/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition Height="1.65*"/>
+                        <RowDefinition Height="1.15*" />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition Height="1.65*" />
                     </Grid.RowDefinitions>
                     <!--Image 1-->
                     <Border Grid.Column="1"
-                        Grid.Row="4">
+                            Grid.Row="4">
                         <Image Source="{StaticResource UnloadAlignDetachImage_1 }"
                                Stretch="Fill">
                             <Image.Visibility>
@@ -712,7 +732,7 @@
                     </Border>
                     <!--Image 2-->
                     <Border Grid.Column="1"
-                        Grid.Row="3">
+                            Grid.Row="3">
                         <Image Source="{StaticResource UnloadAlignDetachImage_2 }"
                                Stretch="Fill">
                             <Image.Visibility>
@@ -725,7 +745,7 @@
                     </Border>
                     <!--Image 3-->
                     <Border Grid.Column="1"
-                        Grid.Row="2">
+                            Grid.Row="2">
                         <Image Source="{StaticResource UnloadAlignDetachImage_3 }"
                                Stretch="Fill">
                             <Image.Visibility>
@@ -738,7 +758,7 @@
                     </Border>
                     <!--Image 4-->
                     <Border Grid.Column="1"
-                        Grid.Row="1">
+                            Grid.Row="1">
                         <Image Source="{StaticResource UnloadAlignDetachImage_4 }"
                                Stretch="Fill">
                             <Image.Visibility>
@@ -769,14 +789,14 @@
                 <Grid Grid.Row="2"
                       Grid.Column="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.3*"/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="0.3*" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="1.5*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="2.4*"/>
-                        <RowDefinition/>
-                        <RowDefinition Height="4*"/>
+                        <RowDefinition Height="2.4*" />
+                        <RowDefinition />
+                        <RowDefinition Height="4*" />
                     </Grid.RowDefinitions>
                     <Image Grid.Column="1"
                            Grid.Row="1"
@@ -793,18 +813,18 @@
                 <Grid Grid.Row="0"
                       Grid.Column="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.3*"/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="0.3*" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="1.5*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="3.5*"/>
-                        <RowDefinition/>
-                        <RowDefinition Height="3.3*"/>
+                        <RowDefinition Height="3.5*" />
+                        <RowDefinition />
+                        <RowDefinition Height="3.3*" />
                     </Grid.RowDefinitions>
                     <Image Grid.Column="1"
                            Grid.Row="1"
-                        Source="{StaticResource UnloadTransferLeftImage}"
+                           Source="{StaticResource UnloadTransferLeftImage}"
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -930,7 +950,7 @@
                                         Command="{Binding DoorOpenCommand}"
                                         Image="/EQX.UI;component/Resources/Images/lock_selected.png"
                                         FontSize="20" />
-                        
+
                     </UniformGrid>
                 </UniformGrid>
             </Border>

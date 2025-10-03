@@ -14,22 +14,19 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
     public class InitializeViewModel : ViewModelBase
     {
-        private readonly Processes _processes;
 
-        public InitializeViewModel(ProcessInitSelect processInitSelect,
-            Devices devices,
+        public InitializeViewModel(Devices devices,
             MachineStatus machineStatus,
             Processes processes)
         {
-            ProcessInitSelect = processInitSelect;
             Devices = devices;
             MachineStatus = machineStatus;
-            _processes = processes;
+            Processes = processes;
         }
 
-        public ProcessInitSelect ProcessInitSelect { get; }
         public Devices Devices { get; }
         public MachineStatus MachineStatus { get; }
+        public Processes Processes { get; }
 
         public ICommand SelectAllCommand
         {
@@ -37,15 +34,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    var props = ProcessInitSelect.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-                    foreach (var prop in props)
-                    {
-                        if (prop.PropertyType == typeof(bool) && prop.CanWrite)
-                        {
-                            prop.SetValue(ProcessInitSelect, true);
-                        }
-                    }
+                    Processes.RootProcess.Childs!.ToList().ForEach(p => p.IsOriginOrInitSelected = true);
                 });
             }
         }
@@ -56,14 +45,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    var props = ProcessInitSelect.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-                    foreach (var prop in props)
-                    {
-                        if (prop.PropertyType == typeof(bool) && prop.CanWrite)
-                        {
-                            prop.SetValue(ProcessInitSelect, false);
-                        }
-                    }
+                    Processes.RootProcess.Childs!.ToList().ForEach(p => p.IsOriginOrInitSelected = false);
                 });
             }
         }
@@ -96,15 +78,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         return;
                     }
 
-                    _processes.RootProcess.Sequence = ESequence.Ready;
+                    Processes.RootProcess.Sequence = ESequence.Ready;
 
-                    foreach (var process in _processes.RootProcess.Childs!)
+                    foreach (var process in Processes.RootProcess.Childs!)
                     {
                         process.ProcessStatus = EProcessStatus.None;
                         process.Sequence = ESequence.Ready;
                     }
 
-                    _processes.RootProcess.ProcessMode = EProcessMode.ToRun;
+                    Processes.RootProcess.ProcessMode = EProcessMode.ToRun;
                 });
             }
         }

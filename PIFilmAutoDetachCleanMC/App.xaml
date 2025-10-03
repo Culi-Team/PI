@@ -35,6 +35,10 @@
                     <cvt:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
                     <cvt:UserPermissionToVisibilityConverter x:Key="UserPermissionToVisibilityConverter"/>
                     <cvt:BooleanToBackgroundUnitInitConverter x:Key="BooleanToBackgroundUnitInitConverter"/>
+                    <cvt:ProcessAlarmStatusToLabelContentConverter x:Key="ProcessAlarmStatusToLabelContentConverter"/>
+                    <cvt:ProcessAlarmStatusToBackgroundConverter x:Key="ProcessAlarmStatusToBackgroundConverter"/>
+                    <cvt:ProcessWarningStatusToLabelContentConverter x:Key="ProcessWarningStatusToLabelContentConverter" />
+                    <cvt:ProcessWarningStatusToBackroundConverter x:Key="ProcessWarningStatusToBackroundConverter" />
                     <uiCvt:CylinderTypeToButtonNameConverter x:Key="CylinderTypeToButtonNameConverter"/>
                     <cvt:LanguageToDisplayNameConverter x:Key="LanguageToDisplayNameConverter"/>
                     <cvt:LanguageToFlagImageConverter x:Key="LanguageToFlagImageConverter"/>
@@ -58,6 +62,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:InitializeViewModel}">
                 <views:InitializeView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:OriginViewModel}">
+                <views:OriginView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:AutoViewModel}">
                 <views:AutoView />

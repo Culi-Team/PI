@@ -222,7 +222,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferOriginStep.Cyl_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.GlassTransfer_UpDownCylinder_Up_Fail);
                         break;
                     }
                     Log.Debug("Cylinder Up Done");
@@ -237,7 +237,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferOriginStep.ZAxis_Origin_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.GlassTransfer_ZAxis_Origin_Fail);
                         break;
                     }
                     Log.Debug("Glass Transfer Z Axis Origin Done");
@@ -252,7 +252,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferOriginStep.YAxis_Origin_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.GlassTransfer_YAxis_Origin_Fail);
                         break;
                     }
                     Log.Debug("Glass Transfer Y Axis Origin Done");

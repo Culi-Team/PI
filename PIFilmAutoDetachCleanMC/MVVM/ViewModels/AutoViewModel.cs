@@ -161,12 +161,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_AreYouSureYouWantToSetMachineOrigin"], (string)Application.Current.Resources["str_Confirm"]) == false)
-                    {
-                        return;
-                    }
-                    Log.Debug("Origin Button Click");
-                    MachineStatus.OPCommand = EOperationCommand.Origin;
+                    _navigationService.NavigateTo<OriginViewModel>();
                 });
             }
         }

@@ -28,7 +28,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         private int _SemiAutoSequence;
         private int _OPCommand;
         private bool _originDone;
-        private bool initializeDone;
         private bool isInputStop;
         private bool isOutputStop;
         private readonly DryRunBypassProfile _dryRunProfile;
@@ -116,12 +115,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get { return _originDone; }
             set { _originDone = value; }
-        }
-
-        public bool InitializeDone
-        {
-            get { return initializeDone; }
-            set { initializeDone = value; }
         }
 
         public bool IsInputStop

@@ -435,7 +435,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Childs!.Count(child => child.Sequence != ESequence.Stop) == 0)
                     {
                         ProcessMode = EProcessMode.ToStop;
-                        _machineStatus.InitializeDone = true;
                         Log.Info("Initialize done");
                     }
                     break;
@@ -548,12 +547,6 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void CheckRealTimeAlarmStatus()
         {
-            if (_devices.Inputs.RemoveZoneFullTapeDetect.Value)
-            {
-                RaiseWarning((int)EWarning.RemoveFilm_Full_Tape);
-                return;
-            }
-
             if (!IsPowerMCOn)
             {
                 RaiseAlarm((int)EAlarm.PowerMCOff);
@@ -670,16 +663,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         return;
                     }
 
-                    if (_machineStatus.OriginDone == false)
+                    if (Childs!.Any(p => p.IsAlarm))
                     {
                         MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_MachineNeedToBeOriginBeforeRun"]);
-                        _machineStatus.OPCommand = EOperationCommand.None;
-                        return;
-                    }
-
-                    if (_machineStatus.InitializeDone == false)
-                    {
-                        MessageBoxEx.ShowDialog("Machine Need To Be Initialize");
                         _machineStatus.OPCommand = EOperationCommand.None;
                         return;
                     }
@@ -770,8 +756,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 if (this.IsInAlarmMode()) return;
 
-                _machineStatus.InitializeDone = false;
-
                 Log.Error($"{alarmSource} raising alarm [#{(int)(EAlarm)alarmId}] {(EAlarm)alarmId}");
                 raisedAlarmCode = alarmId;
                 ProcessMode = EProcessMode.ToAlarm;
@@ -785,8 +769,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 if (this.IsInWarningMode() || this.IsInAlarmMode()) return;
 
                 Log.Warn($"{warningSource} raising warning [#{(int)(EWarning)warningId}] {(EWarning)warningId}");
-
-                _machineStatus.InitializeDone = false;
 
                 raisedWarningCode = warningId;
                 ProcessMode = EProcessMode.ToWarning;

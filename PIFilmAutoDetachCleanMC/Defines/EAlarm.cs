@@ -71,6 +71,8 @@
 
         //Glass Transfer
         GlassTransfer = 12000,
+        GlassTransfer_YAxis_Origin_Fail,
+        GlassTransfer_ZAxis_Origin_Fail,
         GlassTransfer_YAxis_MoveReadyPosition_Fail,
         GlassTransfer_ZAxis_MoveReadyPosition_Fail,
         GlassTransfer_YAxis_MovePickPosition_Fail,

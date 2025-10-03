@@ -62,5 +62,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                 }
             }
         }
+
+        private void Border_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

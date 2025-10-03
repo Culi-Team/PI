@@ -26,6 +26,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
                 services.AddViewModel<InitDeinitViewModel>();
                 services.AddViewModel<InitializeViewModel>();
+                services.AddViewModel<OriginViewModel>();
                 services.AddViewModel<AutoViewModel>();
                 services.AddViewModel<ManualViewModel>();
                 services.AddViewModel<DataViewModel>();
