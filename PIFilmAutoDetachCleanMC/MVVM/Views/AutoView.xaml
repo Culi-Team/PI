@@ -1189,28 +1189,32 @@
                             Content="{Binding MachineStatus.MachineRunModeDisplay}"
                             Background="LightBlue"
                             FontSize="18"
-                            Command="{Binding SelectRunModeCommand}" />
+                            Command="{Binding SelectRunModeCommand}"
+                            IsEnabled="{Binding MachineStatus.IsStandByProcessMode}" />
 
             <ui:ImageButton Grid.Row="1"
                             Image="/EQX.UI;component/Resources/Images/IO_selected.png"
                             Content="IO Monitoring"
                             FontSize="18"
                             Command="{Binding IOMonitoringNavigate}"
-                            Background="LightBlue" />
+                            Background="LightBlue"
+                            IsEnabled="{Binding MachineStatus.IsStandByProcessMode}" />
 
             <ui:ImageButton Grid.Row="2"
                             Image="/EQX.UI;component/Resources/Images/idling_selected.png"
                             Content="Initialize"
                             FontSize="18"
                             Background="LightBlue"
-                            Command="{Binding InitializeNavigate}" />
+                            Command="{Binding InitializeNavigate}" 
+                            IsEnabled="{Binding MachineStatus.IsStandByProcessMode}" />
 
             <ui:ImageButton Grid.Row="3"
                             Image="/EQX.UI;component/Resources/Images/return_origin_selected.png"
                             Content="Origin"
                             FontSize="18"
                             Background="LightBlue"
-                            Command="{Binding OriginCommand}" />
+                            Command="{Binding OriginCommand}" 
+                            IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"/>
 
             <!-- PRODUCT INFORMATION -->
             <Border Grid.Row="4"
