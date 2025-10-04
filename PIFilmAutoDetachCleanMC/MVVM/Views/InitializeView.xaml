@@ -31,6 +31,7 @@
                            Foreground="White" />
                     <Label Content="{Binding IsWarning,Converter={StaticResource ProcessWarningStatusToLabelContentConverter}}"
                            Grid.Row="1"
+                           FontWeight="SemiBold"
                            HorizontalContentAlignment="Center"
                            Background="{Binding IsWarning,Converter={StaticResource ProcessWarningStatusToBackroundConverter}}" />
                 </Grid>

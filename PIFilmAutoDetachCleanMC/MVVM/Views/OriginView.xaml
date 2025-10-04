@@ -32,6 +32,7 @@
                            Foreground="White" />
                     <Label Content="{Binding IsAlarm,Converter={StaticResource ProcessAlarmStatusToLabelContentConverter}}"
                            Grid.Row="1"
+                           FontWeight="SemiBold"
                            HorizontalContentAlignment="Center"
                            Background="{Binding IsAlarm,Converter={StaticResource ProcessAlarmStatusToBackgroundConverter}}" />
                 </Grid>

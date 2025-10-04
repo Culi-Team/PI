@@ -386,6 +386,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
             return true;
         }
+
         public override bool ProcessOrigin()
         {
             switch ((ERobotLoadOriginStep)Step.OriginStep)
