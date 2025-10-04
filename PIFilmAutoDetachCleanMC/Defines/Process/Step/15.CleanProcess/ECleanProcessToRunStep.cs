@@ -12,6 +12,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         FeedingRollerDetect_Check,
         Wiper_Check,
         Set_Pressure,
+        Dispense_Remain,
+        Dispense_Remain_Wait,
+        Fill,
+        Fill_Wait,
         Clear_Flags,
         End
     }

@@ -269,7 +269,6 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddSingleton<ICylinderFactory, SimulationCylinderFactory>();
 #else
                 services.AddSingleton<ICylinderFactory, CylinderFactory>();
-
 #endif
                 services.AddSingleton<Cylinders>();
             });

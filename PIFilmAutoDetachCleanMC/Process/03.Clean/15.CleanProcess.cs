@@ -474,7 +474,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Override Methods
         public override bool PreProcess()
         {
-            if(ProcessMode != EProcessMode.Run) return base.PreProcess();
+            if (ProcessMode != EProcessMode.Run) return base.PreProcess();
 
             switch ((ECleanPreProcessStep)Step.PreProcessStep)
             {
@@ -482,7 +482,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.PreProcessStep++;
                     break;
                 case ECleanPreProcessStep.Wiper_Detect_Check:
-                    if(WiperCleanDetect1 == false ||  WiperCleanDetect2 == false || WiperCleanDetect3 == false)
+                    if (WiperCleanDetect1 == false || WiperCleanDetect2 == false || WiperCleanDetect3 == false)
                     {
                         EWarning? warning = cleanType switch
                         {
@@ -498,7 +498,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     break;
                 case ECleanPreProcessStep.PumpLeak_Detect_Check:
-                    if(IsPumpLeakDetect)
+                    if (IsPumpLeakDetect)
                     {
                         EWarning? warning = cleanType switch
                         {
@@ -514,7 +514,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.PreProcessStep++;
                     break;
                 case ECleanPreProcessStep.AlcoholLeak_Detect_Check:
-                    if(IsAlcoholLeakDetect)
+                    if (IsAlcoholLeakDetect)
                     {
                         EWarning? warning = cleanType switch
                         {
@@ -656,7 +656,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ECleanOriginStep.SyringePump_Origin_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         EAlarm? alarm = cleanType switch
                         {
@@ -882,6 +882,32 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessToRunStep.Set_Pressure:
                     Log.Debug($"Set Pressure : {cleanRecipe.CylinderPushPressure}");
                     Regulator.SetPressure(cleanRecipe.CylinderPushPressure);
+                    Step.ToRunStep++;
+                    break;
+                case ECleanProcessToRunStep.Dispense_Remain:
+                    SyringePump.Dispense(1.0, 7);
+                    Thread.Sleep(100);
+                    Step.ToRunStep++;
+                    break;
+                case ECleanProcessToRunStep.Dispense_Remain_Wait:
+                    if (SyringePump.IsReady == false)
+                    {
+                        Thread.Sleep(100);
+                        break;
+                    }
+                    Step.ToRunStep++;
+                    break;
+                case ECleanProcessToRunStep.Fill:
+                    SyringePump.Fill(1.0);
+                    Thread.Sleep(100);
+                    Step.ToRunStep++;
+                    break;
+                case ECleanProcessToRunStep.Fill_Wait:
+                    if (SyringePump.IsReady == false)
+                    {
+                        Thread.Sleep(100);
+                        break;
+                    }
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.Clear_Flags:
