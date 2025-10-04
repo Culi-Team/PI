@@ -5,6 +5,8 @@ using EQX.Core.Motion;
 using EQX.Core.Recipe;
 using EQX.InOut;
 using EQX.UI.Controls;
+using Microsoft.Extensions.DependencyInjection;
+using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System;
 using System.Collections.Generic;
@@ -46,6 +48,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     string motionName = spt.SinglePosition.Motion;
                     if (MessageBoxEx.ShowDialog($"{MoveTo} {spt.SingleRecipeDescription.Description} ?") == true)
                     {
+                        Devices devices = App.AppHost!.Services.GetRequiredService<Devices>();
+                        RecipeSelector recipeSelector = App.AppHost!.Services.GetRequiredService<RecipeSelector>();
+
                         Motions.FirstOrDefault(m => m.Name.Contains(motionName))!.MoveAbs(spt.Value);
                     }
                 });
