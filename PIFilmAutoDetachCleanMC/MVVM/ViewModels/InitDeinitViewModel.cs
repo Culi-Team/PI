@@ -15,6 +15,7 @@ using System.Runtime.CompilerServices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 using EQX.Core.Robot;
 using EQX.Core.Communication;
+using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -37,6 +38,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         ProcessHandle,
 
         CassetteHandle,
+
+        WorkDataHandle,
 
         End,
         Error,
@@ -82,7 +85,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             CassetteList cassetteList,
             [FromKeyedServices("RobotLoad")] IRobot robotLoad,
             [FromKeyedServices("RobotUnload")] IRobot robotUnload,
-            [FromKeyedServices("SyringePumpSerialCommunicator")] SerialCommunicator syringePumpSerialCommunicator)
+            [FromKeyedServices("SyringePumpSerialCommunicator")] SerialCommunicator syringePumpSerialCommunicator,
+            CWorkData workData)
         {
             _devices = devices;
             _processes = processes;
@@ -95,6 +99,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _robotLoad = robotLoad;
             _robotUnload = robotUnload;
             _syringePumpSerialCommunicator = syringePumpSerialCommunicator;
+            _workData = workData;
             _task = new Task(() => { });
             ErrorMessages = new List<string>();
 
@@ -287,6 +292,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _cassetteList.SubscribeCellClickedEvent();
                         _step++;
                         break;
+                    case EHandleStep.WorkDataHandle:
+                        _workData.Load();
+                        _step++;
+                        break;
                     case EHandleStep.End:
                         _step++;
                         break;
@@ -378,6 +387,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _cassetteList.Save();
                         _step++;
                         break;
+                    case EHandleStep.WorkDataHandle:
+                        _workData.Save();
+                        _step++;
+                        break;
                     case EHandleStep.End:
                         _step++;
                         break;
@@ -411,6 +424,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly IRobot _robotLoad;
         private readonly IRobot _robotUnload;
         private readonly SerialCommunicator _syringePumpSerialCommunicator;
+        private readonly CWorkData _workData;
         private readonly Devices _devices;
         private readonly Processes _processes;
 
