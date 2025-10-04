@@ -401,6 +401,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EOutConveyorProcessOutWorkCSTUnloadStep.Wait_OutWorkCSTUnloadDone:
                     if(CSTDetect1 == true && CSTDetect2 == true)
                     {
+                        Log.Debug("Clear Flag Out Conveyor Ready");
+                        FlagOutConveyorReady = false;
+
                         Step.RunStep++;
                         break;
                     }
