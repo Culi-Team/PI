@@ -25,7 +25,7 @@
                     </Grid.RowDefinitions>
                     <Label Content="{Binding Name}"
                            FontWeight="Bold"
-                           Background="#616161"
+                           Background="Black"
                            FontSize="14"
                            HorizontalContentAlignment="Center"
                            Foreground="White" />

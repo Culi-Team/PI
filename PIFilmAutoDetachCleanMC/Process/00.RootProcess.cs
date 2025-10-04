@@ -222,6 +222,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                 foreach (var motion in _devices.MotionsInovance.All!) { motion.Stop(); }
                 foreach (var motion in _devices.MotionsAjin.All!) { motion.Stop(); }
 
+                // Set Robot process Warning , Need Initialize before Run
+                Childs!.First(p => p.Name == EProcess.RobotLoad.ToString()).IsWarning = true;
+                Childs!.First(p => p.Name == EProcess.RobotUnload.ToString()).IsWarning = true;
+
                 _devices.Outputs.Lamp_Alarm();
                 ProcessMode = EProcessMode.Warning;
                 Log.Info("ToWarning Done, Warning");
@@ -669,6 +673,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Childs!.Any(p => p.IsAlarm))
                     {
                         MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_MachineNeedToBeOriginBeforeRun"]);
+                        _machineStatus.OPCommand = EOperationCommand.None;
+                        return;
+                    }
+
+                    if (Childs!.Any(p => p.IsWarning))
+                    {
+                        MessageBoxEx.ShowDialog("Machine Need To Be Initialize Before Run");
                         _machineStatus.OPCommand = EOperationCommand.None;
                         return;
                     }

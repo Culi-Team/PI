@@ -492,6 +492,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ERobotLoadReadyStep)Step.RunStep)
             {
                 case ERobotLoadReadyStep.Start:
+                    if(IsOriginOrInitSelected == false)
+                    {
+                        Sequence = ESequence.Stop;
+                        break;
+                    }
                     Log.Debug("Ready Start");
                     Step.RunStep++;
                     break;
@@ -664,6 +669,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadReadyStep.End:
                     Log.Debug("Ready run end");
+                    IsWarning = false;
                     Sequence = ESequence.Stop;
                     break;
                 default:

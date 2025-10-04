@@ -14,9 +14,9 @@
             <Border BorderBrush="Gray"
                     Background="{Binding IsOriginOrInitSelected,Converter={StaticResource BooleanToBackgroundUnitInitConverter}}"
                     Cursor="Hand"
-                    BorderThickness="3"
+                    BorderThickness="1"
                     PreviewMouseDown="Border_PreviewMouseDown">
-                <Grid Margin="5">
+                <Grid Margin="3">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -50,7 +50,7 @@
                 Background="White">
             <Viewbox Stretch="Uniform">
                 <Grid>
-                    <Image Source="{StaticResource InitializeImage}"
+                    <Image Source="{StaticResource AutoViewImage}"
                            Stretch="Fill"
                            Opacity="1" />
                 </Grid>

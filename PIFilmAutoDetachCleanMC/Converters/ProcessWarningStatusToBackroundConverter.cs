@@ -15,7 +15,7 @@ namespace PIFilmAutoDetachCleanMC.Converters
         {
             if (value is bool bIsWarning)
             {
-                return bIsWarning ? Brushes.LightYellow : Brushes.GreenYellow;
+                return bIsWarning ? Brushes.Yellow : Brushes.GreenYellow;
             }
 
             return Binding.DoNothing;
