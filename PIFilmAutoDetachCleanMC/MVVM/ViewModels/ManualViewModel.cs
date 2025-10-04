@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Common;
+using EQX.Core.Communication;
 using EQX.Core.Communication.Modbus;
 using EQX.Core.Display;
 using EQX.Core.InOut;
@@ -29,6 +30,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly IRobot _robotLoad;
         private readonly IRobot _robotUnload;
         private readonly Processes _processes;
+        private readonly SerialCommunicator _syringPumpSerialCommunicator;
         private ManualUnitViewModel selectedManualUnit;
         private readonly DisplayManager _displayManager = new();
         private readonly ViewOnlyOverlay _viewOnlyOverlay = new();
@@ -45,6 +47,20 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public bool MotionAjinIsConnected => Devices.MotionsAjin.All.All(m => m.IsConnected);
         public bool SpeedControllersIsConnected => Devices.SpeedControllerList.All.All(sc => sc.IsConnected);
         public bool TorqueControllersIsConnected => Devices.TorqueControllers.All.All(tc => tc.IsConnected);
+        public bool SyringePumpIsConnected
+        {
+            get
+            {
+                return Devices.SyringePumps.WetCleanLeftSyringePump.IsConnected &&
+                       Devices.SyringePumps.WetCleanRightSyringePump.IsConnected &&
+                       Devices.SyringePumps.AfCleanLeftSyringePump.IsConnected &&
+                       Devices.SyringePumps.AfCleanRightSyringePump.IsConnected;
+            }
+        }
+        public bool WETCleanLeftRegulatorIsConnected => Devices.Regulators.WetCleanLRegulator.IsConnected;
+        public bool WETCleanRightRegulatorIsConnected => Devices.Regulators.WetCleanRRegulator.IsConnected;
+        public bool AFCleanLeftRegulatorIsConnected => Devices.Regulators.AfCleanLRegulator.IsConnected;
+        public bool AFCleanRightRegulatorIsConnected => Devices.Regulators.AfCleanRRegulator.IsConnected;
         public InteractiveScreen ActiveScreen
         {
             get => _activeScreen;
@@ -230,27 +246,54 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 });
             }
         }
+
+        public ICommand SyringePumpConnectCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _syringPumpSerialCommunicator.Connect();
+                    OnPropertyChanged(nameof(SyringePumpIsConnected));
+                });
+            }
+        }
+
+        public ICommand RegulatorConnectCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((parameter) =>
+                {
+                    if(parameter == null)
+                    {
+                        MessageBoxEx.Show("Regulator Connect Fail");
+                        return;
+                    }
+                    if(parameter.ToString() == "WETCleanLeft")
+                    {
+                        Devices.Regulators.WetCleanLRegulator.Connect();
+                        OnPropertyChanged(nameof(WETCleanLeftRegulatorIsConnected));
+                    }
+                    if(parameter.ToString() == "WETCleanRight")
+                    {
+                        Devices.Regulators.WetCleanRRegulator.Connect();
+                        OnPropertyChanged(nameof(WETCleanRightRegulatorIsConnected));
+                    }
+                    if(parameter.ToString() == "AFCleanLeft")
+                    {
+                        Devices.Regulators.AfCleanLRegulator.Connect();
+                        OnPropertyChanged(nameof(AFCleanLeftRegulatorIsConnected));
+                    }
+                    if(parameter.ToString() == "AFCleanRight")
+                    {
+                        Devices.Regulators.AfCleanRRegulator.Connect();
+                        OnPropertyChanged(nameof(AFCleanRightRegulatorIsConnected));
+                    }
+                });
+            }
+        }
         #endregion
-
-        //public bool CylinderInterLock(ICylinder cylinder, bool isForward, out string CylinderInterlockMsg)
-        //{
-        //    CylinderInterlockMsg = string.Empty;
-
-        //    // Interlock for TrRotateLeftRotate
-        //    if (cylinder.Name.Contains("TrRotateLeftRotate") || cylinder.Name.Contains("TrRotateLeftFwBw"))
-        //    {
-        //        CylinderInterlockMsg = "Need Transfer Rotation ZAxis at Ready Position before Moving";
-        //        return Devices?.MotionsInovance?.TransferRotationLZAxis?.IsOnPosition(RecipeSelector?.CurrentRecipe?.TransferRotationLeftRecipe?.ZAxisReadyPosition ?? 0) == true;
-        //    }
-        //    // Interlock for TrRotateRightRotate
-        //    if (cylinder.Name.Contains("TrRotateRightRotate") || cylinder.Name.Contains("TrRotateRightFwBw"))
-        //    {
-        //        CylinderInterlockMsg = "Need Transfer Rotation ZAxis at Ready Position before Moving";
-        //        return Devices?.MotionsInovance?.TransferRotationRZAxis?.IsOnPosition(RecipeSelector?.CurrentRecipe?.TransferRotationRightRecipe?.ZAxisReadyPosition ?? 0) == true;
-        //    }
-
-        //    return true;
-        //}
 
         #region Constructor
         public ManualViewModel(Devices devices,
@@ -263,7 +306,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             [FromKeyedServices("TorqueControllerModbusCommunication")] IModbusCommunication torqueModbusCommunication,
             [FromKeyedServices("RobotLoad")] IRobot robotLoad,
             [FromKeyedServices("RobotUnload")] IRobot robotUnload,
-            Processes processes)
+            Processes processes,
+            [FromKeyedServices("SyringePumpSerialCommunicator")] SerialCommunicator SyringPumpSerialCommunicator)
         {
             Devices = devices;
             MachineStatus = machineStatus;
@@ -273,6 +317,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _robotLoad = robotLoad;
             _robotUnload = robotUnload;
             _processes = processes;
+            _syringPumpSerialCommunicator = SyringPumpSerialCommunicator;
             _displayManager.EnableExtend();
             _activeScreen = InteractiveScreen.Primary;
             MoveMainWindowTo(_activeScreen);

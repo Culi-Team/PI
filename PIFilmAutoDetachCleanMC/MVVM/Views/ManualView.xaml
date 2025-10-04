@@ -322,6 +322,110 @@
                     </Grid>
                 </StackPanel>
             </GroupBox>
+
+            <GroupBox Header="SYRINGE PUMP"
+                      DockPanel.Dock="Top">
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Width="26"
+                                     Height="26"
+                                     Fill="{Binding SyringePumpIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                     Stroke="{StaticResource PrimaryBorderBrush}"
+                                     StrokeThickness="1"
+                                     Margin="0 0 5 0" />
+                            <uiControls:ImageButton Grid.Column="1"
+                                                    Content="Syringe Pump"
+                                                    Command="{Binding SyringePumpConnectCommand}"
+                                                    Height="40"
+                                                    Margin="0 5 0 0" />
+                        </Grid>
+
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="REGULATOR"
+                      DockPanel.Dock="Top">
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Width="26"
+                                 Height="26"
+                                 Fill="{Binding WETCleanLeftRegulatorIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                 Stroke="{StaticResource PrimaryBorderBrush}"
+                                 StrokeThickness="1"
+                                 Margin="0 0 5 0" />
+                        <uiControls:ImageButton Grid.Column="1"
+                                                Content="WET Clean Left"
+                                                Command="{Binding RegulatorConnectCommand}"
+                                                CommandParameter="WETCleanLeft"
+                                                Height="40"
+                                                Margin="0 5 0 0" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Width="26"
+                                 Height="26"
+                                 Fill="{Binding WETCleanRightRegulatorIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                 Stroke="{StaticResource PrimaryBorderBrush}"
+                                 StrokeThickness="1"
+                                 Margin="0 0 5 0" />
+                        <uiControls:ImageButton Grid.Column="1"
+                                                Content="WET Clean Right"
+                                                Command="{Binding RegulatorConnectCommand}"
+                                                CommandParameter="WETCleanRight"
+                                                Height="40"
+                                                Margin="0 5 0 0" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Width="26"
+                                 Height="26"
+                                 Fill="{Binding AFCleanLeftRegulatorIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                 Stroke="{StaticResource PrimaryBorderBrush}"
+                                 StrokeThickness="1"
+                                 Margin="0 0 5 0" />
+                        <uiControls:ImageButton Grid.Column="1"
+                                                Content="AF Clean Left"
+                                                Command="{Binding RegulatorConnectCommand}"
+                                                CommandParameter="AFCleanLeft"
+                                                Height="40"
+                                                Margin="0 5 0 0" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Width="26"
+                                 Height="26"
+                                 Fill="{Binding AFCleanRightRegulatorIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                 Stroke="{StaticResource PrimaryBorderBrush}"
+                                 StrokeThickness="1"
+                                 Margin="0 0 5 0" />
+                        <uiControls:ImageButton Grid.Column="1"
+                                                Content="AF Clean Right"
+                                                Command="{Binding RegulatorConnectCommand}"
+                                                CommandParameter="AFCleanRight"
+                                                Height="40"
+                                                Margin="0 5 0 0" />
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
             <GroupBox Header="DISPLAY SCREEN"
                       DockPanel.Dock="Top">
                 <StackPanel Orientation="Vertical">
