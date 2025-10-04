@@ -55,7 +55,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void FixCylinderFwBw(bool isForward)
         {
-            if(isForward)
+            if (isForward)
             {
                 FixCyl1_1.Forward();
                 FixCyl1_2.Forward();
@@ -211,9 +211,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachProcessOriginStep.ZAxis_Origin_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if (DetachGlassZAxis.Status.IsHomeDone == false)
+                        {
+                            RaiseAlarm((int)EAlarm.Detach_ZAxis_Origin_Fail);
+                            break;
+                        }
+                        RaiseAlarm((int)EAlarm.Detach_ShuttleTransferZAxis_Origin_Fail);
                         break;
                     }
+
                     Log.Debug("Detach Glass Z Axis Origin Done");
                     Log.Debug("Shuttle Transfer Z Axis Origin Done");
                     Step.OriginStep++;
@@ -228,7 +234,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachProcessOriginStep.DetachCyl_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if (DetachCyl1.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.Detach_DetachCylinder1_Up_Fail);
+                            break;
+                        }
+                        RaiseWarning((int)EWarning.Detach_DetachCylinder2_Up_Fail);
                         break;
                     }
                     Log.Debug("Detach Cylinder Up Done");
@@ -243,7 +254,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachProcessOriginStep.Cyl_Fix_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.Detach_FixCylinder_Backward_Fail);
                         break;
                     }
                     Log.Debug("Cylinder Fix Fixture Backward Done");
@@ -258,7 +269,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachProcessOriginStep.ShtTransferXAxis_Origin_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.Detach_ShuttleTransferXAxis_Origin_Fail);
                         break;
                     }
                     Log.Debug("Shuttle Transfer X Axis Origin Done");
@@ -368,7 +379,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EDetachReadyStep)Step.RunStep)
             {
                 case EDetachReadyStep.Start:
-                    if(IsOriginOrInitSelected == false)
+                    if (IsOriginOrInitSelected == false)
                     {
                         Sequence = ESequence.Stop;
                         break;
@@ -387,7 +398,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachReadyStep.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if(DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisReadyPosition) == false)
+                        {
+                            RaiseAlarm((int)EAlarm.Detach_ZAxis_MoveReadyPosition_Fail);
+                            break;
+                        }
+                        RaiseAlarm((int)EAlarm.Detach_ShuttleTransferZAxis_MoveReadyPosition_Fail);
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");

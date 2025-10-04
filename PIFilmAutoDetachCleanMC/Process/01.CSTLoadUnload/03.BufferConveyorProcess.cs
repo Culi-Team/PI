@@ -108,7 +108,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EBufferConveyorOriginStep.Stopper_Cylinder_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if(BufferStopper1.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.BufferConveyor_Stopper1_Down_Fail);
+                            break;
+                        }
+
+                        RaiseWarning((int)EWarning.BufferConveyor_Stopper2_Down_Fail);
                         break;
                     }
                     Log.Debug("Stopper Cylinder Down Done");

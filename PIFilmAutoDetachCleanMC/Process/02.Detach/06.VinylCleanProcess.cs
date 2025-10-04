@@ -143,7 +143,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanOriginStep.Cyl_Roller_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.VinylClean_PusherCylinder_Down_Fail);
                         break;
                     }
                     Log.Debug("Vinyl Clean Cylinder Roller Down Done");
@@ -158,7 +158,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanOriginStep.Cyl_Roller_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.VinylClean_RollerBwFwCylinder_Backward_Fail);
                         break;
                     }
                     Log.Debug("Vinyl Clean Cylinder Roller Backward Done");
@@ -561,7 +561,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Motor_UnWinder_Run_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.VinylClean_Motor_UnWinder_Run_Fail);
                         break;
                     }
                     Log.Debug("Motor UnWinder Run Done");

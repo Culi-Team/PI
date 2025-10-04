@@ -376,7 +376,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadAlignStep.Vacuum_On_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout
+                        RaiseWarning((int)EWarning.UnloadAlign_Vacuum_Fail);
                         break;
                     }
                     Step.RunStep++;
@@ -384,7 +384,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadAlignStep.GlassDetect_Check:
                     if (IsGlassDetect == false)
                     {
-                        //ALARM
+                        RaiseWarning((int)EWarning.UnloadAlign_Glass_NotDetect);
                         break;
                     }
                     Step.RunStep++;

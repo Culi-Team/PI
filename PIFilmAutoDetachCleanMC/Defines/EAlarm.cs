@@ -37,6 +37,7 @@
 
         //VinylClean
         VinylClean = 6000,
+        VinylClean_Motor_UnWinder_Run_Fail,
 
         //Robot Load
         RobotLoad = 7000,
@@ -54,6 +55,7 @@
         TransferFixtureOriginFixtureDetect = 9001,
         TransferFixture_YAxis_MoveLoadPosition_Fail,
         TransferFixture_YAxis_MoveUnloadPosition_Fail,
+        TransferFixture_YAxis_Origin_Fail,
 
         //Detach
         Detach = 10000,
@@ -65,6 +67,10 @@
         Detach_ZAxis_MoveDetachReadyPosition_Fail,
         Detach_ZAxis_MoveDetachPosition1_Fail,
         Detach_ZAxis_MoveDetachPosition2_Fail,
+        Detach_ZAxis_Origin_Fail,
+        Detach_ShuttleTransferZAxis_Origin_Fail,
+        Detach_ShuttleTransferXAxis_Origin_Fail,
+        Detach_ZAxis_MoveReadyPosition_Fail,
 
         //Remove Film
         RemoveFilm = 11000,

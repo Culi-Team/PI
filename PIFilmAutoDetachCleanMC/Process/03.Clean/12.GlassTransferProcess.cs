@@ -410,7 +410,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferReadyStep.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.GlassTransfer_ZAxis_MoveReadyPosition_Fail);
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");
@@ -425,7 +425,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferReadyStep.YAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.GlassTransfer_YAxis_MoveReadyPosition_Fail);
                         break;
                     }
                     Log.Debug("Y Axis Move Ready Position Done");

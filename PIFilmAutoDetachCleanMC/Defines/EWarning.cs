@@ -178,7 +178,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         TransferRotationLeft_Cylinder_Down_Fail,
         TransferRotationLeft_RotateVac_Check_Fail,
         TransferRotationLeft_GlassVacAfterRotate_Check_Fail,
-
+        TransferRotationLeft_GlassVacuum1_Check_Fail,
+        TransferRotationLeft_GlassVacuum2_Check_Fail,
+        TransferRotationLeft_GlassVacuumRotate_Check_Fail,
 
         //Transfer Rotation Right
         TransferRotationRight = 20000,
@@ -190,6 +192,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         TransferRotationRight_Cylinder_Down_Fail,
         TransferRotationRight_RotateVac_Check_Fail,
         TransferRotationRight_GlassVacAfterRotate_Check_Fail,
+        TransferRotationRight_GlassVacuum1_Check_Fail,
+        TransferRotationRight_GlassVacuum2_Check_Fail,
+        TransferRotationRight_GlassVacuumRotate_Check_Fail,
 
         //AF Clean Left
         AFCleanLeft = 21000,
@@ -219,6 +224,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         UnloadAlign = 25000,
         UnloadAlign_AlignCylinder_Up_Fail,
         UnloadAlign_AlignCylinder_Down_Fail,
+        UnloadAlign_Vacuum_Fail,
+        UnloadAlign_Glass_NotDetect,
 
         //Robot Unload
         RobotUnload = 26000,

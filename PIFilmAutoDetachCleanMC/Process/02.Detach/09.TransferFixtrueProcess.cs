@@ -182,7 +182,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureOriginStep.Unclamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.TransferFixture_ClampCylinder_UnClamp_Fail);
                         break;
                     }
                     Log.Debug("Unclamp Done");
@@ -208,11 +208,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureOriginStep.CylUp_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.TransferFixture_UpDownCylinder_Up_Fail);
                         break;
                     }
-                    Log.Debug("Cylinder Up Done");
 
+                    Log.Debug("Cylinder Up Done");
                     Step.OriginStep++;
                     break;
                 case ETransferFixtureOriginStep.YAxis_Origin:
@@ -224,7 +224,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureOriginStep.YAxis_Origin_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseAlarm((int)EAlarm.TransferFixture_YAxis_Origin_Fail);
                         break;
                     }
                     Log.Debug("Fixture Transfer Y Axis Origin Done");

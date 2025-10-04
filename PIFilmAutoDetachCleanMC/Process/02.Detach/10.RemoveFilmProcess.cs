@@ -138,7 +138,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmProcessOriginStep.Fix_Cyl_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.RemoveFilm_FixCylinder_Backward_Fail);
                         break;
                     }
                     Log.Debug("Remove Film Process Fix Cylinder Backward Done");
@@ -154,7 +154,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmProcessOriginStep.Pusher_Cyl_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if (PusherCyl1.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.RemoveFilm_PusherCylinder1_Down_Fail);
+                            break;
+                        }
+                        RaiseWarning((int)EWarning.RemoveFilm_PusherCylinder2_Down_Fail);
                         break;
                     }
                     Log.Debug("Remove Film Process Pusher Cylinder Down Done");
@@ -170,7 +175,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmProcessOriginStep.Cyl_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if(UpDownCyl1.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder1_Up_Fail);
+                            break;
+                        }
+                        RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder2_Up_Fail);
                         break;
                     }
                     Log.Debug("Remove Film Process Cylinder Up Done");
@@ -187,7 +197,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmProcessOriginStep.Cyl_UnClamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.RemoveFilm_ClampCylinder_UnClamp_Fail);
                         break;
                     }
                     Log.Debug("Remove Film Process Cylinder UnClamp Done");
@@ -202,7 +212,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmProcessOriginStep.Cyl_Transfer_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.RemoveFilm_TransferCylinder_Backward_Fail);
                         break;
                     }
                     Log.Debug("Remove Film Process Cylinder Transfer Backward Done");
@@ -363,7 +373,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ERemoveFilmReadyStep)Step.RunStep)
             {
                 case ERemoveFilmReadyStep.Start:
-                    if(IsOriginOrInitSelected == false)
+                    if (IsOriginOrInitSelected == false)
                     {
                         Sequence = ESequence.Stop;
                         break;
@@ -381,7 +391,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmReadyStep.Cyl_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if(UpDownCyl1.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder1_Up_Fail);
+                            break;
+                        }
+                        RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder2_Up_Fail);
                         break;
                     }
                     Log.Debug("Cylinder Up Done");
@@ -397,7 +412,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmReadyStep.Cyl_Pusher_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        if(PusherCyl1.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.RemoveFilm_PusherCylinder1_Down_Fail);
+                            break;
+                        }
+                        RaiseWarning((int)EWarning.RemoveFilm_PusherCylinder2_Down_Fail);
                         break;
                     }
                     Log.Debug("Cylinder Pusher Down Done");
