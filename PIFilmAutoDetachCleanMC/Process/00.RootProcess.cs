@@ -66,7 +66,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         }
 
         private bool IsAutoMode => _devices.Inputs.AutoModeSwitchL.Value && _devices.Inputs.AutoModeSwitchR.Value;
-        private bool IsManualMode => _devices.Inputs.ManualModeSwitchL.Value || _devices.Inputs.ManualModeSwitchL.Value;
+        private bool IsManualMode => _devices.Inputs.ManualModeSwitchL.Value || _devices.Inputs.ManualModeSwitchR.Value;
 
         private bool IsLightCurtainLeftDetect => _devices.Inputs.OutCstLightCurtainAlarmDetect.Value;
         private bool IsLightCurtainRightDetect => _devices.Inputs.InCstLightCurtainAlarmDetect.Value;

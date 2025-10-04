@@ -387,7 +387,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("UnAlign Fixture");
                     AlignFixtureCyl1.Backward();
                     AlignFixtureCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return AlignFixtureCyl1.IsBackward && AlignFixtureCyl1.IsBackward; });
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return AlignFixtureCyl1.IsBackward && AlignFixtureCyl2.IsBackward; });
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.Cyl_UnAlign_Wait:
@@ -427,7 +427,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EFixtureAlignTransferStep.Clear_Flag:
                     Log.Debug("Clear Flag Transfer Fixture Done Received");
-                    FlagTransferFixtureDoneReceive = true;
+                    FlagTransferFixtureDoneReceive = false;
                     Log.Debug("Wait Fixture Transfer Done");
                     Step.RunStep++;
                     break;

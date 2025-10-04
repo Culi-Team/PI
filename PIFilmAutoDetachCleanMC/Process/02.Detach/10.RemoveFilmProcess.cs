@@ -43,8 +43,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private bool IsFixtureDetect => _machineStatus.IsSatisfied(_devices.Inputs.RemoveZoneFixtureDetect);
 
-        private bool IsFixCylinderBw => FixCyl1_1.IsBackward && FixCyl2_1.IsBackward && FixCyl2_1.IsBackward && FixCyl2_2.IsBackward;
-        private bool IsFixCylinderFw => FixCyl1_1.IsForward && FixCyl2_1.IsForward && FixCyl2_1.IsForward && FixCyl2_2.IsForward;
+        private bool IsFixCylinderBw => FixCyl1_1.IsBackward && FixCyl1_2.IsBackward && FixCyl2_1.IsBackward && FixCyl2_2.IsBackward;
+        private bool IsFixCylinderFw => FixCyl1_1.IsForward && FixCyl1_2.IsForward && FixCyl2_1.IsForward && FixCyl2_2.IsForward;
         #endregion
 
         private void FixCylinderFwBw(bool isForward)
