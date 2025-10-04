@@ -2,6 +2,7 @@
 using EQX.Core.Common;
 using EQX.Core.Sequence;
 using EQX.UI.Controls;
+using log4net;
 using OpenCvSharp.Dnn;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
@@ -14,14 +15,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
     public class InitializeViewModel : ViewModelBase
     {
+        private readonly INavigationService _navigationService;
 
         public InitializeViewModel(Devices devices,
+            INavigationService navigationService,
             MachineStatus machineStatus,
             Processes processes)
         {
             Devices = devices;
+            _navigationService = navigationService;
             MachineStatus = machineStatus;
             Processes = processes;
+            Log = LogManager.GetLogger("InitializeVM");
         }
 
         public Devices Devices { get; }
@@ -87,6 +92,29 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     }
 
                     Processes.RootProcess.ProcessMode = EProcessMode.ToRun;
+                });
+            }
+        }
+
+        public ICommand StopCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    Log.Debug("Stop Button Click");
+                    MachineStatus.OPCommand = EOperationCommand.Stop;
+                });
+            }
+        }
+
+        public ICommand ExitCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _navigationService.NavigateTo<AutoViewModel>();
                 });
             }
         }

@@ -246,8 +246,145 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Override Methods
         public override bool ProcessToOrigin()
         {
-            FlagRobotOriginDone = false;
-            return base.ProcessToOrigin();
+            switch ((ERobotLoadToOriginStep)Step.OriginStep)
+            {
+                case ERobotLoadToOriginStep.Start:
+                    Log.Debug("To Origin Start");
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadToOriginStep.Clear_FlagOriginDone:
+                    Log.Debug("Clear Flag Robot Origin Done");
+                    FlagRobotOriginDone = false;
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadToOriginStep.ReConnectIfRequired:
+                    if (!_robotLoad.IsConnected)
+                    {
+                        Log.Debug("Robot is not connected, trying to reconnect.");
+                        _robotLoad.Connect();
+                    }
+
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadToOriginStep.CheckConnection:
+                    if (!_robotLoad.IsConnected)
+                    {
+                        RaiseWarning((int)EWarning.RobotLoad_Connect_Fail);
+                        break;
+                    }
+
+                    Log.Debug("Robot is connected.");
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadToOriginStep.RobotMotionOnCheck:
+                    if (!PeriRDY.Value)
+                    {
+                        Log.Debug("Driver ON");
+                        DrivesOn.Value = true;
+                        Step.OriginStep++;
+                        break;
+                    }
+
+                    Step.OriginStep = (int)ERobotLoadToOriginStep.RobotStopMessCheck;
+                    break;
+                case ERobotLoadToOriginStep.RobotMotionOn_Delay:
+                    Wait(3000, () => PeriRDY.Value);
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadToOriginStep.RobotMotionOn_Disable:
+                    Log.Debug("Driver OFF");
+                    DrivesOn.Value = false;
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadToOriginStep.RobotStopMessCheck:
+                    if (StopMess.Value)
+                    {
+                        Log.Debug("Confirm message.");
+                        ConfMess.Value = true;
+                        Step.OriginStep++;
+                        break;
+                    }
+
+                    Step.OriginStep = (int)ERobotLoadToOriginStep.RobotExtStart_Enable;
+                    break;
+                case ERobotLoadToOriginStep.RobotConfMess_Delay:
+                    Wait(500);
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadToOriginStep.RobotConfMess_Disable:
+                    Log.Debug("Disable Confirm message.");
+                    ConfMess.Value = false;
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadToOriginStep.RobotExtStart_Enable:
+                    Log.Debug("Enable External Start.");
+                    ExtStart.Value = true;
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadToOriginStep.RobotExtStart_Delay:
+                    Wait(500);
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadToOriginStep.RobotExtStart_Disable:
+                    Log.Debug("Disable External Start.");
+                    ExtStart.Value = false;
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadToOriginStep.RobotProgramStart_Check:
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(ProACT, true);
+#endif
+                    if (!ProACT.Value)
+                    {
+                        RaiseWarning((int)EWarning.RobotLoad_Programing_Not_Running);
+                        break;
+                    }
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(ProACT, false);
+#endif
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadToOriginStep.SendPGMStart:
+                    _robotLoad.SendCommand(RobotHelpers.PCPGMStart);
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadToOriginStep.SendPGMStart_Check:
+                    if (_robotLoad.ReadResponse(5000, "RobotReady,0\r\n"))
+                    {
+                        Log.Debug("Robot PGM Start Success.");
+                        Step.OriginStep++;
+                        break;
+                    }
+
+                    RaiseAlarm((int)EAlarm.RobotLoad_No_Ready_Response);
+                    break;
+                case ERobotLoadToOriginStep.SetModel:
+                    Log.Debug("Set Model: " + _robotLoadRecipe.Model);
+                    _robotLoad.SendCommand(RobotHelpers.SetModel(_robotLoadRecipe.Model));
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadToOriginStep.SetModel_Check:
+                    if (_robotLoad.ReadResponse(5000, $"select,{_robotLoadRecipe.Model},0\n\r"))
+                    {
+                        Log.Debug("Set Model: " + _robotLoadRecipe.Model + " success");
+                        Step.OriginStep++;
+                        break;
+                    }
+
+                    RaiseAlarm((int)EAlarm.RobotLoad_SetModel_Fail);
+                    break;
+                case ERobotLoadToOriginStep.End:
+                    if (ProcessStatus == EProcessStatus.ToOriginDone)
+                    {
+                        Thread.Sleep(10);
+                        break;
+                    }
+
+                    Log.Debug("To Origin End");
+                    ProcessStatus = EProcessStatus.ToOriginDone;
+                    break;
+            }
+            return true;
         }
         public override bool ProcessOrigin()
         {
@@ -260,11 +397,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadOriginStep.Fixture_Detect_Check:
                     if (IsFixtureDetect)
                     {
-                        if (_machineStatus.IsDryRunMode)
-                        {
-                            Step.RunStep++;
-                            break;
-                        }
                         RaiseWarning((int)EWarning.RobotLoadOriginFixtureDetect);
                         break;
                     }
@@ -298,8 +430,24 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ERobotLoadOriginStep.Robot_Origin:
-                    Log.Debug("Robot Origin");
-                    Wait(1000);
+                    Log.Debug("Start Origin Robot Load");
+                    Log.Debug($"Send Robot Motion Command {ERobotCommand.HOME}");
+                    if (SendCommand(ERobotCommand.HOME, 10, 20))
+                    {
+                        Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.HOME)));
+                        Step.OriginStep++;
+                        break;
+                    }
+
+                    RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
+                    break;
+                case ERobotLoadOriginStep.Robot_Origin_Check:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)EAlarm.RobotLoad_MoveMotionCommand_Timeout);
+                        break;
+                    }
+                    Log.Debug("Robot Origin Done");
                     Step.OriginStep++;
                     break;
                 case ERobotLoadOriginStep.End:
@@ -492,7 +640,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ERobotLoadReadyStep)Step.RunStep)
             {
                 case ERobotLoadReadyStep.Start:
-                    if(IsOriginOrInitSelected == false)
+                    if (IsOriginOrInitSelected == false)
                     {
                         Sequence = ESequence.Stop;
                         break;
@@ -1053,7 +1201,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     AlignCyl2.Backward();
                     ClampCyl1.Backward();
                     ClampCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl1.IsBackward  && AlignCyl2.IsBackward && ClampCyl1.IsBackward && ClampCyl2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl1.IsBackward && AlignCyl2.IsBackward && ClampCyl1.IsBackward && ClampCyl2.IsBackward);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToAlignStep.UnContact_Wait:
@@ -1136,7 +1284,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_REQ_UNLOAD] = false;
                             Log.Debug("Clear Flag Remove Film Unload Done");
                             FlagRemoveFilmUnloadDone = false;
-                    
+
                             Log.Info("Sequence Robot Pick Fixture From Remove Zone");
                             Sequence = ESequence.RobotPickFixtureFromRemoveZone;
                             break;
@@ -1314,7 +1462,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     AlignCyl2.Backward();
                     ClampCyl1.Backward();
                     ClampCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl1.IsBackward && AlignCyl1.IsBackward && ClampCyl1.IsBackward  && AlignCyl2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl1.IsBackward && AlignCyl1.IsBackward && ClampCyl1.IsBackward && AlignCyl2.IsBackward);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.UnContact_Wait:

@@ -16,10 +16,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
     public class OriginViewModel : ViewModelBase
     {
-        public OriginViewModel(Processes processes, MachineStatus machineStatus)
+        private readonly INavigationService _navigationService;
+
+        public OriginViewModel(Processes processes, MachineStatus machineStatus,
+            INavigationService navigationService)
         {
             Processes = processes;
             MachineStatus = machineStatus;
+            _navigationService = navigationService;
             Log = LogManager.GetLogger("OriginVM");
         }
 
@@ -60,6 +64,29 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     }
                     Log.Debug("Origin Button Click");
                     MachineStatus.OPCommand = EOperationCommand.Origin;
+                });
+            }
+        }
+
+        public ICommand StopCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    Log.Debug("Stop Button Click");
+                    MachineStatus.OPCommand = EOperationCommand.Stop;
+                });
+            }
+        }
+
+        public ICommand ExitCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _navigationService.NavigateTo<AutoViewModel>();
                 });
             }
         }

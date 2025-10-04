@@ -117,6 +117,7 @@
                            FontSize="14" />
                     <Button Content="Reset"
                             Margin="5 0 0 0"
+                            IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
                             Command="{Binding ResetCSTOutCommand}" />
                 </UniformGrid>
                 <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
@@ -149,6 +150,7 @@
                            FontWeight="Bold"
                            FontSize="14" />
                     <Button Content="Reset"
+                            IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
                             Margin="5 0 0 0"
                             Command="{Binding ResetCSTInCommand}" />
                 </UniformGrid>

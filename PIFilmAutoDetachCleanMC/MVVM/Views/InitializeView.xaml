@@ -6,12 +6,15 @@
              xmlns:local="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
              xmlns:vm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels"
              mc:Ignorable="d"
+             x:Name="root"
+             xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              d:DataContext="{d:DesignInstance Type=vm:InitializeViewModel}"
              d:DesignHeight="1080"
              d:DesignWidth="1920">
     <UserControl.Resources>
         <DataTemplate x:Key="ProcessOriginStatusTemplate">
             <Border BorderBrush="Gray"
+                    IsEnabled="{Binding DataContext.MachineStatus.IsStandByProcessMode,ElementName=root}"
                     Background="{Binding IsOriginOrInitSelected,Converter={StaticResource BooleanToBackgroundUnitInitConverter}}"
                     Cursor="Hand"
                     BorderThickness="1"
@@ -167,20 +170,38 @@
                     HorizontalAlignment="Center"
                     Height="50"
                     Grid.Row="1">
-            <Button Content="Select All"
-                    Command="{Binding SelectAllCommand}"
-                    FontSize="20"
-                    Margin="0 0 5 0"
-                    Width="200" />
-            <Button Content="Unselect All"
-                    Command="{Binding UnSelectAllCommand}"
-                    FontSize="20"
-                    Margin="0 0 5 0"
-                    Width="200" />
-            <Button Content="Initialize"
-                    Command="{Binding InitializeCommand}"
-                    FontSize="20"
-                    Width="200" />
+            <ui:ImageButton Content="Select All"
+                            Image="/EQX.UI;component/Resources/Images/select_selected.png"
+                            Command="{Binding SelectAllCommand}"
+                            IsEnabled="{Binding DataContext.MachineStatus.IsStandByProcessMode,ElementName=root}"
+                            FontSize="20"
+                            Margin="0 0 5 0"
+                            Width="200" />
+            <ui:ImageButton Content="Unselect All"
+                            Image="/EQX.UI;component/Resources/Images/unselect_all_selected.png"
+                            Command="{Binding UnSelectAllCommand}"
+                            IsEnabled="{Binding DataContext.MachineStatus.IsStandByProcessMode,ElementName=root}"
+                            FontSize="20"
+                            Margin="0 0 5 0"
+                            Width="200" />
+            <ui:ImageButton Content="Initialize"
+                            Image="/EQX.UI;component/Resources/Images/idling_selected.png"
+                            Command="{Binding InitializeCommand}"
+                            IsEnabled="{Binding DataContext.MachineStatus.IsStandByProcessMode,ElementName=root}"
+                            FontSize="20"
+                            Margin="0 0 5 0"
+                            Width="200" />
+            <ui:ImageButton Content="Stop"
+                            Image="/EQX.UI;component/Resources/Images/stop_selected.png"
+                            Command="{Binding StopCommand}"
+                            FontSize="20"
+                            Margin="0 0 5 0"
+                            Width="200" />
+            <ui:ImageButton Content="Exit"
+                            Image="/EQX.UI;component/Resources/Images/exit_selected.png"
+                            Command="{Binding ExitCommand}"
+                            FontSize="20"
+                            Width="200" />
         </StackPanel>
     </Grid>
 </UserControl>

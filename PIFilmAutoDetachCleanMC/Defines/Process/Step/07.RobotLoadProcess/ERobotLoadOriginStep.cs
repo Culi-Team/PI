@@ -13,6 +13,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_Backward,
         Cyl_BackwardWait,
         Robot_Origin,
+        Robot_Origin_Check,
         End
     }
 }

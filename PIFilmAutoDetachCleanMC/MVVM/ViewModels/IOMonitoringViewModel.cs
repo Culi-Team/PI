@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Common;
 using PIFilmAutoDetachCleanMC.Defines;
+using PIFilmAutoDetachCleanMC.Process;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
     public class IOMonitoringViewModel : ViewModelBase
     {
-        public IOMonitoringViewModel(Inputs inputList,Outputs outputList) 
+        public IOMonitoringViewModel(Inputs inputList,Outputs outputList,
+            MachineStatus machineStatus) 
         {
             InputList = inputList;
             OutputList = outputList;
+            MachineStatus = machineStatus;
         }
 
         private int _selectedInputDeviceIndex;
@@ -108,6 +111,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         public Inputs InputList { get; }
         public Outputs OutputList { get; }
+        public MachineStatus MachineStatus { get; }
+
         private int MaxInputDeviceIndex => InputList.All
             .GroupBy(i => i.Id / 32)
             .Count() - 1;
