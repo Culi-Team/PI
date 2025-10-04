@@ -1,4 +1,7 @@
-﻿using System;
+﻿using EQX.Core.Process;
+using PIFilmAutoDetachCleanMC.Defines;
+using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -33,8 +36,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             var binding = BindingOperations.GetBindingExpression(label, Control.BackgroundProperty);
             if (binding == null) return;
 
-            var dataItem = binding.DataItem;                
-            var path = binding.ParentBinding.Path.Path;     
+            var dataItem = binding.DataItem;
+            var path = binding.ParentBinding.Path.Path;
 
             if (string.IsNullOrWhiteSpace(path) || dataItem == null)
                 return;
@@ -47,17 +50,17 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                 var prop = currentObject.GetType().GetProperty(parts[i], BindingFlags.Public | BindingFlags.Instance);
                 if (prop == null) return;
 
-                if (i == parts.Length - 1) 
+                if (i == parts.Length - 1)
                 {
                     if (prop.PropertyType == typeof(bool) && prop.CanRead && prop.CanWrite)
                     {
                         bool currentValue = (bool)prop.GetValue(currentObject);
-                        prop.SetValue(currentObject, !currentValue); 
+                        prop.SetValue(currentObject, !currentValue);
                     }
                 }
                 else
                 {
-                    currentObject = prop.GetValue(currentObject); 
+                    currentObject = prop.GetValue(currentObject);
                     if (currentObject == null) return;
                 }
             }
@@ -65,7 +68,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
 
         private void Border_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (DataContext is InitializeViewModel originVM == false) return;
+            if (sender is Border border == false) return;
+            if (border.DataContext is IProcess<ESequence> process == false) return;
 
+            bool currentValue = process.IsOriginOrInitSelected;
+            process.IsOriginOrInitSelected = !currentValue;
         }
     }
 }

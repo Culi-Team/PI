@@ -15,18 +15,17 @@
         <DataTemplate x:Key="ProcessOriginStatusTemplate">
             <Border BorderBrush="Gray"
                     IsEnabled="{Binding DataContext.MachineStatus.IsStandByProcessMode,ElementName=root}"
-                    Background="{Binding IsOriginOrInitSelected,Converter={StaticResource BooleanToBackgroundUnitInitConverter}}"
                     Cursor="Hand"
                     BorderThickness="1"
                     PreviewMouseDown="Border_PreviewMouseDown">
-                <Grid Margin="3">
+                <Grid >
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <Label Content="{Binding Name}"
                            FontWeight="Bold"
-                           Background="Black"
+                           Background="{Binding IsOriginOrInitSelected,Converter={StaticResource BooleanToBackgroundUnitInitConverter}}"
                            FontSize="14"
                            HorizontalContentAlignment="Center"
                            Foreground="White" />
@@ -126,7 +125,7 @@
                             Canvas.Top="380" />
 
             <ContentControl Content="{Binding Processes.WETCleanLeftProcess}"
-                            Canvas.Left="1100"
+                            Canvas.Left="1120"
                             Canvas.Top="180" />
 
             <ContentControl Content="{Binding Processes.TransferRotationLeftProcess}"
@@ -138,7 +137,7 @@
                             Canvas.Top="180" />
 
             <ContentControl Content="{Binding Processes.WETCleanRightProcess}"
-                            Canvas.Left="1100"
+                            Canvas.Left="1120"
                             Canvas.Top="580" />
 
             <ContentControl Content="{Binding Processes.TransferRotationRightProcess}"
