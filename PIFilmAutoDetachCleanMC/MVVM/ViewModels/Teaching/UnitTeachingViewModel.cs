@@ -168,19 +168,85 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     return false;
                 }
             }
+
             return true; 
         }
         public bool CheckAxisPositionBeforMove(string moveToDescription)
         {
             RecipeSelector recipeSelector = App.AppHost!.Services.GetRequiredService<RecipeSelector>();
             Devices devices = App.AppHost!.Services.GetRequiredService<Devices>();
-            if (moveToDescription == "Transfer Fixture Y Axis Load Position" || moveToDescription == "Transfer Fixture Y Axis Unload Position")
+            if (moveToDescription == "Transfer Fixture Y Axis Load Position" 
+                || moveToDescription == "Transfer Fixture Y Axis Unload Position")
             {
-                var detachZAxis = devices.MotionsInovance.DetachGlassZAxis;
-                if (detachZAxis != null && detachZAxis.Status.ActualPosition != recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetachReadyPosition)
+                var detachGlassZAxis = devices.MotionsInovance.DetachGlassZAxis;
+                if (detachGlassZAxis != null && detachGlassZAxis.Status.ActualPosition 
+                    != recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetachReadyPosition)
                 {
                     MessageBoxEx.ShowDialog($"[Detach Z Axis] need Move [Ready Position] befor move to [{moveToDescription}]");
                     return false;
+                }
+            }
+            if (moveToDescription == "Sht Tr X Axis Detach Position"
+                || moveToDescription == "Sht Tr X Axis Detach Check Position"
+                || moveToDescription == "Sht Tr X Axis Unload Position")
+            {
+                var shuttleTransferZAxis = devices.MotionsAjin.ShuttleTransferZAxis;
+                if (shuttleTransferZAxis != null && shuttleTransferZAxis.Status.ActualPosition 
+                    != recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisDetachReadyPosition)
+                {
+                    MessageBoxEx.ShowDialog($"[Shuttle Transfer Z Axis] need Move [Ready Position] befor move to [{moveToDescription}]");
+                    return false;
+                }
+            }
+            if (moveToDescription == "Glass Transfer Y Axis Ready Position"
+                || moveToDescription == "Glass Transfer Y Axis Left Pick Position"
+                || moveToDescription == "Glass Transfer Y Axis Left Place Position"
+                || moveToDescription == "Glass Transfer Y Axis Right Place Position")
+            {
+                var transferInShuttleLZAxis = devices.MotionsInovance.TransferInShuttleLZAxis;
+                var transferInShuttleRZAxis = devices.MotionsInovance.TransferInShuttleRZAxis;
+                if ((transferInShuttleLZAxis != null && transferInShuttleLZAxis.Status.ActualPosition 
+                    != recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition)
+                    || (transferInShuttleRZAxis != null && transferInShuttleRZAxis.Status.ActualPosition
+                    != recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisReadyPosition))
+                {
+                    MessageBoxEx.ShowDialog($"[Transfer InShuttle Left Z Axis] , [Transfer InShuttle Right Z Axis] need move [Ready Position]");
+                    return false;
+                }
+
+            }
+            if (Name == "Transfer In Shuttle Left")
+            {
+                if (moveToDescription == "Y Axis Ready Position"
+                    || moveToDescription == "Y Axis Pick Position 1"
+                    || moveToDescription == "Y Axis Pick Position 2"
+                    || moveToDescription == "Y Axis Pick Position 3"
+                    || moveToDescription == "Y Axis Place Position")
+                {
+                    var transferInShuttleLZAxis = devices.MotionsInovance.TransferInShuttleLZAxis;
+                    if (transferInShuttleLZAxis != null && transferInShuttleLZAxis.Status.ActualPosition
+                        != recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition)
+                    {
+                        MessageBoxEx.ShowDialog($"[Transfer InShuttle Left Z Axis] ,  need move [Ready Position]");
+                        return false;
+                    }
+                }
+            }
+            if (Name == "Transfer In Shuttle Right")
+            {
+                if (moveToDescription == "Y Axis Ready Position"
+                    || moveToDescription == "Y Axis Pick Position 1"
+                    || moveToDescription == "Y Axis Pick Position 2"
+                    || moveToDescription == "Y Axis Pick Position 3"
+                    || moveToDescription == "Y Axis Place Position")
+                {
+                    var transferInShuttleRZAxis = devices.MotionsInovance.TransferInShuttleRZAxis;
+                    if (transferInShuttleRZAxis != null && transferInShuttleRZAxis.Status.ActualPosition
+                        != recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisReadyPosition)
+                    {
+                        MessageBoxEx.ShowDialog($"[Transfer InShuttle Right Z Axis] need move [Ready Position]");
+                        return false;
+                    }
                 }
             }
             return true; 
