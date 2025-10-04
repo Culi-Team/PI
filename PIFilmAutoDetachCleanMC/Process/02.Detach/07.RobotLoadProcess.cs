@@ -75,6 +75,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Flags
+        private bool FlagRobotOriginDone
+        {
+            set
+            {
+                _robotLoadOutput[(int)ERobotLoadProcessOutput.ROBOT_ORIGIN_DONE] = value;
+            }
+        }
         private bool FlagVinylCleanRequestLoad
         {
             get
@@ -237,6 +244,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
+        public override bool ProcessToOrigin()
+        {
+            FlagRobotOriginDone = false;
+            return base.ProcessToOrigin();
+        }
         public override bool ProcessOrigin()
         {
             switch ((ERobotLoadOriginStep)Step.OriginStep)
@@ -291,6 +303,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ERobotLoadOriginStep.End:
+                    Log.Debug("Set Flag Robot Origin Done");
+                    FlagRobotOriginDone = true;
                     Log.Debug("Origin End");
                     ProcessStatus = EProcessStatus.OriginDone;
                     Step.OriginStep++;

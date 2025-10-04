@@ -163,7 +163,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
-
+        public override bool ProcessToOrigin()
+        {
+            FlagOriginDone = false;
+            return base.ProcessToOrigin();
+        }
         public override bool ProcessToRun()
         {
             switch ((EDetachProcessToRunStep)Step.ToRunStep)

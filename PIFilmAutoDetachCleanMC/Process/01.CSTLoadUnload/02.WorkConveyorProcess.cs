@@ -139,6 +139,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Flags
+        private bool FlagRobotOriginDone
+        {
+            get
+            {
+                return Inputs[(int)EWorkConveyorProcessInput.ROBOT_ORIGIN_DONE];
+            }
+        }
         private bool FlagCSTReady
         {
             set
@@ -213,6 +220,15 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EWorkConveyorOriginStep.Start:
                     Log.Debug("Start");
+                    Step.OriginStep++;
+                    break;
+                case EWorkConveyorOriginStep.Wait_RobotLoadOriginDone:
+                    if(FlagRobotOriginDone == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
                     Step.OriginStep++;
                     break;
                 case EWorkConveyorOriginStep.Cyl_Tilt_Down:

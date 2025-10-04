@@ -10,5 +10,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         ROBOT_PICK_PLACE_CST_DONE,
         NEXT_CONVEYOR_READY,
+
+        ROBOT_ORIGIN_DONE,
     }
 }

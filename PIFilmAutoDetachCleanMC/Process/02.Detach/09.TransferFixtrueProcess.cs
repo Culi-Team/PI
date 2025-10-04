@@ -27,8 +27,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly MachineStatus _machineStatus;
 
         private IMotion TransferFixtureYAxis => _devices.MotionsInovance.FixtureTransferYAxis;
-        private Inputs Inputs => _devices.Inputs;
-        private Outputs Outputs => _devices.Outputs;
         private ICylinder CylUpDown => _devices.Cylinders.TransferFixtureUpDown;
         private ICylinder CylClamp1_1 => _devices.Cylinders.TransferFixture1_1ClampUnclamp;
         private ICylinder CylClamp1_2 => _devices.Cylinders.TransferFixture1_2ClampUnclamp;
@@ -61,6 +59,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         }
 
         #region Flags
+        private bool FlagRobotOriginDone
+        {
+            get
+            {
+                return _transferFixtureInput[(int)ETransferFixtureProcessInput.ROBOT_ORIGIN_DONE];
+            }
+        }
         private bool FlagDetachProcessOriginDone
         {
             get
@@ -183,10 +188,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Unclamp Done");
 
                     Step.OriginStep++;
-                    Log.Debug("Wait Detach Origin");
+                    Log.Debug("Wait Detach and Robot Origin");
                     break;
-                case ETransferFixtureOriginStep.Wait_Detach_Origin:
-                    if (FlagDetachProcessOriginDone == false)
+                case ETransferFixtureOriginStep.Wait_Detach_Robot_OriginDone:
+                    if (FlagDetachProcessOriginDone == false || FlagRobotOriginDone == false)
                     {
                         Wait(20);
                         break;

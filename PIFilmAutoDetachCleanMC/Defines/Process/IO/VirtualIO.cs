@@ -256,6 +256,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 _robotLoadOutput, (int)ERobotLoadProcessOutput.ROBOT_PICK_IN_CST_DONE);
             ((VirtualInputDevice<EWorkConveyorProcessInput>)_inWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.NEXT_CONVEYOR_READY,
                 _bufferConveyorOutput, (int)EBufferConveyorProcessOutput.BUFFER_CONVEYOR_READY);
+            ((VirtualInputDevice<EWorkConveyorProcessInput>)_inWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.ROBOT_ORIGIN_DONE,
+                _robotLoadOutput, (int)ERobotLoadProcessOutput.ROBOT_ORIGIN_DONE);
 
             //BufferConveyor Input Mapping
             ((VirtualInputDevice<EBufferConveyorProcessInput>)_bufferConveyorInput).Mapping((int)EBufferConveyorProcessInput.IN_WORK_CONVEYOR_REQUEST_CST_OUT,
@@ -268,6 +270,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 _robotLoadOutput, (int)ERobotLoadProcessOutput.ROBOT_PLACE_OUT_CST_DONE);
             ((VirtualInputDevice<EWorkConveyorProcessInput>)_outWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.NEXT_CONVEYOR_READY,
                 _outConveyorOutput, (int)EOutConveyorProcessOutput.OUT_CONVEYOR_READY);
+            ((VirtualInputDevice<EWorkConveyorProcessInput>)_outWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.ROBOT_ORIGIN_DONE,
+                _robotLoadOutput, (int)ERobotLoadProcessOutput.ROBOT_ORIGIN_DONE);
 
             //OutConveyor Input Mapping
             ((VirtualInputDevice<EOutConveyorProcessInput>)_outConveyorInput).Mapping((int)EOutConveyorProcessInput.OUT_WORK_CONVEYOR_REQUEST_CST_OUT,
@@ -330,6 +334,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 _detachOutput, (int)EDetachProcessOutput.TRANSFER_FIXTURE_DONE_RECEIVED);
             ((VirtualInputDevice<ETransferFixtureProcessInput>)_transferFixtureInput).Mapping((int)ETransferFixtureProcessInput.REMOVE_FILM_TRANSFER_FIXTURE_DONE_RECEIVED,
                 _removeFilmOutput, (int)ERemoveFilmProcessOutput.TRANSFER_FIXTURE_DONE_RECEIVED);
+            ((VirtualInputDevice<ETransferFixtureProcessInput>)_transferFixtureInput).Mapping((int)ETransferFixtureProcessInput.ROBOT_ORIGIN_DONE,
+                _robotLoadOutput, (int)ERobotLoadProcessOutput.ROBOT_ORIGIN_DONE);
 
             //Detach Input Mapping
             ((VirtualInputDevice<EDetachProcessInput>)_detachInput).Mapping((int)EDetachProcessInput.FIXTURE_TRANSFER_DONE,
