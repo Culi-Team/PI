@@ -280,7 +280,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         break;
                     case EHandleStep.CassetteHandle:
                         Log.Debug("Init Cassette");
-                        _cassetteList.RecipeUpdateHandle();
+                        if(_cassetteList.Load() == false)
+                        {
+                            _cassetteList.RecipeUpdateHandle();
+                        }
                         _cassetteList.SubscribeCellClickedEvent();
                         _step++;
                         break;
@@ -330,13 +333,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _step++;
                         break;
                     case EHandleStep.CommunicationHandle:
+                        Thread.Sleep(200);
                         _rollerModbusCommunication.Disconnect();
                         _torqueModbusCommnication.Disconnect();
+                        _syringePumpSerialCommunicator.Disconnect();
                         _step++;
                         break;
                     case EHandleStep.MotionDeviceHandle:
                         MessageText = "Disconnect Motion Devices";
-
+                        Thread.Sleep(200);
                         _devices.MotionsInovance.MotionControllerInovance.Disconnect();
 
                         _devices.MotionsInovance.All.ForEach(m => m.Disconnect());
@@ -349,6 +354,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         break;
                     case EHandleStep.IODeviceHandle:
                         MessageText = "Disconnect IO Devices";
+                        Thread.Sleep(200);
                         _devices.Inputs.Disconnect();
                         _devices.Outputs.Disconnect();
                         _devices.AnalogInputs.Disconnect();
@@ -367,6 +373,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _step++;
                         break;
                     case EHandleStep.CassetteHandle:
+                        MessageText = "Cassette Save";
+                        Thread.Sleep(200);
+                        _cassetteList.Save();
                         _step++;
                         break;
                     case EHandleStep.End:

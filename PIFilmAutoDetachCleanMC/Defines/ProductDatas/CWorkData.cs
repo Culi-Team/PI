@@ -11,7 +11,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.ProductDatas
     public class CWorkData : ObservableObject
     {
         private readonly IConfiguration _configuration;
-        private string CountDataFolder => _configuration.GetValue<string>("Folders : CountDataFolder") ?? "";
+        private string CountDataFolder => _configuration.GetValue<string>("Folders:CountDataFolder") ?? "";
 
         public CWorkData(CCountData countData,
             CTaktTime taktTime,
