@@ -45,6 +45,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder AlignCyl2 => port == EPort.Left ? _devices.Cylinders.AlignStageL2AlignUnalign : _devices.Cylinders.AlignStageR2AlignUnalign;
         private ICylinder AlignCyl3 => port == EPort.Left ? _devices.Cylinders.AlignStageL3AlignUnalign : _devices.Cylinders.AlignStageR3AlignUnalign;
 
+        private ICylinder BrushCyl => port == EPort.Left ? _devices.Cylinders.AlignStageLBrushCylUpDown : _devices.Cylinders.AlignStageRBrushCylUpDown;
+
         private bool IsGlass1Detect => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLGlassDetect1) : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRGlassDetect1);
         private bool IsGlass2Detect => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLGlassDetect2) : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRGlassDetect2);
         private bool IsGlass3Detect => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLGlassDetect3) : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRGlassDetect3);
@@ -327,6 +329,20 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EGlassAlignProcessToRunStep.Start:
                     Log.Debug("To Run Start");
+                    Step.ToRunStep++;
+                    break;
+                case EGlassAlignProcessToRunStep.BrushCyl_Up:
+                    BrushCyl.Forward();
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => BrushCyl.IsForward);
+                    Step.ToRunStep++;
+                    break;
+                case EGlassAlignProcessToRunStep.Brush_Up_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_BrushCylinder_Up_Fail :
+                                                        EWarning.GlassAlignRight_BrushCylinder_Up_Fail));
+                        break;
+                    }
                     Step.ToRunStep++;
                     break;
                 case EGlassAlignProcessToRunStep.Clear_Flags:

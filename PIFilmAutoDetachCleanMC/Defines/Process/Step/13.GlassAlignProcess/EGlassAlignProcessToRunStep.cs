@@ -9,6 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EGlassAlignProcessToRunStep
     {
         Start,
+        BrushCyl_Up,
+        Brush_Up_Wait,
         Clear_Flags,
         End
     }
