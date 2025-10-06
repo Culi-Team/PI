@@ -672,7 +672,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPlaceStep.ZAxis_Move_PlacePosition:
                     Log.Debug("Z Axis Move Place Position");
                     ZAxis.MoveAbs(ZAxisPlacePosition);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(ZAxisPlacePosition));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisPlacePosition));
                     Step.RunStep++;
                     break;
                 case EGlassTransferPlaceStep.ZAxis_Move_PlacePosition_Wait:
