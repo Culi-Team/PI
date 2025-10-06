@@ -9,6 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ECleanProcessCleanStep
     {
         Start,
+        Cyl_Clamp,
+        Cyl_Clamp_Wait,
         Wait_3M_PrepareDone,
         Axis_MoveCleanHorizontalPosition,
         Axis_MoveCleanHorizontalPosition_Wait,

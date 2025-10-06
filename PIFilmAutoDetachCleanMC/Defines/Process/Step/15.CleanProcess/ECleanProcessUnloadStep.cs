@@ -13,6 +13,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         AxisMoveUnloadPosition,
         AxisMoveUnloadPosition_Wait,
         Vacuum_Off,
+        Cyl_UnClamp,
+        Cyl_UnClamp_Wait,
         Set_FlagRequestUnload,
         Wait_CleanUnloadDone,
         End
