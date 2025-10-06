@@ -18,6 +18,7 @@ using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using log4net;
+using PIFilmAutoDetachCleanMC.Process;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -34,7 +35,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             MotionsAjin motionAjin,
             [FromKeyedServices("VinylCleanEncoder")] IMotion vinylCleanEncoder,
             IConfiguration configuration,
-            CassetteList cassetteList)
+            CassetteList cassetteList,
+            MachineStatus machineStatus)
         {
             RecipeSelector = recipeSelector;
             _motionsInovance = motionsInovance;
@@ -42,7 +44,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _vinylCleanEncoder = vinylCleanEncoder;
             _configuration = configuration;
             CassetteList = cassetteList;
-
+            MachineStatus = machineStatus;
             Log = LogManager.GetLogger("Data");
 
             RecipeSelector.CurrentRecipe.CommonRecipe.RecipeChanged += RecipeChanged_Handler;
@@ -122,6 +124,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 OnPropertyChanged(); 
             }
         }
+
+        public MachineStatus MachineStatus { get; }
 
         public RecipeBase CurrentRecipe
         {
