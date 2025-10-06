@@ -161,6 +161,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         WETCleanLeft_ClampCylinder_Clamp_Fail,
         WETCleanLeft_ClampCylinder_Unclamp_Fail,
         WETCleanLeft_Vacuum_Detect_Fail,
+        Shuttle_Left_XAxis_Collision_Detect,
+        WETCleanLeft_BrushCylinder_Up_Fail,
+        WETCleanLeft_BrushCylinder_Down_Fail,
 
         //WET Clean Right
         WETCleanRight = 18000,
@@ -173,6 +176,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         WETCleanRight_ClampCylinder_Clamp_Fail,
         WETCleanRight_ClampCylinder_Unclamp_Fail,
         WETCleanRight_Vacuum_Detect_Fail,
+        Shuttle_Right_XAxis_Collision_Detect,
+        WETCleanRight_BrushCylinder_Up_Fail,
+        WETCleanRight_BrushCylinder_Down_Fail,
 
         //Transfer Rotation Left
         TransferRotationLeft = 19000,
@@ -211,6 +217,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         AFCleanLeft_PumpLeak_Detect,
         AFCleanLeft_AlcoholLeak_Detect,
         AFCleanLeft_Vacuum_Detect_Fail,
+        AFCleanLeft_BrushCylinder_Up_Fail,
+        AFCleanLeft_BrushCylinder_Down_Fail,
 
         //AF Clean Right
         AFCleanRight = 22000,
@@ -221,6 +229,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         AFCleanRight_PumpLeak_Detect,
         AFCleanRight_AlcoholLeak_Detect,
         AFCleanRight_Vacuum_Detect_Fail,
+        AFCleanRight_BrushCylinder_Up_Fail,
+        AFCleanRight_BrushCylinder_Down_Fail,
 
         //Unload Glass Left
         UnloadTransferLeft = 23000,

@@ -337,6 +337,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput OutShuttleGlassCoatingDetect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_GLASS_COATING_DETECT_2);
         public IDInput OutShuttleLVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_L_VAC);
         public IDInput OutShuttleRVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_R_VAC);
+        public IDInput ShuttleRAvoidCollision => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.SHUTTLE_R_AVOID_COLLISION);
+        public IDInput ShuttleLAvoidCollision => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.SHUTTLE_L_AVOID_COLLISION);
         public IDInput UnloadTransferLVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_TRANSFER_L_VAC);
         public IDInput UnloadTransferRVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_TRANSFER_R_VAC);
         public IDInput OpRButtonStop => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_R_BUTTON_STOP);

@@ -9,8 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ECleanOriginStep
     {
         Start,
-        PushCyl_Up,
-        PushCyl_Up_Wait,
+        Cyl_Up,
+        Cyl_Up_Wait,
         AxisOrigin,
         AxisOrigin_Wait,
         Cyl_UnClamp,

@@ -58,6 +58,14 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private IDInput ShuttleAvoidCollision
+        {
+            get
+            {
+                return port == EPort.Left ? _devices.Inputs.ShuttleLAvoidCollision
+                                            : _devices.Inputs.ShuttleRAvoidCollision;
+            }
+        }
         private DX3000TorqueController UnWinder
         {
             get
@@ -163,6 +171,20 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private ICylinder BrushCyl
+        {
+            get
+            {
+                return cleanType switch
+                {
+                    EClean.WETCleanLeft => _devices.Cylinders.WetCleanBrushLeftUpDown,
+                    EClean.WETCleanRight => _devices.Cylinders.WetCleanBrushRightUpDown,
+                    EClean.AFCleanLeft => _devices.Cylinders.AFCleanBrushLeftUpDown,
+                    EClean.AFCleanRight => _devices.Cylinders.AFCleanBrushRightUpDown,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+        }
         private IRegulator Regulator
         {
             get
@@ -514,6 +536,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanPreProcessStep.Start:
                     Step.PreProcessStep++;
                     break;
+                case ECleanPreProcessStep.Shuttle_XAxis_Collision_Check:
+                    if (ShuttleAvoidCollision.Value)
+                    {
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.Shuttle_Left_XAxis_Collision_Detect :
+                                                                EWarning.Shuttle_Right_XAxis_Collision_Detect));
+                    }
+                    Step.PreProcessStep++;
+                    break;
                 case ECleanPreProcessStep.Wiper_Detect_Check:
                     if (WiperCleanDetect1 == false || WiperCleanDetect2 == false || WiperCleanDetect3 == false)
                     {
@@ -529,6 +559,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)warning!);
                         break;
                     }
+                    Step.PreProcessStep++;
                     break;
                 case ECleanPreProcessStep.PumpLeak_Detect_Check:
                     if (IsPumpLeakDetect)
@@ -579,28 +610,44 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Origin Start");
                     Step.OriginStep++;
                     break;
-                case ECleanOriginStep.PushCyl_Up:
-                    Log.Debug("Push Cylinder Up");
+                case ECleanOriginStep.Cyl_Up:
+                    Log.Debug("Cylinder Up");
                     PushCyl.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return PushCyl.IsBackward; });
+                    BrushCyl.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return PushCyl.IsBackward && BrushCyl.IsBackward; });
                     Step.OriginStep++;
                     break;
-                case ECleanOriginStep.PushCyl_Up_Wait:
+                case ECleanOriginStep.Cyl_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        EWarning? warning = cleanType switch
+                        if (PushCyl.IsBackward == false)
                         {
-                            EClean.WETCleanLeft => EWarning.WETCleanLeft_PusherCylinder_Up_Fail,
-                            EClean.WETCleanRight => EWarning.WETCleanRight_PusherCylinder_Up_Fail,
-                            EClean.AFCleanLeft => EWarning.AFCleanLeft_PusherCylinder_Up_Fail,
-                            EClean.AFCleanRight => EWarning.AFCleanRight_PusherCylinder_Up_Fail,
-                            _ => null
-                        };
-
-                        RaiseWarning((int)warning!);
-                        break;
+                            EWarning? warning = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EWarning.WETCleanLeft_PusherCylinder_Up_Fail,
+                                EClean.WETCleanRight => EWarning.WETCleanRight_PusherCylinder_Up_Fail,
+                                EClean.AFCleanLeft => EWarning.AFCleanLeft_PusherCylinder_Up_Fail,
+                                EClean.AFCleanRight => EWarning.AFCleanRight_PusherCylinder_Up_Fail,
+                                _ => null
+                            };
+                            RaiseWarning((int)warning!);
+                            break;
+                        }
+                        if (BrushCyl.IsBackward)
+                        {
+                            EWarning? warning = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EWarning.WETCleanLeft_BrushCylinder_Up_Fail,
+                                EClean.WETCleanRight => EWarning.WETCleanRight_BrushCylinder_Up_Fail,
+                                EClean.AFCleanLeft => EWarning.AFCleanLeft_BrushCylinder_Up_Fail,
+                                EClean.AFCleanRight => EWarning.AFCleanRight_BrushCylinder_Up_Fail,
+                                _ => null
+                            };
+                            RaiseWarning((int)warning!);
+                            break;
+                        }
                     }
-                    Log.Debug("Push Cylinder Up Done");
+                    Log.Debug("Cylinder Up Done");
                     Step.OriginStep++;
                     break;
                 case ECleanOriginStep.AxisOrigin:
@@ -898,6 +945,46 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("To Run Start");
                     Step.ToRunStep++;
                     break;
+                case ECleanProcessToRunStep.Cyl_Up:
+                    Log.Debug("Cylinder Up");
+                    PushCyl.Backward();
+                    BrushCyl.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return PushCyl.IsBackward && BrushCyl.IsBackward; });
+                    Step.ToRunStep++;
+                    break;
+                case ECleanProcessToRunStep.Cyl_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        if (PushCyl.IsBackward == false)
+                        {
+                            EWarning? warning = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EWarning.WETCleanLeft_PusherCylinder_Up_Fail,
+                                EClean.WETCleanRight => EWarning.WETCleanRight_PusherCylinder_Up_Fail,
+                                EClean.AFCleanLeft => EWarning.AFCleanLeft_PusherCylinder_Up_Fail,
+                                EClean.AFCleanRight => EWarning.AFCleanRight_PusherCylinder_Up_Fail,
+                                _ => null
+                            };
+                            RaiseWarning((int)warning!);
+                            break;
+                        }
+                        if (BrushCyl.IsBackward == false)
+                        {
+                            EWarning? warning = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EWarning.WETCleanLeft_BrushCylinder_Up_Fail,
+                                EClean.WETCleanRight => EWarning.WETCleanRight_BrushCylinder_Up_Fail,
+                                EClean.AFCleanLeft => EWarning.AFCleanLeft_BrushCylinder_Up_Fail,
+                                EClean.AFCleanRight => EWarning.AFCleanRight_BrushCylinder_Up_Fail,
+                                _ => null
+                            };
+                            RaiseWarning((int)warning!);
+                            break;
+                        }
+                    }
+                    Log.Debug("Cylinder Up Done");
+                    Step.ToRunStep++;
+                    break;
                 case ECleanProcessToRunStep.FeedingRollerDetect_Check:
                     Log.Debug("Feeding Roller Detect Check");
                     if (FeedingRollerDetect == false)
@@ -1178,7 +1265,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.Vacuum_Check:
-                    if(VacDetect.Value == false)
+                    if (VacDetect.Value == false)
                     {
                         EWarning? warning = cleanType switch
                         {
@@ -1191,11 +1278,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)warning);
                         break;
                     }
-                    if(cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                    if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
                         Step.RunStep++;
                         break;
-                    }    
+                    }
                     Step.RunStep = (int)ECleanProcessLoadStep.End;
                     break;
                 case ECleanProcessLoadStep.Cyl_Clamp:
@@ -1239,7 +1326,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ECleanProcessCleanStep.Start:
                     Log.Debug("Clean Start");
-                    if(cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                    if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
                         Step.RunStep++;
                         break;
@@ -1254,7 +1341,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.Cyl_Clamp_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.WETCleanLeft_ClampCylinder_Clamp_Fail :
                                                                 EWarning.WETCleanRight_ClampCylinder_Clamp_Fail));
@@ -1653,7 +1740,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(VacDetect, false);
 #endif
                     Wait((int)(_commonRecipe.VacDelay * 1000));
-                    if(cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                    if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
                         Step.RunStep++;
                         break;
@@ -1668,7 +1755,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessUnloadStep.Cyl_UnClamp_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.WETCleanLeft_ClampCylinder_Unclamp_Fail :
                                                           EWarning.WETCleanRight_ClampCylinder_Unclamp_Fail));

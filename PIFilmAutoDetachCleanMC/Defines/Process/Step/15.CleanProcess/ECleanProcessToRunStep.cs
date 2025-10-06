@@ -9,6 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ECleanProcessToRunStep
     {
         Start,
+        Cyl_Up,
+        Cyl_Up_Wait,
         FeedingRollerDetect_Check,
         Wiper_Check,
         Set_Pressure,
