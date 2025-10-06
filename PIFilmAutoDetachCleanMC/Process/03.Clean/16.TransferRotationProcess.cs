@@ -412,7 +412,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (WaitTimeOutOccurred)
                     {
                         RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferRotationLeft_ZAxis_MoveReadyPosition_Fail :
-                                                        EAlarm.TransferRotationLeft_ZAxis_MoveReadyPosition_Fail));
+                                                        EAlarm.TransferRotationRight_ZAxis_MoveReadyPosition_Fail));
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");
