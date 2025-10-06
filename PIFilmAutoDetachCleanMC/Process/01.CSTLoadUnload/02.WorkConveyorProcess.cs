@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
+using PIFilmAutoDetachCleanMC.Helpers;
 using PIFilmAutoDetachCleanMC.Recipe;
 using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System.Windows.Markup;
@@ -36,13 +37,13 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private IDInputDevice Inputs => port == EPort.Right ? _inWorkConveyorInput : _outWorkConveyorInput;
         private IDOutputDevice Outputs => port == EPort.Right ? _inWorkConveyorOutput : _outWorkConveyorOutput;
+        private IAInput LaserSensor => _devices.AnalogInputs.Laser;
 
         private double TAxisWorkPosition => port == EPort.Right ? _cstLoadUnloadRecipe.InCstTAxisWorkPosition : _cstLoadUnloadRecipe.OutCstTAxisWorkPosition;
         private double TAxisLoadPosition => port == EPort.Right ? _cstLoadUnloadRecipe.InCstTAxisLoadPosition : _cstLoadUnloadRecipe.OutCstTAxisLoadPosition;
-
         private ITray<ETrayCellStatus> Cassette => port == EPort.Right ? _cassetteList.CassetteIn : _cassetteList.CassetteOut;
-
         private bool CassetteWorkDone => Cassette.Cells.Count(c => c.Status == ETrayCellStatus.Ready || c.Status == ETrayCellStatus.Working) == 0;
+        private double DistanceFirstFixture => AnalogConverter.Convert(LaserSensor.Volt, 0, 10, 0.0, 5000.0);
         #endregion
 
         #region Constructor
@@ -223,7 +224,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case EWorkConveyorOriginStep.Wait_RobotLoadOriginDone:
-                    if(FlagRobotOriginDone == false)
+                    if (FlagRobotOriginDone == false)
                     {
                         Wait(20);
                         break;
@@ -740,7 +741,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.CheckInputStopValue:
-                    if(_machineStatus.IsInputStop == true)
+                    if (_machineStatus.IsInputStop == true)
                     {
                         Wait(20);
                         break;
