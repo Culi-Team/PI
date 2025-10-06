@@ -360,6 +360,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+
         private double XAxisLoadPosition => cleanRecipe.XAxisLoadPosition;
         private double YAxisLoadPosition => cleanRecipe.YAxisLoadPosition;
         private double TAxisLoadPosition => cleanRecipe.TAxisLoadPosition;

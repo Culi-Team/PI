@@ -524,22 +524,22 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             WetCleanBrushLeftUpDown.CylinderType = ECylinderType.UpDown;
 
             WetCleanRight1ClampUnclamp = _cylinderFactory
-                .Create(_inputs.InShuttleRAlign1FW, _inputs.InShuttleRAlign1BW, _outputs.InShuttleRAlignFw, _outputs.InShuttleRAlignBw)
+                .Create(_inputs.InShuttleRClamp1FW, _inputs.InShuttleRClamp1BW, _outputs.InShuttleRClampFw, _outputs.InShuttleRClampBw)
                 .SetIdentity((int)ECylinder.WetCleanRight1ClampUnclamp, ECylinder.WetCleanRight1ClampUnclamp.ToString());
             WetCleanRight1ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
 
             WetCleanRight2ClampUnclamp = _cylinderFactory
-                .Create(_inputs.InShuttleRAlign2FW, _inputs.InShuttleRAlign2BW, _outputs.InShuttleRAlignFw, _outputs.InShuttleRAlignBw)
+                .Create(_inputs.InShuttleRClamp2FW, _inputs.InShuttleRClamp2BW, _outputs.InShuttleRClampFw, _outputs.InShuttleRClampBw)
                 .SetIdentity((int)ECylinder.WetCleanRight2ClampUnclamp, ECylinder.WetCleanRight2ClampUnclamp.ToString());
             WetCleanRight2ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
 
             WetCleanLeft1ClampUnclamp = _cylinderFactory
-                .Create(_inputs.InShuttleLAlign1FW, _inputs.InShuttleLAlign1BW, _outputs.InShuttleLAlignFw, _outputs.InShuttleLAlignBw)
+                .Create(_inputs.InShuttleLClamp1FW, _inputs.InShuttleLClamp1BW, _outputs.InShuttleLClampFw, _outputs.InShuttleLClampBw)
                 .SetIdentity((int)ECylinder.WetCleanLeft1ClampUnclamp, ECylinder.WetCleanLeft1ClampUnclamp.ToString());
             WetCleanLeft1ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
 
             WetCleanLeft2ClampUnclamp = _cylinderFactory
-                .Create(_inputs.InShuttleLAlign2FW, _inputs.InShuttleLAlign2BW, _outputs.InShuttleLAlignFw, _outputs.InShuttleLAlignBw)
+                .Create(_inputs.InShuttleLClamp2FW, _inputs.InShuttleLClamp2BW, _outputs.InShuttleLClampFw, _outputs.InShuttleLClampBw)
                 .SetIdentity((int)ECylinder.WetCleanLeft2ClampUnclamp, ECylinder.WetCleanLeft2ClampUnclamp.ToString());
             WetCleanLeft2ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
 

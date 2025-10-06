@@ -161,10 +161,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput GlassTransferCyl3Down => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.GLASS_TRANSFER_CYL_3_DOWN);
         public IDOutput InShuttleRVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_SHUTTLE_R_VAC_ON_OFF);
         public IDOutput InShuttleLVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_SHUTTLE_L_VAC_ON_OFF);
-        public IDOutput InShuttleRAlignFw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_SHUTTLE_R_ALIGN_FW);
-        public IDOutput InShuttleRAlignBw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_SHUTTLE_R_ALIGN_BW);
-        public IDOutput InShuttleLAlignFw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_SHUTTLE_L_ALIGN_FW);
-        public IDOutput InShuttleLAlignBw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_SHUTTLE_L_ALIGN_BW);
+        public IDOutput InShuttleRClampFw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_SHUTTLE_R_CLAMP_FW);
+        public IDOutput InShuttleRClampBw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_SHUTTLE_R_CLAMP_BW);
+        public IDOutput InShuttleLClampFw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_SHUTTLE_L_CLAMP_FW);
+        public IDOutput InShuttleLClampBw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_SHUTTLE_L_CLAMP_BW);
         public IDOutput WetCleanPusherRightUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.WET_CLEAN_PUSHER_RIGHT_UP);
         public IDOutput WetCleanPusherRightDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.WET_CLEAN_PUSHER_RIGHT_DOWN);
         public IDOutput WetCleanPusherLeftUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.WET_CLEAN_PUSHER_LEFT_UP);
