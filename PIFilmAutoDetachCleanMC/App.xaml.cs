@@ -40,6 +40,7 @@ namespace PIFilmAutoDetachCleanMC
                 .AddRecipes()
                 .AddProcesses()
                 .AddCassette()
+                .AddIndicatorDevices()
                 .Build();
         }
 

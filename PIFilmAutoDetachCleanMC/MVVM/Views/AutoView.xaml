@@ -203,14 +203,15 @@
                         </Image.Source>
                     </Image>
                     <Image Style="{StaticResource EmergencyIndicatorImageStyle}"
-                           Canvas.Left="746">
+                           Canvas.Left="720"
+                           Canvas.Top="15">
                         <Image.Source>
                             <Binding Path="Devices.Inputs.OpLEmo.Value"
                                      Converter="{StaticResource EmergencyStatusToImageConverter}" />
                         </Image.Source>
                     </Image>
                     <Image Style="{StaticResource EmergencyIndicatorImageStyle}"
-                           Canvas.Left="746"
+                           Canvas.Left="720"
                            Canvas.Top="360">
                         <Image.Source>
                             <Binding Path="Devices.Inputs.OpREmo.Value"
@@ -282,6 +283,11 @@
                                 <Binding Path="Devices.Inputs.DoorLatch2L.Value" />
                             </MultiBinding>
                         </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle Grid.Column="2"
+                               Grid.Row="0"
+                               Fill="Ivory"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
                     </Rectangle>
                     <Rectangle Grid.Column="3"
                                Grid.Row="0"
@@ -355,6 +361,11 @@
                             </MultiBinding>
                         </Rectangle.Fill>
                     </Rectangle>
+                    <Rectangle Grid.Column="2"
+                               Grid.Row="2"
+                               Fill="Ivory"
+                               Style="{StaticResource DoorIndicatorRectangleStyle}">
+                    </Rectangle>
                     <Rectangle Grid.Column="3"
                                Grid.Row="2"
                                Style="{StaticResource DoorIndicatorRectangleStyle}">
@@ -425,9 +436,9 @@
                         <RowDefinition Height="0.9*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.35*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="0.22*"/>
+                        <ColumnDefinition Width="0.35*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.22*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource InCSTWorkImage}"
                            Grid.Column="1"
@@ -450,9 +461,9 @@
                         <RowDefinition Height="0.4*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.34*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="0.23*"/>
+                        <ColumnDefinition Width="0.34*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.23*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource BufferImage}"
                            Grid.Column="1"
@@ -474,9 +485,9 @@
                         <RowDefinition Height="0.15*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.6*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.6*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.5*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource OutCSTWorkImage}"
                            Grid.Column="1"
@@ -508,9 +519,9 @@
                         <RowDefinition Height="0.6*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.5*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.6*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource InCSTImage}"
                            Grid.Column="1"
@@ -532,9 +543,9 @@
                         <RowDefinition Height="0.17*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.33*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="0.7*"/>
+                        <ColumnDefinition Width="0.33*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.7*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource OutCSTImage}"
                            Grid.Column="1"
@@ -573,9 +584,9 @@
                         <RowDefinition Height="1.5*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.45*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="0.13*"/>
+                        <ColumnDefinition Width="0.45*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.13*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource VinylCleanImageDetach}"
                            Grid.Column="1"
@@ -590,14 +601,14 @@
                 </Grid>
                 <!-- FixtureAlign Image overlay-->
                 <Grid Grid.Row="2"
-                        Grid.Column="1">
+                      Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="0.65*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.57*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.57*" />
+                        <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource AlignFixtureImageDetach}"
                            Grid.Column="1"
@@ -611,16 +622,16 @@
                 </Grid>
                 <!-- Detach Image overlay-->
                 <Grid Grid.Row="1"
-                        Grid.Column="1">
+                      Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.22*" />
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="0.2*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.65*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="0.05*"/>
+                        <ColumnDefinition Width="0.65*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.05*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource GlassDetach}"
                            Grid.Column="1"
@@ -635,14 +646,14 @@
                 </Grid>
                 <!-- RemoveFilm Image overlay-->
                 <Grid Grid.Row="0"
-                        Grid.Column="1">
+                      Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="1.9*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.56*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.56*" />
+                        <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource RemoveZoneImageDetach}"
                            Grid.Column="1"
@@ -660,19 +671,19 @@
                   Grid.Column="4">
                 <!--Glass Align Detach Image overlay-->
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.75*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="0.95*"/>
+                    <RowDefinition Height="0.75*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="0.95*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.9*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1.55*"/>
+                    <ColumnDefinition Width="1.9*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1.55*" />
                 </Grid.ColumnDefinitions>
                 <Image Source="{StaticResource AlignStageDetachImage}"
-                           Grid.Column="1"
-                           Grid.Row="1"
-                           Stretch="Fill">
+                       Grid.Column="1"
+                       Grid.Row="1"
+                       Stretch="Fill">
                     <Image.Visibility>
                         <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                             <Binding Path="Devices.Inputs.DetachGlassShtVac1.Value" />
@@ -697,9 +708,9 @@
                         <RowDefinition Height="0.77*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.4*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1.4*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource AlignStageDetachLeftImage}"
                            Grid.Column="1"
@@ -722,9 +733,9 @@
                         <RowDefinition Height="2.15*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.4*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1.4*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource AlignStageDetachRightImage}"
                            Grid.Column="1"
@@ -757,9 +768,9 @@
                 <!--Wet Clean Left Image overlay-->
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.3*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="0.45*"/>
+                        <RowDefinition Height="0.3*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="0.45*" />
                     </Grid.RowDefinitions>
                     <Image Source="{StaticResource WetCleanImageDetachLeft}"
                            Grid.Column="1"
@@ -776,9 +787,9 @@
                 <!--AF Clean Left Image overlay-->
                 <Grid Grid.Column="3">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.3*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="0.45*"/>
+                        <RowDefinition Height="0.3*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="0.45*" />
                     </Grid.RowDefinitions>
                     <Image Source="{StaticResource AFCleanImageDetachLeft}"
                            Grid.Column="1"
@@ -794,11 +805,11 @@
                 </Grid>
                 <!--Wet Clean Left Image overlay-->
                 <Grid Grid.Column="1"
-                        Grid.Row="1">
+                      Grid.Row="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.33*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="0.35*"/>
+                        <RowDefinition Height="0.33*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="0.35*" />
                     </Grid.RowDefinitions>
                     <Image Source="{StaticResource WetCleanImageDetachRight}"
                            Grid.Column="1"
@@ -814,11 +825,11 @@
                 </Grid>
                 <!--AF Clean Left Image overlay-->
                 <Grid Grid.Column="3"
-                        Grid.Row="1">
+                      Grid.Row="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.33*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="0.35*"/>
+                        <RowDefinition Height="0.33*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="0.35*" />
                     </Grid.RowDefinitions>
                     <Image Source="{StaticResource AFCleanImageDetachRight}"
                            Grid.Column="1"
@@ -851,9 +862,9 @@
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1.25*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="1.25*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="0.2*" />
                     </Grid.RowDefinitions>
                     <Image Source="{StaticResource TransferRotationDetachLeftImage}"
                            Grid.Row="1"
@@ -873,9 +884,9 @@
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.08*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1.35*"/>
+                        <RowDefinition Height="0.08*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1.35*" />
                     </Grid.RowDefinitions>
                     <Image Source="{StaticResource TransferRotationDetachRightImage}"
                            Grid.Row="1"
@@ -977,12 +988,12 @@
                 <!--Unload Robot Glass Image overlay-->
                 <Grid Grid.Column="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.12*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="0.14*"/>
+                        <ColumnDefinition Width="0.12*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.14*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="2.1*"/>
+                        <RowDefinition Height="2.1*" />
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
@@ -1183,6 +1194,7 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <ui:ImageButton Grid.Row="0"
                             Image="/EQX.UI;component/Resources/Images/model_change_Selected.png"
@@ -1205,7 +1217,7 @@
                             Content="Initialize"
                             FontSize="18"
                             Background="LightBlue"
-                            Command="{Binding InitializeNavigate}" 
+                            Command="{Binding InitializeNavigate}"
                             IsEnabled="{Binding MachineStatus.IsStandByProcessMode}" />
 
             <ui:ImageButton Grid.Row="3"
@@ -1213,8 +1225,8 @@
                             Content="Origin"
                             FontSize="18"
                             Background="LightBlue"
-                            Command="{Binding OriginCommand}" 
-                            IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"/>
+                            Command="{Binding OriginCommand}"
+                            IsEnabled="{Binding MachineStatus.IsStandByProcessMode}" />
 
             <!-- PRODUCT INFORMATION -->
             <Border Grid.Row="4"
@@ -1224,7 +1236,8 @@
                 <ContentControl Content="{Binding WorkData}" />
             </Border>
 
-            <UniformGrid Grid.Row="6"
+
+            <UniformGrid Grid.Row="7"
                          Margin="0 10 0 10"
                          Columns="2">
                 <Button Content="Input Stop"
@@ -1237,13 +1250,13 @@
                         Background="{Binding MachineStatus.IsOutputStop, Converter={StaticResource InputOutputStopConverter}}" />
             </UniformGrid>
 
-            <ui:ImageButton Grid.Row="7"
+            <ui:ImageButton Grid.Row="8"
                             Image="/EQX.UI;component/Resources/Images/start_selected.png"
                             Content="Start"
                             FontSize="18"
                             Command="{Binding StartCommand}" />
 
-            <ui:ImageButton Grid.Row="8"
+            <ui:ImageButton Grid.Row="9"
                             Image="/EQX.UI;component/Resources/Images/stop_selected.png"
                             Content="Stop"
                             FontSize="18"

@@ -29,6 +29,7 @@ using EQX.InOut.InOut.Analog;
 using EQX.InOut.ByVendor.Ajinextek;
 using EQX.InOut.ByVendor.Inovance;
 using EQX.Device.Torque;
+using EQX.Device.Indicator;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -421,6 +422,24 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
                 services.AddSingleton<CassetteList>();
+            });
+
+            return hostBuilder;
+        }
+
+        public static IHostBuilder AddIndicatorDevices(this IHostBuilder hostBuilder)
+        {
+            hostBuilder.ConfigureServices((hostContext, services) =>
+            {
+                services.AddKeyedScoped<IModbusCommunication>("IndicatorModbusCommunication", (services, obj) =>
+                {
+                    return new ModbusRTUCommunication("COM8", 9600);
+                });
+
+                services.AddSingleton<NEOSHSDIndicator>((ser) =>
+                {
+                    return new NEOSHSDIndicator(1, "Indicator,", ser.GetRequiredKeyedService<IModbusCommunication>("IndicatorModbusCommunication"));
+                });
             });
 
             return hostBuilder;

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Common;
 using EQX.Core.Sequence;
+using EQX.Device.Indicator;
 using EQX.UI.Controls;
 using log4net;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -25,7 +26,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             RecipeSelector recipeSelector,
             DieHardK180Plasma plasma,
             CWorkData workData,
-            UserStore userStore)
+            UserStore userStore,
+            NEOSHSDIndicator nEOSHSDIndicator)
         {
             MachineStatus = machineStatus;
             _navigationService = navigationService;
@@ -35,11 +37,23 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             Plasma = plasma;
             WorkData = workData;
             UserStore = userStore;
+            _nEOSHSDIndicator = nEOSHSDIndicator;
             MachineStatus.PropertyChanged += MachineStatusOnPropertyChanged;
 
             RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.CassetteSizeChanged += CassetteSizeChanged_Handler;
 
             Log = LogManager.GetLogger("AutoVM");
+
+            System.Timers.Timer temperatureUpdateTimer = new System.Timers.Timer(500);
+
+            temperatureUpdateTimer.Elapsed += (s, e) =>
+            {
+                OnPropertyChanged(nameof(Temperature));
+                OnPropertyChanged(nameof(Humidity));
+            };
+
+            temperatureUpdateTimer.AutoReset = true;
+            temperatureUpdateTimer.Enabled = true;
         }
         #endregion
 
@@ -53,6 +67,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public UserStore UserStore { get; }
 
         public string MachineRunModeDisplay => MachineStatus.MachineRunModeDisplay;
+        public double Temperature => _nEOSHSDIndicator.Temperature;
+        public double Humidity => _nEOSHSDIndicator.Humidity;
         #endregion
 
         private void MachineStatusOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -268,6 +284,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         #region Privates
         private readonly INavigationService _navigationService;
+        private readonly NEOSHSDIndicator _nEOSHSDIndicator;
         #endregion
     }
 }
