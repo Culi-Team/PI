@@ -128,10 +128,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         AFCleanPusherLeftUpDown,
         AFCleanBrushRightUpDown,
         AFCleanBrushLeftUpDown,
-        AFCleanRight1ClampUnclamp,
-        AFCleanRight2ClampUnclamp,
-        AFCleanLeft1ClampUnclamp,
-        AFCleanLeft2ClampUnclamp,
 
         // Robot 2 Unload
         UnloadRobotCyl1UpDown,

@@ -145,10 +145,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
         public ICylinder AFCleanPusherLeftUpDown { get; }
         public ICylinder AFCleanBrushRightUpDown { get; }
         public ICylinder AFCleanBrushLeftUpDown { get; }
-        public ICylinder AFCleanRight1ClampUnclamp { get; }
-        public ICylinder AFCleanRight2ClampUnclamp { get; }
-        public ICylinder AFCleanLeft1ClampUnclamp { get; }
-        public ICylinder AFCleanLeft2ClampUnclamp { get; }
 
         // Robot 2 Unload
         public ICylinder UnloadRobotCyl1UpDown { get; }
@@ -599,26 +595,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                 .Create(_inputs.AfCleanBrushLeftDown, _inputs.AfCleanBrushLeftUp, _outputs.AfCleanBrushLeftDown, null)
                 .SetIdentity((int)ECylinder.AFCleanBrushLeftUpDown, ECylinder.AFCleanBrushLeftUpDown.ToString());
             AFCleanBrushLeftUpDown.CylinderType = ECylinderType.UpDown;
-
-            AFCleanRight1ClampUnclamp = _cylinderFactory
-                .Create(_inputs.OutShuttleRAlign1FW, _inputs.OutShuttleRAlign1BW, _outputs.OutShuttleRAlignFw, _outputs.OutShuttleRAlignBw)
-                .SetIdentity((int)ECylinder.AFCleanRight1ClampUnclamp, ECylinder.AFCleanRight1ClampUnclamp.ToString());
-            AFCleanRight1ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
-
-            AFCleanRight2ClampUnclamp = _cylinderFactory
-                .Create(_inputs.OutShuttleRAlign2FW, _inputs.OutShuttleRAlign2BW, _outputs.OutShuttleRAlignFw, _outputs.OutShuttleRAlignBw)
-                .SetIdentity((int)ECylinder.AFCleanRight2ClampUnclamp, ECylinder.AFCleanRight2ClampUnclamp.ToString());
-            AFCleanRight2ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
-
-            AFCleanLeft1ClampUnclamp = _cylinderFactory
-                .Create(_inputs.OutShuttleLAlign1FW, _inputs.OutShuttleLAlign1BW, _outputs.OutShuttleLAlignFw, _outputs.OutShuttleLAlignBw)
-                .SetIdentity((int)ECylinder.AFCleanLeft1ClampUnclamp, ECylinder.AFCleanLeft1ClampUnclamp.ToString());
-            AFCleanLeft1ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
-
-            AFCleanLeft2ClampUnclamp = _cylinderFactory
-                .Create(_inputs.OutShuttleLAlign2FW, _inputs.OutShuttleLAlign2BW, _outputs.OutShuttleLAlignFw, _outputs.OutShuttleLAlignBw)
-                .SetIdentity((int)ECylinder.AFCleanLeft2ClampUnclamp, ECylinder.AFCleanLeft2ClampUnclamp.ToString());
-            AFCleanLeft2ClampUnclamp.CylinderType = ECylinderType.ClampUnclamp;
 
             // Robot 2 Unload
             UnloadRobotCyl1UpDown = _cylinderFactory

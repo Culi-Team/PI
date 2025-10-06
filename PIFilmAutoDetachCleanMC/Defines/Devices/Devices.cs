@@ -287,8 +287,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
             cylinders.Add(Cylinders.AFCleanPusherLeftUpDown);
             cylinders.Add(Cylinders.AFCleanBrushLeftUpDown);
-            cylinders.Add(Cylinders.AFCleanLeft1ClampUnclamp);
-            cylinders.Add(Cylinders.AFCleanLeft2ClampUnclamp);
             return cylinders;
         }
 
@@ -297,8 +295,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
             cylinders.Add(Cylinders.AFCleanPusherRightUpDown);
             cylinders.Add(Cylinders.AFCleanBrushRightUpDown);
-            cylinders.Add(Cylinders.AFCleanRight1ClampUnclamp);
-            cylinders.Add(Cylinders.AFCleanRight2ClampUnclamp);
             return cylinders;
         }
 
@@ -699,10 +695,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.AfCleanPusherLeftDown);
             inputs.Add(Inputs.AfCleanBrushLeftUp);
             inputs.Add(Inputs.AfCleanBrushLeftDown);
-            inputs.Add(Inputs.OutShuttleLAlign1FW);
-            inputs.Add(Inputs.OutShuttleLAlign1BW);
-            inputs.Add(Inputs.OutShuttleLAlign2FW);
-            inputs.Add(Inputs.OutShuttleLAlign2BW);
             inputs.Add(Inputs.OutShuttleLVac);
             inputs.Add(Inputs.AfCleanLeftAlcoholLeakDetect);
             inputs.Add(Inputs.AfCleanLeftPumpLeakDetect);
@@ -722,10 +714,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.AfCleanPusherRightDown);
             inputs.Add(Inputs.AfCleanBrushRightUp);
             inputs.Add(Inputs.AfCleanBrushRightDown);
-            inputs.Add(Inputs.OutShuttleRAlign1FW);
-            inputs.Add(Inputs.OutShuttleRAlign1BW);
-            inputs.Add(Inputs.OutShuttleRAlign2FW);
-            inputs.Add(Inputs.OutShuttleRAlign2BW);
             inputs.Add(Inputs.OutShuttleRVac);
             inputs.Add(Inputs.AfCleanRightAlcoholLeakDetect);
             inputs.Add(Inputs.AfCleanRightPumpLeakDetect);

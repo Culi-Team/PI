@@ -273,14 +273,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput InShuttleLAlign1BW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_SHUTTLE_L_ALIGN_1_BW);
         public IDInput InShuttleLAlign2FW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_SHUTTLE_L_ALIGN_2_FW);
         public IDInput InShuttleLAlign2BW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_SHUTTLE_L_ALIGN_2_BW);
-        public IDInput OutShuttleRAlign1FW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_R_ALIGN_1_FW);
-        public IDInput OutShuttleRAlign1BW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_R_ALIGN_1_BW);
-        public IDInput OutShuttleRAlign2FW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_R_ALIGN_2_FW);
-        public IDInput OutShuttleRAlign2BW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_R_ALIGN_2_BW);
-        public IDInput OutShuttleLAlign1FW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_L_ALIGN_1_FW);
-        public IDInput OutShuttleLAlign1BW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_L_ALIGN_1_BW);
-        public IDInput OutShuttleLAlign2FW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_L_ALIGN_2_FW);
-        public IDInput OutShuttleLAlign2BW => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_L_ALIGN_2_BW);
         public IDInput WetCleanPusherRightUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_PUSHER_RIGHT_UP);
         public IDInput WetCleanPusherRightDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_PUSHER_RIGHT_DOWN);
         public IDInput WetCleanRightPumpLeakDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.WET_CLEAN_RIGHT_PUMP_LEAK_DETECT);
