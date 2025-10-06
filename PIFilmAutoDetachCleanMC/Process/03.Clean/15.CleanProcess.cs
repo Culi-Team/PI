@@ -1017,6 +1017,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.AFCleanRight;
                         break;
                     }
+
+                    if (_machineStatus.IsDryRunMode)
+                    {
+                        Log.Info("Dry Run Mode Skip Clean Auto Run");
+                        Step.RunStep = (int)ECleanProcessAutoRunStep.End;
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case ECleanProcessAutoRunStep.End:

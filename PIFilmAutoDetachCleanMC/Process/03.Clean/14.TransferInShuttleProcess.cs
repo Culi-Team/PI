@@ -432,6 +432,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Log.Info("Sequence WET Clean Load");
                         Sequence = port == EPort.Left ? ESequence.WETCleanLeftLoad : ESequence.WETCleanRightLoad;
                     }
+                    else if (_machineStatus.IsDryRunMode)
+                    {
+                        Log.Info("Dry Run Mode Skip Transfer In Shuttle Auto Run");
+                        Step.RunStep = (int)ETransferInShuttleAutoRunStep.End;
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleAutoRunStep.End:
@@ -686,7 +692,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.Vacuum_On:
                     Log.Debug("Vacuum On");
                     GlassVac.Value = true;
-                    Wait((int)(_commonRecipe.VacDelay * 1000), () => GlassVac.Value || _machineStatus.IsDryRunMode);
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.Vacuum_On_Wait:

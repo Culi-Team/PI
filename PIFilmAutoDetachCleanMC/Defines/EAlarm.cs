@@ -246,6 +246,7 @@
         UnloadTransferLeft_YAxis_MovePlacePosition3_Fail,
         UnloadTransferLeft_YAxis_MovePlacePosition4_Fail,
         UnloadTransferLeft_ZAxis_MovePlacePosition_Fail,
+        UnloadTransferLeft_VacuumOn_Fail,
 
         //Unload Glass Right
         UnloadTransferRight = 24000,
@@ -260,6 +261,7 @@
         UnloadTransferRight_YAxis_MovePlacePosition3_Fail,
         UnloadTransferRight_YAxis_MovePlacePosition4_Fail,
         UnloadTransferRight_ZAxis_MovePlacePosition_Fail,
+        UnloadTransferRight_VacuumOn_Fail,
 
         //Unload Align
         UnloadAlign = 25000,

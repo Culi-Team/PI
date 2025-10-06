@@ -303,6 +303,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.VinylClean;
                         break;
                     }
+                    if (_machineStatus.IsDryRunMode)
+                    {
+                        Log.Info("Dry Run Mode Skip Vinyl Clean Auto Run");
+                        Step.RunStep = (int)EVinylCleanProcessAutoRunStep.End;
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessAutoRunStep.End:

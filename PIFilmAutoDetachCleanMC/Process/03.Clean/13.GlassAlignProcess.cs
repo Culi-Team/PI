@@ -397,6 +397,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Log.Info("Sequence Align Glass");
                         Sequence = port == EPort.Left ? ESequence.AlignGlassLeft : ESequence.AlignGlassRight;
                     }
+                    else if (_machineStatus.IsDryRunMode)
+                    {
+                        Log.Info("Dry Run Mode Skip Glass Align Auto Run");
+                        Step.RunStep = (int)EGlassAlignAutoRunStep.End;
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case EGlassAlignAutoRunStep.End:

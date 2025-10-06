@@ -308,6 +308,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.BufferConveyor_CST_Position_Error);
                         break;
                     }
+                    if (_machineStatus.IsDryRunMode)
+                    {
+                        Log.Info("Dry Run Mode Skip Buffer Conveyor Auto Run");
+                        Step.RunStep = (int)EBufferConveyorAutoRunStep.End;
+                        break;
+                    }
                     break;
                 case EBufferConveyorAutoRunStep.End:
                     break;

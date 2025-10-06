@@ -432,6 +432,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.DetachUnload;
                         break;
                     }
+                    if (_machineStatus.IsDryRunMode)
+                    {
+                        Log.Info("Dry Run Mode Skip Shuttle Vacuum Check");
+                        Step.RunStep = (int)EDetachAutoRunStep.Fixture_Detect_Check;
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.Fixture_Detect_Check:
@@ -439,6 +445,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         Log.Info("Sequence Detach");
                         Sequence = ESequence.Detach;
+                        break;
+                    }
+                    if (_machineStatus.IsDryRunMode)
+                    {
+                        Log.Info("Dry Run Mode Skip Fixture Detect Check");
+                        Step.RunStep = (int)EDetachAutoRunStep.End;
                         break;
                     }
                     Step.RunStep++;

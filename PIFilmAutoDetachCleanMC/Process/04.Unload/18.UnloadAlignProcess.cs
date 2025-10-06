@@ -321,6 +321,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.UnloadAlignGlass;
                         break;
                     }
+                    if (_machineStatus.IsDryRunMode)
+                    {
+                        Log.Info("Dry Run Mode Skip Unload Align Auto Run");
+                        Step.RunStep = (int)EUnloadAlignAutoRunStep.End;
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case EUnloadAlignAutoRunStep.End:
@@ -370,7 +376,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassDetect3, true);
                     SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassDetect4, true);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000), () => (AlignVac1.Value && AlignVac2.Value && AlignVac3.Value && AlignVac4.Value) || _machineStatus.IsDryRunMode);
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsGlassVac || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.Vacuum_On_Wait:

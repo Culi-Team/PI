@@ -453,6 +453,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.GlassTransferPlace;
                         break;
                     }
+                    if (_machineStatus.IsDryRunMode)
+                    {
+                        Log.Info("Dry Run Mode Skip Glass Transfer Auto Run");
+                        Step.RunStep = (int)EGlassTransferAutoRunStep.End;
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case EGlassTransferAutoRunStep.End:

@@ -463,6 +463,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = port == EPort.Left ? ESequence.AFCleanLeftLoad : ESequence.AFCleanRightLoad;
                         break;
                     }
+                    if (_machineStatus.IsDryRunMode)
+                    {
+                        Log.Info("Dry Run Mode Skip Transfer Rotation Auto Run");
+                        Log.Info("Sequence WET Clean Unload");
+                        Sequence = port == EPort.Left ? ESequence.WETCleanLeftUnload : ESequence.WETCleanRightUnload;
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case ETransferRotationAutoRunStep.End:

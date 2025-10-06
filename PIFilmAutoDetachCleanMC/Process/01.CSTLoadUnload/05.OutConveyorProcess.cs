@@ -283,6 +283,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.OutConveyorUnload;
                         break;
                     }
+                    if (_machineStatus.IsDryRunMode)
+                    {
+                        Log.Info("Dry Run Mode Skip Out Conveyor Auto Run");
+                        Step.RunStep = (int)EOutConveyorAutoRunStep.End;
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case EOutConveyorAutoRunStep.End:

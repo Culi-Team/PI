@@ -427,7 +427,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EFixtureAlignTransferStep.Clear_Flag:
                     Log.Debug("Clear Flag Transfer Fixture Done Received");
-                    FlagTransferFixtureDoneReceive = false;
+                    FlagTransferFixtureDoneReceive = true;
                     Log.Debug("Wait Fixture Transfer Done");
                     Step.RunStep++;
                     break;

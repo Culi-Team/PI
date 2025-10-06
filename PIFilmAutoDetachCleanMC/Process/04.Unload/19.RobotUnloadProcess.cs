@@ -480,6 +480,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
+                    if (_machineStatus.IsDryRunMode)
+                    {
+                        Log.Info("Dry Run Mode Skip Robot Unload Auto Run");
+                        Step.RunStep = (int)ERobotUnloadAutoRunStep.End;
+                        break;
+                    }
+
                     Step.RunStep++;
                     break;
                 case ERobotUnloadAutoRunStep.End:
