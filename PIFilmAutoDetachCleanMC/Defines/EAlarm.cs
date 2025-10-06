@@ -142,6 +142,7 @@
         WETCleanLeft_RFeedingAxis_MoveForward_Fail,
         WETCleanLeft_RFeedingAxis_MoveBackward_Fail,
         WETCleanLeft_SyringePump_Origin_Fail,
+        WETCleanLeft_XAxis_MoveReadyPosition_Fail,
 
         //WET Clean Right
         WETCleanRight = 18000,
@@ -166,6 +167,7 @@
         WETCleanRight_RFeedingAxis_MoveForward_Fail,
         WETCleanRight_RFeedingAxis_MoveBackward_Fail,
         WETCleanRight_SyringePump_Origin_Fail,
+        WETCleanRight_XAxis_MoveReadyPosition_Fail,
 
         //Transfer Rotation Left
         TransferRotationLeft = 19000,
@@ -208,6 +210,7 @@
         AFCleanLeft_RFeedingAxis_MoveForward_Fail,
         AFCleanLeft_RFeedingAxis_MoveBackward_Fail,
         AFCleanLeft_SyringePump_Origin_Fail,
+        AFCleanLeft_XAxis_MoveReadyPosition_Fail,
 
         //AF Clean Right
         AFCleanRight = 22000,
@@ -232,6 +235,7 @@
         AFCleanRight_RFeedingAxis_MoveForward_Fail,
         AFCleanRight_RFeedingAxis_MoveBackward_Fail,
         AFCleanRight_SyringePump_Origin_Fail,
+        AFCleanRight_XAxis_MoveReadyPosition_Fail,
 
         //Unload Glass Left
         UnloadTransferLeft = 23000,

@@ -415,6 +415,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 throw new ArgumentOutOfRangeException();
             }
         }
+        private double XAxisReadyPosition => cleanRecipe.XAxisReadyPosition;
+
         private double XAxisLoadPosition => cleanRecipe.XAxisLoadPosition;
         private double YAxisLoadPosition => cleanRecipe.YAxisLoadPosition;
         private double TAxisLoadPosition => cleanRecipe.TAxisLoadPosition;
@@ -793,8 +795,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
-                    IsWarning = false;
-                    Sequence = ESequence.Stop;
+                    Sequence_Ready();
                     break;
                 case ESequence.InWorkCSTLoad:
                     break;
@@ -1122,6 +1123,89 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Info("Sequence AF Clean Load");
                     Sequence = port == EPort.Left ? ESequence.AFCleanLeftLoad : ESequence.AFCleanRightLoad;
+                    break;
+            }
+        }
+
+        private void Sequence_Ready()
+        {
+            switch ((ECleanProcessReadyStep)Step.RunStep)
+            {
+                case ECleanProcessReadyStep.Start:
+                    if(IsOriginOrInitSelected == false)
+                    {
+                        Sequence = ESequence.Stop;
+                        break;
+                    }
+                    Log.Debug("Initialize Start");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessReadyStep.Cyl_Up:
+                    Log.Debug("Cylinder Up");
+                    PushCyl.Backward();
+                    BrushCyl.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return PushCyl.IsBackward && BrushCyl.IsBackward; });
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessReadyStep.Cyl_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        if (PushCyl.IsBackward == false)
+                        {
+                            EWarning? warning = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EWarning.WETCleanLeft_PusherCylinder_Up_Fail,
+                                EClean.WETCleanRight => EWarning.WETCleanRight_PusherCylinder_Up_Fail,
+                                EClean.AFCleanLeft => EWarning.AFCleanLeft_PusherCylinder_Up_Fail,
+                                EClean.AFCleanRight => EWarning.AFCleanRight_PusherCylinder_Up_Fail,
+                                _ => null
+                            };
+                            RaiseWarning((int)warning!);
+                            break;
+                        }
+                        if (BrushCyl.IsBackward)
+                        {
+                            EWarning? warning = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EWarning.WETCleanLeft_BrushCylinder_Up_Fail,
+                                EClean.WETCleanRight => EWarning.WETCleanRight_BrushCylinder_Up_Fail,
+                                EClean.AFCleanLeft => EWarning.AFCleanLeft_BrushCylinder_Up_Fail,
+                                EClean.AFCleanRight => EWarning.AFCleanRight_BrushCylinder_Up_Fail,
+                                _ => null
+                            };
+                            RaiseWarning((int)warning!);
+                            break;
+                        }
+                    }
+                    Log.Debug("Cylinder Up Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessReadyStep.XAxis_MoveReadyPosition:
+                    Log.Debug("X Axis Move Ready Position");
+                    XAxis.MoveAbs(XAxisReadyPosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => XAxis.IsOnPosition(XAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessReadyStep.XAxis_MoveReadyPosition_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        EAlarm? alarm = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EAlarm.WETCleanLeft_XAxis_MoveReadyPosition_Fail,
+                            EClean.WETCleanRight => EAlarm.WETCleanRight_XAxis_MoveReadyPosition_Fail,
+                            EClean.AFCleanLeft => EAlarm.AFCleanLeft_XAxis_MoveReadyPosition_Fail,
+                            EClean.AFCleanRight => EAlarm.AFCleanRight_XAxis_MoveReadyPosition_Fail,
+                            _ => null
+                        };
+                        RaiseAlarm((int)alarm!);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessReadyStep.End:
+                    IsWarning = false;
+                    Log.Debug("Initialize End");
+                    Sequence = ESequence.Stop;
                     break;
             }
         }
