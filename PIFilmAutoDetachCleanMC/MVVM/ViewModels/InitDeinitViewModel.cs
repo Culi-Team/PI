@@ -86,7 +86,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             [FromKeyedServices("RobotLoad")] IRobot robotLoad,
             [FromKeyedServices("RobotUnload")] IRobot robotUnload,
             [FromKeyedServices("SyringePumpSerialCommunicator")] SerialCommunicator syringePumpSerialCommunicator,
-            CWorkData workData)
+            CWorkData workData,
+            [FromKeyedServices("IndicatorModbusCommunication")] IModbusCommunication indicatorModbusCommunication)
         {
             _devices = devices;
             _processes = processes;
@@ -100,6 +101,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _robotUnload = robotUnload;
             _syringePumpSerialCommunicator = syringePumpSerialCommunicator;
             _workData = workData;
+            _indicatorModbusCommunication = indicatorModbusCommunication;
             _task = new Task(() => { });
             ErrorMessages = new List<string>();
 
@@ -177,10 +179,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         {
                             ErrorMessages.Add("Torque Controller Connect Fail");
                         }
-
                         if(_syringePumpSerialCommunicator.Connect() == false)
                         {
                             ErrorMessages.Add("Syringe Pump Connect Fail");
+                        }
+                        if(_indicatorModbusCommunication.Connect() == false)
+                        {
+                            ErrorMessages.Add("Indicator Connect Fail");
                         }
                         _step++;
                         break;
@@ -346,6 +351,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _rollerModbusCommunication.Disconnect();
                         _torqueModbusCommnication.Disconnect();
                         _syringePumpSerialCommunicator.Disconnect();
+                        _indicatorModbusCommunication.Disconnect();
                         _step++;
                         break;
                     case EHandleStep.MotionDeviceHandle:
@@ -425,6 +431,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly IRobot _robotUnload;
         private readonly SerialCommunicator _syringePumpSerialCommunicator;
         private readonly CWorkData _workData;
+        private readonly IModbusCommunication _indicatorModbusCommunication;
         private readonly Devices _devices;
         private readonly Processes _processes;
 

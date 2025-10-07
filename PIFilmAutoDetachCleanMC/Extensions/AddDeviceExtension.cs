@@ -253,7 +253,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     for (int i = 0; i < speedCtlList.Count; i++)
                     {
 
-                        speedcontrollerList.Add(new SD201SSpeedController(speedCtlIndex[i], speedCtlList[i],modbusCommunication));
+                        speedcontrollerList.Add(new SD201SSpeedController(speedCtlIndex[i], speedCtlList[i], modbusCommunication));
                     }
                     return new SpeedControllerList(speedcontrollerList);
                 });
@@ -328,7 +328,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             {
                 services.AddKeyedSingleton<SerialCommunicator>("SyringePumpSerialCommunicator", (ser, obj) =>
                 {
-                    return new SerialCommunicator(1, "SyringePumpSerialCommunicator", "COM7", 38400);
+                    return new SerialCommunicator(1, "SyringePumpSerialCommunicator", "COM8", 38400);
                 });
 
                 services.AddKeyedSingleton<ISyringePump>("WETCleanLeftSyringePump", (ser, obj) =>
@@ -344,7 +344,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 {
                     var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
 #if SIMULATION
-                return new SimulationSyringePump("WETCleanRightSyringePump", 2);
+                    return new SimulationSyringePump("WETCleanRightSyringePump", 2);
 #else
                     return new PSD4SyringePump("WETCleanRightSyringePump", 1, serialCommunicator, 1.0);
 #endif
@@ -353,7 +353,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 {
                     var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
 #if SIMULATION
-                return new SimulationSyringePump("AFCleanLeftSyringePump", 3);
+                    return new SimulationSyringePump("AFCleanLeftSyringePump", 3);
 #else
                     return new PSD4SyringePump("AFCleanLeftSyringePump", 1, serialCommunicator, 1.0);
 #endif
@@ -433,7 +433,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             {
                 services.AddKeyedScoped<IModbusCommunication>("IndicatorModbusCommunication", (services, obj) =>
                 {
-                    return new ModbusRTUCommunication("COM8", 9600);
+                    return new ModbusRTUCommunication("COM9", 9600);
                 });
 
                 services.AddSingleton<NEOSHSDIndicator>((ser) =>

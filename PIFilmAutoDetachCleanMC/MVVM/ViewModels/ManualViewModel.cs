@@ -6,6 +6,7 @@ using EQX.Core.Display;
 using EQX.Core.InOut;
 using EQX.Core.Robot;
 using EQX.Core.Sequence;
+using EQX.Device.Indicator;
 using EQX.UI.Controls;
 using EQX.UI.Display;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +32,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly IRobot _robotUnload;
         private readonly Processes _processes;
         private readonly SerialCommunicator _syringPumpSerialCommunicator;
+        private readonly IModbusCommunication _indicatorModbusCommunication;
         private ManualUnitViewModel selectedManualUnit;
         private readonly DisplayManager _displayManager = new();
         private readonly ViewOnlyOverlay _viewOnlyOverlay = new();
@@ -41,6 +43,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         #region Properties
         public Devices Devices { get; }
         public MachineStatus MachineStatus { get; }
+        public NEOSHSDIndicator Indicator { get; }
+
         public bool RobotLoadIsConnected => _robotLoad.IsConnected;
         public bool RobotUnloadIsConnected => _robotUnload.IsConnected;
         public bool MotionsInovanceIsConnected => Devices.MotionsInovance.MotionControllerInovance.IsConnected;
@@ -57,6 +61,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                        Devices.SyringePumps.AfCleanRightSyringePump.IsConnected;
             }
         }
+        public bool IndicatorIsConnected => Indicator.IsConnected;
         public bool WETCleanLeftRegulatorIsConnected => Devices.Regulators.WetCleanLRegulator.IsConnected;
         public bool WETCleanRightRegulatorIsConnected => Devices.Regulators.WetCleanRRegulator.IsConnected;
         public bool AFCleanLeftRegulatorIsConnected => Devices.Regulators.AfCleanLRegulator.IsConnected;
@@ -259,6 +264,17 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
+        public ICommand IndicatorConnectCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _indicatorModbusCommunication.Connect();
+                    OnPropertyChanged(nameof(IndicatorIsConnected));
+                });
+            }
+        }
         public ICommand RegulatorConnectCommand
         {
             get
@@ -307,7 +323,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             [FromKeyedServices("RobotLoad")] IRobot robotLoad,
             [FromKeyedServices("RobotUnload")] IRobot robotUnload,
             Processes processes,
-            [FromKeyedServices("SyringePumpSerialCommunicator")] SerialCommunicator SyringPumpSerialCommunicator)
+            [FromKeyedServices("SyringePumpSerialCommunicator")] SerialCommunicator SyringPumpSerialCommunicator,
+            [FromKeyedServices("IndicatorModbusCommunication")] IModbusCommunication indicatorModbusCommunication,
+            NEOSHSDIndicator indicator)
         {
             Devices = devices;
             MachineStatus = machineStatus;
@@ -318,6 +336,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _robotUnload = robotUnload;
             _processes = processes;
             _syringPumpSerialCommunicator = SyringPumpSerialCommunicator;
+            _indicatorModbusCommunication = indicatorModbusCommunication;
+            Indicator = indicator;
             _displayManager.EnableExtend();
             _activeScreen = InteractiveScreen.Primary;
             MoveMainWindowTo(_activeScreen);
