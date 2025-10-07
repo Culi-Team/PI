@@ -107,7 +107,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EBufferConveyorOriginStep.Stopper_Cylinder_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        if(BufferStopper1.IsBackward == false)
+                        if (BufferStopper1.IsBackward == false)
                         {
                             RaiseWarning((int)EWarning.BufferConveyor_Stopper1_Down_Fail);
                             break;
@@ -284,6 +284,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EBufferConveyorAutoRunStep.CSTDetect_Check:
+                    if(_machineStatus.IsDryRunMode)
+                    {
+                        Log.Info("Sequence Out Work CST Load");
+                        Sequence = ESequence.OutWorkCSTLoad;
+                        break;
+                    }    
                     if (BufferDetect1 == false && BufferDetect2 == false)
                     {
                         Log.Info("Sequence In Work CST Unload");
@@ -305,12 +311,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (BufferDetect2 == true && BufferStopper2.IsBackward)
                     {
                         RaiseWarning((int)EWarning.BufferConveyor_CST_Position_Error);
-                        break;
-                    }
-                    if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Dry Run Mode Skip Buffer Conveyor Auto Run");
-                        Step.RunStep = (int)EBufferConveyorAutoRunStep.End;
                         break;
                     }
                     break;
@@ -358,21 +358,25 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EBufferConveyorInWorkCSTUnloadStep.CSTDetect_Check:
-                    if (BufferDetect1 == true && BufferDetect2 == false)
+                    if (_machineStatus.IsDryRunMode == false)
                     {
-                        Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.Conveyor_Run;
-                        break;
+                        if (BufferDetect1 == true && BufferDetect2 == false)
+                        {
+                            Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.Conveyor_Run;
+                            break;
+                        }
+                        if (BufferDetect1 == true && BufferDetect2 == true)
+                        {
+                            Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.Conveyor_Stop;
+                            break;
+                        }
+                        if (BufferDetect1 == false && BufferDetect2 == true)
+                        {
+                            RaiseWarning((int)EWarning.BufferConveyor_CST_Position_Error);
+                            break;
+                        }
                     }
-                    if (BufferDetect1 == true && BufferDetect2 == true)
-                    {
-                        Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.Conveyor_Stop;
-                        break;
-                    }
-                    if (BufferDetect1 == false && BufferDetect2 == true)
-                    {
-                        RaiseWarning((int)EWarning.BufferConveyor_CST_Position_Error);
-                        break;
-                    }
+
                     Log.Debug("Set Flag Buffer Conveyor Ready");
                     FlagBufferConveyorReady = true;
                     Step.RunStep++;

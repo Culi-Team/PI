@@ -33,8 +33,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             CSTLoadUnloadRecipe cstLoadUnloadRecipe,
             CommonRecipe commonRecipe,
             MachineStatus machineStatus,
-            [FromKeyedServices("OutConveyorInput")]IDInputDevice outConveyorInput,
-            [FromKeyedServices("OutConveyorOutput")]IDOutputDevice outConveyorOutput)
+            [FromKeyedServices("OutConveyorInput")] IDInputDevice outConveyorInput,
+            [FromKeyedServices("OutConveyorOutput")] IDOutputDevice outConveyorOutput)
         {
             _devices = devices;
             _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
@@ -276,16 +276,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EOutConveyorAutoRunStep.CSTDetect_Check:
-                    if (CSTDetect1 || CSTDetect2)
+                    if ((CSTDetect1 || CSTDetect2) && _machineStatus.IsDryRunMode == false)
                     {
                         Log.Info("Sequence Out CST Unload");
                         Sequence = ESequence.OutConveyorUnload;
-                        break;
-                    }
-                    if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Dry Run Mode Skip Out Conveyor Auto Run");
-                        Step.RunStep = (int)EOutConveyorAutoRunStep.End;
                         break;
                     }
                     Step.RunStep++;
@@ -312,7 +306,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EOutConveyorUnloadStep.Stopper_Up_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.OutConveyor_Stopper_Up_Fail);
                         break;
@@ -321,12 +315,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EOutConveyorUnloadStep.CSTDetect_Check:
-                    if(CSTDetect1 == true && CSTDetect2 == false)
+                    if ((CSTDetect1 == true && CSTDetect2 == false) || _machineStatus.IsDryRunMode)
                     {
                         Step.RunStep++;
                         break;
                     }
-                    if(CSTDetect1 == true && CSTDetect2 == true)
+                    if (CSTDetect1 == true && CSTDetect2 == true)
                     {
                         Step.RunStep = (int)EOutConveyorUnloadStep.Conveyor_Stop;
                         break;
@@ -341,7 +335,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EOutConveyorUnloadStep.Wait_CSTUnload:
-                    if(CSTDetect1 == false && CSTDetect2 == false)
+                    if ((CSTDetect1 == false && CSTDetect2 == false) || _machineStatus.IsDryRunMode)
                     {
                         Step.RunStep++;
                         break;
@@ -377,7 +371,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EOutConveyorProcessOutWorkCSTUnloadStep.Stopper_Up_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.OutConveyor_Stopper_Up_Fail);
                         break;
@@ -387,7 +381,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EOutConveyorProcessOutWorkCSTUnloadStep.Wait_OutWorkCSTRequestUnload:
-                    if(FlagOutWorkConveyorRequestCSTOut == false)
+                    if (FlagOutWorkConveyorRequestCSTOut == false)
                     {
                         Wait(20);
                         break;
@@ -405,7 +399,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EOutConveyorProcessOutWorkCSTUnloadStep.Wait_OutWorkCSTUnloadDone:
-                    if(CSTDetect1 == true && CSTDetect2 == true)
+                    if (CSTDetect1 == true && CSTDetect2 == true)
                     {
                         Log.Debug("Clear Flag Out Conveyor Ready");
                         FlagOutConveyorReady = false;

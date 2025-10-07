@@ -466,16 +466,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorAutoRunStep.Cassette_Check:
-                    if (IsCassetteDetect)
+                    if (IsCassetteDetect || _machineStatus.IsDryRunMode)
                     {
                         Log.Info("Sequence Tilt");
                         Sequence = ESequence.CSTTilt;
-                        break;
-                    }
-                    if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Dry Run Mode Skip Work Conveyor Auto Run");
-                        Step.RunStep = (int)EWorkConveyorAutoRunStep.End;
                         break;
                     }
                     Step.RunStep++;
@@ -758,7 +752,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Wait_CassetteLoadDone:
-                    if (IsCassetteDetect == false)
+                    if (IsCassetteDetect == false && _machineStatus.IsDryRunMode == false)
                     {
                         Wait(20);
                         break;
@@ -936,7 +930,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Wait_CSTOut_Done:
-                    if (IsCassetteOut && IsNextConveyorDetect)
+                    if ((IsCassetteOut && IsNextConveyorDetect) || _machineStatus.IsDryRunMode)
                     {
                         if (port == EPort.Left)
                         {
