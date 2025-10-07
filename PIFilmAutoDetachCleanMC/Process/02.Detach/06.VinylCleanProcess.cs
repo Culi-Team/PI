@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
@@ -23,7 +22,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _vinylCleanOutput;
         private readonly MachineStatus _machineStatus;
 
-        private bool IsFixtureDetect => _machineStatus.IsSatisfied(_devices.Inputs.VinylCleanFixtureDetect);
+        private bool IsFixtureDetect => _devices.Inputs.VinylCleanFixtureDetect.Value;
         private ICylinder FixtureClampCyl1 => _devices.Cylinders.VinylCleanFixture1ClampUnclamp;
         private ICylinder FixtureClampCyl2 => _devices.Cylinders.VinylCleanFixture2ClampUnclamp;
 
@@ -31,8 +30,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder PusherCyl => _devices.Cylinders.VinylCleanPusherRollerUpDown;
 
         private IDOutput MotorOnOff => _devices.Outputs.VinylCleanMotorOnOff;
-        private bool IsUnWinderFullDetect => _machineStatus.IsSatisfied(_devices.Inputs.VinylCleanFullDetect);
-        private bool IsWinderRunOffDetect => _machineStatus.IsSatisfied(_devices.Inputs.VinylCleanRunoffDetect);
+        private bool IsUnWinderFullDetect => _devices.Inputs.VinylCleanFullDetect.Value;
+        private bool IsWinderRunOffDetect => _devices.Inputs.VinylCleanRunoffDetect.Value;
         #endregion
 
         #region Flags

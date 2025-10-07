@@ -10,7 +10,6 @@ using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using PIFilmAutoDetachCleanMC.Recipe;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,8 +47,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Inputs
-        private bool BufferDetect1 => _machineStatus.IsSatisfied(_devices.Inputs.BufferCstDetect1);
-        private bool BufferDetect2 => _machineStatus.IsSatisfied(_devices.Inputs.BufferCstDetect2);
+        private bool BufferDetect1 => _devices.Inputs.BufferCstDetect1.Value;
+        private bool BufferDetect2 => _devices.Inputs.BufferCstDetect2.Value;
 
         #endregion
 

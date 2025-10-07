@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +40,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder PusherCyl1 => _devices.Cylinders.RemoveZonePusherCyl1UpDown;
         private ICylinder PusherCyl2 => _devices.Cylinders.RemoveZonePusherCyl2UpDown;
 
-        private bool IsFixtureDetect => _machineStatus.IsSatisfied(_devices.Inputs.RemoveZoneFixtureDetect);
+        private bool IsFixtureDetect => _devices.Inputs.RemoveZoneFixtureDetect.Value;
 
         private bool IsFixCylinderBw => FixCyl1_1.IsBackward && FixCyl1_2.IsBackward && FixCyl2_1.IsBackward && FixCyl2_2.IsBackward;
         private bool IsFixCylinderFw => FixCyl1_1.IsForward && FixCyl1_2.IsForward && FixCyl2_1.IsForward && FixCyl2_2.IsForward;

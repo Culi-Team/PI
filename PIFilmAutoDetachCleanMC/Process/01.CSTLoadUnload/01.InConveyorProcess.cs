@@ -10,7 +10,6 @@ using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using PIFilmAutoDetachCleanMC.Recipe;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,8 +49,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Inputs
-        private bool CST_Det1 => _machineStatus.IsSatisfied(_devices.Inputs.InCstDetect1);
-        private bool CST_Det2 => _machineStatus.IsSatisfied(_devices.Inputs.InCstDetect2);
+        private bool CST_Det1 => _devices.Inputs.InCstDetect1.Value;
+        private bool CST_Det2 => _devices.Inputs.InCstDetect2.Value;
         private IDInput InCompleteButton => _devices.Inputs.InCompleteButton;
         private IDInput InMutingButton => _devices.Inputs.InMutingButton;
         #endregion

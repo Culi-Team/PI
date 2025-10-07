@@ -275,6 +275,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 });
             }
         }
+
         public ICommand RegulatorConnectCommand
         {
             get

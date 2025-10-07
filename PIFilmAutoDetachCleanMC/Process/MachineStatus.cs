@@ -5,7 +5,6 @@ using EQX.Core.Process;
 using EQX.Core.Sequence;
 using EQX.InOut.InOut;
 using PIFilmAutoDetachCleanMC.Defines;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,7 +19,6 @@ namespace PIFilmAutoDetachCleanMC.Process
     {
         public MachineStatus()
         {
-            _dryRunProfile = DryRunBypassProfile.CreateDefault();
         }
 
         private EMachineRunMode _machineRunMode;
@@ -30,13 +28,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool _originDone;
         private bool isInputStop;
         private bool isOutputStop;
-        private readonly DryRunBypassProfile _dryRunProfile;
         public const int DryRunVacuumDurationMilliseconds = 1000;
 
         //public bool IsByPassMode => _machineRunMode == EMachineRunMode.ByPass;
         public bool IsDryRunMode => _machineRunMode == EMachineRunMode.DryRun;
-        public IReadOnlyCollection<DryRunBypassGroup> DryRunBypassGroups => _dryRunProfile.EnabledGroups;
-        public IReadOnlyCollection<EInput> ActiveDryRunBypasses => _dryRunProfile.ActiveInputs;
         public EMachineRunMode MachineRunMode
         {
             get
@@ -137,28 +132,5 @@ namespace PIFilmAutoDetachCleanMC.Process
                 MultiThreadingHelpers.SafeSetValue(ref _SemiAutoSequence, value);
             }
         }
-
-        public void ConfigureDryRunBypass(params DryRunBypassGroup[] groups)
-        {
-            _dryRunProfile.SetEnabledGroups(groups);
-            OnPropertyChanged(nameof(DryRunBypassGroups));
-        }
-
-        public bool ShouldBypass(EInput input)
-        {
-            return IsDryRunMode && _dryRunProfile.ShouldBypass(input);
-        }
-
-        public bool ShouldBypass(int inputId)
-        {
-            if (!Enum.IsDefined(typeof(EInput), inputId))
-            {
-                return false;
-            }
-
-            return ShouldBypass((EInput)inputId);
-        }
-
-        public int DryRunVacuumDuration => DryRunVacuumDurationMilliseconds;
     }
 }

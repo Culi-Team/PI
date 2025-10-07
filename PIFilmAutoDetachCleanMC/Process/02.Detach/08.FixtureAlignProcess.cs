@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
@@ -22,9 +21,9 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private ICylinder AlignFixtureCyl1 => _devices.Cylinders.AlignFixtureCyl1FwBw;
         private ICylinder AlignFixtureCyl2 => _devices.Cylinders.AlignFixtureCyl2FwBw;
-        private bool IsFixtureDetect => _machineStatus.IsSatisfied(_devices.Inputs.AlignFixtureDetect);
-        private bool IsFixtureTiltDetect => _machineStatus.IsSatisfied(_devices.Inputs.AlignFixtureTiltDetect);
-        private bool IsFixtureReverseDetect => _machineStatus.IsSatisfied(_devices.Inputs.AlignFixtureReverseDetect);
+        private bool IsFixtureDetect => _devices.Inputs.AlignFixtureDetect.Value;
+        private bool IsFixtureTiltDetect => _devices.Inputs.AlignFixtureTiltDetect.Value;
+        private bool IsFixtureReverseDetect => _devices.Inputs.AlignFixtureReverseDetect.Value;
         #endregion
 
         #region Flags

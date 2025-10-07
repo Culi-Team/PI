@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,9 +31,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDOutput AlignStageVac2 => port == EPort.Left ? _devices.Outputs.AlignStageLVac2OnOff : _devices.Outputs.AlignStageRVac2OnOff;
         private IDOutput AlignStageVac3 => port == EPort.Left ? _devices.Outputs.AlignStageLVac3OnOff : _devices.Outputs.AlignStageRVac3OnOff;
 
-        private bool AlignStageVac1Sensor => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLVac1) : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRVac1);
-        private bool AlignStageVac2Sensor => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLVac2) : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRVac2);
-        private bool AlignStageVac3Sensor => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLVac3) : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRVac3);
+        private bool AlignStageVac1Sensor => port == EPort.Left ? _devices.Inputs.AlignStageLVac1.Value : _devices.Inputs.AlignStageRVac1.Value;
+        private bool AlignStageVac2Sensor => port == EPort.Left ? _devices.Inputs.AlignStageLVac2.Value : _devices.Inputs.AlignStageRVac2.Value;
+        private bool AlignStageVac3Sensor => port == EPort.Left ? _devices.Inputs.AlignStageLVac3.Value : _devices.Inputs.AlignStageRVac3.Value;
 
         private bool IsVacDetect1 => AlignStageVac1Sensor == true;
         private bool IsVacDetect2 => AlignStageVac2Sensor == true;
@@ -47,9 +46,9 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private ICylinder BrushCyl => port == EPort.Left ? _devices.Cylinders.AlignStageLBrushCylUpDown : _devices.Cylinders.AlignStageRBrushCylUpDown;
 
-        private bool IsGlass1Detect => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLGlassDetect1) : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRGlassDetect1);
-        private bool IsGlass2Detect => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLGlassDetect2) : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRGlassDetect2);
-        private bool IsGlass3Detect => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLGlassDetect3) : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRGlassDetect3);
+        private bool IsGlass1Detect => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect1.Value : _devices.Inputs.AlignStageRGlassDetect1.Value;
+        private bool IsGlass2Detect => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect2.Value : _devices.Inputs.AlignStageRGlassDetect2.Value;
+        private bool IsGlass3Detect => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect3.Value : _devices.Inputs.AlignStageRGlassDetect3.Value;
         private bool IsGlassDetect => IsGlass1Detect || IsGlass2Detect || IsGlass3Detect;
 
         private bool IsAlign => AlignCyl1.IsForward && AlignCyl2.IsForward && AlignCyl3.IsForward;

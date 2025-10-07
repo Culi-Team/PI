@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,14 +33,14 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDOutputDevice Outputs => port == EPort.Left ? _transferInShuttleLeftOutput : _transferInShuttleRightOutput;
 
         private bool IsGlassDetect1 => port == EPort.Left
-            ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLGlassDetect1)
-            : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRGlassDetect1);
+            ? _devices.Inputs.AlignStageLGlassDetect1.Value
+            : _devices.Inputs.AlignStageRGlassDetect1.Value;
         private bool IsGlassDetect2 => port == EPort.Left
-            ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLGlassDetect2)
-            : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRGlassDetect2);
+            ? _devices.Inputs.AlignStageLGlassDetect2.Value
+            : _devices.Inputs.AlignStageRGlassDetect2.Value;
         private bool IsGlassDetect3 => port == EPort.Left
-            ? _machineStatus.IsSatisfied(_devices.Inputs.AlignStageLGlassDetect3)
-            : _machineStatus.IsSatisfied(_devices.Inputs.AlignStageRGlassDetect3);
+            ? _devices.Inputs.AlignStageLGlassDetect3.Value
+            : _devices.Inputs.AlignStageRGlassDetect3.Value;
 
         private EPort port => Name == EProcess.TransferInShuttleLeft.ToString() ? EPort.Left : EPort.Right;
 
@@ -61,7 +60,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             ? _devices.Inputs.TransferInShuttleLVac
             : _devices.Inputs.TransferInShuttleRVac;
 
-        private bool IsVacDetect => _machineStatus.IsSatisfied(GlassVacuumInput);
+        private bool IsVacDetect => GlassVacuumInput.Value;
 
         private double YAxisReadyPosition => port == EPort.Left ? _transferInShuttleLeftRecipe.YAxisReadyPosition
                                                                     : _transferInShuttleRightRecipe.YAxisReadyPosition;

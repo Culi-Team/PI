@@ -12,7 +12,6 @@ using PIFilmAutoDetachCleanMC.Defines.Devices.Robot;
 using PIFilmAutoDetachCleanMC.Defines.Process.Step._07.RobotLoadProcess;
 using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 using PIFilmAutoDetachCleanMC.Recipe;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
@@ -603,7 +602,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadAutoRunStep.Check_Flag_RemoveFilm:
-                    if (_machineStatus.IsSatisfied(_devices.Inputs.RemoveZoneFixtureDetect))
+                    if (_devices.Inputs.RemoveZoneFixtureDetect.Value)
                     {
                         if (FlagRemoveFilmRequestUnload)
                         {
@@ -1140,7 +1139,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     else
                     {
-                        if (_machineStatus.IsSatisfied(_devices.Inputs.RemoveZoneFixtureDetect))
+                        if (_devices.Inputs.RemoveZoneFixtureDetect.Value)
                         {
                             if (FlagRemoveFilmRequestUnload)
                             {
@@ -1284,7 +1283,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.RobotPickFixtureFromCST;
                         break;
                     }
-                    if (_machineStatus.IsSatisfied(_devices.Inputs.RemoveZoneFixtureDetect))
+                    if (_devices.Inputs.RemoveZoneFixtureDetect.Value)
                     {
                         if (FlagRemoveFilmRequestUnload)
                         {

@@ -14,7 +14,6 @@ using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 using PIFilmAutoDetachCleanMC.Recipe;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
@@ -46,12 +45,12 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDInput GlassVac => port == EPort.Left ? _devices.Inputs.UnloadTransferLVac :
                                                          _devices.Inputs.UnloadTransferRVac;
 
-        private bool UnloadAlignVac1 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassAlignVac1);
-        private bool UnloadAlignVac2 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassAlignVac2);
-        private bool UnloadAlignVac3 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassAlignVac3);
-        private bool UnloadAlignVac4 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadGlassAlignVac4);
+        private bool UnloadAlignVac1 => _devices.Inputs.UnloadGlassAlignVac1.Value;
+        private bool UnloadAlignVac2 => _devices.Inputs.UnloadGlassAlignVac2.Value;
+        private bool UnloadAlignVac3 => _devices.Inputs.UnloadGlassAlignVac3.Value;
+        private bool UnloadAlignVac4 => _devices.Inputs.UnloadGlassAlignVac4.Value;
 
-        private bool IsVacDetect => _machineStatus.IsSatisfied(GlassVac);
+        private bool IsVacDetect => GlassVac.Value;
 
         private UnloadTransferRecipe Recipe => port == EPort.Left ? _unloadTransferLeftRecipe :
                                                     _unloadTransferRightRecipe;

@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,11 +37,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder DetachCyl1 => _devices.Cylinders.DetachCyl1UpDown;
         private ICylinder DetachCyl2 => _devices.Cylinders.DetachCyl2UpDown;
 
-        private bool IsFixtureDetect => _machineStatus.IsSatisfied(_devices.Inputs.DetachFixtureDetect);
+        private bool IsFixtureDetect => _devices.Inputs.DetachFixtureDetect.Value;
 
-        private bool IsGlassShuttleVac1 => _machineStatus.IsSatisfied(_devices.Inputs.DetachGlassShtVac1);
-        private bool IsGlassShuttleVac2 => _machineStatus.IsSatisfied(_devices.Inputs.DetachGlassShtVac2);
-        private bool IsGlassShuttleVac3 => _machineStatus.IsSatisfied(_devices.Inputs.DetachGlassShtVac3);
+        private bool IsGlassShuttleVac1 => _devices.Inputs.DetachGlassShtVac1.Value;
+        private bool IsGlassShuttleVac2 => _devices.Inputs.DetachGlassShtVac2.Value;
+        private bool IsGlassShuttleVac3 => _devices.Inputs.DetachGlassShtVac3.Value;
         private bool IsGlassShuttleVacAll => IsGlassShuttleVac1 && IsGlassShuttleVac2 && IsGlassShuttleVac3;
 
         private IDOutput GlassShuttleVac1 => _devices.Outputs.DetachGlassShtVac1OnOff;

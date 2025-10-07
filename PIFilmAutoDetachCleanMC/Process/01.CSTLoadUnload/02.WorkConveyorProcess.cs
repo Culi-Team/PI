@@ -14,7 +14,6 @@ using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 using PIFilmAutoDetachCleanMC.Helpers;
 using PIFilmAutoDetachCleanMC.Recipe;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System.Windows.Markup;
 
 namespace PIFilmAutoDetachCleanMC.Process
@@ -72,13 +71,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Inputs
-        private bool Detect1 => port == EPort.Right ? _machineStatus.IsSatisfied(_devices.Inputs.InCstWorkDetect1) :
-                                                         _machineStatus.IsSatisfied(_devices.Inputs.OutCstWorkDetect1);
-        private bool Detect2 => port == EPort.Right ? _machineStatus.IsSatisfied(_devices.Inputs.InCstWorkDetect2) :
-                                                         _machineStatus.IsSatisfied(_devices.Inputs.OutCstWorkDetect2);
-        private bool Detect3 => port == EPort.Right ? _machineStatus.IsSatisfied(_devices.Inputs.InCstWorkDetect3) :
-                                                         _machineStatus.IsSatisfied(_devices.Inputs.OutCstWorkDetect3);
-        private bool Detect4 => _machineStatus.IsSatisfied(_devices.Inputs.InCstWorkDetect4);
+        private bool Detect1 => port == EPort.Right ? _devices.Inputs.InCstWorkDetect1.Value :
+                                                         _devices.Inputs.OutCstWorkDetect1.Value;
+        private bool Detect2 => port == EPort.Right ? _devices.Inputs.InCstWorkDetect2.Value :
+                                                         _devices.Inputs.OutCstWorkDetect2.Value;
+        private bool Detect3 => port == EPort.Right ? _devices.Inputs.InCstWorkDetect3.Value :
+                                                         _devices.Inputs.OutCstWorkDetect3.Value;
+        private bool Detect4 => _devices.Inputs.InCstWorkDetect4.Value;
 
         private bool IsCassetteDetect
         {
@@ -113,11 +112,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 if (port == EPort.Right)
                 {
-                    return _machineStatus.IsSatisfied(_devices.Inputs.BufferCstDetect1)
-                        && _machineStatus.IsSatisfied(_devices.Inputs.BufferCstDetect2);
+                    return _devices.Inputs.BufferCstDetect1.Value
+                        && _devices.Inputs.BufferCstDetect2.Value;
                 }
-                return _machineStatus.IsSatisfied(_devices.Inputs.OutCstDetect1)
-                    && _machineStatus.IsSatisfied(_devices.Inputs.OutCstDetect2);
+                return _devices.Inputs.OutCstDetect1.Value
+                    && _devices.Inputs.OutCstDetect2.Value;
             }
         }
 

@@ -9,7 +9,6 @@ using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Robot;
 using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 using PIFilmAutoDetachCleanMC.Recipe;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
@@ -34,10 +33,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDOutput GlassVacOnOff3 => _devices.Outputs.UnloadRobotVac3OnOff;
         private IDOutput GlassVacOnOff4 => _devices.Outputs.UnloadRobotVac4OnOff;
 
-        private bool GlassVac1 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotVac1);
-        private bool GlassVac2 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotVac2);
-        private bool GlassVac3 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotVac3);
-        private bool GlassVac4 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotVac4);
+        private bool GlassVac1 => _devices.Inputs.UnloadRobotVac1.Value;
+        private bool GlassVac2 => _devices.Inputs.UnloadRobotVac2.Value;
+        private bool GlassVac3 => _devices.Inputs.UnloadRobotVac3.Value;
+        private bool GlassVac4 => _devices.Inputs.UnloadRobotVac4.Value;
         private ICylinder Cyl1 => _devices.Cylinders.UnloadRobotCyl1UpDown;
         private ICylinder Cyl2 => _devices.Cylinders.UnloadRobotCyl2UpDown;
         private ICylinder Cyl3 => _devices.Cylinders.UnloadRobotCyl3UpDown;
@@ -46,10 +45,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool IsCylindersUp => Cyl1.IsBackward && Cyl2.IsBackward && Cyl3.IsBackward && Cyl4.IsBackward;
         private bool IsCylindersDown => Cyl1.IsForward && Cyl2.IsForward && Cyl3.IsForward && Cyl4.IsForward;
 
-        private bool GlassDetect1 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotDetect1);
-        private bool GlassDetect2 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotDetect2);
-        private bool GlassDetect3 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotDetect3);
-        private bool GlassDetect4 => _machineStatus.IsSatisfied(_devices.Inputs.UnloadRobotDetect4);
+        private bool GlassDetect1 => _devices.Inputs.UnloadRobotDetect1.Value;
+        private bool GlassDetect2 => _devices.Inputs.UnloadRobotDetect2.Value;
+        private bool GlassDetect3 => _devices.Inputs.UnloadRobotDetect3.Value;
+        private bool GlassDetect4 => _devices.Inputs.UnloadRobotDetect4.Value;
 
         private int PlasmaSpeed => _robotUnloadRecipe.RobotPlasmaSpeed;
         private int LowSpeed => _robotUnloadRecipe.RobotSpeedLow;

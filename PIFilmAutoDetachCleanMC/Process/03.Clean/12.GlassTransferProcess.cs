@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,9 +41,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool IsCylinderUp => CylinderUpDown1.IsBackward && CylinderUpDown2.IsBackward && CylinderUpDown3.IsBackward;
         private bool IsCylinderDown => CylinderUpDown1.IsForward && CylinderUpDown2.IsForward && CylinderUpDown3.IsForward;
 
-        private bool GlassTransferVac1 => _machineStatus.IsSatisfied(_devices.Inputs.GlassTransferVac1);
-        private bool GlassTransferVac2 => _machineStatus.IsSatisfied(_devices.Inputs.GlassTransferVac2);
-        private bool GlassTransferVac3 => _machineStatus.IsSatisfied(_devices.Inputs.GlassTransferVac3);
+        private bool GlassTransferVac1 => _devices.Inputs.GlassTransferVac1.Value;
+        private bool GlassTransferVac2 => _devices.Inputs.GlassTransferVac2.Value;
+        private bool GlassTransferVac3 => _devices.Inputs.GlassTransferVac3.Value;
 
         private bool IsVac1Detect => GlassTransferVac1 == true;
         private bool IsVac2Detect => GlassTransferVac2 == true;

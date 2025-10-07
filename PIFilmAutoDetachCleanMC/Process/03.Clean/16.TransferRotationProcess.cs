@@ -9,7 +9,6 @@ using OpenCvSharp;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
-using PIFilmAutoDetachCleanMC.Services.DryRunServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,14 +52,14 @@ namespace PIFilmAutoDetachCleanMC.Process
         public IDOutput GlassRotateVacOnOff => port == EPort.Left ? _devices.Outputs.TrRotateLeftRotVacOnOff :
                                                       _devices.Outputs.TrRotateRightRotVacOnOff;
 
-        public bool GlassVac1 => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.TrRotateLeftVac1) :
-                                                      _machineStatus.IsSatisfied(_devices.Inputs.TrRotateRightVac1);
+        public bool GlassVac1 => port == EPort.Left ? _devices.Inputs.TrRotateLeftVac1.Value :
+                                                      _devices.Inputs.TrRotateRightVac1.Value;
 
-        public bool GlassVac2 => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.TrRotateLeftVac2) :
-                                                      _machineStatus.IsSatisfied(_devices.Inputs.TrRotateRightVac2);
+        public bool GlassVac2 => port == EPort.Left ? _devices.Inputs.TrRotateLeftVac2.Value :
+                                                      _devices.Inputs.TrRotateRightVac2.Value;
 
-        public bool GlassRotVac => port == EPort.Left ? _machineStatus.IsSatisfied(_devices.Inputs.TrRotateLeftRotVac) :
-                                                      _machineStatus.IsSatisfied(_devices.Inputs.TrRotateRightRotVac);
+        public bool GlassRotVac => port == EPort.Left ? _devices.Inputs.TrRotateLeftRotVac.Value :
+                                                      _devices.Inputs.TrRotateRightRotVac.Value;
 
         private TransferRotationRecipe Recipe => port == EPort.Left ? _transferRotationLeftRecipe : _transferRotationRightRecipe;
 
