@@ -149,7 +149,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     if (devices.Cylinders.InCvSupportUpDown.IsBackward == false
                         || devices.Cylinders.InCvSupportBufferUpDown.IsBackward == false)
                     {
-                        MessageBoxEx.ShowDialog($"Cylinder [InCvSupportUpDown] and [InCvSupportBufferUpDown] need [Backward] befor move to [{moveToDescription}]");
+                        MessageBoxEx.ShowDialog($"Cylinder [InCvSupportUpDown] ," +
+                            $"\n [InCvSupportBufferUpDown] , " +
+                            $"\n need [Backward] befor move to " +
+                            $"\n [{moveToDescription}]");
                         return false;
                     }
                 }
@@ -159,7 +162,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     if (devices.Cylinders.OutCvSupportUpDown.IsBackward == false
                         || devices.Cylinders.OutCvSupportBufferUpDown.IsBackward == false)
                     {
-                        MessageBoxEx.ShowDialog($"Cylinder [OutCvSupportUpDown] and [OutCvSupportBufferUpDown] need [Backward] befor move to [{moveToDescription}]");
+                        MessageBoxEx.ShowDialog($"Cylinder [OutCvSupportUpDown] ," +
+                            $"\n [OutCvSupportBufferUpDown] ," +
+                            $"\n need [Backward] befor move to " +
+                            $"\n [{moveToDescription}]");
                         return false;
                     }
                 }
@@ -172,7 +178,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     if (devices.Cylinders.InCvSupportUpDown.IsBackward == false
                         || devices.Cylinders.InCvSupportBufferUpDown.IsBackward == false)
                     {
-                        MessageBoxEx.ShowDialog($"Cylinder [InCvSupportUpDown] and [InCvSupportBufferUpDown] need [Backward] befor move to [{moveToDescription}]");
+                        MessageBoxEx.ShowDialog($"Cylinder [InCvSupportUpDown] ," +
+                            $"\n [InCvSupportBufferUpDown] ," +
+                            $"\n need [Backward] befor move to " +
+                            $"\n [{moveToDescription}]");
                         return false;
                     }
                 }
@@ -182,7 +191,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     if (devices.Cylinders.OutCvSupportUpDown.IsBackward == false
                         || devices.Cylinders.OutCvSupportBufferUpDown.IsBackward == false)
                     {
-                        MessageBoxEx.ShowDialog($"Cylinder [OutCvSupportUpDown] and [OutCvSupportBufferUpDown] need [Backward] befor move to [{moveToDescription}]");
+                        MessageBoxEx.ShowDialog($"Cylinder [OutCvSupportUpDown] ," +
+                            $"\n [OutCvSupportBufferUpDown] ," +
+                            $"\n need [Backward] befor move to " +
+                            $"\n [{moveToDescription}]");
                         return false;
                     }
                 }
@@ -194,7 +206,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 {
                     if (devices.Cylinders.TransferFixtureUpDown.IsBackward == true)
                     {
-                        MessageBoxEx.ShowDialog($"Cylinder [TransferFixtureUpDown] need [move Up] befor move to [{moveToDescription}]");
+                        MessageBoxEx.ShowDialog($"Cylinder [TransferFixtureUpDown] ," +
+                            $"\n need [move Up] befor move to ," +
+                            $"\n [{moveToDescription}]");
                         return false;
                     }
                 }
@@ -205,7 +219,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     if (detachGlassZAxis != null && detachGlassZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetachReadyPosition)
                     {
-                        MessageBoxEx.ShowDialog($"[Detach Z Axis] need Move [Ready Position] befor move to [{moveToDescription}]");
+                        MessageBoxEx.ShowDialog($"[Detach Z Axis] ," +
+                            $"\n need Move [Ready Position] befor move to ," +
+                            $"\n [{moveToDescription}]");
                         return false;
                     }
                 }
@@ -220,7 +236,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     if (shuttleTransferZAxis != null && shuttleTransferZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisDetachReadyPosition)
                     {
-                        MessageBoxEx.ShowDialog($"[Shuttle Transfer Z Axis] need Move [Ready Position] befor move to [{moveToDescription}]");
+                        MessageBoxEx.ShowDialog($"[Shuttle Transfer Z Axis] ," +
+                            $"\n Need Move [Ready Position] befor move to " +
+                            $"\n [{moveToDescription}]");
                         return false;
                     }
                 }
@@ -239,7 +257,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                         || (transferInShuttleRZAxis != null && transferInShuttleRZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisReadyPosition))
                     {
-                        MessageBoxEx.ShowDialog($"[Transfer InShuttle Left Z Axis] , [Transfer InShuttle Right Z Axis] need move [Ready Position]");
+                        MessageBoxEx.ShowDialog($"[Transfer InShuttle Left Z Axis] ," +
+                            $"\n [Transfer InShuttle Right Z Axis]," +
+                            $"\n need move [Ready Position] befor move to " +
+                            $"\n [{moveToDescription}]");
                         return false;
                     }
 
@@ -257,7 +278,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     if (transferInShuttleLZAxis != null && transferInShuttleLZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition)
                     {
-                        MessageBoxEx.ShowDialog($"[Transfer InShuttle Left Z Axis] ,  need move [Ready Position]");
+                        MessageBoxEx.ShowDialog($"[Transfer InShuttle Left Z Axis] ," +
+                            $"\n  need move [Ready Position] befor move to" +
+                            $"\n [{moveToDescription}]");
                         return false;
                     }
                 }
@@ -274,7 +297,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     if (transferInShuttleRZAxis != null && transferInShuttleRZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisReadyPosition)
                     {
-                        MessageBoxEx.ShowDialog($"[Transfer InShuttle Right Z Axis] need move [Ready Position]");
+                        MessageBoxEx.ShowDialog($"[Transfer InShuttle Right Z Axis] ," +
+                            $"\n need move [Ready Position] befor move to" +
+                            $"\n [{moveToDescription}]");
                         return false;
                     }
                 }
@@ -300,7 +325,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                         || transferRotationLZAxis != null && transferRotationLZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition))
                     {
-                        MessageBoxEx.ShowDialog($"[WetCleanBrushLeftUpDown] [WetCleanBrushLeftUpDown] [WetCleanPusherLeftUpDown], need [Backward] and [AF X Axis Position] move to [Unload Position]");
+                        MessageBoxEx.ShowDialog($"[WetCleanBrushLeftUpDown] ," +
+                            $"\n [WetCleanBrushLeftUpDown] ," +
+                            $"\n [WetCleanPusherLeftUpDown]," +
+                            $"\n need [Backward] and [AF X Axis Position] ," +
+                            $"\n need move to [Unload Position] befor move to " +
+                            $"\n[{moveToDescription}]");
                         return false;
                     }
                 }
@@ -325,7 +355,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                         || transferRotationLZAxis != null && transferRotationLZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition))
                     {
-                        MessageBoxEx.ShowDialog($"[WetCleanBrushLeftUpDown] need [Backward]");
+                        MessageBoxEx.ShowDialog($"[WetCleanBrushLeftUpDown] ," +
+                            $"\n need [Backward] befor move to " +
+                            $"\n [{moveToDescription}]");
                         return false;
                     }
                 }
@@ -350,7 +382,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                         || transferRotationRZAxis != null && transferRotationRZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisReadyPosition))
                     {
-                        MessageBoxEx.ShowDialog($"[WetCleanBrushLeftUpDown] [WetCleanBrushLeftUpDown] [WetCleanPusherLeftUpDown] and [WetCleanPusherLeftUpDown] need [Backward] and [AF X Axis Left Position] move to [Unload Position]");
+                        MessageBoxEx.ShowDialog($"[WetCleanBrushLeftUpDown] ," +
+                            $"\n [WetCleanBrushLeftUpDown] ," +
+                            $"\n [WetCleanPusherLeftUpDown] ," +
+                            $"\n [WetCleanPusherLeftUpDown] ," +
+                            $"\n [Backward] and [AF X Axis Left Position]" +
+                            $"\n move to [Unload Position] befor move to " +
+                            $"\n[{moveToDescription}]");
                         return false;
                     }
                 }
@@ -375,7 +413,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                         || transferRotationRZAxis != null && transferRotationRZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisReadyPosition))
                     {
-                        MessageBoxEx.ShowDialog($"[AFCleanBrushRightUpDown] and [AFCleanPusherRightUpDown] need [Backward]");
+                        MessageBoxEx.ShowDialog($"[AFCleanBrushRightUpDown] ," +
+                            $"\n [AFCleanPusherRightUpDown] ," +
+                            $"\n need [Backward] befor move to " +
+                            $"\n[{moveToDescription}]");
                         return false;
                     }
                 }
@@ -390,9 +431,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Y Axis Place Position 4")
                 {
                     var glassUnloadLAxis = devices.MotionsInovance.GlassUnloadLZAxis;
-                    if (glassUnloadLAxis != null && glassUnloadLAxis.Status.ActualPosition != recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisReadyPosition)
+                    if (glassUnloadLAxis != null && glassUnloadLAxis.Status.ActualPosition 
+                        != recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisReadyPosition)
                     {
-                        MessageBoxEx.ShowDialog($"[Glass Unload Left Z Axis] move to [Ready Position]");
+                        MessageBoxEx.ShowDialog($"[Glass Unload Left Z Axis] ," +
+                            $"\n need move to [Ready Position] befor move to " +
+                            $"\n [{moveToDescription}]");
                         return false;
                     }
                 }
@@ -407,9 +451,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Y Axis Place Position 4")
                 {
                     var glassUnloadRAxis = devices.MotionsInovance.GlassUnloadRZAxis;
-                    if (glassUnloadRAxis != null && glassUnloadRAxis.Status.ActualPosition != recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisReadyPosition)
+                    if (glassUnloadRAxis != null && glassUnloadRAxis.Status.ActualPosition 
+                        != recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisReadyPosition)
                     {
-                        MessageBoxEx.ShowDialog($"[Glass Unload Right Z Axis] move to [Ready Position]");
+                        MessageBoxEx.ShowDialog($"[Glass Unload Right Z Axis] ," +
+                            $"\n move to [Ready Position] befor move to " +
+                            $"\n[{moveToDescription}]");
                         return false;
                     }
                 }
