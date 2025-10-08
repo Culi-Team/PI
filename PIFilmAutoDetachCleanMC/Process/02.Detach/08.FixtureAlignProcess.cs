@@ -306,10 +306,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EFixtureAlignRobotPlaceFixtureToAlignStep.FixtureDetectCheck:
-                    Log.Debug("Fixture Detect Check");
-                    if (!IsFixtureDetect)
+                    if (IsFixtureDetect == false && _machineStatus.IsDryRunMode == false)
                     {
-                        RaiseWarning((int)EWarning.FixtureAlignLoadFail);
+                        RaiseWarning((int)EWarning.FixtureAlign_Fixture_NotDetect);
                         break;
                     }
                     Step.RunStep++;
@@ -319,7 +318,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
                     Log.Info("Sequence Fixture Align");
@@ -353,33 +352,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.TiltCheck:
-                    if (IsFixtureTiltDetect)
+                    if (IsFixtureTiltDetect == true && _machineStatus.IsDryRunMode == false)
                     {
-                        if (_machineStatus.IsDryRunMode)
-                        {
-                            Step.RunStep++;
-                            break;
-                        }
-                        RaiseWarning((int)EWarning.FixtureAlignTiltDetect);
+                        RaiseWarning((int)EWarning.FixtureAlign_Fixture_TiltDetect);
                         break;
                     }
-                    Log.Debug("Fixture Tilt Check OK");
-
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.ReverseCheck:
-                    if (IsFixtureReverseDetect)
+                    if (IsFixtureReverseDetect == true && _machineStatus.IsDryRunMode == false)
                     {
-                        if (_machineStatus.IsDryRunMode)
-                        {
-                            Step.RunStep++;
-                            break;
-                        }
-                        RaiseWarning((int)EWarning.FixtureAlignReverseDetect);
+                        RaiseWarning((int)EWarning.FixtureAlign_Fixture_ReverseDetect);
                         break;
                     }
-                    Log.Debug("Fixture Reverse Check OK");
-
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.Cyl_UnAlign:

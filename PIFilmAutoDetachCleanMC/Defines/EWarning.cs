@@ -58,15 +58,15 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         //VinylClean
         VinylClean = 6000,
-        VinylCleanFixtureNotDetect,
+        VinylClean_Fixture_NotDetect,
         VinylClean_FixtureCylinder_Clamp_Fail,
         VinylClean_FixtureCylinder_UnClamp_Fail,
         VinylClean_PusherCylinder_Up_Fail,
         VinylClean_PusherCylinder_Down_Fail,
         VinylClean_RollerBwFwCylinder_Backward_Fail,
         VinylClean_RollerBwFwCylinder_Forward_Fail,
-        Vinylclean_Full_Detect,
-        Vinylclean_Vinyl_Not_Detect,
+        VinylClean_Full_Detect,
+        VinylClean_Vinyl_NotDetect,
 
         //Robot Load
         RobotLoad = 7000,
@@ -81,9 +81,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         //Fixture Align
         FixtureAlign = 8000,
-        FixtureAlignTiltDetect = 8001,
-        FixtureAlignReverseDetect = 8002,
-        FixtureAlignLoadFail = 8003,
+        FixtureAlign_Fixture_TiltDetect = 8001,
+        FixtureAlign_Fixture_ReverseDetect = 8002,
+        FixtureAlign_Fixture_NotDetect = 8003,
         FixtureAlign_AlignCylinder_Backward_Fail,
         FixtureAlign_AlignCylinder_Forward_Fail,
 
@@ -122,11 +122,13 @@ namespace PIFilmAutoDetachCleanMC.Defines
         RemoveFilm_ClampCylinder_Clamp_Fail,
         RemoveFilm_ClampCylinder_UnClamp_Fail,
         RemoveFilm_Full_Tape,
+        RemoveFilm_Fixture_NotDetect,
 
         //Glass Transfer
         GlassTransfer = 12000,
         GlassTransfer_UpDownCylinder_Up_Fail,
         GlassTransfer_UpDownCylinder_Down_Fail,
+        GlassTransfer_Vacuum_Fail,
 
         //Align Glass Left
         GlassAlignLeft = 13000,
@@ -135,6 +137,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         GlassAlignLeft_GlassNotDetect,
         GlassAlignLeft_BrushCylinder_Up_Fail,
         GlassAlignLeft_BrushCylinder_Down_Fail,
+        GlassAlignLeft_Vacuum_Fail,
 
         //Align Glass Right
         GlassAlignRight = 14000,
@@ -143,16 +146,19 @@ namespace PIFilmAutoDetachCleanMC.Defines
         GlassAlignRight_GlassNotDetect,
         GlassAlignRight_BrushCylinder_Up_Fail,
         GlassAlignRight_BrushCylinder_Down_Fail,
+        GlassAlignRight_Vacuum_Fail,
 
         //Transfer In Shuttle Left
         TransferInShuttleLeft = 15000,
         TransferInShuttleLeft_RotateCylinder_180D_Fail,
         TransferInShuttleLeft_RotateCylinder_0D_Fail,
+        TransferInShuttleLeft_Vacuum_Fail,
 
         //Transfer In Shuttle Right
         TransferInShuttleRight = 16000,
         TransferInShuttleRight_RotateCylinder_180D_Fail,
         TransferInShuttleRight_RotateCylinder_0D_Fail,
+        TransferInShuttleRight_Vacuum_Fail,
 
         //WET Clean Left
         WETCleanLeft = 17000,

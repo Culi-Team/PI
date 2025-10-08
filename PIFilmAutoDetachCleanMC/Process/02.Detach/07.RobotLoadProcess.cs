@@ -32,8 +32,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         private int CurrentOutWorkCSTFixtureIndex = -1;
         private string[] paras = new string[8] { "0", "0", "0", "0", "0", "0", "0", "0" };
 
-        private int cstIndexX, cstIndexY;
-
         private int HightSpeed => _robotLoadRecipe.RobotSpeedHigh;
         private int LowSpeed => _robotLoadRecipe.RobotSpeedLow;
 
@@ -46,7 +44,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private bool SendCommand(ERobotCommand command, int lowSpeed, int highSpeed, string[] paras = null)
         {
-            if (paras == null || paras.Count() == 0)
+            if (paras == null || paras.Length == 0)
             {
                 _robotLoad.SendCommand(RobotHelpers.MotionCommands(command, lowSpeed, highSpeed));
             }
@@ -587,6 +585,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadAutoRunStep.Start:
                     Log.Debug("Auto Run Start");
                     _workData.TaktTime.TaktTimeCounter = Environment.TickCount;
+                    if (_machineStatus.IsDryRunMode)
+                    {
+                        Log.Info("Sequence Robot Pick Fixture from CST");
+                        Sequence = ESequence.RobotPickFixtureFromCST;
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case ERobotLoadAutoRunStep.Check_Flag_VinylCleanRequestFixture:
@@ -614,12 +618,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                             Sequence = ESequence.RobotPickFixtureFromRemoveZone;
                             break;
                         }
-                        break;
-                    }
-                    if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Dry Run Mode Skip Robot Load Auto Run");
-                        Step.RunStep = (int)ERobotLoadAutoRunStep.End;
                         break;
                     }
                     Step.RunStep++;
@@ -1179,7 +1177,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.RunStep++;
                     break;
-
                 case ERobotLoadPlaceFixtureToAlignStep.Move_FixtureAlignPlacePosition:
                     Log.Debug("Robot Move To Fixture Align Place Position");
                     if (SendCommand(ERobotCommand.S3_RDY_PP, LowSpeed, HightSpeed))
@@ -1468,7 +1465,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     AlignCyl2.Backward();
                     ClampCyl1.Backward();
                     ClampCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl1.IsBackward && AlignCyl2.IsBackward && ClampCyl1.IsBackward  && ClampCyl2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl1.IsBackward && AlignCyl2.IsBackward && ClampCyl1.IsBackward && ClampCyl2.IsBackward);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.UnContact_Wait:

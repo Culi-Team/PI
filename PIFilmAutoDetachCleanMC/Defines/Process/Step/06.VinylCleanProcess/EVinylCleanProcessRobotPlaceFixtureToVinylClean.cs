@@ -22,6 +22,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Motor_UnWinder_Stop,
         Set_Flag_RequestFixture,
         Wait_FixtureLoadDone,
+        Fixture_Detect_Check,
         End
     }
 }

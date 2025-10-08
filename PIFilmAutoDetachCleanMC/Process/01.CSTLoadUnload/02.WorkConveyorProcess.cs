@@ -41,7 +41,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private double TAxisWorkPosition => port == EPort.Right ? _cstLoadUnloadRecipe.InCstTAxisWorkPosition : _cstLoadUnloadRecipe.OutCstTAxisWorkPosition;
         private double TAxisLoadPosition => port == EPort.Right ? _cstLoadUnloadRecipe.InCstTAxisLoadPosition : _cstLoadUnloadRecipe.OutCstTAxisLoadPosition;
         private ITray<ETrayCellStatus> Cassette => port == EPort.Right ? _cassetteList.CassetteIn : _cassetteList.CassetteOut;
-        private bool CassetteWorkDone => Cassette.Cells.Count(c => c.Status == ETrayCellStatus.Ready || c.Status == ETrayCellStatus.Working) == 0;
+        private bool CassetteWorkDone => Cassette.Cells.Any(c => c.Status == ETrayCellStatus.Ready || c.Status == ETrayCellStatus.Working) == false;
         private double DistanceFirstFixture => AnalogConverter.Convert(LaserSensor.Volt, 0, 10, 0.0, 5000.0);
         #endregion
 

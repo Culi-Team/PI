@@ -174,7 +174,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmProcessOriginStep.Cyl_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        if(UpDownCyl1.IsBackward == false)
+                        if (UpDownCyl1.IsBackward == false)
                         {
                             RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder1_Up_Fail);
                             break;
@@ -396,7 +396,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmReadyStep.Cyl_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        if(UpDownCyl1.IsBackward == false)
+                        if (UpDownCyl1.IsBackward == false)
                         {
                             RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder1_Up_Fail);
                             break;
@@ -417,7 +417,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmReadyStep.Cyl_Pusher_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        if(PusherCyl1.IsBackward == false)
+                        if (PusherCyl1.IsBackward == false)
                         {
                             RaiseWarning((int)EWarning.RemoveFilm_PusherCylinder1_Down_Fail);
                             break;
@@ -514,6 +514,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Set Flag Transfer Fixture Done Received");
                     FlagTransferFixtureDoneReceived = true;
 
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessTransferFixtureUnloadStep.Fixture_Detect_Check:
+                    if (IsFixtureDetect == false && _machineStatus.IsDryRunMode == false)
+                    {
+                        RaiseWarning((int)EWarning.RemoveFilm_Fixture_NotDetect);
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case ERemoveFilmProcessTransferFixtureUnloadStep.End:

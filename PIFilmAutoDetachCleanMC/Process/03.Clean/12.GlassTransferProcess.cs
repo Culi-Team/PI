@@ -392,7 +392,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EGlassTransferReadyStep)Step.RunStep)
             {
                 case EGlassTransferReadyStep.Start:
-                    if(IsOriginOrInitSelected == false)
+                    if (IsOriginOrInitSelected == false)
                     {
                         Sequence = ESequence.Stop;
                         break;
@@ -450,12 +450,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         Log.Info("Sequence Glass Transfer Place");
                         Sequence = ESequence.GlassTransferPlace;
-                        break;
-                    }
-                    if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Dry Run Mode Skip Glass Transfer Auto Run");
-                        Step.RunStep = (int)EGlassTransferAutoRunStep.End;
                         break;
                     }
                     Step.RunStep++;
@@ -532,16 +526,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPickStep.Vacuum_On:
                     Log.Debug("Vacuum On");
                     VacOnOff(true);
-                    Wait((int)_commonRecipe.VacDelay * 1000,() => IsVacDetect  || _machineStatus.IsDryRunMode);
+                    Wait((int)_commonRecipe.VacDelay * 1000, () => IsVacDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EGlassTransferPickStep.Vacuum_On_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout
+                        RaiseWarning((int)EWarning.GlassTransfer_Vacuum_Fail);
                         break;
                     }
-
                     Step.RunStep++;
                     break;
                 case EGlassTransferPickStep.ZAxis_Move_ReadyPosition:

@@ -314,16 +314,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadAlignAutoRunStep.GlassVac_Check:
-                    if (IsGlassVac || IsGlassDetect)
+                    if ((IsGlassVac || IsGlassDetect) && _machineStatus.IsDryRunMode == false)
                     {
                         Log.Info("Sequence Unload Align Glass");
                         Sequence = ESequence.UnloadAlignGlass;
-                        break;
-                    }
-                    if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Dry Run Mode Skip Unload Align Auto Run");
-                        Step.RunStep = (int)EUnloadAlignAutoRunStep.End;
                         break;
                     }
                     Step.RunStep++;
@@ -414,7 +408,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
                     Log.Info("Unload Robot Pick");
@@ -471,7 +465,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
 
@@ -525,7 +519,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
                     Log.Info("Sequence Unload Align Glass");

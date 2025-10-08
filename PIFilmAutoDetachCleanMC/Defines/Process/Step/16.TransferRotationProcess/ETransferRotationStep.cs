@@ -14,7 +14,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         ZAxis_Move_TransferBeforeRotatePosition,
         ZAxis_Move_TransferBeforeRotatePosition_Wait,
         GlassRotVac_On,
-        GlassRotVac_On_Wait,
         GlassVac1_Off,
         GlassRotVac_On_Check,
         ZAxis_Move_ReadyPosition,

@@ -450,23 +450,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationAutoRunStep.GlassVac_Check:
-                    if (GlassVac1 || GlassRotVac)
+                    if ((GlassVac1 || GlassRotVac) && _machineStatus.IsDryRunMode == false)
                     {
                         Log.Info("Sequence Transfer Rotation");
                         Sequence = port == EPort.Left ? ESequence.TransferRotationLeft : ESequence.TransferRotationRight;
                         break;
                     }
-                    if (GlassVac2)
+                    if (GlassVac2 && _machineStatus.IsDryRunMode == false)
                     {
                         Log.Info("Sequence AF Clean Load");
                         Sequence = port == EPort.Left ? ESequence.AFCleanLeftLoad : ESequence.AFCleanRightLoad;
-                        break;
-                    }
-                    if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Dry Run Mode Skip Transfer Rotation Auto Run");
-                        Log.Info("Sequence WET Clean Unload");
-                        Sequence = port == EPort.Left ? ESequence.WETCleanLeftUnload : ESequence.WETCleanRightUnload;
                         break;
                     }
                     Step.RunStep++;
@@ -573,7 +566,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
                     Log.Info("Sequence Transfer Rotation");
@@ -628,16 +621,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftRotVac : _devices.Inputs.TrRotateRightRotVac, true);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000), () => GlassRotVac || _machineStatus.IsDryRunMode);
-                    Step.RunStep++;
-                    break;
-                case ETransferRotationStep.GlassRotVac_On_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_GlassVacuumRotate_Check_Fail :
-                                                        EWarning.TransferRotationRight_GlassVacuumRotate_Check_Fail));
-                        break;
-                    }
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassVac1_Off:
@@ -650,7 +634,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassRotVac_On_Check:
-                    if (GlassRotVac != true)
+                    if (GlassRotVac == false)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_RotateVac_Check_Fail :
                                                           EWarning.TransferRotationRight_RotateVac_Check_Fail));
@@ -779,7 +763,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
                     Log.Info("Sequence AF Clean Load");
@@ -874,7 +858,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
 

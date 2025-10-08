@@ -369,7 +369,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ETransferInShuttleReadyStep)Step.RunStep)
             {
                 case ETransferInShuttleReadyStep.Start:
-                    if(IsOriginOrInitSelected == false)
+                    if (IsOriginOrInitSelected == false)
                     {
                         Sequence = ESequence.Stop;
                         break;
@@ -426,16 +426,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleAutoRunStep.GlassVac_Check:
-                    if (IsVacDetect)
+                    if (IsVacDetect && _machineStatus.IsDryRunMode == false)
                     {
                         Log.Info("Sequence WET Clean Load");
                         Sequence = port == EPort.Left ? ESequence.WETCleanLeftLoad : ESequence.WETCleanRightLoad;
-                    }
-                    else if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Dry Run Mode Skip Transfer In Shuttle Auto Run");
-                        Step.RunStep = (int)ETransferInShuttleAutoRunStep.End;
-                        break;
                     }
                     Step.RunStep++;
                     break;
@@ -552,7 +546,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
                     Log.Info("Sequence Transfer In Shuttle Pick");
@@ -596,7 +590,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferInShuttlePickStep.GlassDetect_Check:
                     Log.Debug("Glass Detect Check");
-                    if (IsGlassDetect1)
+                    if (IsGlassDetect1 || _machineStatus.IsDryRunMode)
                     {
 #if SIMULATION
                         SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect1 : _devices.Inputs.AlignStageRGlassDetect1, false);
@@ -697,7 +691,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.Vacuum_On_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Time out
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferInShuttleLeft_Vacuum_Fail
+                                                                : EWarning.TransferInShuttleRight_Vacuum_Fail));
                         break;
                     }
                     Step.RunStep++;
@@ -753,7 +748,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
 

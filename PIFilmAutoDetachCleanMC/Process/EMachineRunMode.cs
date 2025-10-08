@@ -9,7 +9,6 @@ namespace PIFilmAutoDetachCleanMC.Process
     public enum EMachineRunMode
     {
         Auto,
-        ByPass,
         DryRun,
     }
 }

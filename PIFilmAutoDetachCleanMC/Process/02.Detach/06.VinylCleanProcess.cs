@@ -115,12 +115,12 @@ namespace PIFilmAutoDetachCleanMC.Process
 
             if (IsUnWinderFullDetect)
             {
-                RaiseWarning((int)EWarning.Vinylclean_Full_Detect);
+                RaiseWarning((int)EWarning.VinylClean_Full_Detect);
             }
 
             if (IsWinderRunOffDetect)
             {
-                RaiseWarning((int)EWarning.Vinylclean_Vinyl_Not_Detect);
+                RaiseWarning((int)EWarning.VinylClean_Vinyl_NotDetect);
             }
             return base.PreProcess();
         }
@@ -302,12 +302,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.VinylClean;
                         break;
                     }
-                    if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Dry Run Mode Skip Vinyl Clean Auto Run");
-                        Step.RunStep = (int)EVinylCleanProcessAutoRunStep.End;
-                        break;
-                    }
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessAutoRunStep.End:
@@ -329,9 +323,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessVinylCleanStep.FixtureDetect_Check:
-                    if (IsFixtureDetect == false)
+                    if (IsFixtureDetect == false && _machineStatus.IsDryRunMode == false)
                     {
-                        RaiseWarning((int)EWarning.VinylCleanFixtureNotDetect);
+                        RaiseWarning((int)EWarning.VinylClean_Fixture_NotDetect);
                         break;
                     }
 #if SIMULATION
@@ -594,6 +588,14 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                     Log.Debug("Set Flag Vinyl Clean Receive Load Done");
                     FlagVinylCleanReceiveLoadDone = true;
+                    Step.RunStep++;
+                    break;
+                case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Fixture_Detect_Check:
+                    if (IsFixtureDetect == false && _machineStatus.IsDryRunMode == false)
+                    {
+                        RaiseWarning((int)EWarning.VinylClean_Fixture_NotDetect);
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.End:

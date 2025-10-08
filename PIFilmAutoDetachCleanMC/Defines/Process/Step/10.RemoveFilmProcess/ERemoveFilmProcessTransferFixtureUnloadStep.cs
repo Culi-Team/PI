@@ -13,6 +13,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_Fix_Backward_Done,
         Set_Flag_RemoveFilmDone,
         Wait_TransferFixtureDone,
+        Fixture_Detect_Check,
         End
     }
 }

@@ -471,21 +471,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadAutoRunStep.GlassVac_Check:
-                    if (GlassVac1 || GlassVac2 || GlassVac3 || GlassVac4)
+                    if ((GlassVac1 || GlassVac2 || GlassVac3 || GlassVac4) && _machineStatus.IsDryRunMode == false)
                     {
                         PlasmaPrepare();
                         Log.Info("Sequence Unload Robot Plasma");
                         Sequence = ESequence.UnloadRobotPlasma;
                         break;
                     }
-
-                    if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Dry Run Mode Skip Robot Unload Auto Run");
-                        Step.RunStep = (int)ERobotUnloadAutoRunStep.End;
-                        break;
-                    }
-
                     Step.RunStep++;
                     break;
                 case ERobotUnloadAutoRunStep.End:
@@ -586,7 +578,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotUnloadPickStep.GlassDetect_Check:
                     Log.Debug("Glass Detect Check");
-                    if (GlassDetect1 == false || GlassDetect2 == false || GlassDetect3 == false || GlassDetect4 == false)
+                    if ((GlassDetect1 == false || GlassDetect2 == false || GlassDetect3 == false || GlassDetect4 == false) && _machineStatus.IsDryRunMode == false)
                     {
                         RaiseWarning((int)EWarning.RobotUnload_Pick_Fail);
                         break;
@@ -637,7 +629,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
                     Log.Info("Sequence Unload Robot Plasma");
@@ -732,7 +724,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
 
@@ -751,7 +743,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.CheckOutputStopValue:
-                    if(_machineStatus.IsOutputStop == true)
+                    if (_machineStatus.IsOutputStop == true)
                     {
                         Wait(20);
                         break;

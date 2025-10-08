@@ -352,7 +352,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EUnloadTransferReadyStep)Step.RunStep)
             {
                 case EUnloadTransferReadyStep.Start:
-                    if(IsOriginOrInitSelected == false)
+                    if (IsOriginOrInitSelected == false)
                     {
                         Sequence = ESequence.Stop;
                         break;
@@ -409,16 +409,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadTransferAutoRunStep.GlassVac_Check:
-                    if (IsVacDetect)
+                    if (IsVacDetect && _machineStatus.IsDryRunMode == false)
                     {
                         Log.Info("Sequence Unload Transfer Place");
                         Sequence = port == EPort.Left ? ESequence.UnloadTransferLeftPlace : ESequence.UnloadTransferRightPlace;
-                        break;
-                    }
-                    if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Dry Run Mode Skip Unload Transfer Auto Run");
-                        Step.RunStep = (int)EUnloadTransferAutoRunStep.End;
                         break;
                     }
                     Step.RunStep++;
@@ -562,7 +556,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferPlaceStep.UnloadAlign_GlassVacCheck:
                     Log.Debug("Set Flag Unloading");
                     FlagUnloadTransferUnloading = true;
-                    if (UnloadAlignVac1 == false)
+                    if (UnloadAlignVac1 == false || _machineStatus.IsDryRunMode)
                     {
 #if SIMULATION
                         SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac1, true);
@@ -739,7 +733,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
                     if (port == EPort.Left)

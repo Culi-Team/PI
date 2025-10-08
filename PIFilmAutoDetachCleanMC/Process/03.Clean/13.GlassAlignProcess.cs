@@ -336,7 +336,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case EGlassAlignProcessToRunStep.Brush_Up_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_BrushCylinder_Up_Fail :
                                                         EWarning.GlassAlignRight_BrushCylinder_Up_Fail));
@@ -346,7 +346,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EGlassAlignProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
-                    if(port == EPort.Left)
+                    if (port == EPort.Left)
                     {
                         ((VirtualOutputDevice<EGlassAlignProcessOutput>)_glassAlignLeftOutput).Clear();
                     }
@@ -407,16 +407,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EGlassAlignAutoRunStep.GlassVacDetect_Check:
-                    if (IsVacDetect || IsGlassDetect)
+                    if ((IsVacDetect || IsGlassDetect) && _machineStatus.IsDryRunMode == false)
                     {
                         Log.Info("Sequence Align Glass");
                         Sequence = port == EPort.Left ? ESequence.AlignGlassLeft : ESequence.AlignGlassRight;
-                    }
-                    else if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Dry Run Mode Skip Glass Align Auto Run");
-                        Step.RunStep = (int)EGlassAlignAutoRunStep.End;
-                        break;
                     }
                     Step.RunStep++;
                     break;
@@ -507,7 +501,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassAlignStep.Vacuum_On_1st_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_Vacuum_Fail
+                                                                : EWarning.GlassAlignRight_Vacuum_Fail));
                         break;
                     }
                     Step.RunStep++;
@@ -544,7 +539,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Wait_GlassDetect:
-                    if (IsGlassDetect == false)
+                    if (IsGlassDetect == false && _machineStatus.IsDryRunMode == false)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_GlassNotDetect : EWarning.GlassAlignRight_GlassNotDetect));
                         break;
@@ -566,7 +561,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassAlignStep.Vacuum_On_2nd_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_Vacuum_Fail
+                                                                : EWarning.GlassAlignRight_Vacuum_Fail));
                         break;
                     }
                     Step.RunStep++;
@@ -590,7 +586,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
                     Log.Info("Sequence Transfer In Shuttle Pick");
@@ -624,7 +620,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Clear Flag Glass Align Pick Done Received");
                     FlagGlassAlignPickDoneReceived = false;
 
-                    if (IsGlassDetect)
+                    if (IsGlassDetect || _machineStatus.IsDryRunMode)
                     {
                         Step.RunStep++;
                         break;
@@ -655,7 +651,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
                     Log.Info("Sequence Glass Transfer Place");

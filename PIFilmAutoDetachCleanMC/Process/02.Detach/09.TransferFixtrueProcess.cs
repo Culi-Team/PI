@@ -163,11 +163,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Fixture Detect Check");
                     if (IsFixtureDetect1 || IsFixtureDetect2)
                     {
-                        if (_machineStatus.IsDryRunMode)
-                        {
-                            Step.RunStep++;
-                            break;
-                        }
                         RaiseWarning((int)EWarning.TransferFixtureOriginFixtureDetect);
                         break;
                     }
@@ -186,7 +181,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Unclamp Done");
-
                     Step.OriginStep++;
                     Log.Debug("Wait Detach and Robot Origin");
                     break;

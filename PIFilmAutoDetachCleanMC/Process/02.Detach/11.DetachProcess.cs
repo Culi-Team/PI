@@ -397,7 +397,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachReadyStep.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        if(DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisReadyPosition) == false)
+                        if (DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisReadyPosition) == false)
                         {
                             RaiseAlarm((int)EAlarm.Detach_ZAxis_MoveReadyPosition_Fail);
                             break;
@@ -425,31 +425,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.ShuttleTransfer_Vac_Check:
-                    if (IsGlassShuttleVacAll)
+                    if (IsGlassShuttleVacAll && _machineStatus.IsDryRunMode == false)
                     {
                         Log.Info("Sequence Detach Unload");
                         Sequence = ESequence.DetachUnload;
                         break;
                     }
-                    if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Dry Run Mode Skip Shuttle Vacuum Check");
-                        Step.RunStep = (int)EDetachAutoRunStep.Fixture_Detect_Check;
-                        break;
-                    }
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.Fixture_Detect_Check:
-                    if (IsFixtureDetect)
+                    if (IsFixtureDetect && _machineStatus.IsDryRunMode == false)
                     {
                         Log.Info("Sequence Detach");
                         Sequence = ESequence.Detach;
-                        break;
-                    }
-                    if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Dry Run Mode Skip Fixture Detect Check");
-                        Step.RunStep = (int)EDetachAutoRunStep.End;
                         break;
                     }
                     Step.RunStep++;
@@ -503,7 +491,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachUnloadStep.Vacuum_Check:
-                    if (!IsGlassShuttleVacAll)
+                    if (IsGlassShuttleVacAll == false && _machineStatus.IsDryRunMode == false)
                     {
                         RaiseWarning((int)EWarning.DetachFail);
                         break;

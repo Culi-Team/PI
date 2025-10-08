@@ -1080,7 +1080,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessAutoRunStep.VacDetect_Check:
-                    if (IsVacDetect)
+                    if (IsVacDetect && _machineStatus.IsDryRunMode == false)
                     {
                         Sequence_Prepare3M();
                         if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
@@ -1104,13 +1104,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.AFCleanRight;
                         break;
                     }
-
-                    if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Dry Run Mode Skip Clean Auto Run");
-                        Step.RunStep = (int)ECleanProcessAutoRunStep.End;
-                        break;
-                    }
                     Step.RunStep++;
                     break;
                 case ECleanProcessAutoRunStep.End:
@@ -1131,7 +1124,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ECleanProcessReadyStep)Step.RunStep)
             {
                 case ECleanProcessReadyStep.Start:
-                    if(IsOriginOrInitSelected == false)
+                    if (IsOriginOrInitSelected == false)
                     {
                         Sequence = ESequence.Stop;
                         break;
@@ -1186,7 +1179,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessReadyStep.XAxis_MoveReadyPosition_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         EAlarm? alarm = cleanType switch
                         {
@@ -1328,7 +1321,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
-                    Sequence_Prepare3M();
                     Log.Debug("Clear Flag Request Load");
                     FlagCleanRequestLoad = false;
                     Step.RunStep++;
@@ -1344,11 +1336,11 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(VacDetect, true);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.Vacuum_Check:
-                    if (VacDetect.Value == false)
+                    if (WaitTimeOutOccurred)
                     {
                         EWarning? warning = cleanType switch
                         {
@@ -1358,9 +1350,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                             EClean.AFCleanRight => EWarning.AFCleanRight_Vacuum_Detect_Fail,
                             _ => null
                         };
-                        RaiseWarning((int)warning);
+                        RaiseWarning((int)warning!);
                         break;
                     }
+                    Sequence_Prepare3M();
                     if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
                         Step.RunStep++;
@@ -1717,7 +1710,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
                     if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
