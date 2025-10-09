@@ -436,12 +436,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
 
             // In Shuttle rotate
             TransferInShuttleLRotate = _cylinderFactory
-                .Create(_inputs.TransferInShuttleL0Degree, _inputs.TransferInShuttleL180Degree, _outputs.TransferInShuttleL0Degree, _outputs.TransferInShuttleL180Degree)
+                .Create(_inputs.TransferInShuttleL180Degree, _inputs.TransferInShuttleL0Degree, _outputs.TransferInShuttleL180Degree, _outputs.TransferInShuttleL0Degree)
                 .SetIdentity((int)ECylinder.TransferInShuttleLRotate, ECylinder.TransferInShuttleLRotate.ToString());
             TransferInShuttleLRotate.CylinderType = ECylinderType.FlipUnflip;
 
             TransferInShuttleRRotate = _cylinderFactory
-                .Create(_inputs.TransferInShuttleR0Degree, _inputs.TransferInShuttleR180Degree, _outputs.TransferInShuttleR0Degree, _outputs.TransferInShuttleR180Degree)
+                .Create(_inputs.TransferInShuttleR180Degree, _inputs.TransferInShuttleR0Degree, _outputs.TransferInShuttleR180Degree, _outputs.TransferInShuttleR0Degree)
                 .SetIdentity((int)ECylinder.TransferInShuttleRRotate, ECylinder.TransferInShuttleRRotate.ToString());
             TransferInShuttleRRotate.CylinderType = ECylinderType.FlipUnflip;
 
