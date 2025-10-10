@@ -21,6 +21,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IRobot _robotLoad;
         private readonly CommonRecipe _commonRecipe;
         private readonly RobotLoadRecipe _robotLoadRecipe;
+        private readonly CSTLoadUnloadRecipe _cstLoadUnloadRecipe;
         private readonly Devices _devices;
         private readonly IDInputDevice _robotLoadInput;
         private readonly IDOutputDevice _robotLoadOutput;
@@ -219,6 +220,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         public RobotLoadProcess([FromKeyedServices("RobotLoad")] IRobot robotLoad,
             CommonRecipe commonRecipe,
             RobotLoadRecipe robotLoadRecipe,
+            CSTLoadUnloadRecipe cstLoadUnloadRecipe,
             Devices devices,
             MachineStatus machineStatus,
             [FromKeyedServices("RobotLoadInput")] IDInputDevice robotLoadInput,
@@ -230,6 +232,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             _robotLoad = robotLoad;
             _commonRecipe = commonRecipe;
             _robotLoadRecipe = robotLoadRecipe;
+            _cstLoadUnloadRecipe = cstLoadUnloadRecipe;
             _devices = devices;
             _machineStatus = machineStatus;
             _robotLoadInput = robotLoadInput;
@@ -271,6 +274,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     Log.Debug("Robot is connected.");
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadToOriginStep.EnableOutput:
+                    Log.Debug("Enable Outputs Move Enable, Driver Off");
+                    _devices.Outputs.LoadRobMoveEnable.Value = true;
+                    _devices.Outputs.LoadRobDrivesOff.Value = true;
                     Step.OriginStep++;
                     break;
                 case ERobotLoadToOriginStep.RobotMotionOnCheck:
@@ -559,6 +568,21 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("To Run Start");
                     Step.ToRunStep++;
                     break;
+                case ERobotLoadProcessToRunStep.Send_CassettePitch:
+                    Log.Debug("Send Cassette Pitch: " + _cstLoadUnloadRecipe.Pitch);
+                    _robotLoad.SendCommand(RobotHelpers.SetCassettePitch(0, _cstLoadUnloadRecipe.Pitch));
+                    Step.ToRunStep++;
+                    break;
+                case ERobotLoadProcessToRunStep.Send_CassettePitch_Check:
+                    if (_robotLoad.ReadResponse(5000, $"pitch,X:0,Y:{_cstLoadUnloadRecipe.Pitch},0\n\r"))
+                    {
+                        Log.Debug("Set pitch X: 0, Y: " + _cstLoadUnloadRecipe.Pitch + " success");
+                        Step.ToRunStep++;
+                        break;
+                    }
+
+                    RaiseAlarm((int)EAlarm.RobotLoad_SetCassettePitch_Fail);
+                    break;
                 case ERobotLoadProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
                     ((VirtualOutputDevice<ERobotLoadProcessOutput>)_robotLoadOutput).Clear();
@@ -669,6 +693,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     Log.Debug("Robot is connected.");
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadReadyStep.EnableOutput:
+                    Log.Debug("Enable Outputs Move Enable, Driver Off");
+                    _devices.Outputs.LoadRobMoveEnable.Value = true;
+                    _devices.Outputs.LoadRobDrivesOff.Value = true;
                     Step.RunStep++;
                     break;
                 case ERobotLoadReadyStep.RobotMotionOnCheck:

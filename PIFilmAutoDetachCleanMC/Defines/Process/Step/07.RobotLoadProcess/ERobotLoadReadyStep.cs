@@ -7,6 +7,7 @@
         ReConnectIfRequired,
         CheckConnection,
 
+        EnableOutput,
         RobotMotionOnCheck,
         RobotMotionOn_Delay,
         RobotMotionOn_Disable,

@@ -15,7 +15,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private uint conveyorAcc;
         private uint conveyorDec;
         private int casetteRows;
-        private uint pitch;
+        private double pitch;
         private double inCstTAxisLoadPosition;
         private double inCstTAxisWorkPosition;
         private double outCstTAxisLoadPosition;
@@ -76,7 +76,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 
         [SingleRecipeDescription(Description = "Cassette Pitch", Unit = Unit.mm)]
         [SingleRecipeMinMax(Max = 50.0, Min = 0.0)]
-        public uint Pitch
+        public double Pitch
 		{
 			get { return pitch; }
 			set 

@@ -1,4 +1,6 @@
-﻿namespace PIFilmAutoDetachCleanMC.Defines.Devices.Robot
+﻿using PIFilmAutoDetachCleanMC.Converters;
+
+namespace PIFilmAutoDetachCleanMC.Defines.Devices.Robot
 {
     public static class RobotHelpers
     {
@@ -10,6 +12,11 @@
         public static string SetModel(int model)
         {
             return $"model,{model},0\r\n";
+        }
+
+        public static string SetCassettePitch(double pitchX, double pitchY)
+        {
+            return $"pitch,{pitchX},{pitchY},0\r\n";
         }
 
         public static string MotionCommands(ERobotCommand robotCommand, int lowSpeed, int highSpeed)

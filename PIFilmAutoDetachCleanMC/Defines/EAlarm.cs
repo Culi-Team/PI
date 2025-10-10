@@ -42,6 +42,7 @@
         //Robot Load
         RobotLoad = 7000,
         RobotLoad_No_Ready_Response,
+        RobotLoad_SetCassettePitch_Fail,
         RobotLoad_SetModel_Fail,
         RobotLoad_MoveMotionCommand_Timeout,
         RobotLoad_SendMotionCommand_Fail,
