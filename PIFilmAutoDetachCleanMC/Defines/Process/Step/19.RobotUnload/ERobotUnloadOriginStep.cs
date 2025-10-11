@@ -11,6 +11,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Start,
         Cylinder_Up,
         Cylinder_Up_Wait,
+        RobotHomePosition,
+        RobotHomePosition_Check,
+        RobotSeqHome,
+        RobotSeqHome_Check,
+        Robot_Origin,
+        Robot_Origin_Check,
         End
     }
 }

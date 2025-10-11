@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Robot;
+using PIFilmAutoDetachCleanMC.Defines.Process.Step._07.RobotLoadProcess;
 using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 using PIFilmAutoDetachCleanMC.Recipe;
 
@@ -81,6 +82,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDOutput DrivesOn => _devices.Outputs.UnloadRobDrivesOn;
         private IDOutput ConfMess => _devices.Outputs.UnloadRobConfMess;
         private IDOutput ExtStart => _devices.Outputs.UnloadRobExtStart;
+        private IDOutput DrivesOff => _devices.Outputs.UnloadRobDrivesOff;
+        private IDOutput MoveEnable => _devices.Outputs.UnloadRobMoveEnable;
         #endregion
 
         #region Flags
@@ -158,6 +161,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     Log.Debug("Robot is connected.");
+                    Step.OriginStep++;
+                    break;
+                case ERobotUnloadToOriginStep.EnableOutput:
+                    Log.Debug("Enable Output MoveEnable, DriverOff");
+                    DrivesOff.Value = true;
+                    MoveEnable.Value = true;
                     Step.OriginStep++;
                     break;
                 case ERobotUnloadToOriginStep.RobotMotionOnCheck:
@@ -292,6 +301,58 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Cylinders Up Done");
+                    Step.OriginStep++;
+                    break;
+                case ERobotUnloadOriginStep.RobotHomePosition:
+                    Log.Debug("Check Home Positon RobotUnload");
+                    _robotUnload.SendCommand(RobotHelpers.HomePositionCheck);
+                    Step.OriginStep++;
+                    break;
+                case ERobotUnloadOriginStep.RobotHomePosition_Check:
+                    if (_robotUnload.ReadResponse(5000, "Robot in home,0\r\n"))
+                    {
+                        Log.Debug("Robot In Home .");
+                        Step.OriginStep = (int)ERobotUnloadOriginStep.End;
+                        break;
+                    }
+
+                    Step.OriginStep++;
+                    break;
+                case ERobotUnloadOriginStep.RobotSeqHome:
+                    Log.Debug("Check Sequence Home RobotUnload");
+                    _robotUnload.SendCommand(RobotHelpers.SeqHomeCheck);
+                    Step.OriginStep++;
+                    break;
+                case ERobotUnloadOriginStep.RobotSeqHome_Check:
+                    if (_robotUnload.ReadResponse(5000, "Home safely,0\r\n"))
+                    {
+                        Log.Debug("Robot Unload Home Safely");
+                        Step.OriginStep++;
+                        break;
+                    }
+
+                    RaiseWarning((int)EWarning.RobotUnload_Home_Manual_By_TeachingPendant);
+                    break;
+                case ERobotUnloadOriginStep.Robot_Origin:
+                    Log.Debug("Start Origin Robot Unload");
+                    Log.Debug($"Send Robot Motion Command {ERobotCommand.HOME}");
+                    if (SendCommand(ERobotCommand.HOME, 10, 30))
+                    {
+                        Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.HOME)));
+                        Step.OriginStep++;
+                        break;
+                    }
+
+                    RaiseAlarm((int)EAlarm.RobotUnload_SendMotionCommand_Fail);
+                    break;
+                case ERobotUnloadOriginStep.Robot_Origin_Check:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)EAlarm.RobotUnload_MoveMotionCommand_Timeout);
+                        break;
+                    }
+
+                    Log.Debug($"Robot Unload Origin done");
                     Step.OriginStep++;
                     break;
                 case ERobotUnloadOriginStep.End:

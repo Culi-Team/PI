@@ -434,10 +434,41 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinders Backward Done");
                     Step.OriginStep++;
                     break;
+                case ERobotLoadOriginStep.RobotHomePosition:
+                    Log.Debug("Check Home Positon RobotLoad");
+                    _robotLoad.SendCommand(RobotHelpers.HomePositionCheck);
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadOriginStep.RobotHomePosition_Check:
+                    if (_robotLoad.ReadResponse(5000, "Robot in home,0\r\n"))
+                    {
+                        Log.Debug("Robot In Home .");
+                        Step.OriginStep = (int)ERobotLoadOriginStep.End;
+                        break;
+                    }
+
+                    Log.Debug("Robot load is not in home position");
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadOriginStep.RobotSeqHome:
+                    Log.Debug("Check sequence home robot load");
+                    _robotLoad.SendCommand(RobotHelpers.SeqHomeCheck);
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadOriginStep.RobotSeqHome_Check:
+                    if (_robotLoad.ReadResponse(5000, "Home safely,0\r\n"))
+                    {
+                        Log.Debug("Robot load can origin safely");
+                        Step.OriginStep++;
+                        break;
+                    }
+
+                    RaiseWarning((int)EWarning.RobotLoad_Home_Manual_By_TeachingPendant);
+                    break;
                 case ERobotLoadOriginStep.Robot_Origin:
                     Log.Debug("Start Origin Robot Load");
                     Log.Debug($"Send Robot Motion Command {ERobotCommand.HOME}");
-                    if (SendCommand(ERobotCommand.HOME, 10, 20))
+                    if (SendCommand(ERobotCommand.HOME, 10, 30))
                     {
                         Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.HOME)));
                         Step.OriginStep++;
@@ -452,6 +483,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseAlarm((int)EAlarm.RobotLoad_MoveMotionCommand_Timeout);
                         break;
                     }
+
                     Log.Debug("Robot Origin Done");
                     Step.OriginStep++;
                     break;

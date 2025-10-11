@@ -12,6 +12,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Fixture_Detect_Check,
         Cyl_Backward,
         Cyl_BackwardWait,
+        RobotHomePosition,
+        RobotHomePosition_Check,
+        RobotSeqHome,
+        RobotSeqHome_Check,
         Robot_Origin,
         Robot_Origin_Check,
         End
