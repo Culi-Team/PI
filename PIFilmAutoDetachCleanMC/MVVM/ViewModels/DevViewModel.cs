@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Common;
 using EQX.Core.Robot;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,12 +15,37 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
     {
         private readonly IRobot _robotLoad;
         private readonly IRobot _robotUnload;
-        private readonly RobotLoadRecipe _robotLoadRecipe;
-        private readonly RobotUnloadRecipe _robotUnloadRecipe;
-       
+
+        private bool isRobotLoadSelected = true;
+        private bool isRobotUnloadSelected;
+
+        private IRobot _currentRobot => isRobotLoadSelected ? _robotLoad : _robotUnload;
+
         #region Properties
+        public bool IsRobotLoadSelected
+        {
+            get => isRobotLoadSelected;
+            set
+            {
+                if (SetProperty(ref isRobotLoadSelected, value))
+                {
+                    OnPropertyChanged(nameof(IsRobotLoadSelected));
+                }
+            }
+        }
+
+        public bool IsRobotUnloadSelected
+        {
+            get => isRobotUnloadSelected;
+            set
+            {
+                if (SetProperty(ref isRobotUnloadSelected, value))
+                {
+                    OnPropertyChanged(nameof(IsRobotUnloadSelected));
+                }
+            }
+        }
         public int RobotCommandNumber { get; set; }
-       
         #endregion
 
         public ICommand RobotConnect
@@ -28,7 +54,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    _robotUnload.Connect();
+                    _currentRobot.Connect();
                 });
             }
         }
@@ -39,7 +65,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    _robotUnload.Disconnect();
+                    _currentRobot.Disconnect();
                 });
             }
         }
@@ -50,7 +76,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    _robotUnload.SendCommand($"model,0,0\r\n");
+                    _currentRobot.SendCommand($"model,0,0\r\n");
                 });
             }
         }
@@ -61,7 +87,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    _robotUnload.SendCommand(RobotHelpers.MotionCommands((ERobotCommand)RobotCommandNumber, _robotLoadRecipe.RobotSpeedLow, _robotLoadRecipe.RobotSpeedHigh));
+                    _currentRobot.SendCommand(RobotHelpers.MotionCommands((ERobotCommand)RobotCommandNumber, RobotLowSpeed, RobotHighSpeed));
                 });
             }
         }
@@ -83,7 +109,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         OffsetC.ToString("0.###")
                     };
 
-                    _robotUnload.SendCommand(RobotHelpers.MotionCommands((ERobotCommand)RobotCommandNumber, RobotLowSpeed, RobotHighSpeed, paras));
+                    _currentRobot.SendCommand(RobotHelpers.MotionCommands((ERobotCommand)RobotCommandNumber, RobotLowSpeed, RobotHighSpeed, paras));
                 });
             }
         }
@@ -94,7 +120,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    _robotUnload.SendCommand(RobotHelpers.PCPGMStart);
+                    _currentRobot.SendCommand(RobotHelpers.PCPGMStart);
 
                 });
             }
@@ -106,7 +132,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    _robotUnload.SendCommand(RobotHelpers.RobotStop);
+                    _currentRobot.SendCommand(RobotHelpers.RobotStop);
                 });
             }
         }
@@ -123,15 +149,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public double OffsetC = 0;
         public MachineStatus MachineStatus { get; }
 
-        public DevViewModel([FromKeyedServices("RobotLoad")] IRobot robotLoad,
-            RobotLoadRecipe robotLoadRecipe,
-            [FromKeyedServices("RobotUnload")] IRobot robotUnload,
-            RobotUnloadRecipe robotUnloadRecipe)
+        public DevViewModel(
+            [FromKeyedServices("RobotLoad")] IRobot robotLoad,
+            [FromKeyedServices("RobotUnload")] IRobot robotUnload)
         {
             _robotLoad = robotLoad;
-            _robotLoadRecipe = robotLoadRecipe;
             _robotUnload = robotUnload;
-            _robotUnloadRecipe = robotUnloadRecipe;
         }
 
         #region Privates
