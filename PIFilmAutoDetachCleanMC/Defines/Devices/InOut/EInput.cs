@@ -104,6 +104,8 @@
         ROBOT_FIXTURE_1_UNCLAMP = 99,
         ROBOT_FIXTURE_2_CLAMP = 100,
         ROBOT_FIXTURE_2_UNCLAMP = 101,
+        SPARE_IN102 = 102,
+        SPARE_IN103 = 103,
         POWER_MC_ON_1 = 104,
         POWER_MC_ON_2 = 105,
         EMO_LOAD_R = 106,
