@@ -8,7 +8,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 {
     public enum ERobotLoadToOriginStep
     {
-        Start,
+        Start, 
         Clear_FlagOriginDone,
         ReConnectIfRequired,
         CheckConnection,
