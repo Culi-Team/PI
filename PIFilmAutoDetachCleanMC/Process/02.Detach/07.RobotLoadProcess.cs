@@ -38,8 +38,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private ICylinder ClampCyl1 => _devices.Cylinders.RobotFixture1ClampUnclamp;
         private ICylinder ClampCyl2 => _devices.Cylinders.RobotFixture2ClampUnclamp;
-        private ICylinder AlignCyl1 => _devices.Cylinders.RobotFixtureAlign1FwBw;
-        private ICylinder AlignCyl2 => _devices.Cylinders.RobotFixtureAlign2FwBw;
+        private ICylinder AlignCyl => _devices.Cylinders.RobotFixtureAlignFwBw;
 
         private bool IsFixtureDetect => !ClampCyl1.IsBackward && !ClampCyl1.IsForward && !ClampCyl2.IsBackward && !ClampCyl2.IsForward;
 
@@ -413,9 +412,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinders Backward");
                     ClampCyl1.Backward();
                     ClampCyl2.Backward();
-                    AlignCyl1.Backward();
-                    AlignCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => ClampCyl1.IsBackward && ClampCyl2.IsBackward && AlignCyl1.IsBackward && AlignCyl2.IsBackward);
+                    AlignCyl.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => ClampCyl1.IsBackward && ClampCyl2.IsBackward && AlignCyl.IsBackward);
                     Step.OriginStep++;
                     break;
                 case ERobotLoadOriginStep.Cyl_BackwardWait:
@@ -426,7 +424,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnClamp_Fail);
                             break;
                         }
-                        if (AlignCyl1.IsBackward == false || AlignCyl2.IsBackward == false)
+                        if (AlignCyl.IsBackward == false)
                         {
                             RaiseWarning((int)EWarning.RobotLoad_Cylinder_Backward_Fail);
                             break;
@@ -935,9 +933,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Cyl_Align:
                     Log.Debug("Cylinder Align");
-                    AlignCyl1.Forward();
-                    AlignCyl2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl1.IsForward && AlignCyl2.IsForward);
+                    AlignCyl.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl.IsForward);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Cyl_Align_Wait:
@@ -1042,9 +1039,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Contact");
                     ClampCyl1.Forward();
                     ClampCyl2.Forward();
-                    AlignCyl1.Forward();
-                    AlignCyl2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => ClampCyl1.IsForward && ClampCyl2.IsForward && AlignCyl1.IsForward && AlignCyl2.IsForward);
+                    AlignCyl.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => ClampCyl1.IsForward && ClampCyl2.IsForward);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.CylConntact_Wait:
@@ -1055,7 +1051,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             RaiseWarning((int)EWarning.RobotLoad_Cylinder_Clamp_Fail);
                             break;
                         }
-                        if (AlignCyl1.IsForward == false || AlignCyl2.IsForward == false)
+                        if (AlignCyl.IsForward == false)
                         {
                             RaiseWarning((int)EWarning.RobotLoad_Cylinder_Backward_Fail);
                             break;
@@ -1069,9 +1065,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder UnContact");
                     ClampCyl1.Backward();
                     ClampCyl2.Backward();
-                    AlignCyl1.Backward();
-                    AlignCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => ClampCyl1.IsBackward && ClampCyl2.IsBackward && AlignCyl1.IsBackward && AlignCyl2.IsBackward);
+                    AlignCyl.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => ClampCyl1.IsBackward && ClampCyl2.IsBackward && AlignCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.Cyl_UnContact_Wait:
@@ -1082,7 +1077,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnClamp_Fail);
                             break;
                         }
-                        if (AlignCyl1.IsBackward == false || AlignCyl2.IsBackward == false)
+                        if (AlignCyl.IsBackward == false)
                         {
                             RaiseWarning((int)EWarning.RobotLoad_Cylinder_Backward_Fail);
                             break;
@@ -1230,17 +1225,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadPlaceFixtureToAlignStep.UnContact:
                     Log.Debug("UnContact");
-                    AlignCyl1.Backward();
-                    AlignCyl2.Backward();
+                    AlignCyl.Backward();
                     ClampCyl1.Backward();
                     ClampCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl1.IsBackward && AlignCyl2.IsBackward && ClampCyl1.IsBackward && ClampCyl2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl.IsBackward && ClampCyl1.IsBackward && ClampCyl2.IsBackward);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToAlignStep.UnContact_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        if (AlignCyl1.IsBackward == false || AlignCyl2.IsBackward == false)
+                        if (AlignCyl.IsBackward == false)
                         {
                             RaiseWarning((int)EWarning.RobotLoad_Cylinder_Backward_Fail);
                             break;
@@ -1368,17 +1362,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadPickFixtureFromRemoveZoneStep.Contact:
                     Log.Debug("Contact");
-                    AlignCyl1.Forward();
-                    AlignCyl2.Forward();
+                    AlignCyl.Forward();
                     ClampCyl1.Forward();
                     ClampCyl2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl1.IsForward && AlignCyl2.IsForward && ClampCyl1.IsForward && ClampCyl2.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl.IsForward && ClampCyl1.IsForward && ClampCyl2.IsForward);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromRemoveZoneStep.Contact_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        if (AlignCyl1.IsForward == false || AlignCyl2.IsForward == false)
+                        if (AlignCyl.IsForward == false)
                         {
                             RaiseWarning((int)EWarning.RobotLoad_Cylinder_Forward_Fail);
                             break;
@@ -1491,17 +1484,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.UnContact:
                     Log.Debug("UnContact");
-                    AlignCyl1.Backward();
-                    AlignCyl2.Backward();
+                    AlignCyl.Backward();
                     ClampCyl1.Backward();
                     ClampCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl1.IsBackward && AlignCyl2.IsBackward && ClampCyl1.IsBackward && ClampCyl2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl.IsBackward && ClampCyl1.IsBackward && ClampCyl2.IsBackward);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.UnContact_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        if (AlignCyl1.IsBackward == false || AlignCyl2.IsBackward == false)
+                        if (AlignCyl.IsBackward == false)
                         {
                             RaiseWarning((int)EWarning.RobotLoad_Cylinder_Backward_Fail);
                             break;

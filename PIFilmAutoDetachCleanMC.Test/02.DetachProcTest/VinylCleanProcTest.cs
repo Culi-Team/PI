@@ -98,7 +98,7 @@ namespace PIFilmAutoDetachCleanMC.Test
 
             var process = TestAppCommon.AppHost.Services.GetKeyedService<IProcess<ESequence>>(EProcess.VinylClean.ToString());
             var machineStatus = TestAppCommon.AppHost.Services.GetRequiredService<MachineStatus>();
-            machineStatus.MachineRunMode = EMachineRunMode.ByPass;
+            machineStatus.MachineRunMode = EMachineRunMode.DryRun;
 
             // Act
             process.Start();

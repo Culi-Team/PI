@@ -156,8 +156,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
 
-            cylinders.Add(Cylinders.RobotFixtureAlign1FwBw);
-            cylinders.Add(Cylinders.RobotFixtureAlign2FwBw);
+            cylinders.Add(Cylinders.RobotFixtureAlignFwBw);
             cylinders.Add(Cylinders.RobotFixture1ClampUnclamp);
             cylinders.Add(Cylinders.RobotFixture2ClampUnclamp);
 
@@ -421,10 +420,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.RobotFixture1Unclamp);
             inputs.Add(Inputs.RobotFixture2Clamp);
             inputs.Add(Inputs.RobotFixture2Unclamp);
-            inputs.Add(Inputs.RobotFixtureAlign1Fw);
-            inputs.Add(Inputs.RobotFixtureAlign1Bw);
-            inputs.Add(Inputs.RobotFixtureAlign2Fw);
-            inputs.Add(Inputs.RobotFixtureAlign2Bw);
+            inputs.Add(Inputs.RobotFixtureAlignFw);
+            inputs.Add(Inputs.RobotFixtureAlignBw);
 
             return inputs;
         }

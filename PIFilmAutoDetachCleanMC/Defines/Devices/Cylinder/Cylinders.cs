@@ -44,8 +44,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
         public ICylinder OutCstTiltCylUpDown { get; }
 
         // Robot 1 Load/Unload (per cylinder by inputs, shared outputs where applicable)
-        public ICylinder RobotFixtureAlign1FwBw { get; }
-        public ICylinder RobotFixtureAlign2FwBw { get; }
+        public ICylinder RobotFixtureAlignFwBw { get; }
         public ICylinder RobotFixture1ClampUnclamp { get; }
         public ICylinder RobotFixture2ClampUnclamp { get; }
 
@@ -264,15 +263,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             OutCstTiltCylUpDown.CylinderType = ECylinderType.UpDown;
 
             // Robot 1 Load/Unload
-            RobotFixtureAlign1FwBw = _cylinderFactory
-                .Create(_inputs.RobotFixtureAlign1Fw, _inputs.RobotFixtureAlign1Bw, _outputs.RobotFixtureAlignFw, _outputs.RobotFixtureAlignBw)
-                .SetIdentity((int)ECylinder.RobotFixtureAlign1FwBw, ECylinder.RobotFixtureAlign1FwBw.ToString());
-            RobotFixtureAlign1FwBw.CylinderType = ECylinderType.ForwardBackward;
-
-            RobotFixtureAlign2FwBw = _cylinderFactory
-                .Create(_inputs.RobotFixtureAlign2Fw, _inputs.RobotFixtureAlign2Bw, _outputs.RobotFixtureAlignFw, _outputs.RobotFixtureAlignBw)
-                .SetIdentity((int)ECylinder.RobotFixtureAlign2FwBw, ECylinder.RobotFixtureAlign2FwBw.ToString());
-            RobotFixtureAlign2FwBw.CylinderType = ECylinderType.ForwardBackward;
+            RobotFixtureAlignFwBw = _cylinderFactory
+                .Create(_inputs.RobotFixtureAlignFw, _inputs.RobotFixtureAlignBw, _outputs.RobotFixtureAlignFw, _outputs.RobotFixtureAlignBw)
+                .SetIdentity((int)ECylinder.RobotFixtureAlignFwBw, ECylinder.RobotFixtureAlignFwBw.ToString());
+            RobotFixtureAlignFwBw.CylinderType = ECylinderType.ForwardBackward;
 
             RobotFixture1ClampUnclamp = _cylinderFactory
                 .Create(_inputs.RobotFixture1Clamp, _inputs.RobotFixture1Unclamp, _outputs.RobotFixtureClamp, _outputs.RobotFixtureUnclamp)

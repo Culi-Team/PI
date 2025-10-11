@@ -41,8 +41,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         OutCstTiltCylUpDown,
 
         // Robot 1 Load/Unload
-        RobotFixtureAlign1FwBw,
-        RobotFixtureAlign2FwBw,
+        RobotFixtureAlignFwBw,
         RobotFixture1ClampUnclamp,
         RobotFixture2ClampUnclamp,
 

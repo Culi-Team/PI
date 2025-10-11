@@ -112,10 +112,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput LoadRobOnPath => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.LOAD_ROB_ON_PATH);
         public IDInput LoadRobProAct => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.LOAD_ROB_PRO_ACT);
         public IDInput LoadRobInHome => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.LOAD_ROB_IN_HOME);
-        public IDInput RobotFixtureAlign1Bw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_FIXTURE_ALIGN_1_BW);
-        public IDInput RobotFixtureAlign1Fw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_FIXTURE_ALIGN_1_FW);
-        public IDInput RobotFixtureAlign2Bw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_FIXTURE_ALIGN_2_BW);
-        public IDInput RobotFixtureAlign2Fw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_FIXTURE_ALIGN_2_FW);
+        public IDInput RobotFixtureAlignBw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_FIXTURE_ALIGN_BW);
+        public IDInput RobotFixtureAlignFw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_FIXTURE_ALIGN_FW);
         public IDInput RobotFixture1Clamp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_FIXTURE_1_CLAMP);
         public IDInput RobotFixture1Unclamp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_FIXTURE_1_UNCLAMP);
         public IDInput RobotFixture2Clamp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_FIXTURE_2_CLAMP);
