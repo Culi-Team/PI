@@ -207,7 +207,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             {
                 services.AddKeyedScoped<IModbusCommunication>("TorqueControllerModbusCommunication", (services, obj) =>
                 {
-                    return new ModbusRTUCommunication("COM16", 9600);
+                    return new ModbusRTUCommunication("COM16", 115200);
                 });
 
                 services.AddSingleton<TorqueControllerList>((ser) =>
@@ -238,7 +238,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             {
                 services.AddKeyedScoped<IModbusCommunication>("RollerModbusCommunication", (services, obj) =>
                 {
-                    return new ModbusRTUCommunication("COM15", 9600);
+                    return new ModbusRTUCommunication("COM15", 38400);
                 });
 
                 services.AddSingleton<SpeedControllerList>((ser) =>
@@ -330,41 +330,40 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 {
                     return new SerialCommunicator(1, "SyringePumpSerialCommunicator", "COM17", 38400);
                 });
-
-                services.AddKeyedSingleton<ISyringePump>("WETCleanLeftSyringePump", (ser, obj) =>
-                {
-                    var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
-#if SIMULATION
-                    return new SimulationSyringePump("WETCleanLeftSyringePump", 1);
-#else
-                    return new PSD4SyringePump("WETCleanLeftSyringePump", 1, serialCommunicator, 1.0);
-#endif
-                });
                 services.AddKeyedSingleton<ISyringePump>("WETCleanRightSyringePump", (ser, obj) =>
                 {
                     var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
 #if SIMULATION
-                    return new SimulationSyringePump("WETCleanRightSyringePump", 2);
+                    return new SimulationSyringePump("WETCleanRightSyringePump", 1);
 #else
                     return new PSD4SyringePump("WETCleanRightSyringePump", 1, serialCommunicator, 1.0);
 #endif
                 });
-                services.AddKeyedSingleton<ISyringePump>("AFCleanLeftSyringePump", (ser, obj) =>
+                services.AddKeyedSingleton<ISyringePump>("WETCleanLeftSyringePump", (ser, obj) =>
                 {
                     var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
 #if SIMULATION
-                    return new SimulationSyringePump("AFCleanLeftSyringePump", 3);
+                    return new SimulationSyringePump("WETCleanLeftSyringePump", 2);
 #else
-                    return new PSD4SyringePump("AFCleanLeftSyringePump", 1, serialCommunicator, 1.0);
+                    return new PSD4SyringePump("WETCleanLeftSyringePump", 2, serialCommunicator, 1.0);
 #endif
                 });
                 services.AddKeyedSingleton<ISyringePump>("AFCleanRightSyringePump", (ser, obj) =>
                 {
                     var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
 #if SIMULATION
-                    return new SimulationSyringePump("AFCleanRightSyringePump", 4);
+                    return new SimulationSyringePump("AFCleanRightSyringePump", 3);
 #else
-                    return new PSD4SyringePump("AFCleanLeftSyringePump", 1, serialCommunicator, 1.0);
+                    return new PSD4SyringePump("AFCleanRightSyringePump", 3, serialCommunicator, 1.0);
+#endif
+                });
+                services.AddKeyedSingleton<ISyringePump>("AFCleanLeftSyringePump", (ser, obj) =>
+                {
+                    var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
+#if SIMULATION
+                    return new SimulationSyringePump("AFCleanLeftSyringePump", 4);
+#else
+                    return new PSD4SyringePump("AFCleanLeftSyringePump", 4, serialCommunicator, 1.0);
 #endif
                 });
 

@@ -11,6 +11,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -23,7 +24,19 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
         {
             Name = name;
             RecipeSelector = recipeSelector;
+            System.Timers.Timer timer = new System.Timers.Timer(50);
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
         }
+
+        private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
+        {
+            foreach (var input in Inputs)
+            {
+                input.RaiseValueUpdated();
+            }
+        }
+
         public ObservableCollection<ICylinder> Cylinders { get; set; }
         public ObservableCollection<IMotion> Motions { get; set; }
         public ObservableCollection<IDInput> Inputs { get; set; }
@@ -44,13 +57,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
 
                     string motionName = spt.SinglePosition.Motion;
                     string moveToDescription = spt.SingleRecipeDescription.Description;
-                    
+
                     if (MessageBoxEx.ShowDialog($"{MoveTo} {moveToDescription} ?") == true)
                     {
                         // Check Interlocks before move
                         if (!CheckAxisCylinderAndPositionBeforMove(moveToDescription))
                         {
-                            return; 
+                            return;
                         }
                         Motions.FirstOrDefault(m => m.Name.Contains(motionName))!.MoveAbs(spt.Value);
                     }
@@ -309,7 +322,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 var outShuttleLXAxis = devices.MotionsAjin.OutShuttleLXAxis;
                 var transferRotationLZAxis = devices.MotionsInovance.TransferRotationLZAxis;
                 if (moveToDescription == "X Axis Ready Position"
-                    ||moveToDescription == "X Axis Load Position"
+                    || moveToDescription == "X Axis Load Position"
                     || moveToDescription == "Y Axis Load Position"
                     || moveToDescription == "X Axis Clean Horizontal Position"
                     || moveToDescription == "Y Axis Clean Horizontal Position"
@@ -431,7 +444,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Y Axis Place Position 4")
                 {
                     var glassUnloadLAxis = devices.MotionsInovance.GlassUnloadLZAxis;
-                    if (glassUnloadLAxis != null && glassUnloadLAxis.Status.ActualPosition 
+                    if (glassUnloadLAxis != null && glassUnloadLAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisReadyPosition)
                     {
                         MessageBoxEx.ShowDialog($"[Glass Unload Left Z Axis] ," +
@@ -451,7 +464,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Y Axis Place Position 4")
                 {
                     var glassUnloadRAxis = devices.MotionsInovance.GlassUnloadRZAxis;
-                    if (glassUnloadRAxis != null && glassUnloadRAxis.Status.ActualPosition 
+                    if (glassUnloadRAxis != null && glassUnloadRAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisReadyPosition)
                     {
                         MessageBoxEx.ShowDialog($"[Glass Unload Right Z Axis] ," +
@@ -461,7 +474,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     }
                 }
             }
-            return true; 
+            return true;
         }
     }
 }

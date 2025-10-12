@@ -272,7 +272,7 @@
             <!--Syring Pump-->
             <Border Grid.Column="2"
                     Grid.Row="2">
-                <GroupBox Header="Syringe Pump"
+                <GroupBox Header="{Binding SyringePump.Id}"
                           Style="{StaticResource TextBlockHeaderGroupBox}">
                     <Grid>
                         <Grid.ColumnDefinitions>
