@@ -12,9 +12,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
             [FromKeyedServices("InovanceController#1")] IMotionController motionControllerInovance)
             : base(motionFactory, parameterList)
         {
-            MotionControllerInovance = motionControllerInovance;
+            MotionController = motionControllerInovance;
         }
-        public IMotionController MotionControllerInovance { get; }
+
+        public IMotionController MotionController { get; }
 
         public IMotion InCassetteTAxis => All.FirstOrDefault(m => m.Id == (int)EMotionInovance.InCassetteTAxis);
         public IMotion OutCassetteTAxis => All.FirstOrDefault(m => m.Id == (int)EMotionInovance.OutCassetteTAxis);

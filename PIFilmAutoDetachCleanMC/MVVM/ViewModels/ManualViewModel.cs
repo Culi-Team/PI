@@ -47,7 +47,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         public bool RobotLoadIsConnected => _robotLoad.IsConnected;
         public bool RobotUnloadIsConnected => _robotUnload.IsConnected;
-        public bool MotionsInovanceIsConnected => Devices.MotionsInovance.MotionControllerInovance.IsConnected;
+        public bool MotionsInovanceIsConnected => Devices.MotionsInovance.MotionController.IsConnected;
         public bool MotionAjinIsConnected => Devices.MotionsAjin.All.All(m => m.IsConnected);
         public bool SpeedControllersIsConnected => Devices.SpeedControllerList.All.All(sc => sc.IsConnected);
         public bool TorqueControllersIsConnected => Devices.TorqueControllers.All.All(tc => tc.IsConnected);
@@ -129,7 +129,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    Devices.MotionsInovance.MotionControllerInovance.Connect();
+                    Devices.MotionsInovance.MotionController.Connect();
                     OnPropertyChanged(nameof(MotionsInovanceIsConnected));
                 });
             }

@@ -37,6 +37,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         ProcessHandle,
 
+        ProcessHandle_Wait,
+
         CassetteHandle,
 
         WorkDataHandle,
@@ -164,9 +166,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 {
                     case EHandleStep.Start:
                         MessageText = "Init Start";
+
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.FileSystemHandle:
+
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.CommunicationHandle:
@@ -187,6 +193,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         {
                             ErrorMessages.Add("Indicator Connect Fail");
                         }
+
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.MotionDeviceHandle:
@@ -194,7 +202,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         MessageText = "Connect Motion Devices";
 
-                        _devices.MotionsInovance.MotionControllerInovance.Connect();
+                        _devices.MotionsInovance.MotionController.Connect();
 
                         _devices.MotionsAjin.All.ForEach(m => m.Connect());
 
@@ -245,6 +253,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _devices.MotionsInovance.All.ForEach(m => m.Initialization());
                         _devices.MotionsAjin.All.ForEach(m => m.Initialization());
 
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.IODeviceHandle:
@@ -267,6 +276,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                             ErrorMessages.Add("IO Devices init failed.");
                         }
 
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.RecipeHandle:
@@ -277,6 +287,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                             ErrorMessages.Add("Recipes Load Fail.");
                             Log.Debug("Recipe Load Fail");
                         }
+
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.ProcessHandle:
@@ -286,7 +298,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         _virtualIO.Initialize();
                         _virtualIO.Mappings();
+
+                        Thread.Sleep(50);
                         _step++;
+                        break;
+                    case EHandleStep.ProcessHandle_Wait:
+                        if (_processes.RootProcess.IsAlive && _processes.RootProcess.Childs.All(c => c.IsAlive))
+                        {
+                            _step++;
+                            break;
+                        }
+
+                        Thread.Sleep(50);
                         break;
                     case EHandleStep.CassetteHandle:
                         Log.Debug("Init Cassette");
@@ -295,13 +318,19 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                             _cassetteList.RecipeUpdateHandle();
                         }
                         _cassetteList.SubscribeCellClickedEvent();
+
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.WorkDataHandle:
                         _workData.Load();
+
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.End:
+
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.Error:
@@ -339,25 +368,26 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     case EHandleStep.Start:
                         MessageText = "Deinit Start";
                         MessageText = "Stop Processes";
-                        _processes.ProcessesStop();
-                        Thread.Sleep(500);
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.FileSystemHandle:
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.CommunicationHandle:
-                        Thread.Sleep(200);
+                        Thread.Sleep(50);
                         _rollerModbusCommunication.Disconnect();
                         _torqueModbusCommnication.Disconnect();
                         _syringePumpSerialCommunicator.Disconnect();
                         _indicatorModbusCommunication.Disconnect();
+
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.MotionDeviceHandle:
                         MessageText = "Disconnect Motion Devices";
-                        Thread.Sleep(200);
-                        _devices.MotionsInovance.MotionControllerInovance.Disconnect();
+                        _devices.MotionsInovance.MotionController.Disconnect();
 
                         _devices.MotionsInovance.All.ForEach(m => m.Disconnect());
 
@@ -365,11 +395,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _devices.MotionsAjin.All.ForEach(m => m.Disconnect());
                         _devices.TorqueControllers.All.ForEach(t => t.Disconnect());
                         _rollerModbusCommunication.Disconnect();
+
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.IODeviceHandle:
                         MessageText = "Disconnect IO Devices";
-                        Thread.Sleep(200);
                         _devices.Inputs.Disconnect();
                         _devices.Outputs.Disconnect();
                         _devices.AnalogInputs.Disconnect();
@@ -377,27 +408,47 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _devices.Regulators.WetCleanRRegulator.Disconnect();
                         _devices.Regulators.AfCleanLRegulator.Disconnect();
                         _devices.Regulators.AfCleanRRegulator.Disconnect();
+
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.RecipeHandle:
                         _recipeSelector.Save();
+
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.ProcessHandle:
-                        
+                        _processes.ProcessesStop();
+
+                        Thread.Sleep(50);
                         _step++;
+                        break;
+                    case EHandleStep.ProcessHandle_Wait:
+                        if (_processes.RootProcess.IsAlive == false && _processes.RootProcess.Childs.All(c => c.IsAlive == false))
+                        {
+                            _step++;
+                            break;
+                        }
+
+                        Thread.Sleep(50);
                         break;
                     case EHandleStep.CassetteHandle:
                         MessageText = "Cassette Save";
-                        Thread.Sleep(200);
                         _cassetteList.Save();
+
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.WorkDataHandle:
                         _workData.Save();
+
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.End:
+
+                        Thread.Sleep(50);
                         _step++;
                         break;
                     case EHandleStep.Error:

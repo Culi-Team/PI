@@ -193,10 +193,10 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         public override bool ProcessToAlarm()
         {
-            if (Childs!.Count(child => child.ProcessStatus != EProcessStatus.ToAlarmDone) == 0)
+            if (Childs.All(child => child.ProcessStatus == EProcessStatus.ToAlarmDone))
             {
-                foreach (var motion in _devices.MotionsInovance.All!) { motion.Stop(); }
-                foreach (var motion in _devices.MotionsAjin.All!) { motion.Stop(); }
+                //foreach (var motion in _devices.MotionsInovance.All!) { motion.Stop(); }
+                //foreach (var motion in _devices.MotionsAjin.All!) { motion.Stop(); }
 
                 _machineStatus.OriginDone = false;
 
