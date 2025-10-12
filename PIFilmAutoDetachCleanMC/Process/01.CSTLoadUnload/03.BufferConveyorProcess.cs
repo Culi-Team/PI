@@ -496,8 +496,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             if (bRun)
             {
-                BufferRoller1.Start();
-                BufferRoller2.Start();
+                BufferRoller1.Run();
+                BufferRoller2.Run();
             }
             else
             {

@@ -33,7 +33,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
                         {
                             MessageBoxEx.ShowDialog("Conveyor is not connected.");
                         }
-                        roller.Start();
+                        roller.Run();
                     }
                 });
             }

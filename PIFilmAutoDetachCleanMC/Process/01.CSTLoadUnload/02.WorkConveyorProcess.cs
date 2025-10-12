@@ -969,15 +969,15 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             if (bIn)
             {
-                Roller1.Start();
-                Roller2.Start();
-                RollerSupport1.Start();
+                Roller1.Run();
+                Roller2.Run();
+                RollerSupport1.Run();
             }
             else
             {
-                Roller1.Start();
-                Roller2.Start();
-                RollerSupport2.Start();
+                Roller1.Run();
+                Roller2.Run();
+                RollerSupport2.Run();
             }
         }
 

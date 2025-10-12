@@ -8,11 +8,16 @@ namespace PIFilmAutoDetachCleanMC.Defines
 {
     public enum ESpeedController
     {
-        IN_CV_ROLLER1,
+        IN_CV_ROLLER1 = 1,
         IN_CV_ROLLER2,
         IN_CV_ROLLER3,
 
         SUPPORT_CV1_ROLLER,
+
+        OUT_CV_ROLLER1,
+        OUT_CV_ROLLER2,
+
+        SUPPORT_CV4_ROLLER,
 
         IN_WORK_CV_ROLLER1,
         IN_WORK_CV_ROLLER2,
@@ -26,10 +31,5 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         OUT_WORK_CV_ROLLER1,
         OUT_WORK_CV_ROLLER2,
-
-        SUPPORT_CV4_ROLLER,
-
-        OUT_CV_ROLLER1,
-        OUT_CV_ROLLER2
     }
 }
