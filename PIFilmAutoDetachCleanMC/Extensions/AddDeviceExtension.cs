@@ -207,7 +207,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             {
                 services.AddKeyedScoped<IModbusCommunication>("TorqueControllerModbusCommunication", (services, obj) =>
                 {
-                    return new ModbusRTUCommunication("COM2", 9600);
+                    return new ModbusRTUCommunication("COM16", 9600);
                 });
 
                 services.AddSingleton<TorqueControllerList>((ser) =>
@@ -238,7 +238,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             {
                 services.AddKeyedScoped<IModbusCommunication>("RollerModbusCommunication", (services, obj) =>
                 {
-                    return new ModbusRTUCommunication("COM3", 9600);
+                    return new ModbusRTUCommunication("COM15", 9600);
                 });
 
                 services.AddSingleton<SpeedControllerList>((ser) =>
@@ -301,19 +301,19 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 #else
                 services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("WETCleanLeft", (ser, obj) =>
                 {
-                    return new ITVRegulatorRC(1, "WETCleanLeft", 0.9, "COM4", 9600);
+                    return new ITVRegulatorRC(1, "WETCleanLeft", 0.9, "COM11", 9600);
                 });
                 services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("WETCleanRight", (ser, obj) =>
                 {
-                    return new ITVRegulatorRC(2, "WETCleanRight", 0.9, "COM5", 9600);
+                    return new ITVRegulatorRC(2, "WETCleanRight", 0.9, "COM12", 9600);
                 });
                 services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("AFCleanLeft", (ser, obj) =>
                 {
-                    return new ITVRegulatorRC(3, "AFCleanLeft", 0.9, "COM6", 9600);
+                    return new ITVRegulatorRC(3, "AFCleanLeft", 0.9, "COM13", 9600);
                 });
                 services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("AFCleanRight", (ser, obj) =>
                 {
-                    return new ITVRegulatorRC(4, "AFCleanRight", 0.9, "COM7", 9600);
+                    return new ITVRegulatorRC(4, "AFCleanRight", 0.9, "COM14", 9600);
                 });
 #endif
                 services.AddSingleton<Regulators>();
@@ -328,7 +328,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             {
                 services.AddKeyedSingleton<SerialCommunicator>("SyringePumpSerialCommunicator", (ser, obj) =>
                 {
-                    return new SerialCommunicator(1, "SyringePumpSerialCommunicator", "COM8", 38400);
+                    return new SerialCommunicator(1, "SyringePumpSerialCommunicator", "COM17", 38400);
                 });
 
                 services.AddKeyedSingleton<ISyringePump>("WETCleanLeftSyringePump", (ser, obj) =>
