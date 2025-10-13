@@ -590,7 +590,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorPickPlaceStep.Cassette_Detect_Check:
-                    if (IsCassetteDetect == false)
+                    if (IsCassetteDetect == false && !_machineStatus.IsDryRunMode)
                     {
                         RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyorCSTNotDetect :
                                                                  EWarning.OutWorkConveyorCSTNotDetect));

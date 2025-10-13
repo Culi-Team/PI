@@ -634,7 +634,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassRotVac_On_Check:
-                    if (GlassRotVac == false)
+                    if (GlassRotVac == false && !_machineStatus.IsDryRunMode)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_RotateVac_Check_Fail :
                                                           EWarning.TransferRotationRight_RotateVac_Check_Fail));
@@ -734,7 +734,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassVac2_On_Check:
-                    if (GlassVac2 != true)
+                    if (GlassVac2 != true && !_machineStatus.IsDryRunMode)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_GlassVacAfterRotate_Check_Fail :
                                                           EWarning.TransferRotationRight_GlassVacAfterRotate_Check_Fail));

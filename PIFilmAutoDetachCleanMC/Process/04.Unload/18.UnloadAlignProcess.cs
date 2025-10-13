@@ -381,7 +381,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.GlassDetect_Check:
-                    if (IsGlassDetect == false)
+                    if (IsGlassDetect == false && !_machineStatus.IsDryRunMode)
                     {
                         RaiseWarning((int)EWarning.UnloadAlign_Glass_NotDetect);
                         break;
