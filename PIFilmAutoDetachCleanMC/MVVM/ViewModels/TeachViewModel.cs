@@ -1,4 +1,6 @@
 ﻿using EQX.Core.Common;
+using EQX.Core.Motion;
+using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching;
 using PIFilmAutoDetachCleanMC.Process;
@@ -16,6 +18,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public RecipeList RecipeList;
         public RecipeSelector RecipeSelector;
         public Processes Processes;
+        private readonly IMotion _vinylCleanEncoder;
+
         public MachineStatus MachineStatus { get; }
 
         public ObservableCollection<UnitTeachingViewModel> TeachingUnits { get; }
@@ -46,13 +50,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             RecipeList recipeList,
             RecipeSelector recipeSelector,
             Processes processes,
-            MachineStatus machineStatus)
+            MachineStatus machineStatus,
+            [FromKeyedServices("VinylCleanEncoder")] IMotion vinylCleanEncoder)
         {
             Devices = devices;
             RecipeList = recipeList;
             Processes = processes;
             RecipeSelector = recipeSelector;
             MachineStatus = machineStatus;
+            _vinylCleanEncoder = vinylCleanEncoder;
 
             // Initialize Unit Teachings
             UnitTeachingViewModel CSTLoadUnitTeaching = new UnitTeachingViewModel("CST Load", recipeSelector);
@@ -70,6 +76,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             CSTUnloadUnitTeaching.Outputs = Devices.GetOutWorkConveyorOutputs();
             CSTUnloadUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe;
             CSTUnloadUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("InputCassetteStageImage");
+
+            VinylCleanTeachingViewModel VinylCleanUnitTeaching = new VinylCleanTeachingViewModel("Vinyl Clean",recipeSelector);
+            VinylCleanUnitTeaching.Cylinders = Devices.GetVinylCleanCylinders();
+            VinylCleanUnitTeaching.Inputs = devices.GetVinylCleanInputs();
+            VinylCleanUnitTeaching.Outputs= devices.GetVinylCleanOutputs();
+            VinylCleanUnitTeaching.Motions = new ObservableCollection<IMotion> { _vinylCleanEncoder };
+            VinylCleanUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.VinylCleanRecipe;
+            VinylCleanUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("VinylCleanImage");
 
             UnitTeachingViewModel TransferFixtureUnitTeaching = new UnitTeachingViewModel("Transfer Fixture", recipeSelector);
             TransferFixtureUnitTeaching.Cylinders = Devices.GetTransferFixtureCylinders();
@@ -94,7 +108,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             GlassTransferUnitTeaching.Outputs = Devices.GetGlassTransferOutputs();
             GlassTransferUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.GlassTransferRecipe;
             GlassTransferUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("GlassTransferImage");
-
 
             UnitTeachingViewModel TransferInShuttleLeftUnitTeaching = new UnitTeachingViewModel("Transfer In Shuttle Left", recipeSelector);
             TransferInShuttleLeftUnitTeaching.Cylinders = Devices.GetTransferInShuttleLeftCylinders();
@@ -197,6 +210,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 CSTLoadUnitTeaching,
                 CSTUnloadUnitTeaching,
+                VinylCleanUnitTeaching,
                 TransferFixtureUnitTeaching,
                 DetachUnitTeaching,
                 GlassTransferUnitTeaching,

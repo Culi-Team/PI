@@ -97,6 +97,9 @@
             <DataTemplate DataType="{x:Type teachingVM:CleanUnitTeachingViewModel}">
                 <teachingViews:CleanUnitTeachingView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type teachingVM:VinylCleanTeachingViewModel}">
+                <teachingViews:VinylCleanTeachingView />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type manualVM:ConveyorManualUnitViewModel}">
                 <manualViews:ConveyorManualUnitView />
             </DataTemplate>

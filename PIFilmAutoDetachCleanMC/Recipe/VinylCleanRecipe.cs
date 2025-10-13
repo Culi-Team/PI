@@ -10,18 +10,18 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 {
     public class VinylCleanRecipe : RecipeBase
     {
-		private int winderTorque;
+		private int unWinderTorque;
         private double vinylLengthPerCleaning;
 
-        [SingleRecipeDescription(Description = "Winder Torque", Unit = Unit.Percentage)]
+        [SingleRecipeDescription(Description = "UnWinder Torque", Unit = Unit.Percentage)]
         [SingleRecipeMinMax(Max = 100.0, Min = 0.0)]
-        public int WinderTorque
+        public int UnWinderTorque
 		{
-			get { return winderTorque; }
+			get { return unWinderTorque; }
 			set 
 			{
-                OnRecipeChanged(winderTorque, value);
-                winderTorque = value; 
+                OnRecipeChanged(unWinderTorque, value);
+                unWinderTorque = value; 
 			}
 		}
 
