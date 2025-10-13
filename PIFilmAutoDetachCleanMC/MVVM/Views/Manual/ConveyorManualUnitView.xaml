@@ -7,6 +7,7 @@
              mc:Ignorable="d"
              xmlns:views="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
              x:Name="root"
+             DataContextChanged="root_DataContextChanged"
              xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              d:DesignHeight="450"
              d:DesignWidth="800">

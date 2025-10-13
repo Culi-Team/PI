@@ -106,13 +106,19 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views.Teaching
                     PositionTeaching_StackPanel.Children.Add(singlePositionTeaching);
                 }
             }
-
-
         }
 
         private void root_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             LoadPositionTeaching();
+            if(e.OldValue is UnitTeachingViewModel oldUnit)
+            {
+                oldUnit.DisableTimer();
+            }
+            if(e.NewValue is UnitTeachingViewModel newUnit)
+            {
+                newUnit.EnableTimer();
+            }
         }
     }
 }

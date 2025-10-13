@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual;
+using PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views.Manual
         public ManualUnitView()
         {
             InitializeComponent();
+        }
+
+        private void root_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue is ManualUnitViewModel oldUnit)
+            {
+                oldUnit.DisableTimer();
+            }
+            if (e.NewValue is ManualUnitViewModel newUnit)
+            {
+                newUnit.EnableTimer();
+            }
         }
     }
 }

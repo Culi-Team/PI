@@ -17,6 +17,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
 {
     public class ManualUnitViewModel : ViewModelBase
     {
+        protected System.Timers.Timer timer;
+
         public ObservableCollection<ICylinder> Cylinders { get; set; }
         public ObservableCollection<IMotion> Motions { get; set; }
         public ObservableCollection<IDInput> Inputs { get; set; }
@@ -29,11 +31,19 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
         public ManualUnitViewModel(string name)
         {
             Name = name;
-            System.Timers.Timer timer = new System.Timers.Timer(50);
+            timer = new System.Timers.Timer(50);
             timer.Elapsed += Timer_Elapsed;
+        }
+
+        public void EnableTimer()
+        {
             timer.Start();
         }
 
+        public void DisableTimer() 
+        {
+            timer.Stop(); 
+        }
         private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             foreach (var input in Inputs)
