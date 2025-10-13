@@ -894,8 +894,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (port == EPort.Left)
                     {
                         Log.Debug("Muting Light Curtain");
-                        _devices.Outputs.OutCstLightCurtainMuting1.Value = true;
-                        _devices.Outputs.OutCstLightCurtainMuting2.Value = true;
+                        _devices.Outputs.OutCstLightCurtainInterlock.Value = true;
+                        Wait(50);
+                        _devices.Outputs.OutCstLightCurtainMuting.Value = true;
 
                         _blinkTimer.EnableAction(OutLightCurtainMutingActionKey,
                             () => _devices.Outputs.OutMutingButtonLamp.Value = true,
@@ -935,8 +936,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         if (port == EPort.Left)
                         {
                             Log.Debug("Enable Light Curtain");
-                            _devices.Outputs.OutCstLightCurtainMuting1.Value = false;
-                            _devices.Outputs.OutCstLightCurtainMuting2.Value = false;
+                            _devices.Outputs.OutCstLightCurtainInterlock.Value = false;
+                            Wait(50);
+                            _devices.Outputs.OutCstLightCurtainMuting.Value = false;
 
                             _blinkTimer.DisableAction(OutLightCurtainMutingActionKey);
                         }

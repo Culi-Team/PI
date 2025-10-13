@@ -70,10 +70,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput OutMutingButtonLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_MUTING_BUTTON_LAMP);
         public IDOutput InCstLightCurtainReset => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_LIGHT_CURTAIN_RESET);
         public IDOutput OutCstLightCurtainReset => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_LIGHT_CURTAIN_RESET);
-        public IDOutput InCstLightCurtainMuting1 => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_LIGHT_CURTAIN_MUTING_1);
-        public IDOutput OutCstLightCurtainMuting1 => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_LIGHT_CURTAIN_MUTING_1);
-        public IDOutput InCstLightCurtainMuting2 => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_LIGHT_CURTAIN_MUTING_2);
-        public IDOutput OutCstLightCurtainMuting2 => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_LIGHT_CURTAIN_MUTING_2);
+        public IDOutput InCstLightCurtainMuting => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_LIGHT_CURTAIN_MUTING);
+        public IDOutput InCstLightCurtainInterlock => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_LIGHT_CURTAIN_INTERLOCK);
+        public IDOutput OutCstLightCurtainMuting => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_LIGHT_CURTAIN_MUTING);
+        public IDOutput OutCstLightCurtainInterlock => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_LIGHT_CURTAIN_INTERLOCK);
         public IDOutput LoadRobMoveEnable => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.LOAD_ROB_MOVE_ENABLE);
         public IDOutput LoadRobDrivesOn => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.LOAD_ROB_DRIVES_ON);
         public IDOutput LoadRobDrivesOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.LOAD_ROB_DRIVES_OFF);

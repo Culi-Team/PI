@@ -58,8 +58,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Outputs
         private IDOutput InCompleteButtonLamp => _devices.Outputs.InCompleteButtonLamp;
         private IDOutput InMutingButtonLamp => _devices.Outputs.InMutingButtonLamp;
-        private IDOutput InCstMutingLightCurtain1 => _devices.Outputs.InCstLightCurtainMuting1;
-        private IDOutput InCstMutingLightCurtain2 => _devices.Outputs.InCstLightCurtainMuting2;
+        private IDOutput InCstMutingLightCurtain => _devices.Outputs.InCstLightCurtainMuting;
+        private IDOutput InCstInterlockLightCurtain => _devices.Outputs.InCstLightCurtainInterlock;
         #endregion
 
         #region Flags
@@ -435,8 +435,9 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void MutingLightCurtain(bool bOnOff)
         {
-            InCstMutingLightCurtain1.Value = bOnOff;
-            InCstMutingLightCurtain2.Value = bOnOff;
+            InCstInterlockLightCurtain.Value = bOnOff;
+            Wait(50);
+            InCstMutingLightCurtain.Value = bOnOff;
         }
 
         private void ConveyorRunStop(bool bRun)
