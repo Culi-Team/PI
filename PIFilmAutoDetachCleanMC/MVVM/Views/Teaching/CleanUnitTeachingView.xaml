@@ -111,7 +111,8 @@
                       Grid.Row="1"
                       Style="{StaticResource TextBlockHeaderGroupBox}">
                 <StackPanel VerticalAlignment="Center">
-                    <UniformGrid Rows="1">
+                    <UniformGrid Rows="1"
+                                Margin="0 0 0 5">
                         <Label Content="Pressure"
                                FontSize="14" />
                         <Label Content="{Binding Recipe.CylinderPushPressure,Mode=TwoWay}"
@@ -127,6 +128,16 @@
                         <Button Content="Save"
                                 FontSize="14"
                                 Command="{Binding SaveCommand}" />
+                    </UniformGrid>
+
+                    <UniformGrid Columns="2">
+                        <Label Content="Current Pressure"
+                               FontSize="14" />
+                        <TextBox Text="{Binding CurrentPressure, Mode=OneWay, StringFormat={}{0:F2}}"
+                                 IsReadOnly="True"
+                                 FontSize="14"
+                                 TextAlignment="Center"
+                                 MinWidth="80" />
                     </UniformGrid>
 
                 </StackPanel>

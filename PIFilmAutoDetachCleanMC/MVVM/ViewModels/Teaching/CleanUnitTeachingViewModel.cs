@@ -1,4 +1,12 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows.Threading;
+using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Device.Regulator;
 using EQX.Core.Device.SyringePump;
 using EQX.Core.TorqueController;
@@ -6,14 +14,8 @@ using EQX.Device.SpeedController;
 using EQX.Device.SyringePump;
 using EQX.Device.Torque;
 using log4net;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
 using PIFilmAutoDetachCleanMC.Recipe;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
 {
@@ -40,12 +42,39 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
         public CleanUnitTeachingViewModel(string name, RecipeSelector recipeSelector) : base(name, recipeSelector)
         {
             Name = name;
+            _pressureUpdateTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            _pressureUpdateTimer.Tick += PressureUpdateTimer_Tick;
+            _pressureUpdateTimer.Start();
         }
 
+        private readonly DispatcherTimer _pressureUpdateTimer;
+
+        private IRegulator _regulator;
+        private double _currentPressure;
+
+        public IRegulator Regulator
+        {
+            get => _regulator;
+            set
+            {
+                if (SetProperty(ref _regulator, value))
+                {
+                    UpdateCurrentPressure();
+                }
+            }
+        }
+
+        public double CurrentPressure
+        {
+            get => _currentPressure;
+            private set => SetProperty(ref _currentPressure, value);
+        }
         public DX3000TorqueController Winder { get; set; }
         public DX3000TorqueController UnWinder { get; set; }
         public ISyringePump SyringePump { get; set; }
-        public IRegulator Regulator { get; set; }
 
         public ICommand SetPressureCommand
         {
@@ -54,6 +83,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 return new RelayCommand(() =>
                 {
                     Regulator.SetPressure(((CleanRecipe)Recipe).CylinderPushPressure);
+                    UpdateCurrentPressure();
                 });
             }
         }
@@ -309,5 +339,32 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
         }
 
         private bool isSyringePumpRunTest = false;
+
+        private void PressureUpdateTimer_Tick(object? sender, EventArgs e)
+        {
+            UpdateCurrentPressure();
+        }
+
+        private void UpdateCurrentPressure()
+        {
+            if (Regulator == null)
+            {
+                CurrentPressure = 0;
+                return;
+            }
+
+            CurrentPressure = Regulator.GetPressure();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                _pressureUpdateTimer.Stop();
+                _pressureUpdateTimer.Tick -= PressureUpdateTimer_Tick;
+            }
+        }
     }
 }
