@@ -449,6 +449,7 @@
                                 <Binding Path="Devices.Inputs.InCstWorkDetect1.Value" />
                                 <Binding Path="Devices.Inputs.InCstWorkDetect2.Value" />
                                 <Binding Path="Devices.Inputs.InCstWorkDetect3.Value" />
+                                <Binding Path="Devices.Inputs.InCstWorkDetect4.Value" />
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
@@ -778,8 +779,7 @@
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
-                                <Binding Path="Devices.Inputs.WetCleanPusherLeftDown.Value" />
-                                <Binding Path="Devices.Outputs.WetCleanPusherLeftDown.Value" />
+                                <Binding Path="Devices.Inputs.InShuttleLVac.Value" />
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
@@ -797,8 +797,7 @@
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
-                                <Binding Path="Devices.Inputs.AfCleanPusherLeftDown.Value" />
-                                <Binding Path="Devices.Outputs.AfCleanPusherLeftDown.Value" />
+                                <Binding Path="Devices.Inputs.OutShuttleLVac.Value" />
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
@@ -817,8 +816,7 @@
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
-                                <Binding Path="Devices.Inputs.WetCleanPusherRightDown.Value" />
-                                <Binding Path="Devices.Outputs.WetCleanPusherRightDown.Value" />
+                                <Binding Path="Devices.Inputs.InShuttleRVac.Value" />
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
@@ -837,8 +835,7 @@
                            Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
-                                <Binding Path="Devices.Inputs.AfCleanPusherRightDown.Value" />
-                                <Binding Path="Devices.Outputs.AfCleanPusherRightDown.Value" />
+                                <Binding Path="Devices.Inputs.OutShuttleRVac.Value" />
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
@@ -1007,6 +1004,10 @@
                                 <Binding Path="Devices.Inputs.UnloadRobotDetect2.Value" />
                                 <Binding Path="Devices.Inputs.UnloadRobotDetect3.Value" />
                                 <Binding Path="Devices.Inputs.UnloadRobotDetect4.Value" />
+                                <Binding Path="Devices.Inputs.UnloadRobotVac1.Value" />
+                                <Binding Path="Devices.Inputs.UnloadRobotVac2.Value" />
+                                <Binding Path="Devices.Inputs.UnloadRobotVac3.Value" />
+                                <Binding Path="Devices.Inputs.UnloadRobotVac4.Value" />
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>

@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -28,6 +29,17 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
         public ManualUnitViewModel(string name)
         {
             Name = name;
+            System.Timers.Timer timer = new System.Timers.Timer(50);
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
+        }
+
+        private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
+        {
+            foreach (var input in Inputs)
+            {
+                input.RaiseValueUpdated();
+            }
         }
 
         public ICommand CylinderForwardCommand

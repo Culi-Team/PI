@@ -54,8 +54,108 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
             temperatureUpdateTimer.AutoReset = true;
             temperatureUpdateTimer.Enabled = true;
+
+            System.Timers.Timer statusUpdateTimer = new System.Timers.Timer(100);
+            statusUpdateTimer.Elapsed +=StatusUpdateTimerHandler;
+            statusUpdateTimer.AutoReset = true;
+            statusUpdateTimer.Enabled = true;
         }
         #endregion
+
+        private void StatusUpdateTimerHandler(object? sender, System.Timers.ElapsedEventArgs e)
+        {
+            Devices.Inputs.EmoLoadL.RaiseValueUpdated();
+            Devices.Inputs.EmoLoadR.RaiseValueUpdated();
+            Devices.Inputs.OpLEmo.RaiseValueUpdated();
+            Devices.Inputs.OpREmo.RaiseValueUpdated();
+            Devices.Inputs.EmoUnloadL.RaiseValueUpdated();
+            Devices.Inputs.EmoUnloadR.RaiseValueUpdated();
+
+            Devices.Inputs.DoorLock1L.RaiseValueUpdated();
+            Devices.Inputs.DoorLock1R.RaiseValueUpdated();
+            Devices.Inputs.DoorLock2L.RaiseValueUpdated();
+            Devices.Inputs.DoorLock2R.RaiseValueUpdated();
+            Devices.Inputs.DoorLock3L.RaiseValueUpdated();
+            Devices.Inputs.DoorLock3R.RaiseValueUpdated();
+            Devices.Inputs.DoorLock4L.RaiseValueUpdated();
+            Devices.Inputs.DoorLock4R.RaiseValueUpdated();
+            Devices.Inputs.DoorLock5L.RaiseValueUpdated();
+            Devices.Inputs.DoorLock5R.RaiseValueUpdated();
+            Devices.Inputs.DoorLock6L.RaiseValueUpdated();
+            Devices.Inputs.DoorLock6R.RaiseValueUpdated();
+            Devices.Inputs.DoorLock7L.RaiseValueUpdated();
+            Devices.Inputs.DoorLock7R.RaiseValueUpdated();
+
+            Devices.Inputs.InCstDetect1.RaiseValueUpdated();
+            Devices.Inputs.InCstDetect2.RaiseValueUpdated();
+
+            Devices.Inputs.InCstWorkDetect1.RaiseValueUpdated();
+            Devices.Inputs.InCstWorkDetect2.RaiseValueUpdated();
+            Devices.Inputs.InCstWorkDetect3.RaiseValueUpdated();
+            Devices.Inputs.InCstWorkDetect4.RaiseValueUpdated();
+
+            Devices.Inputs.BufferCstDetect1.RaiseValueUpdated();
+            Devices.Inputs.BufferCstDetect2.RaiseValueUpdated();
+
+            Devices.Inputs.OutCstWorkDetect1.RaiseValueUpdated();
+            Devices.Inputs.OutCstWorkDetect2.RaiseValueUpdated();
+            Devices.Inputs.OutCstWorkDetect3.RaiseValueUpdated();
+
+            Devices.Inputs.OutCstDetect1.RaiseValueUpdated();
+            Devices.Inputs.OutCstDetect2.RaiseValueUpdated();
+
+            Devices.Inputs.VinylCleanFixtureDetect.RaiseValueUpdated();
+            Devices.Inputs.AlignFixtureDetect.RaiseValueUpdated();
+            Devices.Inputs.DetachFixtureDetect.RaiseValueUpdated();
+            Devices.Inputs.RemoveZoneFixtureDetect.RaiseValueUpdated();
+
+            Devices.Inputs.DetachGlassShtVac1.RaiseValueUpdated();
+            Devices.Inputs.DetachGlassShtVac2.RaiseValueUpdated();
+            Devices.Inputs.DetachGlassShtVac3.RaiseValueUpdated();
+
+            Devices.Inputs.AlignStageLGlassDetect1.RaiseValueUpdated();
+            Devices.Inputs.AlignStageLGlassDetect2.RaiseValueUpdated();
+            Devices.Inputs.AlignStageLGlassDetect3.RaiseValueUpdated();
+
+            Devices.Inputs.AlignStageRGlassDetect1.RaiseValueUpdated();
+            Devices.Inputs.AlignStageRGlassDetect2.RaiseValueUpdated();
+            Devices.Inputs.AlignStageRGlassDetect3.RaiseValueUpdated();
+
+            Devices.Inputs.InShuttleLVac.RaiseValueUpdated();
+            Devices.Inputs.InShuttleRVac.RaiseValueUpdated();
+            Devices.Inputs.OutShuttleLVac.RaiseValueUpdated();
+            Devices.Inputs.OutShuttleRVac.RaiseValueUpdated();
+
+            Devices.Inputs.TrRotateLeftVac1.RaiseValueUpdated();
+            Devices.Inputs.TrRotateLeftVac2.RaiseValueUpdated();
+
+            Devices.Inputs.TrRotateRightVac1.RaiseValueUpdated();
+            Devices.Inputs.TrRotateRightVac2.RaiseValueUpdated();
+
+            Devices.Inputs.UnloadGlassAlignVac1.RaiseValueUpdated();
+            Devices.Inputs.UnloadGlassDetect1.RaiseValueUpdated();
+
+            Devices.Inputs.UnloadGlassAlignVac2.RaiseValueUpdated();
+            Devices.Inputs.UnloadGlassDetect2.RaiseValueUpdated();
+
+            Devices.Inputs.UnloadGlassAlignVac3.RaiseValueUpdated();
+            Devices.Inputs.UnloadGlassDetect3.RaiseValueUpdated();  
+
+            Devices.Inputs.UnloadGlassAlignVac4.RaiseValueUpdated();
+            Devices.Inputs.UnloadGlassDetect4.RaiseValueUpdated();
+
+            Devices.Inputs.UnloadRobotVac1.RaiseValueUpdated();
+            Devices.Inputs.UnloadRobotDetect1.RaiseValueUpdated();
+
+            Devices.Inputs.UnloadRobotVac2.RaiseValueUpdated();
+            Devices.Inputs.UnloadRobotDetect3.RaiseValueUpdated();
+
+            Devices.Inputs.UnloadRobotVac3.RaiseValueUpdated();
+            Devices.Inputs.UnloadRobotDetect3.RaiseValueUpdated();
+
+            Devices.Inputs.UnloadRobotVac4.RaiseValueUpdated();
+            Devices.Inputs.UnloadRobotDetect4.RaiseValueUpdated();
+        }
 
         #region Properties
         public MachineStatus MachineStatus { get; }
