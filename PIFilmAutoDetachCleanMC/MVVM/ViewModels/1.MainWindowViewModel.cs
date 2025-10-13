@@ -18,9 +18,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                                    ViewModelProvider viewModelProvider)
         {
             _navigationStore = navigationStore;
-
-            HeaderVM = viewModelProvider.GetViewModel<HeaderViewModel>();
-            FooterVM = viewModelProvider.GetViewModel<FooterViewModel>();
+            _viewModelProvider = viewModelProvider;
+            HeaderVM = _viewModelProvider.GetViewModel<HeaderViewModel>();
+            FooterVM = _viewModelProvider.GetViewModel<FooterViewModel>();
 
             _navigationStore.CurrentViewModelChanged += FrameNavigationStore_CurrentViewModelChanged;
         }
@@ -30,6 +30,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             Application.Current.Dispatcher.BeginInvoke(new Action(() =>
             {
+                if (CurrentFrameVM is AutoViewModel vm)
+                {
+                    vm.EnableTimer();
+                }
+                else
+                {
+                    _viewModelProvider.GetViewModel<AutoViewModel>().DisableTimer();
+                }
+
                 OnPropertyChanged(nameof(CurrentFrameVM));
             }), DispatcherPriority.DataBind);
         }
@@ -37,6 +46,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         #region Private fields
         private readonly ViewModelNavigationStore _navigationStore;
+        private readonly ViewModelProvider _viewModelProvider;
         #endregion
     }
 }

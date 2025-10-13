@@ -44,24 +44,29 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
             Log = LogManager.GetLogger("AutoVM");
 
-            System.Timers.Timer temperatureUpdateTimer = new System.Timers.Timer(500);
-
+            temperatureUpdateTimer = new System.Timers.Timer(500);
             temperatureUpdateTimer.Elapsed += (s, e) =>
             {
                 OnPropertyChanged(nameof(Temperature));
                 OnPropertyChanged(nameof(Humidity));
             };
 
-            temperatureUpdateTimer.AutoReset = true;
-            temperatureUpdateTimer.Enabled = true;
-
-            System.Timers.Timer statusUpdateTimer = new System.Timers.Timer(100);
+            statusUpdateTimer = new System.Timers.Timer(100);
             statusUpdateTimer.Elapsed +=StatusUpdateTimerHandler;
-            statusUpdateTimer.AutoReset = true;
-            statusUpdateTimer.Enabled = true;
         }
         #endregion
 
+        public void EnableTimer()
+        {
+            temperatureUpdateTimer.Enabled = true;
+            statusUpdateTimer.Enabled = true;
+        }
+
+        public void DisableTimer()
+        {
+            temperatureUpdateTimer.Enabled = false;
+            statusUpdateTimer.Enabled = false;
+        }
         private void StatusUpdateTimerHandler(object? sender, System.Timers.ElapsedEventArgs e)
         {
             Devices.Inputs.EmoLoadL.RaiseValueUpdated();
@@ -385,6 +390,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         #region Privates
         private readonly INavigationService _navigationService;
         private readonly NEOSHSDIndicator _nEOSHSDIndicator;
+        private System.Timers.Timer temperatureUpdateTimer;
+        System.Timers.Timer statusUpdateTimer;
         #endregion
     }
 }
