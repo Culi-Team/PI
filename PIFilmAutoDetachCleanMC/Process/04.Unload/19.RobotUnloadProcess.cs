@@ -110,6 +110,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _robotUnloadOutput[(int)ERobotUnloadProcessOutput.ROBOT_UNLOAD_PICK_DONE] = value;
             }
         }
+
+        private bool FlagMachineRequestPlace
+        {
+            get
+            {
+                return _robotUnloadInput[(int)ERobotUnloadProcessInput.MACHINE_REQUEST_PLACE];
+            }
+        }
         #endregion
 
         #region Constructor
@@ -812,7 +820,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.Wait_MachineRequestPlace:
-                    if (_devices.Inputs.RobotUnload.Value == false)
+                    if (FlagMachineRequestPlace == false && !_machineStatus.IsDryRunMode)
                     {
                         Wait(20);
                         break;
