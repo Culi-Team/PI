@@ -209,7 +209,8 @@
                         <ItemsControl ItemsSource="{Binding Motions}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <ui:MovingView DataContext="{Binding }" />
+                                    <ui:MovingView DataContext="{Binding }" 
+                                                   IsEnabled="False"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                             <ItemsControl.ItemsPanel>
