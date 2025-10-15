@@ -154,6 +154,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 return new RelayCommand(() =>
                 {
                     _robotLoad.Connect();
+                    OnPropertyChanged(nameof(RobotLoadIsConnected));
                 });
             }
         }
@@ -165,6 +166,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 return new RelayCommand(() =>
                 {
                     _robotUnload.Connect();
+                    OnPropertyChanged(nameof(RobotUnloadIsConnected));
                 });
             }
         }

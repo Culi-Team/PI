@@ -133,7 +133,7 @@
                     <UniformGrid Columns="2">
                         <Label Content="Current Pressure"
                                FontSize="14" />
-                        <TextBox Text="{Binding CurrentPressure, Mode=OneWay, StringFormat={}{0:F2}}"
+                        <TextBox Text="{Binding CurrentPressure, Mode=OneWay, StringFormat={}{0:0.00}}"
                                  VerticalContentAlignment="Center"
                                  IsReadOnly="True"
                                  FontSize="14"
