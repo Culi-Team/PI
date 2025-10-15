@@ -50,7 +50,6 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddKeyedScoped<IProcess<ESequence>, UnloadAlignProcess>(EProcess.UnloadAlign.ToString());
                 services.AddKeyedScoped<IProcess<ESequence>, RobotUnloadProcess>(EProcess.RobotUnload.ToString());
 
-
                 services.AddSingleton((ser) =>
                 {
                     List<IProcess<ESequence>> processList = new List<IProcess<ESequence>>();

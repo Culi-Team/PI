@@ -38,7 +38,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         public IProcess<ESequence> UnloadTransferRightProcess => _processes.First(p => p.Name == EProcess.UnloadTransferRight.ToString());
         public IProcess<ESequence> UnloadAlignProcess => _processes.First(p => p.Name == EProcess.UnloadAlign.ToString());
         public IProcess<ESequence> RobotUnloadProcess => _processes.First(p => p.Name == EProcess.RobotUnload.ToString());
-
         #endregion
 
         public Processes(List<IProcess<ESequence>> processes)

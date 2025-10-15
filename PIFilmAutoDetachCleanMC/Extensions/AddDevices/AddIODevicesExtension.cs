@@ -1,12 +1,14 @@
 ﻿using EQX.Core.InOut;
 using EQX.Core.Motion;
+using EQX.InOut;
+using EQX.InOut.ByVendor.Ajinextek;
+using EQX.InOut.ByVendor.Inovance;
+using EQX.InOut.InOut.Analog;
+using EQX.Motion.ByVendor.Inovance;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PIFilmAutoDetachCleanMC.Defines;
-using EQX.Motion.ByVendor.Inovance;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
-using EQX.InOut.ByVendor.Ajinextek;
-using EQX.InOut.ByVendor.Inovance;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {

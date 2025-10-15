@@ -31,6 +31,7 @@ namespace PIFilmAutoDetachCleanMC
                 .AddProcessIO()
                 .AddRegulatorDevices()
                 .AddRecipes()
+                .AddProcesses()
                 .Build();
         }
 
