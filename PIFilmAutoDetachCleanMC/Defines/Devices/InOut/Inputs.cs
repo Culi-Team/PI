@@ -14,12 +14,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
             _dInputDevice = dInputDevice;
 
             Initialize();
-
-            //System.Timers.Timer inputUpdateTimer = new System.Timers.Timer(50);
-            //inputUpdateTimer.Elapsed += InputUpdateTimer_Elapsed;
-            //inputUpdateTimer.AutoReset = true;
-            //inputUpdateTimer.Enabled = true;
-
         }
 
         public bool Initialize()
@@ -35,17 +29,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public bool Disconnect()
         {
             return _dInputDevice.Disconnect();
-        }
-
-        private void InputUpdateTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
-        {
-            foreach (var input in _dInputDevice.Inputs)
-            {
-                input.RaiseValueUpdated();
-            }
-
-            OnPropertyChanged(nameof(IsSwitchKeyAutoMode));
-            OnPropertyChanged(nameof(IsSwitchKeyManualMode));
         }
 
         public bool IsSwitchKeyAutoMode => AutoModeSwitchL.Value && AutoModeSwitchR.Value;
