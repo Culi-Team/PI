@@ -70,7 +70,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private bool IsLightCurtainLeftDetect => _devices.Inputs.OutCstLightCurtainAlarmDetect.Value;
         private bool IsLightCurtainRightDetect => _devices.Inputs.InCstLightCurtainAlarmDetect.Value;
-        private bool IsMainAirSupplied => _devices.Inputs.MainAir1.Value && _devices.Inputs.MainAir2.Value && _devices.Inputs.MainAir3.Value;
+        private bool IsMainAirSupplied => _devices.Inputs.MainAir1.Value && _devices.Inputs.MainAir2.Value && _devices.Inputs.MainAir3.Value && _devices.Inputs.MainAir4.Value;
         private bool IsEmergencyStopActive =>
             _devices.Inputs.EmoLoadL.Value ||
             _devices.Inputs.EmoLoadR.Value ||

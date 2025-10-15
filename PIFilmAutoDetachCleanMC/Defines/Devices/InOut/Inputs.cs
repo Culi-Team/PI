@@ -413,6 +413,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput MainAir1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.MAIN_AIR_1);
         public IDInput MainAir2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.MAIN_AIR_2);
         public IDInput MainAir3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.MAIN_AIR_3);
+        public IDInput MainAir4 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.MAIN_AIR_4);
 
     }
 }
