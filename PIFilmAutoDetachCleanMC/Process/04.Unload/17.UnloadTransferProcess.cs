@@ -33,11 +33,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly CWorkData _workData;
         private readonly MachineStatus _machineStatus;
 
-        private IMotion YAxis => port == EPort.Left ? _devices.MotionsInovance.GlassUnloadLYAxis :
-                                                  _devices.MotionsInovance.GlassUnloadRYAxis;
+        private IMotion YAxis => port == EPort.Left ? _devices.Motions.GlassUnloadLYAxis :
+                                                  _devices.Motions.GlassUnloadRYAxis;
 
-        private IMotion ZAxis => port == EPort.Left ? _devices.MotionsInovance.GlassUnloadLZAxis :
-                                                  _devices.MotionsInovance.GlassUnloadRZAxis;
+        private IMotion ZAxis => port == EPort.Left ? _devices.Motions.GlassUnloadLZAxis :
+                                                  _devices.Motions.GlassUnloadRZAxis;
 
         private IDOutput GlassVacOnOff => port == EPort.Left ? _devices.Outputs.UnloadTransferLVacOnOff :
                                                   _devices.Outputs.UnloadTransferRVacOnOff;

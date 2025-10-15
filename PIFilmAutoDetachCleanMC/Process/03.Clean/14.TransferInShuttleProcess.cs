@@ -44,11 +44,11 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private EPort port => Name == EProcess.TransferInShuttleLeft.ToString() ? EPort.Left : EPort.Right;
 
-        private IMotion YAxis => port == EPort.Left ? _devices.MotionsInovance.TransferInShuttleLYAxis
-                                                                        : _devices.MotionsInovance.TransferInShuttleRYAxis;
+        private IMotion YAxis => port == EPort.Left ? _devices.Motions.TransferInShuttleLYAxis :
+                                                      _devices.Motions.TransferInShuttleRYAxis;
 
-        private IMotion ZAxis => port == EPort.Left ? _devices.MotionsInovance.TransferInShuttleLZAxis
-                                                                        : _devices.MotionsInovance.TransferInShuttleRZAxis;
+        private IMotion ZAxis => port == EPort.Left ? _devices.Motions.TransferInShuttleLZAxis :
+                                                      _devices.Motions.TransferInShuttleRZAxis;
 
         public IDOutput GlassVac => port == EPort.Left ? _devices.Outputs.TransferInShuttleLVacOnOff
                                                         : _devices.Outputs.TransferInShuttleRVacOnOff;

@@ -101,10 +101,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.MotionsInovance.WETCleanLFeedingAxis,
-                    EClean.WETCleanRight => _devices.MotionsInovance.WETCleanRFeedingAxis,
-                    EClean.AFCleanLeft => _devices.MotionsInovance.AFCleanLFeedingAxis,
-                    EClean.AFCleanRight => _devices.MotionsInovance.AFCleanRFeedingAxis,
+                    EClean.WETCleanLeft => _devices.Motions.WETCleanLFeedingAxis,
+                    EClean.WETCleanRight => _devices.Motions.WETCleanRFeedingAxis,
+                    EClean.AFCleanLeft => _devices.Motions.AFCleanLFeedingAxis,
+                    EClean.AFCleanRight => _devices.Motions.AFCleanRFeedingAxis,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -116,10 +116,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.MotionsAjin.InShuttleLXAxis,
-                    EClean.WETCleanRight => _devices.MotionsAjin.InShuttleRXAxis,
-                    EClean.AFCleanLeft => _devices.MotionsAjin.OutShuttleLXAxis,
-                    EClean.AFCleanRight => _devices.MotionsAjin.OutShuttleRXAxis,
+                    EClean.WETCleanLeft => _devices.Motions.InShuttleLXAxis,
+                    EClean.WETCleanRight => _devices.Motions.InShuttleRXAxis,
+                    EClean.AFCleanLeft => _devices.Motions.OutShuttleLXAxis,
+                    EClean.AFCleanRight => _devices.Motions.OutShuttleRXAxis,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -131,10 +131,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.MotionsAjin.InShuttleLYAxis,
-                    EClean.WETCleanRight => _devices.MotionsAjin.InShuttleRYAxis,
-                    EClean.AFCleanLeft => _devices.MotionsAjin.OutShuttleLYAxis,
-                    EClean.AFCleanRight => _devices.MotionsAjin.OutShuttleRYAxis,
+                    EClean.WETCleanLeft => _devices.Motions.InShuttleLYAxis,
+                    EClean.WETCleanRight => _devices.Motions.InShuttleRYAxis,
+                    EClean.AFCleanLeft => _devices.Motions.OutShuttleLYAxis,
+                    EClean.AFCleanRight => _devices.Motions.OutShuttleRYAxis,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -146,10 +146,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.MotionsInovance.InShuttleLTAxis,
-                    EClean.WETCleanRight => _devices.MotionsInovance.InShuttleRTAxis,
-                    EClean.AFCleanLeft => _devices.MotionsInovance.OutShuttleLTAxis,
-                    EClean.AFCleanRight => _devices.MotionsInovance.OutShuttleRTAxis,
+                    EClean.WETCleanLeft => _devices.Motions.InShuttleLTAxis,
+                    EClean.WETCleanRight => _devices.Motions.InShuttleRTAxis,
+                    EClean.AFCleanLeft => _devices.Motions.OutShuttleLTAxis,
+                    EClean.AFCleanRight => _devices.Motions.OutShuttleRTAxis,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -1520,8 +1520,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Clean Horizontal");
                     FeedingAxis.MoveJog(cleanRecipe.RFeedingAxisCleaningSpeed, true);
 #if !SIMULATION
-                    _devices.MotionsAjin.CleanHorizontal(cleanType, XAxisCleanHorizontalPosition, YAxisCleanHorizontalPosition, 50, 10, cleanRecipe.CleanHorizontalCount);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _devices.MotionsAjin.IsContiMotioning(cleanType) == false);
+                    _devices.Motions.CleanHorizontal(cleanType, XAxisCleanHorizontalPosition, YAxisCleanHorizontalPosition, 50, 10, cleanRecipe.CleanHorizontalCount);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _devices.Motions.IsContiMotioning(cleanType) == false);
 #else
                     Thread.Sleep(100);
 #endif
@@ -1658,8 +1658,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanStep.CleanVertical:
                     Log.Debug("Clean Vertical");
 #if !SIMULATION
-                    _devices.MotionsAjin.CleanVertical(cleanType,XAxisCleanVerticalPosition,YAxisCleanVerticalPosition,cleanRecipe.CleanVerticalCount);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _devices.MotionsAjin.IsContiMotioning(cleanType));
+                    _devices.Motions.CleanVertical(cleanType,XAxisCleanVerticalPosition,YAxisCleanVerticalPosition,cleanRecipe.CleanVerticalCount);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _devices.Motions.IsContiMotioning(cleanType));
 #else
                     Thread.Sleep(100);
 #endif

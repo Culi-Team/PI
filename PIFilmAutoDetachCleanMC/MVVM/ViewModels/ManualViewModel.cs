@@ -47,8 +47,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         public bool RobotLoadIsConnected => _robotLoad.IsConnected;
         public bool RobotUnloadIsConnected => _robotUnload.IsConnected;
-        public bool MotionsInovanceIsConnected => Devices.MotionsInovance.MotionController.IsConnected;
-        public bool MotionAjinIsConnected => Devices.MotionsAjin.All.All(m => m.IsConnected);
+        public bool MotionsInovanceIsConnected => Devices.Motions.InovanceMaster.IsConnected;
+        public bool MotionAjinIsConnected => Devices.Motions.AjinMaster.IsConnected;
         public bool SpeedControllersIsConnected => Devices.SpeedControllerList.All.All(sc => sc.IsConnected);
         public bool TorqueControllersIsConnected => Devices.TorqueControllers.All.All(tc => tc.IsConnected);
         public bool SyringePumpIsConnected
@@ -129,7 +129,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    Devices.MotionsInovance.MotionController.Connect();
+                    Devices.Motions.InovanceMaster.Connect();
                     OnPropertyChanged(nameof(MotionsInovanceIsConnected));
                 });
             }
@@ -141,7 +141,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    Devices.MotionsAjin.All.ForEach(m => m.Connect());
+                    Devices.Motions.AjinMaster.Connect();
                     OnPropertyChanged(nameof(MotionAjinIsConnected));
                 });
             }
@@ -221,13 +221,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand<object>((o) =>
                 {
-                    if (Devices.MotionsAjin.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
-                    {
-                        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_TurnOnAllMotionsFirst"], (string)Application.Current.Resources["str_Confirm"]);
-                        return;
-                    }
-
-                    if (Devices.MotionsInovance.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
+                    if (Devices.Motions.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
                     {
                         MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_TurnOnAllMotionsFirst"], (string)Application.Current.Resources["str_Confirm"]);
                         return;

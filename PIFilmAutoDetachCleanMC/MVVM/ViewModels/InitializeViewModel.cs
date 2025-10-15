@@ -65,13 +65,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     {
                         return;
                     }
-                    if (Devices.MotionsAjin.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
-                    {
-                        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_TurnOnAllMotionsFirst"], (string)Application.Current.Resources["str_Confirm"]);
-                        return;
-                    }
-
-                    if (Devices.MotionsInovance.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
+                    if (Devices.Motions.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
                     {
                         MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_TurnOnAllMotionsFirst"], (string)Application.Current.Resources["str_Confirm"]);
                         return;

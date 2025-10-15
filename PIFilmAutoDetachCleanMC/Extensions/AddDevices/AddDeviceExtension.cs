@@ -30,6 +30,7 @@ using EQX.InOut.ByVendor.Ajinextek;
 using EQX.InOut.ByVendor.Inovance;
 using EQX.Device.Torque;
 using EQX.Device.Indicator;
+using EQX.Motion.ByVendor.Ajinextek;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
 {
@@ -77,39 +78,27 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     return result;
                 });
 
-                services.AddKeyedScoped<IMotionController, MotionControllerInovance>("InovanceController#1");
 #if SIMULATION
+                services.AddKeyedScoped<IMotionMaster, SimulationMotionMaster>("InovanceMaster#1");
+                services.AddKeyedScoped<IMotionMaster, SimulationMotionMaster>("AjinMaster#1");
+
                 services.AddKeyedScoped<IMotionFactory<IMotion>, SimulationMotionFactory>("InovanceMotionFactory");
                 services.AddKeyedScoped<IMotionFactory<IMotion>, SimulationMotionFactory>("AjinMotionFactory");
+
                 services.AddKeyedScoped<IMotionFactory<IMotion>, SimulationMotionFactory>("MotionEziPlusEFactory");
 #else
+                services.AddKeyedScoped<IMotionMaster, MotionMasterInovance>("InovanceMaster#1");
+                services.AddKeyedScoped<IMotionMaster, MotionMasterAjin>("AjinMaster#1");
+
                 services.AddKeyedScoped<IMotionFactory<IMotion>>("InovanceMotionFactory", (ser, obj) =>
-                    new MotionInovanceFactoryWithDefaultCardHandler
-                    {
-                        MotionController = ser.GetRequiredKeyedService<IMotionController>("InovanceController#1")
-                    }
+                    new MotionInovanceFactory(ser.GetRequiredKeyedService<IMotionMaster>("InovanceMaster#1"))
                 );
 
                 services.AddKeyedScoped<IMotionFactory<IMotion>>("AjinMotionFactory", (ser, obj) => new MotionAjinFactory());
                 services.AddKeyedScoped<IMotionFactory<IMotion>>("MotionEziPlusEFactory", (ser, obj) => new MotionEziPlusEFactory());
 #endif
 
-                services.AddSingleton<MotionsInovance>(ser =>
-                {
-                    return new MotionsInovance(
-                        ser.GetRequiredKeyedService<IMotionFactory<IMotion>>("InovanceMotionFactory"),
-                        ser.GetRequiredKeyedService<List<IMotionParameter>>("MotionInovanceParameters"),
-                        ser.GetRequiredKeyedService<IMotionController>("InovanceController#1")
-                    );
-                });
-
-                services.AddSingleton<MotionsAjin>(ser =>
-                {
-                    return new MotionsAjin(
-                        ser.GetRequiredKeyedService<IMotionFactory<IMotion>>("AjinMotionFactory"),
-                        ser.GetRequiredKeyedService<List<IMotionParameter>>("MotionAjinParameters")
-                        );
-                });
+                services.AddSingleton<Motions>();
 
                 services.AddKeyedScoped<IMotion>("VinylCleanEncoder", (ser, obj) =>
                 {
@@ -158,7 +147,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                         Id = 1,
                         Name = "InputDevice",
                         MaxPin = 1000,
-                        MotionController = (MotionControllerInovance)services.GetRequiredKeyedService<IMotionController>("InovanceController#1")
+                        MotionMaster = (MotionMasterInovance)services.GetRequiredKeyedService<IMotionMaster>("InovanceMaster#1")
                     };
                 });
                 //services.AddKeyedScoped<IDInputDevice>("InputDevice#1", (services, obj) => { return new AjinInputDevice<EInput1> { Id = 1, Name = "InDevice1", MaxPin = 32 }; });
@@ -174,7 +163,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                         Id = 1,
                         Name = "OutputDevice",
                         MaxPin = 1000,
-                        MotionController = (MotionControllerInovance)services.GetRequiredKeyedService<IMotionController>("InovanceController#1")
+                        MotionMaster = (MotionMasterInovance)services.GetRequiredKeyedService<IMotionMaster>("InovanceMaster#1")
                     };
                 });
                 //services.AddKeyedScoped<IDOutputDevice>("OutputDevice#1", (services, obj) => { return new AjinOutputDevice<EOutput1> { Id = 1, Name = "OutDevice1", MaxPin = 32 }; });
@@ -301,19 +290,19 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 #else
                 services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("WETCleanLeft", (ser, obj) =>
                 {
-                    return new ITVRegulatorRC(1, "WETCleanLeft", 0.9, "COM12", 9600);
+                    return new ITVRegulatorRC(1, "WETCleanLeft", 0.9, "COM11", 9600);
                 });
                 services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("WETCleanRight", (ser, obj) =>
                 {
-                    return new ITVRegulatorRC(2, "WETCleanRight", 0.9, "COM11", 9600);
+                    return new ITVRegulatorRC(2, "WETCleanRight", 0.9, "COM12", 9600);
                 });
                 services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("AFCleanLeft", (ser, obj) =>
                 {
-                    return new ITVRegulatorRC(3, "AFCleanLeft", 0.9, "COM14", 9600);
+                    return new ITVRegulatorRC(3, "AFCleanLeft", 0.9, "COM13", 9600);
                 });
                 services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("AFCleanRight", (ser, obj) =>
                 {
-                    return new ITVRegulatorRC(4, "AFCleanRight", 0.9, "COM13", 9600);
+                    return new ITVRegulatorRC(4, "AFCleanRight", 0.9, "COM14", 9600);
                 });
 #endif
                 services.AddSingleton<Regulators>();

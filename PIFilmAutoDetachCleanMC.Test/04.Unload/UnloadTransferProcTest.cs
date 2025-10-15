@@ -38,7 +38,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionController.Connect();
+            devices.MotionsInovance.MotionMaster.Connect();
 
             foreach (var motion in devices.MotionsAjin.All)
             {
@@ -89,7 +89,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionController.Connect();
+            devices.MotionsInovance.MotionMaster.Connect();
 
             foreach (var motion in devices.MotionsAjin.All)
             {
@@ -140,7 +140,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionController.Connect();
+            devices.MotionsInovance.MotionMaster.Connect();
 
             foreach (var motion in devices.MotionsAjin.All)
             {
@@ -192,7 +192,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionController.Connect();
+            devices.MotionsInovance.MotionMaster.Connect();
 
             foreach (var motion in devices.MotionsAjin.All)
             {
@@ -244,7 +244,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionController.Connect();
+            devices.MotionsInovance.MotionMaster.Connect();
 
             foreach (var motion in devices.MotionsAjin.All)
             {
@@ -296,7 +296,7 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionController.Connect();
+            devices.MotionsInovance.MotionMaster.Connect();
 
             foreach (var motion in devices.MotionsAjin.All)
             {

@@ -239,7 +239,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 if (moveToDescription == "Transfer Fixture Y Axis Load Position"
                     || moveToDescription == "Transfer Fixture Y Axis Unload Position")
                 {
-                    var detachGlassZAxis = devices.MotionsInovance.DetachGlassZAxis;
+                    var detachGlassZAxis = devices.Motions.DetachGlassZAxis;
                     if (detachGlassZAxis != null && detachGlassZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetachReadyPosition)
                     {
@@ -256,7 +256,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Sht Tr X Axis Detach Check Position"
                     || moveToDescription == "Sht Tr X Axis Unload Position")
                 {
-                    var shuttleTransferZAxis = devices.MotionsAjin.ShuttleTransferZAxis;
+                    var shuttleTransferZAxis = devices.Motions.ShuttleTransferZAxis;
                     if (shuttleTransferZAxis != null && shuttleTransferZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisDetachReadyPosition)
                     {
@@ -274,8 +274,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Glass Transfer Y Axis Left Place Position"
                     || moveToDescription == "Glass Transfer Y Axis Right Place Position")
                 {
-                    var transferInShuttleLZAxis = devices.MotionsInovance.TransferInShuttleLZAxis;
-                    var transferInShuttleRZAxis = devices.MotionsInovance.TransferInShuttleRZAxis;
+                    var transferInShuttleLZAxis = devices.Motions.TransferInShuttleLZAxis;
+                    var transferInShuttleRZAxis = devices.Motions.TransferInShuttleRZAxis;
                     if ((transferInShuttleLZAxis != null && transferInShuttleLZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition)
                         || (transferInShuttleRZAxis != null && transferInShuttleRZAxis.Status.ActualPosition
@@ -298,7 +298,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Y Axis Pick Position 3"
                     || moveToDescription == "Y Axis Place Position")
                 {
-                    var transferInShuttleLZAxis = devices.MotionsInovance.TransferInShuttleLZAxis;
+                    var transferInShuttleLZAxis = devices.Motions.TransferInShuttleLZAxis;
                     if (transferInShuttleLZAxis != null && transferInShuttleLZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition)
                     {
@@ -317,7 +317,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Y Axis Pick Position 3"
                     || moveToDescription == "Y Axis Place Position")
                 {
-                    var transferInShuttleRZAxis = devices.MotionsInovance.TransferInShuttleRZAxis;
+                    var transferInShuttleRZAxis = devices.Motions.TransferInShuttleRZAxis;
                     if (transferInShuttleRZAxis != null && transferInShuttleRZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisReadyPosition)
                     {
@@ -330,8 +330,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             }
             if (Name == "WET Clean Left")
             {
-                var outShuttleLXAxis = devices.MotionsAjin.OutShuttleLXAxis;
-                var transferRotationLZAxis = devices.MotionsInovance.TransferRotationLZAxis;
+                var outShuttleLXAxis = devices.Motions.OutShuttleLXAxis;
+                var transferRotationLZAxis = devices.Motions.TransferRotationLZAxis;
                 if (moveToDescription == "X Axis Ready Position"
                     || moveToDescription == "X Axis Load Position"
                     || moveToDescription == "Y Axis Load Position"
@@ -361,8 +361,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             }
             if (Name == "AF Clean Left")
             {
-                var inShuttleLXAxis = devices.MotionsAjin.InShuttleLXAxis;
-                var transferRotationLZAxis = devices.MotionsInovance.TransferRotationLZAxis;
+                var inShuttleLXAxis = devices.Motions.InShuttleLXAxis;
+                var transferRotationLZAxis = devices.Motions.TransferRotationLZAxis;
                 if (moveToDescription == "X Axis UnLoad Position"
                     || moveToDescription == "Y Axis Load Position"
                     || moveToDescription == "X Axis Clean Horizontal Position"
@@ -388,8 +388,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             }
             if (Name == "WET Clean Right")
             {
-                var outShuttleRXAxis = devices.MotionsAjin.OutShuttleRXAxis;
-                var transferRotationRZAxis = devices.MotionsInovance.TransferRotationRZAxis;
+                var outShuttleRXAxis = devices.Motions.OutShuttleRXAxis;
+                var transferRotationRZAxis = devices.Motions.TransferRotationRZAxis;
                 if (moveToDescription == "X Axis Load Position"
                     || moveToDescription == "Y Axis Load Position"
                     || moveToDescription == "X Axis Clean Horizontal Position"
@@ -419,8 +419,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             }
             if (Name == "AF Clean Right")
             {
-                var inShuttleRXAxis = devices.MotionsAjin.InShuttleRXAxis;
-                var transferRotationRZAxis = devices.MotionsInovance.TransferRotationRZAxis;
+                var inShuttleRXAxis = devices.Motions.InShuttleRXAxis;
+                var transferRotationRZAxis = devices.Motions.TransferRotationRZAxis;
                 if (moveToDescription == "X Axis UnLoad Position"
                     || moveToDescription == "Y Axis Load Position"
                     || moveToDescription == "X Axis Clean Horizontal Position"
@@ -454,7 +454,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Y Axis Place Position 3"
                     || moveToDescription == "Y Axis Place Position 4")
                 {
-                    var glassUnloadLAxis = devices.MotionsInovance.GlassUnloadLZAxis;
+                    var glassUnloadLAxis = devices.Motions.GlassUnloadLZAxis;
                     if (glassUnloadLAxis != null && glassUnloadLAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisReadyPosition)
                     {
@@ -474,7 +474,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Y Axis Place Position 3"
                     || moveToDescription == "Y Axis Place Position 4")
                 {
-                    var glassUnloadRAxis = devices.MotionsInovance.GlassUnloadRZAxis;
+                    var glassUnloadRAxis = devices.Motions.GlassUnloadRZAxis;
                     if (glassUnloadRAxis != null && glassUnloadRAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisReadyPosition)
                     {

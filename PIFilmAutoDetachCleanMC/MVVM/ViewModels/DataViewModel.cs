@@ -26,21 +26,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
     {
         private string selectedModel;
         private RecipeBase _selectedRecipe;
-        private readonly MotionsInovance _motionsInovance;
-        private readonly MotionsAjin _motionAjin;
+        private readonly Motions _motions;
         private readonly IMotion _vinylCleanEncoder;
         private readonly IConfiguration _configuration;
         public DataViewModel(RecipeSelector recipeSelector,
-            MotionsInovance motionsInovance,
-            MotionsAjin motionAjin,
+            Motions motions,
             [FromKeyedServices("VinylCleanEncoder")] IMotion vinylCleanEncoder,
             IConfiguration configuration,
             CassetteList cassetteList,
             MachineStatus machineStatus)
         {
             RecipeSelector = recipeSelector;
-            _motionsInovance = motionsInovance;
-            _motionAjin = motionAjin;
+            _motions = motions;
             _vinylCleanEncoder = vinylCleanEncoder;
             _configuration = configuration;
             CassetteList = cassetteList;
@@ -72,8 +69,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             get
             {
                 List<IMotion> motions = new List<IMotion>();
-                motions.AddRange(_motionsInovance.All);
-                motions.AddRange(_motionAjin.All);
+                motions.AddRange(_motions.All);
 
                 return new ObservableCollection<IMotion>(motions);
             }
@@ -216,11 +212,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 var existingInovanceParams = JsonConvert.DeserializeObject<List<MotionInovanceParameter>>(
                     File.ReadAllText(inovanceConfigPath)) ?? new List<MotionInovanceParameter>();
 
-                for (int i = 0; i < _motionsInovance.All.Count && i < existingInovanceParams.Count; i++)
+                for (int i = 0; i < _motions.InovanceMotions.All.Count && i < existingInovanceParams.Count; i++)
                 {
-                    existingInovanceParams[i].Velocity = _motionsInovance.All[i].Parameter.Velocity;
-                    existingInovanceParams[i].Acceleration = _motionsInovance.All[i].Parameter.Acceleration;
-                    existingInovanceParams[i].Deceleration = _motionsInovance.All[i].Parameter.Deceleration;
+                    existingInovanceParams[i].Velocity = _motions.InovanceMotions.All[i].Parameter.Velocity;
+                    existingInovanceParams[i].Acceleration = _motions.InovanceMotions.All[i].Parameter.Acceleration;
+                    existingInovanceParams[i].Deceleration = _motions.InovanceMotions.All[i].Parameter.Deceleration;
                 }
 
                 var inovanceJson = JsonConvert.SerializeObject(existingInovanceParams, Formatting.Indented);
@@ -233,11 +229,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 var existingAjinParams = JsonConvert.DeserializeObject<List<MotionAjinParameter>>(
                     File.ReadAllText(ajinConfigPath)) ?? new List<MotionAjinParameter>();
 
-                for (int i = 0; i < _motionAjin.All.Count && i < existingAjinParams.Count; i++)
+                for (int i = 0; i < _motions.AjinMotions.All.Count && i < existingAjinParams.Count; i++)
                 {
-                    existingAjinParams[i].Velocity = _motionAjin.All[i].Parameter.Velocity;
-                    existingAjinParams[i].Acceleration = _motionAjin.All[i].Parameter.Acceleration;
-                    existingAjinParams[i].Deceleration = _motionAjin.All[i].Parameter.Deceleration;
+                    existingAjinParams[i].Velocity = _motions.AjinMotions.All[i].Parameter.Velocity;
+                    existingAjinParams[i].Acceleration = _motions.AjinMotions.All[i].Parameter.Acceleration;
+                    existingAjinParams[i].Deceleration = _motions.AjinMotions.All[i].Parameter.Deceleration;
                 }
 
                 var ajinJson = JsonConvert.SerializeObject(existingAjinParams, Formatting.Indented);

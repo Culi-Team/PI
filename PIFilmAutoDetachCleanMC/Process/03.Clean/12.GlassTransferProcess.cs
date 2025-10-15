@@ -28,8 +28,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private EPort currentPlacePort;
 
-        private IMotion YAxis => _devices.MotionsInovance.GlassTransferYAxis;
-        private IMotion ZAxis => _devices.MotionsInovance.GlassTransferZAxis;
+        private IMotion YAxis => _devices.Motions.GlassTransferYAxis;
+        private IMotion ZAxis => _devices.Motions.GlassTransferZAxis;
 
         private IDOutput GlassVac1 => _devices.Outputs.GlassTransferVac1OnOff;
         private IDOutput GlassVac2 => _devices.Outputs.GlassTransferVac2OnOff;

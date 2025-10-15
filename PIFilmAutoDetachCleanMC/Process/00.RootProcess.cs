@@ -195,8 +195,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             if (Childs.All(child => child.ProcessStatus == EProcessStatus.ToAlarmDone))
             {
-                foreach (var motion in _devices.MotionsInovance.All!) { motion.Stop(); }
-                foreach (var motion in _devices.MotionsAjin.All!) { motion.Stop(); }
+                foreach (var motion in _devices.Motions.All!) { motion.Stop(); }
 
                 _machineStatus.OriginDone = false;
 
@@ -219,8 +218,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             if (Childs!.Count(child => child.ProcessStatus != EProcessStatus.ToWarningDone) == 0)
             {
-                foreach (var motion in _devices.MotionsInovance.All!) { motion.Stop(); }
-                foreach (var motion in _devices.MotionsAjin.All!) { motion.Stop(); }
+                foreach (var motion in _devices.Motions.All!) { motion.Stop(); }
 
                 // Set Robot process Warning , Need Initialize before Run
                 Childs!.First(p => p.Name == EProcess.RobotLoad.ToString()).IsWarning = true;
@@ -597,19 +595,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Thread.Sleep(10);
                     break;
                 case EOperationCommand.Origin:
-                    foreach (var motion in _devices.MotionsAjin.All!) { motion.MotionOn(); }
-                    foreach (var motion in _devices.MotionsInovance.All!) { motion.MotionOn(); }
+                    foreach (var motion in _devices.Motions.All!) { motion.MotionOn(); }
 
                     Thread.Sleep(1000);
 
-                    if (_devices.MotionsAjin.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
-                    {
-                        MessageBoxEx.ShowDialog("Motions turn on failed");
-                        _machineStatus.OPCommand = EOperationCommand.None;
-                        return;
-                    }
-
-                    if (_devices.MotionsInovance.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
+                    if (_devices.Motions.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
                     {
                         MessageBoxEx.ShowDialog("Motions turn on failed");
                         _machineStatus.OPCommand = EOperationCommand.None;
@@ -624,14 +614,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     _machineStatus.OPCommand = EOperationCommand.None;
                     break;
                 case EOperationCommand.Ready:
-                    if (_devices.MotionsAjin.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
-                    {
-                        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_TurnOnAllMotionsFirst"], (string)Application.Current.Resources["str_Confirm"]);
-                        _machineStatus.OPCommand = EOperationCommand.None;
-                        return;
-                    }
-
-                    if (_devices.MotionsInovance.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
+                    if (_devices.Motions.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
                     {
                         MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_TurnOnAllMotionsFirst"], (string)Application.Current.Resources["str_Confirm"]);
                         _machineStatus.OPCommand = EOperationCommand.None;
@@ -656,14 +639,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     _machineStatus.OPCommand = EOperationCommand.None;
                     break;
                 case EOperationCommand.Start:
-                    if (_devices.MotionsAjin.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
-                    {
-                        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_TurnOnAllMotionsFirst"], (string)Application.Current.Resources["str_Confirm"]);
-                        _machineStatus.OPCommand = EOperationCommand.None;
-                        return;
-                    }
-
-                    if (_devices.MotionsInovance.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
+                    if (_devices.Motions.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
                     {
                         MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_TurnOnAllMotionsFirst"], (string)Application.Current.Resources["str_Confirm"]);
                         _machineStatus.OPCommand = EOperationCommand.None;
@@ -698,21 +674,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     _machineStatus.SemiAutoSequence = ESemiSequence.None;
                     break;
                 case EOperationCommand.Stop:
-                    foreach (var motion in _devices.MotionsAjin.All!) { motion.Stop(); }
-                    foreach (var motion in _devices.MotionsInovance.All!) { motion.Stop(); }
+                    foreach (var motion in _devices.Motions.All!) { motion.Stop(); }
 
                     ProcessMode = EProcessMode.ToStop;
                     _machineStatus.OPCommand = EOperationCommand.None;
                     break;
                 case EOperationCommand.SemiAuto:
-                    if (_devices.MotionsAjin.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
-                    {
-                        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_TurnOnAllMotionsFirst"], (string)Application.Current.Resources["str_Confirm"]);
-                        _machineStatus.OPCommand = EOperationCommand.None;
-                        return;
-                    }
-
-                    if (_devices.MotionsInovance.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
+                    if (_devices.Motions.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
                     {
                         MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_TurnOnAllMotionsFirst"], (string)Application.Current.Resources["str_Confirm"]);
                         _machineStatus.OPCommand = EOperationCommand.None;

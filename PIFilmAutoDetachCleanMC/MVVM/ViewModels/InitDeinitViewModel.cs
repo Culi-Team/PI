@@ -202,18 +202,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         MessageText = "Connect Motion Devices";
 
-                        _devices.MotionsInovance.MotionController.Connect();
+                        _devices.Motions.AjinMaster.Connect();
+                        _devices.Motions.InovanceMaster.Connect();
 
-                        _devices.MotionsAjin.All.ForEach(m => m.Connect());
-
-                        _devices.MotionsInovance.All.ForEach(m => m.Connect());
+                        _devices.Motions.All.ForEach(m => m.Connect());
 
                         _devices.SpeedControllerList.All.ForEach(s => s.Connect());
-
                         _devices.TorqueControllers.All.ForEach(t => t.Connect());
 
                         _robotLoad.Connect();
-
                         _robotUnload.Connect();
 
                         if (_devices.SpeedControllerList.All.Any(m => m.IsConnected == false))
@@ -228,16 +225,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                                 $"{string.Join(", ", _devices.TorqueControllers.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
                         }
 
-                        if (_devices.MotionsInovance.All.Any(m => m.IsConnected == false))
+                        if (_devices.Motions.All.Any(m => m.IsConnected == false))
                         {
                             ErrorMessages.Add($"Motion device is not connected: " +
-                                $"{string.Join(", ", _devices.MotionsInovance.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
-                        }
-
-                        if (_devices.MotionsAjin.All.Any(m => m.IsConnected == false))
-                        {
-                            ErrorMessages.Add($"Motion device is not connected: " +
-                                $"{string.Join(", ", _devices.MotionsAjin.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
+                                $"{string.Join(", ", _devices.Motions.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
                         }
 
                         if(_robotLoad.IsConnected == false)
@@ -250,8 +241,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                             ErrorMessages.Add("Robot Unload is not connected");
                         }
 
-                        _devices.MotionsInovance.All.ForEach(m => m.Initialization());
-                        _devices.MotionsAjin.All.ForEach(m => m.Initialization());
+                        _devices.Motions.All.ForEach(m => m.Initialization());
 
                         Thread.Sleep(50);
                         _step++;
@@ -387,13 +377,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         break;
                     case EHandleStep.MotionDeviceHandle:
                         MessageText = "Disconnect Motion Devices";
-                        _devices.MotionsInovance.MotionController.Disconnect();
+                        _devices.Motions.InovanceMaster.Disconnect();
+                        _devices.Motions.AjinMaster.Disconnect();
 
-                        _devices.MotionsInovance.All.ForEach(m => m.Disconnect());
+                        _devices.Motions.All.ForEach(m => m.Disconnect());
 
                         _devices.SpeedControllerList.All.ForEach(s => s.Disconnect());
-                        _devices.MotionsAjin.All.ForEach(m => m.Disconnect());
                         _devices.TorqueControllers.All.ForEach(t => t.Disconnect());
+
                         _rollerModbusCommunication.Disconnect();
 
                         Thread.Sleep(50);

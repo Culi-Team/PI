@@ -196,8 +196,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Motions
-        private IMotion TAxis => port == EPort.Right ? _devices.MotionsInovance.InCassetteTAxis :
-                                                           _devices.MotionsInovance.OutCassetteTAxis;
+        private IMotion TAxis => port == EPort.Right ? _devices.Motions.InCassetteTAxis :
+                                                       _devices.Motions.OutCassetteTAxis;
         #endregion
 
         #region Rollers

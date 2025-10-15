@@ -2,6 +2,7 @@
 using EQX.Core.InOut;
 using EQX.Core.Motion;
 using EQX.Device.SpeedController;
+using EQX.Motion.ByVendor.Inovance;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
@@ -19,8 +20,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
     {
         public Devices(Inputs inputs,
             Outputs outputs,
-            MotionsInovance motionsInovance,
-            MotionsAjin motionsAjin,
+            Motions motions,
             Cylinders cylinders,
             TorqueControllerList torqueControllers,
             SpeedControllerList speedControllerList,
@@ -31,8 +31,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         {
             Inputs = inputs;
             Outputs = outputs;
-            MotionsInovance = motionsInovance;
-            MotionsAjin = motionsAjin;
+            Motions = motions;
             Cylinders = cylinders;
             TorqueControllers = torqueControllers;
             SpeedControllerList = speedControllerList;
@@ -44,8 +43,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
 
         public Inputs Inputs { get; }
         public Outputs Outputs { get; }
-        public MotionsInovance MotionsInovance { get; }
-        public MotionsAjin MotionsAjin { get; }
+        public Motions Motions { get; }
         public Cylinders Cylinders { get; }
         public TorqueControllerList TorqueControllers { get; }
         public SpeedControllerList SpeedControllerList { get; }
@@ -1122,14 +1120,14 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IMotion> GetCSTLoadMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            motions.Add(MotionsInovance.InCassetteTAxis);
+            motions.Add(Motions.InCassetteTAxis);
             return motions;
         }
 
         public ObservableCollection<IMotion> GetCSTUnloadMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            motions.Add(MotionsInovance.OutCassetteTAxis);
+            motions.Add(Motions.OutCassetteTAxis);
             return motions;
         }
 
@@ -1137,70 +1135,70 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IMotion> GetTransferFixtureMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            motions.Add(MotionsInovance.FixtureTransferYAxis);
+            motions.Add(Motions.FixtureTransferYAxis);
             return motions;
         }
 
         public ObservableCollection<IMotion> GetDetachMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            motions.Add(MotionsInovance.DetachGlassZAxis);
-            motions.Add(MotionsAjin.ShuttleTransferZAxis);
-            motions.Add(MotionsInovance.ShuttleTransferXAxis);
+            motions.Add(Motions.DetachGlassZAxis);
+            motions.Add(Motions.ShuttleTransferZAxis);
+            motions.Add(Motions.ShuttleTransferXAxis);
             return motions;
         }
 
         public ObservableCollection<IMotion> GetGlassTransferMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            motions.Add(MotionsInovance.GlassTransferYAxis);
-            motions.Add(MotionsInovance.GlassTransferZAxis);
+            motions.Add(Motions.GlassTransferYAxis);
+            motions.Add(Motions.GlassTransferZAxis);
             return motions;
         }
 
         public ObservableCollection<IMotion> GetTransferShutterLeftMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            motions.Add(MotionsInovance.TransferInShuttleLYAxis);
-            motions.Add(MotionsInovance.TransferInShuttleLZAxis);
+            motions.Add(Motions.TransferInShuttleLYAxis);
+            motions.Add(Motions.TransferInShuttleLZAxis);
             return motions;
         }
 
         public ObservableCollection<IMotion> GetTransferShutterRightMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            motions.Add(MotionsInovance.TransferInShuttleRYAxis);
-            motions.Add(MotionsInovance.TransferInShuttleRZAxis);
+            motions.Add(Motions.TransferInShuttleRYAxis);
+            motions.Add(Motions.TransferInShuttleRZAxis);
             return motions;
         }
 
         public ObservableCollection<IMotion> GetTransferRotationLeftMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            motions.Add(MotionsInovance.TransferRotationLZAxis);
+            motions.Add(Motions.TransferRotationLZAxis);
             return motions;
         }
 
         public ObservableCollection<IMotion> GetTransferRotationRightMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            motions.Add(MotionsInovance.TransferRotationRZAxis);
+            motions.Add(Motions.TransferRotationRZAxis);
             return motions;
         }
 
         public ObservableCollection<IMotion> GetUnloadTransferLeftMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            motions.Add(MotionsInovance.GlassUnloadLYAxis);
-            motions.Add(MotionsInovance.GlassUnloadLZAxis);
+            motions.Add(Motions.GlassUnloadLYAxis);
+            motions.Add(Motions.GlassUnloadLZAxis);
             return motions;
         }
 
         public ObservableCollection<IMotion> GetUnloadTransferRightMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            motions.Add(MotionsInovance.GlassUnloadRYAxis);
-            motions.Add(MotionsInovance.GlassUnloadRZAxis);
+            motions.Add(Motions.GlassUnloadRYAxis);
+            motions.Add(Motions.GlassUnloadRZAxis);
             return motions;
         }
 
@@ -1208,40 +1206,40 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IMotion> GetWETCleanLeftMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            motions.Add(MotionsAjin.InShuttleLXAxis);
-            motions.Add(MotionsAjin.InShuttleLYAxis);
-            motions.Add(MotionsInovance.InShuttleLTAxis);
-            motions.Add(MotionsInovance.WETCleanLFeedingAxis);
+            motions.Add(Motions.InShuttleLXAxis);
+            motions.Add(Motions.InShuttleLYAxis);
+            motions.Add(Motions.InShuttleLTAxis);
+            motions.Add(Motions.WETCleanLFeedingAxis);
             return motions;
         }
 
         public ObservableCollection<IMotion> GetWETCleanRightMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            motions.Add(MotionsAjin.InShuttleRXAxis);
-            motions.Add(MotionsAjin.InShuttleRYAxis);
-            motions.Add(MotionsInovance.InShuttleRTAxis);
-            motions.Add(MotionsInovance.WETCleanRFeedingAxis);
+            motions.Add(Motions.InShuttleRXAxis);
+            motions.Add(Motions.InShuttleRYAxis);
+            motions.Add(Motions.InShuttleRTAxis);
+            motions.Add(Motions.WETCleanRFeedingAxis);
             return motions;
         }
 
         public ObservableCollection<IMotion> GetAFCleanLeftMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            motions.Add(MotionsAjin.OutShuttleLXAxis);
-            motions.Add(MotionsAjin.OutShuttleLYAxis);
-            motions.Add(MotionsInovance.OutShuttleLTAxis);
-            motions.Add(MotionsInovance.AFCleanLFeedingAxis);
+            motions.Add(Motions.OutShuttleLXAxis);
+            motions.Add(Motions.OutShuttleLYAxis);
+            motions.Add(Motions.OutShuttleLTAxis);
+            motions.Add(Motions.AFCleanLFeedingAxis);
             return motions;
         }
 
         public ObservableCollection<IMotion> GetAFCleanRightMotions()
         {
             ObservableCollection<IMotion> motions = new ObservableCollection<IMotion>();
-            motions.Add(MotionsAjin.OutShuttleRXAxis);
-            motions.Add(MotionsAjin.OutShuttleRYAxis);
-            motions.Add(MotionsInovance.OutShuttleRTAxis);
-            motions.Add(MotionsInovance.AFCleanRFeedingAxis);
+            motions.Add(Motions.OutShuttleRXAxis);
+            motions.Add(Motions.OutShuttleRYAxis);
+            motions.Add(Motions.OutShuttleRTAxis);
+            motions.Add(Motions.AFCleanRFeedingAxis);
             return motions;
         }
         #endregion

@@ -32,8 +32,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _transferRotationRightOutput;
         private readonly MachineStatus _machineStatus;
 
-        private IMotion ZAxis => port == EPort.Left ? _devices.MotionsInovance.TransferRotationLZAxis :
-                                                      _devices.MotionsInovance.TransferRotationRZAxis;
+        private IMotion ZAxis => port == EPort.Left ? _devices.Motions.TransferRotationLZAxis :
+                                                      _devices.Motions.TransferRotationRZAxis;
         private ICylinder RotateCyl => port == EPort.Left ? _devices.Cylinders.TrRotateLeftRotate :
                                                       _devices.Cylinders.TrRotateRightRotate;
 

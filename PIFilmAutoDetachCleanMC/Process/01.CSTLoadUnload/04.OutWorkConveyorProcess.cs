@@ -47,7 +47,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Motions
-        private IMotion OutCSTTAxis => _devices.MotionsInovance.OutCassetteTAxis;
+        private IMotion OutCSTTAxis => _devices.Motions.OutCassetteTAxis;
         #endregion
 
         #region Rollers

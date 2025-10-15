@@ -26,7 +26,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _detachOutput;
         private readonly MachineStatus _machineStatus;
 
-        private IMotion TransferFixtureYAxis => _devices.MotionsInovance.FixtureTransferYAxis;
+        private IMotion TransferFixtureYAxis => _devices.Motions.FixtureTransferYAxis;
         private ICylinder CylUpDown => _devices.Cylinders.TransferFixtureUpDown;
         private ICylinder CylClamp1_1 => _devices.Cylinders.TransferFixture1_1ClampUnclamp;
         private ICylinder CylClamp1_2 => _devices.Cylinders.TransferFixture1_2ClampUnclamp;

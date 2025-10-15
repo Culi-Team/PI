@@ -25,9 +25,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDInputDevice _detachInput;
         private readonly IDOutputDevice _detachOutput;
         private readonly MachineStatus _machineStatus;
-        private IMotion DetachGlassZAxis => _devices.MotionsInovance.DetachGlassZAxis;
-        private IMotion ShuttleTransferXAxis => _devices.MotionsInovance.ShuttleTransferXAxis;
-        private IMotion ShuttleTransferZAxis => _devices.MotionsAjin.ShuttleTransferZAxis;
+        private IMotion DetachGlassZAxis => _devices.Motions.DetachGlassZAxis;
+        private IMotion ShuttleTransferXAxis => _devices.Motions.ShuttleTransferXAxis;
+        private IMotion ShuttleTransferZAxis => _devices.Motions.ShuttleTransferZAxis;
 
         private ICylinder FixCyl1_1 => _devices.Cylinders.DetachFixFixtureCyl1_1FwBw;
         private ICylinder FixCyl1_2 => _devices.Cylinders.DetachFixFixtureCyl1_2FwBw;
