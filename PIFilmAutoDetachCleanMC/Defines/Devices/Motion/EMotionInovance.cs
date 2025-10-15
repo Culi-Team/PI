@@ -2,7 +2,7 @@
 {
     public enum EMotionInovance
     {
-        InCassetteTAxis = 1,
+        InCassetteTAxis = 0,
         OutCassetteTAxis,
         FixtureTransferYAxis,
         DetachGlassZAxis,
@@ -12,7 +12,7 @@
         TransferInShuttleRZAxis,
         TransferInShuttleLZAxis,
 
-        GlassTransferYAxis = 11,
+        GlassTransferYAxis,
         GlassTransferZAxis,
         InShuttleRTAxis,
         OutShuttleRTAxis,
@@ -21,7 +21,7 @@
         WETCleanRFeedingAxis,
         WETCleanLFeedingAxis,
 
-        AFCleanRFeedingAxis = 20,
+        AFCleanRFeedingAxis,
         AFCleanLFeedingAxis,
         TransferRotationRZAxis,
         TransferRotationLZAxis,
@@ -29,6 +29,5 @@
         GlassUnloadLYAxis,
         GlassUnloadRZAxis,
         GlassUnloadLZAxis,
-
     }
 }
