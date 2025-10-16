@@ -11,20 +11,28 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Start,
         Fix_Cyl_Forward,
         Fix_Cyl_Forward_Wait,
+
         Cyl_Transfer_Forward,
         Cyl_Transfer_Forward_Wait,
-        Pusher_Cyl_1_Up,
-        Pusher_Cyl_1_Up_Wait,
-        Cyl_UpDown1_Down,
-        Cyl_UpDown1_Down_Wait,
-        Cyl_Clamp,
-        Cyl_Clamp_Wait,
+
         Pusher_Cyl_2_Up,
         Pusher_Cyl_2_Up_Wait,
+
+        Cyl_UpDown1_Down,
+        Cyl_UpDown1_Down_Wait,
+
+        Cyl_Clamp,
+        Cyl_Clamp_Wait,
+
+        Pusher_Cyl_1_Up,
+        Pusher_Cyl_1_Up_Wait,
+
         Cyl_UpDown1_Up,
         Cyl_UpDown1_Up_Wait,
+
         Cyl_Transfer_Backward,
         Cyl_Transfer_Backward_Wait,
+
         Set_Flag_RemoveFilmRequestUnload,
         End
     }
