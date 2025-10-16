@@ -139,6 +139,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput AlignStageLVac1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_L_VAC_1_ON_OFF);
         public IDOutput AlignStageLVac2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_L_VAC_2_ON_OFF);
         public IDOutput AlignStageLVac3OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_L_VAC_3_ON_OFF);
+        public IDOutput AlignStageLBlow1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_L_BLOW_1_ON_OFF);
+        public IDOutput AlignStageLBlow2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_L_BLOW_2_ON_OFF);
+        public IDOutput AlignStageLBlow3OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_L_BLOW_3_ON_OFF);
         public IDOutput AlignStageLBrushCylUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_L_BRUSH_CYL_UP);
         public IDOutput AlignStageL1Align => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_L_1_ALIGN);
         public IDOutput AlignStageL2Align => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_L_2_ALIGN);
@@ -146,6 +149,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput AlignStageRVac1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_R_VAC_1_ON_OFF);
         public IDOutput AlignStageRVac2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_R_VAC_2_ON_OFF);
         public IDOutput AlignStageRVac3OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_R_VAC_3_ON_OFF);
+        public IDOutput AlignStageRBlow1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_R_BLOW_1_ON_OFF);
+        public IDOutput AlignStageRBlow2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_R_BLOW_2_ON_OFF);
+        public IDOutput AlignStageRBlow3OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_R_BLOW_3_ON_OFF);
         public IDOutput AlignStageRBrushCylUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_R_BRUSH_CYL_UP);
         public IDOutput AlignStageR1Align => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_R_1_ALIGN);
         public IDOutput AlignStageR2Align => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_R_2_ALIGN);
@@ -204,6 +210,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput UnloadGlassAlignVac2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_GLASS_ALIGN_VAC_2_ON_OFF);
         public IDOutput UnloadGlassAlignVac3OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_GLASS_ALIGN_VAC_3_ON_OFF);
         public IDOutput UnloadGlassAlignVac4OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_GLASS_ALIGN_VAC_4_ON_OFF);
+        public IDOutput UnloadGlassAlignBlow1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_GLASS_ALIGN_BLOW_1_ON_OFF);
+        public IDOutput UnloadGlassAlignBlow2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_GLASS_ALIGN_BLOW_2_ON_OFF);
+        public IDOutput UnloadGlassAlignBlow3OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_GLASS_ALIGN_BLOW_3_ON_OFF);
+        public IDOutput UnloadGlassAlignBlow4OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_GLASS_ALIGN_BLOW_4_ON_OFF);
         public IDOutput UnloadAlignCyl1Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ALIGN_CYL_1_UP);
         public IDOutput UnloadAlignCyl2Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ALIGN_CYL_2_UP);
         public IDOutput UnloadAlignCyl3Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ALIGN_CYL_3_UP);

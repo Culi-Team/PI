@@ -30,6 +30,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDOutput AlignStageVac1 => port == EPort.Left ? _devices.Outputs.AlignStageLVac1OnOff : _devices.Outputs.AlignStageRVac1OnOff;
         private IDOutput AlignStageVac2 => port == EPort.Left ? _devices.Outputs.AlignStageLVac2OnOff : _devices.Outputs.AlignStageRVac2OnOff;
         private IDOutput AlignStageVac3 => port == EPort.Left ? _devices.Outputs.AlignStageLVac3OnOff : _devices.Outputs.AlignStageRVac3OnOff;
+        private IDOutput AlignStageBlow1 => port == EPort.Left ? _devices.Outputs.AlignStageLBlow1OnOff : _devices.Outputs.AlignStageRBlow1OnOff;
+        private IDOutput AlignStageBlow2 => port == EPort.Left ? _devices.Outputs.AlignStageLBlow2OnOff : _devices.Outputs.AlignStageRBlow2OnOff;
+        private IDOutput AlignStageBlow3 => port == EPort.Left ? _devices.Outputs.AlignStageLBlow3OnOff : _devices.Outputs.AlignStageRBlow3OnOff;
 
         private bool AlignStageVac1Sensor => port == EPort.Left ? _devices.Inputs.AlignStageLVac1.Value : _devices.Inputs.AlignStageRVac1.Value;
         private bool AlignStageVac2Sensor => port == EPort.Left ? _devices.Inputs.AlignStageLVac2.Value : _devices.Inputs.AlignStageRVac2.Value;
@@ -391,6 +394,19 @@ namespace PIFilmAutoDetachCleanMC.Process
             AlignStageVac1.Value = bOnOff;
             AlignStageVac2.Value = bOnOff;
             AlignStageVac3.Value = bOnOff;
+
+            AlignStageBlow1.Value = !bOnOff;
+            AlignStageBlow2.Value = !bOnOff;
+            AlignStageBlow3.Value = !bOnOff;
+            if(bOnOff == false)
+            {
+                Task.Delay(100).ContinueWith(t =>
+                {
+                    AlignStageBlow1.Value = false;
+                    AlignStageBlow2.Value = false;
+                    AlignStageBlow3.Value = false;
+                });
+            }    
 #if SIMULATION
             SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac1 : _devices.Inputs.AlignStageRVac1, bOnOff);
             SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac2 : _devices.Inputs.AlignStageRVac2, bOnOff);
