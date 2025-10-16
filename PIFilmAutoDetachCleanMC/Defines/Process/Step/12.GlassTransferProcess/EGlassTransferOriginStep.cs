@@ -9,6 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EGlassTransferOriginStep
     {
         Start,
+        Wait_TransferInShuttleOriginDone,
+
         Cyl_Up,
         Cyl_Up_Wait,
         ZAxis_Origin,

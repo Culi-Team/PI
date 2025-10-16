@@ -69,7 +69,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             CSTLoadUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe;
             CSTLoadUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("InputCassetteStageImage");
 
-            UnitTeachingViewModel CSTUnloadUnitTeaching = new UnitTeachingViewModel("CST Unload", recipeSelector);
+            CSTUnloadTeachingViewModel CSTUnloadUnitTeaching = new CSTUnloadTeachingViewModel("CST Unload", recipeSelector);
             CSTUnloadUnitTeaching.Cylinders = Devices.GetOutWorkConveyorCylinders();
             CSTUnloadUnitTeaching.Motions = Devices.GetCSTUnloadMotions();
             CSTUnloadUnitTeaching.Inputs = Devices.GetOutWorkConveyorInputs();

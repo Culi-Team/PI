@@ -94,6 +94,9 @@
             <DataTemplate DataType="{x:Type teachingVM:UnitTeachingViewModel}">
                 <teachingViews:UnitTeachingView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type teachingVM:CSTUnloadTeachingViewModel}">
+                <teachingViews:CSTUnloadTeachingView />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type teachingVM:CleanUnitTeachingViewModel}">
                 <teachingViews:CleanUnitTeachingView />
             </DataTemplate>

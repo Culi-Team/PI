@@ -962,6 +962,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.AlignStageLVac1OnOff);
             outputs.Add(Outputs.AlignStageLVac2OnOff);
             outputs.Add(Outputs.AlignStageLVac3OnOff);
+            outputs.Add(Outputs.AlignStageLBlow1OnOff);
+            outputs.Add(Outputs.AlignStageLBlow2OnOff);
+            outputs.Add(Outputs.AlignStageLBlow3OnOff);
             return outputs;
         }
 
@@ -984,6 +987,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.AlignStageRVac1OnOff);
             outputs.Add(Outputs.AlignStageRVac2OnOff);
             outputs.Add(Outputs.AlignStageRVac3OnOff);
+            outputs.Add(Outputs.AlignStageRBlow1OnOff);
+            outputs.Add(Outputs.AlignStageRBlow2OnOff);
+            outputs.Add(Outputs.AlignStageRBlow3OnOff);
             return outputs;
         }
 
@@ -1094,6 +1100,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.UnloadGlassAlignVac2OnOff);
             outputs.Add(Outputs.UnloadGlassAlignVac3OnOff);
             outputs.Add(Outputs.UnloadGlassAlignVac4OnOff);
+            outputs.Add(Outputs.UnloadGlassAlignBlow1OnOff);
+            outputs.Add(Outputs.UnloadGlassAlignBlow2OnOff);
+            outputs.Add(Outputs.UnloadGlassAlignBlow3OnOff);
+            outputs.Add(Outputs.UnloadGlassAlignBlow4OnOff);
             outputs.Add(Outputs.UnloadAlignCyl1Up);
             outputs.Add(Outputs.UnloadAlignCyl2Up);
             outputs.Add(Outputs.UnloadAlignCyl3Up);

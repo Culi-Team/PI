@@ -576,19 +576,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Transfer Forward Done");
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRemoveStep.Pusher_Cyl_1_Up:
-                    Log.Debug("Pusher Cylinder 1 Up");
-                    PusherCyl1.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PusherCyl1.IsForward);
+                case ERemoveFilmProcessRemoveStep.Pusher_Cyl_2_Up:
+                    Log.Debug("Pusher Cylinder 2 Up");
+                    PusherCyl2.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PusherCyl2.IsForward);
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRemoveStep.Pusher_Cyl_1_Up_Wait:
+                case ERemoveFilmProcessRemoveStep.Pusher_Cyl_2_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning((int)EWarning.RemoveFilm_PusherCylinder1_Up_Fail);
+                        RaiseWarning((int)EWarning.RemoveFilm_PusherCylinder2_Up_Fail);
                         break;
                     }
-                    Log.Debug("Pusher Cylinder 1 Up Done");
+                    Log.Debug("Pusher Cylinder 2 Up Done");
                     Step.RunStep++;
                     break;
                 case ERemoveFilmProcessRemoveStep.Cyl_UpDown1_Down:
@@ -621,19 +621,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Clamp Done");
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRemoveStep.Pusher_Cyl_2_Up:
-                    Log.Debug("Pusher Cylinder 2 Up");
-                    PusherCyl2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PusherCyl2.IsForward);
+                case ERemoveFilmProcessRemoveStep.Pusher_Cyl_1_Up:
+                    Log.Debug("Pusher Cylinder 1 Up");
+                    PusherCyl1.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PusherCyl1.IsForward);
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRemoveStep.Pusher_Cyl_2_Up_Wait:
+                case ERemoveFilmProcessRemoveStep.Pusher_Cyl_1_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning((int)EWarning.RemoveFilm_PusherCylinder2_Up_Fail);
+                        RaiseWarning((int)EWarning.RemoveFilm_PusherCylinder1_Up_Fail);
                         break;
                     }
-                    Log.Debug("Pusher Cylinder 2 Up Done");
+                    Log.Debug("Pusher Cylinder 1 Up Done");
                     Step.RunStep++;
                     break;
                 case ERemoveFilmProcessRemoveStep.Cyl_UpDown1_Up:

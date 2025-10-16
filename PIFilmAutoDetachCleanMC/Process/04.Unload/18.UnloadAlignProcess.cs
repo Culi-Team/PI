@@ -35,6 +35,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDOutput AlignVac2 => _devices.Outputs.UnloadGlassAlignVac2OnOff;
         private IDOutput AlignVac3 => _devices.Outputs.UnloadGlassAlignVac3OnOff;
         private IDOutput AlignVac4 => _devices.Outputs.UnloadGlassAlignVac4OnOff;
+        private IDOutput AlignBlow1 => _devices.Outputs.UnloadGlassAlignBlow1OnOff;
+        private IDOutput AlignBlow2 => _devices.Outputs.UnloadGlassAlignBlow2OnOff;
+        private IDOutput AlignBlow3 => _devices.Outputs.UnloadGlassAlignBlow3OnOff;
+        private IDOutput AlignBlow4 => _devices.Outputs.UnloadGlassAlignBlow4OnOff;
 
         private IDInput GlassVac1 => _devices.Inputs.UnloadGlassAlignVac1;
         private IDInput GlassVac2 => _devices.Inputs.UnloadGlassAlignVac2;
@@ -303,6 +307,22 @@ namespace PIFilmAutoDetachCleanMC.Process
             AlignVac2.Value = bOnOff;
             AlignVac3.Value = bOnOff;
             AlignVac4.Value = bOnOff;
+
+            AlignBlow1.Value = !bOnOff;
+            AlignBlow2.Value = !bOnOff;
+            AlignBlow3.Value = !bOnOff;
+            AlignBlow4.Value = !bOnOff;
+
+            if (bOnOff == false)
+            {
+                Task.Delay(100).ContinueWith(t =>
+                {
+                    AlignBlow1.Value = false;
+                    AlignBlow2.Value = false;
+                    AlignBlow3.Value = false;
+                    AlignBlow4.Value = false;
+                });
+            }
         }
 
         private void Sequence_AutoRun()
