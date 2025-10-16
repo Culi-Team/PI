@@ -88,15 +88,18 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Flags
+        private bool FlagOriginDone
+        {
+            set
+            {
+                Outputs[(int)ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_ORIGIN_DONE] = value;
+            }
+        }
         private bool FlagGlassAlignRequestPick
         {
             get
             {
-                if (port == EPort.Left)
-                {
-                    return _transferInShuttleLeftInput[(int)ETransferInShuttleProcessInput.GLASS_ALIGN_REQ_PICK];
-                }
-                return _transferInShuttleRightInput[(int)ETransferInShuttleProcessInput.GLASS_ALIGN_REQ_PICK];
+                return Inputs[(int)ETransferInShuttleProcessInput.GLASS_ALIGN_REQ_PICK];
             }
         }
 
@@ -165,6 +168,12 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
+        public override bool ProcessToOrigin()
+        {
+            FlagOriginDone = false;
+            return base.ProcessToOrigin();
+        }
+
         public override bool ProcessOrigin()
         {
             switch ((ETransferInShuttleOriginStep)Step.OriginStep)
@@ -204,6 +213,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ETransferInShuttleOriginStep.End:
+                    FlagOriginDone = true;
                     Log.Debug("Origin End");
                     ProcessStatus = EProcessStatus.OriginDone;
                     Step.OriginStep++;

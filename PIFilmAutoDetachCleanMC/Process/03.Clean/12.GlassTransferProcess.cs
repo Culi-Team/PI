@@ -77,6 +77,14 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Flags
+        private bool FlagTransferInShuttleOriginDone
+        {
+            get
+            {
+                return _glassTransferInput[(int)EGlassTransferProcessInput.TRANSFER_IN_SHUTTLE_L_ORIGIN_DONE] &&
+                    _glassTransferInput[(int)EGlassTransferProcessInput.TRANSFER_IN_SHUTTLE_R_ORIGIN_DONE];
+            }
+        }
         private bool FlagDetachRequestUnloadGlass
         {
             get
@@ -210,6 +218,15 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EGlassTransferOriginStep.Start:
                     Log.Debug("Origin Start");
+                    Log.Debug("Wait Transfer In Shuttle Origin Done");
+                    Step.OriginStep++;
+                    break;
+                case EGlassTransferOriginStep.Wait_TransferInShuttleOriginDone:
+                    if (FlagTransferInShuttleOriginDone == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
                     Step.OriginStep++;
                     break;
                 case EGlassTransferOriginStep.Cyl_Up:
