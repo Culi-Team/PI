@@ -46,6 +46,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
         }
         private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
         {
+            if (Inputs == null) return;
+
             foreach (var input in Inputs)
             {
                 input.RaiseValueUpdated();

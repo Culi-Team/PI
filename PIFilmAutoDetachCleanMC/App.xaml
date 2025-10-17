@@ -26,6 +26,7 @@
                 <ResourceDictionary Source="/Styles/DataGridCellStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/TextBlockHeaderGroupBoxStyle.xaml"/>
                 <ResourceDictionary Source="/Styles/LanguageButtonStyle.xaml"/>
+                <ResourceDictionary Source="/EQX.UI;component/Styles/RadioButton/ButtonLikeRadioButtonStyle.xaml" />
 
                 <ResourceDictionary>
                     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
