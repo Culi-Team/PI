@@ -9,10 +9,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
     public enum ECylinder
     {
         // In CST
-        InCstStopperUpDown,
+        InCst_StopperUpDown,
 
         // Out CST
-        OutCstStopperUpDown,
+        OutCst_StopperUpDown,
 
         // In CST Work
         InCstFixCyl1FwBw,

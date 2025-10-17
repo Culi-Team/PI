@@ -126,7 +126,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Cylinders
-        private ICylinder FixCylinder1 => port == EPort.Right ? _devices.Cylinders.InCstFixCyl1FwBw :
+        private ICylinder FixCylinder1 => port == EPort.Right ? _devices.Cylinders.InWorkCst_FixCyl1FwBw :
                                                               _devices.Cylinders.OutCstFixCyl1FwBw;
         private ICylinder FixCylinder2 => port == EPort.Right ? _devices.Cylinders.InCstFixCyl2FwBw :
                                                               _devices.Cylinders.OutCstFixCyl2FwBw;

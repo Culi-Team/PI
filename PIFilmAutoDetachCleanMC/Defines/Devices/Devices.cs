@@ -58,7 +58,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<ICylinder> GetInConveyorCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.InCstStopperUpDown);
+            cylinders.Add(Cylinders.InCst_StopperUpDown);
 
             return cylinders;
         }
@@ -66,8 +66,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<ICylinder> GetInWorkConveyorCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.InCstStopperUpDown);
-            cylinders.Add(Cylinders.InCstFixCyl1FwBw);
+            cylinders.Add(Cylinders.InCst_StopperUpDown);
+            cylinders.Add(Cylinders.InWorkCst_FixCyl1FwBw);
             cylinders.Add(Cylinders.InCstFixCyl2FwBw);
             cylinders.Add(Cylinders.InCstTiltCylUpDown);
             cylinders.Add(Cylinders.InCvSupportUpDown);
@@ -86,7 +86,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<ICylinder> GetOutWorkConveyorCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.OutCstStopperUpDown);
+            cylinders.Add(Cylinders.OutCst_StopperUpDown);
             cylinders.Add(Cylinders.OutCstFixCyl1FwBw);
             cylinders.Add(Cylinders.OutCstFixCyl2FwBw);
             cylinders.Add(Cylinders.OutCstTiltCylUpDown);
@@ -98,7 +98,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<ICylinder> GetOutConveyorCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.OutCstStopperUpDown);
+            cylinders.Add(Cylinders.OutCst_StopperUpDown);
             return cylinders;
         }
 
@@ -324,8 +324,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
             inputs.Add(Inputs.InCstDetect1);
             inputs.Add(Inputs.InCstDetect2);
-            inputs.Add(Inputs.InCstStopperUp);
-            inputs.Add(Inputs.InCstStopperDown);
+            inputs.Add(Inputs.InCst_StopperUp);
+            inputs.Add(Inputs.InCst_StopperDown);
 
             return inputs;
         }
@@ -339,14 +339,14 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.InCvSupportDown);
             inputs.Add(Inputs.InCvSupportBufferUp);
             inputs.Add(Inputs.InCvSupportBufferDown);
-            inputs.Add(Inputs.InCstFixCyl1Fw);
+            inputs.Add(Inputs.InWorkCst_FixCyl1Fw);
             inputs.Add(Inputs.InCstFixCyl1Bw);
             inputs.Add(Inputs.InCstFixCyl2Fw);
             inputs.Add(Inputs.InCstFixCyl2Bw);
             inputs.Add(Inputs.InCstTiltCylUp);
             inputs.Add(Inputs.InCstTiltCylDown);
-            inputs.Add(Inputs.InCstStopperUp);
-            inputs.Add(Inputs.InCstStopperDown);
+            inputs.Add(Inputs.InCst_StopperUp);
+            inputs.Add(Inputs.InCst_StopperDown);
 
             return inputs;
         }
@@ -378,8 +378,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.OutCstFixCyl2Bw);
             inputs.Add(Inputs.OutCstTiltCylUp);
             inputs.Add(Inputs.OutCstTiltCylDown);
-            inputs.Add(Inputs.OutCstStopperUp);
-            inputs.Add(Inputs.OutCstStopperDown);
+            inputs.Add(Inputs.OutCst_StopperUp);
+            inputs.Add(Inputs.OutCst_StopperDown);
 
             return inputs;
         }
@@ -389,8 +389,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
             inputs.Add(Inputs.OutCstDetect1);
             inputs.Add(Inputs.OutCstDetect2);
-            inputs.Add(Inputs.OutCstStopperUp);
-            inputs.Add(Inputs.OutCstStopperDown);
+            inputs.Add(Inputs.OutCst_StopperUp);
+            inputs.Add(Inputs.OutCst_StopperDown);
             return inputs;
         }
 
@@ -782,16 +782,16 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDOutput> GetInConveyorOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            outputs.Add(Outputs.InCstStopperUp);
-            outputs.Add(Outputs.InCstStopperDown);
+            outputs.Add(Outputs.InCst_StopperUp);
+            outputs.Add(Outputs.InCst_StopperDown);
             return outputs;
         }
 
         public ObservableCollection<IDOutput> GetInWorkConveyorOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            outputs.Add(Outputs.InCstStopperUp);
-            outputs.Add(Outputs.InCstStopperDown);
+            outputs.Add(Outputs.InCst_StopperUp);
+            outputs.Add(Outputs.InCst_StopperDown);
             outputs.Add(Outputs.InCstFixCyl1Fw);
             outputs.Add(Outputs.InCstFixCyl1Bw);
             outputs.Add(Outputs.InCstFixCyl2Fw);
@@ -819,8 +819,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDOutput> GetOutWorkConveyorOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            outputs.Add(Outputs.OutCstStopperUp);
-            outputs.Add(Outputs.OutCstStopperDown);
+            outputs.Add(Outputs.OutCst_StopperUp);
+            outputs.Add(Outputs.OutCst_StopperDown);
             outputs.Add(Outputs.OutCstFixCyl1Fw);
             outputs.Add(Outputs.OutCstFixCyl1Bw);
             outputs.Add(Outputs.OutCstFixCyl2Fw);
@@ -837,8 +837,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDOutput> GetOutConveyorOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            outputs.Add(Outputs.OutCstStopperUp);
-            outputs.Add(Outputs.OutCstStopperDown);
+            outputs.Add(Outputs.OutCst_StopperUp);
+            outputs.Add(Outputs.OutCst_StopperDown);
             return outputs;
         }
 

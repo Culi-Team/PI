@@ -37,12 +37,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         public List<IDInput> All => _dInputDevice.Inputs;
 
-        public IDInput InCstStopperUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_CST_STOPPER_UP);
-        public IDInput InCstStopperDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_CST_STOPPER_DOWN);
-        public IDInput OutCstStopperUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_CST_STOPPER_UP);
-        public IDInput OutCstStopperDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_CST_STOPPER_DOWN);
+        public IDInput InCst_StopperUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_CST_STOPPER_UP);
+        public IDInput InCst_StopperDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_CST_STOPPER_DOWN);
+        public IDInput OutCst_StopperUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_CST_STOPPER_UP);
+        public IDInput OutCst_StopperDown => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_CST_STOPPER_DOWN);
         public IDInput InCstFixCyl1Bw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_CST_FIX_CYL_1_BW);
-        public IDInput InCstFixCyl1Fw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_CST_FIX_CYL_1_FW);
+        public IDInput InWorkCst_FixCyl1Fw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_CST_FIX_CYL_1_FW);
         public IDInput InCstFixCyl2Bw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_CST_FIX_CYL_2_BW);
         public IDInput InCstFixCyl2Fw => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_CST_FIX_CYL_2_FW);
         public IDInput InCstTiltCylUp => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_CST_TILT_CYL_UP);

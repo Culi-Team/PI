@@ -12,13 +12,13 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
     public class Cylinders
     {
         // In CST
-        public ICylinder InCstStopperUpDown { get; }
+        public ICylinder InCst_StopperUpDown { get; }
 
         // Out CST
-        public ICylinder OutCstStopperUpDown { get; }
+        public ICylinder OutCst_StopperUpDown { get; }
 
         // In CST Work (per input pair)
-        public ICylinder InCstFixCyl1FwBw { get; }
+        public ICylinder InWorkCst_FixCyl1FwBw { get; }
         public ICylinder InCstFixCyl2FwBw { get; }
         public ICylinder InCstTiltCylUpDown { get; }
 
@@ -184,22 +184,22 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             _outputs = outputs;
 
             // In CST
-            InCstStopperUpDown = _cylinderFactory
-                .Create(_inputs.InCstStopperUp, _inputs.InCstStopperDown, _outputs.InCstStopperUp, _outputs.InCstStopperDown)
-                .SetIdentity((int)ECylinder.InCstStopperUpDown, ECylinder.InCstStopperUpDown.ToString());
-            InCstStopperUpDown.CylinderType = ECylinderType.UpDown;
+            InCst_StopperUpDown = _cylinderFactory
+                .Create(_inputs.InCst_StopperUp, _inputs.InCst_StopperDown, _outputs.InCst_StopperUp, _outputs.InCst_StopperDown)
+                .SetIdentity((int)ECylinder.InCst_StopperUpDown, ECylinder.InCst_StopperUpDown.ToString());
+            InCst_StopperUpDown.CylinderType = ECylinderType.UpDown;
 
             // Out CST
-            OutCstStopperUpDown = _cylinderFactory
-                .Create(_inputs.OutCstStopperUp, _inputs.OutCstStopperDown, _outputs.OutCstStopperUp, _outputs.OutCstStopperDown)
-                .SetIdentity((int)ECylinder.OutCstStopperUpDown, ECylinder.OutCstStopperUpDown.ToString());
-            OutCstStopperUpDown.CylinderType = ECylinderType.UpDown;
+            OutCst_StopperUpDown = _cylinderFactory
+                .Create(_inputs.OutCst_StopperUp, _inputs.OutCst_StopperDown, _outputs.OutCst_StopperUp, _outputs.OutCst_StopperDown)
+                .SetIdentity((int)ECylinder.OutCst_StopperUpDown, ECylinder.OutCst_StopperUpDown.ToString());
+            OutCst_StopperUpDown.CylinderType = ECylinderType.UpDown;
 
             // In CST Work (per input pair)
-            InCstFixCyl1FwBw = _cylinderFactory
-                .Create(_inputs.InCstFixCyl1Fw, _inputs.InCstFixCyl1Bw, _outputs.InCstFixCyl1Fw, _outputs.InCstFixCyl1Bw)
+            InWorkCst_FixCyl1FwBw = _cylinderFactory
+                .Create(_inputs.InWorkCst_FixCyl1Fw, _inputs.InCstFixCyl1Bw, _outputs.InCstFixCyl1Fw, _outputs.InCstFixCyl1Bw)
                 .SetIdentity((int)ECylinder.InCstFixCyl1FwBw, ECylinder.InCstFixCyl1FwBw.ToString());
-            InCstFixCyl1FwBw.CylinderType = ECylinderType.ForwardBackward;
+            InWorkCst_FixCyl1FwBw.CylinderType = ECylinderType.ForwardBackward;
 
             InCstFixCyl2FwBw = _cylinderFactory
                 .Create(_inputs.InCstFixCyl2Fw, _inputs.InCstFixCyl2Bw, _outputs.InCstFixCyl2Fw, _outputs.InCstFixCyl2Bw)

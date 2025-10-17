@@ -262,5 +262,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         RobotUnload_Vacuum_On_Fail,
         RobotUnload_Pick_Fail,
         RobotUnload_Home_Manual_By_TeachingPendant,
+        RobotUnload_Programing_Not_Running,
     }
 }
