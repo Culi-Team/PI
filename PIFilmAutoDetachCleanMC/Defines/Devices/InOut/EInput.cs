@@ -413,7 +413,7 @@
         SHUTTLE_L_AVOID_COLLISION = 408,
         SPARE_IN409 = 409,
         SPARE_IN410 = 410,
-        SPARE_IN411 = 411,
+        UNLOAD_TRANSFER_AVOID_COLLISION = 411,
         MAIN_AIR_1 = 412,
         MAIN_AIR_2 = 413,
         MAIN_AIR_3 = 414,
