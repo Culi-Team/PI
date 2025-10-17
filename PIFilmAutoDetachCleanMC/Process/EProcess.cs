@@ -1,4 +1,6 @@
-﻿namespace PIFilmAutoDetachCleanMC.Process
+﻿using System.ComponentModel;
+
+namespace PIFilmAutoDetachCleanMC.Process
 {
     public enum EProcess
     {

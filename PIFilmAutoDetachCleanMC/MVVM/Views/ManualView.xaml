@@ -14,183 +14,35 @@
              x:Name="root"
              d:DesignHeight="450"
              d:DesignWidth="800">
-    <UserControl.Resources>
-        <Style x:Key="AutoWidthTabItemStyle"
-               TargetType="{x:Type TabItem}"
-               BasedOn="{StaticResource {x:Type TabItem}}">
-            <Setter Property="Width"
-                    Value="Auto" />
-            <Setter Property="Height"
-                    Value="Auto" />
-            <Setter Property="Background"
-                    Value="#F5F5F5" />
-            <Setter Property="Foreground"
-                    Value="#333333" />
-            <Setter Property="BorderBrush"
-                    Value="#CCCCCC" />
-            <Setter Property="BorderThickness"
-                    Value="1" />
-            <Setter Property="Margin"
-                    Value="1" />
-            <Setter Property="FontWeight"
-                    Value="SemiBold" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TabItem">
-                        <Grid>
-                            <Border Name="Border"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="4,0,0,4"
-                                    Margin="{TemplateBinding Margin}">
-                                <ContentPresenter x:Name="ContentSite"
-                                                  VerticalAlignment="Center"
-                                                  HorizontalAlignment="Center"
-                                                  ContentSource="Header"
-                                                  Margin="{TemplateBinding Padding}"
-                                                  RecognizesAccessKey="True" />
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <!-- Trạng thái đã chọn (Selected) - Tab chính -->
-                            <Trigger Property="IsSelected"
-                                     Value="True">
-                                <Setter TargetName="Border"
-                                        Property="Background"
-                                        Value="#2196F3" />
-                                <Setter Property="Foreground"
-                                        Value="White" />
-                                <Setter Property="FontWeight"
-                                        Value="Bold" />
-                                <Setter TargetName="Border"
-                                        Property="BorderBrush"
-                                        Value="#1976D2" />
-                            </Trigger>
-
-                            <!-- Trạng thái hover (IsMouseOver) - Tab chính -->
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-                                <Setter TargetName="Border"
-                                        Property="Background"
-                                        Value="#64B5F6" />
-                                <Setter Property="Foreground"
-                                        Value="White" />
-                                <Setter TargetName="Border"
-                                        Property="BorderBrush"
-                                        Value="#2196F3" />
-                            </Trigger>
-
-                            <!-- Trạng thái bình thường - Tab chính -->
-                            <Trigger Property="IsSelected"
-                                     Value="False">
-                                <Setter TargetName="Border"
-                                        Property="Background"
-                                        Value="#F5F5F5" />
-                                <Setter Property="Foreground"
-                                        Value="Black" />
-                                <Setter TargetName="Border"
-                                        Property="BorderBrush"
-                                        Value="#E0E0E0" />
-                            </Trigger>
-
-                            <!-- Hiệu ứng khi focus - Tab chính -->
-                            <Trigger Property="IsKeyboardFocused"
-                                     Value="True">
-                                <Setter TargetName="Border"
-                                        Property="Background"
-                                        Value="#42A5F5" />
-                                <Setter Property="Foreground"
-                                        Value="White" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="{x:Type TabControl}">
-            <Setter Property="ItemContainerStyle"
-                    Value="{StaticResource AutoWidthTabItemStyle}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TabControl">
-                        <Grid ClipToBounds="True"
-                              KeyboardNavigation.TabNavigation="Local">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <!-- Header trong cột tab -->
-                            <Border Grid.Column="0"
-                                    Grid.Row="0"
-                                    Background="Transparent"
-                                    Padding="10,8"
-                                    Margin="0,0,0,5">
-                                <TextBlock Text="Unit"
-                                           FontSize="16"
-                                           FontWeight="Bold"
-                                           Foreground="Black"
-                                           HorizontalAlignment="Center" />
-                            </Border>
-
-                            <!-- Tab headers -->
-                            <ScrollViewer Grid.Column="0"
-                                          Grid.Row="1"
-                                          VerticalScrollBarVisibility="Auto"
-                                          CanContentScroll="True">
-                                <ItemsPresenter />
-                            </ScrollViewer>
-
-                            <!-- Content -->
-                            <Border Grid.Column="1"
-                                    Grid.Row="0"
-                                    Grid.RowSpan="2"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    KeyboardNavigation.DirectionalNavigation="Contained">
-                                <ContentPresenter x:Name="PART_SelectedContentHost"
-                                                  ContentSource="SelectedContent"
-                                                  Margin="{TemplateBinding Padding}" />
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ItemsPanel">
-                <Setter.Value>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="1" />
-                    </ItemsPanelTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid>
-            <TabControl ItemsSource="{Binding ManualUnits}"
-                        SelectedItem="{Binding SelectedManualUnit, Mode=TwoWay}"
-                        Margin="10"
-                        BorderBrush="Gray"
-                        BorderThickness="1">
-                <TabControl.ItemTemplate>
-                    <DataTemplate>
-                        <ContentControl Content="{Binding Name}" />
-                    </DataTemplate>
-                </TabControl.ItemTemplate>
-
-                <TabControl.ContentTemplate>
-                    <DataTemplate>
-                        <ContentControl Content="{Binding}" />
-                    </DataTemplate>
-                </TabControl.ContentTemplate>
-            </TabControl>
+            <DockPanel>
+                <ItemsControl ItemsSource="{Binding ManualUnits}"
+                              DockPanel.Dock="Left"
+                              Width="200">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton Content="{Binding UnitName}"
+                                Command="{Binding DataContext.ManualUnitSelectCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                                CommandParameter="{Binding UnitName}"
+                                GroupName="MANUAL_UNIT_RADIOBUTTON"
+                                IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                Style="{StaticResource ButtonLikeRadioButtonStyle}">
+                            </RadioButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="1"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+                <ContentControl Content="{Binding CurrentManualUnitViewModel}"/>
+            </DockPanel>
         </Grid>
         <DockPanel Grid.Column="1">
             <GroupBox Header="SPEED CONTROL"
@@ -452,7 +304,7 @@
                     </Grid>
                 </StackPanel>
             </GroupBox>
-            
+
             <GroupBox Header="DISPLAY SCREEN"
                       DockPanel.Dock="Top">
                 <StackPanel Orientation="Vertical">

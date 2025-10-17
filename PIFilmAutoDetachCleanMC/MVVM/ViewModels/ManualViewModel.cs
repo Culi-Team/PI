@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Common;
 using EQX.Core.Communication;
@@ -10,6 +11,7 @@ using EQX.Device.Indicator;
 using EQX.UI.Controls;
 using EQX.UI.Display;
 using Microsoft.Extensions.DependencyInjection;
+using OpenCvSharp;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual;
@@ -23,7 +25,41 @@ using System.Windows.Input;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
-    public class ManualViewModel : ViewModelBase
+    public class ManualVMWithSelection : ObservableObject
+    {
+        public string UnitName
+        {
+            get { return _UnitName; }
+            set
+            {
+                _UnitName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsSelected
+        {
+            get { return _IsSelected; }
+            set
+            {
+                _IsSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ManualVMWithSelection(string name, bool selected)
+        {
+            UnitName = name;
+            IsSelected = selected;
+        }
+
+        #region Privates
+        private string _UnitName = "";
+        private bool _IsSelected;
+        #endregion
+    }
+
+    public partial class ManualViewModel : ViewModelBase
     {
         #region Privates
         private readonly IModbusCommunication _rollerModbusCommunication;
@@ -33,7 +69,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly Processes _processes;
         private readonly SerialCommunicator _syringPumpSerialCommunicator;
         private readonly IModbusCommunication _indicatorModbusCommunication;
-        private ManualUnitViewModel selectedManualUnit;
         private readonly DisplayManager _displayManager = new();
         private readonly ViewOnlyOverlay _viewOnlyOverlay = new();
         private InteractiveScreen _activeScreen;
@@ -61,68 +96,40 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                        Devices.SyringePumps.AfCleanRightSyringePump.IsConnected;
             }
         }
+
         public bool IndicatorIsConnected => Indicator.IsConnected;
         public bool WETCleanLeftRegulatorIsConnected => Devices.Regulators.WetCleanLRegulator.IsConnected;
         public bool WETCleanRightRegulatorIsConnected => Devices.Regulators.WetCleanRRegulator.IsConnected;
         public bool AFCleanLeftRegulatorIsConnected => Devices.Regulators.AfCleanLRegulator.IsConnected;
         public bool AFCleanRightRegulatorIsConnected => Devices.Regulators.AfCleanRRegulator.IsConnected;
-        public InteractiveScreen ActiveScreen
-        {
-            get => _activeScreen;
-            set
-            {
-                if (_activeScreen != value)
-                {
-                    _activeScreen = value;
-                    OnPropertyChanged(nameof(ActiveScreen));
-                    MoveMainWindowTo(_activeScreen);
-                    if (_isViewOnly)
-                    {
-                        _viewOnlyOverlay.ShowOn(_activeScreen == InteractiveScreen.Primary ? 1 : 0);
-                    }
-                }
-            }
-        }
-        public bool IsViewOnly
-        {
-            get => _isViewOnly;
-            set
-            {
-                if (_isViewOnly != value)
-                {
-                    _isViewOnly = value;
-                    OnPropertyChanged(nameof(IsViewOnly));
-                    if (_isViewOnly)
-                    {
-                        _viewOnlyOverlay.ShowOn(_activeScreen == InteractiveScreen.Primary ? 1 : 0);
-                    }
-                    else
-                    {
-                        _viewOnlyOverlay.Hide();
-                    }
-                    SetPrimaryInteractiveCommand.NotifyCanExecuteChanged();
-                    SetSecondaryInteractiveCommand.NotifyCanExecuteChanged();
-                }
-            }
-        }
 
-        public ObservableCollection<ManualUnitViewModel> ManualUnits { get; }
+        public ObservableCollection<ManualVMWithSelection> ManualUnits { get; }
 
-        public ManualUnitViewModel SelectedManualUnit
-        {
-            get
-            {
-                return selectedManualUnit;
-            }
-            set
-            {
-                selectedManualUnit = value;
-                OnPropertyChanged(nameof(SelectedManualUnit));
-            }
-        }
+        private string SelectedManualUnit => ManualUnits.First(u => u.IsSelected).UnitName;
+
+        public ManualUnitViewModel CurrentManualUnitViewModel => GetManualUnitViewModel(SelectedManualUnit);
         #endregion
 
         #region Commands
+        public IRelayCommand<string> ManualUnitSelectCommand
+        {
+            get
+            {
+                return new RelayCommand<string>((unitName) =>
+                {
+                    if (string.IsNullOrEmpty(unitName)) return;
+                    if (ManualUnits.Any(u => u.UnitName == unitName) == false) return;
+
+                    foreach (var unit in ManualUnits)
+                    {
+                        unit.IsSelected = unit.UnitName == unitName;
+                    }
+
+                    OnPropertyChanged(nameof(CurrentManualUnitViewModel));
+                });
+            }
+        }
+
         public ICommand MotionInovanceConnectCommand
         {
             get
@@ -195,26 +202,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
-        public IRelayCommand SetPrimaryInteractiveCommand
-        {
-            get
-            {
-                return new RelayCommand(
-                () => ActiveScreen = InteractiveScreen.Primary,
-                () => !IsViewOnly);
-            }
-        }
-
-        public IRelayCommand SetSecondaryInteractiveCommand
-        {
-            get
-            {
-                return new RelayCommand(
-                () => ActiveScreen = InteractiveScreen.Secondary,
-                () => !IsViewOnly);
-            }
-        }
-
         public ICommand SemiAutoCommand
         {
             get
@@ -278,27 +265,27 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand<object>((parameter) =>
                 {
-                    if(parameter == null)
+                    if (parameter == null)
                     {
                         MessageBoxEx.Show("Regulator Connect Fail");
                         return;
                     }
-                    if(parameter.ToString() == "WETCleanLeft")
+                    if (parameter.ToString() == "WETCleanLeft")
                     {
                         Devices.Regulators.WetCleanLRegulator.Connect();
                         OnPropertyChanged(nameof(WETCleanLeftRegulatorIsConnected));
                     }
-                    if(parameter.ToString() == "WETCleanRight")
+                    if (parameter.ToString() == "WETCleanRight")
                     {
                         Devices.Regulators.WetCleanRRegulator.Connect();
                         OnPropertyChanged(nameof(WETCleanRightRegulatorIsConnected));
                     }
-                    if(parameter.ToString() == "AFCleanLeft")
+                    if (parameter.ToString() == "AFCleanLeft")
                     {
                         Devices.Regulators.AfCleanLRegulator.Connect();
                         OnPropertyChanged(nameof(AFCleanLeftRegulatorIsConnected));
                     }
-                    if(parameter.ToString() == "AFCleanRight")
+                    if (parameter.ToString() == "AFCleanRight")
                     {
                         Devices.Regulators.AfCleanRRegulator.Connect();
                         OnPropertyChanged(nameof(AFCleanRightRegulatorIsConnected));
@@ -337,417 +324,415 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             Indicator = indicator;
             _displayManager.EnableExtend();
             _activeScreen = InteractiveScreen.Primary;
-            MoveMainWindowTo(_activeScreen);
             _isViewOnly = false;
 
-            ConveyorManualUnitViewModel inConveyor = new ConveyorManualUnitViewModel("In Conveyor");
-            inConveyor.Cylinders = Devices.GetInConveyorCylinders();
-            inConveyor.Inputs = Devices.GetInConveyorInputs();
-            inConveyor.Outputs = Devices.GetInConveyorOutputs();
-            inConveyor.Rollers = Devices.GetInConveyorRollers();
-            inConveyor.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("InCassetteCVImage");
-            inConveyor.SemiAutoSequences = new ObservableCollection<ESequence>()
+            ManualUnits = new ObservableCollection<ManualVMWithSelection>()
             {
-                ESequence.InConveyorLoad,
-                ESequence.InWorkCSTLoad
+                new ManualVMWithSelection("In Conveyor", true),
+                new ManualVMWithSelection("In Work Conveyor", false),
+                new ManualVMWithSelection("Buffer Conveyor", false),
+                new ManualVMWithSelection("Out Work Conveyor", false),
+                new ManualVMWithSelection("Out Conveyor", false),
+                new ManualVMWithSelection("Robot Load", false),
+                new ManualVMWithSelection("Vinyl Clean", false),
+                new ManualVMWithSelection("Transfer Fixture", false),
+                new ManualVMWithSelection("Fixture Align", false),
+                new ManualVMWithSelection("Detach", false),
+                new ManualVMWithSelection("Remove Film", false),
+                new ManualVMWithSelection("Glass Transfer", false),
+                new ManualVMWithSelection("Transfer In Shuttle Left", false),
+                new ManualVMWithSelection("Glass Align Left", false),
+                new ManualVMWithSelection("Transfer In Shuttle Right", false),
+                new ManualVMWithSelection("Glass Align Right", false),
+                new ManualVMWithSelection("WET Clean Left", false),
+                new ManualVMWithSelection("WET Clean Right", false),
+                new ManualVMWithSelection("Transfer Rotation Left", false),
+                new ManualVMWithSelection("Transfer Rotation Right", false),
+                new ManualVMWithSelection("AFClean Left", false),
+                new ManualVMWithSelection("AFClean Right", false),
+                new ManualVMWithSelection("Unload Transfer Left", false),
+                new ManualVMWithSelection("Unload Transfer Right", false),
+                new ManualVMWithSelection("Unload Align", false),
+                new ManualVMWithSelection("Unload Robot", false),
             };
-
-            ConveyorManualUnitViewModel inWorkConveyor = new ConveyorManualUnitViewModel("In Work Conveyor");
-            inWorkConveyor.Cylinders = Devices.GetInWorkConveyorCylinders();
-            inWorkConveyor.Inputs = Devices.GetInWorkConveyorInputs();
-            inWorkConveyor.Outputs = Devices.GetInWorkConveyorOutputs();
-            inWorkConveyor.Rollers = Devices.GetInWorkConveyorRollers();
-            inWorkConveyor.Motions = Devices.GetCSTLoadMotions();
-            inWorkConveyor.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("LoadWorkCassetteStageImage");
-            inWorkConveyor.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.InWorkCSTLoad,
-                ESequence.CSTTilt,
-                ESequence.InWorkCSTUnLoad
-            };
-
-            ConveyorManualUnitViewModel bufferConveyor = new ConveyorManualUnitViewModel("Buffer Conveyor");
-            bufferConveyor.Cylinders = Devices.GetBufferConveyorCylinders();
-            bufferConveyor.Inputs = Devices.GetBufferConveyorInputs();
-            bufferConveyor.Outputs = Devices.GetBufferConveyorOutputs();
-            bufferConveyor.Rollers = Devices.GetBufferConveyorRollers();
-            bufferConveyor.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("BufferCVImage");
-            bufferConveyor.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.InWorkCSTUnLoad,
-                ESequence.OutWorkCSTLoad
-            };
-
-            ConveyorManualUnitViewModel outWorkConveyor = new ConveyorManualUnitViewModel("Out Work Conveyor");
-            outWorkConveyor.Cylinders = Devices.GetOutWorkConveyorCylinders();
-            outWorkConveyor.Inputs = Devices.GetOutWorkConveyorInputs();
-            outWorkConveyor.Outputs = Devices.GetOutWorkConveyorOutputs();
-            outWorkConveyor.Rollers = Devices.GetOutWorkConveyorRollers();
-            outWorkConveyor.Motions = Devices.GetCSTUnloadMotions();
-            outWorkConveyor.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("LoadWorkCassetteStageImage");
-            outWorkConveyor.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.OutWorkCSTLoad,
-                ESequence.CSTTilt,
-                ESequence.OutWorkCSTUnLoad
-            };
-
-            ConveyorManualUnitViewModel outConveyor = new ConveyorManualUnitViewModel("Out Conveyor");
-            outConveyor.Cylinders = Devices.GetOutConveyorCylinders();
-            outConveyor.Inputs = Devices.GetOutConveyorInputs();
-            outConveyor.Outputs = Devices.GetOutConveyorOutputs();
-            outConveyor.Rollers = Devices.GetOutConveyorRollers();
-            outConveyor.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("OutCassetteCVImage");
-            outConveyor.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.OutWorkCSTUnLoad,
-                ESequence.OutConveyorUnload
-            };
-
-            ManualUnitViewModel robotLoadUnit = new ManualUnitViewModel("Robot Load");
-            robotLoadUnit.Cylinders = Devices.GetRobotLoadCylinders();
-            robotLoadUnit.Inputs = Devices.GetRobotLoadInputs();
-            robotLoadUnit.Outputs = Devices.GetRobotLoadOutputs();
-            robotLoadUnit.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("LoadRobotImage");
-            robotLoadUnit.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.RobotPickFixtureFromCST,
-                ESequence.RobotPlaceFixtureToVinylClean,
-                ESequence.RobotPlaceFixtureToAlign,
-                ESequence.RobotPickFixtureFromRemoveZone,
-                ESequence.RobotPlaceFixtureToOutWorkCST
-            };
-
-            ManualUnitViewModel vinylClean = new ManualUnitViewModel("Vinyl Clean");
-            vinylClean.Cylinders = Devices.GetVinylCleanCylinders();
-            vinylClean.Inputs = Devices.GetVinylCleanInputs();
-            vinylClean.Outputs = Devices.GetVinylCleanOutputs();
-            vinylClean.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("VinylCleanImage");
-            vinylClean.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.RobotPlaceFixtureToVinylClean,
-                ESequence.VinylClean,
-                ESequence.RobotPickFixtureFromVinylClean
-            };
-
-            ManualUnitViewModel transferFixture = new ManualUnitViewModel("Transfer Fixture");
-            transferFixture.Cylinders = Devices.GetGlassTransferCylinders();
-            transferFixture.Inputs = Devices.GetTransferFixtureInputs();
-            transferFixture.Outputs = Devices.GetTransferFixtureOutputs();
-            transferFixture.Motions = Devices.GetTransferFixtureMotions();
-            transferFixture.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferFixtureImage");
-            transferFixture.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.TransferFixtureLoad,
-                ESequence.TransferFixtureUnload,
-            };
-
-            ManualUnitViewModel fixtureAlign = new ManualUnitViewModel("Fixture Align");
-            fixtureAlign.Cylinders = Devices.GetFixtureAlignCylinders();
-            fixtureAlign.Inputs = Devices.GetFixtureAlignInputs();
-            fixtureAlign.Outputs = Devices.GetFixtureAlignOutputs();
-            fixtureAlign.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AlignFixtureImage");
-            fixtureAlign.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.RobotPlaceFixtureToAlign,
-                ESequence.FixtureAlign
-            };
-
-            ManualUnitViewModel detach = new ManualUnitViewModel("Detach");
-            detach.Cylinders = Devices.GetDetachCylinders();
-            detach.Motions = Devices.GetDetachMotions();
-            detach.Inputs = Devices.GetDetachInputs();
-            detach.Outputs = Devices.GetDetachOutputs();
-            detach.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("DetachImage");
-            detach.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.Detach,
-                ESequence.DetachUnload
-            };
-
-            ManualUnitViewModel removeFilm = new ManualUnitViewModel("Remove Film");
-            removeFilm.Cylinders = Devices.GetRemoveFilmCylinders();
-            removeFilm.Inputs = Devices.GetRemoveFilmInputs();
-            removeFilm.Outputs = Devices.GetRemoveFilmOutputs();
-            removeFilm.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("RemoveZoneImage");
-            removeFilm.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.RemoveFilm,
-                ESequence.RemoveFilmThrow
-            };
-
-            ManualUnitViewModel glassTransfer = new ManualUnitViewModel("Glass Transfer");
-            glassTransfer.Cylinders = Devices.GetGlassTransferCylinders();
-            glassTransfer.Motions = Devices.GetGlassTransferMotions();
-            glassTransfer.Inputs = Devices.GetGlassTransferInputs();
-            glassTransfer.Outputs = Devices.GetGlassTransferOutputs();
-            glassTransfer.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("GlassTransferImage");
-            glassTransfer.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.GlassTransferPick,
-                ESequence.GlassTransferPlace,
-            };
-
-            ManualUnitViewModel transferInShuttleLeft = new ManualUnitViewModel("Transfer In Shuttle Left");
-            transferInShuttleLeft.Cylinders = Devices.GetTransferInShuttleLeftCylinders();
-            transferInShuttleLeft.Motions = Devices.GetTransferShutterLeftMotions();
-            transferInShuttleLeft.Inputs = Devices.GetTransferShutterLeftInputs();
-            transferInShuttleLeft.Outputs = Devices.GetTransferShutterLeftOutputs();
-            transferInShuttleLeft.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage");
-            transferInShuttleLeft.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.TransferInShuttleLeftPick,
-                ESequence.WETCleanLeftLoad,
-            };
-
-            ManualUnitViewModel glassAlignLeft = new ManualUnitViewModel("Glass Align Left");
-            glassAlignLeft.Cylinders = Devices.GetGlassAlignLeftCylinders();
-            glassAlignLeft.Inputs = Devices.GetGlassAlignLeftInputs();
-            glassAlignLeft.Outputs = Devices.GetGlassAlignLeftOutputs();
-            glassAlignLeft.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AlignStageImage");
-            glassAlignLeft.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.AlignGlassLeft,
-            };
-
-            ManualUnitViewModel transferInShuttleRight = new ManualUnitViewModel("Transfer In Shuttle Right");
-            transferInShuttleRight.Cylinders = Devices.GetTransferInShuttleRightCylinders();
-            transferInShuttleRight.Motions = Devices.GetTransferShutterRightMotions();
-            transferInShuttleRight.Inputs = Devices.GetTransferShutterRightInputs();
-            transferInShuttleRight.Outputs = Devices.GetTransferShutterRightOutputs();
-            transferInShuttleRight.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage");
-            transferInShuttleRight.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.TransferInShuttleRightPick,
-                ESequence.WETCleanRightLoad,
-            };
-
-            ManualUnitViewModel glassAlignRight = new ManualUnitViewModel("Glass Align Right");
-            glassAlignRight.Cylinders = Devices.GetGlassAlignRightCylinders();
-            glassAlignRight.Inputs = Devices.GetGlassAlignRightInputs();
-            glassAlignRight.Outputs = Devices.GetGlassAlignRightOutputs();
-            glassAlignRight.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AlignStageImage");
-            glassAlignRight.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.AlignGlassRight,
-            };
-
-            ManualUnitViewModel wetCleanLeft = new ManualUnitViewModel("WET Clean Left");
-            wetCleanLeft.Cylinders = Devices.GetWETCleanLeftCylinders();
-            wetCleanLeft.Motions = Devices.GetWETCleanLeftMotions();
-            wetCleanLeft.Inputs = Devices.GetWETCleanLeftInputs();
-            wetCleanLeft.Outputs = Devices.GetWETCleanLeftOutputs();
-            wetCleanLeft.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
-            wetCleanLeft.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.WETCleanLeftLoad,
-                ESequence.WETCleanLeft,
-            };
-
-            ManualUnitViewModel wetCleanRight = new ManualUnitViewModel("WET Clean Right");
-            wetCleanRight.Cylinders = Devices.GetWETCleanRightCylinders();
-            wetCleanRight.Motions = Devices.GetWETCleanRightMotions();
-            wetCleanRight.Inputs = Devices.GetWETCleanRightInputs();
-            wetCleanRight.Outputs = Devices.GetWETCleanRightOutputs();
-            wetCleanRight.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
-            wetCleanRight.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.WETCleanRightLoad,
-                ESequence.WETCleanRight,
-            };
-
-            ManualUnitViewModel transferRotationLeft = new ManualUnitViewModel("Transfer Rotation Left");
-            transferRotationLeft.Cylinders = Devices.GetTransferRotationLeftCylinders();
-            transferRotationLeft.Motions = Devices.GetTransferRotationLeftMotions();
-            transferRotationLeft.Inputs = Devices.GetTransferRotationLeftInputs();
-            transferRotationLeft.Outputs = Devices.GetTransferRotationLeftOutputs();
-            transferRotationLeft.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferRotationImage");
-            transferRotationLeft.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.WETCleanLeftUnload,
-                ESequence.AFCleanLeftLoad,
-            };
-
-            ManualUnitViewModel transferRotationRight = new ManualUnitViewModel("Transfer Rotation Right");
-            transferRotationRight.Cylinders = Devices.GetTransferRotationRightCylinders();
-            transferRotationRight.Motions = Devices.GetTransferRotationRightMotions();
-            transferRotationRight.Inputs = Devices.GetTransferRotationRightInputs();
-            transferRotationRight.Outputs = Devices.GetTransferRotationRightOutputs();
-            transferRotationRight.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferRotationImage");
-            transferRotationRight.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.WETCleanRightUnload,
-                ESequence.AFCleanRightLoad,
-            };
-
-            ManualUnitViewModel afCleanLeft = new ManualUnitViewModel("AF Clean Left");
-            afCleanLeft.Cylinders = Devices.GetAFCleanLeftCylinders();
-            afCleanLeft.Motions = Devices.GetAFCleanLeftMotions();
-            afCleanLeft.Inputs = Devices.GetAFCleanLeftInputs();
-            afCleanLeft.Outputs = Devices.GetAFCleanLeftOutputs();
-            afCleanLeft.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
-            afCleanLeft.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.AFCleanLeftLoad,
-                ESequence.AFCleanLeft,
-            };
-
-            ManualUnitViewModel afCleanRight = new ManualUnitViewModel("AF Clean Right");
-            afCleanRight.Cylinders = Devices.GetAFCleanRightCylinders();
-            afCleanRight.Motions = Devices.GetAFCleanRightMotions();
-            afCleanRight.Inputs = Devices.GetAFCleanRightInputs();
-            afCleanRight.Outputs = Devices.GetAFCleanRightOutputs();
-            afCleanRight.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage");
-            afCleanRight.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.AFCleanRightLoad,
-                ESequence.AFCleanRight,
-            };
-
-            ManualUnitViewModel unloadTransferLeft = new ManualUnitViewModel("Unload Transfer Left");
-            unloadTransferLeft.Cylinders = Devices.GetUnloadTransferLeftCylinders();
-            unloadTransferLeft.Motions = Devices.GetUnloadTransferLeftMotions();
-            unloadTransferLeft.Inputs = Devices.GetUnloadTransferLeftInputs();
-            unloadTransferLeft.Outputs = Devices.GetUnloadTransferLeftOutputs();
-            unloadTransferLeft.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadTransferImage");
-            unloadTransferLeft.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.AFCleanLeftUnload,
-                ESequence.UnloadTransferLeftPlace,
-            };
-
-            ManualUnitViewModel unloadTransferRight = new ManualUnitViewModel("Unload Transfer Right");
-            unloadTransferRight.Cylinders = Devices.GetUnloadTransferRightCylinders();
-            unloadTransferRight.Motions = Devices.GetUnloadTransferRightMotions();
-            unloadTransferRight.Inputs = Devices.GetUnloadTransferRightInputs();
-            unloadTransferRight.Outputs = Devices.GetUnloadTransferRightOutputs();
-            unloadTransferRight.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadTransferImage");
-            unloadTransferRight.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.AFCleanRightUnload,
-                ESequence.UnloadTransferRightPlace,
-            };
-
-            ManualUnitViewModel unloadAlign = new ManualUnitViewModel("Unload Align");
-            unloadAlign.Cylinders = Devices.GetUnloadAlignCylinders();
-            unloadAlign.Inputs = Devices.GetUnloadAlignInputs();
-            unloadAlign.Outputs = Devices.GetUnloadAlignOutputs();
-            unloadAlign.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadStageImage");
-            unloadAlign.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.UnloadAlignGlass,
-            };
-
-            ManualUnitViewModel unloadRobotUnit = new ManualUnitViewModel("Unload Robot");
-            unloadRobotUnit.Cylinders = Devices.GetUnloadRobotCylinders();
-            unloadRobotUnit.Inputs = Devices.GetUnloadRobotInputs();
-            unloadRobotUnit.Outputs = Devices.GetUnloadRobotOutputs();
-            unloadRobotUnit.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadRobotImage");
-            unloadRobotUnit.SemiAutoSequences = new ObservableCollection<ESequence>()
-            {
-                ESequence.UnloadRobotPick,
-                ESequence.UnloadRobotPlasma,
-                ESequence.UnloadRobotPlace,
-            };
-
-            ManualUnits = new ObservableCollection<ManualUnitViewModel>()
-            {
-                inConveyor,
-                inWorkConveyor,
-                bufferConveyor,
-                outWorkConveyor,
-                outConveyor,
-                robotLoadUnit,
-                vinylClean,
-                transferFixture,
-                fixtureAlign,
-                detach,
-                removeFilm,
-                glassTransfer,
-                transferInShuttleLeft,
-                glassAlignLeft,
-                transferInShuttleRight,
-                glassAlignRight,
-                wetCleanLeft,
-                wetCleanRight,
-                transferRotationLeft,
-                transferRotationRight,
-                afCleanLeft,
-                afCleanRight,
-                unloadTransferLeft,
-                unloadTransferRight,
-                unloadRobotUnit
-            };
-
-            SelectedManualUnit = ManualUnits.First();
         }
         #endregion
 
+        private ManualUnitViewModel GetManualUnitViewModel(string name)
+        {
+            switch (name)
+            {
+                case "In Conveyor":
+                    return new ConveyorManualUnitViewModel("In Conveyor")
+                    {
+                        Cylinders = Devices.GetInConveyorCylinders(),
+                        Inputs = Devices.GetInConveyorInputs(),
+                        Outputs = Devices.GetInConveyorOutputs(),
+                        Rollers = Devices.GetInConveyorRollers(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("InCassetteCVImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.InConveyorLoad,
+                            ESequence.InWorkCSTLoad
+                        }
+                    };
+                case "In Work Conveyor":
+                    return new ConveyorManualUnitViewModel("In Work Conveyor")
+                    {
+                        Cylinders = Devices.GetInWorkConveyorCylinders(),
+                        Inputs = Devices.GetInWorkConveyorInputs(),
+                        Outputs = Devices.GetInWorkConveyorOutputs(),
+                        Rollers = Devices.GetInWorkConveyorRollers(),
+                        Motions = Devices.GetCSTLoadMotions(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("LoadWorkCassetteStageImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.InWorkCSTLoad,
+                            ESequence.CSTTilt,
+                            ESequence.InWorkCSTUnLoad
+                        }
+                    };
+                case "Buffer Conveyor":
+                    return new ConveyorManualUnitViewModel("Buffer Conveyor")
+                    {
+                        Cylinders = Devices.GetBufferConveyorCylinders(),
+                        Inputs = Devices.GetBufferConveyorInputs(),
+                        Outputs = Devices.GetBufferConveyorOutputs(),
+                        Rollers = Devices.GetBufferConveyorRollers(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("BufferCVImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.InWorkCSTUnLoad,
+                            ESequence.OutWorkCSTLoad
+                        }
+                    };
+                case "Out Work Conveyor":
+                    return new ConveyorManualUnitViewModel("Out Work Conveyor")
+                    {
+                        Cylinders = Devices.GetOutWorkConveyorCylinders(),
+                        Inputs = Devices.GetOutWorkConveyorInputs(),
+                        Outputs = Devices.GetOutWorkConveyorOutputs(),
+                        Rollers = Devices.GetOutWorkConveyorRollers(),
+                        Motions = Devices.GetCSTUnloadMotions(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("LoadWorkCassetteStageImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.OutWorkCSTLoad,
+                            ESequence.CSTTilt,
+                            ESequence.OutWorkCSTUnLoad
+                        }
+                    };
+                case "Out Conveyor":
+                    return new ConveyorManualUnitViewModel("Out Conveyor")
+                    {
+                        Cylinders = Devices.GetOutConveyorCylinders(),
+                        Inputs = Devices.GetOutConveyorInputs(),
+                        Outputs = Devices.GetOutConveyorOutputs(),
+                        Rollers = Devices.GetOutConveyorRollers(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("OutCassetteCVImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.OutWorkCSTUnLoad,
+                            ESequence.OutConveyorUnload
+                        }
+                    };
+                case "Robot Load":
+                    return new ManualUnitViewModel("Robot Load")
+                    {
+                        Cylinders = Devices.GetRobotLoadCylinders(),
+                        Inputs = Devices.GetRobotLoadInputs(),
+                        Outputs = Devices.GetRobotLoadOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("LoadRobotImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.RobotPickFixtureFromCST,
+                            ESequence.RobotPlaceFixtureToVinylClean,
+                            ESequence.RobotPlaceFixtureToAlign,
+                            ESequence.RobotPickFixtureFromRemoveZone,
+                            ESequence.RobotPlaceFixtureToOutWorkCST
+                        }
+                    };
+                case "Vinyl Clean":
+                    return new ManualUnitViewModel("Vinyl Clean")
+                    {
+                        Cylinders = Devices.GetVinylCleanCylinders(),
+                        Inputs = Devices.GetVinylCleanInputs(),
+                        Outputs = Devices.GetVinylCleanOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("VinylCleanImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.RobotPlaceFixtureToVinylClean,
+                            ESequence.VinylClean,
+                            ESequence.RobotPickFixtureFromVinylClean
+                        }
+                    };
+                case "Transfer Fixture":
+                    return new ManualUnitViewModel("Transfer Fixture")
+                    {
+                        Cylinders = Devices.GetGlassTransferCylinders(),
+                        Outputs = Devices.GetTransferFixtureOutputs(),
+                        Motions = Devices.GetTransferFixtureMotions(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferFixtureImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.TransferFixtureLoad,
+                            ESequence.TransferFixtureUnload,
+                        }
+
+                    };
+                case "Fixture Align":
+                    return new ManualUnitViewModel("Fixture Align")
+                    {
+
+                        Cylinders = Devices.GetFixtureAlignCylinders(),
+                        Inputs = Devices.GetFixtureAlignInputs(),
+                        Outputs = Devices.GetFixtureAlignOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AlignFixtureImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.RobotPlaceFixtureToAlign,
+                            ESequence.FixtureAlign
+                        }
+                    };
+                case "Detach":
+                    return new ManualUnitViewModel("Detach")
+                    {
+                        Cylinders = Devices.GetDetachCylinders(),
+                        Motions = Devices.GetDetachMotions(),
+                        Inputs = Devices.GetDetachInputs(),
+                        Outputs = Devices.GetDetachOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("DetachImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.Detach,
+                            ESequence.DetachUnload
+                        }
+                    };
+                case "Remove Film":
+                    return new ManualUnitViewModel("Remove Film")
+                    {
+                        Cylinders = Devices.GetRemoveFilmCylinders(),
+                        Inputs = Devices.GetRemoveFilmInputs(),
+                        Outputs = Devices.GetRemoveFilmOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("RemoveZoneImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.RemoveFilm,
+                            ESequence.RemoveFilmThrow
+                        }
+                    };
+                case "Glass Transfer":
+                    return new ManualUnitViewModel("Glass Transfer")
+                    {
+                        Cylinders = Devices.GetGlassTransferCylinders(),
+                        Motions = Devices.GetGlassTransferMotions(),
+                        Inputs = Devices.GetGlassTransferInputs(),
+                        Outputs = Devices.GetGlassTransferOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("GlassTransferImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.GlassTransferPick,
+                            ESequence.GlassTransferPlace
+                        }
+                    };
+                case "Transfer In Shuttle Left":
+                    return new ManualUnitViewModel("Transfer In Shuttle Left")
+                    {
+                        Cylinders = Devices.GetTransferInShuttleLeftCylinders(),
+                        Motions = Devices.GetTransferShutterLeftMotions(),
+                        Inputs = Devices.GetTransferShutterLeftInputs(),
+                        Outputs = Devices.GetTransferShutterLeftOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.TransferInShuttleLeftPick,
+                            ESequence.WETCleanLeftLoad,
+                        }
+                    };
+                case "Glass Align Left":
+                    return new ManualUnitViewModel("Glass Align Left")
+                    {
+                        Cylinders = Devices.GetGlassAlignLeftCylinders(),
+                        Inputs = Devices.GetGlassAlignLeftInputs(),
+                        Outputs = Devices.GetGlassAlignLeftOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AlignStageImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.AlignGlassLeft,
+                        }
+                    };
+                case "Transfer In Shuttle Right":
+                    return new ManualUnitViewModel("Transfer In Shuttle Right")
+                    {
+                        Cylinders = Devices.GetTransferInShuttleRightCylinders(),
+                        Motions = Devices.GetTransferShutterRightMotions(),
+                        Inputs = Devices.GetTransferShutterRightInputs(),
+                        Outputs = Devices.GetTransferShutterRightOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.TransferInShuttleRightPick,
+                            ESequence.WETCleanRightLoad,
+                        }
+                    };
+                case "Glass Align Right":
+                    return new ManualUnitViewModel("Glass Align Right")
+                    {
+                        Cylinders = Devices.GetGlassAlignRightCylinders(),
+                        Inputs = Devices.GetGlassAlignRightInputs(),
+                        Outputs = Devices.GetGlassAlignRightOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AlignStageImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.AlignGlassRight,
+                        }
+                    };
+                case "WET Clean Left":
+                    return new ManualUnitViewModel("WET Clean Left")
+                    {
+                        Cylinders = Devices.GetWETCleanLeftCylinders(),
+                        Motions = Devices.GetWETCleanLeftMotions(),
+                        Inputs = Devices.GetWETCleanLeftInputs(),
+                        Outputs = Devices.GetWETCleanLeftOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.WETCleanLeftLoad,
+                            ESequence.WETCleanLeft,
+                        }
+                    };
+                case "WET Clean Right":
+                    return new ManualUnitViewModel("WET Clean Right")
+                    {
+                        Cylinders = Devices.GetWETCleanRightCylinders(),
+                        Motions = Devices.GetWETCleanRightMotions(),
+                        Inputs = Devices.GetWETCleanRightInputs(),
+                        Outputs = Devices.GetWETCleanRightOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.WETCleanRightLoad,
+                            ESequence.WETCleanRight,
+                        }
+                    };
+                case "Transfer Rotation Left":
+                    return new ManualUnitViewModel("Transfer Rotation Left")
+                    {
+                        Cylinders = Devices.GetTransferRotationLeftCylinders(),
+                        Motions = Devices.GetTransferRotationLeftMotions(),
+                        Inputs = Devices.GetTransferRotationLeftInputs(),
+                        Outputs = Devices.GetTransferRotationLeftOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferRotationImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.WETCleanLeftUnload,
+                            ESequence.AFCleanLeftLoad,
+                        }
+                    };
+                case "Transfer Rotation Right":
+                    return new ManualUnitViewModel("Transfer Rotation Right")
+                    {
+                        Cylinders = Devices.GetTransferRotationRightCylinders(),
+                        Motions = Devices.GetTransferRotationRightMotions(),
+                        Inputs = Devices.GetTransferRotationRightInputs(),
+                        Outputs = Devices.GetTransferRotationRightOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferRotationImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.WETCleanRightUnload,
+                            ESequence.AFCleanRightLoad,
+                        }
+                    };
+                case "AFClean Left":
+                    return new ManualUnitViewModel("AF Clean Left")
+                    {
+                        Cylinders = Devices.GetAFCleanLeftCylinders(),
+                        Motions = Devices.GetAFCleanLeftMotions(),
+                        Inputs = Devices.GetAFCleanLeftInputs(),
+                        Outputs = Devices.GetAFCleanLeftOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.AFCleanLeftLoad,
+                            ESequence.AFCleanLeft,
+                        }
+                    };
+                case "AFClean Right":
+                    return new ManualUnitViewModel("AF Clean Right")
+                    {
+                        Cylinders = Devices.GetAFCleanRightCylinders(),
+                        Motions = Devices.GetAFCleanRightMotions(),
+                        Inputs = Devices.GetAFCleanRightInputs(),
+                        Outputs = Devices.GetAFCleanRightOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.AFCleanRightLoad,
+                            ESequence.AFCleanRight,
+                        }
+                    };
+                case "Unload Transfer Left":
+                    return new ManualUnitViewModel("Unload Transfer Left")
+                    {
+                        Cylinders = Devices.GetUnloadTransferLeftCylinders(),
+                        Motions = Devices.GetUnloadTransferLeftMotions(),
+                        Inputs = Devices.GetUnloadTransferLeftInputs(),
+                        Outputs = Devices.GetUnloadTransferLeftOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadTransferImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.AFCleanLeftUnload,
+                            ESequence.UnloadTransferLeftPlace,
+                        }
+                    };
+                case "Unload Transfer Right":
+                    return new ManualUnitViewModel("Unload Transfer Right")
+                    {
+                        Cylinders = Devices.GetUnloadTransferRightCylinders(),
+                        Motions = Devices.GetUnloadTransferRightMotions(),
+                        Inputs = Devices.GetUnloadTransferRightInputs(),
+                        Outputs = Devices.GetUnloadTransferRightOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadTransferImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.AFCleanRightUnload,
+                            ESequence.UnloadTransferRightPlace,
+                        }
+                    };
+                case "Unload Align":
+                    return new ManualUnitViewModel("Unload Align")
+                    {
+                        Cylinders = Devices.GetUnloadAlignCylinders(),
+                        Inputs = Devices.GetUnloadAlignInputs(),
+                        Outputs = Devices.GetUnloadAlignOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadStageImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        {
+                            ESequence.UnloadAlignGlass,
+                        }
+                    };
+                case "Unload Robot":
+                    return new ManualUnitViewModel("Unload Robot")
+                    {
+                        Cylinders = Devices.GetUnloadRobotCylinders(),
+                        Inputs = Devices.GetUnloadRobotInputs(),
+                        Outputs = Devices.GetUnloadRobotOutputs(),
+                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadRobotImage"),
+                        SemiAutoSequences = new ObservableCollection<ESequence>()
+
+
+                        {
+                            ESequence.UnloadRobotPick,
+                            ESequence.UnloadRobotPlasma,
+                            ESequence.UnloadRobotPlace,
+                        }
+                    };
+                default:
+                    return null;
+            }
+        }
+
         #region Private Methods
-        private void MoveMainWindowTo(InteractiveScreen screen)
-        {
-            var monitors = GetMonitors();
-            if (screen == InteractiveScreen.Primary && monitors.Count > 0)
-            {
-                PositionWindow(monitors[0]);
-            }
-            else if (screen == InteractiveScreen.Secondary && monitors.Count > 1)
-            {
-                PositionWindow(monitors[1]);
-            }
-        }
-
-        private static void PositionWindow(MonitorInfo info)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                var window = Application.Current.MainWindow;
-                if (window != null)
-                {
-                    var wasMaximized = window.WindowState == WindowState.Maximized;
-                    if (wasMaximized)
-                    {
-                        window.WindowState = WindowState.Normal;
-                    }
-                    window.Left = info.Left;
-                    window.Top = info.Top;
-                    window.Width = info.Width;
-                    window.Height = info.Height;
-                    if (wasMaximized)
-                    {
-                        window.WindowState = WindowState.Maximized;
-                    }
-                }
-            });
-        }
-
-        private static IList<MonitorInfo> GetMonitors()
-        {
-            var result = new List<MonitorInfo>();
-            EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero,
-                (IntPtr hMonitor, IntPtr hdc, ref RECT rect, IntPtr data) =>
-                {
-                    result.Add(new MonitorInfo(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top));
-                    return true;
-                }, IntPtr.Zero);
-            return result;
-        }
-
-        private record MonitorInfo(int Left, int Top, int Width, int Height);
-
-        private delegate bool MonitorEnumProc(IntPtr hMonitor, IntPtr hdc, ref RECT lprcMonitor, IntPtr dwData);
-
-        [DllImport("user32.dll")]
-        private static extern bool EnumDisplayMonitors(IntPtr hdc, IntPtr lprcClip, MonitorEnumProc lpfnEnum, IntPtr dwData);
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct RECT
-        {
-            public int Left;
-            public int Top;
-            public int Right;
-            public int Bottom;
-        }
         #endregion
     }
 }
