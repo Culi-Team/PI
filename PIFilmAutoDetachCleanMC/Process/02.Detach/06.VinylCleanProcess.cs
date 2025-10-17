@@ -583,6 +583,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.VinylCleanFixtureDetect, true);
+#endif
                     Log.Debug("Clear Flag Vinyl Clean Request Load");
                     FlagVinylCleanRequestLoad = false;
 
@@ -596,6 +599,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.VinylClean_Fixture_NotDetect);
                         break;
                     }
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.VinylCleanFixtureDetect, false);
+#endif
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.End:

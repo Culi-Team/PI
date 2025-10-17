@@ -695,6 +695,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttlePickStep.Vacuum_On:
                     Log.Debug("Vacuum On");
                     GlassVac.Value = true;
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(GlassVacuumInput, true);
+#endif
                     Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
@@ -705,6 +708,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                                                                 : EWarning.TransferInShuttleRight_Vacuum_Fail));
                         break;
                     }
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(GlassVacuumInput, false);
+#endif
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.ZAxis_Move_ReadyPosition:
