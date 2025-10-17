@@ -9,7 +9,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         private readonly IDInputDevice _dInputDevice;
 
-        public Inputs([FromKeyedServices("InputDevice#1")]IDInputDevice dInputDevice)
+        public Inputs([FromKeyedServices("InputDevice#1")] IDInputDevice dInputDevice)
         {
             _dInputDevice = dInputDevice;
 
@@ -408,6 +408,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput PlasmaStatus3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_STATUS_3);
         public IDInput PlasmaStatus4 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_STATUS_4);
         public IDInput RelayPlasmaMotorError => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.RELAY_PLASMA_MOTOR_ERROR);
+
+        public IDInput UnloadTransferAvoidCollision => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_TRANSFER_AVOID_COLLISION);
 
         //Main Air
         public IDInput MainAir1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.MAIN_AIR_1);
