@@ -38,6 +38,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             Regulators = regulators;
             AnalogInputs = analogInputs;
             SyringePumps = syringePumps;
+
+            CylinderInterlockConfigurator.Configure(this);
         }
 
         public Inputs Inputs { get; }

@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:inout="clr-namespace:EQX.InOut;assembly=EQX.InOut"
+                    xmlns:controls="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <DataTemplate x:Key="CylinderControlDataTemplate"
                   DataType="{x:Type inout:CylinderBase}">
@@ -19,22 +20,28 @@
                              Columns="2"
                              Grid.Row="1"
                              HorizontalAlignment="Center">
-                    <Button Content="{Binding CylinderType, Converter={StaticResource CylinderTypeToButtonNameConverter}, ConverterParameter=true}"
-                            Background="{Binding IsForward, Converter={StaticResource CylinderButtonBrushConverter}}"
-                            BorderBrush="{Binding IsForward, Converter={StaticResource CylinderButtonBrushConverter}}"
-                            Command="{Binding DataContext.CylinderForwardCommand,ElementName=root}"
-                            Margin="2 0 2 0"
-                            FontSize="14"
-                            Height="35"
-                            Width="100"
-                            CommandParameter="{Binding}" />
-                    <Button Content="{Binding CylinderType, Converter={StaticResource CylinderTypeToButtonNameConverter}, ConverterParameter=false}"
-                            Background="{Binding IsBackward, Converter={StaticResource CylinderButtonBrushConverter}}"
-                            BorderBrush="{Binding IsBackward, Converter={StaticResource CylinderButtonBrushConverter}}"
-                            Command="{Binding DataContext.CylinderBackwardCommand,ElementName=root}"
-                            Margin="2 0 2 0"
-                            FontSize="14"
-                            CommandParameter="{Binding}" />
+                    <controls:InterlockButton Content="{Binding CylinderType, Converter={StaticResource CylinderTypeToButtonNameConverter}, ConverterParameter=true}"
+                                              Background="{Binding IsForward, Converter={StaticResource CylinderButtonBrushConverter}}"
+                                              BorderBrush="{Binding IsForward, Converter={StaticResource CylinderButtonBrushConverter}}"
+                                              Command="{Binding DataContext.CylinderForwardCommand,ElementName=root}"
+                                              Margin="2 0 2 0"
+                                              FontSize="14"
+                                              Height="35"
+                                              Width="100"
+                                              CommandParameter="{Binding}"
+                                              InterlockKey="{Binding InterlockKey}"
+                                              ToolTip="{Binding InterlockFailMessage}" />
+                    <controls:InterlockButton Content="{Binding CylinderType, Converter={StaticResource CylinderTypeToButtonNameConverter}, ConverterParameter=false}"
+                                              Background="{Binding IsBackward, Converter={StaticResource CylinderButtonBrushConverter}}"
+                                              BorderBrush="{Binding IsBackward, Converter={StaticResource CylinderButtonBrushConverter}}"
+                                              Command="{Binding DataContext.CylinderBackwardCommand,ElementName=root}"
+                                              Margin="2 0 2 0"
+                                              FontSize="14"
+                                              Height="35"
+                                              Width="100"
+                                              CommandParameter="{Binding}"
+                                              InterlockKey="{Binding InterlockKey}"
+                                              ToolTip="{Binding InterlockFailMessage}" />
                 </UniformGrid>
             </Grid>
         </Border>

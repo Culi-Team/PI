@@ -1,13 +1,4 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using EQX.Core.Common;
-using EQX.Core.InOut;
-using EQX.Core.Motion;
-using EQX.Core.Recipe;
-using EQX.UI.Controls;
-using Microsoft.Extensions.DependencyInjection;
-using PIFilmAutoDetachCleanMC.Defines.Devices;
-using PIFilmAutoDetachCleanMC.Recipe;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
@@ -15,6 +6,16 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.Input;
+using EQX.Core.Common;
+using EQX.Core.InOut;
+using EQX.Core.Motion;
+using EQX.Core.Recipe;
+using EQX.InOut;
+using EQX.UI.Controls;
+using Microsoft.Extensions.DependencyInjection;
+using PIFilmAutoDetachCleanMC.Defines.Devices;
+using PIFilmAutoDetachCleanMC.Recipe;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
 {
@@ -119,6 +120,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 {
                     if (o is ICylinder cylinder == false) return;
 
+                    if (EnsureCylinderInterlockSatisfied(cylinder) == false)
+                    {
+                        return;
+                    }
+
                     if (cylinder.CylinderType == ECylinderType.ForwardBackwardReverse ||
                         cylinder.CylinderType == ECylinderType.UpDownReverse ||
                         cylinder.CylinderType == ECylinderType.RightLeftReverse ||
@@ -145,6 +151,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 {
                     if (o is ICylinder cylinder == false) return;
 
+                    if (EnsureCylinderInterlockSatisfied(cylinder) == false)
+                    {
+                        return;
+                    }
+
                     if (cylinder.CylinderType == ECylinderType.ForwardBackwardReverse ||
                         cylinder.CylinderType == ECylinderType.UpDownReverse ||
                         cylinder.CylinderType == ECylinderType.RightLeftReverse ||
@@ -160,6 +171,21 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     cylinder.Backward();
                 });
             }
+        }
+
+        private static bool EnsureCylinderInterlockSatisfied(ICylinder cylinder)
+        {
+            if (cylinder is CylinderBase cylinderBase && cylinderBase.IsInterlockSatisfied() == false)
+            {
+                string message = string.IsNullOrWhiteSpace(cylinderBase.InterlockFailMessage)
+                    ? $"Interlock conditions for cylinder [{cylinderBase.Name}] are not satisfied."
+                    : cylinderBase.InterlockFailMessage!;
+
+                MessageBoxEx.ShowDialog(message);
+                return false;
+            }
+
+            return true;
         }
         public bool CheckAxisCylinderAndPositionBeforMove(string moveToDescription)
         {

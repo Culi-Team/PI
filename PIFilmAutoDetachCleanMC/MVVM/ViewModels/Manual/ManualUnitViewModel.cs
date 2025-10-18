@@ -1,9 +1,4 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using EQX.Core.Common;
-using EQX.Core.InOut;
-using EQX.Core.Motion;
-using PIFilmAutoDetachCleanMC.Defines;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,6 +7,13 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.Input;
+using EQX.Core.Common;
+using EQX.Core.InOut;
+using EQX.Core.Motion;
+using EQX.InOut;
+using EQX.UI.Controls;
+using PIFilmAutoDetachCleanMC.Defines;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
 {
@@ -62,6 +64,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
                 {
                     if (o is ICylinder cylinder == false) return;
 
+                    if (EnsureCylinderInterlockSatisfied(cylinder) == false)
+                    {
+                        return;
+                    }
+
                     if (cylinder.CylinderType == ECylinderType.ForwardBackwardReverse ||
                         cylinder.CylinderType == ECylinderType.UpDownReverse ||
                         cylinder.CylinderType == ECylinderType.RightLeftReverse ||
@@ -88,6 +95,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
                 {
                     if (o is ICylinder cylinder == false) return;
 
+                    if (EnsureCylinderInterlockSatisfied(cylinder) == false)
+                    {
+                        return;
+                    }
+
                     if (cylinder.CylinderType == ECylinderType.ForwardBackwardReverse ||
                         cylinder.CylinderType == ECylinderType.UpDownReverse ||
                         cylinder.CylinderType == ECylinderType.RightLeftReverse ||
@@ -103,6 +115,21 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
                     cylinder.Backward();
                 });
             }
+        }
+
+        private static bool EnsureCylinderInterlockSatisfied(ICylinder cylinder)
+        {
+            if (cylinder is CylinderBase cylinderBase && cylinderBase.IsInterlockSatisfied() == false)
+            {
+                string message = string.IsNullOrWhiteSpace(cylinderBase.InterlockFailMessage)
+                    ? $"Interlock conditions for cylinder [{cylinderBase.Name}] are not satisfied."
+                    : cylinderBase.InterlockFailMessage!;
+
+                MessageBoxEx.ShowDialog(message);
+                return false;
+            }
+
+            return true;
         }
     }
 }
