@@ -115,9 +115,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views.Teaching
             if (e.OldValue is UnitTeachingViewModel oldUnit)
             {
                 oldUnit.DisableTimer();
+                oldUnit.IsSelected = false;
             }
             if (e.NewValue is UnitTeachingViewModel newUnit)
             {
+                newUnit.IsSelected = true;
                 newUnit.EnableTimer();
             }
         }
