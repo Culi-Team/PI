@@ -53,8 +53,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Cylinders
-        private ICylinder BufferStopper1 => _devices.Cylinders.BufferCvStopper1UpDown;
-        private ICylinder BufferStopper2 => _devices.Cylinders.BufferCvStopper2UpDown;
+        private ICylinder BufferStopper1 => _devices.Cylinders.BufferCV_StopperCyl1;
+        private ICylinder BufferStopper2 => _devices.Cylinders.BufferCV_StopperCyl2;
         #endregion
 
         #region Rollers

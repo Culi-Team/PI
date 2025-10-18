@@ -23,11 +23,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly MachineStatus _machineStatus;
 
         private bool IsFixtureDetect => _devices.Inputs.VinylCleanFixtureDetect.Value;
-        private ICylinder FixtureClampCyl1 => _devices.Cylinders.VinylCleanFixture1ClampUnclamp;
-        private ICylinder FixtureClampCyl2 => _devices.Cylinders.VinylCleanFixture2ClampUnclamp;
+        private ICylinder FixtureClampCyl1 => _devices.Cylinders.VinylClean_ClampCyl1;
+        private ICylinder FixtureClampCyl2 => _devices.Cylinders.VinylClean_ClampCyl2;
 
-        private ICylinder RollerFwBwCyl => _devices.Cylinders.VinylCleanRollerFwBw;
-        private ICylinder PusherCyl => _devices.Cylinders.VinylCleanPusherRollerUpDown;
+        private ICylinder RollerFwBwCyl => _devices.Cylinders.VinylClean_BwFwCyl;
+        private ICylinder PusherCyl => _devices.Cylinders.VinylClean_UpDownCyl;
 
         private IDOutput MotorOnOff => _devices.Outputs.VinylCleanMotorOnOff;
         private bool IsUnWinderFullDetect => _devices.Inputs.VinylCleanFullDetect.Value;

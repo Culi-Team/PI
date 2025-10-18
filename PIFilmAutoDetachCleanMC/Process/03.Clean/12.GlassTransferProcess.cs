@@ -35,9 +35,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDOutput GlassVac2 => _devices.Outputs.GlassTransferVac2OnOff;
         private IDOutput GlassVac3 => _devices.Outputs.GlassTransferVac3OnOff;
 
-        private ICylinder CylinderUpDown1 => _devices.Cylinders.GlassTransferCyl1UpDown;
-        private ICylinder CylinderUpDown2 => _devices.Cylinders.GlassTransferCyl2UpDown;
-        private ICylinder CylinderUpDown3 => _devices.Cylinders.GlassTransferCyl3UpDown;
+        private ICylinder CylinderUpDown1 => _devices.Cylinders.GlassTransfer_UpDownCyl1;
+        private ICylinder CylinderUpDown2 => _devices.Cylinders.GlassTransfer_UpDownCyl2;
+        private ICylinder CylinderUpDown3 => _devices.Cylinders.GlassTransfer_UpDownCyl3;
         private bool IsCylinderUp => CylinderUpDown1.IsBackward && CylinderUpDown2.IsBackward && CylinderUpDown3.IsBackward;
         private bool IsCylinderDown => CylinderUpDown1.IsForward && CylinderUpDown2.IsForward && CylinderUpDown3.IsForward;
 

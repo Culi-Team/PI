@@ -58,7 +58,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<ICylinder> GetInConveyorCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.InCst_StopperUpDown);
+            cylinders.Add(Cylinders.InCV_StopperCyl);
 
             return cylinders;
         }
@@ -66,49 +66,49 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<ICylinder> GetInWorkConveyorCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.InCst_StopperUpDown);
-            cylinders.Add(Cylinders.InWorkCst_AlignCyl1FwBw);
-            cylinders.Add(Cylinders.InWorkCst_AlignCyl2FwBw);
-            cylinders.Add(Cylinders.InWorkCst_TiltCylUpDown);
-            cylinders.Add(Cylinders.InCvSupportUpDown);
-            cylinders.Add(Cylinders.InCvSupportBufferUpDown);
+            cylinders.Add(Cylinders.InCV_StopperCyl);
+            cylinders.Add(Cylinders.InWorkCV_AlignCyl1);
+            cylinders.Add(Cylinders.InWorkCV_AlignCyl2);
+            cylinders.Add(Cylinders.InWorkCV_TiltCyl);
+            cylinders.Add(Cylinders.InWorkCV_SupportCyl1);
+            cylinders.Add(Cylinders.InWorkCV_SupportCyl2);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetBufferConveyorCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.BufferCvStopper1UpDown);
-            cylinders.Add(Cylinders.BufferCvStopper2UpDown);
+            cylinders.Add(Cylinders.BufferCV_StopperCyl1);
+            cylinders.Add(Cylinders.BufferCV_StopperCyl2);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetOutWorkConveyorCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.OutCst_StopperUpDown);
-            cylinders.Add(Cylinders.OutWorkCst_AlignCyl1FwBw);
-            cylinders.Add(Cylinders.OutWorkCst_AlignCyl2FwBw);
-            cylinders.Add(Cylinders.OutWorkCst_TiltCylUpDown);
-            cylinders.Add(Cylinders.OutCvSupportUpDown);
-            cylinders.Add(Cylinders.OutCvSupportBufferUpDown);
+            cylinders.Add(Cylinders.OutCV_StopperCyl);
+            cylinders.Add(Cylinders.OutWorkCV_AlignCyl1);
+            cylinders.Add(Cylinders.OutWorkCV_AlignCyl2);
+            cylinders.Add(Cylinders.OutWorkCV_TiltCyl);
+            cylinders.Add(Cylinders.OutWorkCV_SupportCyl2);
+            cylinders.Add(Cylinders.OutWorkCV_SupportCyl1);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetOutConveyorCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.OutCst_StopperUpDown);
+            cylinders.Add(Cylinders.OutCV_StopperCyl);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetVinylCleanCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.VinylCleanRollerFwBw);
-            cylinders.Add(Cylinders.VinylCleanPusherRollerUpDown);
-            cylinders.Add(Cylinders.VinylCleanFixture1ClampUnclamp);
-            cylinders.Add(Cylinders.VinylCleanFixture2ClampUnclamp);
+            cylinders.Add(Cylinders.VinylClean_BwFwCyl);
+            cylinders.Add(Cylinders.VinylClean_UpDownCyl);
+            cylinders.Add(Cylinders.VinylClean_ClampCyl1);
+            cylinders.Add(Cylinders.VinylClean_ClampCyl2);
             return cylinders;
         }
 
@@ -116,11 +116,11 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
 
-            cylinders.Add(Cylinders.TransferFixtureUpDown);
-            cylinders.Add(Cylinders.TransferFixture1_1ClampUnclamp);
-            cylinders.Add(Cylinders.TransferFixture1_2ClampUnclamp);
-            cylinders.Add(Cylinders.TransferFixture2_1ClampUnclamp);
-            cylinders.Add(Cylinders.TransferFixture2_2ClampUnclamp);
+            cylinders.Add(Cylinders.TransferFixture_UpDownCyl);
+            cylinders.Add(Cylinders.TransferFixture_ClampCyl1);
+            cylinders.Add(Cylinders.TransferFixture_ClampCyl2);
+            cylinders.Add(Cylinders.TransferFixture_ClampCyl3);
+            cylinders.Add(Cylinders.TransferFixture_ClampCyl4);
 
             return cylinders;
         }
@@ -128,8 +128,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<ICylinder> GetFixtureAlignCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.AlignFixtureCyl1FwBw);
-            cylinders.Add(Cylinders.AlignFixtureCyl2FwBw);
+            cylinders.Add(Cylinders.FixtureAlign_AlignCyl1);
+            cylinders.Add(Cylinders.FixtureAlign_AlignCyl2);
 
             return cylinders;
         }
@@ -137,16 +137,16 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<ICylinder> GetRemoveFilmCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.RemoveZoneFixCyl1_1FwBw);
-            cylinders.Add(Cylinders.RemoveZoneFixCyl1_2FwBw);
-            cylinders.Add(Cylinders.RemoveZoneFixCyl2_1FwBw);
-            cylinders.Add(Cylinders.RemoveZoneFixCyl2_2FwBw);
-            cylinders.Add(Cylinders.RemoveZoneCyl1ClampUnclamp);
-            cylinders.Add(Cylinders.RemoveZoneCyl2ClampUnclamp);
-            cylinders.Add(Cylinders.RemoveZoneCyl3ClampUnclamp);
-            cylinders.Add(Cylinders.RemoveZonePusherCyl1UpDown);
-            cylinders.Add(Cylinders.RemoveZonePusherCyl2UpDown);
-            cylinders.Add(Cylinders.RemoveZoneTrCylFwBw);
+            cylinders.Add(Cylinders.RemoveZone_ClampCyl1);
+            cylinders.Add(Cylinders.RemoveZone_ClampCyl2);
+            cylinders.Add(Cylinders.RemoveZone_ClampCyl3);
+            cylinders.Add(Cylinders.RemoveZone_ClampCyl4);
+            cylinders.Add(Cylinders.RemoveZone_FilmClampCyl1);
+            cylinders.Add(Cylinders.RemoveZone_FilmClampCyl2);
+            cylinders.Add(Cylinders.RemoveZone_FilmClampCyl3);
+            cylinders.Add(Cylinders.RemoveZone_PusherCyl1);
+            cylinders.Add(Cylinders.RemoveZone_PusherCyl2);
+            cylinders.Add(Cylinders.RemoveZone_TransferCyl);
             return cylinders;
         }
 
@@ -154,9 +154,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
 
-            cylinders.Add(Cylinders.RobotFixtureAlignFwBw);
-            cylinders.Add(Cylinders.RobotFixture1ClampUnclamp);
-            cylinders.Add(Cylinders.RobotFixture2ClampUnclamp);
+            cylinders.Add(Cylinders.RobotLoad_AlignCyl);
+            cylinders.Add(Cylinders.RobotLoad_ClampCyl1);
+            cylinders.Add(Cylinders.RobotLoad_ClampCyl2);
 
             return cylinders;
         }
@@ -165,13 +165,13 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
 
-            cylinders.Add(Cylinders.DetachFixFixtureCyl1_1FwBw);
-            cylinders.Add(Cylinders.DetachFixFixtureCyl1_2FwBw);
-            cylinders.Add(Cylinders.DetachFixFixtureCyl2_1FwBw);
-            cylinders.Add(Cylinders.DetachFixFixtureCyl2_2FwBw);
+            cylinders.Add(Cylinders.Detach_ClampCyl1);
+            cylinders.Add(Cylinders.Detach_ClampCyl2);
+            cylinders.Add(Cylinders.Detach_ClampCyl3);
+            cylinders.Add(Cylinders.Detach_ClampCyl4);
 
-            cylinders.Add(Cylinders.DetachCyl1UpDown);
-            cylinders.Add(Cylinders.DetachCyl2UpDown);
+            cylinders.Add(Cylinders.Detach_UpDownCyl1);
+            cylinders.Add(Cylinders.Detach_UpDownCyl2);
 
             return cylinders;
         }
@@ -180,9 +180,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
 
-            cylinders.Add(Cylinders.GlassTransferCyl1UpDown);
-            cylinders.Add(Cylinders.GlassTransferCyl2UpDown);
-            cylinders.Add(Cylinders.GlassTransferCyl3UpDown);
+            cylinders.Add(Cylinders.GlassTransfer_UpDownCyl1);
+            cylinders.Add(Cylinders.GlassTransfer_UpDownCyl2);
+            cylinders.Add(Cylinders.GlassTransfer_UpDownCyl3);
 
             return cylinders;
         }
@@ -190,118 +190,118 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<ICylinder> GetTransferInShuttleLeftCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.TransferInShuttleLRotate);
+            cylinders.Add(Cylinders.TransferInShuttleL_RotateCyl);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetGlassAlignLeftCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.AlignStageL1AlignUnalign);
-            cylinders.Add(Cylinders.AlignStageL2AlignUnalign);
-            cylinders.Add(Cylinders.AlignStageL3AlignUnalign);
-            cylinders.Add(Cylinders.AlignStageLBrushCylUpDown);
+            cylinders.Add(Cylinders.AlignStageL_AlignCyl1);
+            cylinders.Add(Cylinders.AlignStageL_AlignCyl2);
+            cylinders.Add(Cylinders.AlignStageL_AlignCyl3);
+            cylinders.Add(Cylinders.AlignStageL_BrushCyl);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetTransferInShuttleRightCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.TransferInShuttleRRotate);
+            cylinders.Add(Cylinders.TransferInShuttleR_RotateCyl);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetGlassAlignRightCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.AlignStageR1AlignUnalign);
-            cylinders.Add(Cylinders.AlignStageR2AlignUnalign);
-            cylinders.Add(Cylinders.AlignStageR3AlignUnalign);
-            cylinders.Add(Cylinders.AlignStageRBrushCylUpDown);
+            cylinders.Add(Cylinders.AlignStageR_AlignCyl1);
+            cylinders.Add(Cylinders.AlignStageR_AlignCyl2);
+            cylinders.Add(Cylinders.AlignStageR_AlignCyl3);
+            cylinders.Add(Cylinders.AlignStageR_BrushCyl);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetTransferRotationLeftCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.TrRotateLeftRotate);
-            cylinders.Add(Cylinders.TrRotateLeftFwBw);
-            cylinders.Add(Cylinders.TrRotateLeftUpDown);
+            cylinders.Add(Cylinders.TransferRotationL_RotationCyl);
+            cylinders.Add(Cylinders.TransferRotationL_BwFwCyl);
+            cylinders.Add(Cylinders.TransferRotationLeft_UpDownCyl);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetTransferRotationRightCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.TrRotateRightRotate);
-            cylinders.Add(Cylinders.TrRotateRightFwBw);
-            cylinders.Add(Cylinders.TrRotateRightUpDown);
+            cylinders.Add(Cylinders.TransferRotationR_RotationCyl);
+            cylinders.Add(Cylinders.TransferRotationR_BwFwCyl);
+            cylinders.Add(Cylinders.TransferRotationR_UpDownCyl);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetUnloadTransferLeftCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.UnloadAlignCyl1UpDown);
-            cylinders.Add(Cylinders.UnloadAlignCyl2UpDown);
-            cylinders.Add(Cylinders.UnloadAlignCyl3UpDown);
-            cylinders.Add(Cylinders.UnloadAlignCyl4UpDown);
+            cylinders.Add(Cylinders.UnloadAlign_UpDownCyl1);
+            cylinders.Add(Cylinders.UnloadAlign_UpDownCyl2);
+            cylinders.Add(Cylinders.UnloadAlign_UpDownCyl3);
+            cylinders.Add(Cylinders.UnloadAlign_UpDownCyl4);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetUnloadTransferRightCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.UnloadAlignCyl1UpDown);
-            cylinders.Add(Cylinders.UnloadAlignCyl2UpDown);
-            cylinders.Add(Cylinders.UnloadAlignCyl3UpDown);
-            cylinders.Add(Cylinders.UnloadAlignCyl4UpDown);
+            cylinders.Add(Cylinders.UnloadAlign_UpDownCyl1);
+            cylinders.Add(Cylinders.UnloadAlign_UpDownCyl2);
+            cylinders.Add(Cylinders.UnloadAlign_UpDownCyl3);
+            cylinders.Add(Cylinders.UnloadAlign_UpDownCyl4);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetWETCleanLeftCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.WetCleanPusherLeftUpDown);
-            cylinders.Add(Cylinders.WetCleanBrushLeftUpDown);
-            cylinders.Add(Cylinders.WetCleanLeft1ClampUnclamp);
-            cylinders.Add(Cylinders.WetCleanLeft2ClampUnclamp);
+            cylinders.Add(Cylinders.WetCleanL_PusherCyl);
+            cylinders.Add(Cylinders.WetCleanL_BrushCyl);
+            cylinders.Add(Cylinders.WetCleanL_ClampCyl1);
+            cylinders.Add(Cylinders.WetCleanL_ClampCyl2);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetWETCleanRightCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.WetCleanPusherRightUpDown);
-            cylinders.Add(Cylinders.WetCleanBrushRightUpDown);
-            cylinders.Add(Cylinders.WetCleanRight1ClampUnclamp);
-            cylinders.Add(Cylinders.WetCleanRight2ClampUnclamp);
+            cylinders.Add(Cylinders.WetCleanR_PusherCyl);
+            cylinders.Add(Cylinders.WetCleanR_BrushCyl);
+            cylinders.Add(Cylinders.WetCleanR_ClampCyl1);
+            cylinders.Add(Cylinders.WetCleanR_ClampCyl2);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetAFCleanLeftCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.AFCleanPusherLeftUpDown);
-            cylinders.Add(Cylinders.AFCleanBrushLeftUpDown);
+            cylinders.Add(Cylinders.AFCleanL_PusherCyl);
+            cylinders.Add(Cylinders.AFCleanL_BrushCyl);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetAFCleanRightCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.AFCleanPusherRightUpDown);
-            cylinders.Add(Cylinders.AFCleanBrushRightUpDown);
+            cylinders.Add(Cylinders.AFCleanR_PusherCyl);
+            cylinders.Add(Cylinders.AFCleanR_BrushCyl);
             return cylinders;
         }
 
         public ObservableCollection<ICylinder> GetUnloadAlignCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.UnloadAlignCyl1UpDown);
-            cylinders.Add(Cylinders.UnloadAlignCyl2UpDown);
-            cylinders.Add(Cylinders.UnloadAlignCyl3UpDown);
-            cylinders.Add(Cylinders.UnloadAlignCyl4UpDown);
+            cylinders.Add(Cylinders.UnloadAlign_UpDownCyl1);
+            cylinders.Add(Cylinders.UnloadAlign_UpDownCyl2);
+            cylinders.Add(Cylinders.UnloadAlign_UpDownCyl3);
+            cylinders.Add(Cylinders.UnloadAlign_UpDownCyl4);
 
             return cylinders;
         }
@@ -309,10 +309,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<ICylinder> GetUnloadRobotCylinders()
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
-            cylinders.Add(Cylinders.UnloadRobotCyl1UpDown);
-            cylinders.Add(Cylinders.UnloadRobotCyl2UpDown);
-            cylinders.Add(Cylinders.UnloadRobotCyl3UpDown);
-            cylinders.Add(Cylinders.UnloadRobotCyl4UpDown);
+            cylinders.Add(Cylinders.UnloadRobot_UpDownCyl1);
+            cylinders.Add(Cylinders.UnloadRobot_UpDownCyl2);
+            cylinders.Add(Cylinders.UnloadRobot_UpDownCyl3);
+            cylinders.Add(Cylinders.UnloadRobot_UpDownCyl4);
 
             return cylinders;
         }
@@ -324,8 +324,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
             inputs.Add(Inputs.InCstDetect1);
             inputs.Add(Inputs.InCstDetect2);
-            inputs.Add(Inputs.InCst_StopperUp);
-            inputs.Add(Inputs.InCst_StopperDown);
+            inputs.Add(Inputs.InCV_StopperUp);
+            inputs.Add(Inputs.InCV_StopperDown);
 
             return inputs;
         }
@@ -339,14 +339,14 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.InCvSupportDown);
             inputs.Add(Inputs.InCvSupportBufferUp);
             inputs.Add(Inputs.InCvSupportBufferDown);
-            inputs.Add(Inputs.InWorkCst_AlignCyl1Fw);
-            inputs.Add(Inputs.InWorkCst_AlignCyl1Bw);
-            inputs.Add(Inputs.InWorkCst_AlignCyl2Fw);
-            inputs.Add(Inputs.InWorkCst_AlignCyl2Bw);
-            inputs.Add(Inputs.InWorkCst_TiltCylUp);
-            inputs.Add(Inputs.InWorkCst_TiltCylDown);
-            inputs.Add(Inputs.InCst_StopperUp);
-            inputs.Add(Inputs.InCst_StopperDown);
+            inputs.Add(Inputs.InWorkCV_AlignCyl1Fw);
+            inputs.Add(Inputs.InWorkCV_AlignCyl1Bw);
+            inputs.Add(Inputs.InWorkCV_AlignCyl2Fw);
+            inputs.Add(Inputs.InWorkCV_AlignCyl2Bw);
+            inputs.Add(Inputs.InWorkCV_TiltCylUp);
+            inputs.Add(Inputs.InWorkCV_TiltCylDown);
+            inputs.Add(Inputs.InCV_StopperUp);
+            inputs.Add(Inputs.InCV_StopperDown);
 
             return inputs;
         }
@@ -356,10 +356,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
             inputs.Add(Inputs.BufferCstDetect1);
             inputs.Add(Inputs.BufferCstDetect2);
-            inputs.Add(Inputs.BufferCvStopper1Up);
-            inputs.Add(Inputs.BufferCvStopper1Down);
-            inputs.Add(Inputs.BufferCvStopper2Up);
-            inputs.Add(Inputs.BufferCvStopper2Down);
+            inputs.Add(Inputs.BufferCV_StopperCyl1Up);
+            inputs.Add(Inputs.BufferCV_StopperCyl1Down);
+            inputs.Add(Inputs.BufferCV_StopperCyl2Up);
+            inputs.Add(Inputs.BufferCV_StopperCyl2Down);
             return inputs;
         }
 
@@ -372,14 +372,14 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.OutCvSupportDown);
             inputs.Add(Inputs.OutCvSupportBufferUp);
             inputs.Add(Inputs.OutCvSupportBufferDown);
-            inputs.Add(Inputs.OutWorkCst_AlignCyl1Fw);
-            inputs.Add(Inputs.OutWorkCst_AlignCyl1Bw);
-            inputs.Add(Inputs.OutWorkCst_AlignCyl2Fw);
-            inputs.Add(Inputs.OutWorkCst_AlignCyl2Bw);
-            inputs.Add(Inputs.OutWorkCst_TiltCylUp);
-            inputs.Add(Inputs.OutWorkCst_TiltCylDown);
-            inputs.Add(Inputs.OutCst_StopperUp);
-            inputs.Add(Inputs.OutCst_StopperDown);
+            inputs.Add(Inputs.OutWorkCV_AlignCyl1Fw);
+            inputs.Add(Inputs.OutWorkCV_AlignCyl1Bw);
+            inputs.Add(Inputs.OutWorkCV_AlignCyl2Fw);
+            inputs.Add(Inputs.OutWorkCV_AlignCyl2Bw);
+            inputs.Add(Inputs.OutWorkCV_TiltCylUp);
+            inputs.Add(Inputs.OutWorkCV_TiltCylDown);
+            inputs.Add(Inputs.OutCV_StopperUp);
+            inputs.Add(Inputs.OutCV_StopperDown);
 
             return inputs;
         }
@@ -389,8 +389,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
             inputs.Add(Inputs.OutCstDetect1);
             inputs.Add(Inputs.OutCstDetect2);
-            inputs.Add(Inputs.OutCst_StopperUp);
-            inputs.Add(Inputs.OutCst_StopperDown);
+            inputs.Add(Inputs.OutCV_StopperUp);
+            inputs.Add(Inputs.OutCV_StopperDown);
             return inputs;
         }
 

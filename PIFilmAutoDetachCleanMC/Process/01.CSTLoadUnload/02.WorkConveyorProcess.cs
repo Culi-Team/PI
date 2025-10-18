@@ -126,16 +126,16 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Cylinders
-        private ICylinder AlignCylinder1 => port == EPort.Right ? _devices.Cylinders.InWorkCst_AlignCyl1FwBw :
-                                                              _devices.Cylinders.OutWorkCst_AlignCyl1FwBw;
-        private ICylinder AlignCylinder2 => port == EPort.Right ? _devices.Cylinders.InWorkCst_AlignCyl2FwBw :
-                                                              _devices.Cylinders.OutWorkCst_AlignCyl2FwBw;
-        private ICylinder TiltCylinder => port == EPort.Right ? _devices.Cylinders.InWorkCst_TiltCylUpDown :
-                                                               _devices.Cylinders.OutWorkCst_TiltCylUpDown;
-        private ICylinder CVSupportCyl1 => port == EPort.Right ? _devices.Cylinders.InCvSupportUpDown :
-                                                                _devices.Cylinders.OutCvSupportBufferUpDown;
-        private ICylinder CVSupportCyl2 => port == EPort.Right ? _devices.Cylinders.InCvSupportBufferUpDown :
-                                                                _devices.Cylinders.OutCvSupportUpDown;
+        private ICylinder AlignCylinder1 => port == EPort.Right ? _devices.Cylinders.InWorkCV_AlignCyl1 :
+                                                              _devices.Cylinders.OutWorkCV_AlignCyl1;
+        private ICylinder AlignCylinder2 => port == EPort.Right ? _devices.Cylinders.InWorkCV_AlignCyl2 :
+                                                              _devices.Cylinders.OutWorkCV_AlignCyl2;
+        private ICylinder TiltCylinder => port == EPort.Right ? _devices.Cylinders.InWorkCV_TiltCyl :
+                                                               _devices.Cylinders.OutWorkCV_TiltCyl;
+        private ICylinder CVSupportCyl1 => port == EPort.Right ? _devices.Cylinders.InWorkCV_SupportCyl1 :
+                                                                _devices.Cylinders.OutWorkCV_SupportCyl1;
+        private ICylinder CVSupportCyl2 => port == EPort.Right ? _devices.Cylinders.InWorkCV_SupportCyl2 :
+                                                                _devices.Cylinders.OutWorkCV_SupportCyl2;
         #endregion
 
         #region Flags

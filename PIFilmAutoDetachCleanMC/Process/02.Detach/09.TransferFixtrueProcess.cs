@@ -27,11 +27,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly MachineStatus _machineStatus;
 
         private IMotion TransferFixtureYAxis => _devices.Motions.FixtureTransferYAxis;
-        private ICylinder CylUpDown => _devices.Cylinders.TransferFixtureUpDown;
-        private ICylinder CylClamp1_1 => _devices.Cylinders.TransferFixture1_1ClampUnclamp;
-        private ICylinder CylClamp1_2 => _devices.Cylinders.TransferFixture1_2ClampUnclamp;
-        private ICylinder CylClamp2_1 => _devices.Cylinders.TransferFixture2_1ClampUnclamp;
-        private ICylinder CylClamp2_2 => _devices.Cylinders.TransferFixture2_2ClampUnclamp;
+        private ICylinder CylUpDown => _devices.Cylinders.TransferFixture_UpDownCyl;
+        private ICylinder CylClamp1_1 => _devices.Cylinders.TransferFixture_ClampCyl1;
+        private ICylinder CylClamp1_2 => _devices.Cylinders.TransferFixture_ClampCyl2;
+        private ICylinder CylClamp2_1 => _devices.Cylinders.TransferFixture_ClampCyl3;
+        private ICylinder CylClamp2_2 => _devices.Cylinders.TransferFixture_ClampCyl4;
 
         private bool IsFixtureDetect1 => !CylClamp1_1.IsBackward && !CylClamp1_1.IsForward && !CylClamp1_2.IsBackward && !CylClamp1_2.IsForward;
         private bool IsFixtureDetect2 => !CylClamp2_1.IsBackward && !CylClamp2_1.IsForward && !CylClamp2_2.IsBackward && !CylClamp2_2.IsForward;

@@ -24,21 +24,21 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _removeFilmOutput;
         private readonly MachineStatus _machineStatus;
 
-        private ICylinder FixCyl1_1 => _devices.Cylinders.RemoveZoneFixCyl1_1FwBw;
-        private ICylinder FixCyl1_2 => _devices.Cylinders.RemoveZoneFixCyl1_2FwBw;
-        private ICylinder FixCyl2_1 => _devices.Cylinders.RemoveZoneFixCyl2_1FwBw;
-        private ICylinder FixCyl2_2 => _devices.Cylinders.RemoveZoneFixCyl2_2FwBw;
+        private ICylinder FixCyl1_1 => _devices.Cylinders.RemoveZone_ClampCyl1;
+        private ICylinder FixCyl1_2 => _devices.Cylinders.RemoveZone_ClampCyl2;
+        private ICylinder FixCyl2_1 => _devices.Cylinders.RemoveZone_ClampCyl3;
+        private ICylinder FixCyl2_2 => _devices.Cylinders.RemoveZone_ClampCyl4;
 
-        private ICylinder TransferCyl => _devices.Cylinders.RemoveZoneTrCylFwBw;
-        private ICylinder UpDownCyl1 => _devices.Cylinders.RemoveZoneZCyl1UpDown;
-        private ICylinder UpDownCyl2 => _devices.Cylinders.RemoveZoneZCyl2UpDown;
-        private ICylinder ClampCyl1 => _devices.Cylinders.RemoveZoneCyl1ClampUnclamp;
-        private ICylinder ClampCyl2 => _devices.Cylinders.RemoveZoneCyl2ClampUnclamp;
-        private ICylinder ClampCyl3 => _devices.Cylinders.RemoveZoneCyl3ClampUnclamp;
+        private ICylinder TransferCyl => _devices.Cylinders.RemoveZone_TransferCyl;
+        private ICylinder UpDownCyl1 => _devices.Cylinders.RemoveZone_UpDownCyl1;
+        private ICylinder UpDownCyl2 => _devices.Cylinders.RemoveZone_UpDownCyl2;
+        private ICylinder ClampCyl1 => _devices.Cylinders.RemoveZone_FilmClampCyl1;
+        private ICylinder ClampCyl2 => _devices.Cylinders.RemoveZone_FilmClampCyl2;
+        private ICylinder ClampCyl3 => _devices.Cylinders.RemoveZone_FilmClampCyl3;
 
 
-        private ICylinder PusherCyl1 => _devices.Cylinders.RemoveZonePusherCyl1UpDown;
-        private ICylinder PusherCyl2 => _devices.Cylinders.RemoveZonePusherCyl2UpDown;
+        private ICylinder PusherCyl1 => _devices.Cylinders.RemoveZone_PusherCyl1;
+        private ICylinder PusherCyl2 => _devices.Cylinders.RemoveZone_PusherCyl2;
 
         private bool IsFixtureDetect => _devices.Inputs.RemoveZoneFixtureDetect.Value;
 

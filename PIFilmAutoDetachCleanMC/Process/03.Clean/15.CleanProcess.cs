@@ -161,10 +161,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.Cylinders.WetCleanPusherLeftUpDown,
-                    EClean.WETCleanRight => _devices.Cylinders.WetCleanPusherRightUpDown,
-                    EClean.AFCleanLeft => _devices.Cylinders.AFCleanPusherLeftUpDown,
-                    EClean.AFCleanRight => _devices.Cylinders.AFCleanPusherRightUpDown,
+                    EClean.WETCleanLeft => _devices.Cylinders.WetCleanL_PusherCyl,
+                    EClean.WETCleanRight => _devices.Cylinders.WetCleanR_PusherCyl,
+                    EClean.AFCleanLeft => _devices.Cylinders.AFCleanL_PusherCyl,
+                    EClean.AFCleanRight => _devices.Cylinders.AFCleanR_PusherCyl,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -176,10 +176,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.Cylinders.WetCleanBrushLeftUpDown,
-                    EClean.WETCleanRight => _devices.Cylinders.WetCleanBrushRightUpDown,
-                    EClean.AFCleanLeft => _devices.Cylinders.AFCleanBrushLeftUpDown,
-                    EClean.AFCleanRight => _devices.Cylinders.AFCleanBrushRightUpDown,
+                    EClean.WETCleanLeft => _devices.Cylinders.WetCleanL_BrushCyl,
+                    EClean.WETCleanRight => _devices.Cylinders.WetCleanR_BrushCyl,
+                    EClean.AFCleanLeft => _devices.Cylinders.AFCleanL_BrushCyl,
+                    EClean.AFCleanRight => _devices.Cylinders.AFCleanR_BrushCyl,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -387,11 +387,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 if (cleanType == EClean.WETCleanLeft)
                 {
-                    return _devices.Cylinders.WetCleanLeft1ClampUnclamp;
+                    return _devices.Cylinders.WetCleanL_ClampCyl1;
                 }
                 if (cleanType == EClean.WETCleanRight)
                 {
-                    return _devices.Cylinders.WetCleanRight1ClampUnclamp;
+                    return _devices.Cylinders.WetCleanR_ClampCyl1;
                 }
 
                 throw new ArgumentOutOfRangeException();
@@ -404,11 +404,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 if (cleanType == EClean.WETCleanLeft)
                 {
-                    return _devices.Cylinders.WetCleanLeft2ClampUnclamp;
+                    return _devices.Cylinders.WetCleanL_ClampCyl2;
                 }
                 if (cleanType == EClean.WETCleanRight)
                 {
-                    return _devices.Cylinders.WetCleanRight2ClampUnclamp;
+                    return _devices.Cylinders.WetCleanR_ClampCyl2;
                 }
 
                 throw new ArgumentOutOfRangeException();
@@ -755,7 +755,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Syringe Pump Oriign");
                     SyringePump.Initialize();
                     Thread.Sleep(100);
-                    Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => SyringePump.IsReady());
+                    Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => SyringePump.IsReady);
                     Step.OriginStep++;
                     break;
                 case ECleanOriginStep.SyringePump_Origin_Wait:
@@ -1032,7 +1032,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.Dispense_Remain_Wait:
-                    if (SyringePump.IsReady() == false)
+                    if (SyringePump.IsReady == false)
                     {
                         Thread.Sleep(100);
                         break;
@@ -1045,7 +1045,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.Fill_Wait:
-                    if (SyringePump.IsReady() == false)
+                    if (SyringePump.IsReady == false)
                     {
                         Thread.Sleep(100);
                         break;
@@ -1947,7 +1947,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.Dispense_Port1_Wait:
-                            if (SyringePump.IsReady() == false)
+                            if (SyringePump.IsReady == false)
                             {
                                 Thread.Sleep(100);
                                 break;
@@ -1967,7 +1967,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.Dispense_Port2_Wait:
-                            if (SyringePump.IsReady() == false)
+                            if (SyringePump.IsReady == false)
                             {
                                 Thread.Sleep(100);
                                 break;
@@ -1987,7 +1987,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.Dispense_Port3_Wait:
-                            if (SyringePump.IsReady() == false)
+                            if (SyringePump.IsReady == false)
                             {
                                 Thread.Sleep(100);
                                 break;
@@ -2007,7 +2007,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.Dispense_Port4_Wait:
-                            if (SyringePump.IsReady() == false)
+                            if (SyringePump.IsReady == false)
                             {
                                 Thread.Sleep(100);
                                 break;
@@ -2027,7 +2027,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.Dispense_Port5_Wait:
-                            if (SyringePump.IsReady() == false)
+                            if (SyringePump.IsReady == false)
                             {
                                 Thread.Sleep(100);
                                 break;
@@ -2047,7 +2047,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.Dispense_Port6_Wait:
-                            if (SyringePump.IsReady() == false)
+                            if (SyringePump.IsReady == false)
                             {
                                 Thread.Sleep(100);
                                 break;

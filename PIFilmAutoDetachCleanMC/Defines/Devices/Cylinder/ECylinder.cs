@@ -9,147 +9,146 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
     public enum ECylinder
     {
         // In CST
-        InCst_StopperUpDown,
+        InCV_StopperUpDown,
 
         // Out CST
-        OutCst_StopperUpDown,
+        OutCV_StopperUpDown,
 
         // In CST Work
-        InWorkCst_AlignCyl1FwBw,
-        InWorkCst_AlignCyl2FwBw,
-        InWorkCst_TiltCylUpDown,
+        InWorkCV_AlignCyl1,
+        InWorkCV_AlignCyl2,
+        InWorkCV_TiltCyl,
 
         // Buffer CV Work
-        BufferCvStopper1UpDown,
-        BufferCvStopper2UpDown,
+        BufferCV_StopperCyl1,
+        BufferCV_StopperCyl2,
 
         // In CV Support
-        InCvSupportUpDown,
+        InWorkCV_SupportCyl1,
 
         // In CV Support Buffer
-        InCvSupportBufferUpDown,
+        InWorkCV_SupportCyl2,
 
         // Out CV Support Buffer
-        OutCvSupportBufferUpDown,
+        OutWorkCV_SupportCyl1,
 
         // Out CV Support
-        OutCvSupportUpDown,
+        OutWorkCV_SupportCyl2,
 
         // Out CST Work
-        OutCstFixCyl1FwBw,
-        OutCstFixCyl2FwBw,
-        OutCstTiltCylUpDown,
+        OutWorkCV_AlignCyl1,
+        OutWorkCV_AlignCyl2,
+        OutWorkCV_TiltCyl,
 
         // Robot 1 Load/Unload
-        RobotFixtureAlignFwBw,
-        RobotFixture1ClampUnclamp,
-        RobotFixture2ClampUnclamp,
+        RobotLoad_AlignCyl,
+        RobotLoad_ClampCyl1,
+        RobotLoad_ClampCyl2,
 
         // Fixture Align (non-robot, per cylinder by inputs)
-        FixtureAlignCyl1FwBw,
-        FixtureAlignCyl2FwBw,
+        FixtureAlign_AlignCyl1,
+        FixtureAlign_AlignCyl2,
 
         // Vinyl Clean
-        VinylCleanRollerFwBw,
-        VinylCleanFixture1ClampUnclamp,
-        VinylCleanFixture2ClampUnclamp,
-        VinylCleanPusherRollerUpDown,
+        VinylClean_BwFwCyl,
+        VinylClean_ClampCyl1,
+        VinylClean_ClampCyl2,
+        VinylClean_UpDownCyl,
 
         // Transfer Y Fixture
-        TransferFixtureUpDown,
-        TransferFixture1_1ClampUnclamp,
-        TransferFixture1_2ClampUnclamp,
-        TransferFixture2_1ClampUnclamp,
-        TransferFixture2_2ClampUnclamp,
+        TransferFixture_UpDownCyl,
+        TransferFixture_ClampCyl1,
+        TransferFixture_ClampCyl2,
+        TransferFixture_ClampCyl3,
+        TransferFixture_ClampCyl4,
 
         // Detach Glass
-        DetachCyl1UpDown,
-        DetachCyl2UpDown,
-        DetachFixFixtureCyl1_1FwBw,
-        DetachFixFixtureCyl1_2FwBw,
-        DetachFixFixtureCyl2_1FwBw,
-        DetachFixFixtureCyl2_2FwBw,
+        Detach_UpDownCyl1,
+        Detach_UpDownCyl2,
+        Detach_ClampCyl1,
+        Detach_ClampCyl2,
+        Detach_ClampCyl3,
+        Detach_ClampCyl4,
 
         // Remove Zone
-        RemoveZoneTrCylFwBw,
-        RemoveZoneZCyl1UpDown,
-        RemoveZoneZCyl2UpDown,
-        RemoveZoneCyl1ClampUnclamp,
-        RemoveZoneCyl2ClampUnclamp,
-        RemoveZoneCyl3ClampUnclamp,
-        RemoveZonePusherCyl1UpDown,
-        RemoveZonePusherCyl2UpDown,
-        RemoveZoneFixCyl1_1FwBw,
-        RemoveZoneFixCyl1_2FwBw,
-        RemoveZoneFixCyl2_1FwBw,
-        RemoveZoneFixCyl2_2FwBw,
+        RemoveZone_TransferCyl,
+        RemoveZone_UpDownCyl1,
+        RemoveZone_UpDownCyl2,
+        RemoveZone_FilmClampCyl1,
+        RemoveZone_FilmClampCyl2,
+        RemoveZone_FilmClampCyl3,
+        RemoveZone_PusherCyl1,
+        RemoveZone_PusherCyl2,
+        RemoveZone_ClampCyl1,
+        RemoveZone_ClampCyl2,
+        RemoveZone_ClampCyl3,
+        RemoveZone_ClampCyl4,
 
         // In Shuttle (rotate 0°/180°)
-        TransferInShuttleLRotate,
-        TransferInShuttleRRotate,
+        TransferInShuttleL_RotateCyl,
+        TransferInShuttleR_RotateCyl,
 
         // Align Stage L/R
-        AlignStageLBrushCylUpDown,
-        AlignStageL1AlignUnalign,
-        AlignStageL2AlignUnalign,
-        AlignStageL3AlignUnalign,
-        AlignStageRBrushCylUpDown,
-        AlignStageR1AlignUnalign,
-        AlignStageR2AlignUnalign,
-        AlignStageR3AlignUnalign,
+        AlignStageL_BrushCyl,
+        AlignStageL_AlignCyl1,
+        AlignStageL_AlignCyl2,
+        AlignStageL_AlignCyl3,
+        AlignStageR_BrushCyl,
+        AlignStageR_AlignCyl1,
+        AlignStageR_AlignCyl2,
+        AlignStageR_AlignCyl3,
 
         // Glass Transfer 
-        GlassTransferCyl1UpDown,
-        GlassTransferCyl2UpDown,
-        GlassTransferCyl3UpDown,
+        GlassTransfer_UpDownCyl1,
+        GlassTransfer_UpDownCyl2,
+        GlassTransfer_UpDownCyl3,
 
         // Wet Clean
-        WetCleanPusherRightUpDown,
-        WetCleanPusherLeftUpDown,
-        WetCleanBrushRightUpDown,
-        WetCleanBrushLeftUpDown,
-        WetCleanRight1ClampUnclamp,
-        WetCleanRight2ClampUnclamp,
-        WetCleanLeft1ClampUnclamp,
-        WetCleanLeft2ClampUnclamp,
-
+        WetCleanR_PusherCyl,
+        WetCleanL_PusherCyl,
+        WetCleanR_BrushCyl,
+        WetCleanL_BrushCyl,
+        WetCleanR_ClampCyl1,
+        WetCleanR_ClampCyl2,
+        WetCleanL_ClampCyl1,
+        WetCleanL_ClampCyl2,
 
         // Transfer Rotate
-        TrRotateRightRotate,
-        TrRotateRightFwBw,
-        TrRotateLeftRotate,
-        TrRotateLeftFwBw,
-        TrRotateRightUpDown,
-        TrRotateLeftUpDown,
+        TransferRotationR_RotationCyl,
+        TransferRotationR_BwFwCyl,
+        TransferRotationL_RotationCyl,
+        TransferRotationL_BwFwCyl,
+        TransferRotationR_UpDownCyl,
+        TransferRotationLeft_UpDownCyl,
 
         // AF Clean
-        AFCleanPusherRightUpDown,
-        AFCleanPusherLeftUpDown,
-        AFCleanBrushRightUpDown,
-        AFCleanBrushLeftUpDown,
+        AFCleanR_PusherCyl,
+        AFCleanL_PusherCyl,
+        AFCleanR_BrushCyl,
+        AFCleanL_BrushCyl,
 
         // Robot 2 Unload
-        UnloadRobotCyl1UpDown,
-        UnloadRobotCyl2UpDown,
-        UnloadRobotCyl3UpDown,
-        UnloadRobotCyl4UpDown,
+        UnloadRobot_UpDownCyl1,
+        UnloadRobot_UpDownCyl2,
+        UnloadRobot_UpDownCyl3,
+        UnloadRobot_UpDownCyl4,
 
         // Unload Stage
-        UnloadAlignCyl1UpDown,
-        UnloadAlignCyl2UpDown,
-        UnloadAlignCyl3UpDown,
-        UnloadAlignCyl4UpDown,
+        UnloadAlign_UpDownCyl1,
+        UnloadAlign_UpDownCyl2,
+        UnloadAlign_UpDownCyl3,
+        UnloadAlign_UpDownCyl4,
 
         //In Shuttle
-        InShuttleR1AlignUnalign,
-        InShuttleL1AlignUnalign,
-        InShuttleR2AlignUnalign,
-        InShuttleL2AlignUnalign,
+        InShuttleR_ClampCyl1,
+        InShuttleR_ClampCyl2,
+        InShuttleL_ClampCyl1,
+        InShuttleL_ClampCyl2,
 
         //OutShuttle
-        OutShuttleR1AlignUnalign,
-        OutShuttleL1AlignUnalign,
-        OutShuttleR2AlignUnalign,
-        OutShuttleL2AlignUnalign
+        OutShuttleR_ClampCyl1,
+        OutShuttleR_ClampCyl2,
+        OutShuttleL_ClampCyl1,
+        OutShuttleL_ClampCyl2
     }
 }

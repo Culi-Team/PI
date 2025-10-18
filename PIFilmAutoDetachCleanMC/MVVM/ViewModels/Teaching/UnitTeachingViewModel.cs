@@ -170,8 +170,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 if (moveToDescription == "In Cassette T Axis Load Position"
                     || moveToDescription == "In Cassette T Axis Work Position")
                 {
-                    if (devices.Cylinders.InCvSupportUpDown.IsBackward == false
-                        || devices.Cylinders.InCvSupportBufferUpDown.IsBackward == false)
+                    if (devices.Cylinders.InWorkCV_SupportCyl1.IsBackward == false
+                        || devices.Cylinders.InWorkCV_SupportCyl2.IsBackward == false)
                     {
                         MessageBoxEx.ShowDialog($"Cylinder [InCvSupportUpDown] ," +
                             $"\n [InCvSupportBufferUpDown] , " +
@@ -183,8 +183,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 if (moveToDescription == "Out Cassette T Axis Load Position"
                     || moveToDescription == "Out Cassette T Axis Work Position")
                 {
-                    if (devices.Cylinders.OutCvSupportUpDown.IsBackward == false
-                        || devices.Cylinders.OutCvSupportBufferUpDown.IsBackward == false)
+                    if (devices.Cylinders.OutWorkCV_SupportCyl2.IsBackward == false
+                        || devices.Cylinders.OutWorkCV_SupportCyl1.IsBackward == false)
                     {
                         MessageBoxEx.ShowDialog($"Cylinder [OutCvSupportUpDown] ," +
                             $"\n [OutCvSupportBufferUpDown] ," +
@@ -199,8 +199,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 if (moveToDescription == "In Cassette T Axis Load Position"
                     || moveToDescription == "In Cassette T Axis Work Position")
                 {
-                    if (devices.Cylinders.InCvSupportUpDown.IsBackward == false
-                        || devices.Cylinders.InCvSupportBufferUpDown.IsBackward == false)
+                    if (devices.Cylinders.InWorkCV_SupportCyl1.IsBackward == false
+                        || devices.Cylinders.InWorkCV_SupportCyl2.IsBackward == false)
                     {
                         MessageBoxEx.ShowDialog($"Cylinder [InCvSupportUpDown] ," +
                             $"\n [InCvSupportBufferUpDown] ," +
@@ -212,8 +212,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 if (moveToDescription == "Out Cassette T Axis Load Position"
                     || moveToDescription == "Out Cassette T Axis Work Position")
                 {
-                    if (devices.Cylinders.OutCvSupportUpDown.IsBackward == false
-                        || devices.Cylinders.OutCvSupportBufferUpDown.IsBackward == false)
+                    if (devices.Cylinders.OutWorkCV_SupportCyl2.IsBackward == false
+                        || devices.Cylinders.OutWorkCV_SupportCyl1.IsBackward == false)
                     {
                         MessageBoxEx.ShowDialog($"Cylinder [OutCvSupportUpDown] ," +
                             $"\n [OutCvSupportBufferUpDown] ," +
@@ -228,15 +228,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 if (moveToDescription == "Transfer Fixture Y Axis Load Position"
                     || moveToDescription == "Transfer Fixture Y Axis Unload Position")
                 {
-                    if (devices.Cylinders.TransferFixtureUpDown.IsBackward == true)
+                    if (devices.Cylinders.TransferFixture_UpDownCyl.IsBackward == true)
                     {
                         MessageBoxEx.ShowDialog($"Cylinder [TransferFixtureUpDown] ," +
                             $"\n need [move Up] befor move to ," +
                             $"\n [{moveToDescription}]");
                         return false;
                     }
-                    if (devices.Cylinders.DetachFixFixtureCyl1_1FwBw.IsForward == true ||
-                        devices.Cylinders.DetachFixFixtureCyl1_2FwBw.IsForward == true)
+                    if (devices.Cylinders.Detach_ClampCyl1.IsForward == true ||
+                        devices.Cylinders.Detach_ClampCyl2.IsForward == true)
                     {
                         MessageBoxEx.ShowDialog($"Cylinder [DetachFixFixtureCylinder1] ," +
                             $"\n need [move Backward] befor move to ," +
@@ -345,11 +345,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Y Axis Clean Vertical Position"
                     || moveToDescription == "X Axis Unload Position")
                 {
-                    if ((devices.Cylinders.WetCleanBrushLeftUpDown.IsBackward == false
-                        || devices.Cylinders.WetCleanPusherLeftUpDown.IsBackward == false)
+                    if ((devices.Cylinders.WetCleanL_BrushCyl.IsBackward == false
+                        || devices.Cylinders.WetCleanL_PusherCyl.IsBackward == false)
                         && (outShuttleLXAxis != null && outShuttleLXAxis.Status.ActualVelocity
                         != recipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisLoadPosition)
-                        && (devices.Cylinders.TransferInShuttleLRotate.IsBackward == false
+                        && (devices.Cylinders.TransferInShuttleL_RotateCyl.IsBackward == false
                         || transferRotationLZAxis != null && transferRotationLZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition))
                     {
@@ -375,11 +375,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Y Axis Clean Vertical Position"
                     || moveToDescription == "X Axis load Position")
                 {
-                    if ((devices.Cylinders.AFCleanBrushLeftUpDown.IsBackward == false
-                        || devices.Cylinders.AFCleanPusherLeftUpDown.IsBackward == false)
+                    if ((devices.Cylinders.AFCleanL_BrushCyl.IsBackward == false
+                        || devices.Cylinders.AFCleanL_PusherCyl.IsBackward == false)
                         && (inShuttleLXAxis != null && inShuttleLXAxis.Status.ActualVelocity
                         != recipeSelector.CurrentRecipe.WetCleanLeftRecipe.XAxisLoadPosition)
-                        && (devices.Cylinders.TransferInShuttleLRotate.IsBackward == false
+                        && (devices.Cylinders.TransferInShuttleL_RotateCyl.IsBackward == false
                         || transferRotationLZAxis != null && transferRotationLZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition))
                     {
@@ -402,11 +402,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Y Axis Clean Vertical Position"
                     || moveToDescription == "X Axis Unload Position")
                 {
-                    if ((devices.Cylinders.WetCleanBrushRightUpDown.IsBackward == false
-                        || devices.Cylinders.WetCleanPusherRightUpDown.IsBackward == false)
+                    if ((devices.Cylinders.WetCleanR_BrushCyl.IsBackward == false
+                        || devices.Cylinders.WetCleanR_PusherCyl.IsBackward == false)
                         && (outShuttleRXAxis != null && outShuttleRXAxis.Status.ActualVelocity
                         != recipeSelector.CurrentRecipe.AfCleanRightRecipe.XAxisLoadPosition)
-                        && (devices.Cylinders.TransferInShuttleRRotate.IsBackward == false
+                        && (devices.Cylinders.TransferInShuttleR_RotateCyl.IsBackward == false
                         || transferRotationRZAxis != null && transferRotationRZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisReadyPosition))
                     {
@@ -433,11 +433,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Y Axis Clean Vertical Position"
                     || moveToDescription == "X Axis load Position")
                 {
-                    if ((devices.Cylinders.AFCleanBrushRightUpDown.IsBackward == false
-                        || devices.Cylinders.AFCleanPusherRightUpDown.IsBackward == false)
+                    if ((devices.Cylinders.AFCleanR_BrushCyl.IsBackward == false
+                        || devices.Cylinders.AFCleanR_PusherCyl.IsBackward == false)
                         && (inShuttleRXAxis != null && inShuttleRXAxis.Status.ActualVelocity
                         != recipeSelector.CurrentRecipe.WetCleanRightRecipe.XAxisLoadPosition)
-                        && (devices.Cylinders.TransferInShuttleRRotate.IsBackward == false
+                        && (devices.Cylinders.TransferInShuttleR_RotateCyl.IsBackward == false
                         || transferRotationRZAxis != null && transferRotationRZAxis.Status.ActualPosition
                         != recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisReadyPosition))
                     {

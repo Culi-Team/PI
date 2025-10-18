@@ -43,11 +43,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool IsVacDetect3 => AlignStageVac3Sensor == true;
         private bool IsVacDetect => IsVacDetect1 || IsVacDetect2 || IsVacDetect3;
 
-        private ICylinder AlignCyl1 => port == EPort.Left ? _devices.Cylinders.AlignStageL1AlignUnalign : _devices.Cylinders.AlignStageR1AlignUnalign;
-        private ICylinder AlignCyl2 => port == EPort.Left ? _devices.Cylinders.AlignStageL2AlignUnalign : _devices.Cylinders.AlignStageR2AlignUnalign;
-        private ICylinder AlignCyl3 => port == EPort.Left ? _devices.Cylinders.AlignStageL3AlignUnalign : _devices.Cylinders.AlignStageR3AlignUnalign;
+        private ICylinder AlignCyl1 => port == EPort.Left ? _devices.Cylinders.AlignStageL_AlignCyl1 : _devices.Cylinders.AlignStageR_AlignCyl1;
+        private ICylinder AlignCyl2 => port == EPort.Left ? _devices.Cylinders.AlignStageL_AlignCyl2 : _devices.Cylinders.AlignStageR_AlignCyl2;
+        private ICylinder AlignCyl3 => port == EPort.Left ? _devices.Cylinders.AlignStageL_AlignCyl3 : _devices.Cylinders.AlignStageR_AlignCyl3;
 
-        private ICylinder BrushCyl => port == EPort.Left ? _devices.Cylinders.AlignStageLBrushCylUpDown : _devices.Cylinders.AlignStageRBrushCylUpDown;
+        private ICylinder BrushCyl => port == EPort.Left ? _devices.Cylinders.AlignStageL_BrushCyl : _devices.Cylinders.AlignStageR_BrushCyl;
 
         private bool IsGlass1Detect => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect1.Value : _devices.Inputs.AlignStageRGlassDetect1.Value;
         private bool IsGlass2Detect => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect2.Value : _devices.Inputs.AlignStageRGlassDetect2.Value;
