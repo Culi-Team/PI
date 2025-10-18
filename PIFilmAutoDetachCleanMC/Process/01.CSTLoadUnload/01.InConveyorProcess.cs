@@ -73,7 +73,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Cylinders
-        private ICylinder StopperCylinder => _devices.Cylinders.InCstStopperUpDown;
+        private ICylinder StopperCylinder => _devices.Cylinders.InCst_StopperUpDown;
         #endregion
 
         #region Rollers

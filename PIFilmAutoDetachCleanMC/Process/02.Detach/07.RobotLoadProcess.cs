@@ -369,7 +369,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ERobotLoadToOriginStep.SetModel_Check:
-                    if (_robotLoad.ReadResponse(5000, $"select,{_robotLoadRecipe.Model},0\n\r"))
+                    if (_robotLoad.ReadResponse(5000, $"select,{_robotLoadRecipe.Model},0\r\n"))
                     {
                         Log.Debug("Set Model: " + _robotLoadRecipe.Model + " success");
                         Step.OriginStep++;
@@ -604,7 +604,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ERobotLoadProcessToRunStep.Send_CassettePitch_Check:
-                    if (_robotLoad.ReadResponse(5000, $"pitch,X:0,Y:{_cstLoadUnloadRecipe.Pitch},0\n\r"))
+                    if (_robotLoad.ReadResponse(5000, $"pitch,X:0,Y:{_cstLoadUnloadRecipe.Pitch},0\r\n"))
                     {
                         Log.Debug("Set pitch X: 0, Y: " + _cstLoadUnloadRecipe.Pitch + " success");
                         Step.ToRunStep++;
@@ -819,7 +819,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadReadyStep.SetModel_Check:
-                    if (_robotLoad.ReadResponse(5000, $"select,{_robotLoadRecipe.Model},0\n\r"))
+                    if (_robotLoad.ReadResponse(5000, $"select,{_robotLoadRecipe.Model},0\r\n"))
                     {
                         Log.Debug("Set Model: " + _robotLoadRecipe.Model + " success");
                         Step.RunStep++;

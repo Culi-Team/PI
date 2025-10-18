@@ -126,12 +126,12 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Cylinders
-        private ICylinder FixCylinder1 => port == EPort.Right ? _devices.Cylinders.InCstFixCyl1FwBw :
-                                                              _devices.Cylinders.OutCstFixCyl1FwBw;
-        private ICylinder FixCylinder2 => port == EPort.Right ? _devices.Cylinders.InCstFixCyl2FwBw :
-                                                              _devices.Cylinders.OutCstFixCyl2FwBw;
-        private ICylinder TiltCylinder => port == EPort.Right ? _devices.Cylinders.InCstTiltCylUpDown :
-                                                               _devices.Cylinders.OutCstTiltCylUpDown;
+        private ICylinder AlignCylinder1 => port == EPort.Right ? _devices.Cylinders.InWorkCst_AlignCyl1FwBw :
+                                                              _devices.Cylinders.OutWorkCst_AlignCyl1FwBw;
+        private ICylinder AlignCylinder2 => port == EPort.Right ? _devices.Cylinders.InWorkCst_AlignCyl2FwBw :
+                                                              _devices.Cylinders.OutWorkCst_AlignCyl2FwBw;
+        private ICylinder TiltCylinder => port == EPort.Right ? _devices.Cylinders.InWorkCst_TiltCylUpDown :
+                                                               _devices.Cylinders.OutWorkCst_TiltCylUpDown;
         private ICylinder CVSupportCyl1 => port == EPort.Right ? _devices.Cylinders.InCvSupportUpDown :
                                                                 _devices.Cylinders.OutCvSupportBufferUpDown;
         private ICylinder CVSupportCyl2 => port == EPort.Right ? _devices.Cylinders.InCvSupportBufferUpDown :
@@ -219,7 +219,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EWorkConveyorOriginStep)Step.OriginStep)
             {
                 case EWorkConveyorOriginStep.Start:
-                    Log.Debug("Start");
+                    Log.Debug("Origin Start");
                     Step.OriginStep++;
                     break;
                 case EWorkConveyorOriginStep.Wait_RobotLoadOriginDone:
@@ -281,10 +281,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case EWorkConveyorOriginStep.Cyl_Fix_Backward:
-                    Log.Debug("Cylinder Fix Backward");
-                    FixCylinder1.Backward();
-                    FixCylinder2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FixCylinder1.IsBackward && FixCylinder2.IsBackward);
+                    Log.Debug("Align Cylinder Backward");
+                    AlignCylinder1.Backward();
+                    AlignCylinder2.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCylinder1.IsBackward && AlignCylinder2.IsBackward);
                     Step.OriginStep++;
                     break;
                 case EWorkConveyorOriginStep.Cyl_Fix_Backward_Wait:
@@ -514,10 +514,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorTiltStep.Cyl_Fix_Forward:
-                    Log.Debug("Cylinder Fix Forward");
-                    FixCylinder1.Forward();
-                    FixCylinder2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FixCylinder1.IsForward && FixCylinder2.IsForward);
+                    Log.Debug("Align Cylinder Forward");
+                    AlignCylinder1.Forward();
+                    AlignCylinder2.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCylinder1.IsForward && AlignCylinder2.IsForward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorTiltStep.Cyl_Fix_Forward_Wait:
@@ -701,10 +701,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Cyl_Fix_Backward:
-                    Log.Debug("Cylinder Fix Backward");
-                    FixCylinder1.Backward();
-                    FixCylinder2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FixCylinder1.IsBackward && FixCylinder2.IsBackward);
+                    Log.Debug("Align Cylinder Backward");
+                    AlignCylinder1.Backward();
+                    AlignCylinder2.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCylinder1.IsBackward && AlignCylinder2.IsBackward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Cyl_Fix_Backward_Wait:
@@ -860,10 +860,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Cyl_Fix_Backward:
-                    Log.Debug("Cylinder Fix Backward");
-                    FixCylinder1.Backward();
-                    FixCylinder2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FixCylinder1.IsBackward && FixCylinder2.IsBackward);
+                    Log.Debug("Align Cylinder Backward");
+                    AlignCylinder1.Backward();
+                    AlignCylinder2.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCylinder1.IsBackward && AlignCylinder2.IsBackward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Cyl_Fix_Backward_Wait:

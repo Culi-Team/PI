@@ -32,22 +32,22 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         public List<IDOutput> All => _dOutputDevice.Outputs;
 
-        public IDOutput InCstStopperUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_STOPPER_UP);
-        public IDOutput InCstStopperDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_STOPPER_DOWN);
-        public IDOutput OutCstStopperUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_STOPPER_UP);
-        public IDOutput OutCstStopperDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_STOPPER_DOWN);
-        public IDOutput InCstFixCyl1Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_FIX_CYL_1_BW);
-        public IDOutput InCstFixCyl1Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_FIX_CYL_1_FW);
-        public IDOutput InCstFixCyl2Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_FIX_CYL_2_BW);
-        public IDOutput InCstFixCyl2Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_FIX_CYL_2_FW);
-        public IDOutput InCstTiltCylUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_TILT_CYL_UP);
-        public IDOutput InCstTiltCylDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_TILT_CYL_DOWN);
-        public IDOutput OutCstFixCyl1Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_FIX_CYL_1_BW);
-        public IDOutput OutCstFixCyl1Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_FIX_CYL_1_FW);
-        public IDOutput OutCstFixCyl2Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_FIX_CYL_2_BW);
-        public IDOutput OutCstFixCyl2Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_FIX_CYL_2_FW);
-        public IDOutput OutCstTiltCylUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_TILT_CYL_UP);
-        public IDOutput OutCstTiltCylDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_TILT_CYL_DOWN);
+        public IDOutput InCst_StopperUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_STOPPER_UP);
+        public IDOutput InCst_StopperDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_STOPPER_DOWN);
+        public IDOutput OutCst_StopperUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_STOPPER_UP);
+        public IDOutput OutCst_StopperDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_STOPPER_DOWN);
+        public IDOutput InWorkCst_AlignCyl1Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_WORK_CST_ALIGN_CYL_1_BW);
+        public IDOutput InWorkCst_AlignCyl1Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_WORK_CST_ALIGN_CYL_1_FW);
+        public IDOutput InWorkCst_AlignCyl2Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_WORK_CST_ALIGN_CYL_2_BW);
+        public IDOutput InWorkCst_AlignCyl2Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_WORK_CST_ALIGN_CYL_2_FW);
+        public IDOutput InWorkCst_TiltCylUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_WORK_CST_TILT_CYL_UP);
+        public IDOutput InWorkCst_TiltCylDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_WORK_CST_TILT_CYL_DOWN);
+        public IDOutput OutWorkCst_AlignCyl1Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_WORK_CST_ALIGN_CYL_1_BW);
+        public IDOutput OutWorkCst_AlignCyl1Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_WORK_CST_ALIGN_CYL_1_FW);
+        public IDOutput OutWorkCst_AlignCyl2Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_WORK_CST_ALIGN_CYL_2_BW);
+        public IDOutput OutWorkCst_AlignCyl2Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_WORK_CST_ALIGN_CYL_2_FW);
+        public IDOutput OutWorkCst_TiltCylUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_WORK_CST_TILT_CYL_UP);
+        public IDOutput OutWorkCst_TiltCylDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_WORK_CST_TILT_CYL_DOWN);
         public IDOutput BufferCvStopper1Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.BUFFER_CV_STOPPER_1_UP);
         public IDOutput BufferCvStopper1Down => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.BUFFER_CV_STOPPER_1_DOWN);
         public IDOutput BufferCvStopper2Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.BUFFER_CV_STOPPER_2_UP);

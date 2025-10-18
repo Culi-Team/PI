@@ -12,15 +12,15 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
     public class Cylinders
     {
         // In CST
-        public ICylinder InCstStopperUpDown { get; }
+        public ICylinder InCst_StopperUpDown { get; }
 
         // Out CST
-        public ICylinder OutCstStopperUpDown { get; }
+        public ICylinder OutCst_StopperUpDown { get; }
 
         // In CST Work (per input pair)
-        public ICylinder InCstFixCyl1FwBw { get; }
-        public ICylinder InCstFixCyl2FwBw { get; }
-        public ICylinder InCstTiltCylUpDown { get; }
+        public ICylinder InWorkCst_AlignCyl1FwBw { get; }
+        public ICylinder InWorkCst_AlignCyl2FwBw { get; }
+        public ICylinder InWorkCst_TiltCylUpDown { get; }
 
         // Buffer CV Work
         public ICylinder BufferCvStopper1UpDown { get; }
@@ -39,9 +39,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
         public ICylinder OutCvSupportUpDown { get; }
 
         // Out CST Work (per input pair)
-        public ICylinder OutCstFixCyl1FwBw { get; }
-        public ICylinder OutCstFixCyl2FwBw { get; }
-        public ICylinder OutCstTiltCylUpDown { get; }
+        public ICylinder OutWorkCst_AlignCyl1FwBw { get; }
+        public ICylinder OutWorkCst_AlignCyl2FwBw { get; }
+        public ICylinder OutWorkCst_TiltCylUpDown { get; }
 
         // Robot 1 Load/Unload (per cylinder by inputs, shared outputs where applicable)
         public ICylinder RobotFixtureAlignFwBw { get; }
@@ -184,32 +184,32 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             _outputs = outputs;
 
             // In CST
-            InCstStopperUpDown = _cylinderFactory
-                .Create(_inputs.InCstStopperUp, _inputs.InCstStopperDown, _outputs.InCstStopperUp, _outputs.InCstStopperDown)
-                .SetIdentity((int)ECylinder.InCstStopperUpDown, ECylinder.InCstStopperUpDown.ToString());
-            InCstStopperUpDown.CylinderType = ECylinderType.UpDown;
+            InCst_StopperUpDown = _cylinderFactory
+                .Create(_inputs.InCst_StopperUp, _inputs.InCst_StopperDown, _outputs.InCst_StopperUp, _outputs.InCst_StopperDown)
+                .SetIdentity((int)ECylinder.InCst_StopperUpDown, ECylinder.InCst_StopperUpDown.ToString());
+            InCst_StopperUpDown.CylinderType = ECylinderType.UpDown;
 
             // Out CST
-            OutCstStopperUpDown = _cylinderFactory
-                .Create(_inputs.OutCstStopperUp, _inputs.OutCstStopperDown, _outputs.OutCstStopperUp, _outputs.OutCstStopperDown)
-                .SetIdentity((int)ECylinder.OutCstStopperUpDown, ECylinder.OutCstStopperUpDown.ToString());
-            OutCstStopperUpDown.CylinderType = ECylinderType.UpDown;
+            OutCst_StopperUpDown = _cylinderFactory
+                .Create(_inputs.OutCst_StopperUp, _inputs.OutCst_StopperDown, _outputs.OutCst_StopperUp, _outputs.OutCst_StopperDown)
+                .SetIdentity((int)ECylinder.OutCst_StopperUpDown, ECylinder.OutCst_StopperUpDown.ToString());
+            OutCst_StopperUpDown.CylinderType = ECylinderType.UpDown;
 
             // In CST Work (per input pair)
-            InCstFixCyl1FwBw = _cylinderFactory
-                .Create(_inputs.InCstFixCyl1Fw, _inputs.InCstFixCyl1Bw, _outputs.InCstFixCyl1Fw, _outputs.InCstFixCyl1Bw)
-                .SetIdentity((int)ECylinder.InCstFixCyl1FwBw, ECylinder.InCstFixCyl1FwBw.ToString());
-            InCstFixCyl1FwBw.CylinderType = ECylinderType.ForwardBackward;
+            InWorkCst_AlignCyl1FwBw = _cylinderFactory
+                .Create(_inputs.InWorkCst_AlignCyl1Fw, _inputs.InWorkCst_AlignCyl1Bw, _outputs.InWorkCst_AlignCyl1Fw, _outputs.InWorkCst_AlignCyl1Bw)
+                .SetIdentity((int)ECylinder.InWorkCst_AlignCyl1FwBw, ECylinder.InWorkCst_AlignCyl1FwBw.ToString());
+            InWorkCst_AlignCyl1FwBw.CylinderType = ECylinderType.ForwardBackward;
 
-            InCstFixCyl2FwBw = _cylinderFactory
-                .Create(_inputs.InCstFixCyl2Fw, _inputs.InCstFixCyl2Bw, _outputs.InCstFixCyl2Fw, _outputs.InCstFixCyl2Bw)
-                .SetIdentity((int)ECylinder.InCstFixCyl2FwBw, ECylinder.InCstFixCyl2FwBw.ToString());
-            InCstFixCyl2FwBw.CylinderType = ECylinderType.ForwardBackward;
+            InWorkCst_AlignCyl2FwBw = _cylinderFactory
+                .Create(_inputs.InWorkCst_AlignCyl2Fw, _inputs.InWorkCst_AlignCyl2Bw, _outputs.InWorkCst_AlignCyl2Fw, _outputs.InWorkCst_AlignCyl2Bw)
+                .SetIdentity((int)ECylinder.InWorkCst_AlignCyl2FwBw, ECylinder.InWorkCst_AlignCyl2FwBw.ToString());
+            InWorkCst_AlignCyl2FwBw.CylinderType = ECylinderType.ForwardBackward;
 
-            InCstTiltCylUpDown = _cylinderFactory
-                .Create(_inputs.InCstTiltCylUp, _inputs.InCstTiltCylDown, _outputs.InCstTiltCylUp, _outputs.InCstTiltCylDown)
-                .SetIdentity((int)ECylinder.InCstTiltCylUpDown, ECylinder.InCstTiltCylUpDown.ToString());
-            InCstTiltCylUpDown.CylinderType = ECylinderType.UpDown;
+            InWorkCst_TiltCylUpDown = _cylinderFactory
+                .Create(_inputs.InWorkCst_TiltCylUp, _inputs.InWorkCst_TiltCylDown, _outputs.InWorkCst_TiltCylUp, _outputs.InWorkCst_TiltCylDown)
+                .SetIdentity((int)ECylinder.InWorkCst_TiltCylUpDown, ECylinder.InWorkCst_TiltCylUpDown.ToString());
+            InWorkCst_TiltCylUpDown.CylinderType = ECylinderType.UpDown;
 
             // Buffer CV Work
             BufferCvStopper1UpDown = _cylinderFactory
@@ -247,20 +247,20 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             OutCvSupportUpDown.CylinderType = ECylinderType.UpDown;
 
             // Out CST Work (per input pair)
-            OutCstFixCyl1FwBw = _cylinderFactory
-                .Create(_inputs.OutCstFixCyl1Fw, _inputs.OutCstFixCyl1Bw, _outputs.OutCstFixCyl1Fw, _outputs.OutCstFixCyl1Bw)
+            OutWorkCst_AlignCyl1FwBw = _cylinderFactory
+                .Create(_inputs.OutWorkCst_AlignCyl1Fw, _inputs.OutWorkCst_AlignCyl1Bw, _outputs.OutWorkCst_AlignCyl1Fw, _outputs.OutWorkCst_AlignCyl1Bw)
                 .SetIdentity((int)ECylinder.OutCstFixCyl1FwBw, ECylinder.OutCstFixCyl1FwBw.ToString());
-            OutCstFixCyl1FwBw.CylinderType = ECylinderType.ForwardBackward;
+            OutWorkCst_AlignCyl1FwBw.CylinderType = ECylinderType.ForwardBackward;
 
-            OutCstFixCyl2FwBw = _cylinderFactory
-                .Create(_inputs.OutCstFixCyl2Fw, _inputs.OutCstFixCyl2Bw, _outputs.OutCstFixCyl2Fw, _outputs.OutCstFixCyl2Bw)
+            OutWorkCst_AlignCyl2FwBw = _cylinderFactory
+                .Create(_inputs.OutWorkCst_AlignCyl2Fw, _inputs.OutWorkCst_AlignCyl2Bw, _outputs.OutWorkCst_AlignCyl2Fw, _outputs.OutWorkCst_AlignCyl2Bw)
                 .SetIdentity((int)ECylinder.OutCstFixCyl2FwBw, ECylinder.OutCstFixCyl2FwBw.ToString());
-            OutCstFixCyl2FwBw.CylinderType = ECylinderType.ForwardBackward;
+            OutWorkCst_AlignCyl2FwBw.CylinderType = ECylinderType.ForwardBackward;
 
-            OutCstTiltCylUpDown = _cylinderFactory
-                .Create(_inputs.OutCstTiltCylUp, _inputs.OutCstTiltCylDown, _outputs.OutCstTiltCylUp, _outputs.OutCstTiltCylDown)
+            OutWorkCst_TiltCylUpDown = _cylinderFactory
+                .Create(_inputs.OutWorkCst_TiltCylUp, _inputs.OutWorkCst_TiltCylDown, _outputs.OutWorkCst_TiltCylUp, _outputs.OutWorkCst_TiltCylDown)
                 .SetIdentity((int)ECylinder.OutCstTiltCylUpDown, ECylinder.OutCstTiltCylUpDown.ToString());
-            OutCstTiltCylUpDown.CylinderType = ECylinderType.UpDown;
+            OutWorkCst_TiltCylUpDown.CylinderType = ECylinderType.UpDown;
 
             // Robot 1 Load/Unload
             RobotFixtureAlignFwBw = _cylinderFactory
@@ -597,7 +597,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             UnloadRobotCyl1UpDown.CylinderType = ECylinderType.UpDown;
 
             UnloadRobotCyl2UpDown = _cylinderFactory
-                .Create( _inputs.UnloadRobotCyl2Down ,  _inputs.UnloadRobotCyl2Up , _outputs.UnloadRobotCyl2Down, null)
+                .Create(_inputs.UnloadRobotCyl2Down, _inputs.UnloadRobotCyl2Up, _outputs.UnloadRobotCyl2Down, null)
                 .SetIdentity((int)ECylinder.UnloadRobotCyl2UpDown, ECylinder.UnloadRobotCyl2UpDown.ToString());
             UnloadRobotCyl2UpDown.CylinderType = ECylinderType.UpDown;
 
@@ -631,7 +631,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                 .Create(_inputs.UnloadAlignCyl4Up, _inputs.UnloadAlignCyl4Down, _outputs.UnloadAlignCyl4Up, null)
                 .SetIdentity((int)ECylinder.UnloadAlignCyl4UpDown, ECylinder.UnloadAlignCyl4UpDown.ToString());
             UnloadAlignCyl4UpDown.CylinderType = ECylinderType.UpDown;
-        
+
         }
 
         private readonly ICylinderFactory _cylinderFactory;

@@ -7,6 +7,7 @@
              xmlns:vm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels"
              mc:Ignorable="d"
              x:Name="root"
+             Loaded="root_Loaded"
              xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              d:DataContext="{d:DesignInstance Type=vm:InitializeViewModel}"
              d:DesignHeight="1080"

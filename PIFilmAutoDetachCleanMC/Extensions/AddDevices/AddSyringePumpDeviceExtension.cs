@@ -21,36 +21,36 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 {
                     var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
 #if SIMULATION
-                    return new SimulationSyringePump("WETCleanRightSyringePump", 1);
+                    return new SimulationSyringePump("WETCleanRightSyringePump", 0);
 #else
-                    return new PSD4SyringePump("WETCleanRightSyringePump", 1, serialCommunicator, 1.0);
+                    return new PSD4SyringePump("WETCleanRightSyringePump", 0, serialCommunicator, 1.0);
 #endif
                 });
                 services.AddKeyedSingleton<ISyringePump>("WETCleanLeftSyringePump", (ser, obj) =>
                 {
                     var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
 #if SIMULATION
-                    return new SimulationSyringePump("WETCleanLeftSyringePump", 2);
+                    return new SimulationSyringePump("WETCleanLeftSyringePump", 1);
 #else
-                    return new PSD4SyringePump("WETCleanLeftSyringePump", 2, serialCommunicator, 1.0);
+                    return new PSD4SyringePump("WETCleanLeftSyringePump", 1, serialCommunicator, 1.0);
 #endif
                 });
                 services.AddKeyedSingleton<ISyringePump>("AFCleanRightSyringePump", (ser, obj) =>
                 {
                     var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
 #if SIMULATION
-                    return new SimulationSyringePump("AFCleanRightSyringePump", 3);
+                    return new SimulationSyringePump("AFCleanRightSyringePump", 2);
 #else
-                    return new PSD4SyringePump("AFCleanRightSyringePump", 3, serialCommunicator, 1.0);
+                    return new PSD4SyringePump("AFCleanRightSyringePump", 2, serialCommunicator, 1.0);
 #endif
                 });
                 services.AddKeyedSingleton<ISyringePump>("AFCleanLeftSyringePump", (ser, obj) =>
                 {
                     var serialCommunicator = ser.GetRequiredKeyedService<SerialCommunicator>("SyringePumpSerialCommunicator");
 #if SIMULATION
-                    return new SimulationSyringePump("AFCleanLeftSyringePump", 4);
+                    return new SimulationSyringePump("AFCleanLeftSyringePump", 3);
 #else
-                    return new PSD4SyringePump("AFCleanLeftSyringePump", 4, serialCommunicator, 1.0);
+                    return new PSD4SyringePump("AFCleanLeftSyringePump", 3, serialCommunicator, 1.0);
 #endif
                 });
 

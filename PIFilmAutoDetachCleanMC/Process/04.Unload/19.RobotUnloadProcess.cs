@@ -206,7 +206,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    Step.OriginStep = (int)ERobotLoadToOriginStep.RobotExtStart_Enable;
+                    Step.OriginStep = (int)ERobotUnloadToOriginStep.RobotExtStart_Enable;
                     break;
                 case ERobotUnloadToOriginStep.RobotConfMess_Delay:
                     Wait(500);
@@ -237,7 +237,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #endif
                     if (!ProACT.Value)
                     {
-                        RaiseWarning((int)EWarning.RobotLoad_Programing_Not_Running);
+                        RaiseWarning((int)EWarning.RobotUnload_Programing_Not_Running);
                         break;
                     }
 #if SIMULATION
@@ -265,7 +265,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ERobotUnloadToOriginStep.SetModel_Check:
-                    if (_robotUnload.ReadResponse(5000, $"select,{_robotUnloadRecipe.Model},0\n\r"))
+                    if (_robotUnload.ReadResponse(5000, $"select,{_robotUnloadRecipe.Model},0\r\n"))
                     {
                         Log.Debug("Set Model: " + _robotUnloadRecipe.Model + " success");
                         Step.OriginStep++;

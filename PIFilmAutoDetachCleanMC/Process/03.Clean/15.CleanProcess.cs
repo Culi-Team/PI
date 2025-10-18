@@ -755,7 +755,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Syringe Pump Oriign");
                     SyringePump.Initialize();
                     Thread.Sleep(100);
-                    Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => SyringePump.IsReady);
+                    Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => SyringePump.IsReady());
                     Step.OriginStep++;
                     break;
                 case ECleanOriginStep.SyringePump_Origin_Wait:
@@ -1032,7 +1032,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.Dispense_Remain_Wait:
-                    if (SyringePump.IsReady == false)
+                    if (SyringePump.IsReady() == false)
                     {
                         Thread.Sleep(100);
                         break;
@@ -1045,7 +1045,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.Fill_Wait:
-                    if (SyringePump.IsReady == false)
+                    if (SyringePump.IsReady() == false)
                     {
                         Thread.Sleep(100);
                         break;
@@ -1947,7 +1947,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.Dispense_Port1_Wait:
-                            if (SyringePump.IsReady == false)
+                            if (SyringePump.IsReady() == false)
                             {
                                 Thread.Sleep(100);
                                 break;
@@ -1967,7 +1967,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.Dispense_Port2_Wait:
-                            if (SyringePump.IsReady == false)
+                            if (SyringePump.IsReady() == false)
                             {
                                 Thread.Sleep(100);
                                 break;
@@ -1987,7 +1987,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.Dispense_Port3_Wait:
-                            if (SyringePump.IsReady == false)
+                            if (SyringePump.IsReady() == false)
                             {
                                 Thread.Sleep(100);
                                 break;
@@ -2007,7 +2007,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.Dispense_Port4_Wait:
-                            if (SyringePump.IsReady == false)
+                            if (SyringePump.IsReady() == false)
                             {
                                 Thread.Sleep(100);
                                 break;
@@ -2027,7 +2027,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.Dispense_Port5_Wait:
-                            if (SyringePump.IsReady == false)
+                            if (SyringePump.IsReady() == false)
                             {
                                 Thread.Sleep(100);
                                 break;
@@ -2047,7 +2047,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.Dispense_Port6_Wait:
-                            if (SyringePump.IsReady == false)
+                            if (SyringePump.IsReady() == false)
                             {
                                 Thread.Sleep(100);
                                 break;
