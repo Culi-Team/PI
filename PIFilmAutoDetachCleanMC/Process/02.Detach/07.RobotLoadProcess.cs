@@ -9,7 +9,7 @@ using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Robot;
-using PIFilmAutoDetachCleanMC.Defines.Process.Step._07.RobotLoadProcess;
+using PIFilmAutoDetachCleanMC.Defines.Process;
 using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 using PIFilmAutoDetachCleanMC.Recipe;
 
@@ -361,7 +361,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_No_Ready_Response);
+                    RaiseWarning((int)EWarning.RobotLoad_No_Ready_Response);
                     break;
                 case ERobotLoadToOriginStep.SetModel:
                     Log.Debug("Set Model: " + _robotLoadRecipe.Model);
@@ -475,7 +475,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SendMotionCommand_Fail);
                     break;
                 case ERobotLoadOriginStep.Robot_Origin_Check:
                     if (WaitTimeOutOccurred)
@@ -611,7 +611,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SetCassettePitch_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SetCassettePitch_Fail);
                     break;
                 case ERobotLoadProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
@@ -811,7 +811,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_No_Ready_Response);
+                    RaiseWarning((int)EWarning.RobotLoad_No_Ready_Response);
                     break;
                 case ERobotLoadReadyStep.SetModel:
                     Log.Debug("Set Model: " + _robotLoadRecipe.Model);
@@ -826,7 +826,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SetModel_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SetModel_Fail);
                     break;
                 case ERobotLoadReadyStep.RobotHomePosition:
                     Log.Debug("Check Home Positon RobotLoad");
@@ -868,7 +868,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SendMotionCommand_Fail);
                     break;
                 case ERobotLoadReadyStep.RobotHome_Check:
                     if (WaitTimeOutOccurred)
@@ -936,7 +936,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SendMotionCommand_Fail);
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Move_InCST_PickPosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -987,7 +987,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SendMotionCommand_Fail);
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Move_InCST_ReadyPositon_Wait:
                     if (WaitTimeOutOccurred)
@@ -1051,7 +1051,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SendMotionCommand_Fail);
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.Move_VinylClean_PickPlacePosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -1128,7 +1128,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SendMotionCommand_Fail);
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.Move_VinylClean_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -1243,7 +1243,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SendMotionCommand_Fail);
                     break;
                 case ERobotLoadPlaceFixtureToAlignStep.Move_FixtureAlignPlacePosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -1290,7 +1290,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SendMotionCommand_Fail);
                     break;
                 case ERobotLoadPlaceFixtureToAlignStep.Move_FixtureAlignReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -1380,7 +1380,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SendMotionCommand_Fail);
                     break;
                 case ERobotLoadPickFixtureFromRemoveZoneStep.Move_RemoveZonePickPosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -1427,7 +1427,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SendMotionCommand_Fail);
                     break;
                 case ERobotLoadPickFixtureFromRemoveZoneStep.Move_RemoveZoneReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -1502,7 +1502,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SendMotionCommand_Fail);
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Move_OutCSTPlacePosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -1549,7 +1549,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SendMotionCommand_Fail);
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Move_OutCSTReadyPosition_Wait:
                     if (WaitTimeOutOccurred)

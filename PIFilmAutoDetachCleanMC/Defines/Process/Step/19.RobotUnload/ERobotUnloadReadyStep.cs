@@ -1,6 +1,6 @@
 ﻿namespace PIFilmAutoDetachCleanMC.Defines.Process
 {
-    public enum ERobotLoadReadyStep
+    public enum ERobotUnloadReadyStep
     {
         Start,
 
@@ -35,6 +35,5 @@
         RobotHome_Check,
 
         End
-
     }
 }

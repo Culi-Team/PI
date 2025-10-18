@@ -43,13 +43,8 @@
 
         //Robot Load
         RobotLoad = 7000,
-        RobotLoad_No_Ready_Response,
-        RobotLoad_SetCassettePitch_Fail,
-        RobotLoad_SetModel_Fail,
         RobotLoad_MoveMotionCommand_Timeout,
-        RobotLoad_SendMotionCommand_Fail,
-
-
+        
         //Align Fixture
         AlignFixture = 8000,
 
@@ -275,9 +270,7 @@
 
         //Robot Unload
         RobotUnload = 26000,
-        RobotUnload_No_Ready_Response,
-        RobotUnload_SetModel_Fail,
         RobotUnload_MoveMotionCommand_Timeout,
-        RobotUnload_SendMotionCommand_Fail,
+        
     }
 }

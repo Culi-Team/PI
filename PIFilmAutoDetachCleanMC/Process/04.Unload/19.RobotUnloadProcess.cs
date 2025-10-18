@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Robot;
-using PIFilmAutoDetachCleanMC.Defines.Process.Step._07.RobotLoadProcess;
+using PIFilmAutoDetachCleanMC.Defines.Process;
 using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 using PIFilmAutoDetachCleanMC.Recipe;
 
@@ -257,7 +257,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotUnload_No_Ready_Response);
+                    RaiseWarning((int)EWarning.RobotUnload_No_Ready_Response);
                     break;
                 case ERobotUnloadToOriginStep.SetModel:
                     Log.Debug("Set Model: " + _robotUnloadRecipe.Model);
@@ -351,7 +351,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotUnload_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotUnload_SendMotionCommand_Fail);
                     break;
                 case ERobotUnloadOriginStep.Robot_Origin_Check:
                     if (WaitTimeOutOccurred)
@@ -385,8 +385,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
-                    IsWarning = false;
-                    Sequence = ESequence.Stop;
+                    Sequence_Ready();
                     break;
                 case ESequence.InConveyorLoad:
                     break;
@@ -556,6 +555,204 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private void Sequence_Ready()
+        {
+            switch ((ERobotUnloadReadyStep)Step.RunStep)
+            {
+                case ERobotUnloadReadyStep.Start:
+                    if (IsOriginOrInitSelected == false)
+                    {
+                        Sequence = ESequence.Stop;
+                        break;
+                    }
+                    Log.Debug("Ready Start");
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.ReConnectIfRequired:
+                    if (!_robotUnload.IsConnected)
+                    {
+                        Log.Debug("Robot is not connected, trying to reconnect.");
+                        _robotUnload.Connect();
+                    }
+
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.CheckConnection:
+                    if (!_robotUnload.IsConnected)
+                    {
+                        RaiseWarning((int)EWarning.RobotUnload_Connect_Fail);
+                        break;
+                    }
+
+                    Log.Debug("Robot unload is connected.");
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.EnableOutput:
+                    Log.Debug("Enable Outputs Move Enable, Driver Off");
+                    _devices.Outputs.LoadRobMoveEnable.Value = true;
+                    _devices.Outputs.LoadRobDrivesOff.Value = true;
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.RobotMotionOnCheck:
+                    if (!PeriRDY.Value)
+                    {
+                        Log.Debug("Driver ON");
+                        DrivesOn.Value = true;
+                        Step.RunStep++;
+                        break;
+                    }
+
+                    Step.RunStep = (int)ERobotUnloadReadyStep.RobotStopMessCheck;
+                    break;
+                case ERobotUnloadReadyStep.RobotMotionOn_Delay:
+                    Wait(3000, () => PeriRDY.Value);
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.RobotMotionOn_Disable:
+                    Log.Debug("Driver OFF");
+                    DrivesOn.Value = false;
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.RobotStopMessCheck:
+                    if (StopMess.Value)
+                    {
+                        Log.Debug("Confirm message.");
+                        ConfMess.Value = true;
+                        Step.RunStep++;
+                        break;
+                    }
+
+                    Step.RunStep = (int)ERobotUnloadReadyStep.RobotExtStart_Enable;
+                    break;
+                case ERobotUnloadReadyStep.RobotConfMess_Delay:
+                    Wait(500);
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.RobotConfMess_Disable:
+                    Log.Debug("Disable Confirm message.");
+                    ConfMess.Value = false;
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.RobotExtStart_Enable:
+                    Log.Debug("Enable External Start.");
+                    ExtStart.Value = true;
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.RobotExtStart_Delay:
+                    Wait(500);
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.RobotExtStart_Disable:
+                    Log.Debug("Disable External Start.");
+                    ExtStart.Value = false;
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.RobotProgramStart_Check:
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(ProACT, true);
+#endif
+                    if (!ProACT.Value)
+                    {
+                        RaiseWarning((int)EWarning.RobotUnload_Programing_Not_Running);
+                        break;
+                    }
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(ProACT, false);
+#endif
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.SendPGMStart:
+                    _robotUnload.SendCommand(RobotHelpers.PCPGMStart);
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.SendPGMStart_Check:
+                    if (_robotUnload.ReadResponse(5000, "RobotReady,0\r\n"))
+                    {
+                        Log.Debug("Robot PGM Start Success.");
+                        Step.RunStep++;
+                        break;
+                    }
+
+                    RaiseWarning((int)EWarning.RobotUnload_No_Ready_Response);
+                    break;
+                case ERobotUnloadReadyStep.SetModel:
+                    Log.Debug("Set Model: " + _robotUnloadRecipe.Model);
+                    _robotUnload.SendCommand(RobotHelpers.SetModel(_robotUnloadRecipe.Model));
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.SetModel_Check:
+                    if (_robotUnload.ReadResponse(5000, $"select,{_robotUnloadRecipe.Model},0\r\n"))
+                    {
+                        Log.Debug("Set Model: " + _robotUnloadRecipe.Model + " success");
+                        Step.RunStep++;
+                        break;
+                    }
+
+                    RaiseWarning((int)EWarning.RobotUnload_SetModel_Fail);
+                    break;
+                case ERobotUnloadReadyStep.RobotHomePosition:
+                    Log.Debug("Check Home Positon RobotUnload");
+                    _robotUnload.SendCommand(RobotHelpers.HomePositionCheck);
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.RobotHomePosition_Check:
+                    if (_robotUnload.ReadResponse(5000, "Robot in home,0\r\n"))
+                    {
+                        Log.Debug("Robot Unload In Home .");
+                        Step.RunStep = (int)ERobotUnloadReadyStep.End;
+                        break;
+                    }
+
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.RobotSeqHome:
+                    Log.Debug("Check sequence home robot load");
+                    _robotUnload.SendCommand(RobotHelpers.SeqHomeCheck);
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.RobotSeqHome_Check:
+                    if (_robotUnload.ReadResponse(5000, "Home safely,0\r\n"))
+                    {
+                        Log.Debug("Robot Unload Home Safely");
+                        Step.RunStep++;
+                        break;
+                    }
+
+                    RaiseWarning((int)EWarning.RobotUnload_Home_Manual_By_TeachingPendant);
+                    break;
+                case ERobotUnloadReadyStep.RobotHome:
+                    Log.Debug("Start Home Robot Unload");
+                    Log.Debug($"Send Robot Motion Command {ERobotCommand.HOME}");
+                    if (SendCommand(ERobotCommand.HOME, 10, 20))
+                    {
+                        Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.HOME)));
+                        Step.RunStep++;
+                        break;
+                    }
+
+                    RaiseWarning((int)EWarning.RobotUnload_SendMotionCommand_Fail);
+                    break;
+                case ERobotUnloadReadyStep.RobotHome_Check:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)EAlarm.RobotLoad_MoveMotionCommand_Timeout);
+                        break;
+                    }
+
+                    Log.Debug("Robot Unload Home Done");
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.End:
+                    Log.Debug("Ready run end");
+                    IsWarning = false;
+                    Sequence = ESequence.Stop;
+                    break;
+                default:
+                    Wait(20);
+                    break;
+            }
+        }
+
         private void Sequence_UnloadRobotPick()
         {
             switch ((ERobotUnloadPickStep)Step.RunStep)
@@ -574,7 +771,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotUnload_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotUnload_SendMotionCommand_Fail);
                     break;
                 case ERobotUnloadPickStep.Robot_Move_ReadyPickPosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -604,7 +801,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotUnload_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotUnload_SendMotionCommand_Fail);
                     break;
                 case ERobotUnloadPickStep.Robot_Move_PickPosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -677,7 +874,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotUnload_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotUnload_SendMotionCommand_Fail);
                     break;
                 case ERobotUnloadPickStep.Robot_MoveBack_ReadyPickPosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -775,7 +972,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotUnload_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotUnload_SendMotionCommand_Fail);
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPlasmaStep.Robot_Move_PlasmaPosition_Wait:
@@ -836,7 +1033,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotUnload_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotUnload_SendMotionCommand_Fail);
                     break;
                 case EUnloadRobotPlaceStep.Robot_Move_PlacePosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -861,7 +1058,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep++;
                         break;
                     }
-                    RaiseAlarm((int)EAlarm.RobotUnload_SendMotionCommand_Fail);
+                    RaiseWarning((int)EWarning.RobotUnload_SendMotionCommand_Fail);
                     break;
                 case EUnloadRobotPlaceStep.Robot_Move_ReadyPlacePosition_Wait:
                     if (WaitTimeOutOccurred)
