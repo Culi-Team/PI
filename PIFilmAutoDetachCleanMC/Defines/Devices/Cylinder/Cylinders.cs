@@ -318,12 +318,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             Detach_UpDownCyl1 = _cylinderFactory
                 .Create(_inputs.DetachCyl1Down, _inputs.DetachCyl1Up, _outputs.DetachCyl1Down, _outputs.DetachCyl1Up)
                 .SetIdentity((int)ECylinder.Detach_UpDownCyl1, ECylinder.Detach_UpDownCyl1.ToString());
-            Detach_UpDownCyl1.CylinderType = ECylinderType.UpDown;
+            Detach_UpDownCyl1.CylinderType = ECylinderType.UpDownReverse;
 
             Detach_UpDownCyl2 = _cylinderFactory
                 .Create(_inputs.DetachCyl2Down, _inputs.DetachCyl2Up, _outputs.DetachCyl2Down, _outputs.DetachCyl2Up)
                 .SetIdentity((int)ECylinder.Detach_UpDownCyl2, ECylinder.Detach_UpDownCyl2.ToString());
-            Detach_UpDownCyl2.CylinderType = ECylinderType.UpDown;
+            Detach_UpDownCyl2.CylinderType = ECylinderType.UpDownReverse;
 
             Detach_ClampCyl1 = _cylinderFactory
                 .Create(_inputs.DetachCyl1Clamp, _inputs.DetachCyl1UnClamp, _outputs.DetachClampCyl1Clamp, _outputs.DetachClampCyl1Unclamp)
@@ -354,12 +354,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             RemoveZone_UpDownCyl1 = _cylinderFactory
                 .Create(_inputs.RemoveZoneZCyl1Down, _inputs.RemoveZoneZCyl1Up, _outputs.RemoveZoneZCyl1Down, null)
                 .SetIdentity((int)ECylinder.RemoveZone_UpDownCyl1, ECylinder.RemoveZone_UpDownCyl1.ToString());
-            RemoveZone_UpDownCyl1.CylinderType = ECylinderType.UpDown;
+            RemoveZone_UpDownCyl1.CylinderType = ECylinderType.UpDownReverse;
 
             RemoveZone_UpDownCyl2 = _cylinderFactory
                 .Create(_inputs.RemoveZoneZCyl2Down, _inputs.RemoveZoneZCyl2Up, _outputs.RemoveZoneZCyl2Down, null)
                 .SetIdentity((int)ECylinder.RemoveZone_UpDownCyl2, ECylinder.RemoveZone_UpDownCyl2.ToString());
-            RemoveZone_UpDownCyl2.CylinderType = ECylinderType.UpDown;
+            RemoveZone_UpDownCyl2.CylinderType = ECylinderType.UpDownReverse;
 
             RemoveZone_FilmClampCyl1 = _cylinderFactory
                 .Create(_inputs.RemoveZoneFilm1Clamp, _inputs.RemoveZoneFilm1Unclamp, _outputs.RemoveZoneCyl1Clamp, _outputs.RemoveZoneCyl1Unclamp)
@@ -462,28 +462,28 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             GlassTransfer_UpDownCyl1 = _cylinderFactory
                 .Create(_inputs.GlassTransferCyl1Down, _inputs.GlassTransferCyl1Up, _outputs.GlassTransferCyl1Down, _outputs.GlassTransferCyl1Up)
                 .SetIdentity((int)ECylinder.GlassTransfer_UpDownCyl1, ECylinder.GlassTransfer_UpDownCyl1.ToString());
-            GlassTransfer_UpDownCyl1.CylinderType = ECylinderType.UpDown;
+            GlassTransfer_UpDownCyl1.CylinderType = ECylinderType.UpDownReverse;
 
             GlassTransfer_UpDownCyl2 = _cylinderFactory
                 .Create(_inputs.GlassTransferCyl2Down, _inputs.GlassTransferCyl2Up, _outputs.GlassTransferCyl2Down, _outputs.GlassTransferCyl2Up)
                 .SetIdentity((int)ECylinder.GlassTransfer_UpDownCyl2, ECylinder.GlassTransfer_UpDownCyl2.ToString());
-            GlassTransfer_UpDownCyl2.CylinderType = ECylinderType.UpDown;
+            GlassTransfer_UpDownCyl2.CylinderType = ECylinderType.UpDownReverse;
 
             GlassTransfer_UpDownCyl3 = _cylinderFactory
                 .Create(_inputs.GlassTransferCyl3Down, _inputs.GlassTransferCyl3Up, _outputs.GlassTransferCyl3Down, _outputs.GlassTransferCyl3Up)
                 .SetIdentity((int)ECylinder.GlassTransfer_UpDownCyl3, ECylinder.GlassTransfer_UpDownCyl3.ToString());
-            GlassTransfer_UpDownCyl3.CylinderType = ECylinderType.UpDown;
+            GlassTransfer_UpDownCyl3.CylinderType = ECylinderType.UpDownReverse;
 
             // Wet Clean
             WetCleanR_PusherCyl = _cylinderFactory
                 .Create(_inputs.WetCleanPusherRightDown, _inputs.WetCleanPusherRightUp, _outputs.WetCleanPusherRightDown, _outputs.WetCleanPusherRightUp)
                 .SetIdentity((int)ECylinder.WetCleanR_PusherCyl, ECylinder.WetCleanR_PusherCyl.ToString());
-            WetCleanR_PusherCyl.CylinderType = ECylinderType.UpDown;
+            WetCleanR_PusherCyl.CylinderType = ECylinderType.UpDownReverse;
 
             WetCleanL_PusherCyl = _cylinderFactory
                 .Create(_inputs.WetCleanPusherLeftDown, _inputs.WetCleanPusherLeftUp, _outputs.WetCleanPusherLeftDown, _outputs.WetCleanPusherLeftUp)
                 .SetIdentity((int)ECylinder.WetCleanL_PusherCyl, ECylinder.WetCleanL_PusherCyl.ToString());
-            WetCleanL_PusherCyl.CylinderType = ECylinderType.UpDown;
+            WetCleanL_PusherCyl.CylinderType = ECylinderType.UpDownReverse;
 
             WetCleanR_BrushCyl = _cylinderFactory
                 .Create(_inputs.WetCleanBrushRightDown, _inputs.WetCleanBrushRightUp, _outputs.WetCleanBrushRightDown, null)
@@ -572,22 +572,22 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             UnloadRobot_UpDownCyl1 = _cylinderFactory
                 .Create(_inputs.UnloadRobotCyl1Down, _inputs.UnloadRobotCyl1Up, _outputs.UnloadRobotCyl1Down, null)
                 .SetIdentity((int)ECylinder.UnloadRobot_UpDownCyl1, ECylinder.UnloadRobot_UpDownCyl1.ToString());
-            UnloadRobot_UpDownCyl1.CylinderType = ECylinderType.UpDown;
+            UnloadRobot_UpDownCyl1.CylinderType = ECylinderType.UpDownReverse;
 
             UnloadRobot_UpDownCyl2 = _cylinderFactory
                 .Create(_inputs.UnloadRobotCyl2Down, _inputs.UnloadRobotCyl2Up, _outputs.UnloadRobotCyl2Down, null)
                 .SetIdentity((int)ECylinder.UnloadRobot_UpDownCyl2, ECylinder.UnloadRobot_UpDownCyl2.ToString());
-            UnloadRobot_UpDownCyl2.CylinderType = ECylinderType.UpDown;
+            UnloadRobot_UpDownCyl2.CylinderType = ECylinderType.UpDownReverse;
 
             UnloadRobot_UpDownCyl3 = _cylinderFactory
                 .Create(_inputs.UnloadRobotCyl3Down, _inputs.UnloadRobotCyl3Up, _outputs.UnloadRobotCyl3Down, null)
                 .SetIdentity((int)ECylinder.UnloadRobot_UpDownCyl3, ECylinder.UnloadRobot_UpDownCyl3.ToString());
-            UnloadRobot_UpDownCyl3.CylinderType = ECylinderType.UpDown;
+            UnloadRobot_UpDownCyl3.CylinderType = ECylinderType.UpDownReverse;
 
             UnloadRobot_UpDownCyl4 = _cylinderFactory
                 .Create(_inputs.UnloadRobotCyl4Down, _inputs.UnloadRobotCyl4Up, _outputs.UnloadRobotCyl4Down, null)
                 .SetIdentity((int)ECylinder.UnloadRobot_UpDownCyl4, ECylinder.UnloadRobot_UpDownCyl4.ToString());
-            UnloadRobot_UpDownCyl4.CylinderType = ECylinderType.UpDown;
+            UnloadRobot_UpDownCyl4.CylinderType = ECylinderType.UpDownReverse;
 
             // Unload Stage
             UnloadAlign_UpDownCyl1 = _cylinderFactory
