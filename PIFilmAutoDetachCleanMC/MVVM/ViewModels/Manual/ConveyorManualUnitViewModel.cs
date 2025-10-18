@@ -29,7 +29,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
                 {
                     foreach (var roller in Rollers)
                     {
-                        if(roller.IsConnected == false)
+                        roller.SetSpeed(ConveyorSpeed);
+                        roller.SetAcceleration(ConveyorAcc);
+                        roller.SetDeceleration(ConveyorDec);
+                        if (roller.IsConnected == false)
                         {
                             MessageBoxEx.ShowDialog("Conveyor is not connected.");
                         }
@@ -40,7 +43,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
         }
 
         public ICommand ConveyorStopCommand
-        { 
+        {
             get
             {
                 return new RelayCommand(() =>
@@ -56,5 +59,30 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
                 });
             }
         }
+
+        private int conveyorSpeed = 100;
+
+        public int ConveyorSpeed
+        {
+            get { return conveyorSpeed; }
+            set { conveyorSpeed = value; OnPropertyChanged(); }
+        }
+
+        private int conveyorAcc = 400;
+
+        public int ConveyorAcc
+        {
+            get { return conveyorAcc; }
+            set { conveyorAcc = value; OnPropertyChanged(); }
+        }
+
+        private int conveyorDec = 400;
+
+        public int ConveyorDec
+        {
+            get { return conveyorDec; }
+            set { conveyorDec = value; OnPropertyChanged(); }
+        }
+
     }
 }
