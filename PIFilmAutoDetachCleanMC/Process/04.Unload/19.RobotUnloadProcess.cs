@@ -38,10 +38,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool GlassVac2 => _devices.Inputs.UnloadRobotVac2.Value;
         private bool GlassVac3 => _devices.Inputs.UnloadRobotVac3.Value;
         private bool GlassVac4 => _devices.Inputs.UnloadRobotVac4.Value;
-        private ICylinder Cyl1 => _devices.Cylinders.UnloadRobotCyl1UpDown;
-        private ICylinder Cyl2 => _devices.Cylinders.UnloadRobotCyl2UpDown;
-        private ICylinder Cyl3 => _devices.Cylinders.UnloadRobotCyl3UpDown;
-        private ICylinder Cyl4 => _devices.Cylinders.UnloadRobotCyl4UpDown;
+        private ICylinder Cyl1 => _devices.Cylinders.UnloadRobot_UpDownCyl1;
+        private ICylinder Cyl2 => _devices.Cylinders.UnloadRobot_UpDownCyl2;
+        private ICylinder Cyl3 => _devices.Cylinders.UnloadRobot_UpDownCyl3;
+        private ICylinder Cyl4 => _devices.Cylinders.UnloadRobot_UpDownCyl4;
 
         private bool IsCylindersUp => Cyl1.IsBackward && Cyl2.IsBackward && Cyl3.IsBackward && Cyl4.IsBackward;
         private bool IsCylindersDown => Cyl1.IsForward && Cyl2.IsForward && Cyl3.IsForward && Cyl4.IsForward;
@@ -155,7 +155,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotUnloadToOriginStep.ReConnectIfRequired:
                     if (!_robotUnload.IsConnected)
                     {
-                        Log.Debug("Robot is not connected, trying to reconnect.");
+                        Log.Debug("Robot unload is not connected, trying to reconnect.");
                         _robotUnload.Connect();
                     }
 
@@ -164,11 +164,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotUnloadToOriginStep.CheckConnection:
                     if (!_robotUnload.IsConnected)
                     {
-                        RaiseWarning((int)EWarning.RobotLoad_Connect_Fail);
+                        RaiseWarning((int)EWarning.RobotUnload_Connect_Fail);
                         break;
                     }
 
-                    Log.Debug("Robot is connected.");
+                    Log.Debug("Robot unload is connected.");
                     Step.OriginStep++;
                     break;
                 case ERobotUnloadToOriginStep.EnableOutput:
@@ -206,7 +206,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    Step.OriginStep = (int)ERobotUnloadToOriginStep.RobotExtStart_Enable;
+                    Step.OriginStep = (int)ERobotLoadToOriginStep.RobotExtStart_Enable;
                     break;
                 case ERobotUnloadToOriginStep.RobotConfMess_Delay:
                     Wait(500);
@@ -237,7 +237,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #endif
                     if (!ProACT.Value)
                     {
-                        RaiseWarning((int)EWarning.RobotUnload_Programing_Not_Running);
+                        RaiseWarning((int)EWarning.RobotLoad_Programing_Not_Running);
                         break;
                     }
 #if SIMULATION
@@ -257,7 +257,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_No_Ready_Response);
+                    RaiseAlarm((int)EAlarm.RobotUnload_No_Ready_Response);
                     break;
                 case ERobotUnloadToOriginStep.SetModel:
                     Log.Debug("Set Model: " + _robotUnloadRecipe.Model);
@@ -265,14 +265,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ERobotUnloadToOriginStep.SetModel_Check:
-                    if (_robotUnload.ReadResponse(5000, $"select,{_robotUnloadRecipe.Model},0\r\n"))
+                    if (_robotUnload.ReadResponse(5000, $"select,{_robotUnloadRecipe.Model},0\n\r"))
                     {
                         Log.Debug("Set Model: " + _robotUnloadRecipe.Model + " success");
                         Step.OriginStep++;
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SetModel_Fail);
+                    RaiseWarning((int)EWarning.RobotUnload_SetModel_Fail);
                     break;
                 case ERobotUnloadToOriginStep.End:
                     if (ProcessStatus == EProcessStatus.ToOriginDone)

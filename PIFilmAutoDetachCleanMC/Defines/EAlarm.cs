@@ -22,6 +22,7 @@
         InWorkConveyor_TAxis_Origin_Fail,
         InWorkConveyor_TAxis_MoveWorkPosition_Fail,
         InWorkConveyor_TAxis_MoveLoadPosition_Fail,
+        InWorkConveyor_TAxis_MoveUnloadPosition_Fail,
 
         //BufferConveyor
         BufferConveyor = 3000,
@@ -31,6 +32,7 @@
         OutWorkConveyor_TAxis_Origin_Fail,
         OutWorkConveyor_TAxis_MoveWorkPosition_Fail,
         OutWorkConveyor_TAxis_MoveLoadPosition_Fail,
+        OutWorkConveyor_TAxis_MoveUnloadPosition_Fail,
 
         //OutConveyor
         OutConveyor = 5000,

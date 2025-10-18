@@ -19,8 +19,11 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private double pitch;
         private double inCstTAxisLoadPosition;
         private double inCstTAxisWorkPosition;
+        private double inCstTAxisUnloadPosition;
+
         private double outCstTAxisLoadPosition;
         private double outCstTAxisWorkPosition;
+        private double outCstTAxisUnloadPosition;
 
         [JsonIgnore]
         public EventHandler CassetteSizeChanged;
@@ -123,6 +126,19 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             }
         }
 
+        [SingleRecipeDescription(Description = "In Cassette T Axis Unload Position", Unit = Unit.mm)]
+        [SinglePositionTeaching(Motion = "TAxis")]
+        public double InCstTAxisUnloadPosition
+        {
+            get { return inCstTAxisUnloadPosition; }
+            set 
+            {
+                OnRecipeChanged(inCstTAxisUnloadPosition, value);
+                inCstTAxisUnloadPosition = value; 
+            }
+        }
+
+
         [SingleRecipeDescription(Description = "Out Cassette T Axis Load Position", Unit = Unit.mm)]
         [SinglePositionTeaching(Motion = "TAxis")]
         public double OutCstTAxisLoadPosition
@@ -144,6 +160,18 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             {
                 OnRecipeChanged(outCstTAxisWorkPosition, value);
                 outCstTAxisWorkPosition = value;
+            }
+        }
+
+        [SingleRecipeDescription(Description = "Out Cassette T Axis Unload Position", Unit = Unit.mm)]
+        [SinglePositionTeaching(Motion = "TAxis")]
+        public double OutCstTAxisUnloadPosition
+        {
+            get { return outCstTAxisUnloadPosition; }
+            set 
+            {
+                OnRecipeChanged(outCstTAxisUnloadPosition, value);
+                outCstTAxisUnloadPosition = value; 
             }
         }
     }

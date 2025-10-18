@@ -36,9 +36,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         private int HightSpeed => _robotLoadRecipe.RobotSpeedHigh;
         private int LowSpeed => _robotLoadRecipe.RobotSpeedLow;
 
-        private ICylinder ClampCyl1 => _devices.Cylinders.RobotFixture1ClampUnclamp;
-        private ICylinder ClampCyl2 => _devices.Cylinders.RobotFixture2ClampUnclamp;
-        private ICylinder AlignCyl => _devices.Cylinders.RobotFixtureAlignFwBw;
+        private ICylinder ClampCyl1 => _devices.Cylinders.RobotLoad_ClampCyl1;
+        private ICylinder ClampCyl2 => _devices.Cylinders.RobotLoad_ClampCyl2;
+        private ICylinder AlignCyl => _devices.Cylinders.RobotLoad_AlignCyl;
 
         private bool IsFixtureDetect => !ClampCyl1.IsBackward && !ClampCyl1.IsForward && !ClampCyl2.IsBackward && !ClampCyl2.IsForward;
 
@@ -376,7 +376,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SetModel_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SetModel_Fail);
                     break;
                 case ERobotLoadToOriginStep.End:
                     if (ProcessStatus == EProcessStatus.ToOriginDone)

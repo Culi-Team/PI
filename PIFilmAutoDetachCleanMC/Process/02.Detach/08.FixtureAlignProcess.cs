@@ -19,8 +19,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDInputDevice _fixtureAlignInput;
         private readonly IDOutputDevice _fixtureAlignOutput;
 
-        private ICylinder AlignFixtureCyl1 => _devices.Cylinders.AlignFixtureCyl1FwBw;
-        private ICylinder AlignFixtureCyl2 => _devices.Cylinders.AlignFixtureCyl2FwBw;
+        private ICylinder AlignFixtureCyl1 => _devices.Cylinders.FixtureAlign_AlignCyl1;
+        private ICylinder AlignFixtureCyl2 => _devices.Cylinders.FixtureAlign_AlignCyl2;
         private bool IsFixtureDetect => _devices.Inputs.AlignFixtureDetect.Value;
         private bool IsFixtureTiltDetect => _devices.Inputs.AlignFixtureTiltDetect.Value;
         private bool IsFixtureReverseDetect => _devices.Inputs.AlignFixtureReverseDetect.Value;

@@ -469,9 +469,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 case "Transfer Fixture":
                     return new ManualUnitViewModel("Transfer Fixture")
                     {
-                        Cylinders = Devices.GetGlassTransferCylinders(),
+                        Cylinders = Devices.GetTransferFixtureCylinders(),
                         Outputs = Devices.GetTransferFixtureOutputs(),
                         Motions = Devices.GetTransferFixtureMotions(),
+                        Inputs = Devices.GetTransferFixtureInputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferFixtureImage"),
                         SemiAutoSequences = new ObservableCollection<ESequence>()
                         {

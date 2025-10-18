@@ -24,10 +24,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _unloadAlignOutput;
         private readonly MachineStatus _machineStatus;
 
-        private ICylinder AlignCyl1 => _devices.Cylinders.UnloadAlignCyl1UpDown;
-        private ICylinder AlignCyl2 => _devices.Cylinders.UnloadAlignCyl2UpDown;
-        private ICylinder AlignCyl3 => _devices.Cylinders.UnloadAlignCyl3UpDown;
-        private ICylinder AlignCyl4 => _devices.Cylinders.UnloadAlignCyl4UpDown;
+        private ICylinder AlignCyl1 => _devices.Cylinders.UnloadAlign_UpDownCyl1;
+        private ICylinder AlignCyl2 => _devices.Cylinders.UnloadAlign_UpDownCyl2;
+        private ICylinder AlignCyl3 => _devices.Cylinders.UnloadAlign_UpDownCyl3;
+        private ICylinder AlignCyl4 => _devices.Cylinders.UnloadAlign_UpDownCyl4;
         private bool IsAlign => AlignCyl1.IsForward && AlignCyl2.IsForward && AlignCyl3.IsForward && AlignCyl4.IsForward;
         private bool IsUnalign => AlignCyl1.IsBackward && AlignCyl2.IsBackward && AlignCyl3.IsBackward && AlignCyl4.IsBackward;
 

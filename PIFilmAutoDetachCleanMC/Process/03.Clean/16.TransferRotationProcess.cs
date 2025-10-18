@@ -34,14 +34,14 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private IMotion ZAxis => port == EPort.Left ? _devices.Motions.TransferRotationLZAxis :
                                                       _devices.Motions.TransferRotationRZAxis;
-        private ICylinder RotateCyl => port == EPort.Left ? _devices.Cylinders.TrRotateLeftRotate :
-                                                      _devices.Cylinders.TrRotateRightRotate;
+        private ICylinder RotateCyl => port == EPort.Left ? _devices.Cylinders.TransferRotationL_RotationCyl :
+                                                      _devices.Cylinders.TransferRotationR_RotationCyl;
 
-        private ICylinder TransferCyl => port == EPort.Left ? _devices.Cylinders.TrRotateLeftFwBw :
-                                                      _devices.Cylinders.TrRotateRightFwBw;
+        private ICylinder TransferCyl => port == EPort.Left ? _devices.Cylinders.TransferRotationL_BwFwCyl :
+                                                      _devices.Cylinders.TransferRotationR_BwFwCyl;
 
-        private ICylinder UpDownCyl => port == EPort.Left ? _devices.Cylinders.TrRotateLeftUpDown :
-                                                            _devices.Cylinders.TrRotateRightUpDown;
+        private ICylinder UpDownCyl => port == EPort.Left ? _devices.Cylinders.TransferRotationLeft_UpDownCyl :
+                                                            _devices.Cylinders.TransferRotationR_UpDownCyl;
 
         public IDOutput GlassVac1OnOff => port == EPort.Left ? _devices.Outputs.TrRotateLeftVac1OnOff :
                                                       _devices.Outputs.TrRotateRightVac1OnOff;

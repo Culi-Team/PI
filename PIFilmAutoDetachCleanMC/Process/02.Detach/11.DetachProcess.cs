@@ -29,13 +29,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IMotion ShuttleTransferXAxis => _devices.Motions.ShuttleTransferXAxis;
         private IMotion ShuttleTransferZAxis => _devices.Motions.ShuttleTransferZAxis;
 
-        private ICylinder FixCyl1_1 => _devices.Cylinders.DetachFixFixtureCyl1_1FwBw;
-        private ICylinder FixCyl1_2 => _devices.Cylinders.DetachFixFixtureCyl1_2FwBw;
-        private ICylinder FixCyl2_1 => _devices.Cylinders.DetachFixFixtureCyl2_1FwBw;
-        private ICylinder FixCyl2_2 => _devices.Cylinders.DetachFixFixtureCyl2_2FwBw;
+        private ICylinder FixCyl1_1 => _devices.Cylinders.Detach_ClampCyl1;
+        private ICylinder FixCyl1_2 => _devices.Cylinders.Detach_ClampCyl2;
+        private ICylinder FixCyl2_1 => _devices.Cylinders.Detach_ClampCyl3;
+        private ICylinder FixCyl2_2 => _devices.Cylinders.Detach_ClampCyl4;
 
-        private ICylinder DetachCyl1 => _devices.Cylinders.DetachCyl1UpDown;
-        private ICylinder DetachCyl2 => _devices.Cylinders.DetachCyl2UpDown;
+        private ICylinder DetachCyl1 => _devices.Cylinders.Detach_UpDownCyl1;
+        private ICylinder DetachCyl2 => _devices.Cylinders.Detach_UpDownCyl2;
 
         private bool IsFixtureDetect => _devices.Inputs.DetachFixtureDetect.Value;
 
