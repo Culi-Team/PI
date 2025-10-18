@@ -456,7 +456,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ERobotLoadOriginStep.RobotSeqHome_Check:
-                    if (_robotLoad.ReadResponse(5000, "Home safely,0\r\n"))
+                    if (_robotLoad.ReadResponse(5000, "Home safety,0\r\n"))
                     {
                         Log.Debug("Robot load can origin safely");
                         Step.OriginStep++;
@@ -849,7 +849,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadReadyStep.RobotSeqHome_Check:
-                    if (_robotLoad.ReadResponse(5000, "Home safely,0\r\n"))
+                    if (_robotLoad.ReadResponse(5000, "Home safety,0\r\n"))
                     {
                         Log.Debug("Robot Load Home Safely");
                         Step.RunStep++;
