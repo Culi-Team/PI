@@ -55,17 +55,14 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
                 key: "Cylinder.DetachCyl1UpDown",
                 condition: () =>  devices.Cylinders.Detach_ClampCyl3.IsBackward
                                  && devices.Cylinders.Detach_ClampCyl4.IsBackward,
-                failMessage: "Detach Z axis must be homed and Detach Fix Fixture Cyl1 cylinders must be backward before using DetachCyl1UpDown.",
                 statusNotifier,
                 devices.Cylinders.Detach_ClampCyl1,
                 devices.Cylinders.Detach_ClampCyl2);
 
             devices.Cylinders.Detach_UpDownCyl2.ConfigureInterlock(
                 key: "Cylinder.DetachCyl2UpDown",
-                condition: () => detachAxis.Status.IsHomeDone
-                                 && devices.Cylinders.Detach_ClampCyl3.IsBackward
+                condition: () =>  devices.Cylinders.Detach_ClampCyl3.IsBackward
                                  && devices.Cylinders.Detach_ClampCyl4.IsBackward,
-                failMessage: "Detach Z axis must be homed and Detach Fix Fixture Cyl2 cylinders must be backward before using DetachCyl2UpDown.",
                 statusNotifier,
                 devices.Cylinders.Detach_ClampCyl3,
                 devices.Cylinders.Detach_ClampCyl4);
