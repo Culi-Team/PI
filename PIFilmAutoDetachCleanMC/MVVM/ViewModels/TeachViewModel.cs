@@ -1,4 +1,5 @@
-﻿using EQX.Core.Common;
+﻿using CommunityToolkit.Mvvm.Input;
+using EQX.Core.Common;
 using EQX.Core.Motion;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
@@ -7,6 +8,7 @@ using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Input;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -46,6 +48,19 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             OnPropertyChanged(nameof(SelectedTeachingUnit));
         }
 
+        public ICommand GetTeachingUnitViewModel
+        {
+            get
+            {
+                return new RelayCommand<object>((teachingUnit) =>
+                {
+                    if(teachingUnit is UnitTeachingViewModel unitTeachingViewModel)
+                    {
+                        SelectedTeachingUnit = unitTeachingViewModel;
+                    }
+                });
+            }
+        }
         public TeachViewModel(Devices devices,
             RecipeList recipeList,
             RecipeSelector recipeSelector,
@@ -82,6 +97,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             VinylCleanUnitTeaching.Inputs = devices.GetVinylCleanInputs();
             VinylCleanUnitTeaching.Outputs= devices.GetVinylCleanOutputs();
             VinylCleanUnitTeaching.Motions = new ObservableCollection<IMotion> { _vinylCleanEncoder };
+            VinylCleanUnitTeaching.UnWinder = Devices.TorqueControllers.VinylCleanUnWinder;
             VinylCleanUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.VinylCleanRecipe;
             VinylCleanUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("VinylCleanImage");
 

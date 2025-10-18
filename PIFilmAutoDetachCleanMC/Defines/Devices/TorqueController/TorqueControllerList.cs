@@ -18,7 +18,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
             All = torqueControllerList;
         }
 
-        public DX3000TorqueController VinylCleanWinder => All.First(m => m.Id == (int)ETorqueController.VinylClean_Winder);
+        public DX3000TorqueController VinylCleanUnWinder => All.First(m => m.Id == (int)ETorqueController.VinylClean_UnWinder);
         public DX3000TorqueController WETCleanLeftWinder => All.First(m => m.Id == (int)ETorqueController.WETClean_Left_Winder);
         public DX3000TorqueController WETCleanLeftUnWinder => All.First(m => m.Id == (int)ETorqueController.WETClean_Left_UnWinder);
         public DX3000TorqueController WETCleanRightWinder => All.First(m => m.Id == (int)ETorqueController.WETClean_Right_Winder);

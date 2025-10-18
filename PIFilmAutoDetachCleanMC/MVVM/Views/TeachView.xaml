@@ -162,22 +162,29 @@
 
     </UserControl.Resources>
     <Grid>
-        <TabControl ItemsSource="{Binding TeachingUnits}"
-                    SelectedItem="{Binding SelectedTeachingUnit, Mode=TwoWay}"
-                    Margin="10"
-                    BorderBrush="Gray"
-                    BorderThickness="1">
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <ContentControl Content="{Binding Name}" />
-                </DataTemplate>
-            </TabControl.ItemTemplate>
-
-            <TabControl.ContentTemplate>
-                <DataTemplate>
-                    <ContentControl Content="{Binding}" />
-                </DataTemplate>
-            </TabControl.ContentTemplate>
-        </TabControl>
+        <DockPanel>
+            <ItemsControl ItemsSource="{Binding TeachingUnits}"
+                          DockPanel.Dock="Left"
+                          Width="200">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton Content="{Binding Name}"
+                                     Command="{Binding DataContext.GetTeachingUnitViewModel, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                                     CommandParameter="{Binding .}"
+                                     GroupName="MANUAL_UNIT_RADIOBUTTON"
+                                     IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                     Style="{StaticResource ButtonLikeRadioButtonStyle}">
+                        </RadioButton>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="1" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+            <ContentControl Content="{Binding SelectedTeachingUnit}" />
+        </DockPanel>
     </Grid>
+
 </UserControl>

@@ -18,6 +18,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         AFClean_Right_Winder,
         AFClean_Right_UnWinder,
 
-        VinylClean_Winder,
+        VinylClean_UnWinder,
     }
 }
