@@ -31,6 +31,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             timer.Elapsed += Timer_Elapsed;
         }
 
+        private bool isSelected;
+
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set 
+            {
+                isSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
         public void EnableTimer()
         {
             timer.Start();
