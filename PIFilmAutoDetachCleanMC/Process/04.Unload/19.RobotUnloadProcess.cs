@@ -155,7 +155,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotUnloadToOriginStep.ReConnectIfRequired:
                     if (!_robotUnload.IsConnected)
                     {
-                        Log.Debug("Robot is not connected, trying to reconnect.");
+                        Log.Debug("Robot unload is not connected, trying to reconnect.");
                         _robotUnload.Connect();
                     }
 
@@ -164,11 +164,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotUnloadToOriginStep.CheckConnection:
                     if (!_robotUnload.IsConnected)
                     {
-                        RaiseWarning((int)EWarning.RobotLoad_Connect_Fail);
+                        RaiseWarning((int)EWarning.RobotUnload_Connect_Fail);
                         break;
                     }
 
-                    Log.Debug("Robot is connected.");
+                    Log.Debug("Robot unload is connected.");
                     Step.OriginStep++;
                     break;
                 case ERobotUnloadToOriginStep.EnableOutput:
@@ -257,7 +257,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_No_Ready_Response);
+                    RaiseAlarm((int)EAlarm.RobotUnload_No_Ready_Response);
                     break;
                 case ERobotUnloadToOriginStep.SetModel:
                     Log.Debug("Set Model: " + _robotUnloadRecipe.Model);
@@ -272,7 +272,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SetModel_Fail);
+                    RaiseWarning((int)EWarning.RobotUnload_SetModel_Fail);
                     break;
                 case ERobotUnloadToOriginStep.End:
                     if (ProcessStatus == EProcessStatus.ToOriginDone)

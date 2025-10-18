@@ -376,7 +376,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    RaiseAlarm((int)EAlarm.RobotLoad_SetModel_Fail);
+                    RaiseWarning((int)EWarning.RobotLoad_SetModel_Fail);
                     break;
                 case ERobotLoadToOriginStep.End:
                     if (ProcessStatus == EProcessStatus.ToOriginDone)
