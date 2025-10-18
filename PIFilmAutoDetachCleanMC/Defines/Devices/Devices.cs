@@ -37,7 +37,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             SpeedControllerList = speedControllerList;
             Regulators = regulators;
             AnalogInputs = analogInputs;
-            MachineStatus = machineStatus;
             SyringePumps = syringePumps;
         }
 
@@ -49,7 +48,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public SpeedControllerList SpeedControllerList { get; }
         public Regulators Regulators { get; }
         public AnalogInputs AnalogInputs { get; }
-        public MachineStatus MachineStatus { get; }
         public SyringePumps SyringePumps { get; }
 
         #region Public Methods

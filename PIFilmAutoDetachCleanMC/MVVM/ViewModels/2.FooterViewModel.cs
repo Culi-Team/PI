@@ -1,5 +1,6 @@
 ﻿using EQX.Core.Common;
 using PIFilmAutoDetachCleanMC.Factories;
+using System.Windows;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -10,7 +11,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         /// <summary>
         /// Is InitDeinitView currently be displayed?
         /// </summary>
-        public bool IsInitializing => _viewModelNavigationStore?.CurrentViewModel?.GetType() != typeof(InitDeinitViewModel);
+        public bool IsNavigationMenuHide
+        {
+            get
+            {
+                return _viewModelNavigationStore?.CurrentViewModel?.GetType() != typeof(InitDeinitViewModel);
+            }
+        }
 
         public FooterViewModel(ViewModelNavigationStore viewModelNavigationStore,
             ViewModelProvider viewModelProvider)
@@ -25,7 +32,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         private void _viewModelNavigationStore_CurrentViewModelChanged()
         {
-            OnPropertyChanged(nameof(IsInitializing));
+            OnPropertyChanged(nameof(IsNavigationMenuHide));
         }
 
         private readonly ViewModelNavigationStore _viewModelNavigationStore;

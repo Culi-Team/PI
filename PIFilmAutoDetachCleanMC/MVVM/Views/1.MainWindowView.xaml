@@ -13,16 +13,19 @@
         ShowInTaskbar="True"
         Icon="/EQX.UI;component/Resources/Images/TopIcon.ico"
         AllowsTransparency="True"
-        WindowState="Maximized"
         d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel}"
         Loaded="Window_Loaded"
         Closing="Window_Closing"
-        Title="MainWindowView" >
-    <DockPanel>
+        Title="MainWindowView">
+    <DockPanel Margin="7 0">
+        <Grid Height="11.5"
+            DockPanel.Dock="Bottom"
+            Background="{StaticResource PrimaryBackgroundColor}"/>
         <ContentControl Content="{Binding HeaderVM}"
                         DockPanel.Dock="Top"
                         Height="Auto"/>
         <ContentControl Content="{Binding FooterVM}"
+                        Visibility="{Binding IsThisVMActive, Converter={StaticResource BooleanToVisibilityConverter}}"
                         DockPanel.Dock="Bottom"/>
 
         <ContentControl Content="{Binding CurrentFrameVM}"/>

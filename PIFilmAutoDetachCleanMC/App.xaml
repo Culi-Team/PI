@@ -55,6 +55,9 @@
             <DataTemplate DataType="{x:Type vm:HeaderViewModel}">
                 <views:HeaderView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:MaintenanceViewModel}">
+                <views:MaintenanceView />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vm:NavigateMenuViewModel}">
                 <views:NavigateMenuView />
             </DataTemplate>

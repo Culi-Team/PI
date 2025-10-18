@@ -9,6 +9,9 @@
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/AlertImage.png"/>
     <BitmapImage x:Key="MainAir" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/05.Alarm/MainAir.png"/>
+    <BitmapImage x:Key="PM" 
+                 UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/PM.png"/>
+
     <!-- 01. CST LOAD/UNLOAD IMAGES  -->
     <BitmapImage x:Key="InputCassetteStageImage" 
                  UriSource="pack://application:,,,/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/InputCassetteStage.png"/>

@@ -1,13 +1,20 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using EQX.Core.Helpers;
+using EQX.Motion.ByVendor.Inovance;
+using EQX.UI.Converters;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Configuration;
-using System.Data;
-using System.Windows;
+using Newtonsoft.Json;
+using PIFilmAutoDetachCleanMC.Converters;
+using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Extensions;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
 using PIFilmAutoDetachCleanMC.MVVM.Views;
-using PIFilmAutoDetachCleanMC.Converters;
-using EQX.UI.Converters;
+using System.Configuration;
+using System.Data;
+using System.IO;
+using System.Windows;
+using static EQX.Core.Helpers.DisplayHelpers;
 
 namespace PIFilmAutoDetachCleanMC
 {
@@ -48,11 +55,45 @@ namespace PIFilmAutoDetachCleanMC
             var flagConverter = AppHost.Services.GetRequiredService<LanguageToFlagImageConverter>();
             Application.Current.Resources.Add(nameof(LanguageToFlagImageConverter), flagConverter);
 
-            Window window = AppHost.Services.GetRequiredService<MainWindowView>();
-            window.DataContext = AppHost.Services.GetRequiredService<MainWindowViewModel>();
-            window.Show();
+            ShowWindows();
 
             base.OnStartup(e);
+        }
+
+        private void ShowWindows()
+        {
+            if (AppHost == null) return;
+
+            var validDisplays = DisplayHelpers.GetValidMonitors();
+
+            if (validDisplays.Count == 2)
+            {
+                ShowSingleWindow(EScreen.RightScreen, validDisplays);
+
+                ShowSingleWindow(EScreen.LeftScreen, validDisplays);
+
+                return;
+            }
+
+            ShowSingleWindow(EScreen.RightScreen, validDisplays);
+        }
+
+        private void ShowSingleWindow(EScreen screen, IList<MonitorInfo> validDisplays)
+        {
+            var configuration = AppHost.Services.GetRequiredService<IConfiguration>();
+            var displayOrder = JsonConvert.DeserializeObject<List<EScreen>>(
+                File.ReadAllText(configuration["Files:DisplayConfigFile"] ?? ""));
+
+            Window window = AppHost.Services.GetRequiredKeyedService<MainWindowView>(screen);
+            var viewModel = AppHost.Services.GetRequiredKeyedService<MainWindowViewModel>(screen);
+            viewModel.Screen = screen;
+            window.DataContext = viewModel;
+
+            window.Left = validDisplays[displayOrder.IndexOf(screen)].Left;
+            window.Top = validDisplays[displayOrder.IndexOf(screen)].Top;
+
+            window.Show();
+            window.WindowState = WindowState.Maximized;
         }
 
         protected override async void OnExit(ExitEventArgs e)

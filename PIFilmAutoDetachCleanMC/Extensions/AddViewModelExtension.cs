@@ -1,6 +1,7 @@
 ﻿using EQX.Core.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Factories;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
 using PIFilmAutoDetachCleanMC.MVVM.Views;
@@ -18,11 +19,13 @@ namespace PIFilmAutoDetachCleanMC.Extensions
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
-                services.AddSingleton<MainWindowViewModel>();
+                services.AddKeyedScoped<MainWindowViewModel>(EScreen.RightScreen);
+                services.AddKeyedScoped<MainWindowViewModel>(EScreen.LeftScreen);
 
                 services.AddViewModel<NavigateMenuViewModel>();
                 services.AddViewModel<HeaderViewModel>();
                 services.AddViewModel<FooterViewModel>();
+                services.AddViewModel<MaintenanceViewModel>();
 
                 services.AddViewModel<InitDeinitViewModel>();
                 services.AddViewModel<InitializeViewModel>();
@@ -50,7 +53,8 @@ namespace PIFilmAutoDetachCleanMC.Extensions
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
-                services.AddSingleton<MainWindowView>();
+                services.AddKeyedScoped<MainWindowView>(EScreen.RightScreen);
+                services.AddKeyedScoped<MainWindowView>(EScreen.LeftScreen);
             });
 
             return hostBuilder;

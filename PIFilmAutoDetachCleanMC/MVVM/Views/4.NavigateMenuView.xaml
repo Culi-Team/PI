@@ -18,7 +18,7 @@
                 <Setter Property="Padding"
                     Value="5 15" />
                 <Setter Property="Margin"
-                    Value="3" />
+                    Value="3 0" />
                 <Setter Property="Width"
                     Value="90" />
                 <Setter Property="FontSize"
@@ -55,7 +55,7 @@
 
         <ui:LogDisplayer d:Width="200"
             Grid.Column="1"
-            Margin="20 3"/>
+            Margin="20 0"/>
 
         <StackPanel Orientation="Horizontal"
                 DockPanel.Dock="Right"

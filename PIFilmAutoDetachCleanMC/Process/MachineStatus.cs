@@ -17,18 +17,26 @@ namespace PIFilmAutoDetachCleanMC.Process
 {
     public class MachineStatus : ObservableObject
     {
-        public MachineStatus()
-        {
-        }
+        #region Events
+        public event Action? ActiveScreenChanged;
+        #endregion
 
-        private EMachineRunMode _machineRunMode;
-        private EProcessMode currentProcessMode;
-        private int _SemiAutoSequence;
-        private int _OPCommand;
-        private bool _originDone;
-        private bool isInputStop;
-        private bool isOutputStop;
         public const int DryRunVacuumDurationMilliseconds = 1000;
+
+        public EScreen ActiveScreen
+        {
+            get { return activeScreen; }
+            set
+            {
+                if (activeScreen == value)
+                {
+                    return;
+                }
+
+                activeScreen = value;
+                ActiveScreenChanged?.Invoke();
+            }
+        }
 
         //public bool IsByPassMode => _machineRunMode == EMachineRunMode.ByPass;
         public bool IsDryRunMode => _machineRunMode == EMachineRunMode.DryRun;
@@ -52,8 +60,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 OnPropertyChanged(nameof(IsDryRunMode));
             }
         }
-        public string MachineRunModeDisplay 
-        { 
+        public string MachineRunModeDisplay
+        {
             get
             {
                 return _machineRunMode.ToString();
@@ -132,5 +140,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                 MultiThreadingHelpers.SafeSetValue(ref _SemiAutoSequence, value);
             }
         }
+
+        #region Privates
+        private EMachineRunMode _machineRunMode;
+        private EProcessMode currentProcessMode;
+        private int _SemiAutoSequence;
+        private int _OPCommand;
+        private bool _originDone;
+        private bool isInputStop;
+        private bool isOutputStop;
+        private EScreen activeScreen;
+        #endregion
     }
 }

@@ -32,6 +32,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resource\Image\PM.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resource\Image\PM.png" />
     <Resource Include="TopIcon.ico" />
   </ItemGroup>
 
