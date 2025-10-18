@@ -14,341 +14,462 @@
              x:Name="root"
              d:DesignHeight="450"
              d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="SpinnerDotStyle"
+               TargetType="Ellipse">
+            <Setter Property="Width"
+                    Value="8" />
+            <Setter Property="Height"
+                    Value="8" />
+            <Setter Property="Fill"
+                    Value="DodgerBlue" />
+            <Setter Property="RenderTransformOrigin"
+                    Value="0.5,0.5" />
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="6*" />
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
         <Grid>
-            <DockPanel>
-                <ItemsControl ItemsSource="{Binding ManualUnits}"
-                              DockPanel.Dock="Left"
-                              Width="200">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <RadioButton Content="{Binding UnitName}"
-                                Command="{Binding DataContext.ManualUnitSelectCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
-                                CommandParameter="{Binding UnitName}"
-                                GroupName="MANUAL_UNIT_RADIOBUTTON"
-                                IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                Style="{StaticResource ButtonLikeRadioButtonStyle}">
-                            </RadioButton>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid Columns="1"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-                <ContentControl Content="{Binding CurrentManualUnitViewModel}"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <DockPanel>
+                    <ItemsControl ItemsSource="{Binding ManualUnits}"
+                                  DockPanel.Dock="Left"
+                                  Width="200">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton Content="{Binding UnitName}"
+                                             Command="{Binding DataContext.ManualUnitSelectCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                                             CommandParameter="{Binding UnitName}"
+                                             GroupName="MANUAL_UNIT_RADIOBUTTON"
+                                             IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                             Style="{StaticResource ButtonLikeRadioButtonStyle}">
+                                </RadioButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="1" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <ContentControl Content="{Binding CurrentManualUnitViewModel}" />
+                </DockPanel>
+            </Grid>
+            <DockPanel Grid.Column="1">
+                <GroupBox Header="SPEED CONTROL"
+                          DockPanel.Dock="Top">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Ellipse Width="26"
+                                         Height="26"
+                                         Fill="{Binding SpeedControllersIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                         Stroke="{StaticResource PrimaryBorderBrush}"
+                                         StrokeThickness="1"
+                                         Margin="0 0 5 0" />
+                                <uiControls:ImageButton Grid.Column="1"
+                                                        Content="Speed Controllers"
+                                                        Command="{Binding SpeedControllerConnectCommand}"
+                                                        Height="40"
+                                                        Margin="0 5 0 0" />
+                            </Grid>
+
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="TORQUE CONTROL"
+                          DockPanel.Dock="Top">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Ellipse Width="26"
+                                         Height="26"
+                                         Fill="{Binding TorqueControllersIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                         Stroke="{StaticResource PrimaryBorderBrush}"
+                                         StrokeThickness="1"
+                                         Margin="0 0 5 0" />
+                                <uiControls:ImageButton Grid.Column="1"
+                                                        Content="Torque Controllers"
+                                                        Command="{Binding TorqueControllerConnectCommand}"
+                                                        Height="40"
+                                                        Margin="0 5 0 0" />
+                            </Grid>
+
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="MOTION"
+                          DockPanel.Dock="Top">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Width="26"
+                                     Height="26"
+                                     Fill="{Binding MotionsInovanceIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                     Stroke="{StaticResource PrimaryBorderBrush}"
+                                     StrokeThickness="1"
+                                     Margin="0 0 5 0" />
+                            <uiControls:ImageButton Grid.Column="1"
+                                                    Content="Motions Inovance"
+                                                    Command="{Binding MotionInovanceConnectCommand}"
+                                                    Height="40"
+                                                    Margin="0 5 0 0" />
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Width="26"
+                                     Height="26"
+                                     Fill="{Binding MotionAjinIsConnected, Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                     Stroke="{StaticResource PrimaryBorderBrush}"
+                                     StrokeThickness="1"
+                                     Margin="0 0 5 0" />
+                            <uiControls:ImageButton Grid.Column="1"
+                                                    Content="Motion Ajin"
+                                                    Command="{Binding MotionAjinConnectCommand}"
+                                                    Height="40"
+                                                    Margin="0 5 0 0" />
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="ROBOT"
+                          DockPanel.Dock="Top">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Width="26"
+                                     Height="26"
+                                     Fill="{Binding RobotLoadIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                     Stroke="{StaticResource PrimaryBorderBrush}"
+                                     StrokeThickness="1"
+                                     Margin="0 0 5 0" />
+                            <uiControls:ImageButton Grid.Column="1"
+                                                    Content="Robot Load"
+                                                    Command="{Binding RobotLoadConnectCommand}"
+                                                    Height="40"
+                                                    Margin="0 5 0 0" />
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Width="26"
+                                     Height="26"
+                                     Fill="{Binding RobotUnloadIsConnected, Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                     Stroke="{StaticResource PrimaryBorderBrush}"
+                                     StrokeThickness="1"
+                                     Margin="0 0 5 0" />
+                            <uiControls:ImageButton Grid.Column="1"
+                                                    Content="Robot Unload"
+                                                    Command="{Binding RobotUnloadConnectCommand}"
+                                                    Height="40"
+                                                    Margin="0 5 0 0" />
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="SYRINGE PUMP"
+                          DockPanel.Dock="Top">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Ellipse Width="26"
+                                         Height="26"
+                                         Fill="{Binding SyringePumpIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                         Stroke="{StaticResource PrimaryBorderBrush}"
+                                         StrokeThickness="1"
+                                         Margin="0 0 5 0" />
+                                <uiControls:ImageButton Grid.Column="1"
+                                                        Content="Syringe Pump"
+                                                        Command="{Binding SyringePumpConnectCommand}"
+                                                        Height="40"
+                                                        Margin="0 5 0 0" />
+                            </Grid>
+
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="INDICATOR"
+                          DockPanel.Dock="Top">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Ellipse Width="26"
+                                         Height="26"
+                                         Fill="{Binding IndicatorIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                         Stroke="{StaticResource PrimaryBorderBrush}"
+                                         StrokeThickness="1"
+                                         Margin="0 0 5 0" />
+                                <uiControls:ImageButton Grid.Column="1"
+                                                        Content="Indicator"
+                                                        Command="{Binding IndicatorConnectCommand}"
+                                                        Height="40"
+                                                        Margin="0 5 0 0" />
+                            </Grid>
+
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="REGULATOR"
+                          DockPanel.Dock="Top">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Width="26"
+                                     Height="26"
+                                     Fill="{Binding WETCleanLeftRegulatorIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                     Stroke="{StaticResource PrimaryBorderBrush}"
+                                     StrokeThickness="1"
+                                     Margin="0 0 5 0" />
+                            <uiControls:ImageButton Grid.Column="1"
+                                                    Content="WET Clean Left"
+                                                    Command="{Binding RegulatorConnectCommand}"
+                                                    CommandParameter="WETCleanLeft"
+                                                    Height="40"
+                                                    Margin="0 5 0 0" />
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Width="26"
+                                     Height="26"
+                                     Fill="{Binding WETCleanRightRegulatorIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                     Stroke="{StaticResource PrimaryBorderBrush}"
+                                     StrokeThickness="1"
+                                     Margin="0 0 5 0" />
+                            <uiControls:ImageButton Grid.Column="1"
+                                                    Content="WET Clean Right"
+                                                    Command="{Binding RegulatorConnectCommand}"
+                                                    CommandParameter="WETCleanRight"
+                                                    Height="40"
+                                                    Margin="0 5 0 0" />
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Width="26"
+                                     Height="26"
+                                     Fill="{Binding AFCleanLeftRegulatorIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                     Stroke="{StaticResource PrimaryBorderBrush}"
+                                     StrokeThickness="1"
+                                     Margin="0 0 5 0" />
+                            <uiControls:ImageButton Grid.Column="1"
+                                                    Content="AF Clean Left"
+                                                    Command="{Binding RegulatorConnectCommand}"
+                                                    CommandParameter="AFCleanLeft"
+                                                    Height="40"
+                                                    Margin="0 5 0 0" />
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Width="26"
+                                     Height="26"
+                                     Fill="{Binding AFCleanRightRegulatorIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
+                                     Stroke="{StaticResource PrimaryBorderBrush}"
+                                     StrokeThickness="1"
+                                     Margin="0 0 5 0" />
+                            <uiControls:ImageButton Grid.Column="1"
+                                                    Content="AF Clean Right"
+                                                    Command="{Binding RegulatorConnectCommand}"
+                                                    CommandParameter="AFCleanRight"
+                                                    Height="40"
+                                                    Margin="0 5 0 0" />
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="DISPLAY SCREEN"
+                          DockPanel.Dock="Top">
+                    <StackPanel Orientation="Vertical">
+                        <UniformGrid Columns="2">
+                            <Button Content="Main Screen"
+                                    Command="{Binding SetPrimaryInteractiveCommand}">
+                                <Button.Style>
+                                    <Style TargetType="Button"
+                                           BasedOn="{StaticResource {x:Type Button}}">
+                                        <Setter Property="Background"
+                                                Value="LightGray" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ActiveScreen}"
+                                                         Value="{x:Static vmm:InteractiveScreen.Primary}">
+                                                <Setter Property="Background"
+                                                        Value="LightGreen" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                            <Button Content="Second Screen"
+                                    Command="{Binding SetSecondaryInteractiveCommand}">
+                                <Button.Style>
+                                    <Style TargetType="Button"
+                                           BasedOn="{StaticResource {x:Type Button}}">
+                                        <Setter Property="Background"
+                                                Value="LightGray" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ActiveScreen}"
+                                                         Value="{x:Static vmm:InteractiveScreen.Secondary}">
+                                                <Setter Property="Background"
+                                                        Value="LightGreen" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </UniformGrid>
+                        <CheckBox Content="View Only"
+                                  IsChecked="{Binding IsViewOnly}" />
+                    </StackPanel>
+                </GroupBox>
             </DockPanel>
         </Grid>
-        <DockPanel Grid.Column="1">
-            <GroupBox Header="SPEED CONTROL"
-                      DockPanel.Dock="Top">
-                <StackPanel Orientation="Vertical">
-                    <Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Ellipse Width="26"
-                                     Height="26"
-                                     Fill="{Binding SpeedControllersIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                     Stroke="{StaticResource PrimaryBorderBrush}"
-                                     StrokeThickness="1"
-                                     Margin="0 0 5 0" />
-                            <uiControls:ImageButton Grid.Column="1"
-                                                    Content="Speed Controllers"
-                                                    Command="{Binding SpeedControllerConnectCommand}"
-                                                    Height="40"
-                                                    Margin="0 5 0 0" />
-                        </Grid>
+        <Grid Background="#80000000"
+              Visibility="{Binding IsConnecting, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-                    </Grid>
-                </StackPanel>
-            </GroupBox>
-            <GroupBox Header="TORQUE CONTROL"
-                      DockPanel.Dock="Top">
-                <StackPanel Orientation="Vertical">
-                    <Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Ellipse Width="26"
-                                     Height="26"
-                                     Fill="{Binding TorqueControllersIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                     Stroke="{StaticResource PrimaryBorderBrush}"
-                                     StrokeThickness="1"
-                                     Margin="0 0 5 0" />
-                            <uiControls:ImageButton Grid.Column="1"
-                                                    Content="Torque Controllers"
-                                                    Command="{Binding TorqueControllerConnectCommand}"
-                                                    Height="40"
-                                                    Margin="0 5 0 0" />
-                        </Grid>
+            <!-- Spinner -->
+            <Grid HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+                <Canvas Width="60"
+                        Height="60">
+                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
+                             Canvas.Left="26"
+                             Canvas.Top="0">
+                        <Ellipse.RenderTransform>
+                            <RotateTransform Angle="0"
+                                             CenterX="4"
+                                             CenterY="30" />
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
+                             Canvas.Left="45"
+                             Canvas.Top="10">
+                        <Ellipse.RenderTransform>
+                            <RotateTransform Angle="45"
+                                             CenterX="-10"
+                                             CenterY="25" />
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
+                             Canvas.Left="55"
+                             Canvas.Top="30">
+                        <Ellipse.RenderTransform>
+                            <RotateTransform Angle="90"
+                                             CenterX="-25"
+                                             CenterY="15" />
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
+                             Canvas.Left="45"
+                             Canvas.Top="50">
+                        <Ellipse.RenderTransform>
+                            <RotateTransform Angle="135"
+                                             CenterX="-25"
+                                             CenterY="-5" />
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
+                             Canvas.Left="26"
+                             Canvas.Top="60">
+                        <Ellipse.RenderTransform>
+                            <RotateTransform Angle="180"
+                                             CenterX="-20"
+                                             CenterY="-20" />
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
+                             Canvas.Left="7"
+                             Canvas.Top="50">
+                        <Ellipse.RenderTransform>
+                            <RotateTransform Angle="225"
+                                             CenterX="-10"
+                                             CenterY="-25" />
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
+                             Canvas.Left="0"
+                             Canvas.Top="30">
+                        <Ellipse.RenderTransform>
+                            <RotateTransform Angle="270"
+                                             CenterX="0"
+                                             CenterY="-30" />
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
+                             Canvas.Left="7"
+                             Canvas.Top="10">
+                        <Ellipse.RenderTransform>
+                            <RotateTransform Angle="315"
+                                             CenterX="10"
+                                             CenterY="-25" />
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                </Canvas>
 
-                    </Grid>
-                </StackPanel>
-            </GroupBox>
+                <Grid.Triggers>
+                    <EventTrigger RoutedEvent="Grid.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever">
+                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(RotateTransform.Angle)"
+                                                 From="0"
+                                                 To="360"
+                                                 Duration="0:0:1.2" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Grid.Triggers>
 
-            <GroupBox Header="MOTION"
-                      DockPanel.Dock="Top">
-                <StackPanel Orientation="Vertical">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Ellipse Width="26"
-                                 Height="26"
-                                 Fill="{Binding MotionsInovanceIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                 Stroke="{StaticResource PrimaryBorderBrush}"
-                                 StrokeThickness="1"
-                                 Margin="0 0 5 0" />
-                        <uiControls:ImageButton Grid.Column="1"
-                                                Content="Motions Inovance"
-                                                Command="{Binding MotionInovanceConnectCommand}"
-                                                Height="40"
-                                                Margin="0 5 0 0" />
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Ellipse Width="26"
-                                 Height="26"
-                                 Fill="{Binding MotionAjinIsConnected, Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                 Stroke="{StaticResource PrimaryBorderBrush}"
-                                 StrokeThickness="1"
-                                 Margin="0 0 5 0" />
-                        <uiControls:ImageButton Grid.Column="1"
-                                                Content="Motion Ajin"
-                                                Command="{Binding MotionAjinConnectCommand}"
-                                                Height="40"
-                                                Margin="0 5 0 0" />
-                    </Grid>
-                </StackPanel>
-            </GroupBox>
-            <GroupBox Header="ROBOT"
-                      DockPanel.Dock="Top">
-                <StackPanel Orientation="Vertical">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Ellipse Width="26"
-                                 Height="26"
-                                 Fill="{Binding RobotLoadIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                 Stroke="{StaticResource PrimaryBorderBrush}"
-                                 StrokeThickness="1"
-                                 Margin="0 0 5 0" />
-                        <uiControls:ImageButton Grid.Column="1"
-                                                Content="Robot Load"
-                                                Command="{Binding RobotLoadConnectCommand}"
-                                                Height="40"
-                                                Margin="0 5 0 0" />
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Ellipse Width="26"
-                                 Height="26"
-                                 Fill="{Binding RobotUnloadIsConnected, Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                 Stroke="{StaticResource PrimaryBorderBrush}"
-                                 StrokeThickness="1"
-                                 Margin="0 0 5 0" />
-                        <uiControls:ImageButton Grid.Column="1"
-                                                Content="Robot Unload"
-                                                Command="{Binding RobotUnloadConnectCommand}"
-                                                Height="40"
-                                                Margin="0 5 0 0" />
-                    </Grid>
-                </StackPanel>
-            </GroupBox>
+                <Grid.RenderTransform>
+                    <RotateTransform Angle="0" />
+                </Grid.RenderTransform>
+            </Grid>
 
-            <GroupBox Header="SYRINGE PUMP"
-                      DockPanel.Dock="Top">
-                <StackPanel Orientation="Vertical">
-                    <Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Ellipse Width="26"
-                                     Height="26"
-                                     Fill="{Binding SyringePumpIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                     Stroke="{StaticResource PrimaryBorderBrush}"
-                                     StrokeThickness="1"
-                                     Margin="0 0 5 0" />
-                            <uiControls:ImageButton Grid.Column="1"
-                                                    Content="Syringe Pump"
-                                                    Command="{Binding SyringePumpConnectCommand}"
-                                                    Height="40"
-                                                    Margin="0 5 0 0" />
-                        </Grid>
-
-                    </Grid>
-                </StackPanel>
-            </GroupBox>
-
-            <GroupBox Header="INDICATOR"
-                      DockPanel.Dock="Top">
-                <StackPanel Orientation="Vertical">
-                    <Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Ellipse Width="26"
-                                     Height="26"
-                                     Fill="{Binding IndicatorIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                     Stroke="{StaticResource PrimaryBorderBrush}"
-                                     StrokeThickness="1"
-                                     Margin="0 0 5 0" />
-                            <uiControls:ImageButton Grid.Column="1"
-                                                    Content="Indicator"
-                                                    Command="{Binding IndicatorConnectCommand}"
-                                                    Height="40"
-                                                    Margin="0 5 0 0" />
-                        </Grid>
-
-                    </Grid>
-                </StackPanel>
-            </GroupBox>
-
-            <GroupBox Header="REGULATOR"
-                      DockPanel.Dock="Top">
-                <StackPanel Orientation="Vertical">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Ellipse Width="26"
-                                 Height="26"
-                                 Fill="{Binding WETCleanLeftRegulatorIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                 Stroke="{StaticResource PrimaryBorderBrush}"
-                                 StrokeThickness="1"
-                                 Margin="0 0 5 0" />
-                        <uiControls:ImageButton Grid.Column="1"
-                                                Content="WET Clean Left"
-                                                Command="{Binding RegulatorConnectCommand}"
-                                                CommandParameter="WETCleanLeft"
-                                                Height="40"
-                                                Margin="0 5 0 0" />
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Ellipse Width="26"
-                                 Height="26"
-                                 Fill="{Binding WETCleanRightRegulatorIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                 Stroke="{StaticResource PrimaryBorderBrush}"
-                                 StrokeThickness="1"
-                                 Margin="0 0 5 0" />
-                        <uiControls:ImageButton Grid.Column="1"
-                                                Content="WET Clean Right"
-                                                Command="{Binding RegulatorConnectCommand}"
-                                                CommandParameter="WETCleanRight"
-                                                Height="40"
-                                                Margin="0 5 0 0" />
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Ellipse Width="26"
-                                 Height="26"
-                                 Fill="{Binding AFCleanLeftRegulatorIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                 Stroke="{StaticResource PrimaryBorderBrush}"
-                                 StrokeThickness="1"
-                                 Margin="0 0 5 0" />
-                        <uiControls:ImageButton Grid.Column="1"
-                                                Content="AF Clean Left"
-                                                Command="{Binding RegulatorConnectCommand}"
-                                                CommandParameter="AFCleanLeft"
-                                                Height="40"
-                                                Margin="0 5 0 0" />
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Ellipse Width="26"
-                                 Height="26"
-                                 Fill="{Binding AFCleanRightRegulatorIsConnected,Converter={StaticResource BooleanToOnOffBrushConverter}}"
-                                 Stroke="{StaticResource PrimaryBorderBrush}"
-                                 StrokeThickness="1"
-                                 Margin="0 0 5 0" />
-                        <uiControls:ImageButton Grid.Column="1"
-                                                Content="AF Clean Right"
-                                                Command="{Binding RegulatorConnectCommand}"
-                                                CommandParameter="AFCleanRight"
-                                                Height="40"
-                                                Margin="0 5 0 0" />
-                    </Grid>
-                </StackPanel>
-            </GroupBox>
-
-            <GroupBox Header="DISPLAY SCREEN"
-                      DockPanel.Dock="Top">
-                <StackPanel Orientation="Vertical">
-                    <UniformGrid Columns="2">
-                        <Button Content="Main Screen"
-                                Command="{Binding SetPrimaryInteractiveCommand}">
-                            <Button.Style>
-                                <Style TargetType="Button"
-                                       BasedOn="{StaticResource {x:Type Button}}">
-                                    <Setter Property="Background"
-                                            Value="LightGray" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ActiveScreen}"
-                                                     Value="{x:Static vmm:InteractiveScreen.Primary}">
-                                            <Setter Property="Background"
-                                                    Value="LightGreen" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                        <Button Content="Second Screen"
-                                Command="{Binding SetSecondaryInteractiveCommand}">
-                            <Button.Style>
-                                <Style TargetType="Button"
-                                       BasedOn="{StaticResource {x:Type Button}}">
-                                    <Setter Property="Background"
-                                            Value="LightGray" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ActiveScreen}"
-                                                     Value="{x:Static vmm:InteractiveScreen.Secondary}">
-                                            <Setter Property="Background"
-                                                    Value="LightGreen" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                    </UniformGrid>
-                    <CheckBox Content="View Only"
-                              IsChecked="{Binding IsViewOnly}" />
-                </StackPanel>
-            </GroupBox>
-        </DockPanel>
+            <TextBlock Text="Connecting..."
+                       Foreground="White"
+                       FontSize="16"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Bottom"
+                       Margin="0,0,0,80" />
+        </Grid>
     </Grid>
-
 </UserControl>

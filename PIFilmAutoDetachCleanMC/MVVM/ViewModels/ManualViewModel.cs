@@ -134,12 +134,39 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             get
             {
-                return new RelayCommand(() =>
+                return new RelayCommand(async () =>
                 {
-                    Devices.Motions.InovanceMaster.Connect();
-                    OnPropertyChanged(nameof(MotionsInovanceIsConnected));
+                    IsConnecting = true;
+                    OnPropertyChanged(nameof(IsConnecting));
+
+                    try
+                    {
+                        await Task.Run(() =>
+                        {
+                            Devices.Motions.InovanceMaster.Connect();
+                        });
+
+                        OnPropertyChanged(nameof(MotionsInovanceIsConnected));
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBoxEx.ShowDialog($"Inovance Motion Connect Fail\r\n{ex.Message}");
+                    }
+                    finally
+                    {
+                        IsConnecting = false;
+                        OnPropertyChanged(nameof(IsConnecting));
+                    }
                 });
             }
+        }
+
+        private bool isConnecting = false;
+
+        public bool IsConnecting
+        {
+            get { return isConnecting; }
+            set { isConnecting = value; }
         }
 
         public ICommand MotionAjinConnectCommand
