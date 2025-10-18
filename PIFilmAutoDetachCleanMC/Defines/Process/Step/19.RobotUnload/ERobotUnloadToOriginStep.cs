@@ -19,9 +19,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         RobotStopMessCheck,
         RobotConfMess_Delay,
+
         RobotConfMess_Disable,
 
         RobotExtStart_Enable,
+
         RobotExtStart_Delay,
         RobotExtStart_Disable,
 

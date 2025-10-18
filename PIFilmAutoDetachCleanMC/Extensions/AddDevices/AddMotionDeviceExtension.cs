@@ -67,11 +67,11 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 #else
                 services.AddKeyedScoped<IMotionMaster>("InovanceMaster#1", (ser, obj) =>
                 {
-                    return new MotionMasterInovance() { NumberOfDevices = Enum.GetNames(typeof(EMotionInovance)).Length + 3 };
+                    return new MotionMasterInovance() { NumberOfDevices = Enum.GetNames(typeof(EMotionInovance)).Length };
                 });
                 services.AddKeyedScoped<IMotionMaster, MotionMasterAjin>("AjinMaster#1", (ser, obj) =>
                 {
-                    return new MotionMasterAjin() { NumberOfDevices = Enum.GetNames(typeof(EMotionAjin)).Length + 1 };
+                    return new MotionMasterAjin() { NumberOfDevices = Enum.GetNames(typeof(EMotionAjin)).Length };
                 });
 
                 services.AddKeyedScoped<IMotionFactory<IMotion>>("InovanceMotionFactory", (ser, obj) =>

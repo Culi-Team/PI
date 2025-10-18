@@ -351,32 +351,36 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadToOriginStep.SendPGMStart:
                     _robotLoad.SendCommand(RobotHelpers.PCPGMStart);
+                    Wait(5000, () => _robotLoad.ReadResponse("RobotReady,0\r\n"));
                     Step.OriginStep++;
                     break;
                 case ERobotLoadToOriginStep.SendPGMStart_Check:
-                    if (_robotLoad.ReadResponse(5000, "RobotReady,0\r\n"))
+                    if (WaitTimeOutOccurred)
                     {
-                        Log.Debug("Robot PGM Start Success.");
-                        Step.OriginStep++;
+                        RaiseWarning((int)EWarning.RobotLoad_No_Ready_Response);
                         break;
                     }
 
-                    RaiseWarning((int)EWarning.RobotLoad_No_Ready_Response);
+                    Log.Debug("Robot PGM Start Success.");
+                    Step.OriginStep++;
                     break;
                 case ERobotLoadToOriginStep.SetModel:
                     Log.Debug("Set Model: " + _robotLoadRecipe.Model);
                     _robotLoad.SendCommand(RobotHelpers.SetModel(_robotLoadRecipe.Model));
+
+                    Wait(5000, () => _robotLoad.ReadResponse($"select,{_robotLoadRecipe.Model},0\r\n"));
+
                     Step.OriginStep++;
                     break;
                 case ERobotLoadToOriginStep.SetModel_Check:
-                    if (_robotLoad.ReadResponse(5000, $"select,{_robotLoadRecipe.Model},0\r\n"))
+                    if (WaitTimeOutOccurred)
                     {
-                        Log.Debug("Set Model: " + _robotLoadRecipe.Model + " success");
-                        Step.OriginStep++;
+                        RaiseWarning((int)EWarning.RobotLoad_SetModel_Fail);
                         break;
                     }
-
-                    RaiseWarning((int)EWarning.RobotLoad_SetModel_Fail);
+                    
+                    Log.Debug("Set Model: " + _robotLoadRecipe.Model + " success");
+                    Step.OriginStep++;
                     break;
                 case ERobotLoadToOriginStep.End:
                     if (ProcessStatus == EProcessStatus.ToOriginDone)

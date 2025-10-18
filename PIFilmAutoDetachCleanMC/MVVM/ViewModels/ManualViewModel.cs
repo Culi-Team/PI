@@ -3,13 +3,11 @@ using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Common;
 using EQX.Core.Communication;
 using EQX.Core.Communication.Modbus;
-using EQX.Core.Display;
 using EQX.Core.InOut;
 using EQX.Core.Robot;
 using EQX.Core.Sequence;
 using EQX.Device.Indicator;
 using EQX.UI.Controls;
-using EQX.UI.Display;
 using Microsoft.Extensions.DependencyInjection;
 using OpenCvSharp;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -69,10 +67,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly Processes _processes;
         private readonly SerialCommunicator _syringPumpSerialCommunicator;
         private readonly IModbusCommunication _indicatorModbusCommunication;
-        private readonly DisplayManager _displayManager = new();
-        private readonly ViewOnlyOverlay _viewOnlyOverlay = new();
-        private InteractiveScreen _activeScreen;
-        private bool _isViewOnly;
         #endregion
 
         #region Properties
@@ -325,10 +319,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         #region Constructor
         public ManualViewModel(Devices devices,
             MachineStatus machineStatus,
-            [FromKeyedServices("WETCleanLeftRecipe")] CleanRecipe wetCleanLeftRecipe,
-            [FromKeyedServices("WETCleanRightRecipe")] CleanRecipe wetCleanRightRecipe,
-            [FromKeyedServices("AFCleanLeftRecipe")] CleanRecipe afCleanLeftRecipe,
-            [FromKeyedServices("AFCleanRightRecipe")] CleanRecipe afCleanRightRecipe,
             [FromKeyedServices("RollerModbusCommunication")] IModbusCommunication rollerModbusCommunication,
             [FromKeyedServices("TorqueControllerModbusCommunication")] IModbusCommunication torqueModbusCommunication,
             [FromKeyedServices("RobotLoad")] IRobot robotLoad,
@@ -349,9 +339,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _syringPumpSerialCommunicator = SyringPumpSerialCommunicator;
             _indicatorModbusCommunication = indicatorModbusCommunication;
             Indicator = indicator;
-            _displayManager.EnableExtend();
-            _activeScreen = InteractiveScreen.Primary;
-            _isViewOnly = false;
 
             ManualUnits = new ObservableCollection<ManualVMWithSelection>()
             {

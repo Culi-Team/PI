@@ -5,6 +5,8 @@
              xmlns:views="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
              xmlns:cvt="clr-namespace:PIFilmAutoDetachCleanMC.Converters"
              xmlns:uiCvt="clr-namespace:EQX.UI.Converters;assembly=EQX.UI"
+             xmlns:inout="clr-namespace:EQX.InOut;assembly=EQX.InOut"
+             xmlns:viewsLib="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              xmlns:manualViews="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views.Manual"
              xmlns:manualVM="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual"
              xmlns:teachingVM="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching"
@@ -115,6 +117,10 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type productDatas:CWorkData}">
                 <views:ProductInformationView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type inout:CylinderBase}">
+                <viewsLib:CylinderView/>
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
