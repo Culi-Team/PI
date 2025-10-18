@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EQX.Core.InOut;
+using EQX.Core.Interlock;
 using EQX.InOut;
-using EQX.UI.Interlock;
 
 namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
 {
@@ -27,7 +27,14 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             InterlockService.Default.Reevaluate();
         };
 
-        public static void ConfigureInterlock(this ICylinder cylinder, string key, Func<bool> condition, string failMessage, params object[] dependencies)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cylinder">Which cylinder</param>
+        /// <param name="key">Should write "Cylinder.{Cylinder.Name}</param>
+        /// <param name="condition">Condition to interlock</param>
+        /// <param name="dependencies">Cylinder dependencies for what?</param>
+        public static void ConfigureInterlock(this ICylinder cylinder, string key, Func<bool> condition, params object[] dependencies)
         {
             if (cylinder is not CylinderBase cylinderBase)
             {
@@ -36,9 +43,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
 
             cylinderBase.InterlockKey = key;
             cylinderBase.InterlockCondition = condition;
-            cylinderBase.InterlockFailMessage = failMessage;
 
-            InterlockService.Default.RegisterRule(new LambdaInterlockRule(key, _ => condition()));
+            InterlockService.Default.RegisterRule(new LambdaInterlockRule(key, condition));
 
             cylinderBase.StateChanged += CylinderStateChangedHandler;
             AttachDependencyHandlers(dependencies);
