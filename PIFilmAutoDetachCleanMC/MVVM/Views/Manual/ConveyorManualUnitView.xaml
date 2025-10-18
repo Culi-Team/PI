@@ -7,6 +7,8 @@
              mc:Ignorable="d"
              xmlns:views="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.Views"
              x:Name="root"
+             xmlns:vm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual"
+             d:DataContext="{d:DesignInstance Type={x:Type vm:ConveyorManualUnitViewModel}}"
              DataContextChanged="root_DataContextChanged"
              xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              d:DesignHeight="450"
@@ -95,18 +97,71 @@
             <GroupBox Header="Conveyor"
                       Grid.Column="1"
                       Style="{StaticResource TextBlockHeaderGroupBox}">
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
-                    <Button Content="Run"
-                            Command="{Binding ConveyorRunCommand}"
-                            Width="100"
-                            Margin="0 0 10 0" />
-                    <Button Content="Stop"
-                            Command="{Binding ConveyorStopCommand}"
-                            Width="100"
-                            Margin="10 0 0 0" />
-                </StackPanel>
+                <UniformGrid Rows="4">
+                    <UniformGrid Columns="2">
+                        <Label Content="Speed (rpm)"
+                               VerticalContentAlignment="Center"
+                               BorderThickness="1"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               BorderBrush="LightGray"
+                               Margin="0 2 2 2" />
+                        <Label Margin="0 2 2 2"
+                               BorderBrush="LightGray"
+                               Cursor="Hand"
+                               BorderThickness="0.5"
+                               Content="{Binding ConveyorSpeed,Mode=TwoWay,Converter={StaticResource DoubleToIntConveter}}"
+                               MouseLeftButtonDown="Label_MouseLeftButtonDown"
+                               HorizontalContentAlignment="Center"
+                               VerticalContentAlignment="Center"
+                               FontSize="14" />
+                    </UniformGrid>
+                    <UniformGrid Columns="2">
+                        <Label Content="Acceleration (rpm/s)"
+                               VerticalContentAlignment="Center"
+                               BorderThickness="1"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               BorderBrush="LightGray"
+                               Margin="0 2 2 2" />
+                        <Label Margin="0 2 2 2"
+                               BorderBrush="LightGray"
+                               Cursor="Hand"
+                               BorderThickness="0.5"
+                               Content="{Binding ConveyorAcc,Mode=TwoWay,Converter={StaticResource DoubleToIntConveter}}"
+                               MouseLeftButtonDown="Label_MouseLeftButtonDown"
+                               HorizontalContentAlignment="Center"
+                               VerticalContentAlignment="Center"
+                               FontSize="14" />
+                    </UniformGrid>
+                    <UniformGrid Columns="2">
+                        <Label Content="Deceleration (rpm/s)"
+                               VerticalContentAlignment="Center"
+                               BorderThickness="1"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               BorderBrush="LightGray"
+                               Margin="0 2 2 2" />
+                        <Label Margin="0 2 2 2"
+                               BorderBrush="LightGray"
+                               Cursor="Hand"
+                               BorderThickness="0.5"
+                               Content="{Binding ConveyorDec,Mode=TwoWay,Converter={StaticResource DoubleToIntConveter}}"
+                               MouseLeftButtonDown="Label_MouseLeftButtonDown"
+                               HorizontalContentAlignment="Center"
+                               VerticalContentAlignment="Center"
+                               FontSize="14" />
+                    </UniformGrid>
+                    <UniformGrid Columns="2"
+                                 VerticalAlignment="Center">
+                        <Button Content="Run"
+                                Command="{Binding ConveyorRunCommand}"
+                                Margin="0 0 5 0" />
+                        <Button Content="Stop"
+                                Command="{Binding ConveyorStopCommand}"
+                                Margin="5 0 0 0" />
+                    </UniformGrid>
+                </UniformGrid>
             </GroupBox>
 
             <GroupBox Grid.Row="1"

@@ -1,4 +1,5 @@
-﻿using PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual;
+﻿using EQX.UI.Controls;
+using PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views.Manual
             if (e.NewValue is ManualUnitViewModel newUnit)
             {
                 newUnit.EnableTimer();
+            }
+        }
+
+        private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Label label)
+            {
+                DataEditor dataEditor = new DataEditor(Convert.ToDouble(label.Content), null);
+                if (dataEditor.ShowDialog() == true)
+                {
+                    label.Content = dataEditor.NewValue;
+                }
             }
         }
     }
