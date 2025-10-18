@@ -65,14 +65,24 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 
                 services.AddKeyedScoped<IMotionFactory<IMotion>, SimulationMotionFactory>("MotionEziPlusEFactory");
 #else
-                services.AddKeyedScoped<IMotionMaster, MotionMasterInovance>("InovanceMaster#1");
-                services.AddKeyedScoped<IMotionMaster, MotionMasterAjin>("AjinMaster#1");
+                services.AddKeyedScoped<IMotionMaster>("InovanceMaster#1", (ser, obj) =>
+                {
+                    return new MotionMasterInovance() { NumberOfDevices = Enum.GetNames(typeof(EMotionInovance)).Length + 3 };
+                });
+                services.AddKeyedScoped<IMotionMaster, MotionMasterAjin>("AjinMaster#1", (ser, obj) =>
+                {
+                    return new MotionMasterAjin() { NumberOfDevices = Enum.GetNames(typeof(EMotionAjin)).Length + 1 };
+                });
 
                 services.AddKeyedScoped<IMotionFactory<IMotion>>("InovanceMotionFactory", (ser, obj) =>
-                    new MotionInovanceFactory(ser.GetRequiredKeyedService<IMotionMaster>("InovanceMaster#1"))
-                );
+                {
+                    return new MotionInovanceFactory(ser.GetRequiredKeyedService<IMotionMaster>("InovanceMaster#1"));
+                });
 
-                services.AddKeyedScoped<IMotionFactory<IMotion>>("AjinMotionFactory", (ser, obj) => new MotionAjinFactory());
+                services.AddKeyedScoped<IMotionFactory<IMotion>>("AjinMotionFactory", (ser, obj) =>
+                {
+                    return new MotionAjinFactory(ser.GetRequiredKeyedService<IMotionMaster>("AjinMaster#1"));
+                });
                 services.AddKeyedScoped<IMotionFactory<IMotion>>("MotionEziPlusEFactory", (ser, obj) => new MotionEziPlusEFactory());
 #endif
 
