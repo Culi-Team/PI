@@ -29,51 +29,21 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             InitializeComponent();
         }
 
-        private void Label_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (sender is Label label == false) return;
-
-            var binding = BindingOperations.GetBindingExpression(label, Control.BackgroundProperty);
-            if (binding == null) return;
-
-            var dataItem = binding.DataItem;
-            var path = binding.ParentBinding.Path.Path;
-
-            if (string.IsNullOrWhiteSpace(path) || dataItem == null)
-                return;
-
-            var parts = path.Split('.');
-            object currentObject = dataItem;
-
-            for (int i = 0; i < parts.Length; i++)
-            {
-                var prop = currentObject.GetType().GetProperty(parts[i], BindingFlags.Public | BindingFlags.Instance);
-                if (prop == null) return;
-
-                if (i == parts.Length - 1)
-                {
-                    if (prop.PropertyType == typeof(bool) && prop.CanRead && prop.CanWrite)
-                    {
-                        bool currentValue = (bool)prop.GetValue(currentObject);
-                        prop.SetValue(currentObject, !currentValue);
-                    }
-                }
-                else
-                {
-                    currentObject = prop.GetValue(currentObject);
-                    if (currentObject == null) return;
-                }
-            }
-        }
-
         private void Border_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (DataContext is InitializeViewModel originVM == false) return;
+            if (DataContext is InitializeViewModel initializeVM == false) return;
             if (sender is Border border == false) return;
             if (border.DataContext is IProcess<ESequence> process == false) return;
 
             bool currentValue = process.IsOriginOrInitSelected;
             process.IsOriginOrInitSelected = !currentValue;
+        }
+
+        private void root_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is InitializeViewModel initializeVM == false) return;
+
+            initializeVM.Processes.RootProcess.Childs!.ToList().ForEach(p => p.IsOriginOrInitSelected = false);
         }
     }
 }

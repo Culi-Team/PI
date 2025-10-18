@@ -46,6 +46,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             }
 
             if (originVM.Processes.OutWorkConveyorProcess.IsOriginOrInitSelected ||
+                originVM.Processes.InWorkConveyorProcess.IsOriginOrInitSelected ||
                 originVM.Processes.VinylCleanProcess.IsOriginOrInitSelected ||
                 originVM.Processes.FixtureAlignProcess.IsOriginOrInitSelected ||
                 originVM.Processes.DetachProcess.IsOriginOrInitSelected ||
@@ -53,6 +54,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             {
                 originVM.Processes.RobotLoadProcess.IsOriginOrInitSelected = true;
             }
+
+            if(originVM.Processes.GlassTransferProcess.IsOriginOrInitSelected)
+            {
+                originVM.Processes.TransferInShuttleLeftProcess.IsOriginOrInitSelected = true;
+                originVM.Processes.TransferInShuttleRightProcess.IsOriginOrInitSelected = true;
+            }
+        }
+
+        private void root_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is OriginViewModel originVM == false) return;
+            originVM.Processes.RootProcess.Childs!.ToList().ForEach(p => p.IsOriginOrInitSelected = false);
         }
     }
 }
