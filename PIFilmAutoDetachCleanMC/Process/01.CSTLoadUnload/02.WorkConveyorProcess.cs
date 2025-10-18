@@ -40,6 +40,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private double TAxisWorkPosition => port == EPort.Right ? _cstLoadUnloadRecipe.InCstTAxisWorkPosition : _cstLoadUnloadRecipe.OutCstTAxisWorkPosition;
         private double TAxisLoadPosition => port == EPort.Right ? _cstLoadUnloadRecipe.InCstTAxisLoadPosition : _cstLoadUnloadRecipe.OutCstTAxisLoadPosition;
+        private double TAxisUnloadPosition => port == EPort.Right ? _cstLoadUnloadRecipe.InCstTAxisUnloadPosition : _cstLoadUnloadRecipe.OutCstTAxisUnloadPosition;
         private ITray<ETrayCellStatus> Cassette => port == EPort.Right ? _cassetteList.CassetteIn : _cassetteList.CassetteOut;
         private bool CassetteWorkDone => Cassette.Cells.Any(c => c.Status == ETrayCellStatus.Ready || c.Status == ETrayCellStatus.Working) == false;
         private double DistanceFirstFixture => AnalogConverter.Convert(LaserSensor.Volt, 0, 10, 0.0, 5000.0);
@@ -827,16 +828,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.TAxis_MoveLoadPosition:
-                    Log.Debug("T Axis Move Load Position");
-                    TAxis.MoveAbs(TAxisLoadPosition);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => TAxis.IsOnPosition(TAxisLoadPosition));
+                    Log.Debug("T Axis Move Unload Position");
+                    TAxis.MoveAbs(TAxisUnloadPosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => TAxis.IsOnPosition(TAxisUnloadPosition));
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.TAxis_MoveLoadPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseAlarm((int)(port == EPort.Right ? EAlarm.InWorkConveyor_TAxis_MoveLoadPosition_Fail :
-                                                         EAlarm.OutWorkConveyor_TAxis_MoveLoadPosition_Fail));
+                        RaiseAlarm((int)(port == EPort.Right ? EAlarm.InWorkConveyor_TAxis_MoveUnloadPosition_Fail :
+                                                         EAlarm.OutWorkConveyor_TAxis_MoveUnloadPosition_Fail));
                         break;
                     }
                     Log.Debug("T Axis Move Load Position Done");
