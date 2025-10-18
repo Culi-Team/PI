@@ -15,9 +15,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         OutCst_StopperUpDown,
 
         // In CST Work
-        InCstFixCyl1FwBw,
-        InCstFixCyl2FwBw,
-        InCstTiltCylUpDown,
+        InWorkCst_AlignCyl1FwBw,
+        InWorkCst_AlignCyl2FwBw,
+        InWorkCst_TiltCylUpDown,
 
         // Buffer CV Work
         BufferCvStopper1UpDown,

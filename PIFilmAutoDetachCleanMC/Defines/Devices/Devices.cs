@@ -67,9 +67,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
             cylinders.Add(Cylinders.InCst_StopperUpDown);
-            cylinders.Add(Cylinders.InWorkCst_FixCyl1FwBw);
-            cylinders.Add(Cylinders.InCstFixCyl2FwBw);
-            cylinders.Add(Cylinders.InCstTiltCylUpDown);
+            cylinders.Add(Cylinders.InWorkCst_AlignCyl1FwBw);
+            cylinders.Add(Cylinders.InWorkCst_AlignCyl2FwBw);
+            cylinders.Add(Cylinders.InWorkCst_TiltCylUpDown);
             cylinders.Add(Cylinders.InCvSupportUpDown);
             cylinders.Add(Cylinders.InCvSupportBufferUpDown);
             return cylinders;
@@ -87,9 +87,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         {
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
             cylinders.Add(Cylinders.OutCst_StopperUpDown);
-            cylinders.Add(Cylinders.OutCstFixCyl1FwBw);
-            cylinders.Add(Cylinders.OutCstFixCyl2FwBw);
-            cylinders.Add(Cylinders.OutCstTiltCylUpDown);
+            cylinders.Add(Cylinders.OutWorkCst_AlignCyl1FwBw);
+            cylinders.Add(Cylinders.OutWorkCst_AlignCyl2FwBw);
+            cylinders.Add(Cylinders.OutWorkCst_TiltCylUpDown);
             cylinders.Add(Cylinders.OutCvSupportUpDown);
             cylinders.Add(Cylinders.OutCvSupportBufferUpDown);
             return cylinders;
@@ -339,12 +339,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.InCvSupportDown);
             inputs.Add(Inputs.InCvSupportBufferUp);
             inputs.Add(Inputs.InCvSupportBufferDown);
-            inputs.Add(Inputs.InWorkCst_FixCyl1Fw);
-            inputs.Add(Inputs.InCstFixCyl1Bw);
-            inputs.Add(Inputs.InCstFixCyl2Fw);
-            inputs.Add(Inputs.InCstFixCyl2Bw);
-            inputs.Add(Inputs.InCstTiltCylUp);
-            inputs.Add(Inputs.InCstTiltCylDown);
+            inputs.Add(Inputs.InWorkCst_AlignCyl1Fw);
+            inputs.Add(Inputs.InWorkCst_AlignCyl1Bw);
+            inputs.Add(Inputs.InWorkCst_AlignCyl2Fw);
+            inputs.Add(Inputs.InWorkCst_AlignCyl2Bw);
+            inputs.Add(Inputs.InWorkCst_TiltCylUp);
+            inputs.Add(Inputs.InWorkCst_TiltCylDown);
             inputs.Add(Inputs.InCst_StopperUp);
             inputs.Add(Inputs.InCst_StopperDown);
 
@@ -372,12 +372,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.OutCvSupportDown);
             inputs.Add(Inputs.OutCvSupportBufferUp);
             inputs.Add(Inputs.OutCvSupportBufferDown);
-            inputs.Add(Inputs.OutCstFixCyl1Fw);
-            inputs.Add(Inputs.OutCstFixCyl1Bw);
-            inputs.Add(Inputs.OutCstFixCyl2Fw);
-            inputs.Add(Inputs.OutCstFixCyl2Bw);
-            inputs.Add(Inputs.OutCstTiltCylUp);
-            inputs.Add(Inputs.OutCstTiltCylDown);
+            inputs.Add(Inputs.OutWorkCst_AlignCyl1Fw);
+            inputs.Add(Inputs.OutWorkCst_AlignCyl1Bw);
+            inputs.Add(Inputs.OutWorkCst_AlignCyl2Fw);
+            inputs.Add(Inputs.OutWorkCst_AlignCyl2Bw);
+            inputs.Add(Inputs.OutWorkCst_TiltCylUp);
+            inputs.Add(Inputs.OutWorkCst_TiltCylDown);
             inputs.Add(Inputs.OutCst_StopperUp);
             inputs.Add(Inputs.OutCst_StopperDown);
 
@@ -792,12 +792,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
             outputs.Add(Outputs.InCst_StopperUp);
             outputs.Add(Outputs.InCst_StopperDown);
-            outputs.Add(Outputs.InCstFixCyl1Fw);
-            outputs.Add(Outputs.InCstFixCyl1Bw);
-            outputs.Add(Outputs.InCstFixCyl2Fw);
-            outputs.Add(Outputs.InCstFixCyl2Bw);
-            outputs.Add(Outputs.InCstTiltCylUp);
-            outputs.Add(Outputs.InCstTiltCylDown);
+            outputs.Add(Outputs.InWorkCst_AlignCyl1Fw);
+            outputs.Add(Outputs.InWorkCst_AlignCyl1Bw);
+            outputs.Add(Outputs.InWorkCst_AlignCyl2Fw);
+            outputs.Add(Outputs.InWorkCst_AlignCyl2Bw);
+            outputs.Add(Outputs.InWorkCst_TiltCylUp);
+            outputs.Add(Outputs.InWorkCst_TiltCylDown);
             outputs.Add(Outputs.InCvSupportUp);
             outputs.Add(Outputs.InCvSupportDown);
             outputs.Add(Outputs.InCvSupportBufferUp);
@@ -821,12 +821,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
             outputs.Add(Outputs.OutCst_StopperUp);
             outputs.Add(Outputs.OutCst_StopperDown);
-            outputs.Add(Outputs.OutCstFixCyl1Fw);
-            outputs.Add(Outputs.OutCstFixCyl1Bw);
-            outputs.Add(Outputs.OutCstFixCyl2Fw);
-            outputs.Add(Outputs.OutCstFixCyl2Bw);
-            outputs.Add(Outputs.OutCstTiltCylUp);
-            outputs.Add(Outputs.OutCstTiltCylDown);
+            outputs.Add(Outputs.OutWorkCst_AlignCyl1Fw);
+            outputs.Add(Outputs.OutWorkCst_AlignCyl1Bw);
+            outputs.Add(Outputs.OutWorkCst_AlignCyl2Fw);
+            outputs.Add(Outputs.OutWorkCst_AlignCyl2Bw);
+            outputs.Add(Outputs.OutWorkCst_TiltCylUp);
+            outputs.Add(Outputs.OutWorkCst_TiltCylDown);
             outputs.Add(Outputs.OutCvSupportUp);
             outputs.Add(Outputs.OutCvSupportDown);
             outputs.Add(Outputs.OutCvSupportBufferUp);
