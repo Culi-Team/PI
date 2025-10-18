@@ -364,112 +364,57 @@
                 </GroupBox>
             </DockPanel>
         </Grid>
-        <Grid Background="#80000000"
+        <Grid Background="#50000000"
               Visibility="{Binding IsConnecting, Converter={StaticResource BooleanToVisibilityConverter}}">
 
             <!-- Spinner -->
             <Grid HorizontalAlignment="Center"
                   VerticalAlignment="Center">
-                <Canvas Width="60"
-                        Height="60">
-                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
-                             Canvas.Left="26"
-                             Canvas.Top="0">
-                        <Ellipse.RenderTransform>
-                            <RotateTransform Angle="0"
-                                             CenterX="4"
-                                             CenterY="30" />
-                        </Ellipse.RenderTransform>
-                    </Ellipse>
-                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
-                             Canvas.Left="45"
-                             Canvas.Top="10">
-                        <Ellipse.RenderTransform>
-                            <RotateTransform Angle="45"
-                                             CenterX="-10"
-                                             CenterY="25" />
-                        </Ellipse.RenderTransform>
-                    </Ellipse>
-                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
-                             Canvas.Left="55"
-                             Canvas.Top="30">
-                        <Ellipse.RenderTransform>
-                            <RotateTransform Angle="90"
-                                             CenterX="-25"
-                                             CenterY="15" />
-                        </Ellipse.RenderTransform>
-                    </Ellipse>
-                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
-                             Canvas.Left="45"
-                             Canvas.Top="50">
-                        <Ellipse.RenderTransform>
-                            <RotateTransform Angle="135"
-                                             CenterX="-25"
-                                             CenterY="-5" />
-                        </Ellipse.RenderTransform>
-                    </Ellipse>
-                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
-                             Canvas.Left="26"
-                             Canvas.Top="60">
-                        <Ellipse.RenderTransform>
-                            <RotateTransform Angle="180"
-                                             CenterX="-20"
-                                             CenterY="-20" />
-                        </Ellipse.RenderTransform>
-                    </Ellipse>
-                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
-                             Canvas.Left="7"
-                             Canvas.Top="50">
-                        <Ellipse.RenderTransform>
-                            <RotateTransform Angle="225"
-                                             CenterX="-10"
-                                             CenterY="-25" />
-                        </Ellipse.RenderTransform>
-                    </Ellipse>
-                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
-                             Canvas.Left="0"
-                             Canvas.Top="30">
-                        <Ellipse.RenderTransform>
-                            <RotateTransform Angle="270"
-                                             CenterX="0"
-                                             CenterY="-30" />
-                        </Ellipse.RenderTransform>
-                    </Ellipse>
-                    <Ellipse Style="{StaticResource SpinnerDotStyle}"
-                             Canvas.Left="7"
-                             Canvas.Top="10">
-                        <Ellipse.RenderTransform>
-                            <RotateTransform Angle="315"
-                                             CenterX="10"
-                                             CenterY="-25" />
-                        </Ellipse.RenderTransform>
-                    </Ellipse>
-                </Canvas>
+                <Canvas Width="80" Height="80">
+            <!-- 8 chấm đều nhau quanh vòng tròn -->
+            <Ellipse x:Name="Dot1" Width="10" Height="10" Fill="DodgerBlue" Canvas.Left="35" Canvas.Top="0"/>
+            <Ellipse x:Name="Dot2" Width="10" Height="10" Fill="DodgerBlue" Canvas.Left="56" Canvas.Top="9"/>
+            <Ellipse x:Name="Dot3" Width="10" Height="10" Fill="DodgerBlue" Canvas.Left="65" Canvas.Top="30"/>
+            <Ellipse x:Name="Dot4" Width="10" Height="10" Fill="DodgerBlue" Canvas.Left="56" Canvas.Top="51"/>
+            <Ellipse x:Name="Dot5" Width="10" Height="10" Fill="DodgerBlue" Canvas.Left="35" Canvas.Top="60"/>
+            <Ellipse x:Name="Dot6" Width="10" Height="10" Fill="DodgerBlue" Canvas.Left="14" Canvas.Top="51"/>
+            <Ellipse x:Name="Dot7" Width="10" Height="10" Fill="DodgerBlue" Canvas.Left="5" Canvas.Top="30"/>
+            <Ellipse x:Name="Dot8" Width="10" Height="10" Fill="DodgerBlue" Canvas.Left="14" Canvas.Top="9"/>
+        </Canvas>
 
-                <Grid.Triggers>
-                    <EventTrigger RoutedEvent="Grid.Loaded">
-                        <BeginStoryboard>
-                            <Storyboard RepeatBehavior="Forever">
-                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(RotateTransform.Angle)"
-                                                 From="0"
-                                                 To="360"
-                                                 Duration="0:0:1.2" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Grid.Triggers>
-
-                <Grid.RenderTransform>
-                    <RotateTransform Angle="0" />
-                </Grid.RenderTransform>
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Grid.Loaded">
+                <BeginStoryboard>
+                    <Storyboard RepeatBehavior="Forever">
+                        <!-- 8 animation mờ / sáng luân phiên -->
+                        <DoubleAnimation Storyboard.TargetName="Dot1" Storyboard.TargetProperty="Opacity"
+                                         From="0.2" To="1" Duration="0:0:0.8" BeginTime="0:0:0" AutoReverse="True"/>
+                        <DoubleAnimation Storyboard.TargetName="Dot2" Storyboard.TargetProperty="Opacity"
+                                         From="0.2" To="1" Duration="0:0:0.8" BeginTime="0:0:0.1" AutoReverse="True"/>
+                        <DoubleAnimation Storyboard.TargetName="Dot3" Storyboard.TargetProperty="Opacity"
+                                         From="0.2" To="1" Duration="0:0:0.8" BeginTime="0:0:0.2" AutoReverse="True"/>
+                        <DoubleAnimation Storyboard.TargetName="Dot4" Storyboard.TargetProperty="Opacity"
+                                         From="0.2" To="1" Duration="0:0:0.8" BeginTime="0:0:0.3" AutoReverse="True"/>
+                        <DoubleAnimation Storyboard.TargetName="Dot5" Storyboard.TargetProperty="Opacity"
+                                         From="0.2" To="1" Duration="0:0:0.8" BeginTime="0:0:0.4" AutoReverse="True"/>
+                        <DoubleAnimation Storyboard.TargetName="Dot6" Storyboard.TargetProperty="Opacity"
+                                         From="0.2" To="1" Duration="0:0:0.8" BeginTime="0:0:0.5" AutoReverse="True"/>
+                        <DoubleAnimation Storyboard.TargetName="Dot7" Storyboard.TargetProperty="Opacity"
+                                         From="0.2" To="1" Duration="0:0:0.8" BeginTime="0:0:0.6" AutoReverse="True"/>
+                        <DoubleAnimation Storyboard.TargetName="Dot8" Storyboard.TargetProperty="Opacity"
+                                         From="0.2" To="1" Duration="0:0:0.8" BeginTime="0:0:0.7" AutoReverse="True"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
             </Grid>
 
             <TextBlock Text="Connecting..."
                        Foreground="White"
-                       FontSize="16"
+                       FontSize="20"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Bottom"
-                       Margin="0,0,0,80" />
+                       Margin="0,0,0,60" />
         </Grid>
     </Grid>
 </UserControl>
