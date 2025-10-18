@@ -459,20 +459,20 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
             inputs.Add(Inputs.RemoveZoneFixtureDetect);
-            inputs.Add(Inputs.RemoveZoneFixCyl11Fw);
-            inputs.Add(Inputs.RemoveZoneFixCyl11Bw);
-            inputs.Add(Inputs.RemoveZoneFixCyl12Fw);
-            inputs.Add(Inputs.RemoveZoneFixCyl12Bw);
-            inputs.Add(Inputs.RemoveZoneFixCyl21Fw);
-            inputs.Add(Inputs.RemoveZoneFixCyl21Bw);
-            inputs.Add(Inputs.RemoveZoneFixCyl22Fw);
-            inputs.Add(Inputs.RemoveZoneFixCyl22Bw);
-            inputs.Add(Inputs.RemoveZoneCyl1Clamp);
-            inputs.Add(Inputs.RemoveZoneCyl1Unclamp);
-            inputs.Add(Inputs.RemoveZoneCyl2Clamp);
-            inputs.Add(Inputs.RemoveZoneCyl2Unclamp);
-            inputs.Add(Inputs.RemoveZoneCyl3Clamp);
-            inputs.Add(Inputs.RemoveZoneCyl3Unclamp);
+            inputs.Add(Inputs.RemoveZoneClampCyl1Clamp);
+            inputs.Add(Inputs.RemoveZoneClampCyl1Unclamp);
+            inputs.Add(Inputs.RemoveZoneClampCyl2Clamp);
+            inputs.Add(Inputs.RemoveZoneClampCyl2Unclamp);
+            inputs.Add(Inputs.RemoveZoneClampCyl3Clamp);
+            inputs.Add(Inputs.RemoveZoneClampCyl3Unclamp);
+            inputs.Add(Inputs.RemoveZoneClampCyl4Clamp);
+            inputs.Add(Inputs.RemoveZoneClampCyl4Unclamp);
+            inputs.Add(Inputs.RemoveZoneFilm1Clamp);
+            inputs.Add(Inputs.RemoveZoneFilm1Unclamp);
+            inputs.Add(Inputs.RemoveZoneFilm2Clamp);
+            inputs.Add(Inputs.RemoveZoneFilm2Unclamp);
+            inputs.Add(Inputs.RemoveZoneFilm3Clamp);
+            inputs.Add(Inputs.RemoveZoneFilm3Unclamp);
             inputs.Add(Inputs.RemoveZonePusherCyl1Up);
             inputs.Add(Inputs.RemoveZonePusherCyl1Down);
             inputs.Add(Inputs.RemoveZonePusherCyl2Up);
@@ -493,14 +493,14 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.DetachCyl1Down);
             inputs.Add(Inputs.DetachCyl2Up);
             inputs.Add(Inputs.DetachCyl2Down);
-            inputs.Add(Inputs.DetachFixFixtureCyl11Fw);
-            inputs.Add(Inputs.DetachFixFixtureCyl11Bw);
-            inputs.Add(Inputs.DetachFixFixtureCyl12Fw);
-            inputs.Add(Inputs.DetachFixFixtureCyl12Bw);
-            inputs.Add(Inputs.DetachFixFixtureCyl21Fw);
-            inputs.Add(Inputs.DetachFixFixtureCyl21Bw);
-            inputs.Add(Inputs.DetachFixFixtureCyl22Fw);
-            inputs.Add(Inputs.DetachFixFixtureCyl22Bw);
+            inputs.Add(Inputs.DetachCyl1Clamp);
+            inputs.Add(Inputs.DetachCyl1UnClamp);
+            inputs.Add(Inputs.DetachCyl2Clamp);
+            inputs.Add(Inputs.DetachCyl2UnClamp);
+            inputs.Add(Inputs.DetachCyl3Clamp);
+            inputs.Add(Inputs.DetachCyl3UnClamp);
+            inputs.Add(Inputs.DetachCyl4Clamp);
+            inputs.Add(Inputs.DetachCyl4Unclamp);
 
             return inputs;
         }
@@ -881,10 +881,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDOutput> GetRemoveFilmOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
-            outputs.Add(Outputs.RemoveZoneFixCyl1Fw);
-            outputs.Add(Outputs.RemoveZoneFixCyl1Bw);
-            outputs.Add(Outputs.RemoveZoneFixCyl2Fw);
-            outputs.Add(Outputs.RemoveZoneFixCyl2Bw);
+            outputs.Add(Outputs.RemoveZoneClampCyl1Clamp);
+            outputs.Add(Outputs.RemoveZoneClampCyl1Unclamp);
+            outputs.Add(Outputs.RemoveZoneClampCyl2Clamp);
+            outputs.Add(Outputs.RemoveZoneClampCyl2Unclamp);
             outputs.Add(Outputs.RemoveZoneCyl1Clamp);
             outputs.Add(Outputs.RemoveZoneCyl1Unclamp);
             outputs.Add(Outputs.RemoveZoneCyl2Clamp);
@@ -921,10 +921,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.DetachCyl1Down);
             outputs.Add(Outputs.DetachCyl2Up);
             outputs.Add(Outputs.DetachCyl2Down);
-            outputs.Add(Outputs.DetachFixFixtureCyl1Fw);
-            outputs.Add(Outputs.DetachFixFixtureCyl1Bw);
-            outputs.Add(Outputs.DetachFixFixtureCyl2Fw);
-            outputs.Add(Outputs.DetachFixFixtureCyl2Bw);
+            outputs.Add(Outputs.DetachClampCyl1Unclamp);
+            outputs.Add(Outputs.DetachClampCyl1Clamp);
+            outputs.Add(Outputs.DetachClampCyl2Unclamp);
+            outputs.Add(Outputs.DetachClampCyl2Clamp);
             return outputs;
         }
 

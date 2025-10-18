@@ -326,22 +326,22 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             Detach_UpDownCyl2.CylinderType = ECylinderType.UpDown;
 
             Detach_ClampCyl1 = _cylinderFactory
-                .Create(_inputs.DetachFixFixtureCyl11Fw, _inputs.DetachFixFixtureCyl11Bw, _outputs.DetachFixFixtureCyl1Fw, _outputs.DetachFixFixtureCyl1Bw)
+                .Create(_inputs.DetachCyl1Clamp, _inputs.DetachCyl1UnClamp, _outputs.DetachClampCyl1Clamp, _outputs.DetachClampCyl1Unclamp)
                 .SetIdentity((int)ECylinder.Detach_ClampCyl1, ECylinder.Detach_ClampCyl1.ToString());
             Detach_ClampCyl1.CylinderType = ECylinderType.ForwardBackward;
 
             Detach_ClampCyl2 = _cylinderFactory
-                .Create(_inputs.DetachFixFixtureCyl12Fw, _inputs.DetachFixFixtureCyl12Bw, _outputs.DetachFixFixtureCyl1Fw, _outputs.DetachFixFixtureCyl1Bw)
+                .Create(_inputs.DetachCyl2Clamp, _inputs.DetachCyl2UnClamp, _outputs.DetachClampCyl2Clamp, _outputs.DetachClampCyl2Unclamp)
                 .SetIdentity((int)ECylinder.Detach_ClampCyl2, ECylinder.Detach_ClampCyl2.ToString());
             Detach_ClampCyl2.CylinderType = ECylinderType.ForwardBackward;
 
             Detach_ClampCyl3 = _cylinderFactory
-                .Create(_inputs.DetachFixFixtureCyl21Fw, _inputs.DetachFixFixtureCyl21Bw, _outputs.DetachFixFixtureCyl2Fw, _outputs.DetachFixFixtureCyl2Bw)
+                .Create(_inputs.DetachCyl3Clamp, _inputs.DetachCyl3UnClamp, _outputs.DetachClampCyl3Clamp, _outputs.DetachClampCyl3Unclamp)
                 .SetIdentity((int)ECylinder.Detach_ClampCyl3, ECylinder.Detach_ClampCyl3.ToString());
             Detach_ClampCyl3.CylinderType = ECylinderType.ForwardBackward;
 
             Detach_ClampCyl4 = _cylinderFactory
-                .Create(_inputs.DetachFixFixtureCyl22Fw, _inputs.DetachFixFixtureCyl22Bw, _outputs.DetachFixFixtureCyl2Fw, _outputs.DetachFixFixtureCyl2Bw)
+                .Create(_inputs.DetachCyl4Clamp, _inputs.DetachCyl4Unclamp, _outputs.DetachClampCyl4Clamp, _outputs.DetachClampCyl4Unclamp)
                 .SetIdentity((int)ECylinder.Detach_ClampCyl4, ECylinder.Detach_ClampCyl4.ToString());
             Detach_ClampCyl4.CylinderType = ECylinderType.ForwardBackward;
 
@@ -362,17 +362,17 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             RemoveZone_UpDownCyl2.CylinderType = ECylinderType.UpDown;
 
             RemoveZone_FilmClampCyl1 = _cylinderFactory
-                .Create(_inputs.RemoveZoneCyl1Clamp, _inputs.RemoveZoneCyl1Unclamp, _outputs.RemoveZoneCyl1Clamp, _outputs.RemoveZoneCyl1Unclamp)
+                .Create(_inputs.RemoveZoneFilm1Clamp, _inputs.RemoveZoneFilm1Unclamp, _outputs.RemoveZoneCyl1Clamp, _outputs.RemoveZoneCyl1Unclamp)
                 .SetIdentity((int)ECylinder.RemoveZone_FilmClampCyl1, ECylinder.RemoveZone_FilmClampCyl1.ToString());
             RemoveZone_FilmClampCyl1.CylinderType = ECylinderType.ClampUnclamp;
 
             RemoveZone_FilmClampCyl2 = _cylinderFactory
-                .Create(_inputs.RemoveZoneCyl2Clamp, _inputs.RemoveZoneCyl2Unclamp, _outputs.RemoveZoneCyl2Clamp, _outputs.RemoveZoneCyl2Unclamp)
+                .Create(_inputs.RemoveZoneFilm2Clamp, _inputs.RemoveZoneFilm2Unclamp, _outputs.RemoveZoneCyl2Clamp, _outputs.RemoveZoneCyl2Unclamp)
                 .SetIdentity((int)ECylinder.RemoveZone_FilmClampCyl2, ECylinder.RemoveZone_FilmClampCyl2.ToString());
             RemoveZone_FilmClampCyl2.CylinderType = ECylinderType.ClampUnclamp;
 
             RemoveZone_FilmClampCyl3 = _cylinderFactory
-                .Create(_inputs.RemoveZoneCyl3Clamp, _inputs.RemoveZoneCyl3Unclamp, _outputs.RemoveZoneCyl3Clamp, _outputs.RemoveZoneCyl3Unclamp)
+                .Create(_inputs.RemoveZoneFilm3Clamp, _inputs.RemoveZoneFilm3Unclamp, _outputs.RemoveZoneCyl3Clamp, _outputs.RemoveZoneCyl3Unclamp)
                 .SetIdentity((int)ECylinder.RemoveZone_FilmClampCyl3, ECylinder.RemoveZone_FilmClampCyl3.ToString());
             RemoveZone_FilmClampCyl3.CylinderType = ECylinderType.ClampUnclamp;
 
@@ -387,22 +387,22 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             RemoveZone_PusherCyl2.CylinderType = ECylinderType.UpDown;
 
             RemoveZone_ClampCyl1 = _cylinderFactory
-                .Create(_inputs.RemoveZoneFixCyl11Fw, _inputs.RemoveZoneFixCyl11Bw, _outputs.RemoveZoneFixCyl1Fw, _outputs.RemoveZoneFixCyl1Bw)
+                .Create(_inputs.RemoveZoneClampCyl1Clamp, _inputs.RemoveZoneClampCyl1Unclamp, _outputs.RemoveZoneClampCyl1Clamp, _outputs.RemoveZoneClampCyl1Unclamp)
                 .SetIdentity((int)ECylinder.RemoveZone_ClampCyl1, ECylinder.RemoveZone_ClampCyl1.ToString());
             RemoveZone_ClampCyl1.CylinderType = ECylinderType.ForwardBackward;
 
             RemoveZone_ClampCyl2 = _cylinderFactory
-                .Create(_inputs.RemoveZoneFixCyl12Fw, _inputs.RemoveZoneFixCyl12Bw, _outputs.RemoveZoneFixCyl1Fw, _outputs.RemoveZoneFixCyl1Bw)
+                .Create(_inputs.RemoveZoneClampCyl2Clamp, _inputs.RemoveZoneClampCyl2Unclamp, _outputs.RemoveZoneClampCyl2Clamp, _outputs.RemoveZoneClampCyl2Unclamp)
                 .SetIdentity((int)ECylinder.RemoveZone_ClampCyl2, ECylinder.RemoveZone_ClampCyl2.ToString());
             RemoveZone_ClampCyl2.CylinderType = ECylinderType.ForwardBackward;
 
             RemoveZone_ClampCyl3 = _cylinderFactory
-                .Create(_inputs.RemoveZoneFixCyl21Fw, _inputs.RemoveZoneFixCyl21Bw, _outputs.RemoveZoneFixCyl2Fw, _outputs.RemoveZoneFixCyl2Bw)
+                .Create(_inputs.RemoveZoneClampCyl3Clamp, _inputs.RemoveZoneClampCyl3Unclamp, _outputs.RemoveZoneClampCyl3Clamp, _outputs.RemoveZoneClampCyl3Unclamp)
                 .SetIdentity((int)ECylinder.RemoveZone_ClampCyl3, ECylinder.RemoveZone_ClampCyl3.ToString());
             RemoveZone_ClampCyl3.CylinderType = ECylinderType.ForwardBackward;
 
             RemoveZone_ClampCyl4 = _cylinderFactory
-                .Create(_inputs.RemoveZoneFixCyl22Fw, _inputs.RemoveZoneFixCyl22Bw, _outputs.RemoveZoneFixCyl2Fw, _outputs.RemoveZoneFixCyl2Bw)
+                .Create(_inputs.RemoveZoneClampCyl4Clamp, _inputs.RemoveZoneClampCyl4Unclamp, _outputs.RemoveZoneClampCyl4Clamp, _outputs.RemoveZoneClampCyl4Unclamp)
                 .SetIdentity((int)ECylinder.RemoveZone_ClampCyl4, ECylinder.RemoveZone_ClampCyl4.ToString());
             RemoveZone_ClampCyl4.CylinderType = ECylinderType.ForwardBackward;
 
