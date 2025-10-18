@@ -38,16 +38,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
@@ -89,16 +83,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
@@ -140,16 +128,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
@@ -191,16 +173,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
@@ -242,16 +218,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
@@ -294,16 +264,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
@@ -346,16 +310,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
@@ -398,16 +356,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
@@ -450,16 +402,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
@@ -502,16 +448,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
@@ -554,16 +494,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
@@ -606,16 +540,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
@@ -658,16 +586,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
@@ -710,16 +632,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
@@ -762,16 +678,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
@@ -814,16 +724,10 @@ namespace PIFilmAutoDetachCleanMC.Test
             devices.Outputs.Initialize();
             devices.Inputs.Connect();
             devices.Outputs.Connect();
-            devices.MotionsInovance.MotionMaster.Connect();
+            devices.Motions.InovanceMaster.Connect();
+            devices.Motions.AjinMaster.Connect();
 
-            foreach (var motion in devices.MotionsAjin.All)
-            {
-                motion.Connect();
-                motion.Initialization();
-                motion.MotionOn();
-            }
-
-            foreach (var motion in devices.MotionsInovance.All)
+            foreach (var motion in devices.Motions.All)
             {
                 motion.Connect();
                 motion.Initialization();
