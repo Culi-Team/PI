@@ -81,6 +81,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views.Teaching
                     positionAttribute = (SinglePositionTeachingAttribute)attrs.FirstOrDefault(att => att is SinglePositionTeachingAttribute);
                 }
 
+                if (vm.Name == "CST Load" && dataAttr.Description.Contains("Out Cassette")) continue;
+
                 if (positionAttribute == null) continue;
 
                 // 6. Add recipe DataView to the view
