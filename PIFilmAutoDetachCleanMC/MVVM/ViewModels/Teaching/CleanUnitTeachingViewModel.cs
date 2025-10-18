@@ -70,7 +70,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
         public double CurrentPressure
         {
             get => _currentPressure;
-            private set => SetProperty(ref _currentPressure, value);
+            set
+            {
+                _currentPressure = value;
+                OnPropertyChanged();
+            }
         }
         public DX3000TorqueController Winder { get; set; }
         public DX3000TorqueController UnWinder { get; set; }

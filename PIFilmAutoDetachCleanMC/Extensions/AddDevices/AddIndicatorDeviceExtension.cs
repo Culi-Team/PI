@@ -13,7 +13,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
             {
                 services.AddKeyedScoped<IModbusCommunication>("IndicatorModbusCommunication", (services, obj) =>
                 {
-                    return new ModbusRTUCommunication("COM9", 9600);
+                    return new ModbusRTUCommunication("COM18", 115200);
                 });
 
                 services.AddSingleton<NEOSHSDIndicator>((ser) =>
