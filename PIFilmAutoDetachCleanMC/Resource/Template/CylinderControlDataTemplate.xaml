@@ -21,8 +21,6 @@
                              Grid.Row="1"
                              HorizontalAlignment="Center">
                     <controls:InterlockButton Content="{Binding CylinderType, Converter={StaticResource CylinderTypeToButtonNameConverter}, ConverterParameter=true}"
-                                              Background="{Binding IsForward, Converter={StaticResource CylinderButtonBrushConverter}}"
-                                              BorderBrush="{Binding IsForward, Converter={StaticResource CylinderButtonBrushConverter}}"
                                               Command="{Binding DataContext.CylinderForwardCommand,ElementName=root}"
                                               Margin="2 0 2 0"
                                               FontSize="14"
@@ -30,10 +28,18 @@
                                               Width="100"
                                               CommandParameter="{Binding}"
                                               InterlockKey="{Binding InterlockKey}"
-                                              ToolTip="{Binding InterlockFailMessage}" />
+                                              ToolTip="{Binding InterlockFailMessage}">
+                        <controls:InterlockButton.Background>
+                            <MultiBinding Converter="{StaticResource CylinderButtonBrushConverter}">
+                                <Binding Path="IsForward" />
+                                <Binding Path="IsBackward" />
+                                <Binding Path="CylinderType"/>
+                                <Binding Source="Forward"/>
+                            </MultiBinding>
+                        </controls:InterlockButton.Background>
+                    </controls:InterlockButton>
+
                     <controls:InterlockButton Content="{Binding CylinderType, Converter={StaticResource CylinderTypeToButtonNameConverter}, ConverterParameter=false}"
-                                              Background="{Binding IsBackward, Converter={StaticResource CylinderButtonBrushConverter}}"
-                                              BorderBrush="{Binding IsBackward, Converter={StaticResource CylinderButtonBrushConverter}}"
                                               Command="{Binding DataContext.CylinderBackwardCommand,ElementName=root}"
                                               Margin="2 0 2 0"
                                               FontSize="14"
@@ -41,7 +47,16 @@
                                               Width="100"
                                               CommandParameter="{Binding}"
                                               InterlockKey="{Binding InterlockKey}"
-                                              ToolTip="{Binding InterlockFailMessage}" />
+                                              ToolTip="{Binding InterlockFailMessage}">
+                        <controls:InterlockButton.Background>
+                            <MultiBinding Converter="{StaticResource CylinderButtonBrushConverter}">
+                                <Binding Path="IsForward" />
+                                <Binding Path="IsBackward" />
+                                <Binding Path="CylinderType" />
+                                <Binding Source="Backward" />
+                            </MultiBinding>
+                        </controls:InterlockButton.Background>
+                    </controls:InterlockButton>
                 </UniformGrid>
             </Grid>
         </Border>
