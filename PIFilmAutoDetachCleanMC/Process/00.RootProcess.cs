@@ -597,7 +597,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Thread.Sleep(20);
                     break;
                 case EOperationCommand.Origin:
-                    foreach (var motion in _devices.Motions.All!) { motion.MotionOn(); }
+                    foreach (var motion in _devices.Motions.All!)
+                    {
+                        if (motion.Status.IsAlarm) motion.AlarmReset();
+
+                        motion.MotionOn();
+                    }
 
                     Thread.Sleep(1000);
 
