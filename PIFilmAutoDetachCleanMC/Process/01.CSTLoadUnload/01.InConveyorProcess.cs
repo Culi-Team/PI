@@ -441,7 +441,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private void MutingLightCurtain(bool bOnOff)
         {
             InCstInterlockLightCurtain.Value = bOnOff;
-            Wait(50);
+            Thread.Sleep(300);
             InCstMutingLightCurtain.Value = bOnOff;
         }
 

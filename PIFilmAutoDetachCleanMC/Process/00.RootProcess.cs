@@ -122,14 +122,20 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 if (IsLightCurtainLeftDetect)
                 {
+                    Childs!.ToList().ForEach(p => p.IsAlarm = true);
+
                     RaiseAlarm((int)EAlarm.LightCurtainLeftDetected);
                 }
                 if (IsLightCurtainRightDetect)
                 {
+                    Childs!.ToList().ForEach(p => p.IsAlarm = true);
+
                     RaiseAlarm(alarmId: (int)EAlarm.LightCurtainRightDetected);
                 }
                 if (IsAutoMode == false || IsManualMode == true)
                 {
+                    Childs!.ToList().ForEach(p => p.IsWarning = true);
+
                     RaiseWarning((int)EWarning.ManualModeSwitch);
                 }
             }

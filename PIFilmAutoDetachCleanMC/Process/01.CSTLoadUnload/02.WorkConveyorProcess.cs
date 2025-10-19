@@ -744,7 +744,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EWorkConveyorProcessLoadStep.Conveyor_Run:
                     Log.Debug("Conveyor Run In");
-                    ConveyorRunInOut(true);
+                    ConveyorRun(true);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Set_FlagRequestCassetteIn:
@@ -845,9 +845,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EWorkConveyorUnloadStep.Support_CV_Up:
                     Log.Debug("Support Conveyor Up");
-                    CVSupportCyl1.Forward();
                     CVSupportCyl2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => CVSupportCyl1.IsForward && CVSupportCyl2.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => CVSupportCyl2.IsForward);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Support_CV_Up_Wait:
@@ -906,7 +905,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Conveyor_Run:
-                    ConveyorRunInOut(false);
+                    ConveyorRun(false);
 #if SIMULATION
                     Wait(1000);
                     if (port == EPort.Right)
@@ -934,6 +933,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorUnloadStep.Wait_CSTOut_Done:
                     if ((IsCassetteOut && IsNextConveyorDetect) || _machineStatus.IsDryRunMode)
                     {
+                        ConveyorStop();
+
                         if (port == EPort.Left)
                         {
                             Log.Debug("Enable Light Curtain");
@@ -943,6 +944,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                             _blinkTimer.DisableAction(OutLightCurtainMutingActionKey);
                         }
+
                         Step.RunStep++;
                         break;
                     }
@@ -968,9 +970,9 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private void ConveyorRunInOut(bool bIn)
+        private void ConveyorRun(bool bInDirection)
         {
-            if (bIn)
+            if (bInDirection)
             {
                 //InWorkConveyor
                 if(port == EPort.Right)

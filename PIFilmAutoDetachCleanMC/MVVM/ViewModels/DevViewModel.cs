@@ -181,10 +181,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         public DevViewModel(
             [FromKeyedServices("RobotLoad")] IRobot robotLoad,
-            [FromKeyedServices("RobotUnload")] IRobot robotUnload)
+            [FromKeyedServices("RobotUnload")] IRobot robotUnload,
+            MachineStatus machineStatus)
         {
             _robotLoad = robotLoad;
             _robotUnload = robotUnload;
+            MachineStatus = machineStatus;
+
             isCylinderInterlockBypassed = InterlockService.Default.IsBypassAllEnabled;
         }
 

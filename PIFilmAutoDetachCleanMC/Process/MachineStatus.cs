@@ -141,6 +141,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        public bool MachineTestMode { get; set; }
+
         #region Privates
         private EMachineRunMode _machineRunMode;
         private EProcessMode currentProcessMode;

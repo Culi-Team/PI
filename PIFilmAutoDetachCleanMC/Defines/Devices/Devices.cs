@@ -665,7 +665,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.InShuttleLClamp2FW);
             inputs.Add(Inputs.InShuttleLClamp2BW);
             inputs.Add(Inputs.InShuttleLVac);
-            inputs.Add(Inputs.WetCleanLeftAlcoholLeakDetect);
+            inputs.Add(Inputs.WetCleanLeftAlcoholLeakNotDetect);
             inputs.Add(Inputs.WetCleanLeftPumpLeakNotDetect);
             inputs.Add(Inputs.WetCleanLeftAlcoholPumpDetect);
             inputs.Add(Inputs.WetCleanLeftDoorLock);
@@ -689,7 +689,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.InShuttleRClamp2FW);
             inputs.Add(Inputs.InShuttleRClamp2BW);
             inputs.Add(Inputs.InShuttleRVac);
-            inputs.Add(Inputs.WetCleanRightAlcoholLeakDetect);
+            inputs.Add(Inputs.WetCleanRightAlcoholLeakNotDetect);
             inputs.Add(Inputs.WetCleanRightPumpLeakNotDetect);
             inputs.Add(Inputs.WetCleanRightAlcoholPumpDetect);
             inputs.Add(Inputs.WetCleanRightDoorLock);
@@ -708,7 +708,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.AfCleanBrushLeftUp);
             inputs.Add(Inputs.AfCleanBrushLeftDown);
             inputs.Add(Inputs.OutShuttleLVac);
-            inputs.Add(Inputs.AfCleanLeftAlcoholLeakDetect);
+            inputs.Add(Inputs.AfCleanLeftAlcoholLeakNotDetect);
             inputs.Add(Inputs.AfCleanLeftPumpLeakNotDetect);
             inputs.Add(Inputs.AfCleanLeftAlcoholPumpDetect);
             inputs.Add(Inputs.AfCleanLeftDoorLock);
@@ -727,7 +727,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.AfCleanBrushRightUp);
             inputs.Add(Inputs.AfCleanBrushRightDown);
             inputs.Add(Inputs.OutShuttleRVac);
-            inputs.Add(Inputs.AfCleanRightAlcoholLeakDetect);
+            inputs.Add(Inputs.AfCleanRightAlcoholLeakNotDetect);
             inputs.Add(Inputs.AfCleanRightPumpLeakNotDetect);
             inputs.Add(Inputs.AfCleanRightAlcoholPumpDetect);
             inputs.Add(Inputs.AfCleanRightDoorLock);

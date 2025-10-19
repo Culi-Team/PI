@@ -128,5 +128,13 @@
                 </UniformGrid>
             </Grid>
         </Expander>
+
+        <Expander Header="Dev Options">
+            <StackPanel>
+                <CheckBox Content="Enable Test Mode"
+                          Tag="Check to endable Test Mode"
+                          IsChecked="{Binding MachineStatus.MachineTestMode, Mode=TwoWay}"/>
+            </StackPanel>
+        </Expander>
     </DockPanel>
 </UserControl>
