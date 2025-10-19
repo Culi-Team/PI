@@ -113,15 +113,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                 return base.PreProcess();
             }
 
-            // TODO: Remove tmp code
-            return base.PreProcess();
-
-            if (IsUnWinderFullDetect)
+            if (IsUnWinderFullDetect & _machineStatus.MachineTestMode == false)
             {
                 RaiseWarning((int)EWarning.VinylClean_Full_Detect);
             }
 
-            if (IsWinderRunOffDetect)
+            if (IsWinderRunOffDetect & _machineStatus.MachineTestMode == false)
             {
                 RaiseWarning((int)EWarning.VinylClean_Vinyl_NotDetect);
             }

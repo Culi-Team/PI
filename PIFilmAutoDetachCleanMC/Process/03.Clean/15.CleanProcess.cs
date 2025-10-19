@@ -248,8 +248,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                // TODO: Remove tmp code
-                return true;
+                if (_machineStatus.IsDryRunMode || _machineStatus.MachineTestMode) return true;
 
                 return cleanType switch
                 {
@@ -328,15 +327,12 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                // TODO: Remove tmp code
-                return false;
-
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftAlcoholLeakDetect.Value,
-                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightAlcoholLeakDetect.Value,
-                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftAlcoholLeakDetect.Value,
-                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightAlcoholLeakDetect.Value,
+                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftAlcoholLeakNotDetect.Value == false,
+                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightAlcoholLeakNotDetect.Value == false,
+                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftAlcoholLeakNotDetect.Value == false,
+                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightAlcoholLeakNotDetect.Value == false,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -1019,7 +1015,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ECleanProcessToRunStep.FeedingRollerDetect_Check:
                     Log.Debug("Feeding Roller Detect Check");
-                    if (FeedingRollerDetect == false && !_machineStatus.IsDryRunMode)
+                    if (FeedingRollerDetect == false)
                     {
                         EWarning? warning = cleanType switch
                         {
