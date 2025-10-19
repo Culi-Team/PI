@@ -20,7 +20,7 @@
                 <Setter Property="Margin"
                     Value="3 0" />
                 <Setter Property="Width"
-                    Value="90" />
+                    Value="95" />
                 <Setter Property="FontSize"
                     Value="11" />
             </Style.Setters>

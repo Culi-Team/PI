@@ -208,6 +208,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _devices.Motions.All.ForEach(m => m.Connect());
 
                         _devices.SpeedControllerList.All.ForEach(s => s.Connect());
+
+                        if(_rollerModbusCommunication.IsConnected)
+                        {
+                            _devices.SpeedControllerList.SetDirection();
+                        }
+
                         _devices.TorqueControllers.All.ForEach(t => t.Connect());
 
                         _robotLoad.Connect();

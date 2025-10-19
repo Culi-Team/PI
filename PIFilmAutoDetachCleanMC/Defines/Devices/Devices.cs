@@ -1311,8 +1311,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<SD201SSpeedController> GetInWorkConveyorRollers()
         {
             ObservableCollection<SD201SSpeedController> rollers = new ObservableCollection<SD201SSpeedController>();
+            rollers.Add(SpeedControllerList.SupportConveyorRoller1);
             rollers.Add(SpeedControllerList.InWorkConveyorRoller1);
             rollers.Add(SpeedControllerList.InWorkConveyorRoller2);
+            rollers.Add(SpeedControllerList.SupportConveyorRoller2);
             return rollers;
         }
 
@@ -1327,8 +1329,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<SD201SSpeedController> GetOutWorkConveyorRollers()
         {
             ObservableCollection<SD201SSpeedController> rollers = new ObservableCollection<SD201SSpeedController>();
+            rollers.Add(SpeedControllerList.SupportConveyorRoller3);
             rollers.Add(SpeedControllerList.OutWorkConveyorRoller1);
             rollers.Add(SpeedControllerList.OutWorkConveyorRoller2);
+            rollers.Add(SpeedControllerList.SupportConveyorRoller4);
             return rollers;
         }
 

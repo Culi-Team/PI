@@ -47,7 +47,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Rollers
-        private SD201SSpeedController RollerSup => _devices.SpeedControllerList.SupportConveyor4Roller;
+        private SD201SSpeedController RollerSup => _devices.SpeedControllerList.SupportConveyorRoller4;
         private SD201SSpeedController Roller1 => _devices.SpeedControllerList.OutWorkConveyorRoller1;
         private SD201SSpeedController Roller2 => _devices.SpeedControllerList.OutWorkConveyorRoller2;
         #endregion

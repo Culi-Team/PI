@@ -12,22 +12,22 @@ namespace PIFilmAutoDetachCleanMC.Defines
         IN_CV_ROLLER2,
         IN_CV_ROLLER3,
 
-        SUPPORT_CV1_ROLLER,
+        SUPPORT_CV_ROLLER1,
 
         OUT_CV_ROLLER1,
         OUT_CV_ROLLER2,
 
-        SUPPORT_CV4_ROLLER,
+        SUPPORT_CV_ROLLER4,
 
         IN_WORK_CV_ROLLER1,
         IN_WORK_CV_ROLLER2,
 
-        SUPPORT_CV2_ROLLER,
+        SUPPORT_CV_ROLLER2,
 
         BUFFER_CV_ROLLER1,
         BUFFER_CV_ROLLER2,
 
-        SUPPORT_CV3_ROLLER,
+        SUPPORT_CV_ROLLER3,
 
         OUT_WORK_CV_ROLLER1,
         OUT_WORK_CV_ROLLER2,

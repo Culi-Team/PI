@@ -202,11 +202,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Rollers
-        private SD201SSpeedController RollerSupport1 => port == EPort.Right ? _devices.SpeedControllerList.SupportConveyor1Roller :
-                                                                        _devices.SpeedControllerList.SupportConveyor3Roller;
+        private SD201SSpeedController RollerSupport1 => port == EPort.Right ? _devices.SpeedControllerList.SupportConveyorRoller1 :
+                                                                        _devices.SpeedControllerList.SupportConveyorRoller3;
 
-        private SD201SSpeedController RollerSupport2 => port == EPort.Right ? _devices.SpeedControllerList.SupportConveyor2Roller :
-                                                                        _devices.SpeedControllerList.SupportConveyor4Roller;
+        private SD201SSpeedController RollerSupport2 => port == EPort.Right ? _devices.SpeedControllerList.SupportConveyorRoller2 :
+                                                                        _devices.SpeedControllerList.SupportConveyorRoller4;
 
         private SD201SSpeedController Roller1 => port == EPort.Right ? _devices.SpeedControllerList.InWorkConveyorRoller1 :
                                                                  _devices.SpeedControllerList.OutWorkConveyorRoller1;
