@@ -40,20 +40,20 @@ namespace PIFilmAutoDetachCleanMC.Defines
             InConveyorRoller1.SetDirection(false);
             InConveyorRoller2.SetDirection(false);
             InConveyorRoller3.SetDirection(false);
-            SupportConveyorRoller1.SetDirection(false);
-            InWorkConveyorRoller1.SetDirection(false);
-            InWorkConveyorRoller2.SetDirection(false);
+            SupportConveyorRoller1.SetDirection(true);
+            InWorkConveyorRoller1.SetDirection(true);
+            InWorkConveyorRoller2.SetDirection(true);
 
-            SupportConveyorRoller2.SetDirection(true);
-            BufferConveyorRoller1.SetDirection(true);
-            BufferConveyorRoller2.SetDirection(true);
+            SupportConveyorRoller2.SetDirection(false);
+            BufferConveyorRoller1.SetDirection(false);
+            BufferConveyorRoller2.SetDirection(false);
 
-            SupportConveyorRoller3.SetDirection(true);
-            OutWorkConveyorRoller1.SetDirection(true);
-            OutWorkConveyorRoller2.SetDirection(true);
+            SupportConveyorRoller3.SetDirection(false);
+            OutWorkConveyorRoller1.SetDirection(false);
+            OutWorkConveyorRoller2.SetDirection(false);
             SupportConveyorRoller4.SetDirection(true);
-            OutConveyorRoller1.SetDirection(true);
-            OutConveyorRoller2.SetDirection(true);
+            OutConveyorRoller1.SetDirection(false);
+            OutConveyorRoller2.SetDirection(false);
         }
     }
 }

@@ -27,8 +27,7 @@
                                               Height="35"
                                               Width="100"
                                               CommandParameter="{Binding}"
-                                              InterlockKey="{Binding InterlockKey}"
-                                              ToolTip="{Binding InterlockFailMessage}">
+                                              InterlockKey="{Binding InterlockKey}">
                         <controls:InterlockButton.Background>
                             <MultiBinding Converter="{StaticResource CylinderButtonBrushConverter}">
                                 <Binding Path="IsForward" />
@@ -46,8 +45,7 @@
                                               Height="35"
                                               Width="100"
                                               CommandParameter="{Binding}"
-                                              InterlockKey="{Binding InterlockKey}"
-                                              ToolTip="{Binding InterlockFailMessage}">
+                                              InterlockKey="{Binding InterlockKey}">
                         <controls:InterlockButton.Background>
                             <MultiBinding Converter="{StaticResource CylinderButtonBrushConverter}">
                                 <Binding Path="IsForward" />

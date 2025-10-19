@@ -441,33 +441,39 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadOriginStep.RobotHomePosition:
                     Log.Debug("Check Home Positon RobotLoad");
                     _robotLoad.SendCommand(RobotHelpers.HomePositionCheck);
+
+                    Wait(5000, () => _robotLoad.ReadResponse("Robot in home,0\r\n"));
+
                     Step.OriginStep++;
                     break;
                 case ERobotLoadOriginStep.RobotHomePosition_Check:
-                    if (_robotLoad.ReadResponse(5000, "Robot in home,0\r\n"))
+                    if (WaitTimeOutOccurred)
                     {
-                        Log.Debug("Robot In Home .");
-                        Step.OriginStep = (int)ERobotLoadOriginStep.End;
-                        break;
-                    }
-
-                    Log.Debug("Robot load is not in home position");
-                    Step.OriginStep++;
-                    break;
-                case ERobotLoadOriginStep.RobotSeqHome:
-                    Log.Debug("Check sequence home robot load");
-                    _robotLoad.SendCommand(RobotHelpers.SeqHomeCheck);
-                    Step.OriginStep++;
-                    break;
-                case ERobotLoadOriginStep.RobotSeqHome_Check:
-                    if (_robotLoad.ReadResponse(5000, "Home safety,0\r\n"))
-                    {
-                        Log.Debug("Robot load can origin safely");
+                        Log.Debug("Robot load is not in home position");
                         Step.OriginStep++;
                         break;
                     }
 
-                    RaiseWarning((int)EWarning.RobotLoad_Home_Manual_By_TeachingPendant);
+                    Log.Debug("Robot In Home .");
+                    Step.OriginStep = (int)ERobotLoadOriginStep.End;
+                    break;
+                case ERobotLoadOriginStep.RobotSeqHome:
+                    Log.Debug("Check sequence home robot load");
+                    _robotLoad.SendCommand(RobotHelpers.SeqHomeCheck);
+
+                    Wait(5000, () => _robotLoad.ReadResponse("Home safety,0\r\n"));
+
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadOriginStep.RobotSeqHome_Check:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.RobotLoad_Home_Manual_By_TeachingPendant);
+                        break;
+                    }
+
+                    Log.Debug("Robot load can origin safely");
+                    Step.OriginStep++;
                     break;
                 case ERobotLoadOriginStep.Robot_Origin:
                     Log.Debug("Start Origin Robot Load");
@@ -605,17 +611,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadProcessToRunStep.Send_CassettePitch:
                     Log.Debug("Send Cassette Pitch: " + _cstLoadUnloadRecipe.Pitch);
                     _robotLoad.SendCommand(RobotHelpers.SetCassettePitch(0, _cstLoadUnloadRecipe.Pitch));
+
+                    Wait(5000, () => _robotLoad.ReadResponse($"pitch,0,{_cstLoadUnloadRecipe.Pitch},0\r\n"));
+
                     Step.ToRunStep++;
                     break;
                 case ERobotLoadProcessToRunStep.Send_CassettePitch_Check:
-                    if (_robotLoad.ReadResponse(5000, $"pitch,X:0,Y:{_cstLoadUnloadRecipe.Pitch},0\r\n"))
+                    if (WaitTimeOutOccurred)
                     {
-                        Log.Debug("Set pitch X: 0, Y: " + _cstLoadUnloadRecipe.Pitch + " success");
-                        Step.ToRunStep++;
+                        RaiseWarning((int)EWarning.RobotLoad_SetCassettePitch_Fail);
                         break;
                     }
 
-                    RaiseWarning((int)EWarning.RobotLoad_SetCassettePitch_Fail);
+                    Log.Debug("Set pitch X: 0, Y: " + _cstLoadUnloadRecipe.Pitch + " success");
+                    Step.ToRunStep++;
                     break;
                 case ERobotLoadProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
@@ -805,62 +814,74 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadReadyStep.SendPGMStart:
                     _robotLoad.SendCommand(RobotHelpers.PCPGMStart);
+
+                    Wait(5000, () => _robotLoad.ReadResponse("RobotReady,0\r\n"));
+
                     Step.RunStep++;
                     break;
                 case ERobotLoadReadyStep.SendPGMStart_Check:
-                    if (_robotLoad.ReadResponse(5000, "RobotReady,0\r\n"))
+                    if (WaitTimeOutOccurred)
                     {
-                        Log.Debug("Robot PGM Start Success.");
-                        Step.RunStep++;
+                        RaiseWarning((int)EWarning.RobotLoad_No_Ready_Response);
                         break;
                     }
 
-                    RaiseWarning((int)EWarning.RobotLoad_No_Ready_Response);
+                    Log.Debug("Robot PGM Start Success.");
+                    Step.RunStep++;
                     break;
                 case ERobotLoadReadyStep.SetModel:
                     Log.Debug("Set Model: " + _robotLoadRecipe.Model);
                     _robotLoad.SendCommand(RobotHelpers.SetModel(_robotLoadRecipe.Model));
+
+                    Wait(5000, () => _robotLoad.ReadResponse($"select,{_robotLoadRecipe.Model},0\r\n"));
+
                     Step.RunStep++;
                     break;
                 case ERobotLoadReadyStep.SetModel_Check:
-                    if (_robotLoad.ReadResponse(5000, $"select,{_robotLoadRecipe.Model},0\r\n"))
+                    if (WaitTimeOutOccurred)
                     {
-                        Log.Debug("Set Model: " + _robotLoadRecipe.Model + " success");
-                        Step.RunStep++;
+                        RaiseWarning((int)EWarning.RobotLoad_SetModel_Fail);
                         break;
                     }
 
-                    RaiseWarning((int)EWarning.RobotLoad_SetModel_Fail);
+                    Log.Debug("Set Model: " + _robotLoadRecipe.Model + " success");
+                    Step.RunStep++;
                     break;
                 case ERobotLoadReadyStep.RobotHomePosition:
                     Log.Debug("Check Home Positon RobotLoad");
                     _robotLoad.SendCommand(RobotHelpers.HomePositionCheck);
-                    Step.RunStep++;
-                    break;
-                case ERobotLoadReadyStep.RobotHomePosition_Check:
-                    if (_robotLoad.ReadResponse(5000, "Robot in home,0\r\n"))
-                    {
-                        Log.Debug("Robot In Home .");
-                        Step.RunStep = (int)ERobotLoadReadyStep.End;
-                        break;
-                    }
+
+                    Wait(5000, () => _robotLoad.ReadResponse("Robot in home,0\r\n"));
 
                     Step.RunStep++;
                     break;
-                case ERobotLoadReadyStep.RobotSeqHome:
-                    Log.Debug("Check sequence home robot load");
-                    _robotLoad.SendCommand(RobotHelpers.SeqHomeCheck);
-                    Step.RunStep++;
-                    break;
-                case ERobotLoadReadyStep.RobotSeqHome_Check:
-                    if (_robotLoad.ReadResponse(5000, "Home safety,0\r\n"))
+                case ERobotLoadReadyStep.RobotHomePosition_Check:
+                    if (WaitTimeOutOccurred)
                     {
-                        Log.Debug("Robot Load Home Safely");
                         Step.RunStep++;
                         break;
                     }
 
-                    RaiseWarning((int)EWarning.RobotLoad_Home_Manual_By_TeachingPendant);
+                    Log.Debug("Robot In Home .");
+                    Step.RunStep = (int)ERobotLoadReadyStep.End;
+                    break;
+                case ERobotLoadReadyStep.RobotSeqHome:
+                    Log.Debug("Check sequence home robot load");
+                    _robotLoad.SendCommand(RobotHelpers.SeqHomeCheck);
+
+                    Wait(5000, () => _robotLoad.ReadResponse("Home safety,0\r\n"));
+
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadReadyStep.RobotSeqHome_Check:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.RobotLoad_Home_Manual_By_TeachingPendant);
+                        break;
+                    }
+
+                    Log.Debug("Robot Load Home Safely");
+                    Step.RunStep++;
                     break;
                 case ERobotLoadReadyStep.RobotHome:
                     Log.Debug("Start Home Robot Load");

@@ -114,7 +114,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
 
         [SingleRecipeDescription(Description = "Cylinder Push Pressure", Unit = Unit.MilliPascal)]
         [SingleRecipeMinMax(Max = 0.9, Min = 0)]
-        public double CylinderPushPressure
+        public double CylinderPressure
         {
             get { return cylinderPushPressure; }
             set 

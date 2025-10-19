@@ -138,6 +138,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         await Task.Run(() =>
                         {
                             Devices.Motions.InovanceMaster.Connect();
+                            Devices.Inputs.InputStatusSet();
                         });
 
                         OnPropertyChanged(nameof(MotionsInovanceIsConnected));
@@ -241,17 +242,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         return;
                     }
 
-                    if (o is ESequence sequence == false) return;
+                    if (o is ESemiSequence sequence == false) return;
 
-                    _processes.RootProcess.Sequence = sequence;
-
-                    foreach (var process in _processes.RootProcess.Childs!)
-                    {
-                        process.ProcessStatus = EProcessStatus.None;
-                        process.Sequence = sequence;
-                    }
-
-                    _processes.RootProcess.ProcessMode = EProcessMode.ToRun;
+                    MachineStatus.OPCommand = EOperationCommand.SemiAuto;
+                    MachineStatus.SemiAutoSequence = sequence;
                 });
             }
         }
@@ -384,10 +378,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Outputs = Devices.GetInConveyorOutputs(),
                         Rollers = Devices.GetInConveyorRollers(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("InCassetteCVImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.InConveyorLoad,
-                            ESequence.InWorkCSTLoad
+                            ESemiSequence.InConveyorLoad,
+                            ESemiSequence.InWorkCSTLoad
                         }
                     };
                 case "In Work Conveyor":
@@ -399,11 +393,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Rollers = Devices.GetInWorkConveyorRollers(),
                         Motions = Devices.GetCSTLoadMotions(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("LoadWorkCassetteStageImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.InWorkCSTLoad,
-                            ESequence.CSTTilt,
-                            ESequence.InWorkCSTUnLoad
+                            ESemiSequence.InWorkCSTLoad,
+                            ESemiSequence.CSTTilt,
+                            ESemiSequence.InWorkCSTUnLoad
                         }
                     };
                 case "Buffer Conveyor":
@@ -414,10 +408,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Outputs = Devices.GetBufferConveyorOutputs(),
                         Rollers = Devices.GetBufferConveyorRollers(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("BufferCVImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.InWorkCSTUnLoad,
-                            ESequence.OutWorkCSTLoad
+                            ESemiSequence.InWorkCSTUnLoad,
+                            ESemiSequence.OutWorkCSTLoad
                         }
                     };
                 case "Out Work Conveyor":
@@ -429,11 +423,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Rollers = Devices.GetOutWorkConveyorRollers(),
                         Motions = Devices.GetCSTUnloadMotions(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("LoadWorkCassetteStageImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.OutWorkCSTLoad,
-                            ESequence.CSTTilt,
-                            ESequence.OutWorkCSTUnLoad
+                            ESemiSequence.OutWorkCSTLoad,
+                            ESemiSequence.CSTTilt,
+                            ESemiSequence.OutWorkCSTUnLoad
                         }
                     };
                 case "Out Conveyor":
@@ -444,10 +438,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Outputs = Devices.GetOutConveyorOutputs(),
                         Rollers = Devices.GetOutConveyorRollers(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("OutCassetteCVImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.OutWorkCSTUnLoad,
-                            ESequence.OutConveyorUnload
+                            ESemiSequence.OutWorkCSTUnLoad,
+                            ESemiSequence.OutConveyorUnload
                         }
                     };
                 case "Robot Load":
@@ -457,13 +451,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetRobotLoadInputs(),
                         Outputs = Devices.GetRobotLoadOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("LoadRobotImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.RobotPickFixtureFromCST,
-                            ESequence.RobotPlaceFixtureToVinylClean,
-                            ESequence.RobotPlaceFixtureToAlign,
-                            ESequence.RobotPickFixtureFromRemoveZone,
-                            ESequence.RobotPlaceFixtureToOutWorkCST
+                            ESemiSequence.RobotPickFixtureFromCST,
+                            ESemiSequence.RobotPlaceFixtureToVinylClean,
+                            ESemiSequence.RobotPlaceFixtureToAlign,
+                            ESemiSequence.RobotPickFixtureFromRemoveZone,
+                            ESemiSequence.RobotPlaceFixtureToOutWorkCST
                         }
                     };
                 case "Vinyl Clean":
@@ -473,11 +467,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetVinylCleanInputs(),
                         Outputs = Devices.GetVinylCleanOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("VinylCleanImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.RobotPlaceFixtureToVinylClean,
-                            ESequence.VinylClean,
-                            ESequence.RobotPickFixtureFromVinylClean
+                            ESemiSequence.RobotPlaceFixtureToVinylClean,
+                            ESemiSequence.VinylClean,
+                            ESemiSequence.RobotPickFixtureFromVinylClean
                         }
                     };
                 case "Transfer Fixture":
@@ -488,10 +482,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Motions = Devices.GetTransferFixtureMotions(),
                         Inputs = Devices.GetTransferFixtureInputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferFixtureImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.TransferFixtureLoad,
-                            ESequence.TransferFixtureUnload,
+                            ESemiSequence.TransferFixtureLoad,
+                            ESemiSequence.TransferFixtureUnload,
                         }
 
                     };
@@ -503,10 +497,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetFixtureAlignInputs(),
                         Outputs = Devices.GetFixtureAlignOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AlignFixtureImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.RobotPlaceFixtureToAlign,
-                            ESequence.FixtureAlign
+                            ESemiSequence.RobotPlaceFixtureToAlign,
+                            ESemiSequence.FixtureAlign
                         }
                     };
                 case "Detach":
@@ -517,10 +511,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetDetachInputs(),
                         Outputs = Devices.GetDetachOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("DetachImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.Detach,
-                            ESequence.DetachUnload
+                            ESemiSequence.Detach,
+                            ESemiSequence.DetachUnload
                         }
                     };
                 case "Remove Film":
@@ -530,10 +524,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetRemoveFilmInputs(),
                         Outputs = Devices.GetRemoveFilmOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("RemoveZoneImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.RemoveFilm,
-                            ESequence.RemoveFilmThrow
+                            ESemiSequence.RemoveFilm,
+                            ESemiSequence.RemoveFilmThrow
                         }
                     };
                 case "Glass Transfer":
@@ -544,10 +538,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetGlassTransferInputs(),
                         Outputs = Devices.GetGlassTransferOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("GlassTransferImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.GlassTransferPick,
-                            ESequence.GlassTransferPlace
+                            ESemiSequence.GlassTransferPick,
+                            ESemiSequence.GlassTransferPlace
                         }
                     };
                 case "Transfer In Shuttle Left":
@@ -558,10 +552,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetTransferShutterLeftInputs(),
                         Outputs = Devices.GetTransferShutterLeftOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.TransferInShuttleLeftPick,
-                            ESequence.WETCleanLeftLoad,
+                            ESemiSequence.TransferInShuttleLeftPick,
+                            ESemiSequence.WETCleanLeftLoad,
                         }
                     };
                 case "Glass Align Left":
@@ -571,9 +565,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetGlassAlignLeftInputs(),
                         Outputs = Devices.GetGlassAlignLeftOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AlignStageImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.AlignGlassLeft,
+                            ESemiSequence.AlignGlassLeft,
                         }
                     };
                 case "Transfer In Shuttle Right":
@@ -584,10 +578,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetTransferShutterRightInputs(),
                         Outputs = Devices.GetTransferShutterRightOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.TransferInShuttleRightPick,
-                            ESequence.WETCleanRightLoad,
+                            ESemiSequence.TransferInShuttleRightPick,
+                            ESemiSequence.WETCleanRightLoad,
                         }
                     };
                 case "Glass Align Right":
@@ -597,9 +591,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetGlassAlignRightInputs(),
                         Outputs = Devices.GetGlassAlignRightOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AlignStageImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.AlignGlassRight,
+                            ESemiSequence.AlignGlassRight,
                         }
                     };
                 case "WET Clean Left":
@@ -610,10 +604,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetWETCleanLeftInputs(),
                         Outputs = Devices.GetWETCleanLeftOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.WETCleanLeftLoad,
-                            ESequence.WETCleanLeft,
+                            ESemiSequence.WETCleanLeftLoad,
+                            ESemiSequence.WETCleanLeft,
                         }
                     };
                 case "WET Clean Right":
@@ -624,10 +618,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetWETCleanRightInputs(),
                         Outputs = Devices.GetWETCleanRightOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.WETCleanRightLoad,
-                            ESequence.WETCleanRight,
+                            ESemiSequence.WETCleanRightLoad,
+                            ESemiSequence.WETCleanRight,
                         }
                     };
                 case "Transfer Rotation Left":
@@ -638,10 +632,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetTransferRotationLeftInputs(),
                         Outputs = Devices.GetTransferRotationLeftOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferRotationImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.WETCleanLeftUnload,
-                            ESequence.AFCleanLeftLoad,
+                            ESemiSequence.WETCleanLeftUnload,
+                            ESemiSequence.AFCleanLeftLoad,
                         }
                     };
                 case "Transfer Rotation Right":
@@ -652,10 +646,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetTransferRotationRightInputs(),
                         Outputs = Devices.GetTransferRotationRightOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferRotationImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.WETCleanRightUnload,
-                            ESequence.AFCleanRightLoad,
+                            ESemiSequence.WETCleanRightUnload,
+                            ESemiSequence.AFCleanRightLoad,
                         }
                     };
                 case "AFClean Left":
@@ -666,10 +660,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetAFCleanLeftInputs(),
                         Outputs = Devices.GetAFCleanLeftOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.AFCleanLeftLoad,
-                            ESequence.AFCleanLeft,
+                            ESemiSequence.AFCleanLeftLoad,
+                            ESemiSequence.AFCleanLeft,
                         }
                     };
                 case "AFClean Right":
@@ -680,10 +674,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetAFCleanRightInputs(),
                         Outputs = Devices.GetAFCleanRightOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AFCleanImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.AFCleanRightLoad,
-                            ESequence.AFCleanRight,
+                            ESemiSequence.AFCleanRightLoad,
+                            ESemiSequence.AFCleanRight,
                         }
                     };
                 case "Unload Transfer Left":
@@ -694,10 +688,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetUnloadTransferLeftInputs(),
                         Outputs = Devices.GetUnloadTransferLeftOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadTransferImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.AFCleanLeftUnload,
-                            ESequence.UnloadTransferLeftPlace,
+                            ESemiSequence.AFCleanLeftUnload,
+                            ESemiSequence.UnloadTransferLeftPlace,
                         }
                     };
                 case "Unload Transfer Right":
@@ -708,10 +702,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetUnloadTransferRightInputs(),
                         Outputs = Devices.GetUnloadTransferRightOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadTransferImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.AFCleanRightUnload,
-                            ESequence.UnloadTransferRightPlace,
+                            ESemiSequence.AFCleanRightUnload,
+                            ESemiSequence.UnloadTransferRightPlace,
                         }
                     };
                 case "Unload Align":
@@ -721,9 +715,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetUnloadAlignInputs(),
                         Outputs = Devices.GetUnloadAlignOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadStageImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.UnloadAlignGlass,
+                            ESemiSequence.UnloadAlignGlass,
                         }
                     };
                 case "Unload Robot":
@@ -733,13 +727,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Inputs = Devices.GetUnloadRobotInputs(),
                         Outputs = Devices.GetUnloadRobotOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("UnloadRobotImage"),
-                        SemiAutoSequences = new ObservableCollection<ESequence>()
-
-
+                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESequence.UnloadRobotPick,
-                            ESequence.UnloadRobotPlasma,
-                            ESequence.UnloadRobotPlace,
+                            ESemiSequence.UnloadRobotPick,
+                            ESemiSequence.UnloadRobotPlasma,
+                            ESemiSequence.UnloadRobotPlace,
                         }
                     };
                 default:

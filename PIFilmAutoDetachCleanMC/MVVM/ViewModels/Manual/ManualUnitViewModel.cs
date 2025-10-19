@@ -26,14 +26,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
         public ObservableCollection<IDInput> Inputs { get; set; }
         public ObservableCollection<IDOutput> Outputs { get; set; }
 
-        public ObservableCollection<ESequence> SemiAutoSequences { get; set; }
+        public ObservableCollection<ESemiSequence> SemiAutoSequences { get; set; }
         public string Name { get; init; }
         public ImageSource Image { get; set; }
 
         public ManualUnitViewModel(string name)
         {
             Name = name;
-            timer = new System.Timers.Timer(50);
+            timer = new System.Timers.Timer(100);
             timer.Elapsed += Timer_Elapsed;
         }
 

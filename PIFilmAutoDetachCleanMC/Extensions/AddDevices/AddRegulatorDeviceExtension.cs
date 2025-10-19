@@ -36,7 +36,7 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 });
                 services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("WETCleanRight", (ser, obj) =>
                 {
-                    return new ITVRegulatorRC(2, "WETCleanRight", 0.9, "COM11", 9600);
+                    return new ITVRegulatorRC(2, "WETCleanRight", 0.9, "COM1", 9600);
                 });
                 services.AddKeyedScoped<IRegulator, ITVRegulatorRC>("AFCleanLeft", (ser, obj) =>
                 {

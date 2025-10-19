@@ -1149,7 +1149,7 @@
                         <UniformGrid Columns="2">
                             <Label Content="AUTO"
                                    FontSize="16"
-                                   Background="{Binding Devices.Inputs.IsSwitchKeyAutoMode,Converter={StaticResource BoolToBrushConverter}}"
+                                   Background="{Binding IsAutoMode,Converter={StaticResource BoolToBrushConverter}}"
                                    BorderBrush="Gray"
                                    BorderThickness="1"
                                    FontWeight="SemiBold"
@@ -1157,7 +1157,7 @@
                                    VerticalContentAlignment="Center" />
                             <Label Content="MANUAL"
                                    FontSize="16"
-                                   Background="{Binding Devices.Inputs.IsSwitchKeyManualMode,Converter={StaticResource BoolToBrushConverter}}"
+                                   Background="{Binding IsManualMode,Converter={StaticResource BoolToBrushConverter}}"
                                    BorderBrush="Gray"
                                    BorderThickness="1"
                                    FontWeight="SemiBold"

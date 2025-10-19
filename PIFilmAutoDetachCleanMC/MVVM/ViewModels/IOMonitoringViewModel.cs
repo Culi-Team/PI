@@ -15,19 +15,23 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
     public class IOMonitoringViewModel : ViewModelBase
     {
         public IOMonitoringViewModel(Inputs inputList, Outputs outputList,
-            MachineStatus machineStatus)
+            MachineStatus machineStatus,
+            ViewModelNavigationStore navigationStore)
         {
             InputList = inputList;
             OutputList = outputList;
             MachineStatus = machineStatus;
+            _navigationStore = navigationStore;
 
-            System.Timers.Timer timer = new System.Timers.Timer(50);
+            System.Timers.Timer timer = new System.Timers.Timer(100);
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
         }
 
         private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
         {
+            if (_navigationStore.CurrentViewModel != this) return;
+
             for (int i = SelectedInputDeviceIndex * 32; i < SelectedInputDeviceIndex * 32 + 32; i++)
             {
                 InputList.All[i].RaiseValueUpdated();
@@ -52,6 +56,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public int SelectedInputBoardNumber => SelectedInputDeviceIndex + 1;
 
         private int _selectedOutputDeviceIndex;
+        private readonly ViewModelNavigationStore _navigationStore;
+
         public int SelectedOutputDeviceIndex
         {
             get => _selectedOutputDeviceIndex;

@@ -30,7 +30,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder PusherCyl => _devices.Cylinders.VinylClean_UpDownCyl;
 
         private IDOutput MotorOnOff => _devices.Outputs.VinylCleanMotorOnOff;
-        private bool IsUnWinderFullDetect => _devices.Inputs.VinylCleanFullDetect.Value;
+        private bool IsUnWinderFullDetect => _devices.Inputs.VinylCleanFullNotDetect.Value == false;
         private bool IsWinderRunOffDetect => _devices.Inputs.VinylCleanRunoffDetect.Value;
         #endregion
 
@@ -112,6 +112,9 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 return base.PreProcess();
             }
+
+            // TODO: Remove tmp code
+            return base.PreProcess();
 
             if (IsUnWinderFullDetect)
             {

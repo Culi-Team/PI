@@ -262,6 +262,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _isSuccess &= _devices.Outputs.Connect();
                         _isSuccess &= _devices.AnalogInputs.Connect();
 
+                        _devices.Inputs.InputStatusSet();
+
                         _isSuccess &= _devices.Regulators.WetCleanLRegulator.Connect();
                         _isSuccess &= _devices.Regulators.WetCleanRRegulator.Connect();
                         _isSuccess &= _devices.Regulators.AfCleanLRegulator.Connect();
@@ -373,7 +375,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         break;
                     case EHandleStep.CommunicationHandle:
                         Thread.Sleep(50);
-                        _rollerModbusCommunication.Disconnect();
                         _torqueModbusCommnication.Disconnect();
                         _syringePumpSerialCommunicator.Disconnect();
                         _indicatorModbusCommunication.Disconnect();
@@ -388,9 +389,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         _devices.Motions.All.ForEach(m => m.Disconnect());
 
-                        _devices.SpeedControllerList.All.ForEach(s => s.Disconnect());
                         _devices.TorqueControllers.All.ForEach(t => t.Disconnect());
 
+                        if(_rollerModbusCommunication.IsConnected)
+                        {
+                            _devices.SpeedControllerList.All.ForEach(r => r.Stop());
+                        }    
                         _rollerModbusCommunication.Disconnect();
 
                         Thread.Sleep(50);

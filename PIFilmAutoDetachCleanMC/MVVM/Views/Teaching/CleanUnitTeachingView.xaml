@@ -115,7 +115,7 @@
                                 Margin="0 0 0 5">
                         <Label Content="Pressure"
                                FontSize="14" />
-                        <Label Content="{Binding Recipe.CylinderPushPressure,Mode=TwoWay}"
+                        <Label Content="{Binding Recipe.CylinderPressure,Mode=TwoWay}"
                                MouseLeftButtonDown="Label_MouseLeftButtonDown"
                                VerticalContentAlignment="Center"
                                Cursor="Hand"

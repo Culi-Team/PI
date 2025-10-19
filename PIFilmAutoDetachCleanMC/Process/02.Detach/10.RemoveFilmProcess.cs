@@ -196,11 +196,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmProcessOriginStep.Cyl_UnClamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        // TODO: Remove temp code
-                        Log.Debug("Remove Film Process Cylinder UnClamp Done");
-                        Step.OriginStep++;
-                        break;
-
                         RaiseWarning((int)EWarning.RemoveFilm_ClampCylinder_UnClamp_Fail);
                         break;
                     }

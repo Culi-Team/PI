@@ -972,12 +972,36 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             if (bIn)
             {
+                //InWorkConveyor
+                if(port == EPort.Right)
+                {
+                    Roller1.SetDirection(true);
+                    Roller2.SetDirection(true);
+                }
+                //OutWorkConveyor
+                else
+                {
+                    Roller1.SetDirection(false);
+                    Roller2.SetDirection(false);
+                }    
                 Roller1.Run();
                 Roller2.Run();
                 RollerSupport1.Run();
             }
             else
             {
+                //InWorkConveyor
+                if(port == EPort.Right)
+                {
+                    Roller1.SetDirection(false);
+                    Roller2.SetDirection(false);
+                }
+                //OutWorkConveyor
+                else
+                {
+                    Roller1.SetDirection(true);
+                    Roller2.SetDirection(true);
+                }
                 Roller1.Run();
                 Roller2.Run();
                 RollerSupport2.Run();

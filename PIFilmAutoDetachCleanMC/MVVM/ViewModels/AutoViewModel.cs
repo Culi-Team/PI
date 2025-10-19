@@ -27,7 +27,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             DieHardK180Plasma plasma,
             CWorkData workData,
             UserStore userStore,
-            NEOSHSDIndicator nEOSHSDIndicator)
+            NEOSHSDIndicator nEOSHSDIndicator,
+            ViewModelNavigationStore navigationStore)
         {
             MachineStatus = machineStatus;
             _navigationService = navigationService;
@@ -38,6 +39,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             WorkData = workData;
             UserStore = userStore;
             _nEOSHSDIndicator = nEOSHSDIndicator;
+            _navigationStore = navigationStore;
+
             MachineStatus.PropertyChanged += MachineStatusOnPropertyChanged;
 
             RecipeSelector.CurrentRecipe.CstLoadUnloadRecipe.CassetteSizeChanged += CassetteSizeChanged_Handler;
@@ -69,6 +72,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         }
         private void StatusUpdateTimerHandler(object? sender, System.Timers.ElapsedEventArgs e)
         {
+            if (_navigationStore.CurrentViewModel != this) return;
+            
             Devices.Inputs.EmoLoadL.RaiseValueUpdated();
             Devices.Inputs.EmoLoadR.RaiseValueUpdated();
             Devices.Inputs.OpLEmo.RaiseValueUpdated();
@@ -160,9 +165,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
             Devices.Inputs.UnloadRobotVac4.RaiseValueUpdated();
             Devices.Inputs.UnloadRobotDetect4.RaiseValueUpdated();
+
+            OnPropertyChanged(nameof(IsAutoMode));
+            OnPropertyChanged(nameof(IsManualMode));
         }
 
         #region Properties
+        public bool IsAutoMode => Devices.Inputs.AutoModeSwitchL.Value & Devices.Inputs.AutoModeSwitchR.Value;
+        public bool IsManualMode => Devices.Inputs.ManualModeSwitchL.Value | Devices.Inputs.ManualModeSwitchR.Value;
+
         public MachineStatus MachineStatus { get; }
         public CassetteList CassetteList { get; }
         public Devices Devices { get; }
@@ -390,6 +401,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         #region Privates
         private readonly INavigationService _navigationService;
         private readonly NEOSHSDIndicator _nEOSHSDIndicator;
+        private readonly ViewModelNavigationStore _navigationStore;
         private System.Timers.Timer temperatureUpdateTimer;
         System.Timers.Timer statusUpdateTimer;
         #endregion

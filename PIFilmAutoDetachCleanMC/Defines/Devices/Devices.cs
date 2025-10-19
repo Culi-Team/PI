@@ -400,7 +400,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
             inputs.Add(Inputs.VinylCleanFixtureDetect);
             inputs.Add(Inputs.VinylCleanRunoffDetect);
-            inputs.Add(Inputs.VinylCleanFullDetect);
+            inputs.Add(Inputs.VinylCleanFullNotDetect);
             inputs.Add(Inputs.VinylCleanFixture1Clamp);
             inputs.Add(Inputs.VinylCleanFixture2Clamp);
             inputs.Add(Inputs.VinylCleanFixture1Unclamp);
@@ -666,7 +666,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.InShuttleLClamp2BW);
             inputs.Add(Inputs.InShuttleLVac);
             inputs.Add(Inputs.WetCleanLeftAlcoholLeakDetect);
-            inputs.Add(Inputs.WetCleanLeftPumpLeakDetect);
+            inputs.Add(Inputs.WetCleanLeftPumpLeakNotDetect);
             inputs.Add(Inputs.WetCleanLeftAlcoholPumpDetect);
             inputs.Add(Inputs.WetCleanLeftDoorLock);
             inputs.Add(Inputs.WetCleanLeftFeedingRollerDetect);
@@ -690,7 +690,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.InShuttleRClamp2BW);
             inputs.Add(Inputs.InShuttleRVac);
             inputs.Add(Inputs.WetCleanRightAlcoholLeakDetect);
-            inputs.Add(Inputs.WetCleanRightPumpLeakDetect);
+            inputs.Add(Inputs.WetCleanRightPumpLeakNotDetect);
             inputs.Add(Inputs.WetCleanRightAlcoholPumpDetect);
             inputs.Add(Inputs.WetCleanRightDoorLock);
             inputs.Add(Inputs.WetCleanRightFeedingRollerDetect);
@@ -709,7 +709,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.AfCleanBrushLeftDown);
             inputs.Add(Inputs.OutShuttleLVac);
             inputs.Add(Inputs.AfCleanLeftAlcoholLeakDetect);
-            inputs.Add(Inputs.AfCleanLeftPumpLeakDetect);
+            inputs.Add(Inputs.AfCleanLeftPumpLeakNotDetect);
             inputs.Add(Inputs.AfCleanLeftAlcoholPumpDetect);
             inputs.Add(Inputs.AfCleanLeftDoorLock);
             inputs.Add(Inputs.AfCleanLeftFeedingRollerDetect);
@@ -728,7 +728,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.AfCleanBrushRightDown);
             inputs.Add(Inputs.OutShuttleRVac);
             inputs.Add(Inputs.AfCleanRightAlcoholLeakDetect);
-            inputs.Add(Inputs.AfCleanRightPumpLeakDetect);
+            inputs.Add(Inputs.AfCleanRightPumpLeakNotDetect);
             inputs.Add(Inputs.AfCleanRightAlcoholPumpDetect);
             inputs.Add(Inputs.AfCleanRightDoorLock);
             inputs.Add(Inputs.AfCleanRightFeedingRollerDetect);

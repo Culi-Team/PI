@@ -57,12 +57,12 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private IDInput ShuttleAvoidCollision
+        private IDInput ShuttleAvoidNotCollision
         {
             get
             {
-                return port == EPort.Left ? _devices.Inputs.ShuttleLAvoidCollision
-                                            : _devices.Inputs.ShuttleRAvoidCollision;
+                return port == EPort.Left ? _devices.Inputs.ShuttleLAvoidNotCollision
+                                          : _devices.Inputs.ShuttleRAvoidNotCollision;
             }
         }
         private DX3000TorqueController UnWinder
@@ -248,6 +248,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
+                // TODO: Remove tmp code
+                return true;
+
                 return cleanType switch
                 {
                     EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftFeedingRollerDetect.Value,
@@ -312,10 +315,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 return cleanType switch
                 {
-                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftPumpLeakDetect.Value,
-                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightPumpLeakDetect.Value,
-                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftPumpLeakDetect.Value,
-                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightPumpLeakDetect.Value,
+                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftPumpLeakNotDetect.Value == false,
+                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightPumpLeakNotDetect.Value == false,
+                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftPumpLeakNotDetect.Value == false,
+                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightPumpLeakNotDetect.Value == false,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -325,6 +328,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
+                // TODO: Remove tmp code
+                return false;
+
                 return cleanType switch
                 {
                     EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftAlcoholLeakDetect.Value,
@@ -538,7 +544,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.PreProcessStep++;
                     break;
                 case ECleanPreProcessStep.Shuttle_XAxis_Collision_Check:
-                    if (ShuttleAvoidCollision.Value)
+                    if (ShuttleAvoidNotCollision.Value == false)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.Shuttle_Left_XAxis_Collision_Detect :
                                                                 EWarning.Shuttle_Right_XAxis_Collision_Detect));
@@ -601,6 +607,32 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
             }
             return base.PreProcess();
+        }
+
+        public override bool ProcessToOrigin()
+        {
+
+            switch ((ECleanToOriginStep)Step.OriginStep)
+            {
+                case ECleanToOriginStep.Start:
+                    Step.OriginStep++;
+                    break;
+                case ECleanToOriginStep.Set_Pressure:
+                    Log.Debug($"Set {Regulator.Name} Regulator Pressure to {cleanRecipe.CylinderPressure}Mpa");
+                    Regulator.SetPressure(cleanRecipe.CylinderPressure);
+
+                    Step.OriginStep++;
+                    break;
+                case ECleanToOriginStep.End:
+                    ProcessStatus = EProcessStatus.ToOriginDone;
+                    Step.OriginStep++;
+                    break;
+                default:
+                    Wait(50);
+                    break;
+            }
+
+            return true;
         }
 
         public override bool ProcessOrigin()
@@ -1022,8 +1054,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.Set_Pressure:
-                    Log.Debug($"Set Pressure : {cleanRecipe.CylinderPushPressure}");
-                    Regulator.SetPressure(cleanRecipe.CylinderPushPressure);
+                    Log.Debug($"Set Pressure : {cleanRecipe.CylinderPressure}");
+                    Regulator.SetPressure(cleanRecipe.CylinderPressure);
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.Dispense_Remain:

@@ -27,7 +27,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
         {
             Name = name;
             RecipeSelector = recipeSelector;
-            timer = new System.Timers.Timer(50);
+            timer = new System.Timers.Timer(100);
             timer.Elapsed += Timer_Elapsed;
         }
 
@@ -55,6 +55,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
 
         private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
         {
+            if (Inputs == null) return;
+
             foreach (var input in Inputs)
             {
                 input.RaiseValueUpdated();

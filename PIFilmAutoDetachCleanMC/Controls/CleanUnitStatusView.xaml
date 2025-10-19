@@ -68,7 +68,7 @@
 
         <TextBox Style="{StaticResource TextBoxWithNameLeftStyle}"
                  Grid.Row="4"
-                 Text="{Binding CylinderPushPressure,Mode=OneWay,StringFormat='{}{0:0.###}'}"
+                 Text="{Binding CylinderPressure,Mode=OneWay,StringFormat='{}{0:0.###}'}"
                  Tag="Pressure" />
         <Label Grid.Column="1"
                Grid.Row="4"

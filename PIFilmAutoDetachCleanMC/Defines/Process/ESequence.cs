@@ -123,50 +123,110 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         None,
 
+        [Description("In Conveyor Load")]
+        InConveyorLoad,
+        [Description("In Work CST Load")]
         InWorkCSTLoad,
+        [Description("In Work CST Unload")]
         InWorkCSTUnLoad,
-
+        [Description("CST Tilt")]
+        CSTTilt,
+        [Description("Out Work CST Load")]
         OutWorkCSTLoad,
+        [Description("Out Work CST Unload")]
         OutWorkCSTUnLoad,
+        [Description("Out Conveyor Unload")]
+        OutConveyorUnload,
 
+        [Description("Pick From CST")]
         RobotPickFixtureFromCST,
+        [Description("Place To Vinyl Clean")]
         RobotPlaceFixtureToVinylClean,
+        [Description("Vinyl Clean")]
+        VinylClean,
+        [Description("Pick From Vinyl Clean")]
         RobotPickFixtureFromVinylClean,
+        [Description("Place To Align")]
         RobotPlaceFixtureToAlign,
+        [Description("Fixture Align")]
+        FixtureAlign,
+        [Description("Pick From Remove Zone")]
         RobotPickFixtureFromRemoveZone,
+        [Description("Place To Out CST")]
         RobotPlaceFixtureToOutWorkCST,
 
-        FixtureTransfer,
+        [Description("Transfer Fixture Load")]
+        TransferFixtureLoad,
+        [Description("Detach")]
         Detach,
+        [Description("Transfer Fixture Unload")]
+        TransferFixtureUnload,
+        [Description("Detach Unload")]
         DetachUnload,
+        [Description("Remove Film")]
         RemoveFilm,
+        [Description("Remove Film Throw")]
+        RemoveFilmThrow,
 
+        [Description("Glass Transfer Pick")]
         GlassTransferPick,
+        [Description("Glass Transfer Place")]
         GlassTransferPlace,
 
-        AlignGlass,
+        [Description("Glass Align")]
+        AlignGlassLeft,
+        [Description("Glass Align")]
+        AlignGlassRight,
 
-        TransferInShuttlePick,
-        TransferInShuttlePlace,
+        [Description("Transfer In Shuttle Pick")]
+        TransferInShuttleLeftPick,
+        [Description("Transfer In Shuttle Pick")]
+        TransferInShuttleRightPick,
 
-        WETCleanLoad,
-        WETClean,
-        WETCleanUnload,
+        [Description("WET Clean Load")]
+        WETCleanLeftLoad,
+        [Description("WET Clean Load")]
+        WETCleanRightLoad,
+        [Description("WET Clean")]
+        WETCleanLeft,
+        [Description("WET Clean")]
+        WETCleanRight,
+        [Description("WET Clean Unload")]
+        WETCleanLeftUnload,
+        [Description("WET Clean Unload")]
+        WETCleanRightUnload,
 
-        TransferRotationPick,
-        TransferRotationPlace,
+        [Description("Transfer Rotation")]
+        TransferRotationLeft,
+        [Description("Transfer Rotation")]
+        TransferRotationRight,
 
-        AFCleanLoad,
-        AFClean,
-        AFCleanUnload,
+        [Description("AF Clean Load")]
+        AFCleanLeftLoad,
+        [Description("AF Clean Load")]
+        AFCleanRightLoad,
+        [Description("AF Clean")]
+        AFCleanLeft,
+        [Description("AF Clean")]
+        AFCleanRight,
+        [Description("AF Clean Unload")]
+        AFCleanLeftUnload,
+        [Description("AF Clean Unload")]
+        AFCleanRightUnload,
 
-        UnloadTransferPick,
-        UnloadTransferPlace,
+        [Description("Unload Transfer Place")]
+        UnloadTransferLeftPlace,
+        [Description("Unload Transfer Place")]
+        UnloadTransferRightPlace,
 
+        [Description("Unload Align")]
         UnloadAlignGlass,
 
+        [Description("Robot Pick")]
         UnloadRobotPick,
+        [Description("Plasma")]
         UnloadRobotPlasma,
+        [Description("Robot Place")]
         UnloadRobotPlace,
     }
 }

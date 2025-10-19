@@ -5,6 +5,7 @@ using EQX.UI.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
+using System;
 using System.Windows;
 
 namespace PIFilmAutoDetachCleanMC.Process
@@ -701,27 +702,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         return;
                     }
 
-                    //switch (_machineStatus.SemiAutoSequence)
-                    //{
-                    //    case ESemiAutoSequence.LeftIn_Load: Sequence = EUTGSequence.LeftIn_Load; break;
-                    //    case ESemiAutoSequence.LeftIn_PickPlace: Sequence = EUTGSequence.LeftIn_PickPlace; break;
-                    //    case ESemiAutoSequence.LeftIn_Transfer: Sequence = EUTGSequence.LeftIn_Transfer; break;
-                    //    case ESemiAutoSequence.LeftIn_Change: Sequence = EUTGSequence.LeftIn_Change; break;
-                    //    case ESemiAutoSequence.RightIn_Load: Sequence = EUTGSequence.RightIn_Load; break;
-                    //    case ESemiAutoSequence.RightIn_PickPlace: Sequence = EUTGSequence.RightIn_PickPlace; break;
-                    //    case ESemiAutoSequence.RightIn_Change: Sequence = EUTGSequence.RightIn_Change; break;
-                    //    case ESemiAutoSequence.TraySup_Load: Sequence = EUTGSequence.TraySup_Load; break;
-                    //    case ESemiAutoSequence.TraySup_Change: Sequence = EUTGSequence.TraySup_Change; break;
-                    //    case ESemiAutoSequence.NGTray_Load: Sequence = EUTGSequence.NGTray_Load; break;
-                    //    case ESemiAutoSequence.NGTray_PlaceNG: Sequence = EUTGSequence.NGTray_PlaceNG; break;
-                    //    case ESemiAutoSequence.NGTray_Transfer: Sequence = EUTGSequence.NGTray_Transfer; break;
-                    //    case ESemiAutoSequence.NGTray_Change: Sequence = EUTGSequence.NGTray_Change; break;
-                    //    case ESemiAutoSequence.Robot_Inspect: Sequence = EUTGSequence.Robot_Inspect; break;
-                    //    case ESemiAutoSequence.None:
-                    //    default:
-                    //        Thread.Sleep(20);
-                    //        break;
-                    //}
+                    Sequence = (ESequence)Enum.Parse(typeof(ESequence), _machineStatus.SemiAutoSequence.ToString());
 
                     foreach (var process in Childs!)
                     {

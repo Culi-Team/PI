@@ -86,7 +86,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             {
                 return new RelayCommand(() =>
                 {
-                    Regulator.SetPressure(((CleanRecipe)Recipe).CylinderPushPressure);
+                    Regulator.SetPressure(((CleanRecipe)Recipe).CylinderPressure);
                     UpdateCurrentPressure();
                 });
             }

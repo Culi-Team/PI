@@ -264,7 +264,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Set Model: " + _robotUnloadRecipe.Model);
                     _robotUnload.SendCommand(RobotHelpers.SetModel(_robotUnloadRecipe.Model));
 
-                    Wait(5000, () => _robotUnload.ReadResponse(5000, $"select,{_robotUnloadRecipe.Model},0\r\n"));
+                    Wait(5000, () => _robotUnload.ReadResponse($"select,{_robotUnloadRecipe.Model},0\r\n"));
 
                     Step.OriginStep++;
                     break;
@@ -319,7 +319,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Check Home Positon RobotUnload");
                     _robotUnload.SendCommand(RobotHelpers.HomePositionCheck);
 
-                    Wait(5000, () => _robotUnload.ReadResponse(5000, "Robot in home,0\r\n"));
+                    Wait(5000, () => _robotUnload.ReadResponse("Robot in home,0\r\n"));
 
                     Step.OriginStep++;
                     break;
@@ -337,7 +337,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Check Sequence Home RobotUnload");
                     _robotUnload.SendCommand(RobotHelpers.SeqHomeCheck);
 
-                    Wait(5000, () => _robotUnload.ReadResponse(5000, "Home safety,0\r\n"));
+                    Wait(5000, () => _robotUnload.ReadResponse("Home safety,0\r\n"));
 
                     Step.OriginStep++;
                     break;
@@ -674,7 +674,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotUnloadReadyStep.SendPGMStart:
                     _robotUnload.SendCommand(RobotHelpers.PCPGMStart);
 
-                    Wait(5000, () => _robotUnload.ReadResponse(5000, "RobotReady,0\r\n"));
+                    Wait(5000, () => _robotUnload.ReadResponse("RobotReady,0\r\n"));
 
                     Step.RunStep++;
                     break;
@@ -692,7 +692,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Set Model: " + _robotUnloadRecipe.Model);
                     _robotUnload.SendCommand(RobotHelpers.SetModel(_robotUnloadRecipe.Model));
 
-                    Wait(5000, () => _robotUnload.ReadResponse(5000, $"select,{_robotUnloadRecipe.Model},0\r\n"));
+                    Wait(5000, () => _robotUnload.ReadResponse($"select,{_robotUnloadRecipe.Model},0\r\n"));
 
                     Step.RunStep++;
                     break;
@@ -710,7 +710,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Check Home Positon RobotUnload");
                     _robotUnload.SendCommand(RobotHelpers.HomePositionCheck);
 
-                    Wait(5000, () => _robotUnload.ReadResponse(5000, "Robot in home,0\r\n"));
+                    Wait(5000, () => _robotUnload.ReadResponse("Robot in home,0\r\n"));
 
                     Step.RunStep++;
                     break;
@@ -728,7 +728,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Check sequence home robot load");
                     _robotUnload.SendCommand(RobotHelpers.SeqHomeCheck);
 
-                    Wait(5000, () => _robotUnload.ReadResponse(5000, "Home safety,0\r\n"));
+                    Wait(5000, () => _robotUnload.ReadResponse("Home safety,0\r\n"));
 
                     Step.RunStep++;
                     break;
