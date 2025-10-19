@@ -455,11 +455,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.InWorkCSTUnLoad:
                     break;
-                case ESequence.CSTTilt:
+                case ESequence.InWorkCSTTilt:
                     break;
                 case ESequence.OutWorkCSTLoad:
                     break;
                 case ESequence.OutWorkCSTUnLoad:
+                    break;
+                case ESequence.OutWorkCSTTilt:
                     break;
                 case ESequence.OutConveyorUnload:
                     break;
@@ -689,6 +691,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EOperationCommand.Stop:
                     foreach (var motion in _devices.Motions.All!) { motion.Stop(); }
+                    foreach (var roller in _devices.SpeedControllerList.All!) { roller.Stop(); }
 
                     ProcessMode = EProcessMode.ToStop;
                     _machineStatus.OPCommand = EOperationCommand.None;

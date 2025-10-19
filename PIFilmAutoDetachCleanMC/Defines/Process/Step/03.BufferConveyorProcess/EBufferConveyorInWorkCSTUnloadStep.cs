@@ -23,6 +23,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         Conveyor_Stop,
 
+        BothStopper_Up,
+        BothStopper_Up_Wait,
+
         End,
     }
 }

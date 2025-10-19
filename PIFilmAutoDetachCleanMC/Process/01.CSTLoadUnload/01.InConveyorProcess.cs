@@ -142,9 +142,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_InWorkCSTLoad();
                     break;
                 case ESequence.InWorkCSTUnLoad:
-                case ESequence.CSTTilt:
+                case ESequence.InWorkCSTTilt:
                 case ESequence.OutWorkCSTLoad:
                 case ESequence.OutWorkCSTUnLoad:
+                case ESequence.OutWorkCSTTilt:
                 case ESequence.OutConveyorUnload:
                 case ESequence.RobotPickFixtureFromCST:
                 case ESequence.RobotPlaceFixtureToVinylClean:

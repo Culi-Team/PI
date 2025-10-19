@@ -44,6 +44,12 @@ namespace PIFilmAutoDetachCleanMC
 
         protected override async void OnStartup(StartupEventArgs e)
         {
+            ThreadPool.GetMinThreads(out int workerThreads, out int completionPortThreads);
+
+            ThreadPool.SetMinThreads(25, completionPortThreads);
+
+            ThreadPool.GetMinThreads(out int newWorker, out _);
+
             await AppHost!.StartAsync();
 
             var converter = AppHost.Services.GetRequiredService<CellStatusToColorConverter>();

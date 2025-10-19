@@ -525,11 +525,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.InWorkCSTUnLoad:
                     break;
-                case ESequence.CSTTilt:
+                case ESequence.InWorkCSTTilt:
                     break;
                 case ESequence.OutWorkCSTLoad:
                     break;
                 case ESequence.OutWorkCSTUnLoad:
+                    break;
+                case ESequence.OutWorkCSTTilt:
                     break;
                 case ESequence.RobotPickFixtureFromCST:
                     Sequence_RobotPickFixtureFromCST();

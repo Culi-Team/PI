@@ -18,14 +18,16 @@ namespace PIFilmAutoDetachCleanMC.Defines
         InWorkCSTLoad,
         [Description("In Work CST Unload")]
         InWorkCSTUnLoad,
-        [Description("CST Tilt")]
-        CSTTilt,
+        [Description("In Work CST Tilt")]
+        InWorkCSTTilt,
         [Description("Out Work CST Load")]
         OutWorkCSTLoad,
         [Description("Out Work CST Unload")]
         OutWorkCSTUnLoad,
         [Description("Out Conveyor Unload")]
         OutConveyorUnload,
+        [Description("Out Work CST Tilt")]
+        OutWorkCSTTilt,
 
         [Description("Pick From CST")]
         RobotPickFixtureFromCST,
@@ -129,14 +131,16 @@ namespace PIFilmAutoDetachCleanMC.Defines
         InWorkCSTLoad,
         [Description("In Work CST Unload")]
         InWorkCSTUnLoad,
-        [Description("CST Tilt")]
-        CSTTilt,
+        [Description("In Work CST Tilt")]
+        InWorkCSTTilt,
         [Description("Out Work CST Load")]
         OutWorkCSTLoad,
         [Description("Out Work CST Unload")]
         OutWorkCSTUnLoad,
         [Description("Out Conveyor Unload")]
         OutConveyorUnload,
+        [Description("Out Work CST Tilt")]
+        OutWorkCSTTilt,
 
         [Description("Pick From CST")]
         RobotPickFixtureFromCST,

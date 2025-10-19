@@ -396,7 +396,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
                             ESemiSequence.InWorkCSTLoad,
-                            ESemiSequence.CSTTilt,
+                            ESemiSequence.InWorkCSTTilt,
                             ESemiSequence.InWorkCSTUnLoad
                         }
                     };
@@ -426,7 +426,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
                             ESemiSequence.OutWorkCSTLoad,
-                            ESemiSequence.CSTTilt,
+                            ESemiSequence.OutWorkCSTTilt,
                             ESemiSequence.OutWorkCSTUnLoad
                         }
                     };

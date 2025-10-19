@@ -332,19 +332,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.InConveyorLoad:
                     break;
                 case ESequence.InWorkCSTLoad:
-                    Sequence_Load();
+                    if (port == EPort.Right) Sequence_Load();
                     break;
                 case ESequence.InWorkCSTUnLoad:
-                    Sequence_Unload();
+                    if (port == EPort.Right) Sequence_Unload();
                     break;
-                case ESequence.CSTTilt:
-                    Sequence_Tilt();
+                case ESequence.InWorkCSTTilt:
+                    if (port == EPort.Right) Sequence_Tilt();
                     break;
                 case ESequence.OutWorkCSTLoad:
-                    Sequence_Load();
+                    if (port == EPort.Left) Sequence_Load();
                     break;
                 case ESequence.OutWorkCSTUnLoad:
-                    Sequence_Unload();
+                    if (port == EPort.Left) Sequence_Unload();
+                    break;
+                case ESequence.OutWorkCSTTilt:
+                    if (port == EPort.Left) Sequence_Tilt();
                     break;
                 case ESequence.OutConveyorUnload:
                     break;
@@ -470,7 +473,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (IsCassetteDetect || _machineStatus.IsDryRunMode)
                     {
                         Log.Info("Sequence Tilt");
-                        Sequence = ESequence.CSTTilt;
+                        Sequence = port == EPort.Right ? ESequence.InWorkCSTTilt : ESequence.OutWorkCSTTilt;
                         break;
                     }
                     Step.RunStep++;
@@ -781,7 +784,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Info("Sequence CST Tilt");
-                    Sequence = ESequence.CSTTilt;
+
+                    Sequence = port == EPort.Right ? ESequence.InWorkCSTTilt : ESequence.OutWorkCSTTilt;
                     break;
             }
         }
@@ -891,11 +895,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Muting_LightCurtain:
+                    Log.Debug("Muting Light Curtain");
+
                     if (port == EPort.Left)
                     {
-                        Log.Debug("Muting Light Curtain");
                         _devices.Outputs.OutCstLightCurtainInterlock.Value = true;
-                        Wait(50);
+                        Thread.Sleep(300);
                         _devices.Outputs.OutCstLightCurtainMuting.Value = true;
 
                         _blinkTimer.EnableAction(OutLightCurtainMutingActionKey,

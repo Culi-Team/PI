@@ -782,7 +782,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanOriginStep.SyringePump_Origin:
                     Log.Debug("Syringe Pump Oriign");
                     SyringePump.Initialize();
-                    Thread.Sleep(100);
                     Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => SyringePump.IsReady());
                     Step.OriginStep++;
                     break;
@@ -828,11 +827,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.InWorkCSTUnLoad:
                     break;
-                case ESequence.CSTTilt:
+                case ESequence.InWorkCSTTilt:
                     break;
                 case ESequence.OutWorkCSTLoad:
                     break;
                 case ESequence.OutWorkCSTUnLoad:
+                    break;
+                case ESequence.OutWorkCSTTilt:
                     break;
                 case ESequence.RobotPickFixtureFromCST:
                     break;
@@ -1053,6 +1054,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug($"Set Pressure : {cleanRecipe.CylinderPressure}");
                     Regulator.SetPressure(cleanRecipe.CylinderPressure);
                     Step.ToRunStep++;
+
+                    // TODO: Remove tmp code
+                    Step.ToRunStep = (int)ECleanProcessToRunStep.Clear_Flags;
                     break;
                 case ECleanProcessToRunStep.Dispense_Remain:
                     SyringePump.Dispense(1.0, 7);

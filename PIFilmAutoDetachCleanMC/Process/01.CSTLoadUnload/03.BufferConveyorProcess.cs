@@ -156,7 +156,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.InWorkCSTUnLoad:
                     Sequence_InWorkCSTUnload();
                     break;
-                case ESequence.CSTTilt:
+                case ESequence.InWorkCSTTilt:
                     break;
                 case ESequence.OutWorkCSTLoad:
                     Sequence_OutWorkCSTLoad();
@@ -164,6 +164,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.OutWorkCSTUnLoad:
                     break;
                 case ESequence.OutConveyorUnload:
+                    break;
+                case ESequence.OutWorkCSTTilt:
                     break;
                 case ESequence.RobotPickFixtureFromCST:
                     break;
@@ -403,6 +405,24 @@ namespace PIFilmAutoDetachCleanMC.Process
                     ConveyorRunStop(false);
                     Log.Debug("Clear Flag Buffer Conveyor Ready");
                     FlagBufferConveyorReady = false;
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorInWorkCSTUnloadStep.BothStopper_Up:
+                    BufferStopper1.Forward();
+                    BufferStopper2.Forward();
+
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => BufferStopper1.IsForward && BufferStopper2.IsForward);
+
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyorInWorkCSTUnloadStep.BothStopper_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.BufferConveyor_Stopper_Up_Fail);
+                        break;
+                    }
+
+                    Log.Debug("Both Stopper Up Done.");
                     Step.RunStep++;
                     break;
                 case EBufferConveyorInWorkCSTUnloadStep.End:
