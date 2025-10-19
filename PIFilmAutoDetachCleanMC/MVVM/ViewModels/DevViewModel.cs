@@ -1,13 +1,14 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EQX.Core.Common;
+using EQX.Core.Interlock;
 using EQX.Core.Robot;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Robot;
 using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Recipe;
-using System.Windows.Input;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -18,6 +19,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         private bool isRobotLoadSelected = true;
         private bool isRobotUnloadSelected;
+        private bool isCylinderInterlockBypassed;
+
 
         private IRobot _currentRobot => isRobotLoadSelected ? _robotLoad : _robotUnload;
 
@@ -137,6 +140,33 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
+        public bool IsCylinderInterlockEnabled
+        {
+            get => !IsCylinderInterlockBypassed;
+            set
+            {
+                if (value == IsCylinderInterlockEnabled)
+                {
+                    return;
+                }
+
+                IsCylinderInterlockBypassed = !value;
+            }
+        }
+
+        public bool IsCylinderInterlockBypassed
+        {
+            get => isCylinderInterlockBypassed;
+            set
+            {
+                if (SetProperty(ref isCylinderInterlockBypassed, value))
+                {
+                    InterlockService.Default.IsBypassAllEnabled = value;
+                    OnPropertyChanged(nameof(IsCylinderInterlockEnabled));
+                }
+            }
+        }
+
         public int RobotLowSpeed { get; set; }
         public int RobotHighSpeed { get; set; }
         public int IndexX { get; set; }
@@ -155,6 +185,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             _robotLoad = robotLoad;
             _robotUnload = robotUnload;
+            isCylinderInterlockBypassed = InterlockService.Default.IsBypassAllEnabled;
         }
 
         #region Privates

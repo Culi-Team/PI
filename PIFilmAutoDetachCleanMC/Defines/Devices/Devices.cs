@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
 using PIFilmAutoDetachCleanMC.Process;
+using PIFilmAutoDetachCleanMC.Recipe;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,7 +28,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             Regulators regulators,
             AnalogInputs analogInputs,
             MachineStatus machineStatus,
-            SyringePumps syringePumps)
+            SyringePumps syringePumps,
+            CSTLoadUnloadRecipe cstLoadUnloadRecipe)
         {
             Inputs = inputs;
             Outputs = outputs;
@@ -38,8 +40,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             Regulators = regulators;
             AnalogInputs = analogInputs;
             SyringePumps = syringePumps;
-
-            CylinderInterlockConfigurator.Configure(this);
+            CylinderInterlockConfigurator.Configure(this, cstLoadUnloadRecipe);
         }
 
         public Inputs Inputs { get; }

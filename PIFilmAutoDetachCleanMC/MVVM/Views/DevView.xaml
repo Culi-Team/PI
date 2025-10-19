@@ -24,6 +24,28 @@
 
         <Expander
             DockPanel.Dock="Top"
+            Header="CYLINDER INTERLOCK"
+            IsExpanded="True">
+            <StackPanel Orientation="Horizontal"
+                        Margin="10,0,0,10"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left">
+                <TextBlock Text="Cylinder Interlock"
+                           VerticalAlignment="Center"
+                           Margin="0,0,20,0"
+                           FontWeight="Bold" />
+                <RadioButton Content="Enable"
+                             GroupName="CylinderInterlock"
+                             IsChecked="{Binding IsCylinderInterlockEnabled, Mode=TwoWay}"
+                             Margin="0,0,20,0" />
+                <RadioButton Content="Bypass"
+                             GroupName="CylinderInterlock"
+                             IsChecked="{Binding IsCylinderInterlockBypassed, Mode=TwoWay}" />
+            </StackPanel>
+        </Expander>
+
+        <Expander
+            DockPanel.Dock="Top"
             Header="ROBOT TEST"
             IsExpanded="True">
 
