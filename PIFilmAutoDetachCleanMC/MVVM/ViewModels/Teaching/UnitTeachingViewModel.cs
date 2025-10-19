@@ -105,7 +105,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
 
                     string motionName = spt.SinglePosition.Motion;
 
-                    spt.Value = Motions.FirstOrDefault(m => m.Name == motionName)!.Status.ActualPosition;
+                    spt.Value = Motions.FirstOrDefault(m => m.Name.Contains(motionName))!.Status.ActualPosition;
                 });
             }
         }
