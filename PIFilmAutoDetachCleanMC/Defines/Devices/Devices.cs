@@ -890,12 +890,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.LoadRobDrivesOff);
             outputs.Add(Outputs.LoadRobConfMess);
             outputs.Add(Outputs.LoadRobExtStart);
-
-            outputs.Add(Outputs.LoadRobMoveEnable);
-            outputs.Add(Outputs.LoadRobDrivesOn);
-            outputs.Add(Outputs.LoadRobDrivesOff);
-            outputs.Add(Outputs.LoadRobConfMess);
-            outputs.Add(Outputs.LoadRobExtStart);
             return outputs;
         }
 
