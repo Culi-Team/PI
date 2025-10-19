@@ -414,12 +414,20 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetRobotLoadInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Inputs.LoadRobStopmess);
+            inputs.Add(Inputs.LoadRobPeriRdy);
+            inputs.Add(Inputs.LoadRobAlarmStop);
+            inputs.Add(Inputs.LoadRobUserSaf);
+            inputs.Add(Inputs.LoadRobIoActconf);
+            inputs.Add(Inputs.LoadRobOnPath);
+            inputs.Add(Inputs.LoadRobProAct);
+            inputs.Add(Inputs.LoadRobInHome);
+            inputs.Add(Inputs.RobotFixtureAlignFw);
+            inputs.Add(Inputs.RobotFixtureAlignBw);
             inputs.Add(Inputs.RobotFixture1Clamp);
             inputs.Add(Inputs.RobotFixture1Unclamp);
             inputs.Add(Inputs.RobotFixture2Clamp);
             inputs.Add(Inputs.RobotFixture2Unclamp);
-            inputs.Add(Inputs.RobotFixtureAlignFw);
-            inputs.Add(Inputs.RobotFixtureAlignBw);
 
             inputs.Add(Inputs.LoadRobStopmess);
             inputs.Add(Inputs.LoadRobPeriRdy);
@@ -781,6 +789,14 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.UnloadRobotCyl3Down);
             inputs.Add(Inputs.UnloadRobotCyl4Up);
             inputs.Add(Inputs.UnloadRobotCyl4Down);
+            inputs.Add(Inputs.UnloadRobStopmess);
+            inputs.Add(Inputs.UnloadRobPeriRdy);
+            inputs.Add(Inputs.UnloadRobAlarmStop);
+            inputs.Add(Inputs.UnloadRobUserSaf);
+            inputs.Add(Inputs.UnloadRobIoActconf);
+            inputs.Add(Inputs.UnloadRobOnPath);
+            inputs.Add(Inputs.UnloadRobProAct);
+            inputs.Add(Inputs.UnloadRobInHome);
 
             return inputs;
         }
@@ -869,6 +885,11 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.RobotFixtureUnclamp);
             outputs.Add(Outputs.RobotFixtureAlignFw);
             outputs.Add(Outputs.RobotFixtureAlignBw);
+            outputs.Add(Outputs.LoadRobMoveEnable);
+            outputs.Add(Outputs.LoadRobDrivesOn);
+            outputs.Add(Outputs.LoadRobDrivesOff);
+            outputs.Add(Outputs.LoadRobConfMess);
+            outputs.Add(Outputs.LoadRobExtStart);
 
             outputs.Add(Outputs.LoadRobMoveEnable);
             outputs.Add(Outputs.LoadRobDrivesOn);
@@ -1146,6 +1167,11 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.UnloadRobotCyl2Down);
             outputs.Add(Outputs.UnloadRobotCyl3Down);
             outputs.Add(Outputs.UnloadRobotCyl4Down);
+            outputs.Add(Outputs.UnloadRobMoveEnable);
+            outputs.Add(Outputs.UnloadRobDrivesOn);
+            outputs.Add(Outputs.UnloadRobDrivesOff);
+            outputs.Add(Outputs.UnloadRobConfMess);
+            outputs.Add(Outputs.UnloadRobExtStart);
             return outputs;
         }
         #endregion
