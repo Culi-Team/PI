@@ -111,12 +111,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput RemoveZoneTrCylFw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_TR_CYL_FW);
         public IDOutput RemoveZoneZCyl1Down => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_Z_CYL_1_DOWN);
         public IDOutput RemoveZoneZCyl2Down => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_Z_CYL_2_DOWN);
-        public IDOutput RemoveZoneCyl1Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_1_CLAMP);
-        public IDOutput RemoveZoneCyl1Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_1_UNCLAMP);
-        public IDOutput RemoveZoneCyl2Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_2_CLAMP);
-        public IDOutput RemoveZoneCyl2Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_2_UNCLAMP);
-        public IDOutput RemoveZoneCyl3Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_3_CLAMP);
-        public IDOutput RemoveZoneCyl3Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_3_UNCLAMP);
+        public IDOutput RemoveZoneFilm1Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_1_CLAMP);
+        public IDOutput RemoveZoneFilm1Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_1_UNCLAMP);
+        public IDOutput RemoveZoneFilm2Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_2_CLAMP);
+        public IDOutput RemoveZoneFilm2Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_2_UNCLAMP);
+        public IDOutput RemoveZoneFilm3Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_3_CLAMP);
+        public IDOutput RemoveZoneFilm3Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_3_UNCLAMP);
         public IDOutput RemoveZoneIonRunStop => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_ION_RUN_STOP);
         public IDOutput RemoveZonePusherCyl1Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_PUSHER_CYL_1_UP);
         public IDOutput RemoveZonePusherCyl1Down => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_PUSHER_CYL_1_DOWN);

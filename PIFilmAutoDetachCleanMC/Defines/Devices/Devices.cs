@@ -421,6 +421,14 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.RobotFixtureAlignFw);
             inputs.Add(Inputs.RobotFixtureAlignBw);
 
+            inputs.Add(Inputs.LoadRobStopmess);
+            inputs.Add(Inputs.LoadRobPeriRdy);
+            inputs.Add(Inputs.LoadRobAlarmStop);
+            inputs.Add(Inputs.LoadRobUserSaf);
+            inputs.Add(Inputs.LoadRobIoActconf);
+            inputs.Add(Inputs.LoadRobOnPath);
+            inputs.Add(Inputs.LoadRobProAct);
+            inputs.Add(Inputs.LoadRobInHome);
             return inputs;
         }
 
@@ -862,6 +870,11 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.RobotFixtureAlignFw);
             outputs.Add(Outputs.RobotFixtureAlignBw);
 
+            outputs.Add(Outputs.LoadRobMoveEnable);
+            outputs.Add(Outputs.LoadRobDrivesOn);
+            outputs.Add(Outputs.LoadRobDrivesOff);
+            outputs.Add(Outputs.LoadRobConfMess);
+            outputs.Add(Outputs.LoadRobExtStart);
             return outputs;
         }
 
@@ -881,22 +894,29 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDOutput> GetRemoveFilmOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            outputs.Add(Outputs.RemoveZoneTrCylFw);
+            outputs.Add(Outputs.RemoveZoneTrCylBw);
+            outputs.Add(Outputs.RemoveZoneZCyl1Down);
+            outputs.Add(Outputs.RemoveZoneZCyl2Down);
             outputs.Add(Outputs.RemoveZoneClampCyl1Clamp);
             outputs.Add(Outputs.RemoveZoneClampCyl1Unclamp);
             outputs.Add(Outputs.RemoveZoneClampCyl2Clamp);
             outputs.Add(Outputs.RemoveZoneClampCyl2Unclamp);
-            outputs.Add(Outputs.RemoveZoneCyl1Clamp);
-            outputs.Add(Outputs.RemoveZoneCyl1Unclamp);
-            outputs.Add(Outputs.RemoveZoneCyl2Clamp);
-            outputs.Add(Outputs.RemoveZoneCyl2Unclamp);
-            outputs.Add(Outputs.RemoveZoneCyl3Clamp);
-            outputs.Add(Outputs.RemoveZoneCyl3Unclamp);
+            outputs.Add(Outputs.RemoveZoneClampCyl3Clamp);
+            outputs.Add(Outputs.RemoveZoneClampCyl3Unclamp);
+            outputs.Add(Outputs.RemoveZoneClampCyl4Clamp);
+            outputs.Add(Outputs.RemoveZoneClampCyl4Unclamp);
+            outputs.Add(Outputs.RemoveZoneFilm1Clamp);
+            outputs.Add(Outputs.RemoveZoneFilm1Unclamp);
+            outputs.Add(Outputs.RemoveZoneFilm2Clamp);
+            outputs.Add(Outputs.RemoveZoneFilm2Unclamp);
+            outputs.Add(Outputs.RemoveZoneFilm3Clamp);
+            outputs.Add(Outputs.RemoveZoneFilm3Unclamp);
             outputs.Add(Outputs.RemoveZonePusherCyl1Up);
             outputs.Add(Outputs.RemoveZonePusherCyl1Down);
             outputs.Add(Outputs.RemoveZonePusherCyl2Up);
             outputs.Add(Outputs.RemoveZonePusherCyl2Down);
-            outputs.Add(Outputs.RemoveZoneTrCylFw);
-            outputs.Add(Outputs.RemoveZoneTrCylBw);
+            outputs.Add(Outputs.RemoveZoneIonRunStop);
 
             return outputs;
         }
@@ -925,6 +945,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.DetachClampCyl1Clamp);
             outputs.Add(Outputs.DetachClampCyl2Unclamp);
             outputs.Add(Outputs.DetachClampCyl2Clamp);
+            outputs.Add(Outputs.DetachClampCyl3Unclamp);
+            outputs.Add(Outputs.DetachClampCyl3Clamp);
+            outputs.Add(Outputs.DetachClampCyl4Unclamp);
+            outputs.Add(Outputs.DetachClampCyl4Clamp);
             return outputs;
         }
 
