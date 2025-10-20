@@ -929,7 +929,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkDetect1, false);
                         SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkDetect2, false);
                         SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkDetect3, false);
-                        SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkDetect4, false);
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkFixtureDetect, false);
 
                         SimulationInputSetter.SetSimInput(_devices.Inputs.BufferCstDetect1, true);
                         SimulationInputSetter.SetSimInput(_devices.Inputs.BufferCstDetect2, true);
