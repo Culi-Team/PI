@@ -449,7 +449,6 @@
                                 <Binding Path="Devices.Inputs.InCstWorkDetect1.Value" />
                                 <Binding Path="Devices.Inputs.InCstWorkDetect2.Value" />
                                 <Binding Path="Devices.Inputs.InCstWorkDetect3.Value" />
-                                <Binding Path="Devices.Inputs.InCstWorkDetect4.Value" />
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>

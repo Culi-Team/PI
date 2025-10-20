@@ -24,7 +24,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             Motions motions,
             Cylinders cylinders,
             TorqueControllerList torqueControllers,
-            SpeedControllerList speedControllerList,
+            RollerList speedControllerList,
             Regulators regulators,
             AnalogInputs analogInputs,
             MachineStatus machineStatus,
@@ -36,7 +36,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             Motions = motions;
             Cylinders = cylinders;
             TorqueControllers = torqueControllers;
-            SpeedControllerList = speedControllerList;
+            RollerList = speedControllerList;
             Regulators = regulators;
             AnalogInputs = analogInputs;
             SyringePumps = syringePumps;
@@ -48,7 +48,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public Motions Motions { get; }
         public Cylinders Cylinders { get; }
         public TorqueControllerList TorqueControllers { get; }
-        public SpeedControllerList SpeedControllerList { get; }
+        public RollerList RollerList { get; }
         public Regulators Regulators { get; }
         public AnalogInputs AnalogInputs { get; }
         public SyringePumps SyringePumps { get; }
@@ -1300,48 +1300,48 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         #endregion
 
         #region GetRollers
-        public ObservableCollection<SD201SSpeedController> GetInConveyorRollers()
+        public ObservableCollection<BD201SRollerController> GetInConveyorRollers()
         {
-            ObservableCollection<SD201SSpeedController> rollers = new ObservableCollection<SD201SSpeedController>();
-            rollers.Add(SpeedControllerList.InConveyorRoller1);
-            rollers.Add(SpeedControllerList.InConveyorRoller2);
-            rollers.Add(SpeedControllerList.InConveyorRoller3);
+            ObservableCollection<BD201SRollerController> rollers = new ObservableCollection<BD201SRollerController>();
+            rollers.Add(RollerList.InConveyorRoller1);
+            rollers.Add(RollerList.InConveyorRoller2);
+            rollers.Add(RollerList.InConveyorRoller3);
             return rollers;
         }
 
-        public ObservableCollection<SD201SSpeedController> GetInWorkConveyorRollers()
+        public ObservableCollection<BD201SRollerController> GetInWorkConveyorRollers()
         {
-            ObservableCollection<SD201SSpeedController> rollers = new ObservableCollection<SD201SSpeedController>();
-            rollers.Add(SpeedControllerList.SupportConveyorRoller1);
-            rollers.Add(SpeedControllerList.InWorkConveyorRoller1);
-            rollers.Add(SpeedControllerList.InWorkConveyorRoller2);
-            rollers.Add(SpeedControllerList.SupportConveyorRoller2);
+            ObservableCollection<BD201SRollerController> rollers = new ObservableCollection<BD201SRollerController>();
+            rollers.Add(RollerList.SupportConveyorRoller1);
+            rollers.Add(RollerList.InWorkConveyorRoller1);
+            rollers.Add(RollerList.InWorkConveyorRoller2);
+            rollers.Add(RollerList.SupportConveyorRoller2);
             return rollers;
         }
 
-        public ObservableCollection<SD201SSpeedController> GetBufferConveyorRollers()
+        public ObservableCollection<BD201SRollerController> GetBufferConveyorRollers()
         {
-            ObservableCollection<SD201SSpeedController> rollers = new ObservableCollection<SD201SSpeedController>();
-            rollers.Add(SpeedControllerList.BufferConveyorRoller1);
-            rollers.Add(SpeedControllerList.BufferConveyorRoller2);
+            ObservableCollection<BD201SRollerController> rollers = new ObservableCollection<BD201SRollerController>();
+            rollers.Add(RollerList.BufferConveyorRoller1);
+            rollers.Add(RollerList.BufferConveyorRoller2);
             return rollers;
         }
 
-        public ObservableCollection<SD201SSpeedController> GetOutWorkConveyorRollers()
+        public ObservableCollection<BD201SRollerController> GetOutWorkConveyorRollers()
         {
-            ObservableCollection<SD201SSpeedController> rollers = new ObservableCollection<SD201SSpeedController>();
-            rollers.Add(SpeedControllerList.SupportConveyorRoller3);
-            rollers.Add(SpeedControllerList.OutWorkConveyorRoller1);
-            rollers.Add(SpeedControllerList.OutWorkConveyorRoller2);
-            rollers.Add(SpeedControllerList.SupportConveyorRoller4);
+            ObservableCollection<BD201SRollerController> rollers = new ObservableCollection<BD201SRollerController>();
+            rollers.Add(RollerList.SupportConveyorRoller3);
+            rollers.Add(RollerList.OutWorkConveyorRoller1);
+            rollers.Add(RollerList.OutWorkConveyorRoller2);
+            rollers.Add(RollerList.SupportConveyorRoller4);
             return rollers;
         }
 
-        public ObservableCollection<SD201SSpeedController> GetOutConveyorRollers()
+        public ObservableCollection<BD201SRollerController> GetOutConveyorRollers()
         {
-            ObservableCollection<SD201SSpeedController> rollers = new ObservableCollection<SD201SSpeedController>();
-            rollers.Add(SpeedControllerList.OutConveyorRoller1);
-            rollers.Add(SpeedControllerList.OutConveyorRoller2);
+            ObservableCollection<BD201SRollerController> rollers = new ObservableCollection<BD201SRollerController>();
+            rollers.Add(RollerList.OutConveyorRoller1);
+            rollers.Add(RollerList.OutConveyorRoller2);
             return rollers;
         }
         #endregion

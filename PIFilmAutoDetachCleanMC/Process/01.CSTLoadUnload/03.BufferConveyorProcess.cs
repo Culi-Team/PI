@@ -58,8 +58,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Rollers
-        private SD201SSpeedController BufferRoller1 => _devices.SpeedControllerList.BufferConveyorRoller1;
-        private SD201SSpeedController BufferRoller2 => _devices.SpeedControllerList.BufferConveyorRoller2;
+        private BD201SRollerController BufferRoller1 => _devices.RollerList.BufferConveyorRoller1;
+        private BD201SRollerController BufferRoller2 => _devices.RollerList.BufferConveyorRoller2;
         #endregion
 
         #region Flags
@@ -89,6 +89,20 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Method
+        public override bool ProcessToStop()
+        {
+            if (ProcessStatus == EProcessStatus.ToStopDone)
+            {
+                Thread.Sleep(50);
+                return true;
+            }
+
+            BufferRoller1.Stop();
+            BufferRoller1.Stop();
+
+            return base.ProcessToStop();
+        }
+
         public override bool ProcessOrigin()
         {
             switch ((EBufferConveyorOriginStep)Step.OriginStep)
@@ -369,6 +383,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         }
                         if (BufferDetect1 == true && BufferDetect2 == true)
                         {
+                            Wait(1000);
                             Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.Conveyor_Stop;
                             break;
                         }

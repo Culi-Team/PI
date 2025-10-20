@@ -78,20 +78,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                                                          _devices.Inputs.OutCstWorkDetect2.Value;
         private bool Detect3 => port == EPort.Right ? _devices.Inputs.InCstWorkDetect3.Value :
                                                          _devices.Inputs.OutCstWorkDetect3.Value;
-        private bool Detect4 => _devices.Inputs.InCstWorkDetect4.Value;
+        private bool InCstDetectFixture => _devices.Inputs.InCstWorkFixtureDetect.Value;
 
         private bool IsCassetteDetect
         {
             get
             {
-                if (port == EPort.Right) // InWorkConveyor
-                {
-                    return Detect1 && Detect2 && Detect3 && Detect4;
-                }
-                else // OutWorkConveyor
-                {
-                    return Detect1 && Detect2 && Detect3;
-                }
+                return Detect1 && Detect2 && Detect3;
             }
         }
 
@@ -99,10 +92,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                if (port == EPort.Right)
-                {
-                    return Detect1 == false && Detect2 == false && Detect3 == false && Detect4 == false;
-                }
                 return Detect1 == false && Detect2 == false && Detect3 == false;
             }
         }
@@ -187,11 +176,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagNextConveyorReady
+        private bool FlagDownStreamReady
         {
             get
             {
-                return Inputs[(int)EWorkConveyorProcessInput.NEXT_CONVEYOR_READY];
+                return Inputs[(int)EWorkConveyorProcessInput.DOWN_STREAM_READY];
             }
         }
         #endregion
@@ -202,19 +191,35 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Rollers
-        private SD201SSpeedController RollerSupport1 => port == EPort.Right ? _devices.SpeedControllerList.SupportConveyorRoller1 :
-                                                                        _devices.SpeedControllerList.SupportConveyorRoller3;
+        private BD201SRollerController RollerSupport1 => port == EPort.Right ? _devices.RollerList.SupportConveyorRoller1 :
+                                                                        _devices.RollerList.SupportConveyorRoller3;
 
-        private SD201SSpeedController RollerSupport2 => port == EPort.Right ? _devices.SpeedControllerList.SupportConveyorRoller2 :
-                                                                        _devices.SpeedControllerList.SupportConveyorRoller4;
+        private BD201SRollerController RollerSupport2 => port == EPort.Right ? _devices.RollerList.SupportConveyorRoller2 :
+                                                                        _devices.RollerList.SupportConveyorRoller4;
 
-        private SD201SSpeedController Roller1 => port == EPort.Right ? _devices.SpeedControllerList.InWorkConveyorRoller1 :
-                                                                 _devices.SpeedControllerList.OutWorkConveyorRoller1;
-        private SD201SSpeedController Roller2 => port == EPort.Right ? _devices.SpeedControllerList.InWorkConveyorRoller2 :
-                                                                 _devices.SpeedControllerList.OutWorkConveyorRoller2;
+        private BD201SRollerController Roller1 => port == EPort.Right ? _devices.RollerList.InWorkConveyorRoller1 :
+                                                                 _devices.RollerList.OutWorkConveyorRoller1;
+        private BD201SRollerController Roller2 => port == EPort.Right ? _devices.RollerList.InWorkConveyorRoller2 :
+                                                                 _devices.RollerList.OutWorkConveyorRoller2;
         #endregion
 
         #region Override Methods
+        public override bool ProcessToStop()
+        {
+            if (ProcessStatus == EProcessStatus.ToStopDone)
+            {
+                Thread.Sleep(50);
+                return true;
+            }
+
+            Roller1.Stop();
+            Roller1.Stop();
+            RollerSupport1.Stop();
+            RollerSupport2.Stop();
+
+            return base.ProcessToStop();
+        }
+
         public override bool ProcessOrigin()
         {
             switch ((EWorkConveyorOriginStep)Step.OriginStep)
@@ -352,7 +357,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.OutConveyorUnload:
                     break;
                 case ESequence.RobotPickFixtureFromCST:
-                    Sequence_PickPlace();
+                    if (port == EPort.Right) Sequence_PickPlace();
                     break;
                 case ESequence.RobotPlaceFixtureToVinylClean:
                     break;
@@ -365,7 +370,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.RobotPickFixtureFromRemoveZone:
                     break;
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
-                    Sequence_PickPlace();
+                    if (port == EPort.Left) Sequence_PickPlace();
                     break;
                 case ESequence.TransferFixtureLoad:
                     break;
@@ -761,6 +766,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
+                    Log.Debug("Cassette Arrived, keep running for 1 seconds");
+                    Wait(1000);
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorProcessLoadStep.Clear_FlagRequestCst:
                     Log.Debug("Clear Flag Request Cassette In");
                     FlagRequestCSTIn = false;
                     Step.RunStep++;
@@ -776,13 +786,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.End:
-                    Log.Debug("Load End");
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
-                        Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        // Wait Upper Stream set Root to Stop
+                        Wait(50);
                         break;
                     }
+                    Log.Debug("Load End");
                     Log.Info("Sequence CST Tilt");
 
                     Sequence = port == EPort.Right ? ESequence.InWorkCSTTilt : ESequence.OutWorkCSTTilt;
@@ -887,11 +897,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Wait_NextConveyorReady:
-                    if (FlagNextConveyorReady == false)
+                    if (FlagDownStreamReady == false)
                     {
                         Wait(20);
                         break;
                     }
+
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Muting_LightCurtain:
@@ -936,33 +947,34 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Wait_CSTOut_Done:
-                    if ((IsCassetteOut && IsNextConveyorDetect) || _machineStatus.IsDryRunMode)
+                    if (FlagDownStreamReady == true || IsCassetteDetect)
                     {
-                        ConveyorStop();
-
-                        if (port == EPort.Left)
-                        {
-                            Log.Debug("Enable Light Curtain");
-                            _devices.Outputs.OutCstLightCurtainInterlock.Value = false;
-                            Wait(50);
-                            _devices.Outputs.OutCstLightCurtainMuting.Value = false;
-
-                            _blinkTimer.DisableAction(OutLightCurtainMutingActionKey);
-                        }
-
-                        Step.RunStep++;
+                        Wait(20);
                         break;
                     }
-                    Wait(20);
+
+                    ConveyorStop();
+
+                    if (port == EPort.Left)
+                    {
+                        Log.Debug("Enable Light Curtain");
+                        _devices.Outputs.OutCstLightCurtainInterlock.Value = false;
+                        Wait(50);
+                        _devices.Outputs.OutCstLightCurtainMuting.Value = false;
+
+                        _blinkTimer.DisableAction(OutLightCurtainMutingActionKey);
+                    }
+
+                    Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.End:
-                    Log.Debug("Unload End");
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
-                        Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
+                        // Waiting for DownStream to Stop Root
+                        Wait(50);
                         break;
                     }
+                    Log.Debug("Unload End");
                     if (port == EPort.Right)
                     {
                         Log.Info("Sequence In Work CST Load");

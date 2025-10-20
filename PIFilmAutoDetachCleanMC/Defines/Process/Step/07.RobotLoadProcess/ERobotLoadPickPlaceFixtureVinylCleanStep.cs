@@ -12,11 +12,15 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Move_VinylClean_PickPlacePosition,
         Move_VinylClean_PickPlacePosition_Wait,
 
-        CylConntact,
-        CylConntact_Wait,
+        CylAlign,
+        CylAlign_Wait,
+        CylClamp,
+        CylClamp_Wait,
 
-        Cyl_UnContact,
-        Cyl_UnContact_Wait,
+        CylUnClamp,
+        CylUnClamp_Wait,
+        CylUnAlign,
+        CylUnAlign_Wait,
 
         Move_VinylClean_ReadyPosition,
         Move_VinylClean_ReadyPosition_Wait,

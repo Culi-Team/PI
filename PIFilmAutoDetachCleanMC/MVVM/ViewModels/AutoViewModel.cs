@@ -96,13 +96,28 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             Devices.Inputs.DoorLock7L.RaiseValueUpdated();
             Devices.Inputs.DoorLock7R.RaiseValueUpdated();
 
+            Devices.Inputs.DoorLatch1L.RaiseValueUpdated();
+            Devices.Inputs.DoorLatch1R.RaiseValueUpdated();
+            Devices.Inputs.DoorLatch2L.RaiseValueUpdated();
+            Devices.Inputs.DoorLatch2R.RaiseValueUpdated();
+            Devices.Inputs.DoorLatch3L.RaiseValueUpdated();
+            Devices.Inputs.DoorLatch3R.RaiseValueUpdated();
+            Devices.Inputs.DoorLatch4L.RaiseValueUpdated();
+            Devices.Inputs.DoorLatch4R.RaiseValueUpdated();
+            Devices.Inputs.DoorLatch5L.RaiseValueUpdated();
+            Devices.Inputs.DoorLatch5R.RaiseValueUpdated();
+            Devices.Inputs.DoorLatch6L.RaiseValueUpdated();
+            Devices.Inputs.DoorLatch6R.RaiseValueUpdated();
+            Devices.Inputs.DoorLatch7L.RaiseValueUpdated();
+            Devices.Inputs.DoorLatch7R.RaiseValueUpdated();
+
             Devices.Inputs.InCstDetect1.RaiseValueUpdated();
             Devices.Inputs.InCstDetect2.RaiseValueUpdated();
 
             Devices.Inputs.InCstWorkDetect1.RaiseValueUpdated();
+            Devices.Inputs.InCstWorkFixtureDetect.RaiseValueUpdated();
             Devices.Inputs.InCstWorkDetect2.RaiseValueUpdated();
             Devices.Inputs.InCstWorkDetect3.RaiseValueUpdated();
-            Devices.Inputs.InCstWorkDetect4.RaiseValueUpdated();
 
             Devices.Inputs.BufferCstDetect1.RaiseValueUpdated();
             Devices.Inputs.BufferCstDetect2.RaiseValueUpdated();

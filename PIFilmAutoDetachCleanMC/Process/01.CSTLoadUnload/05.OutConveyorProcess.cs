@@ -48,6 +48,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Inputs
         private bool CSTDetect1 => _devices.Inputs.OutCstDetect1.Value;
         private bool CSTDetect2 => _devices.Inputs.OutCstDetect2.Value;
+        private bool CSTExist => CSTDetect1 || CSTDetect2;
         private IDInput OutCompleteButton => _devices.Inputs.OutCompleteButton;
         private IDInput OutMutingButton => _devices.Inputs.OutMutingButton;
         private IDInput OutCSTLightCurtain => _devices.Inputs.OutCstLightCurtainAlarmDetect;
@@ -65,8 +66,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Rollers
-        private SD201SSpeedController Roller1 => _devices.SpeedControllerList.OutConveyorRoller1;
-        private SD201SSpeedController Roller2 => _devices.SpeedControllerList.OutConveyorRoller2;
+        private BD201SRollerController Roller1 => _devices.RollerList.OutConveyorRoller1;
+        private BD201SRollerController Roller2 => _devices.RollerList.OutConveyorRoller2;
 
         #endregion
 
@@ -89,6 +90,20 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
+        public override bool ProcessToStop()
+        {
+            if (ProcessStatus == EProcessStatus.ToStopDone)
+            {
+                Thread.Sleep(50);
+                return true;
+            }
+
+            Roller1.Stop();
+            Roller2.Stop();
+
+            return base.ProcessToStop();
+        }
+
         public override bool ProcessOrigin()
         {
             switch ((EOutConveyorOriginStep)Step.OriginStep)
@@ -317,16 +332,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EOutConveyorUnloadStep.CSTDetect_Check:
-                    if ((CSTDetect1 == true && CSTDetect2 == false) || _machineStatus.IsDryRunMode)
-                    {
-                        Step.RunStep++;
-                        break;
-                    }
-                    if (CSTDetect1 == true && CSTDetect2 == true)
+                    if (CSTDetect2 == true)
                     {
                         Step.RunStep = (int)EOutConveyorUnloadStep.Conveyor_Stop;
                         break;
                     }
+
+                    Step.RunStep++;
                     break;
                 case EOutConveyorUnloadStep.Conveyor_Run:
                     ConveyorRunStop(true);
@@ -364,6 +376,22 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EOutConveyorProcessOutWorkCSTUnloadStep.Start:
                     Log.Debug("Out Work CST Unload Step");
+                    Step.RunStep++;
+                    break;
+                case EOutConveyorProcessOutWorkCSTUnloadStep.CstExist_Check:
+                    if (CSTExist)
+                    {
+                        if (Parent?.Sequence != ESequence.AutoRun)
+                        {
+                            Sequence = ESequence.Stop;
+                            Parent!.ProcessMode = EProcessMode.ToStop;
+                            break;
+                        }
+
+                        Wait(50);
+                        break;
+                    }
+                    
                     Step.RunStep++;
                     break;
                 case EOutConveyorProcessOutWorkCSTUnloadStep.Stopper_Up:

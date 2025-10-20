@@ -207,11 +207,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         _devices.Motions.All.ForEach(m => m.Connect());
 
-                        _devices.SpeedControllerList.All.ForEach(s => s.Connect());
+                        _devices.RollerList.All.ForEach(s => s.Connect());
 
                         if(_rollerModbusCommunication.IsConnected)
                         {
-                            _devices.SpeedControllerList.SetDirection();
+                            _devices.RollerList.SetDirection();
                         }
 
                         _devices.TorqueControllers.All.ForEach(t => t.Connect());
@@ -219,10 +219,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _robotLoad.Connect();
                         _robotUnload.Connect();
 
-                        if (_devices.SpeedControllerList.All.Any(m => m.IsConnected == false))
+                        if (_devices.RollerList.All.Any(m => m.IsConnected == false))
                         {
                             ErrorMessages.Add($"Speed Controller is not connected: " +
-                                $"{string.Join(", ", _devices.SpeedControllerList.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
+                                $"{string.Join(", ", _devices.RollerList.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
                         }
 
                         if (_devices.TorqueControllers.All.Any(m => m.IsConnected == false))
@@ -393,7 +393,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         if(_rollerModbusCommunication.IsConnected)
                         {
-                            _devices.SpeedControllerList.All.ForEach(r => r.Stop());
+                            _devices.RollerList.All.ForEach(r => r.Stop());
                         }    
                         _rollerModbusCommunication.Disconnect();
 

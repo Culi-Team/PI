@@ -19,7 +19,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
         {
         }
 
-        public ObservableCollection<SD201SSpeedController> Rollers { get; set; }
+        public ObservableCollection<BD201SRollerController> Rollers { get; set; }
 
         public ICommand ConveyorRunCommand
         {

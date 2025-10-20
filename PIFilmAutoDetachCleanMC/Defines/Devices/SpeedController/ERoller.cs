@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum ESpeedController
+    public enum ERoller
     {
         IN_CV_ROLLER1 = 1,
         IN_CV_ROLLER2,

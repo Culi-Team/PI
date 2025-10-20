@@ -107,9 +107,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput OutCstDetect1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_CV_CST_DETECT_1);
         public IDInput OutCstDetect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_CV_CST_DETECT_2);
         public IDInput InCstWorkDetect1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_WORK_CV_CST_DETECT_1);
+        public IDInput InCstWorkFixtureDetect => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_WORK_CV_FIXTRURE_DETECT);
         public IDInput InCstWorkDetect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_WORK_CV_CST_DETECT_2);
         public IDInput InCstWorkDetect3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_WORK_CV_CST_DETECT_3);
-        public IDInput InCstWorkDetect4 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.IN_WORK_CV_CST_DETECT_4);
         public IDInput OutCstWorkDetect1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_WORK_CV_CST_DETECT_1);
         public IDInput OutCstWorkDetect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_WORK_CV_CST_DETECT_2);
         public IDInput OutCstWorkDetect3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_WORK_CV_CST_DETECT_3);

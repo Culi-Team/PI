@@ -185,20 +185,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     IsWarning = false;
                     Sequence = ESequence.Stop;
                     break;
-                case ESequence.InWorkCSTLoad:
-                    break;
-                case ESequence.InWorkCSTUnLoad:
-                    break;
-                case ESequence.InWorkCSTTilt:
-                    break;
-                case ESequence.OutWorkCSTLoad:
-                    break;
-                case ESequence.OutWorkCSTUnLoad:
-                    break;
-                case ESequence.OutWorkCSTTilt:
-                    break;
-                case ESequence.RobotPickFixtureFromCST:
-                    break;
                 case ESequence.RobotPlaceFixtureToVinylClean:
                     Sequence_RobotPlaceFixtureToVinylClean();
                     break;
@@ -207,56 +193,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.RobotPickFixtureFromVinylClean:
                     Sequence_RobotPickFixtureFromVinylClean();
-                    break;
-                case ESequence.RobotPlaceFixtureToAlign:
-                    break;
-                case ESequence.FixtureAlign:
-                    break;
-                case ESequence.RobotPickFixtureFromRemoveZone:
-                    break;
-                case ESequence.RobotPlaceFixtureToOutWorkCST:
-                    break;
-                case ESequence.TransferFixtureLoad:
-                    break;
-                case ESequence.Detach:
-                    break;
-                case ESequence.TransferFixtureUnload:
-                    break;
-                case ESequence.DetachUnload:
-                    break;
-                case ESequence.RemoveFilm:
-                    break;
-                case ESequence.GlassTransferPick:
-                    break;
-                case ESequence.GlassTransferPlace:
-                    break;
-                case ESequence.AlignGlassLeft:
-                    break;
-                case ESequence.TransferInShuttleLeftPick:
-                    break;
-                case ESequence.WETCleanLeftLoad:
-                    break;
-                case ESequence.WETCleanLeft:
-                    break;
-                case ESequence.WETCleanLeftUnload:
-                    break;
-                case ESequence.TransferRotationLeft:
-                    break;
-                case ESequence.AFCleanLeftLoad:
-                    break;
-                case ESequence.AFCleanLeft:
-                    break;
-                case ESequence.AFCleanLeftUnload:
-                    break;
-                case ESequence.UnloadTransferLeftPlace:
-                    break;
-                case ESequence.UnloadAlignGlass:
-                    break;
-                case ESequence.UnloadRobotPick:
-                    break;
-                case ESequence.UnloadRobotPlasma:
-                    break;
-                case ESequence.UnloadRobotPlace:
                     break;
             }
             return true;
