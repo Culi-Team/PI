@@ -69,7 +69,7 @@
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.8 *" />
+                <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -85,22 +85,22 @@
                     <ItemsControl ItemsSource="{Binding Cylinders}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <UniformGrid Columns="4"
+                                <UniformGrid Columns="6"
                                              VerticalAlignment="Top" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <ContentControl Content="{Binding .}"
-                                    Margin="3 0"
-                                    Height="250"
-                                    Width="150"/>
+                                <ContentControl
+                                    Content="{Binding .}"
+                                    Margin="3"
+                                    Height="110"
+                                    Width="180"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
             </GroupBox>
-
 
             <GroupBox Grid.Row="1"
                       Header="Motions"
