@@ -293,14 +293,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 _vinylCleanOutput, (int)EVinylCleanProcessOutput.VINYL_CLEAN_RECEIVE_UNLOAD_DONE);
             ((MappableInputDevice<ERobotLoadProcessInput>)_robotLoadInput).Mapping((int)ERobotLoadProcessInput.FIXTURE_ALIGN_REQ_LOAD,
                 _fixtureAlignOutput, (int)EFixtureAlignProcessOutput.FIXTURE_ALIGN_REQ_LOAD);
-            ((MappableInputDevice<ERobotLoadProcessInput>)_robotLoadInput).Mapping((int)ERobotLoadProcessInput.FIXTURE_ALIGN_LOAD_DONE_RECEIVED,
-                _fixtureAlignOutput, (int)EFixtureAlignProcessOutput.FIXTURE_ALIGN_LOAD_DONE_RECEIVED);
             ((MappableInputDevice<ERobotLoadProcessInput>)_robotLoadInput).Mapping((int)ERobotLoadProcessInput.REMOVE_FILM_REQ_UNLOAD,
                 _removeFilmOutput, (int)ERemoveFilmProcessOutput.REMOVE_FILM_REQ_UNLOAD);
-            ((MappableInputDevice<ERobotLoadProcessInput>)_robotLoadInput).Mapping((int)ERobotLoadProcessInput.IN_CST_PICK_DONE_RECEIVED,
-                _inWorkConveyorOutput, (int)EWorkConveyorProcessOutput.IN_CST_PICK_PLACE_DONE_RECEIVED);
-            ((MappableInputDevice<ERobotLoadProcessInput>)_robotLoadInput).Mapping((int)ERobotLoadProcessInput.OUT_CST_PLACE_DONE_RECEIVED,
-                _outWorkConveyorOutput, (int)EWorkConveyorProcessOutput.IN_CST_PICK_PLACE_DONE_RECEIVED);
 
             //Vinyl Clean Input Mapping
             ((MappableInputDevice<EVinylCleanProcessInput>)_vinylCleanInput).Mapping((int)EVinylCleanProcessInput.VINYL_CLEAN_LOAD_DONE,
@@ -368,15 +362,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 _glassAlignLeftOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_REQ_PICK);
             ((MappableInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleLeftInput).Mapping((int)ETransferInShuttleProcessInput.WET_CLEAN_REQ_LOAD,
                 _wetCleanLeftOutput, (int)ECleanProcessOutput.REQ_LOAD);
-            ((MappableInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleLeftInput).Mapping((int)ETransferInShuttleProcessInput.WET_CLEAN_LOAD_DONE_RECEIVED,
-                _wetCleanLeftOutput, (int)ECleanProcessOutput.LOAD_DONE_RECEIVED);
             //Right
             ((MappableInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleRightInput).Mapping((int)ETransferInShuttleProcessInput.GLASS_ALIGN_REQ_PICK,
                 _glassAlignRightOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_REQ_PICK);
             ((MappableInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleRightInput).Mapping((int)ETransferInShuttleProcessInput.WET_CLEAN_REQ_LOAD,
                 _wetCleanRightOutput, (int)ECleanProcessOutput.REQ_LOAD);
-            ((MappableInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleRightInput).Mapping((int)ETransferInShuttleProcessInput.WET_CLEAN_LOAD_DONE_RECEIVED,
-                _wetCleanRightOutput, (int)ECleanProcessOutput.LOAD_DONE_RECEIVED);
 
 
             //Clean Input Mapping
@@ -417,47 +407,31 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //Left
             ((MappableInputDevice<ETransferRotationProcessInput>)_transferRotationLeftInput).Mapping((int)ETransferRotationProcessInput.WET_CLEAN_REQ_UNLOAD,
                 _wetCleanLeftOutput, (int)ECleanProcessOutput.REQ_UNLOAD);
-            ((MappableInputDevice<ETransferRotationProcessInput>)_transferRotationLeftInput).Mapping((int)ETransferRotationProcessInput.WET_CLEAN_UNLOAD_DONE_RECEIVED,
-                _wetCleanLeftOutput, (int)ECleanProcessOutput.UNLOAD_DONE_RECEIVED);
             ((MappableInputDevice<ETransferRotationProcessInput>)_transferRotationLeftInput).Mapping((int)ETransferRotationProcessInput.AF_CLEAN_REQ_LOAD,
                 _afCleanLeftOutput, (int)ECleanProcessOutput.REQ_LOAD);
-            ((MappableInputDevice<ETransferRotationProcessInput>)_transferRotationLeftInput).Mapping((int)ETransferRotationProcessInput.AF_CLEAN_LOAD_DONE_RECEIVED,
-                _afCleanLeftOutput, (int)ECleanProcessOutput.LOAD_DONE_RECEIVED);
 
             //Right
             ((MappableInputDevice<ETransferRotationProcessInput>)_transferRotationRightInput).Mapping((int)ETransferRotationProcessInput.WET_CLEAN_REQ_UNLOAD,
             _wetCleanRightOutput, (int)ECleanProcessOutput.REQ_UNLOAD);
-            ((MappableInputDevice<ETransferRotationProcessInput>)_transferRotationRightInput).Mapping((int)ETransferRotationProcessInput.WET_CLEAN_UNLOAD_DONE_RECEIVED,
-                _wetCleanRightOutput, (int)ECleanProcessOutput.UNLOAD_DONE_RECEIVED);
             ((MappableInputDevice<ETransferRotationProcessInput>)_transferRotationRightInput).Mapping((int)ETransferRotationProcessInput.AF_CLEAN_REQ_LOAD,
                 _afCleanRightOutput, (int)ECleanProcessOutput.REQ_LOAD);
-            ((MappableInputDevice<ETransferRotationProcessInput>)_transferRotationRightInput).Mapping((int)ETransferRotationProcessInput.AF_CLEAN_LOAD_DONE_RECEIVED,
-                _afCleanRightOutput, (int)ECleanProcessOutput.LOAD_DONE_RECEIVED);
 
             //Unload Transfer Input Mapping
             //Left
             ((MappableInputDevice<EUnloadTransferProcessInput>)_unloadTransferLeftInput).Mapping((int)EUnloadTransferProcessInput.AF_CLEAN_REQ_UNLOAD,
                         _afCleanLeftOutput, (int)ECleanProcessOutput.REQ_UNLOAD);
-            ((MappableInputDevice<EUnloadTransferProcessInput>)_unloadTransferLeftInput).Mapping((int)EUnloadTransferProcessInput.AF_CLEAN_UNLOAD_DONE_RECEIVED,
-                        _afCleanLeftOutput, (int)ECleanProcessOutput.UNLOAD_DONE_RECEIVED);
             ((MappableInputDevice<EUnloadTransferProcessInput>)_unloadTransferLeftInput).Mapping((int)EUnloadTransferProcessInput.UNLOAD_TRANSFER_UNLOADING,
                         _unloadTransferRightOutput, (int)EUnloadTransferProcessOutput.UNLOAD_TRANSFER_UNLOADING);
             ((MappableInputDevice<EUnloadTransferProcessInput>)_unloadTransferLeftInput).Mapping((int)EUnloadTransferProcessInput.UNLOAD_ALIGN_READY,
                         _unloadAlignOutput, (int)EUnloadAlignProcessOutput.UNLOAD_ALIGN_READY);
-            ((MappableInputDevice<EUnloadTransferProcessInput>)_unloadTransferLeftInput).Mapping((int)EUnloadTransferProcessInput.UNLOAD_ALIGN_PLACE_DONE_RECEIVED,
-                        _unloadAlignOutput, (int)EUnloadAlignProcessOutput.UNLOAD_ALIGN_PLACE_DONE_RECEIVED);
 
             //Right
             ((MappableInputDevice<EUnloadTransferProcessInput>)_unloadTransferRightInput).Mapping((int)EUnloadTransferProcessInput.AF_CLEAN_REQ_UNLOAD,
                     _afCleanRightOutput, (int)ECleanProcessOutput.REQ_UNLOAD);
-            ((MappableInputDevice<EUnloadTransferProcessInput>)_unloadTransferRightInput).Mapping((int)EUnloadTransferProcessInput.AF_CLEAN_UNLOAD_DONE_RECEIVED,
-                        _afCleanRightOutput, (int)ECleanProcessOutput.UNLOAD_DONE_RECEIVED);
             ((MappableInputDevice<EUnloadTransferProcessInput>)_unloadTransferRightInput).Mapping((int)EUnloadTransferProcessInput.UNLOAD_TRANSFER_UNLOADING,
                         _unloadTransferLeftOutput, (int)EUnloadTransferProcessOutput.UNLOAD_TRANSFER_UNLOADING);
             ((MappableInputDevice<EUnloadTransferProcessInput>)_unloadTransferRightInput).Mapping((int)EUnloadTransferProcessInput.UNLOAD_ALIGN_READY,
                         _unloadAlignOutput, (int)EUnloadAlignProcessOutput.UNLOAD_ALIGN_READY);
-            ((MappableInputDevice<EUnloadTransferProcessInput>)_unloadTransferRightInput).Mapping((int)EUnloadTransferProcessInput.UNLOAD_ALIGN_PLACE_DONE_RECEIVED,
-                        _unloadAlignOutput, (int)EUnloadAlignProcessOutput.UNLOAD_ALIGN_PLACE_DONE_RECEIVED);
 
             //Unload Align Input Mapping
             ((MappableInputDevice<EUnloadAlignProcessInput>)_unloadAlignInput).Mapping((int)EUnloadAlignProcessInput.UNLOAD_TRANSFER_LEFT_PLACE_DONE,
@@ -470,8 +444,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //Robot Unload Input Mapping
             ((MappableInputDevice<ERobotUnloadProcessInput>)_robotUnloadInput).Mapping((int)ERobotUnloadProcessInput.UNLOAD_ALIGN_REQ_ROBOT_UNLOAD,
                     _unloadAlignOutput, (int)EUnloadAlignProcessOutput.UNLOAD_ALIGN_REQ_ROBOT_UNLOAD);
-            ((MappableInputDevice<ERobotUnloadProcessInput>)_robotUnloadInput).Mapping((int)ERobotUnloadProcessInput.UNLOAD_ALIGN_UNLOAD_DONE_RECEIVED,
-                    _unloadAlignOutput, (int)EUnloadAlignProcessOutput.ROBOT_UNLOAD_DONE_RECEIVED);
         }
     }
 }
