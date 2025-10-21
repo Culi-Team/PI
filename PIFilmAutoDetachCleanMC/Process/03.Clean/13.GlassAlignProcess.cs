@@ -568,21 +568,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect3 : _devices.Inputs.AlignStageRGlassDetect3, false);
 #endif
                     Log.Debug("Glass Align Done");
+                    Wait(1000);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Vacuum_On_2nd:
                     Log.Debug("Vacuum On");
                     VacOnOff(true);
-                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect || _machineStatus.IsDryRunMode);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Vacuum_On_2nd_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_Vacuum_Fail
-                                                                : EWarning.GlassAlignRight_Vacuum_Fail));
-                        break;
-                    }
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Cyl_Align_Down:

@@ -11,6 +11,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Start,
         ZAxis_Move_ReadyPosition,
         ZAxis_Move_ReadyPosition_Wait,
+        Cylinder_Up,
+        Cylinder_Up_Wait,
         End
     }
 }

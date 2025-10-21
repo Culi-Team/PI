@@ -28,7 +28,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         ZAxis_Move_Detach1Position_Wait,
 
         Vacuum_On,
-        Vacuum_On_Wait,
 
         ZAxis_Move_ReadyDetachPosition_2nd,
         ZAxis_Move_ReadyDetachPosition_Wait_2nd,

@@ -78,7 +78,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public bool RobotUnloadIsConnected => _robotUnload.IsConnected;
         public bool MotionsInovanceIsConnected => Devices.Motions.InovanceMaster.IsConnected;
         public bool MotionAjinIsConnected => Devices.Motions.AjinMaster.IsConnected;
-        public bool SpeedControllersIsConnected => Devices.SpeedControllerList.All.All(sc => sc.IsConnected);
+        public bool SpeedControllersIsConnected => Devices.RollerList.All.All(sc => sc.IsConnected);
         public bool TorqueControllersIsConnected => Devices.TorqueControllers.All.All(tc => tc.IsConnected);
         public bool SyringePumpIsConnected
         {
@@ -455,6 +455,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         {
                             ESemiSequence.RobotPickFixtureFromCST,
                             ESemiSequence.RobotPlaceFixtureToVinylClean,
+                            ESemiSequence.RobotPickFixtureFromVinylClean,
                             ESemiSequence.RobotPlaceFixtureToAlign,
                             ESemiSequence.RobotPickFixtureFromRemoveZone,
                             ESemiSequence.RobotPlaceFixtureToOutWorkCST

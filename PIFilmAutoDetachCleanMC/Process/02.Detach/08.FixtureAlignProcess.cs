@@ -253,7 +253,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EFixtureAlignAutoRunStep.FixtureDetectCheck:
                     Log.Debug("Fixture Detect Check");
-                    if (_machineStatus.MachineRunMode == EMachineRunMode.DryRun)
+                    if (_machineStatus.IsDryRunMode)
                     {
                         Log.Info("Sequence Fixture Align");
                         Sequence = ESequence.FixtureAlign;
@@ -413,6 +413,27 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Clear Flag Transfer Fixture Done Received");
                     FlagTransferFixtureDoneReceive = true;
                     Log.Debug("Wait Fixture Transfer Done");
+                    Step.RunStep++;
+                    break;
+                case EFixtureAlignTransferStep.Cyl_UnAlign:
+                    Log.Debug("UnAlign Fixture");
+                    AlignFixtureCyl1.Backward();
+                    AlignFixtureCyl2.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return AlignFixtureCyl1.IsBackward && AlignFixtureCyl2.IsBackward; });
+                    Step.RunStep++;
+                    break;
+                case EFixtureAlignTransferStep.Cyl_UnAlign_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.FixtureAlign_AlignCylinder_Backward_Fail);
+                        break;
+                    }
+                    Log.Debug("UnAlign Fixture Done");
+                    Step.RunStep++;
+                    break;
+                case EFixtureAlignTransferStep.Set_FlagAlignDone:
+                    Log.Debug("Set Flag Align Done");
+                    FlagFixtureAlignDone = true;
                     Step.RunStep++;
                     break;
                 case EFixtureAlignTransferStep.Wait_TransferDone:

@@ -36,7 +36,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
         public bool IsSelected
         {
             get { return isSelected; }
-            set 
+            set
             {
                 isSelected = value;
                 OnPropertyChanged();
@@ -133,7 +133,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 return new RelayCommand<object>((o) =>
                 {
                     if (o is ICylinder cylinder == false) return;
-
+                    if (CheckInterlockCylinderBeforeMove(cylinder) == false) return;
                     if (cylinder.CylinderType == ECylinderType.ForwardBackwardReverse ||
                         cylinder.CylinderType == ECylinderType.UpDownReverse ||
                         cylinder.CylinderType == ECylinderType.RightLeftReverse ||
@@ -175,6 +175,30 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     cylinder.Backward();
                 });
             }
+        }
+
+        private bool CheckInterlockCylinderBeforeMove(ICylinder cylinder)
+        {
+            Devices devices = App.AppHost!.Services.GetRequiredService<Devices>();
+            if (cylinder.Name == "TransferFixture_UpDownCyl")
+            {
+                if (devices.Cylinders.Detach_ClampCyl1.IsBackward == false ||
+                    devices.Cylinders.Detach_ClampCyl2.IsBackward == false ||
+                    devices.Cylinders.Detach_ClampCyl3.IsBackward == false ||
+                    devices.Cylinders.Detach_ClampCyl4.IsBackward == false ||
+                    devices.Cylinders.FixtureAlign_AlignCyl1.IsBackward == false ||
+                    devices.Cylinders.FixtureAlign_AlignCyl2.IsBackward == false ||
+                    devices.Cylinders.RemoveZone_ClampCyl1.IsBackward == false ||
+                    devices.Cylinders.RemoveZone_ClampCyl2.IsBackward == false ||
+                    devices.Cylinders.RemoveZone_ClampCyl3.IsBackward == false ||
+                    devices.Cylinders.RemoveZone_ClampCyl4.IsBackward == false)
+                {
+                    MessageBoxEx.ShowDialog($"Cylinder Clamp Detach / Fixture Align / Remove Zone Unit need move Backward");
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public bool CheckAxisCylinderAndPositionBeforMove(string moveToDescription)
@@ -252,7 +276,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                         return false;
                     }
                     if (devices.Cylinders.Detach_ClampCyl1.IsForward == true ||
-                        devices.Cylinders.Detach_ClampCyl2.IsForward == true)
+                        devices.Cylinders.Detach_ClampCyl2.IsForward == true ||
+                        devices.Cylinders.Detach_ClampCyl3.IsForward == true ||
+                        devices.Cylinders.Detach_ClampCyl4.IsForward == true)
                     {
                         MessageBoxEx.ShowDialog($"Cylinder [DetachFixFixtureCylinder1] ," +
                             $"\n need [move Backward] befor move to ," +
@@ -261,7 +287,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     }
                     var detachGlassZAxis = devices.Motions.DetachGlassZAxis;
                     if (detachGlassZAxis != null && detachGlassZAxis.Status.ActualPosition
-                        != recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisDetachReadyPosition)
+                        > recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisReadyPosition)
                     {
                         MessageBoxEx.ShowDialog($"[Detach Z Axis] ," +
                             $"\n need Move [Ready Position] befor move to ," +

@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum EDetachProcessFixtureTransferStep
+    public enum EDetachProcessTransferFixtureLoadStep
     {
         Start,
-        Clear_Flag,
         DetachZAxis_Move_ReadyPosition,
-        DetachedZAxis_Move_ReadyPosition_Wait,
-        Cyl_Fix_Backward,
-        Cyl_Fix_Backward_Wait,
-        SetFlagDetachDone,
+        DetachZAxis_Move_ReadyPosition_Wait,
+
+        Detach_Cylinder_Up,
+        Detach_Cylinder_Up_Wait,
+
+        Cyl_Clamp_Backward,
+        Cyl_Clamp_Backward_Wait,
+        Set_FlagDetachDone,
+
         Wait_FixtureTransferDone,
         End
     }

@@ -3,6 +3,8 @@
     public enum ERobotLoadPickFixtureFromCSTStep
     {
         Start,
+        Cyl_UnClamp,
+        Cyl_UnClamp_Wait,
         Wait_InCST_Ready,
         Index_Initiation,
         Move_InCST_PickPositon,

@@ -254,7 +254,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //InWorkConveyor Input Mapping
             ((VirtualInputDevice<EWorkConveyorProcessInput>)_inWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.ROBOT_PICK_PLACE_CST_DONE,
                 _robotLoadOutput, (int)ERobotLoadProcessOutput.ROBOT_PICK_IN_CST_DONE);
-            ((VirtualInputDevice<EWorkConveyorProcessInput>)_inWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.NEXT_CONVEYOR_READY,
+            ((VirtualInputDevice<EWorkConveyorProcessInput>)_inWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.DOWN_STREAM_READY,
                 _bufferConveyorOutput, (int)EBufferConveyorProcessOutput.BUFFER_CONVEYOR_READY);
             ((VirtualInputDevice<EWorkConveyorProcessInput>)_inWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.ROBOT_ORIGIN_DONE,
                 _robotLoadOutput, (int)ERobotLoadProcessOutput.ROBOT_ORIGIN_DONE);
@@ -268,7 +268,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //OutWorkConveyor Input Mapping
             ((VirtualInputDevice<EWorkConveyorProcessInput>)_outWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.ROBOT_PICK_PLACE_CST_DONE,
                 _robotLoadOutput, (int)ERobotLoadProcessOutput.ROBOT_PLACE_OUT_CST_DONE);
-            ((VirtualInputDevice<EWorkConveyorProcessInput>)_outWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.NEXT_CONVEYOR_READY,
+            ((VirtualInputDevice<EWorkConveyorProcessInput>)_outWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.DOWN_STREAM_READY,
                 _outConveyorOutput, (int)EOutConveyorProcessOutput.OUT_CONVEYOR_READY);
             ((VirtualInputDevice<EWorkConveyorProcessInput>)_outWorkConveyorInput).Mapping((int)EWorkConveyorProcessInput.ROBOT_ORIGIN_DONE,
                 _robotLoadOutput, (int)ERobotLoadProcessOutput.ROBOT_ORIGIN_DONE);

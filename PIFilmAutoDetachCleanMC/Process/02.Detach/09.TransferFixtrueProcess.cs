@@ -411,7 +411,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessLoadStep.Cyl_Down:
-                    Log.Debug("Transfer Fixture Cylinder Up");
+                    Log.Debug("Transfer Fixture Cylinder Down");
                     CylUpDown.Backward();
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return CylUpDown.IsBackward; });
                     Step.RunStep++;
@@ -422,7 +422,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.TransferFixture_UpDownCylinder_Down_Fail);
                         break;
                     }
-                    Log.Debug("Transfer Fixture Cylinder Up Done");
+                    Log.Debug("Transfer Fixture Cylinder Down Done");
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessLoadStep.Cyl_Clamp:

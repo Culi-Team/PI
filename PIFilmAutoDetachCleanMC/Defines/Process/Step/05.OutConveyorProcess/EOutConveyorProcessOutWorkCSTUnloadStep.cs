@@ -9,6 +9,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EOutConveyorProcessOutWorkCSTUnloadStep
     {
         Start,
+
+        CstExist_Check,
+
         Stopper_Up,
         Stopper_Up_Wait,
 

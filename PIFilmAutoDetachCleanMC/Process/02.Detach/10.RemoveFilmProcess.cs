@@ -40,7 +40,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder PusherCyl1 => _devices.Cylinders.RemoveZone_PusherCyl1;
         private ICylinder PusherCyl2 => _devices.Cylinders.RemoveZone_PusherCyl2;
 
-        private bool IsFixtureDetect => _devices.Inputs.RemoveZoneFixtureDetect.Value;
+        private bool IsFixtureDetect
+        {
+            get
+            {
+                return _devices.Inputs.RemoveZoneFixtureDetect.Value || _machineStatus.IsDryRunMode || _machineStatus.MachineTestMode;
+            }
+        }
 
         private bool IsFixCylinderBw => FixCyl1_1.IsBackward && FixCyl1_2.IsBackward && FixCyl2_1.IsBackward && FixCyl2_2.IsBackward;
         private bool IsFixCylinderFw => FixCyl1_1.IsForward && FixCyl1_2.IsForward && FixCyl2_1.IsForward && FixCyl2_2.IsForward;

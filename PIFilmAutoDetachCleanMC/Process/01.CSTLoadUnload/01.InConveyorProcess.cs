@@ -51,6 +51,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Inputs
         private bool CST_Det1 => _devices.Inputs.InCstDetect1.Value;
         private bool CST_Det2 => _devices.Inputs.InCstDetect2.Value;
+        private bool CST_Exist => CST_Det1 || CST_Det2;
         private IDInput InCompleteButton => _devices.Inputs.InCompleteButton;
         private IDInput InMutingButton => _devices.Inputs.InMutingButton;
         #endregion
@@ -63,7 +64,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Flags
-        private bool FlagInWorkCSTRequestCSTIn
+        private bool FlagDownStreamRequestCassetteIn
         {
             get
             {
@@ -77,12 +78,27 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Rollers
-        private SD201SSpeedController Roller1 => _devices.SpeedControllerList.InConveyorRoller1;
-        private SD201SSpeedController Roller2 => _devices.SpeedControllerList.InConveyorRoller2;
-        private SD201SSpeedController Roller3 => _devices.SpeedControllerList.InConveyorRoller3;
+        private BD201SRollerController Roller1 => _devices.RollerList.InConveyorRoller1;
+        private BD201SRollerController Roller2 => _devices.RollerList.InConveyorRoller2;
+        private BD201SRollerController Roller3 => _devices.RollerList.InConveyorRoller3;
         #endregion
 
         #region Override Method
+        public override bool ProcessToStop()
+        {
+            if (ProcessStatus == EProcessStatus.ToStopDone)
+            {
+                Thread.Sleep(50);
+                return true;
+            }
+
+            Roller1.Stop();
+            Roller2.Stop();
+            Roller3.Stop();
+
+            return base.ProcessToStop();
+        }
+
         public override bool ProcessOrigin()
         {
             switch ((EConveyorOriginStep)Step.OriginStep)
@@ -279,11 +295,23 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Wait_InWorkCSTRequestLoad:
-                    if (FlagInWorkCSTRequestCSTIn == false)
+                    if (FlagDownStreamRequestCassetteIn == false)
                     {
                         Wait(20);
                         break;
                     }
+
+                    // NO CST DETECT ON SEMI AUTO, STOP PROCESS
+                    if (CST_Exist == false)
+                    {
+                        if (Parent?.Sequence != ESequence.AutoRun)
+                        {
+                            Sequence = ESequence.Stop;
+                            Parent.ProcessMode = EProcessMode.ToStop;
+                            break;
+                        }
+                    }
+
                     Step.RunStep++;
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Stopper_Down:
@@ -322,12 +350,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkDetect1, true);
                     SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkDetect2, true);
                     SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkDetect3, true);
-                    SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkDetect4, true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.InCstWorkFixtureDetect, true);
 #endif
                     Step.RunStep++;
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Wait_InWorkCSTLoadDone:
-                    if (FlagInWorkCSTRequestCSTIn == true)
+                    if (FlagDownStreamRequestCassetteIn == true)
                     {
                         Wait(20);
                         break;
@@ -402,11 +430,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EInConveyorLoadStep.CSTDetect_Check:
                     if(_machineStatus.IsDryRunMode)
                     {
+                        Wait(1000);
                         Step.RunStep = (int)EInConveyorLoadStep.Conveyor_Stop;
                         break;
                     }
                     if (CST_Det2)
                     {
+                        Wait(1000);
                         Step.RunStep = (int)EInConveyorLoadStep.Conveyor_Stop;
                         break;
                     }
@@ -415,6 +445,17 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep++;
                         break;
                     }
+
+                    // IF NO CST DETECT ON SEMI AUTO
+                    if (Parent?.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        Parent.ProcessMode = EProcessMode.ToStop;
+                        break;
+                    }
+
+                    // Wait for CST on AUTO RUN
+                    Wait(50);
                     break;
                 case EInConveyorLoadStep.Conveyor_Run:
                     ConveyorRunStop(true);

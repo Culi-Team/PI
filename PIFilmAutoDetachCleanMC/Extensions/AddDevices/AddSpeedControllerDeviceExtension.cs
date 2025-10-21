@@ -17,21 +17,21 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                     return new ModbusRTUCommunication("COM15", 38400);
                 });
 
-                services.AddSingleton<SpeedControllerList>((ser) =>
+                services.AddSingleton<RollerList>((ser) =>
                 {
                     IModbusCommunication modbusCommunication = ser.GetRequiredKeyedService<IModbusCommunication>("RollerModbusCommunication");
 
-                    var speedCtlList = Enum.GetNames(typeof(ESpeedController)).ToList();
-                    var speedCtlIndex = (int[])Enum.GetValues(typeof(ESpeedController));
+                    var speedCtlList = Enum.GetNames(typeof(ERoller)).ToList();
+                    var speedCtlIndex = (int[])Enum.GetValues(typeof(ERoller));
 
-                    var speedcontrollerList = new List<SD201SSpeedController>();
+                    var speedcontrollerList = new List<BD201SRollerController>();
 
                     for (int i = 0; i < speedCtlList.Count; i++)
                     {
 
-                        speedcontrollerList.Add(new SD201SSpeedController(speedCtlIndex[i], speedCtlList[i], modbusCommunication));
+                        speedcontrollerList.Add(new BD201SRollerController(speedCtlIndex[i], speedCtlList[i], modbusCommunication));
                     }
-                    return new SpeedControllerList(speedcontrollerList);
+                    return new RollerList(speedcontrollerList);
                 });
             });
 
