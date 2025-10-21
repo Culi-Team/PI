@@ -441,6 +441,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             switch (Sequence)
             {
+                case ESequence.Stop:
+                    break;
+                case ESequence.AutoRun:
+                    break;
                 case ESequence.Ready:
                     if (Childs!.Count(child => child.Sequence != ESequence.Stop) == 0)
                     {
@@ -448,11 +452,17 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Log.Info("Initialize done");
                     }
                     break;
+                default: // User defined SemiAuto sequence
+                    if (Childs!.Count(child => child.Sequence != ESequence.Stop) == 0)
+                    {
+                        ProcessMode = EProcessMode.Stop;
+                        Log.Info("SemiAuto sequence done");
+                    }
+                    break;
             }
 
             return true;
         }
-
         #endregion
 
         #region Private Methods

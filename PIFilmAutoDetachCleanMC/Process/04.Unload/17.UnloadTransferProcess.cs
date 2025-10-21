@@ -512,9 +512,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
+
                     Log.Info("Sequence Unload Transfer Place");
                     Sequence = port == EPort.Left ? ESequence.UnloadTransferLeftPlace : ESequence.UnloadTransferRightPlace;
                     break;
@@ -719,7 +719,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
                     if (port == EPort.Left)

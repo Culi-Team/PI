@@ -118,6 +118,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch (Sequence)
             {
                 case ESequence.Stop:
+                    Wait(50);
                     break;
                 case ESequence.AutoRun:
                     Sequence_AutoRun();
@@ -126,74 +127,17 @@ namespace PIFilmAutoDetachCleanMC.Process
                     IsWarning = false;
                     Sequence = ESequence.Stop;
                     break;
-                case ESequence.InWorkCSTLoad:
-                    break;
-                case ESequence.InWorkCSTUnLoad:
-                    break;
-                case ESequence.OutWorkCSTLoad:
-                    break;
-                case ESequence.OutWorkCSTUnLoad:
-                    break;
-                case ESequence.RobotPickFixtureFromCST:
-                    break;
-                case ESequence.RobotPlaceFixtureToVinylClean:
-                    break;
-                case ESequence.RobotPickFixtureFromVinylClean:
-                    break;
                 case ESequence.RobotPlaceFixtureToAlign:
                     Sequence_RobotPlaceFixtureToAlign();
                     break;
                 case ESequence.FixtureAlign:
                     Sequence_FixtureAlign();
                     break;
-                case ESequence.RobotPickFixtureFromRemoveZone:
-                    break;
-                case ESequence.RobotPlaceFixtureToOutWorkCST:
-                    break;
                 case ESequence.TransferFixture:
                     Sequence_TransferFixture();
                     break;
-                case ESequence.Detach:
-                    break;
-                case ESequence.DetachUnload:
-                    break;
-                case ESequence.RemoveFilm:
-                    break;
-                case ESequence.GlassTransferPick:
-                    break;
-                case ESequence.GlassTransferPlace:
-                    break;
-                case ESequence.AlignGlassLeft:
-                    break;
-                case ESequence.TransferInShuttleLeftPick:
-                    break;
-                case ESequence.WETCleanLeftLoad:
-                    break;
-                case ESequence.WETCleanLeft:
-                    break;
-                case ESequence.WETCleanLeftUnload:
-                    break;
-                case ESequence.TransferRotationLeft:
-                    break;
-                case ESequence.AFCleanLeftLoad:
-                    break;
-                case ESequence.AFCleanLeft:
-                    break;
-                case ESequence.AFCleanLeftUnload:
-                    break;
-                case ESequence.UnloadTransferLeftPlace:
-                    break;
-                case ESequence.UnloadAlignGlass:
-                    break;
-                case ESequence.UnloadRobotPick:
-                    break;
-                case ESequence.UnloadRobotPlasma:
-                    break;
-                case ESequence.UnloadRobotPlace:
-                    break;
-
                 default:
-                    Thread.Sleep(20);
+                    Sequence = ESequence.Stop;
                     break;
             }
             return true;
@@ -296,7 +240,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent!.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
                     Log.Info("Sequence Fixture Align");
@@ -370,9 +313,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
+
                     Log.Info("Sequence Transfer Fixture");
                     Sequence = ESequence.TransferFixture;
                     break;
@@ -430,9 +373,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
+
                     Log.Info("Sequence Robot Place Fixture To Align");
                     Sequence = ESequence.RobotPlaceFixtureToAlign;
                     break;

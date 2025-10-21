@@ -184,6 +184,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch (Sequence)
             {
                 case ESequence.Stop:
+                    Wait(50);
                     break;
                 case ESequence.AutoRun:
                     Sequence_AutoRun();
@@ -200,6 +201,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.RobotPickFixtureFromVinylClean:
                     Sequence_RobotPickFixtureFromVinylClean();
+                    break;
+                default:
+                    Sequence = ESequence.Stop;
                     break;
             }
             return true;
@@ -359,9 +363,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
+
                     Log.Info("Sequence Robot Pick Fixture From Vinyl Clean");
                     Sequence = ESequence.RobotPickFixtureFromVinylClean;
                     break;
@@ -420,9 +424,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
+
                     Log.Info("Sequence Robot Place Fixture To Vinyl Clean");
                     Sequence = ESequence.RobotPlaceFixtureToVinylClean;
                     break;
@@ -553,9 +557,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
+
                     Log.Info("Sequence Vinyl Clean");
                     Sequence = ESequence.VinylClean;
                     break;

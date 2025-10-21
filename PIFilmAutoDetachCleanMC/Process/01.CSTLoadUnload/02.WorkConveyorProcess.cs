@@ -318,6 +318,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch (Sequence)
             {
                 case ESequence.Stop:
+                    Wait(50);
                     break;
                 case ESequence.AutoRun:
                     Sequence_AutoRun();
@@ -351,58 +352,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.RobotPickFixtureFromCST:
                     if (port == EPort.Right) Sequence_PickPlace();
                     break;
-                case ESequence.RobotPlaceFixtureToVinylClean:
-                    break;
-                case ESequence.RobotPickFixtureFromVinylClean:
-                    break;
-                case ESequence.RobotPlaceFixtureToAlign:
-                    break;
-                case ESequence.FixtureAlign:
-                    break;
-                case ESequence.RobotPickFixtureFromRemoveZone:
-                    break;
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
                     if (port == EPort.Left) Sequence_PickPlace();
                     break;
-                case ESequence.TransferFixture:
-                    break;
-                case ESequence.Detach:
-                    break;
-                case ESequence.DetachUnload:
-                    break;
-                case ESequence.RemoveFilm:
-                    break;
-                case ESequence.GlassTransferPick:
-                    break;
-                case ESequence.GlassTransferPlace:
-                    break;
-                case ESequence.AlignGlassLeft:
-                    break;
-                case ESequence.TransferInShuttleLeftPick:
-                    break;
-                case ESequence.WETCleanLeftLoad:
-                    break;
-                case ESequence.WETCleanLeft:
-                    break;
-                case ESequence.WETCleanLeftUnload:
-                    break;
-                case ESequence.TransferRotationLeft:
-                    break;
-                case ESequence.AFCleanLeftLoad:
-                    break;
-                case ESequence.AFCleanLeft:
-                    break;
-                case ESequence.AFCleanLeftUnload:
-                    break;
-                case ESequence.UnloadTransferLeftPlace:
-                    break;
-                case ESequence.UnloadAlignGlass:
-                    break;
-                case ESequence.UnloadRobotPick:
-                    break;
-                case ESequence.UnloadRobotPlasma:
-                    break;
-                case ESequence.UnloadRobotPlace:
+                default:
+                    Sequence = ESequence.Stop;
                     break;
 
             }
@@ -565,15 +519,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
+
                     if (port == EPort.Right)
                     {
                         Log.Info("Robot Pick Fixture From In CST");
                         Sequence = ESequence.RobotPickFixtureFromCST;
                         break;
                     }
+
                     Log.Info("Robot Place Fixture To Out CST");
                     Sequence = ESequence.RobotPlaceFixtureToOutWorkCST;
                     break;
@@ -641,15 +596,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
+
                     if (port == EPort.Right)
                     {
                         Log.Info("Sequence In Work CST Unload");
                         Sequence = ESequence.InWorkCSTUnLoad;
                         break;
                     }
+
                     Log.Info("Sequence Out Work CST Unload");
                     Sequence = ESequence.OutWorkCSTUnLoad;
                     break;
@@ -775,8 +731,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorProcessLoadStep.End:
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
-                        // Wait Upper Stream set Root to Stop
-                        Wait(50);
+                        Sequence = ESequence.Stop;
                         break;
                     }
                     Log.Debug("Load End");
@@ -957,10 +912,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorUnloadStep.End:
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
-                        // Waiting for DownStream to Stop Root
-                        Wait(50);
+                        Sequence = ESequence.Stop;
                         break;
                     }
+
                     Log.Debug("Unload End");
                     if (port == EPort.Right)
                     {

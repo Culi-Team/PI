@@ -155,6 +155,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch (Sequence)
             {
                 case ESequence.Stop:
+                    Wait(50);
                     break;
                 case ESequence.AutoRun:
                     Sequence_AutoRun();
@@ -163,79 +164,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     IsWarning = false;
                     Sequence = ESequence.Stop;
                     break;
-                case ESequence.InConveyorLoad:
-                    break;
-                case ESequence.InWorkCSTLoad:
-                    break;
                 case ESequence.InWorkCSTUnLoad:
                     Sequence_InWorkCSTUnload();
-                    break;
-                case ESequence.InWorkCSTTilt:
                     break;
                 case ESequence.OutWorkCSTLoad:
                     Sequence_OutWorkCSTLoad();
                     break;
-                case ESequence.OutWorkCSTUnLoad:
-                    break;
-                case ESequence.OutConveyorUnload:
-                    break;
-                case ESequence.OutWorkCSTTilt:
-                    break;
-                case ESequence.RobotPickFixtureFromCST:
-                    break;
-                case ESequence.RobotPlaceFixtureToVinylClean:
-                    break;
-                case ESequence.VinylClean:
-                    break;
-                case ESequence.RobotPickFixtureFromVinylClean:
-                    break;
-                case ESequence.RobotPlaceFixtureToAlign:
-                    break;
-                case ESequence.FixtureAlign:
-                    break;
-                case ESequence.RobotPickFixtureFromRemoveZone:
-                    break;
-                case ESequence.RobotPlaceFixtureToOutWorkCST:
-                    break;
-                case ESequence.TransferFixture:
-                    break;
-                case ESequence.Detach:
-                    break;
-                case ESequence.DetachUnload:
-                    break;
-                case ESequence.RemoveFilm:
-                    break;
-                case ESequence.GlassTransferPick:
-                    break;
-                case ESequence.GlassTransferPlace:
-                    break;
-                case ESequence.AlignGlassLeft:
-                    break;
-                case ESequence.TransferInShuttleLeftPick:
-                    break;
-                case ESequence.WETCleanLeftLoad:
-                    break;
-                case ESequence.WETCleanLeft:
-                    break;
-                case ESequence.WETCleanLeftUnload:
-                    break;
-                case ESequence.TransferRotationLeft:
-                    break;
-                case ESequence.AFCleanLeftLoad:
-                    break;
-                case ESequence.AFCleanLeft:
-                    break;
-                case ESequence.AFCleanLeftUnload:
-                    break;
-                case ESequence.UnloadTransferLeftPlace:
-                    break;
-                case ESequence.UnloadAlignGlass:
-                    break;
-                case ESequence.UnloadRobotPick:
-                    break;
-                case ESequence.UnloadRobotPlasma:
-                    break;
-                case ESequence.UnloadRobotPlace:
+                default:
+                    Sequence = ESequence.Stop;
                     break;
             }
 
@@ -443,9 +379,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
+
                     Log.Info("Sequence Out Work CST Load");
                     Sequence = ESequence.OutWorkCSTLoad;
                     break;
@@ -516,9 +452,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
-                        Parent.ProcessMode = EProcessMode.ToStop;
                         break;
                     }
+
                     Log.Info("Sequence In Work CST Unload");
                     Sequence = ESequence.InWorkCSTUnLoad;
                     break;
