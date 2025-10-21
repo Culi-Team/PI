@@ -563,11 +563,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
                     Sequence_RobotPlaceFixtureToOutCST();
                     break;
-                case ESequence.TransferFixtureLoad:
+                case ESequence.TransferFixture:
                     break;
                 case ESequence.Detach:
-                    break;
-                case ESequence.TransferFixtureUnload:
                     break;
                 case ESequence.DetachUnload:
                     break;

@@ -89,20 +89,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagGlassAlignPickDoneReceived
-        {
-            set
-            {
-                if (port == EPort.Left)
-                {
-                    _glassAlignLeftOutput[(int)EGlassAlignProcessOutput.GLASS_ALIGN_PICK_DONE_RECEIVED] = value;
-                }
-                else
-                {
-                    _glassAlignRightOutput[(int)EGlassAlignProcessOutput.GLASS_ALIGN_PICK_DONE_RECEIVED] = value;
-                }
-            }
-        }
         private bool FlagGlassTransferPlaceDone
         {
             get
@@ -126,21 +112,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 }
 
                 return _glassAlignRightInput[(int)EGlassAlignProcessInput.TRANSFER_IN_SHUTTLE_PICK_DONE];
-            }
-        }
-
-        private bool FlagGlassAlignPlaceDoneReceived
-        {
-            set
-            {
-                if (port == EPort.Left)
-                {
-                    _glassAlignLeftOutput[(int)EGlassAlignProcessOutput.GLASS_ALIGN_PLACE_DONE_RECEIVED] = value;
-                }
-                else
-                {
-                    _glassAlignRightOutput[(int)EGlassAlignProcessOutput.GLASS_ALIGN_PLACE_DONE_RECEIVED] = value;
-                }
             }
         }
         #endregion
@@ -243,11 +214,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
                     break;
-                case ESequence.TransferFixtureLoad:
+                case ESequence.TransferFixture:
                     break;
                 case ESequence.Detach:
-                    break;
-                case ESequence.TransferFixtureUnload:
                     break;
                 case ESequence.DetachUnload:
                     break;
@@ -446,7 +415,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassAlignGlassTransferPlaceStep.Start:
                     Log.Debug("Glass Transfer Place Start");
                     Log.Debug("Clear Flag Glass Align Place Done Received");
-                    FlagGlassAlignPlaceDoneReceived = false;
                     Step.RunStep++;
                     break;
                 case EGlassAlignGlassTransferPlaceStep.Cyl_Align_Down:
@@ -477,11 +445,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
+
                     Log.Debug("Clear Flag Request Glass");
                     FlagGlassAlignRequestGlass = false;
-
-                    Log.Debug("Set Flag Glass Align Place Done Received");
-                    FlagGlassAlignPlaceDoneReceived = true;
                     Step.RunStep++;
                     break;
                 case EGlassAlignGlassTransferPlaceStep.End:
@@ -630,9 +596,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassAlignTransferInShuttlePickStep.Glass_Detect_Check:
                     Log.Debug("Glass Detect Check");
 
-                    Log.Debug("Clear Flag Glass Align Pick Done Received");
-                    FlagGlassAlignPickDoneReceived = false;
-
                     if (IsGlassDetect || _machineStatus.IsDryRunMode)
                     {
                         Step.RunStep++;
@@ -656,8 +619,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Clear Flag Glass Align Request Pick");
                     FlagGlassAlignRequestPick = false;
 
-                    Log.Debug("Set Flag Glass Align Pick Done Received");
-                    FlagGlassAlignPickDoneReceived = true;
                     Step.RunStep = (int)EGlassAlignTransferInShuttlePickStep.Glass_Detect_Check;
                     break;
                 case EGlassAlignTransferInShuttlePickStep.End:

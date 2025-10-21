@@ -384,6 +384,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         break;
                     case EHandleStep.MotionDeviceHandle:
                         MessageText = "Disconnect Motion Devices";
+
+                        _devices.Outputs.DoorOpen.Value = true;
+
                         _devices.Motions.InovanceMaster.Disconnect();
                         _devices.Motions.AjinMaster.Disconnect();
 

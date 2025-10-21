@@ -643,7 +643,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Up");
                     PushCyl.Backward();
                     BrushCyl.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return PushCyl.IsBackward && BrushCyl.IsBackward; });
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PushCyl.IsBackward && BrushCyl.IsBackward);
                     Step.OriginStep++;
                     break;
                 case ECleanOriginStep.Cyl_Up_Wait:
@@ -688,7 +688,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     YAxis.SearchOrigin();
                     TAxis.SearchOrigin();
                     FeedingAxis.SearchOrigin();
-                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => { return XAxis.Status.IsHomeDone && YAxis.Status.IsHomeDone && TAxis.Status.IsHomeDone && FeedingAxis.Status.IsHomeDone; });
+                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => XAxis.Status.IsHomeDone && YAxis.Status.IsHomeDone && TAxis.Status.IsHomeDone && FeedingAxis.Status.IsHomeDone);
                     Step.OriginStep++;
                     break;
                 case ECleanOriginStep.AxisOrigin_Wait:
@@ -851,11 +851,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
                     break;
-                case ESequence.TransferFixtureLoad:
+                case ESequence.TransferFixture:
                     break;
                 case ESequence.Detach:
-                    break;
-                case ESequence.TransferFixtureUnload:
                     break;
                 case ESequence.DetachUnload:
                     break;
@@ -978,7 +976,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Up");
                     PushCyl.Backward();
                     BrushCyl.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return PushCyl.IsBackward && BrushCyl.IsBackward; });
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PushCyl.IsBackward && BrushCyl.IsBackward);
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.Cyl_Up_Wait:
@@ -1168,7 +1166,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Up");
                     PushCyl.Backward();
                     BrushCyl.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => { return PushCyl.IsBackward && BrushCyl.IsBackward; });
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PushCyl.IsBackward && BrushCyl.IsBackward);
                     Step.RunStep++;
                     break;
                 case ECleanProcessReadyStep.Cyl_Up_Wait:

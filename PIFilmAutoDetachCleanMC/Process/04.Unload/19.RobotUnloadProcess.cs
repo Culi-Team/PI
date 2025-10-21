@@ -237,7 +237,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #endif
                     if (!ProACT.Value)
                     {
-                        RaiseWarning((int)EWarning.RobotLoad_Programing_Not_Running);
+                        RaiseWarning((int)EWarning.RobotUnload_Programing_Not_Running);
                         break;
                     }
 #if SIMULATION
@@ -429,17 +429,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
                     break;
-                case ESequence.TransferFixtureLoad:
+                case ESequence.TransferFixture:
                     break;
                 case ESequence.Detach:
-                    break;
-                case ESequence.TransferFixtureUnload:
                     break;
                 case ESequence.DetachUnload:
                     break;
                 case ESequence.RemoveFilm:
-                    break;
-                case ESequence.RemoveFilmThrow:
                     break;
                 case ESequence.GlassTransferPick:
                     break;

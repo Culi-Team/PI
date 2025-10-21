@@ -147,26 +147,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 }
             }
         }
-
-        private bool FlagDetachGlassTransferPickDoneReceived
-        {
-            get
-            {
-                return _glassTransferInput[(int)EGlassTransferProcessInput.GLASS_TRANSFER_PICK_DONE_RECEIVED];
-            }
-        }
-
-        private bool FlagGlassAlignPlaceDoneReceived
-        {
-            get
-            {
-                if (currentPlacePort == EPort.Left)
-                {
-                    return _glassTransferInput[(int)EGlassTransferProcessInput.GLASS_ALIGN_LEFT_PLACE_DONE_RECEIVED];
-                }
-                return _glassTransferInput[(int)EGlassTransferProcessInput.GLASS_ALIGN_RIGHT_PLACE_DONE_RECEIVED];
-            }
-        }
         #endregion
 
         #region Constructor
@@ -247,7 +227,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferOriginStep.ZAxis_Origin:
                     Log.Debug("Glass Transfer Z Axis Origin Start");
                     ZAxis.SearchOrigin();
-                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => { return ZAxis.Status.IsHomeDone; });
+                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => ZAxis.Status.IsHomeDone);
                     Step.OriginStep++;
                     break;
                 case EGlassTransferOriginStep.ZAxis_Origin_Wait:
@@ -262,7 +242,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferOriginStep.YAxis_Origin:
                     Log.Debug("Glass Transfer Y Axis Origin Start");
                     YAxis.SearchOrigin();
-                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => { return YAxis.Status.IsHomeDone; });
+                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => YAxis.Status.IsHomeDone);
                     Step.OriginStep++;
                     break;
                 case EGlassTransferOriginStep.YAxis_Origin_Wait:
@@ -327,11 +307,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
                     break;
-                case ESequence.TransferFixtureLoad:
+                case ESequence.TransferFixture:
                     break;
                 case ESequence.Detach:
-                    break;
-                case ESequence.TransferFixtureUnload:
                     break;
                 case ESequence.DetachUnload:
                     break;
@@ -608,8 +586,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EGlassTransferPickStep.Wait_DetachGlassTransferPickDone_Received:
-                    if (FlagDetachGlassTransferPickDoneReceived == false)
+                    if (FlagDetachRequestUnloadGlass == true)
                     {
+                        // Wait until Detach clears the request unload signal
+                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag Glass Transfer Pick Done");
@@ -759,8 +739,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EGlassTransferPlaceStep.Wait_GlassAlignPlaceDoneReceived:
-                    if (FlagGlassAlignPlaceDoneReceived == false)
+                    bool DownStreamRequestFlag = currentPlacePort == EPort.Left ? FlagGlassAlignLeftRequestGlass : FlagGlassAlignRightRequestGlass;
+                    if (DownStreamRequestFlag == true)
                     {
+                        // Wait until Glass Align clears the request glass signal
+                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag Place Done");

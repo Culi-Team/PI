@@ -12,7 +12,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         FIXTURE_ALIGN_LOAD_DONE_RECEIVED,
 
         FIXTURE_ALIGN_DONE,
-
         TRANSFER_FIXTURE_DONE_RECEIVED,
     }
 }

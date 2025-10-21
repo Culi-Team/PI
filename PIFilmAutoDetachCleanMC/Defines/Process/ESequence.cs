@@ -46,18 +46,14 @@ namespace PIFilmAutoDetachCleanMC.Defines
         [Description("Place To Out CST")]
         RobotPlaceFixtureToOutWorkCST,
 
-        [Description("Transfer Fixture Load")]
-        TransferFixtureLoad,
+        [Description("Transfer Fixture")]
+        TransferFixture,
         [Description("Detach")]
         Detach,
-        [Description("Transfer Fixture Unload")]
-        TransferFixtureUnload,
         [Description("Detach Unload")]
         DetachUnload,
         [Description("Remove Film")]
         RemoveFilm,
-        [Description("Remove Film Throw")]
-        RemoveFilmThrow,
 
         [Description("Glass Transfer Pick")]
         GlassTransferPick,
@@ -159,18 +155,14 @@ namespace PIFilmAutoDetachCleanMC.Defines
         [Description("Place To Out CST")]
         RobotPlaceFixtureToOutWorkCST,
 
-        [Description("Transfer Fixture Load")]
-        TransferFixtureLoad,
+        [Description("Transfer Fixture")]
+        TransferFixture,
         [Description("Detach")]
         Detach,
-        [Description("Transfer Fixture Unload")]
-        TransferFixtureUnload,
         [Description("Detach Unload")]
         DetachUnload,
         [Description("Remove Film")]
         RemoveFilm,
-        [Description("Remove Film Throw")]
-        RemoveFilmThrow,
 
         [Description("Glass Transfer Pick")]
         GlassTransferPick,

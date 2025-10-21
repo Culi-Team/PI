@@ -10,6 +10,5 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         REMOVE_FILM_REQ_UNLOAD,
         REMOVE_FILM_DONE,
-        TRANSFER_FIXTURE_DONE_RECEIVED
     }
 }

@@ -171,9 +171,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.FixtureAlign:
                 case ESequence.RobotPickFixtureFromRemoveZone:
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
-                case ESequence.TransferFixtureLoad:
+                case ESequence.TransferFixture:
                 case ESequence.Detach:
-                case ESequence.TransferFixtureUnload:
                 case ESequence.DetachUnload:
                 case ESequence.RemoveFilm:
                 case ESequence.GlassTransferPick:

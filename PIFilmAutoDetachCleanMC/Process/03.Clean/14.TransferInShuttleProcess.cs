@@ -111,14 +111,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagGlassAlignPickDoneReceived
-        {
-            get
-            {
-                return Inputs[(int)ETransferInShuttleProcessInput.GLASS_ALIGN_PICK_DONE_RECEIVED];
-            }
-        }
-
         private bool FlagWETCleanLoadDoneReceived
         {
             get
@@ -185,7 +177,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttleOriginStep.ZAxis_Origin:
                     Log.Debug("Transfer In Shuttle Z Axis Origin Start");
                     ZAxis.SearchOrigin();
-                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => { return ZAxis.Status.IsHomeDone; });
+                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => ZAxis.Status.IsHomeDone);
                     Step.OriginStep++;
                     break;
                 case ETransferInShuttleOriginStep.ZAxis_Origin_Wait:
@@ -200,7 +192,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttleOriginStep.YAxis_Origin:
                     Log.Debug("Transfer In Shuttle Y Axis Origin Start");
                     YAxis.SearchOrigin();
-                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => { return YAxis.Status.IsHomeDone; });
+                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => YAxis.Status.IsHomeDone);
                     Step.OriginStep++;
                     break;
                 case ETransferInShuttleOriginStep.YAxis_Origin_Wait:
@@ -266,11 +258,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
                     break;
-                case ESequence.TransferFixtureLoad:
+                case ESequence.TransferFixture:
                     break;
                 case ESequence.Detach:
-                    break;
-                case ESequence.TransferFixtureUnload:
                     break;
                 case ESequence.DetachUnload:
                     break;
@@ -754,8 +744,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePickStep.Wait_GlassAlignPickDoneReceived:
-                    if (FlagGlassAlignPickDoneReceived == false)
+                    if (FlagGlassAlignRequestPick == true)
                     {
+                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag Transfer In Shuttle Pick Done");

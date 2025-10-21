@@ -158,7 +158,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferOriginStep.ZAxis_Origin:
                     Log.Debug("Z Axis Origin Start");
                     ZAxis.SearchOrigin();
-                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => { return ZAxis.Status.IsHomeDone; });
+                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => ZAxis.Status.IsHomeDone);
                     Step.OriginStep++;
                     break;
                 case EUnloadTransferOriginStep.ZAxis_Origin_Wait:
@@ -174,7 +174,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferOriginStep.YAxis_Origin:
                     Log.Debug("Y Axis Origin Start");
                     YAxis.SearchOrigin();
-                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => { return YAxis.Status.IsHomeDone; });
+                    Wait((int)_commonRecipe.MotionOriginTimeout * 1000, () => YAxis.Status.IsHomeDone);
                     Step.OriginStep++;
                     break;
                 case EUnloadTransferOriginStep.YAxis_Origin_Wait:
@@ -239,11 +239,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
                     break;
-                case ESequence.TransferFixtureLoad:
+                case ESequence.TransferFixture:
                     break;
                 case ESequence.Detach:
-                    break;
-                case ESequence.TransferFixtureUnload:
                     break;
                 case ESequence.DetachUnload:
                     break;

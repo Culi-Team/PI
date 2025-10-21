@@ -303,8 +303,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Sht Tr X Axis Unload Position")
                 {
                     var shuttleTransferZAxis = devices.Motions.ShuttleTransferZAxis;
-                    if (shuttleTransferZAxis != null && shuttleTransferZAxis.Status.ActualPosition
-                        != recipeSelector.CurrentRecipe.DetachRecipe.ShuttleTransferZAxisDetachReadyPosition)
+                    if (shuttleTransferZAxis != null && !shuttleTransferZAxis.IsOnPosition(recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[Shuttle Transfer Z Axis] ," +
                             $"\n Need Move [Ready Position] befor move to " +

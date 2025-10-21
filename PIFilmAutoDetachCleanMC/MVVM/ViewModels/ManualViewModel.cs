@@ -485,8 +485,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferFixtureImage"),
                         SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESemiSequence.TransferFixtureLoad,
-                            ESemiSequence.TransferFixtureUnload,
+                            ESemiSequence.TransferFixture,
                         }
 
                     };
@@ -528,7 +527,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
                             ESemiSequence.RemoveFilm,
-                            ESemiSequence.RemoveFilmThrow
+                            ESemiSequence.RobotPickFixtureFromRemoveZone,
                         }
                     };
                 case "Glass Transfer":

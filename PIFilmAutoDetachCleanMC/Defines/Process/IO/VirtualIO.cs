@@ -329,12 +329,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 _fixtureAlignOutput, (int)EFixtureAlignProcessOutput.FIXTURE_ALIGN_DONE);
             ((MappableInputDevice<ETransferFixtureProcessInput>)_transferFixtureInput).Mapping((int)ETransferFixtureProcessInput.REMOVE_FILM_DONE,
                 _removeFilmOutput, (int)ERemoveFilmProcessOutput.REMOVE_FILM_DONE);
-            ((MappableInputDevice<ETransferFixtureProcessInput>)_transferFixtureInput).Mapping((int)ETransferFixtureProcessInput.ALIGN_TRANSFER_FIXTURE_DONE_RECEIVED,
-                _fixtureAlignOutput, (int)EFixtureAlignProcessOutput.TRANSFER_FIXTURE_DONE_RECEIVED);
-            ((MappableInputDevice<ETransferFixtureProcessInput>)_transferFixtureInput).Mapping((int)ETransferFixtureProcessInput.DETACH_TRANSFER_FIXTURE_DONE_RECEIVED,
-                _detachOutput, (int)EDetachProcessOutput.TRANSFER_FIXTURE_DONE_RECEIVED);
-            ((MappableInputDevice<ETransferFixtureProcessInput>)_transferFixtureInput).Mapping((int)ETransferFixtureProcessInput.REMOVE_FILM_TRANSFER_FIXTURE_DONE_RECEIVED,
-                _removeFilmOutput, (int)ERemoveFilmProcessOutput.TRANSFER_FIXTURE_DONE_RECEIVED);
             ((MappableInputDevice<ETransferFixtureProcessInput>)_transferFixtureInput).Mapping((int)ETransferFixtureProcessInput.ROBOT_ORIGIN_DONE,
                 _robotLoadOutput, (int)ERobotLoadProcessOutput.ROBOT_ORIGIN_DONE);
 
@@ -347,16 +341,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //Glass Transfer Input Mapping
             ((MappableInputDevice<EGlassTransferProcessInput>)_glassTransferInput).Mapping((int)EGlassTransferProcessInput.DETACH_REQ_UNLOAD_GLASS,
                 _detachOutput, (int)EDetachProcessOutput.DETACH_REQ_UNLOAD_GLASS);
-            ((MappableInputDevice<EGlassTransferProcessInput>)_glassTransferInput).Mapping((int)EGlassTransferProcessInput.GLASS_TRANSFER_PICK_DONE_RECEIVED,
-                _detachOutput, (int)EDetachProcessOutput.GLASS_TRANSFER_PICK_DONE_RECEIVED);
             ((MappableInputDevice<EGlassTransferProcessInput>)_glassTransferInput).Mapping((int)EGlassTransferProcessInput.GLASS_ALIGN_LEFT_REQ_GLASS,
                 _glassAlignLeftOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_REQ_GLASS);
             ((MappableInputDevice<EGlassTransferProcessInput>)_glassTransferInput).Mapping((int)EGlassTransferProcessInput.GLASS_ALIGN_RIGHT_REQ_GLASS,
                 _glassAlignRightOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_REQ_GLASS);
-            ((MappableInputDevice<EGlassTransferProcessInput>)_glassTransferInput).Mapping((int)EGlassTransferProcessInput.GLASS_ALIGN_LEFT_PLACE_DONE_RECEIVED,
-                _glassAlignLeftOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_PLACE_DONE_RECEIVED);
-            ((MappableInputDevice<EGlassTransferProcessInput>)_glassTransferInput).Mapping((int)EGlassTransferProcessInput.GLASS_ALIGN_RIGHT_PLACE_DONE_RECEIVED,
-                _glassAlignRightOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_PLACE_DONE_RECEIVED);
             ((MappableInputDevice<EGlassTransferProcessInput>)_glassTransferInput).Mapping((int)EGlassTransferProcessInput.TRANSFER_IN_SHUTTLE_L_ORIGIN_DONE,
                 _transferInShuttleLeftOutput, (int)ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_ORIGIN_DONE);
             ((MappableInputDevice<EGlassTransferProcessInput>)_glassTransferInput).Mapping((int)EGlassTransferProcessInput.TRANSFER_IN_SHUTTLE_R_ORIGIN_DONE,
@@ -378,8 +366,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //Left
             ((MappableInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleLeftInput).Mapping((int)ETransferInShuttleProcessInput.GLASS_ALIGN_REQ_PICK,
                 _glassAlignLeftOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_REQ_PICK);
-            ((MappableInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleLeftInput).Mapping((int)ETransferInShuttleProcessInput.GLASS_ALIGN_PICK_DONE_RECEIVED,
-                _glassAlignLeftOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_PICK_DONE_RECEIVED);
             ((MappableInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleLeftInput).Mapping((int)ETransferInShuttleProcessInput.WET_CLEAN_REQ_LOAD,
                 _wetCleanLeftOutput, (int)ECleanProcessOutput.REQ_LOAD);
             ((MappableInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleLeftInput).Mapping((int)ETransferInShuttleProcessInput.WET_CLEAN_LOAD_DONE_RECEIVED,
@@ -387,8 +373,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //Right
             ((MappableInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleRightInput).Mapping((int)ETransferInShuttleProcessInput.GLASS_ALIGN_REQ_PICK,
                 _glassAlignRightOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_REQ_PICK);
-            ((MappableInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleRightInput).Mapping((int)ETransferInShuttleProcessInput.GLASS_ALIGN_PICK_DONE_RECEIVED,
-                _glassAlignRightOutput, (int)EGlassAlignProcessOutput.GLASS_ALIGN_PICK_DONE_RECEIVED);
             ((MappableInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleRightInput).Mapping((int)ETransferInShuttleProcessInput.WET_CLEAN_REQ_LOAD,
                 _wetCleanRightOutput, (int)ECleanProcessOutput.REQ_LOAD);
             ((MappableInputDevice<ETransferInShuttleProcessInput>)_transferInShuttleRightInput).Mapping((int)ETransferInShuttleProcessInput.WET_CLEAN_LOAD_DONE_RECEIVED,

@@ -93,13 +93,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagTransferFixtureDoneReceived
-        {
-            set
-            {
-                _removeFilmOutput[(int)ERemoveFilmProcessOutput.TRANSFER_FIXTURE_DONE_RECEIVED] = value;
-            }
-        }
         private bool FlagRemoveFilmDone
         {
             set
@@ -270,20 +263,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
                     break;
-                case ESequence.TransferFixtureLoad:
+                case ESequence.TransferFixture:
+                    Sequence_TransferFixture();
                     break;
                 case ESequence.Detach:
-                    break;
-                case ESequence.TransferFixtureUnload:
-                    Sequence_TransferFixtureUnload();
                     break;
                 case ESequence.DetachUnload:
                     break;
                 case ESequence.RemoveFilm:
                     Sequence_RemoveFilm();
-                    break;
-                case ESequence.RemoveFilmThrow:
-                    Sequence_RemoveFilmThrow();
                     break;
                 case ESequence.GlassTransferPick:
                     break;
@@ -374,7 +362,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERemoveFilmAutoRunStep.End:
                     Log.Info("Sequence Transfer Fixture Unload");
-                    Sequence = ESequence.TransferFixtureUnload;
+                    Sequence = ESequence.TransferFixture;
                     break;
             }
         }
@@ -475,7 +463,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private void Sequence_TransferFixtureUnload()
+        private void Sequence_TransferFixture()
         {
             switch ((ERemoveFilmProcessTransferFixtureUnloadStep)Step.RunStep)
             {
@@ -516,9 +504,6 @@ namespace PIFilmAutoDetachCleanMC.Process
 #endif
                     Log.Debug("Clear Flag Remove Film Done");
                     FlagRemoveFilmDone = false;
-
-                    Log.Debug("Set Flag Transfer Fixture Done Received");
-                    FlagTransferFixtureDoneReceived = true;
 
                     Step.RunStep++;
                     break;
@@ -685,7 +670,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Info("Sequence Remove Film Throw");
-                    Sequence = ESequence.RemoveFilmThrow;
+                    Sequence = ESequence.RobotPickFixtureFromRemoveZone;
                     break;
             }
         }
@@ -820,7 +805,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Info("Sequence Transfer Fixture Unload");
-                    Sequence = ESequence.TransferFixtureUnload;
+                    Sequence = ESequence.TransferFixture;
                     break;
             }
         }
