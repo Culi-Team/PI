@@ -934,6 +934,30 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     Log.Debug("Wait In Cassette Ready");
                     break;
+                case ERobotLoadPickFixtureFromCSTStep.Cyl_UnClamp:
+                    Log.Debug("Cylinder UnClamp");
+                    Log.Debug("Cylinder Unalign");
+                    ClampCyl1.Backward();
+                    ClampCyl2.Backward();
+                    AlignCyl.Backward();
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => ClampCyl1.IsBackward && ClampCyl2.IsBackward && AlignCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPickFixtureFromCSTStep.Cyl_UnClamp_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        if(ClampCyl1.IsBackward == false || ClampCyl2.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnClamp_Fail);
+                            break;
+                        }
+
+                        RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnAlign_Fail);
+                        break;
+                    }
+
+                    Step.RunStep++;
+                    break;
                 case ERobotLoadPickFixtureFromCSTStep.Wait_InCST_Ready:
                     if (FlagInCSTReady == false)
                     {

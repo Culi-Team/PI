@@ -22,7 +22,14 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _vinylCleanOutput;
         private readonly MachineStatus _machineStatus;
 
-        private bool IsFixtureDetect => _devices.Inputs.VinylCleanFixtureDetect.Value;
+        private bool IsFixtureDetect
+        {
+            get
+            {
+                if (_machineStatus.IsDryRunMode || _machineStatus.MachineTestMode) return true;
+                return _devices.Inputs.VinylCleanFixtureDetect.Value;
+            }
+        }
         private ICylinder FixtureClampCyl1 => _devices.Cylinders.VinylClean_ClampCyl1;
         private ICylinder FixtureClampCyl2 => _devices.Cylinders.VinylClean_ClampCyl2;
 
@@ -261,7 +268,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessVinylCleanStep.FixtureDetect_Check:
-                    if (IsFixtureDetect == false && _machineStatus.IsDryRunMode == false)
+                    if (IsFixtureDetect == false)
                     {
                         RaiseWarning((int)EWarning.VinylClean_Fixture_NotDetect);
                         break;
@@ -532,7 +539,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Fixture_Detect_Check:
-                    if (IsFixtureDetect == false && _machineStatus.IsDryRunMode == false)
+                    if (IsFixtureDetect == false)
                     {
                         RaiseWarning((int)EWarning.VinylClean_Fixture_NotDetect);
                         break;

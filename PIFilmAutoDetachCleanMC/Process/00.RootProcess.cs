@@ -28,21 +28,23 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                //return _devices.Inputs.DoorLock1L.Value &&
-                //       _devices.Inputs.DoorLock1R.Value &&
-                //       _devices.Inputs.DoorLock2L.Value &&
-                //       _devices.Inputs.DoorLock2R.Value &&
-                //       _devices.Inputs.DoorLock3L.Value &&
-                //       _devices.Inputs.DoorLock3R.Value &&
-                //       _devices.Inputs.DoorLock4L.Value &&
-                //       _devices.Inputs.DoorLock4R.Value &&
-                //       _devices.Inputs.DoorLock5L.Value &&
-                //       _devices.Inputs.DoorLock5R.Value &&
-                //       _devices.Inputs.DoorLock6L.Value &&
-                //       _devices.Inputs.DoorLock6R.Value &&
-                //       _devices.Inputs.DoorLock7L.Value &&
-                //       _devices.Inputs.DoorLock7R.Value;
+                //TODO : Remove temp code
                 return true;
+
+                return _devices.Inputs.DoorLock1L.Value &&
+                       _devices.Inputs.DoorLock1R.Value &&
+                       _devices.Inputs.DoorLock2L.Value &&
+                       _devices.Inputs.DoorLock2R.Value &&
+                       _devices.Inputs.DoorLock3L.Value &&
+                       _devices.Inputs.DoorLock3R.Value &&
+                       _devices.Inputs.DoorLock4L.Value &&
+                       _devices.Inputs.DoorLock4R.Value &&
+                       _devices.Inputs.DoorLock5L.Value &&
+                       _devices.Inputs.DoorLock5R.Value &&
+                       _devices.Inputs.DoorLock6L.Value &&
+                       _devices.Inputs.DoorLock6R.Value &&
+                       _devices.Inputs.DoorLock7L.Value &&
+                       _devices.Inputs.DoorLock7R.Value;
             }
         }
 
@@ -50,21 +52,23 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                //return _devices.Inputs.DoorLatch1L.Value &&
-                //       _devices.Inputs.DoorLatch1R.Value &&
-                //       _devices.Inputs.DoorLatch2L.Value &&
-                //       _devices.Inputs.DoorLatch2R.Value &&
-                //       _devices.Inputs.DoorLatch3L.Value &&
-                //       _devices.Inputs.DoorLatch3R.Value &&
-                //       _devices.Inputs.DoorLatch4L.Value &&
-                //       _devices.Inputs.DoorLatch4R.Value &&
-                //       _devices.Inputs.DoorLatch5L.Value &&
-                //       _devices.Inputs.DoorLatch5R.Value &&
-                //       _devices.Inputs.DoorLatch6L.Value &&
-                //       _devices.Inputs.DoorLatch6R.Value &&
-                //       _devices.Inputs.DoorLatch7L.Value &&
-                //       _devices.Inputs.DoorLatch7R.Value;
+                //TODO : Remove temp code
                 return true;
+
+                return _devices.Inputs.DoorLatch1L.Value &&
+                       _devices.Inputs.DoorLatch1R.Value &&
+                       _devices.Inputs.DoorLatch2L.Value &&
+                       _devices.Inputs.DoorLatch2R.Value &&
+                       _devices.Inputs.DoorLatch3L.Value &&
+                       _devices.Inputs.DoorLatch3R.Value &&
+                       _devices.Inputs.DoorLatch4L.Value &&
+                       _devices.Inputs.DoorLatch4R.Value &&
+                       _devices.Inputs.DoorLatch5L.Value &&
+                       _devices.Inputs.DoorLatch5R.Value &&
+                       _devices.Inputs.DoorLatch6L.Value &&
+                       _devices.Inputs.DoorLatch6R.Value &&
+                       _devices.Inputs.DoorLatch7L.Value &&
+                       _devices.Inputs.DoorLatch7R.Value;
             }
         }
 
@@ -513,12 +517,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EOperationCommand.Origin:
                     foreach (var motion in _devices.Motions.All!)
                     {
-                        if (motion.Status.IsAlarm) motion.AlarmReset();
+                        if (motion.Status.IsAlarm)
+                        {
+                            motion.AlarmReset();
+                        }
 
                         motion.MotionOn();
                     }
 
-                    Thread.Sleep(1000);
+                    Thread.Sleep(2000);
 
                     if (_devices.Motions.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
                     {
