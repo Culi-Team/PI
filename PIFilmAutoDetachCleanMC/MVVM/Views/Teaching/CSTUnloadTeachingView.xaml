@@ -16,17 +16,18 @@
              d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition Width="1.2*" />
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
             <ScrollViewer Grid.Column="0"
-                          Grid.ColumnSpan="2">
+                          Grid.ColumnSpan="2"
+                          Margin="5">
                 <StackPanel x:Name="PositionTeaching_StackPanel">
                 </StackPanel>
             </ScrollViewer>
@@ -43,24 +44,33 @@
                 <ColumnDefinition Width="1.2*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="1.5*" />
+                <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
 
             <Border Grid.Column="0"
                     Grid.ColumnSpan="2">
                 <GroupBox Header="Cylinder"
-                          Style="{StaticResource TextBlockHeaderGroupBox}">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                  HorizontalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding Cylinders}"
-                                      ItemTemplate="{StaticResource CylinderControlDataTemplate}">
+                          Grid.Row="1"
+                          Grid.ColumnSpan="2"
+                          Style="{StaticResource TextBlockHeaderGroupBox}">     
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding Cylinders}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Columns="4"
+                                    <UniformGrid Columns="6"
                                                  VerticalAlignment="Top" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ContentControl
+                                                Content="{Binding .}"
+                                                Margin="3"
+                                                Height="150"
+                                                Width="170"/>   
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </ScrollViewer>
                 </GroupBox>
@@ -113,28 +123,27 @@
                     </Grid.ColumnDefinitions>
                     <GroupBox Header="Motions"
                               Style="{StaticResource TextBlockHeaderGroupBox}">
-                        <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                      HorizontalScrollBarVisibility="Auto">
-                            <ItemsControl ItemsSource="{Binding Motions}"
-                                          x:Name="motionsList">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <ui:MovingView x:Name="motion"
-                                                       DataContext="{Binding }" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
+                        <ScrollViewer>
+                            <ItemsControl x:Name="MotionItemsControl"
+                                          ItemsSource="{Binding Motions}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <UniformGrid Columns="3" />
+                                        <UniformGrid VerticalAlignment="Top"
+                                                     HorizontalAlignment="Left"/>
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <ui:MotionView DataContext="{Binding}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </ScrollViewer>
                     </GroupBox>
                     <GroupBox Header="Laser"
                               Style="{StaticResource TextBlockHeaderGroupBox}"
                               Grid.Column="1">
-                        <UniformGrid Rows="2"
+                        <UniformGrid Rows="6"
                                      Margin="0 0 0 5">
                             <UniformGrid>
                                 <Label Content="1st Fixture Distance"
@@ -151,9 +160,11 @@
                             <UniformGrid>
                                 <Button Content="Get"
                                         FontSize="14"
+                                        Margin="2"
                                         Command="{Binding GetCurrentDistanceCommand}" />
                                 <Button Content="Save"
                                         FontSize="14"
+                                        Margin="2"
                                         Command="{Binding SaveCommand}" />
                             </UniformGrid>
                         </UniformGrid>

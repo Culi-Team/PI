@@ -58,14 +58,15 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0"
+              Margin="2 5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition Width="1.2*" />
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <ScrollViewer Grid.Column="0"
                           Grid.ColumnSpan="2">
@@ -85,30 +86,39 @@
                 <ColumnDefinition Width="1.2*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="1*" />
                 <RowDefinition Height="1.5*" />
+                <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
 
             <!--Cylinder and Pressure-->
             <GroupBox Header="Cylinder"
+                      Grid.Row="1"
                       Grid.ColumnSpan="2"
                       Style="{StaticResource TextBlockHeaderGroupBox}">
-                <ScrollViewer VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Cylinders}"
-                                  ItemTemplate="{StaticResource CylinderControlDataTemplate}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Cylinders}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <UniformGrid Rows="1"
+                                <UniformGrid Columns="6"
                                              VerticalAlignment="Top" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ContentControl
+                                            Content="{Binding .}"
+                                            Margin="3"
+                                            Height="150"
+                                            Width="170"/>       
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
             </GroupBox>
+            
             <GroupBox Header="Regulator"
-                      Grid.Row="1"
+                      Grid.Row="0"
                       Style="{StaticResource TextBlockHeaderGroupBox}">
                 <StackPanel VerticalAlignment="Center">
                     <UniformGrid Rows="1"
@@ -146,7 +156,7 @@
 
             <!--Torque-->
             <Border Grid.Column="1"
-                    Grid.Row="1">
+                    Grid.Row="0">
                 <UniformGrid Columns="2">
                     <GroupBox Header="Winder Torque"
                               Style="{StaticResource TextBlockHeaderGroupBox}"
@@ -355,18 +365,20 @@
                 <GroupBox Header="Motions"
                           Style="{StaticResource TextBlockHeaderGroupBox}">
                     <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                  HorizontalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding Motions}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <ui:MovingView DataContext="{Binding }" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
+                                  HorizontalScrollBarVisibility="Disabled">
+                        <ItemsControl x:Name="MotionItemsControl"
+                                      ItemsSource="{Binding Motions}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Rows="1" />
+                                    <UniformGrid Columns="4"
+                                                 VerticalAlignment="Top" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ui:MotionView DataContext="{Binding}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </ScrollViewer>
                 </GroupBox>

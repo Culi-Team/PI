@@ -57,8 +57,8 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -79,85 +79,44 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition Width="1.2*" />
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="4*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="1.5*" />
             </Grid.RowDefinitions>
 
             <!--Cylinder and Pressure-->
-            <GroupBox Header="Cylinder"
-                      Grid.ColumnSpan="2"
-                      Style="{StaticResource TextBlockHeaderGroupBox}">
-                <ScrollViewer VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Cylinders}"
-                                  ItemTemplate="{StaticResource CylinderControlDataTemplate}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Rows="1"
-                                             VerticalAlignment="Top" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </ScrollViewer>
-            </GroupBox>
-            <!--Torque-->
-            <Border Grid.Column="1"
-                    Grid.Row="1">
-                <UniformGrid Columns="2">
-                    <GroupBox Header="UnWinder Torque"
-                              Style="{StaticResource TextBlockHeaderGroupBox}"
-                              Margin="2 0 0 0">
-                        <UniformGrid Rows="3">
-                            <UniformGrid Columns="2">
-                                <Label Content="Torque (%)"
-                                       VerticalContentAlignment="Center"
-                                       BorderThickness="1"
-                                       FontSize="14"
-                                       FontWeight="SemiBold"
-                                       BorderBrush="LightGray"
-                                       Margin="0 2 2 2" />
-                                <Label Margin="0 2 2 2"
-                                       BorderBrush="LightGray"
-                                       BorderThickness="0.5"
-                                       Cursor="Hand"
-                                       MouseLeftButtonDown="Label_MouseLeftButtonDown"
-                                       Content="{Binding Recipe.UnWinderTorque,Mode=TwoWay,Converter={StaticResource DoubleToIntConveter}}"
-                                       HorizontalContentAlignment="Center"
-                                       VerticalContentAlignment="Center"
-                                       FontSize="14" />
-                            </UniformGrid>
-                            <UniformGrid Columns="2">
-                                <Button Content="Set"
-                                        FontSize="14"
-                                        Command="{Binding UnWinderSetTorqueCommand}"
-                                        Margin="0 2 2 2" />
-                                <Button Content="Save"
-                                        FontSize="14"
-                                        Command="{Binding SaveCommand}"
-                                        Margin="0 2 2 2" />
-                            </UniformGrid>
-                            <UniformGrid Columns="2">
-                                <Button Content="Run"
-                                        FontSize="14"
-                                        Command="{Binding UnWinderRunCommand}"
-                                        Margin="0 2 2 2" />
-                                <Button Content="Stop"
-                                        FontSize="14"
-                                        Command="{Binding UnWinderStopCommand}"
-                                        Margin="0 2 2 2" />
-                            </UniformGrid>
-                        </UniformGrid>
-                    </GroupBox>
-                </UniformGrid>
-
+            <Border Grid.Column="0"
+                    Grid.ColumnSpan="2">
+                <GroupBox Header="Cylinder"
+                          Grid.Row="1"
+                          Grid.ColumnSpan="2"
+                          Style="{StaticResource TextBlockHeaderGroupBox}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding Cylinders}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="6"
+                                                 VerticalAlignment="Top" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ContentControl
+                                                Content="{Binding .}"
+                                                Margin="3"
+                                                Height="150"
+                                                Width="170"/>   
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </GroupBox>
             </Border>
-
+            
             <!--Inout-->
             <Border Grid.Column="2"
                     Grid.RowSpan="3">
@@ -199,29 +158,88 @@
                 </ScrollViewer>
             </Border>
 
-            <!--Motion-->
-            <Border Grid.Row="2"
+            <Grid   Grid.Row="1"
                     Grid.ColumnSpan="2">
-                <GroupBox Header="Encoders"
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="1.2*" />
+                </Grid.ColumnDefinitions>
+                
+                <!--Motion-->
+                <Border>
+                    <GroupBox Header="Motions"
                           Style="{StaticResource TextBlockHeaderGroupBox}">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                  HorizontalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding Motions}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <ui:MovingView DataContext="{Binding }" 
-                                                   IsEnabled="False"/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <UniformGrid Columns="4" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </GroupBox>
-            </Border>
+                        <ScrollViewer>
+                            <ItemsControl x:Name="MotionItemsControl"
+                                      ItemsSource="{Binding Motions}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid VerticalAlignment="Top"
+                                                 HorizontalAlignment="Left"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <ui:MotionView DataContext="{Binding}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </GroupBox>
+                </Border>
+
+                <!--Torque-->
+                <Border Grid.Column="1">
+                    <UniformGrid Columns="1">
+                        <GroupBox Header="UnWinder Torque"
+                                  Style="{StaticResource TextBlockHeaderGroupBox}"
+                                  Margin="2 0 0 0"> 
+                            <UniformGrid Rows="6">
+                                <UniformGrid Columns="2">
+                                    <Label Content="Torque (%)"
+                                           VerticalContentAlignment="Center"
+                                           BorderThickness="1"
+                                           FontSize="14"
+                                           FontWeight="SemiBold"
+                                           BorderBrush="LightGray"
+                                           Margin="0 2 2 2" />
+                                    <Label Margin="0 2 2 2"
+                                           BorderBrush="LightGray"
+                                           BorderThickness="0.5"
+                                           Cursor="Hand"
+                                           MouseLeftButtonDown="Label_MouseLeftButtonDown"
+                                           Content="{Binding Recipe.UnWinderTorque,Mode=TwoWay,Converter={StaticResource DoubleToIntConveter}}"
+                                           HorizontalContentAlignment="Center"
+                                           VerticalContentAlignment="Center"
+                                           FontSize="14" /> 
+                                </UniformGrid>
+                                <UniformGrid Columns="2">
+                                    <Button Content="Set"
+                                            FontSize="14"
+                                            Command="{Binding UnWinderSetTorqueCommand}"
+                                            Margin="0 2 2 2" />
+                                    <Button Content="Save"
+                                            FontSize="14"
+                                            Command="{Binding SaveCommand}"
+                                            Margin="0 2 2 2" />
+                                </UniformGrid>
+                                <UniformGrid Columns="2">
+                                    <Button Content="Run"
+                                            FontSize="14"
+                                            Command="{Binding UnWinderRunCommand}"
+                                            Margin="0 2 2 2" />
+                                    <Button Content="Stop"
+                                            FontSize="14"
+                                            Command="{Binding UnWinderStopCommand}"
+                                            Margin="0 2 2 2" />
+                                </UniformGrid>
+                            </UniformGrid>
+                        </GroupBox>
+                    </UniformGrid>
+                </Border>
+
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>
