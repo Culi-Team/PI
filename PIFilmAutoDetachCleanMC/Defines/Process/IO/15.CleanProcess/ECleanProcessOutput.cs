@@ -9,10 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ECleanProcessOutput
     {
         REQ_LOAD,
-        LOAD_DONE_RECEIVED,
 
         REQ_UNLOAD,
-        UNLOAD_DONE_RECEIVED,
 
     }
 }

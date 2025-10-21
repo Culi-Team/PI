@@ -152,14 +152,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagInOutCSTPickPlaceDoneReceived
-        {
-            set
-            {
-                Outputs[(int)EWorkConveyorProcessOutput.IN_CST_PICK_PLACE_DONE_RECEIVED] = value;
-            }
-        }
-
         private bool FlagRequestCSTIn
         {
             set
@@ -632,7 +624,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorPickPlaceStep.Set_FlagReady:
                     Log.Debug("Set Flag Ready");
                     FlagCSTReady = true;
-                    FlagInOutCSTPickPlaceDoneReceived = false;
                     Step.RunStep++;
                     Log.Debug("Wait Robot" + (port == EPort.Right ? "Pick" : "Place") + " Done");
                     break;
@@ -642,8 +633,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
-                    Log.Debug("Set Flag In Out Cassette Pick Place Done Received");
-                    FlagInOutCSTPickPlaceDoneReceived = true;
                     Log.Debug("Clear Flag Ready");
                     FlagCSTReady = false;
                     Step.RunStep = (int)EWorkConveyorPickPlaceStep.Cassette_WorkCondition_Check;

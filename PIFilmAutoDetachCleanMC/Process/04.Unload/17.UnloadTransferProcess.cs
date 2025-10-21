@@ -68,14 +68,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagAFCleanUnloaDoneReceived
-        {
-            get
-            {
-                return Inputs[(int)EUnloadTransferProcessInput.AF_CLEAN_UNLOAD_DONE_RECEIVED];
-            }
-        }
-
         private bool FlagUnloadTransferUnloading
         {
             get
@@ -109,14 +101,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             set
             {
                 Outputs[(int)EUnloadTransferProcessOutput.UNLOAD_TRANSFER_PLACE_DONE] = value;
-            }
-        }
-
-        private bool FlagUnloadAlignPlaceDoneReceived
-        {
-            get
-            {
-                return Inputs[(int)EUnloadTransferProcessInput.UNLOAD_ALIGN_PLACE_DONE_RECEIVED];
             }
         }
         #endregion
@@ -514,8 +498,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadTransferAFCleanUnloadStep.Wait_AFCleanUnloadDoneReceived:
-                    if (FlagAFCleanUnloaDoneReceived == false)
+                    if (FlagAFCleanRequestUnload == true)
                     {
+                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag AF Clean Unload Done");
@@ -720,8 +705,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.Wait_UnloadAlignPlaceDoneReceived:
-                    if (FlagUnloadAlignPlaceDoneReceived == false)
+                    if (FlagUnloadAlignReady == true)
                     {
+                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag Unload Transfer Place Done");

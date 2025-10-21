@@ -82,14 +82,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagWETCleanUnloadDoneReceived
-        {
-            get
-            {
-                return Inputs[(int)ETransferRotationProcessInput.WET_CLEAN_UNLOAD_DONE_RECEIVED];
-            }
-        }
-
         private bool FlagWETCleanUnloadDone
         {
             set
@@ -103,14 +95,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             get
             {
                 return Inputs[(int)ETransferRotationProcessInput.AF_CLEAN_REQ_LOAD];
-            }
-        }
-
-        private bool FlagAFCleanLoadDoneReceived
-        {
-            get
-            {
-                return Inputs[(int)ETransferRotationProcessInput.AF_CLEAN_LOAD_DONE_RECEIVED];
             }
         }
 
@@ -550,8 +534,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationWETCleanUnloadStep.Wait_WETCleanUnloadDoneReceived:
-                    if (FlagWETCleanUnloadDoneReceived == false)
+                    if (FlagWETCleanRequestUnload == true)
                     {
+                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag WET Clean Unload Done");
@@ -843,8 +828,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationAFCleanLoad.Wait_AFCleanLoadDoneReceived:
-                    if (FlagAFCleanLoadDoneReceived == false)
+                    if (FlagAFCleanRequestLoad == true)
                     {
+                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag AF Clean Load Done");

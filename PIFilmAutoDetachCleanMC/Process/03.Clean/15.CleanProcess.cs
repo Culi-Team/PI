@@ -444,13 +444,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagCleanLoadDoneReceived
-        {
-            set
-            {
-                Outputs[(int)ECleanProcessOutput.LOAD_DONE_RECEIVED] = value;
-            }
-        }
 
         private bool FlagCleanLoadDone
         {
@@ -465,14 +458,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             set
             {
                 Outputs[(int)ECleanProcessOutput.REQ_UNLOAD] = value;
-            }
-        }
-
-        private bool FlagCleanUnloadDoneReceived
-        {
-            set
-            {
-                Outputs[(int)ECleanProcessOutput.UNLOAD_DONE_RECEIVED] = value;
             }
         }
 
@@ -1239,14 +1224,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessLoadStep.Start:
                     Log.Debug("Clean Load Start");
 
-                    Log.Debug("Clear Flag Clean Load Done Received");
-
                     if (cleanType == EClean.AFCleanLeft || cleanType == EClean.AFCleanRight)
                     {
                         Log.Debug("Wait Transfer Rotation Ready Place");
                     }
 
-                    FlagCleanLoadDoneReceived = false;
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.Wait_WETCleanUnloadDone:
@@ -1353,11 +1335,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Clear Flag Request Load");
                     FlagCleanRequestLoad = false;
-                    Step.RunStep++;
-                    break;
-                case ECleanProcessLoadStep.Set_FlagCleanLoadDoneReceived:
-                    Log.Debug("Set Flag Clean Load Done Received");
-                    FlagCleanLoadDoneReceived = true;
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.Vacuum_On:
@@ -1761,8 +1738,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ECleanProcessUnloadStep.Start:
                     Log.Debug("Unload Start");
-                    Log.Debug("Clear Flag Unload Done Received");
-                    FlagCleanUnloadDoneReceived = false;
                     if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
                         Log.Debug("Wait Transfer Rotation Ready Pick");
@@ -1882,9 +1857,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
-                    Log.Debug("Set Flag Unload Done Received");
-                    FlagCleanUnloadDoneReceived = true;
-
                     Log.Debug("Clear Flag Request Unload");
                     FlagCleanRequestUnload = false;
                     Step.RunStep++;

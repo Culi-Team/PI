@@ -192,6 +192,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
             return true;
         }
+
         public override bool ProcessOrigin()
         {
             switch ((EGlassTransferOriginStep)Step.OriginStep)

@@ -95,14 +95,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagRobotUnloadDoneReceived
-        {
-            get
-            {
-                return _robotUnloadInput[(int)ERobotUnloadProcessInput.UNLOAD_ALIGN_UNLOAD_DONE_RECEIVED];
-            }
-        }
-
         private bool FlagRobotUnloadPickDone
         {
             set
@@ -877,8 +869,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.Wait_UnloadAlign_PickDoneReceived:
-                    if (FlagRobotUnloadDoneReceived == false)
+                    if (FlagUnloadAlignRequestUnload == true)
                     {
+                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag Robot Pick Done");

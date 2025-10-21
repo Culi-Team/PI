@@ -111,14 +111,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagWETCleanLoadDoneReceived
-        {
-            get
-            {
-                return Inputs[(int)ETransferInShuttleProcessInput.WET_CLEAN_LOAD_DONE_RECEIVED];
-            }
-        }
-
         private bool FlagTransferInShuttlePickDone
         {
             set
@@ -536,8 +528,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait WET Clean Load Done Received");
                     break;
                 case ETransferInShuttlePlaceStep.Wait_WETCleanPlaceDoneReceived:
-                    if (FlagWETCleanLoadDoneReceived == false)
+                    if (FlagWETCleanRequestLoad == true)
                     {
+                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag WET Clean Load Done");

@@ -111,14 +111,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagInCSTPickDoneReceived
-        {
-            get
-            {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.IN_CST_PICK_DONE_RECEIVED];
-            }
-        }
-
         private bool FlagVinylCleanLoadDone
         {
             set
@@ -159,13 +151,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagFixtureAlignLoadDoneReceived
-        {
-            get
-            {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.FIXTURE_ALIGN_LOAD_DONE_RECEIVED];
-            }
-        }
         private bool FlagFixtureAlignLoadDone
         {
             set
@@ -187,14 +172,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             get
             {
                 return _robotLoadInput[(int)ERobotLoadProcessInput.OUT_CST_READY];
-            }
-        }
-
-        private bool FlagOutCSTPlaceDoneReceived
-        {
-            get
-            {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.OUT_CST_PLACE_DONE_RECEIVED];
             }
         }
 
@@ -1068,8 +1045,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Wait_InCST_PickDone:
-                    if (FlagInCSTPickDoneReceived == false)
+                    if (FlagInCSTReady == true)
                     {
+                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag Robot Pick In CST Done");
@@ -1376,8 +1354,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToAlignStep.Wait_FixtureAlignLoadDoneReceived:
-                    if (FlagFixtureAlignLoadDoneReceived == false)
+                    if (FlagFixtureAlignRequestLoad == true)
                     {
+                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag Fixture Align Load Done");
@@ -1640,8 +1619,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Wait_OutCSTPlaceDoneReceived:
-                    if (FlagOutCSTPlaceDoneReceived == false)
+                    if (FlagOutCSTReady == true)
                     {
+                        Wait(20);
                         break;
                     }
                     Log.Debug("Clear Flag Robot Place Out CST Done");

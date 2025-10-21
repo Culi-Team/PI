@@ -9,7 +9,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ERobotUnloadProcessInput
     {
         UNLOAD_ALIGN_REQ_ROBOT_UNLOAD,
-        UNLOAD_ALIGN_UNLOAD_DONE_RECEIVED,
 
         MACHINE_REQUEST_PLACE,
     }

@@ -68,21 +68,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagUnloadAlignPlaceDoneReceived
-        {
-            set
-            {
-                _unloadAlignOutput[(int)EUnloadAlignProcessOutput.UNLOAD_ALIGN_PLACE_DONE_RECEIVED] = value;
-            }
-        }
-        private bool FlagRobotUnloadDoneReceived
-        {
-            set
-            {
-                _unloadAlignOutput[(int)EUnloadAlignProcessOutput.ROBOT_UNLOAD_DONE_RECEIVED] = value;
-            }
-        }
-
         private bool FlagUnloadAlignReady
         {
             set
@@ -355,8 +340,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EUnloadAlignStep.Start:
                     Log.Debug("Unload Align Start");
-                    Log.Debug("Clear Flag Robot Unload Done Received");
-                    FlagRobotUnloadDoneReceived = false;
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.Cyl_Align_Up:
@@ -476,8 +459,6 @@ namespace PIFilmAutoDetachCleanMC.Process
 #endif
                     Log.Debug("Clear Flag Request Robot Unload");
                     FlagUnloadAlignRequestRobotUnload = false;
-                    Log.Debug("Set Flag Robot Unload Done Received");
-                    FlagRobotUnloadDoneReceived = true;
                     Step.RunStep++;
                     break;
                 case EUnloadAlignRobotPickStep.End:
@@ -510,8 +491,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.End;
                         break;
                     }
-                    Log.Debug("Clear Flag Unload Align Place Done Received");
-                    FlagUnloadAlignPlaceDoneReceived = false;
                     Step.RunStep++;
                     break;
                 case EUnloadAlignUnloadTransferPlaceStep.Set_FlagUnloadAlignReady:
@@ -520,7 +499,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Unload Transfer Place Done");
                     Step.RunStep++;
                     break;
-                case EUnloadAlignUnloadTransferPlaceStep.Wait_UnloadTransfePlaceDone:
+                case EUnloadAlignUnloadTransferPlaceStep.Wait_UnloadTransferPlaceDone:
                     if (FlagUnloadTransferLeftPlaceDone == false && FlagUnloadTransferRightPlaceDone == false)
                     {
                         Wait(20);
@@ -530,8 +509,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     FlagUnloadAlignReady = false;
 
                     Wait(200);
-                    Log.Debug("Set Flag Unload Align Place Done Received");
-                    FlagUnloadAlignPlaceDoneReceived = true;
                     Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.GlassVac_Check;
                     break;
                 case EUnloadAlignUnloadTransferPlaceStep.End:
