@@ -197,7 +197,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EGlassTransferToRunStep.Clear_Flag:
                     Log.Debug("Clear Flag");
-                    ((VirtualOutputDevice<EGlassTransferProcessOutput>)_glassTransferOutput).Clear();
+                    ((MappableOutputDevice<EGlassTransferProcessOutput>)_glassTransferOutput).ClearOutputs();
                     Step.ToRunStep++;
                     break;
                 case EGlassTransferToRunStep.End:

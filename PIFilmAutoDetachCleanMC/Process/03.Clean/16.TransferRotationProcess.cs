@@ -373,7 +373,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferRotationProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
-                    ((VirtualOutputDevice<ETransferRotationProcessOutput>)Outputs).Clear();
+                    ((MappableOutputDevice<ETransferRotationProcessOutput>)Outputs).ClearOutputs();
                     Step.ToRunStep++;
                     break;
                 case ETransferRotationProcessToRunStep.End:

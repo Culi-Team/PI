@@ -638,7 +638,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
-                    ((VirtualOutputDevice<ERobotLoadProcessOutput>)_robotLoadOutput).Clear();
+                    ((MappableOutputDevice<ERobotLoadProcessOutput>)_robotLoadOutput).ClearOutputs();
                     Step.ToRunStep++;
                     break;
                 case ERobotLoadProcessToRunStep.End:

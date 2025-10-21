@@ -226,7 +226,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EFixtureAlignProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
-                    ((VirtualOutputDevice<EFixtureAlignProcessOutput>)_fixtureAlignOutput).Clear();
+                    ((MappableOutputDevice<EFixtureAlignProcessOutput>)_fixtureAlignOutput).ClearOutputs();
                     Step.ToRunStep++;
                     break;
                 case EFixtureAlignProcessToRunStep.End:

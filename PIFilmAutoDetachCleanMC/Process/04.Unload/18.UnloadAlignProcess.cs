@@ -268,7 +268,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EUnloadAlignProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
-                    ((VirtualOutputDevice<EUnloadAlignProcessOutput>)_unloadAlignOutput).Clear();
+                    ((MappableOutputDevice<EUnloadAlignProcessOutput>)_unloadAlignOutput).ClearOutputs();
                     Step.ToRunStep++;
                     break;
                 case EUnloadAlignProcessToRunStep.End:

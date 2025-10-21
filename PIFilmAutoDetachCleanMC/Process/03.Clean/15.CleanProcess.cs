@@ -1086,7 +1086,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ECleanProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
-                    ((VirtualOutputDevice<ECleanProcessOutput>)Outputs).Clear();
+                    ((MappableOutputDevice<ECleanProcessOutput>)Outputs).ClearOutputs();
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.End:

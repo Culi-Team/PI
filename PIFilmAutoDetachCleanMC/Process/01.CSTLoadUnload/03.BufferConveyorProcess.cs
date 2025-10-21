@@ -274,7 +274,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EBufferConveyorToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
-                    ((VirtualOutputDevice<EBufferConveyorProcessOutput>)_bufferConveyorOutput).Clear();
+                    ((MappableOutputDevice<EBufferConveyorProcessOutput>)_bufferConveyorOutput).ClearOutputs();
                     Step.ToRunStep++;
                     break;
                 case EBufferConveyorToRunStep.End:

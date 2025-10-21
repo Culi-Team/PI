@@ -215,7 +215,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EVinylCleanProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
-                    ((VirtualOutputDevice<EVinylCleanProcessOutput>)_vinylCleanOutput).Clear();
+                    ((MappableOutputDevice<EVinylCleanProcessOutput>)_vinylCleanOutput).ClearOutputs();
                     Step.ToRunStep++;
                     break;
                 case EVinylCleanProcessToRunStep.End:

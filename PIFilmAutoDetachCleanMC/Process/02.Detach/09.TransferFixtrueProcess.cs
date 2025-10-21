@@ -330,7 +330,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferFixtureProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
-                    ((VirtualOutputDevice<ETransferFixtureProcessOutput>)_transferFixtureOutput).Clear();
+                    ((MappableOutputDevice<ETransferFixtureProcessOutput>)_transferFixtureOutput).ClearOutputs();
                     Step.ToRunStep++;
                     break;
                 case ETransferFixtureProcessToRunStep.End:

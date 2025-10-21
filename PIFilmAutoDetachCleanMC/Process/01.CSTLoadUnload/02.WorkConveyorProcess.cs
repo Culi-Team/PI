@@ -449,7 +449,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EWorkConveyorToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
-                    ((VirtualOutputDevice<EWorkConveyorProcessOutput>)Outputs).Clear();
+                    ((MappableOutputDevice<EWorkConveyorProcessOutput>)Outputs).ClearOutputs();
                     Step.ToRunStep++;
                     break;
                 case EWorkConveyorToRunStep.End:

@@ -353,11 +353,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Clear Flags");
                     if (port == EPort.Left)
                     {
-                        ((VirtualOutputDevice<EGlassAlignProcessOutput>)_glassAlignLeftOutput).Clear();
+                        ((MappableOutputDevice<EGlassAlignProcessOutput>)_glassAlignLeftOutput).ClearOutputs();
                     }
                     else
                     {
-                        ((VirtualOutputDevice<EGlassAlignProcessOutput>)_glassAlignRightOutput).Clear();
+                        ((MappableOutputDevice<EGlassAlignProcessOutput>)_glassAlignRightOutput).ClearOutputs();
                     }
                     Step.ToRunStep++;
                     break;

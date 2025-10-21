@@ -17,82 +17,82 @@ namespace PIFilmAutoDetachCleanMC.Extensions
         {
             hostBuilder.ConfigureServices((hostContext, services) =>
             {
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EInConveyorProcessInput>>("InConveyorInput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EInConveyorProcessInput>>("InConveyorInput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EWorkConveyorProcessInput>>("InWorkConveyorInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EWorkConveyorProcessOutput>>("InWorkConveyorOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EWorkConveyorProcessInput>>("InWorkConveyorInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EWorkConveyorProcessOutput>>("InWorkConveyorOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EBufferConveyorProcessInput>>("BufferConveyorInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EBufferConveyorProcessOutput>>("BufferConveyorOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EBufferConveyorProcessInput>>("BufferConveyorInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EBufferConveyorProcessOutput>>("BufferConveyorOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EWorkConveyorProcessInput>>("OutWorkConveyorInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EWorkConveyorProcessOutput>>("OutWorkConveyorOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EWorkConveyorProcessInput>>("OutWorkConveyorInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EWorkConveyorProcessOutput>>("OutWorkConveyorOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EOutConveyorProcessInput>>("OutConveyorInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EOutConveyorProcessOutput>>("OutConveyorOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EOutConveyorProcessInput>>("OutConveyorInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EOutConveyorProcessOutput>>("OutConveyorOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ERobotLoadProcessInput>>("RobotLoadInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ERobotLoadProcessOutput>>("RobotLoadOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<ERobotLoadProcessInput>>("RobotLoadInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<ERobotLoadProcessOutput>>("RobotLoadOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EVinylCleanProcessInput>>("VinylCleanInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EVinylCleanProcessOutput>>("VinylCleanOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EVinylCleanProcessInput>>("VinylCleanInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EVinylCleanProcessOutput>>("VinylCleanOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EFixtureAlignProcessInput>>("FixtureAlignInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EFixtureAlignProcessOutput>>("FixtureAlignOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EFixtureAlignProcessInput>>("FixtureAlignInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EFixtureAlignProcessOutput>>("FixtureAlignOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ERemoveFilmProcessInput>>("RemoveFilmInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ERemoveFilmProcessOutput>>("RemoveFilmOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<ERemoveFilmProcessInput>>("RemoveFilmInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<ERemoveFilmProcessOutput>>("RemoveFilmOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ETransferFixtureProcessInput>>("TransferFixtureInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ETransferFixtureProcessOutput>>("TransferFixtureOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<ETransferFixtureProcessInput>>("TransferFixtureInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<ETransferFixtureProcessOutput>>("TransferFixtureOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EDetachProcessInput>>("DetachInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EDetachProcessOutput>>("DetachOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EDetachProcessInput>>("DetachInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EDetachProcessOutput>>("DetachOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EGlassTransferProcessInput>>("GlassTransferInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EGlassTransferProcessOutput>>("GlassTransferOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EGlassTransferProcessInput>>("GlassTransferInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EGlassTransferProcessOutput>>("GlassTransferOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EGlassAlignProcessInput>>("GlassAlignLeftInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EGlassAlignProcessOutput>>("GlassAlignLeftOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EGlassAlignProcessInput>>("GlassAlignLeftInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EGlassAlignProcessOutput>>("GlassAlignLeftOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EGlassAlignProcessInput>>("GlassAlignRightInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EGlassAlignProcessOutput>>("GlassAlignRightOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EGlassAlignProcessInput>>("GlassAlignRightInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EGlassAlignProcessOutput>>("GlassAlignRightOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ETransferInShuttleProcessInput>>("TransferInShuttleLeftInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ETransferInShuttleProcessOutput>>("TransferInShuttleLeftOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<ETransferInShuttleProcessInput>>("TransferInShuttleLeftInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<ETransferInShuttleProcessOutput>>("TransferInShuttleLeftOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ETransferInShuttleProcessInput>>("TransferInShuttleRightInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ETransferInShuttleProcessOutput>>("TransferInShuttleRightOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<ETransferInShuttleProcessInput>>("TransferInShuttleRightInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<ETransferInShuttleProcessOutput>>("TransferInShuttleRightOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ECleanProcessInput>>("WETCleanLeftInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ECleanProcessOutput>>("WETCleanLeftOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<ECleanProcessInput>>("WETCleanLeftInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<ECleanProcessOutput>>("WETCleanLeftOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ECleanProcessInput>>("WETCleanRightInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ECleanProcessOutput>>("WETCleanRightOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<ECleanProcessInput>>("WETCleanRightInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<ECleanProcessOutput>>("WETCleanRightOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ECleanProcessInput>>("AFCleanLeftInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ECleanProcessOutput>>("AFCleanLeftOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<ECleanProcessInput>>("AFCleanLeftInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<ECleanProcessOutput>>("AFCleanLeftOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ECleanProcessInput>>("AFCleanRightInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ECleanProcessOutput>>("AFCleanRightOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<ECleanProcessInput>>("AFCleanRightInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<ECleanProcessOutput>>("AFCleanRightOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ETransferRotationProcessInput>>("TransferRotationLeftInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ETransferRotationProcessOutput>>("TransferRotationLeftOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<ETransferRotationProcessInput>>("TransferRotationLeftInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<ETransferRotationProcessOutput>>("TransferRotationLeftOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ETransferRotationProcessInput>>("TransferRotationRightInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ETransferRotationProcessOutput>>("TransferRotationRightOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<ETransferRotationProcessInput>>("TransferRotationRightInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<ETransferRotationProcessOutput>>("TransferRotationRightOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EUnloadTransferProcessInput>>("UnloadTransferLeftInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EUnloadTransferProcessOutput>>("UnloadTransferLeftOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EUnloadTransferProcessInput>>("UnloadTransferLeftInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EUnloadTransferProcessOutput>>("UnloadTransferLeftOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EUnloadTransferProcessInput>>("UnloadTransferRightInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EUnloadTransferProcessOutput>>("UnloadTransferRightOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EUnloadTransferProcessInput>>("UnloadTransferRightInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EUnloadTransferProcessOutput>>("UnloadTransferRightOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<EUnloadAlignProcessInput>>("UnloadAlignInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<EUnloadAlignProcessOutput>>("UnloadAlignOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EUnloadAlignProcessInput>>("UnloadAlignInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EUnloadAlignProcessOutput>>("UnloadAlignOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, VirtualInputDevice<ERobotUnloadProcessInput>>("RobotUnloadInput");
-                services.AddKeyedSingleton<IDOutputDevice, VirtualOutputDevice<ERobotUnloadProcessOutput>>("RobotUnloadOutput");
+                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<ERobotUnloadProcessInput>>("RobotUnloadInput");
+                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<ERobotUnloadProcessOutput>>("RobotUnloadOutput");
 
                 services.AddSingleton<VirtualIO>();
 

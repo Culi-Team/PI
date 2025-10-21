@@ -359,7 +359,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferInShuttleProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
-                    ((VirtualOutputDevice<ETransferInShuttleProcessOutput>)Outputs).Clear();
+                    ((MappableOutputDevice<ETransferInShuttleProcessOutput>)Outputs).ClearOutputs();
                     Step.ToRunStep++;
                     break;
                 case ETransferInShuttleProcessToRunStep.End:
