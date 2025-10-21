@@ -31,6 +31,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private bool isCleanVertical;
 
         private double xAxisReadyPosition;
+        private double yAxisReadyPosition;
+        private double tAxisReadyPosition;
 
         private double xAxisLoadPosition;
         private double yAxisLoadPosition;
@@ -171,6 +173,29 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             }
         }
 
+        [SingleRecipeDescription(Description = "Y Axis Ready Position", Unit = Unit.mm)]
+        [SinglePositionTeaching(Motion = "YAxis")]
+        public double YAxisReadyPosition
+        {
+            get { return yAxisReadyPosition; }
+            set 
+            {
+                OnRecipeChanged(yAxisReadyPosition, value);
+                yAxisReadyPosition = value; 
+            }
+        }
+
+        [SingleRecipeDescription(Description = "T Axis Ready Position", Unit = Unit.mm)]
+        [SinglePositionTeaching(Motion = "TAxis")]
+        public double TAxisReadyPosition
+        {
+            get { return tAxisReadyPosition; }
+            set 
+            {
+                OnRecipeChanged(tAxisReadyPosition, value);
+                tAxisReadyPosition = value; 
+            }
+        }
 
         [SingleRecipeDescription(Description = "X Axis Load Position", Unit = Unit.mm)]
         [SinglePositionTeaching(Motion = "XAxis")]

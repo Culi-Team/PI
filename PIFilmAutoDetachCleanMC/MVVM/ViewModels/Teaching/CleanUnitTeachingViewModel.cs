@@ -142,7 +142,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             {
                 return new RelayCommand(() =>
                 {
-                    UnWinder.Run();
+                    UnWinder.Run(false);
                 });
             }
         }

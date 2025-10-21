@@ -10,6 +10,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         Start,
         Wait_WETCleanUnloadDone,
+        TAxisMoveLoadPosition,
+        TAxisMoveLoadPosition_Wait,
         AxisMoveLoadPosition,
         AxisMoveLoadPosition_Wait,
         Cyl_UnClamp,

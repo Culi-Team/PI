@@ -1103,6 +1103,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.WetCleanPusherLeftUp);
             outputs.Add(Outputs.WetCleanPusherLeftDown);
             outputs.Add(Outputs.WetCleanBrushLeftDown);
+            outputs.Add(Outputs.InShuttleLVacOnOff);
             return outputs;
         }
 
@@ -1112,6 +1113,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.WetCleanPusherRightUp);
             outputs.Add(Outputs.WetCleanPusherRightDown);
             outputs.Add(Outputs.WetCleanBrushRightDown);
+            outputs.Add(Outputs.InShuttleRVacOnOff);
             return outputs;
         }
 
@@ -1121,6 +1123,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.AfCleanPusherLeftUp);
             outputs.Add(Outputs.AfCleanPusherLeftDown);
             outputs.Add(Outputs.AfCleanBrushLeftDown);
+            outputs.Add(Outputs.OutShuttleLVacOnOff);
             return outputs;
         }
 
@@ -1130,6 +1133,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.AfCleanPusherRightUp);
             outputs.Add(Outputs.AfCleanPusherRightDown);
             outputs.Add(Outputs.AfCleanBrushRightDown);
+            outputs.Add(Outputs.OutShuttleRVacOnOff);
             return outputs;
         }
 
