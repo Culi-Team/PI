@@ -63,6 +63,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDInput PeriRDY => _devices.Inputs.LoadRobPeriRdy;
         private IDInput StopMess => _devices.Inputs.LoadRobStopmess;
         private IDInput ProACT => _devices.Inputs.LoadRobProAct;
+        private IDInput InHome => _devices.Inputs.LoadRobInHome;
         #endregion
 
         #region Outputs
@@ -423,24 +424,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinders Unalign Done");
                     Step.OriginStep++;
                     break;
-                case ERobotLoadOriginStep.RobotHomePosition:
-                    Log.Debug("Check Home Positon RobotLoad");
-                    _robotLoad.SendCommand(RobotHelpers.HomePositionCheck);
-
-                    Wait(5000, () => _robotLoad.ReadResponse("Robot in home,0\r\n"));
-
-                    Step.OriginStep++;
-                    break;
                 case ERobotLoadOriginStep.RobotHomePosition_Check:
-                    if (WaitTimeOutOccurred)
+                    if (InHome.Value)
                     {
-                        Log.Debug("Robot load is not in home position");
-                        Step.OriginStep++;
+                        Log.Debug("Robot in home position");
+                        Step.OriginStep = (int)ERobotLoadOriginStep.End;
                         break;
                     }
 
-                    Log.Debug("Robot In Home .");
-                    Step.OriginStep = (int)ERobotLoadOriginStep.End;
+                    Log.Debug("Robot load is not in home position");
+                    Step.OriginStep++;
                     break;
                 case ERobotLoadOriginStep.RobotSeqHome:
                     Log.Debug("Check sequence home robot load");
@@ -539,24 +532,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ERobotLoadProcessToRunStep.Start:
                     Log.Debug("To Run Start");
-                    Step.ToRunStep++;
-                    break;
-                case ERobotLoadProcessToRunStep.Send_CassettePitch:
-                    Log.Debug("Send Cassette Pitch: " + _cstLoadUnloadRecipe.Pitch);
-                    _robotLoad.SendCommand(RobotHelpers.SetCassettePitch(0, _cstLoadUnloadRecipe.Pitch));
-
-                    Wait(5000, () => _robotLoad.ReadResponse($"pitch,0,{_cstLoadUnloadRecipe.Pitch},0\r\n"));
-
-                    Step.ToRunStep++;
-                    break;
-                case ERobotLoadProcessToRunStep.Send_CassettePitch_Check:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)EWarning.RobotLoad_SetCassettePitch_Fail);
-                        break;
-                    }
-
-                    Log.Debug("Set pitch X: 0, Y: " + _cstLoadUnloadRecipe.Pitch + " success");
                     Step.ToRunStep++;
                     break;
                 case ERobotLoadProcessToRunStep.Clear_Flags:
@@ -780,23 +755,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Set Model: " + _robotLoadRecipe.Model + " success");
                     Step.RunStep++;
                     break;
-                case ERobotLoadReadyStep.RobotHomePosition:
-                    Log.Debug("Check Home Positon RobotLoad");
-                    _robotLoad.SendCommand(RobotHelpers.HomePositionCheck);
-
-                    Wait(5000, () => _robotLoad.ReadResponse("Robot in home,0\r\n"));
-
-                    Step.RunStep++;
-                    break;
                 case ERobotLoadReadyStep.RobotHomePosition_Check:
-                    if (WaitTimeOutOccurred)
+                    if (InHome.Value)
                     {
-                        Step.RunStep++;
+                        Log.Debug("Robot load in home position");
+                        Step.RunStep = (int)ERobotLoadReadyStep.Send_CassettePitch_Check;
                         break;
                     }
 
-                    Log.Debug("Robot In Home .");
-                    Step.RunStep = (int)ERobotLoadReadyStep.End;
+                    Log.Debug("Robot load is not in home position");
+                    Step.RunStep++;
                     break;
                 case ERobotLoadReadyStep.RobotSeqHome:
                     Log.Debug("Check sequence home robot load");
@@ -816,25 +784,44 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Robot Load Home Safely");
                     Step.RunStep++;
                     break;
-                case ERobotLoadReadyStep.RobotHome:
-                    Log.Debug("Start Home Robot Load");
-                    Log.Debug($"Send Robot Motion Command {ERobotCommand.HOME}");
-                    if (SendCommand(ERobotCommand.HOME, 10, 20))
+                case ERobotLoadReadyStep.RobotReady:
+                    Log.Debug("Start Move Ready Position Robot Load");
+                    Log.Debug($"Send Robot Motion Command {ERobotCommand.READY}");
+                    if (SendCommand(ERobotCommand.READY, 10, 15))
                     {
-                        Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.HOME)));
+                        Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.READY)));
                         Step.RunStep++;
                         break;
                     }
 
                     RaiseWarning((int)EWarning.RobotLoad_SendMotionCommand_Fail);
                     break;
-                case ERobotLoadReadyStep.RobotHome_Check:
+                case ERobotLoadReadyStep.RobotReady_Check:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseAlarm((int)EAlarm.RobotLoad_MoveMotionCommand_Timeout);
                         break;
                     }
-                    Log.Debug("Robot Home Done");
+
+                    Log.Debug("Robot Move Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadReadyStep.Send_CassettePitch:
+                    Log.Debug("Send Cassette Pitch: " + _cstLoadUnloadRecipe.Pitch);
+                    _robotLoad.SendCommand(RobotHelpers.SetCassettePitch(0, _cstLoadUnloadRecipe.Pitch));
+
+                    Wait(5000, () => _robotLoad.ReadResponse($"pitch,0,{_cstLoadUnloadRecipe.Pitch},0\r\n"));
+
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadReadyStep.Send_CassettePitch_Check:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.RobotLoad_SetCassettePitch_Fail);
+                        break;
+                    }
+
+                    Log.Debug("Set pitch X: 0, Y: " + _cstLoadUnloadRecipe.Pitch + " success");
                     Step.RunStep++;
                     break;
                 case ERobotLoadReadyStep.End:
@@ -867,9 +854,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Cyl_UnClamp_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
-                        if(ClampCyl1.IsBackward == false || ClampCyl2.IsBackward == false)
+                        if (ClampCyl1.IsBackward == false || ClampCyl2.IsBackward == false)
                         {
                             RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnClamp_Fail);
                             break;

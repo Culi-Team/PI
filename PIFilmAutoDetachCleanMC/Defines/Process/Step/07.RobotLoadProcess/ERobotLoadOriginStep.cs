@@ -14,7 +14,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_Unclamp_Wait,
         Cyl_UnAlign,
         Cyl_Unalign_Wait,
-        RobotHomePosition,
         RobotHomePosition_Check,
         RobotSeqHome,
         RobotSeqHome_Check,

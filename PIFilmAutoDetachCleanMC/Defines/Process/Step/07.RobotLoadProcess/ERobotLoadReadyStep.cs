@@ -27,12 +27,14 @@
         SetModel,
         SetModel_Check,
 
-        RobotHomePosition,
         RobotHomePosition_Check,
         RobotSeqHome,
         RobotSeqHome_Check,
-        RobotHome,
-        RobotHome_Check,
+        RobotReady,
+        RobotReady_Check,
+
+        Send_CassettePitch,
+        Send_CassettePitch_Check,
 
         End
 

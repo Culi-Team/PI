@@ -2,6 +2,7 @@
 using EQX.Core.Robot;
 using EQX.Core.Sequence;
 using EQX.InOut;
+using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
@@ -76,6 +77,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDInput PeriRDY => _devices.Inputs.UnloadRobPeriRdy;
         private IDInput StopMess => _devices.Inputs.UnloadRobStopmess;
         private IDInput ProACT => _devices.Inputs.UnloadRobProAct;
+        private IDInput InHome => _devices.Inputs.UnloadRobInHome;
         #endregion
 
         #region Outputs
@@ -307,23 +309,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinders Up Done");
                     Step.OriginStep++;
                     break;
-                case ERobotUnloadOriginStep.RobotHomePosition:
-                    Log.Debug("Check Home Positon RobotUnload");
-                    _robotUnload.SendCommand(RobotHelpers.HomePositionCheck);
-
-                    Wait(5000, () => _robotUnload.ReadResponse("Robot in home,0\r\n"));
-
-                    Step.OriginStep++;
-                    break;
                 case ERobotUnloadOriginStep.RobotHomePosition_Check:
-                    if (WaitTimeOutOccurred)
+                    if (InHome.Value)
                     {
-                        Step.OriginStep++;
+                        Log.Debug("Robot in home position");
+                        Step.OriginStep = (int)ERobotUnloadOriginStep.End;
                         break;
                     }
 
-                    Log.Debug("Robot In Home .");
-                    Step.OriginStep = (int)ERobotUnloadOriginStep.End;
+                    Log.Debug("Robot unload not in home ");  
+                    Step.OriginStep++;
                     break;
                 case ERobotUnloadOriginStep.RobotSeqHome:
                     Log.Debug("Check Sequence Home RobotUnload");
@@ -404,6 +399,31 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
             }
 
+            return true;
+        }
+
+        public override bool ProcessToRun()
+        {
+            switch ((EUnloadRobotToRunStep)Step.ToRunStep)
+            {
+                case EUnloadRobotToRunStep.Start:
+                    Log.Debug("To Run Start");
+                    Step.ToRunStep++;
+                    break;
+                case EUnloadRobotToRunStep.Clear_Flags:
+                    Log.Debug("Clear Flags");
+                    ((MappableOutputDevice<ERobotUnloadProcessOutput>)_robotUnloadOutput).ClearOutputs();
+                    Step.ToRunStep++;
+                    break;
+                case EUnloadRobotToRunStep.End:
+                    Log.Debug("To Run End");
+                    Step.ToRunStep++;
+                    ProcessStatus = EProcessStatus.ToRunDone;
+                    break;
+                default:
+                    Thread.Sleep(20);
+                    break;
+            }
             return true;
         }
         #endregion
@@ -614,23 +634,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Set Model: " + _robotUnloadRecipe.Model + " success");
                     Step.RunStep++;
                     break;
-                case ERobotUnloadReadyStep.RobotHomePosition:
-                    Log.Debug("Check Home Positon RobotUnload");
-                    _robotUnload.SendCommand(RobotHelpers.HomePositionCheck);
-
-                    Wait(5000, () => _robotUnload.ReadResponse("Robot in home,0\r\n"));
-
-                    Step.RunStep++;
-                    break;
                 case ERobotUnloadReadyStep.RobotHomePosition_Check:
-                    if (WaitTimeOutOccurred)
+                    if(InHome.Value)
                     {
-                        Step.RunStep++;
+                        Log.Debug("Robot in home position");
+                        Step.RunStep = (int)ERobotUnloadReadyStep.End;
                         break;
                     }
 
-                    Log.Debug("Robot Unload In Home .");
-                    Step.RunStep = (int)ERobotUnloadReadyStep.End;
+                    Log.Debug("Robot unload not in home");
+                    Step.RunStep++;
                     break;
                 case ERobotUnloadReadyStep.RobotSeqHome:
                     Log.Debug("Check sequence home robot load");
