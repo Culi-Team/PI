@@ -936,7 +936,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.RemoveZonePusherCyl1Down);
             outputs.Add(Outputs.RemoveZonePusherCyl2Up);
             outputs.Add(Outputs.RemoveZonePusherCyl2Down);
-            outputs.Add(Outputs.RemoveZoneIonRunStop);
 
             return outputs;
         }
