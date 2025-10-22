@@ -349,9 +349,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 new ManualVMWithSelection("Remove Film", false),
                 new ManualVMWithSelection("Glass Transfer", false),
                 new ManualVMWithSelection("Transfer In Shuttle Left", false),
-                new ManualVMWithSelection("Glass Align Left", false),
                 new ManualVMWithSelection("Transfer In Shuttle Right", false),
-                new ManualVMWithSelection("Glass Align Right", false),
                 new ManualVMWithSelection("WET Clean Left", false),
                 new ManualVMWithSelection("WET Clean Right", false),
                 new ManualVMWithSelection("Transfer Rotation Left", false),
@@ -541,7 +539,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
                             ESemiSequence.GlassTransferPick,
-                            ESemiSequence.GlassTransferPlace
+                            ESemiSequence.GlassTransferLeft,
+                            ESemiSequence.GlassTransferRight,
                         }
                     };
                 case "Transfer In Shuttle Left":
@@ -554,20 +553,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage"),
                         SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESemiSequence.TransferInShuttleLeftPick,
-                            ESemiSequence.WETCleanLeftLoad,
-                        }
-                    };
-                case "Glass Align Left":
-                    return new ManualUnitViewModel("Glass Align Left")
-                    {
-                        Cylinders = Devices.GetGlassAlignLeftCylinders(),
-                        Inputs = Devices.GetGlassAlignLeftInputs(),
-                        Outputs = Devices.GetGlassAlignLeftOutputs(),
-                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AlignStageImage"),
-                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
-                        {
+                            ESemiSequence.GlassTransferLeft,
                             ESemiSequence.AlignGlassLeft,
+                            ESemiSequence.WETCleanLeftLoad,
                         }
                     };
                 case "Transfer In Shuttle Right":
@@ -580,20 +568,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage"),
                         SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
-                            ESemiSequence.TransferInShuttleRightPick,
-                            ESemiSequence.WETCleanRightLoad,
-                        }
-                    };
-                case "Glass Align Right":
-                    return new ManualUnitViewModel("Glass Align Right")
-                    {
-                        Cylinders = Devices.GetGlassAlignRightCylinders(),
-                        Inputs = Devices.GetGlassAlignRightInputs(),
-                        Outputs = Devices.GetGlassAlignRightOutputs(),
-                        Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("AlignStageImage"),
-                        SemiAutoSequences = new ObservableCollection<ESemiSequence>()
-                        {
+                            ESemiSequence.GlassTransferRight,
                             ESemiSequence.AlignGlassRight,
+                            ESemiSequence.WETCleanRightLoad,
                         }
                     };
                 case "WET Clean Left":

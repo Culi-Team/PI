@@ -23,8 +23,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         public IProcess<ESequence> RemoveFilmProcess => _processes.First(p => p.Name == EProcess.RemoveFilm.ToString());
 
         public IProcess<ESequence> GlassTransferProcess => _processes.First(p => p.Name == EProcess.GlassTransfer.ToString());
-        public IProcess<ESequence> GlassAlignLeftProcess => _processes.First(p => p.Name == EProcess.GlassAlignLeft.ToString());
-        public IProcess<ESequence> GlassAlignRightProcess => _processes.First(p => p.Name == EProcess.GlassAlignRight.ToString());
         public IProcess<ESequence> TransferInShuttleLeftProcess => _processes.First(p => p.Name == EProcess.TransferInShuttleLeft.ToString());
         public IProcess<ESequence> TransferInShuttleRightProcess => _processes.First(p => p.Name == EProcess.TransferInShuttleRight.ToString());
         public IProcess<ESequence> WETCleanLeftProcess => _processes.First(p => p.Name == EProcess.WETCleanLeft.ToString());
@@ -65,8 +63,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             RootProcess.AddChild(RemoveFilmProcess);
 
             RootProcess.AddChild(GlassTransferProcess);
-            RootProcess.AddChild(GlassAlignLeftProcess);
-            RootProcess.AddChild(GlassAlignRightProcess);
             RootProcess.AddChild(TransferInShuttleLeftProcess);
             RootProcess.AddChild(TransferInShuttleRightProcess);
             RootProcess.AddChild(WETCleanLeftProcess);

@@ -8,7 +8,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
 {
     public enum ETransferInShuttleProcessInput
     {
-        GLASS_ALIGN_REQ_PICK,
+        GLASS_TRANSFER_PLACE_DONE,
+
         WET_CLEAN_REQ_LOAD,
     }
 }

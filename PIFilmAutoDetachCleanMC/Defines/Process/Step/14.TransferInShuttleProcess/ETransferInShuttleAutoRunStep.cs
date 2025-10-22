@@ -9,7 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ETransferInShuttleAutoRunStep
     {
         Start,
-        GlassVac_Check,
+        Transfer_VacCheck,
+        Align_GlassCheck,
         End
     }
 }

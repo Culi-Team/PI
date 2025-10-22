@@ -57,18 +57,21 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         [Description("Glass Transfer Pick")]
         GlassTransferPick,
-        [Description("Glass Transfer Place")]
-        GlassTransferPlace,
+        /// <summary>
+        /// Transfer glass from Glass Shuttle to Align Left
+        /// </summary>
+        [Description("Glass Transfer to Left")]
+        GlassTransferLeft,
+        /// <summary>
+        /// Transfer glass from Glass Shuttle to Align Right
+        /// </summary>
+        [Description("Glass Transfer to Right")]
+        GlassTransferRight,
 
         [Description("Glass Align")]
         AlignGlassLeft,
         [Description("Glass Align")]
         AlignGlassRight,
-
-        [Description("Transfer In Shuttle Pick")]
-        TransferInShuttleLeftPick,
-        [Description("Transfer In Shuttle Pick")]
-        TransferInShuttleRightPick,
 
         [Description("WET Clean Load")]
         WETCleanLeftLoad,
@@ -166,18 +169,15 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         [Description("Glass Transfer Pick")]
         GlassTransferPick,
-        [Description("Glass Transfer Place")]
-        GlassTransferPlace,
+        [Description("Glass Transfer to Left")]
+        GlassTransferLeft,
+        [Description("Glass Transfer to Right")]
+        GlassTransferRight,
 
-        [Description("Glass Align")]
+        [Description("Glass Align Left")]
         AlignGlassLeft,
-        [Description("Glass Align")]
+        [Description("Glass Align Left")]
         AlignGlassRight,
-
-        [Description("Transfer In Shuttle Pick")]
-        TransferInShuttleLeftPick,
-        [Description("Transfer In Shuttle Pick")]
-        TransferInShuttleRightPick,
 
         [Description("WET Clean Load")]
         WETCleanLeftLoad,

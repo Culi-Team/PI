@@ -335,39 +335,27 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //Glass Transfer Input Mapping
             _glassTransferInput[EGlassTransferProcessInput.DETACH_REQ_UNLOAD_GLASS].
                 MapTo(_detachOutput[EDetachProcessOutput.DETACH_REQ_UNLOAD_GLASS]);
-            _glassTransferInput[EGlassTransferProcessInput.GLASS_ALIGN_LEFT_REQ_GLASS].
-                MapTo(_glassAlignLeftOutput[EGlassAlignProcessOutput.GLASS_ALIGN_REQ_GLASS]);
-            _glassTransferInput[EGlassTransferProcessInput.GLASS_ALIGN_RIGHT_REQ_GLASS].
-                MapTo(_glassAlignRightOutput[EGlassAlignProcessOutput.GLASS_ALIGN_REQ_GLASS]);
             _glassTransferInput[EGlassTransferProcessInput.TRANSFER_IN_SHUTTLE_L_ORIGIN_DONE].
                 MapTo(_transferInShuttleLeftOutput[ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_ORIGIN_DONE]);
             _glassTransferInput[EGlassTransferProcessInput.TRANSFER_IN_SHUTTLE_R_ORIGIN_DONE].
                 MapTo(_transferInShuttleRightOutput[ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_ORIGIN_DONE]);
 
-            // Glass Align Input Mapping
-            // Left
-            _glassAlignLeftInput[EGlassAlignProcessInput.GLASS_TRANSFER_PLACE_DONE].
-                MapTo(_glassTransferOutput[EGlassTransferProcessOutput.GLASS_TRANSFER_LEFT_PLACE_DONE]);
-            _glassAlignLeftInput[EGlassAlignProcessInput.TRANSFER_IN_SHUTTLE_PICK_DONE].
-                MapTo(_transferInShuttleLeftOutput[ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_PICK_DONE]);
-            // Right
-            _glassAlignRightInput[EGlassAlignProcessInput.GLASS_TRANSFER_PLACE_DONE].
-                MapTo(_glassTransferOutput[EGlassTransferProcessOutput.GLASS_TRANSFER_RIGHT_PLACE_DONE]);
-            _glassAlignRightInput[EGlassAlignProcessInput.TRANSFER_IN_SHUTTLE_PICK_DONE].
-                MapTo(_transferInShuttleRightOutput[ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_PICK_DONE]);
+            _glassTransferInput[EGlassTransferProcessInput.TRANSFER_IN_SHUTTLE_LEFT_GLASS_REQUEST].
+                MapTo(_transferInShuttleLeftOutput[ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_GLASS_REQUEST]);
+            _glassTransferInput[EGlassTransferProcessInput.TRANSFER_IN_SHUTTLE_RIGHT_GLASS_REQUEST].
+                MapTo(_transferInShuttleRightOutput[ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_GLASS_REQUEST]);
 
             // TransferInShuttle Input Mapping
             // Left
-            _transferInShuttleLeftInput[ETransferInShuttleProcessInput.GLASS_ALIGN_REQ_PICK].
-                MapTo(_glassAlignLeftOutput[EGlassAlignProcessOutput.GLASS_ALIGN_REQ_PICK]);
             _transferInShuttleLeftInput[ETransferInShuttleProcessInput.WET_CLEAN_REQ_LOAD].
                 MapTo(_wetCleanLeftOutput[ECleanProcessOutput.REQ_LOAD]);
+            _transferInShuttleLeftInput[ETransferInShuttleProcessInput.GLASS_TRANSFER_PLACE_DONE].
+                MapTo(_glassTransferOutput[EGlassTransferProcessOutput.GLASS_TRANSFER_LEFT_PLACE_DONE]);
             // Right
-            _transferInShuttleRightInput[ETransferInShuttleProcessInput.GLASS_ALIGN_REQ_PICK].
-                MapTo(_glassAlignRightOutput[EGlassAlignProcessOutput.GLASS_ALIGN_REQ_PICK]);
             _transferInShuttleRightInput[ETransferInShuttleProcessInput.WET_CLEAN_REQ_LOAD].
                 MapTo(_wetCleanRightOutput[ECleanProcessOutput.REQ_LOAD]);
-
+            _transferInShuttleRightInput[ETransferInShuttleProcessInput.GLASS_TRANSFER_PLACE_DONE].
+                MapTo(_glassTransferOutput[EGlassTransferProcessOutput.GLASS_TRANSFER_RIGHT_PLACE_DONE]);
 
             // Clean Input Mapping
             // WET Clean
@@ -385,7 +373,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 MapTo(_transferRotationRightOutput[ETransferRotationProcessOutput.WET_CLEAN_UNLOAD_DONE]);
             _wetCleanRightInput[ECleanProcessInput.TRANSFER_ROTATION_READY_PICK_PLACE].
                 MapTo(_transferRotationRightOutput[ETransferRotationProcessOutput.TRANSFER_ROTATION_READY_PICK]);
-
 
             //AF Clean
             //Left

@@ -110,14 +110,6 @@
                             Canvas.Left="880"
                             Canvas.Top="180" />
 
-            <ContentControl Content="{Binding Processes.GlassAlignLeftProcess}"
-                            Canvas.Left="920"
-                            Canvas.Top="280" />
-
-            <ContentControl Content="{Binding Processes.GlassAlignRightProcess}"
-                            Canvas.Left="920"
-                            Canvas.Top="480" />
-
             <ContentControl Content="{Binding Processes.TransferInShuttleRightProcess}"
                             Canvas.Left="880"
                             Canvas.Top="580" />

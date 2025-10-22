@@ -52,12 +52,6 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EGlassTransferProcessInput>>("GlassTransferInput");
                 services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EGlassTransferProcessOutput>>("GlassTransferOutput");
 
-                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EGlassAlignProcessInput>>("GlassAlignLeftInput");
-                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EGlassAlignProcessOutput>>("GlassAlignLeftOutput");
-
-                services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<EGlassAlignProcessInput>>("GlassAlignRightInput");
-                services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<EGlassAlignProcessOutput>>("GlassAlignRightOutput");
-
                 services.AddKeyedSingleton<IDInputDevice, MappableInputDevice<ETransferInShuttleProcessInput>>("TransferInShuttleLeftInput");
                 services.AddKeyedSingleton<IDOutputDevice, MappableOutputDevice<ETransferInShuttleProcessOutput>>("TransferInShuttleLeftOutput");
 

@@ -66,6 +66,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 return _transferFixtureInput[(int)ETransferFixtureProcessInput.ROBOT_ORIGIN_DONE];
             }
         }
+
         private bool FlagDetachProcessOriginDone
         {
             get
@@ -90,19 +91,19 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagFixtureTransferDone
-        {
-            set
-            {
-                _transferFixtureOutput[(int)ETransferFixtureProcessOutput.FIXTURE_TRANSFER_DONE] = value;
-            }
-        }
-
         private bool FlagRemoveFilmDone
         {
             get
             {
                 return _transferFixtureInput[(int)ETransferFixtureProcessInput.REMOVE_FILM_DONE];
+            }
+        }
+
+        private bool FlagFixtureTransferDone
+        {
+            set
+            {
+                _transferFixtureOutput[(int)ETransferFixtureProcessOutput.FIXTURE_TRANSFER_DONE] = value;
             }
         }
         #endregion

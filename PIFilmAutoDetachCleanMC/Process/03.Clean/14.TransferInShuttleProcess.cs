@@ -25,92 +25,24 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly MachineStatus _machineStatus;
 
         private IDInputDevice Inputs => port == EPort.Left ? _transferInShuttleLeftInput : _transferInShuttleRightInput;
-        private IDOutputDevice Outputs => port == EPort.Left ? _transferInShuttleLeftOutput : _transferInShuttleRightOutput;
-
-        private bool IsGlassDetect1 => port == EPort.Left
-            ? _devices.Inputs.AlignStageLGlassDetect1.Value
-            : _devices.Inputs.AlignStageRGlassDetect1.Value;
-        private bool IsGlassDetect2 => port == EPort.Left
-            ? _devices.Inputs.AlignStageLGlassDetect2.Value
-            : _devices.Inputs.AlignStageRGlassDetect2.Value;
-        private bool IsGlassDetect3 => port == EPort.Left
-            ? _devices.Inputs.AlignStageLGlassDetect3.Value
-            : _devices.Inputs.AlignStageRGlassDetect3.Value;
+        private IDOutputDevice OutputFlagss => port == EPort.Left ? _transferInShuttleLeftOutput : _transferInShuttleRightOutput;
 
         private EPort port => Name == EProcess.TransferInShuttleLeft.ToString() ? EPort.Left : EPort.Right;
-
-        private IMotion YAxis => port == EPort.Left ? _devices.Motions.TransferInShuttleLYAxis :
-                                                      _devices.Motions.TransferInShuttleRYAxis;
-
-        private IMotion ZAxis => port == EPort.Left ? _devices.Motions.TransferInShuttleLZAxis :
-                                                      _devices.Motions.TransferInShuttleRZAxis;
-
-        public IDOutput GlassVac => port == EPort.Left ? _devices.Outputs.TransferInShuttleLVacOnOff
-                                                        : _devices.Outputs.TransferInShuttleRVacOnOff;
-
-        public ICylinder RotCyl => port == EPort.Left ? _devices.Cylinders.TransferInShuttleL_RotateCyl
-                                                       : _devices.Cylinders.TransferInShuttleR_RotateCyl;
-
-        private IDInput GlassVacuumInput => port == EPort.Left
-            ? _devices.Inputs.TransferInShuttleLVac
-            : _devices.Inputs.TransferInShuttleRVac;
-
-        private bool IsVacDetect => GlassVacuumInput.Value;
-
-        private double YAxisReadyPosition => port == EPort.Left ? _transferInShuttleLeftRecipe.YAxisReadyPosition
-                                                                    : _transferInShuttleRightRecipe.YAxisReadyPosition;
-
-        private double ZAxisReadyPosition => port == EPort.Left ? _transferInShuttleLeftRecipe.ZAxisReadyPosition
-                                                                    : _transferInShuttleRightRecipe.ZAxisReadyPosition;
-
-        private double YAxisPickPosition1 => port == EPort.Left ? _transferInShuttleLeftRecipe.YAxisPickPosition1
-                                                                    : _transferInShuttleRightRecipe.YAxisPickPosition1;
-
-        private double YAxisPickPosition2 => port == EPort.Left ? _transferInShuttleLeftRecipe.YAxisPickPosition2
-                                                                    : _transferInShuttleRightRecipe.YAxisPickPosition2;
-
-        private double YAxisPickPosition3 => port == EPort.Left ? _transferInShuttleLeftRecipe.YAxisPickPosition3
-                                                                    : _transferInShuttleRightRecipe.YAxisPickPosition3;
-
-        private double ZAxisPickPosition => port == EPort.Left ? _transferInShuttleLeftRecipe.ZAxisPickPosition
-                                                                    : _transferInShuttleRightRecipe.ZAxisPickPosition;
-
-        private double YAxisPlacePosition => port == EPort.Left ? _transferInShuttleLeftRecipe.YAxisPlacePosition
-                                                                    : _transferInShuttleRightRecipe.YAxisPlacePosition;
-
-        private double ZAxisPlacePosition => port == EPort.Left ? _transferInShuttleLeftRecipe.ZAxisPlacePosition
-                                                                    : _transferInShuttleRightRecipe.ZAxisPlacePosition;
         #endregion
 
         #region Flags
-        private bool FlagOriginDone
+        private bool OutFlag_OriginDone
         {
             set
             {
-                Outputs[(int)ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_ORIGIN_DONE] = value;
+                OutputFlagss[(int)ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_ORIGIN_DONE] = value;
             }
         }
-        private bool FlagGlassAlignRequestPick
-        {
-            get
-            {
-                return Inputs[(int)ETransferInShuttleProcessInput.GLASS_ALIGN_REQ_PICK];
-            }
-        }
-
-        private bool FlagWETCleanRequestLoad
-        {
-            get
-            {
-                return Inputs[(int)ETransferInShuttleProcessInput.WET_CLEAN_REQ_LOAD];
-            }
-        }
-
-        private bool FlagTransferInShuttlePickDone
+        private bool OutFlag_TransferInShuttleGlassRequest
         {
             set
             {
-                Outputs[(int)ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_PICK_DONE] = value;
+                OutputFlagss[(int)ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_GLASS_REQUEST] = value;
             }
         }
 
@@ -118,9 +50,110 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
-                Outputs[(int)ETransferInShuttleProcessOutput.WET_CLEAN_LOAD_DONE] = value;
+                OutputFlagss[(int)ETransferInShuttleProcessOutput.WET_CLEAN_LOAD_DONE] = value;
             }
         }
+
+        private bool InFlag_WETCleanRequestLoad
+        {
+            get
+            {
+                return Inputs[(int)ETransferInShuttleProcessInput.WET_CLEAN_REQ_LOAD];
+            }
+        }
+
+        private bool InFlag_GlassTransferPlaceDone
+        {
+            get
+            {
+                return Inputs[(int)ETransferInShuttleProcessInput.GLASS_TRANSFER_PLACE_DONE];
+            }
+        }
+        #endregion
+
+        #region Motions
+        private IMotion YAxis => port == EPort.Left ? _devices.Motions.TransferInShuttleLYAxis :
+                                              _devices.Motions.TransferInShuttleRYAxis;
+
+        private IMotion ZAxis => port == EPort.Left ? _devices.Motions.TransferInShuttleLZAxis :
+                                                      _devices.Motions.TransferInShuttleRZAxis;
+
+        #endregion
+
+        #region Cylinders
+        private ICylinder AlignCyl1 => port == EPort.Left ? _devices.Cylinders.AlignStageL_AlignCyl1 : _devices.Cylinders.AlignStageR_AlignCyl1;
+        private ICylinder AlignCyl2 => port == EPort.Left ? _devices.Cylinders.AlignStageL_AlignCyl2 : _devices.Cylinders.AlignStageR_AlignCyl2;
+        private ICylinder AlignCyl3 => port == EPort.Left ? _devices.Cylinders.AlignStageL_AlignCyl3 : _devices.Cylinders.AlignStageR_AlignCyl3;
+
+        private ICylinder BrushCyl => port == EPort.Left ? _devices.Cylinders.AlignStageL_BrushCyl : _devices.Cylinders.AlignStageR_BrushCyl;
+
+        public ICylinder RotCyl => port == EPort.Left ? _devices.Cylinders.TransferInShuttleL_RotateCyl
+                                               : _devices.Cylinders.TransferInShuttleR_RotateCyl;
+        #endregion
+
+        #region Positions
+        private double YAxisReadyPosition => port == EPort.Left ? _transferInShuttleLeftRecipe.YAxisReadyPosition
+                                                        : _transferInShuttleRightRecipe.YAxisReadyPosition;
+
+        private double ZAxisReadyPosition => port == EPort.Left ? _transferInShuttleLeftRecipe.ZAxisReadyPosition
+                                                                : _transferInShuttleRightRecipe.ZAxisReadyPosition;
+
+        private double YAxisPickPosition1 => port == EPort.Left ? _transferInShuttleLeftRecipe.YAxisPickPosition1
+                                                                : _transferInShuttleRightRecipe.YAxisPickPosition1;
+
+        private double YAxisPickPosition2 => port == EPort.Left ? _transferInShuttleLeftRecipe.YAxisPickPosition2
+                                                                : _transferInShuttleRightRecipe.YAxisPickPosition2;
+
+        private double YAxisPickPosition3 => port == EPort.Left ? _transferInShuttleLeftRecipe.YAxisPickPosition3
+                                                                : _transferInShuttleRightRecipe.YAxisPickPosition3;
+
+        private double ZAxisPickPosition => port == EPort.Left ? _transferInShuttleLeftRecipe.ZAxisPickPosition
+                                                               : _transferInShuttleRightRecipe.ZAxisPickPosition;
+
+        private double YAxisPlacePosition => port == EPort.Left ? _transferInShuttleLeftRecipe.YAxisPlacePosition
+                                                                : _transferInShuttleRightRecipe.YAxisPlacePosition;
+
+        private double ZAxisPlacePosition => port == EPort.Left ? _transferInShuttleLeftRecipe.ZAxisPlacePosition
+                                                                : _transferInShuttleRightRecipe.ZAxisPlacePosition;
+
+        #endregion
+
+        #region Inputs
+        private bool AlignStageVac1Sensor => port == EPort.Left ? _devices.Inputs.AlignStageLVac1.Value : _devices.Inputs.AlignStageRVac1.Value;
+        private bool AlignStageVac2Sensor => port == EPort.Left ? _devices.Inputs.AlignStageLVac2.Value : _devices.Inputs.AlignStageRVac2.Value;
+        private bool AlignStageVac3Sensor => port == EPort.Left ? _devices.Inputs.AlignStageLVac3.Value : _devices.Inputs.AlignStageRVac3.Value;
+
+        private bool IsAlign_VacDetect1 => AlignStageVac1Sensor == true;
+        private bool IsAlign_VacDetect2 => AlignStageVac2Sensor == true;
+        private bool IsAlign_VacDetect3 => AlignStageVac3Sensor == true;
+        private bool IsAlign_VacDetect => IsAlign_VacDetect1 || IsAlign_VacDetect2 || IsAlign_VacDetect3;
+
+        private bool IsAlign_GlassDetect1 => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect1.Value : _devices.Inputs.AlignStageRGlassDetect1.Value;
+        private bool IsAlign_GlassDetect2 => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect2.Value : _devices.Inputs.AlignStageRGlassDetect2.Value;
+        private bool IsAlign_GlassDetect3 => port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect3.Value : _devices.Inputs.AlignStageRGlassDetect3.Value;
+        private bool IsAlign_GlassDetect => IsAlign_GlassDetect1 || IsAlign_GlassDetect2 || IsAlign_GlassDetect3;
+
+        private IDInput TransferVacuumInput => port == EPort.Left
+            ? _devices.Inputs.TransferInShuttleLVac
+            : _devices.Inputs.TransferInShuttleRVac;
+
+        private bool IsTransfer_VacDetect => TransferVacuumInput.Value;
+
+        private bool IsAlignCylUp => AlignCyl1.IsForward && AlignCyl2.IsForward && AlignCyl3.IsForward;
+        private bool IsAlignCylDown => AlignCyl1.IsBackward && AlignCyl2.IsBackward && AlignCyl3.IsBackward;
+        #endregion
+
+        #region Outputs
+        private IDOutput AlignVac1 => port == EPort.Left ? _devices.Outputs.AlignStageLVac1OnOff : _devices.Outputs.AlignStageRVac1OnOff;
+        private IDOutput AlignVac2 => port == EPort.Left ? _devices.Outputs.AlignStageLVac2OnOff : _devices.Outputs.AlignStageRVac2OnOff;
+        private IDOutput AlignVac3 => port == EPort.Left ? _devices.Outputs.AlignStageLVac3OnOff : _devices.Outputs.AlignStageRVac3OnOff;
+        private IDOutput AlignBlow1 => port == EPort.Left ? _devices.Outputs.AlignStageLBlow1OnOff : _devices.Outputs.AlignStageRBlow1OnOff;
+        private IDOutput AlignBlow2 => port == EPort.Left ? _devices.Outputs.AlignStageLBlow2OnOff : _devices.Outputs.AlignStageRBlow2OnOff;
+        private IDOutput AlignBlow3 => port == EPort.Left ? _devices.Outputs.AlignStageLBlow3OnOff : _devices.Outputs.AlignStageRBlow3OnOff;
+
+        public IDOutput TransferVac => port == EPort.Left
+            ? _devices.Outputs.TransferInShuttleLVacOnOff
+            : _devices.Outputs.TransferInShuttleRVacOnOff;
         #endregion
 
         #region Constructor
@@ -149,7 +182,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Override Methods
         public override bool ProcessToOrigin()
         {
-            FlagOriginDone = false;
+            OutFlag_OriginDone = false;
             return base.ProcessToOrigin();
         }
 
@@ -192,7 +225,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ETransferInShuttleOriginStep.End:
-                    FlagOriginDone = true;
+                    OutFlag_OriginDone = true;
                     Log.Debug("Origin End");
                     ProcessStatus = EProcessStatus.OriginDone;
                     Step.OriginStep++;
@@ -218,18 +251,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.Ready:
                     Sequence_Ready();
                     break;
-                case ESequence.TransferInShuttleLeftPick:
-                    if (port == EPort.Left)
-                    {
-                        Sequence_TransferInShuttlePick();
-                    }
+                case ESequence.GlassTransferLeft:
+                    if (port == EPort.Left) Sequence_GlassTransferToAlign();
                     else Sequence = ESequence.Stop;
                     break;
-                case ESequence.TransferInShuttleRightPick:
-                    if (port == EPort.Right)
-                    {
-                        Sequence_TransferInShuttlePick();
-                    }
+                case ESequence.GlassTransferRight:
+                    if (port == EPort.Right) Sequence_GlassTransferToAlign();
+                    else Sequence = ESequence.Stop;
+                    break;
+                case ESequence.AlignGlassLeft:
+                    if (port == EPort.Left) Sequence_AlignGlass();
+                    else Sequence = ESequence.Stop;
+                    break;
+                case ESequence.AlignGlassRight:
+                    if (port == EPort.Right) Sequence_AlignGlass();
                     else Sequence = ESequence.Stop;
                     break;
                 case ESequence.WETCleanLeftLoad:
@@ -264,7 +299,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferInShuttleProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
-                    ((MappableOutputDevice<ETransferInShuttleProcessOutput>)Outputs).ClearOutputs();
+                    OutputFlagss.ClearOutputs();
                     Step.ToRunStep++;
                     break;
                 case ETransferInShuttleProcessToRunStep.End:
@@ -342,17 +377,214 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Auto Run Start");
                     Step.RunStep++;
                     break;
-                case ETransferInShuttleAutoRunStep.GlassVac_Check:
-                    if (IsVacDetect && _machineStatus.IsDryRunMode == false)
+                case ETransferInShuttleAutoRunStep.Transfer_VacCheck:
+                    if (IsTransfer_VacDetect && _machineStatus.IsDryRunMode == false)
                     {
                         Log.Info("Sequence WET Clean Load");
                         Sequence = port == EPort.Left ? ESequence.WETCleanLeftLoad : ESequence.WETCleanRightLoad;
+
+                        Step.RunStep = (int)ETransferInShuttleAutoRunStep.End;
                     }
+
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleAutoRunStep.Align_GlassCheck:
+                    if (IsAlign_GlassDetect)
+                    {
+                        Log.Info("Glass Detect on Align unit, Now align glass");
+                        Sequence = port == EPort.Left ? ESequence.AlignGlassLeft : ESequence.AlignGlassRight;
+
+                        Step.RunStep = (int)ETransferInShuttleAutoRunStep.End;
+                    }
+
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleAutoRunStep.End:
                     Log.Info("Sequence Transfer In Shuttle Pick");
-                    Sequence = port == EPort.Left ? ESequence.TransferInShuttleLeftPick : ESequence.TransferInShuttleRightPick;
+                    Sequence = port == EPort.Left ? ESequence.GlassTransferLeft : ESequence.GlassTransferRight;
+                    break;
+            }
+        }
+
+        private void Sequence_GlassTransferToAlign()
+        {
+            switch ((EGlassAlignGlassTransferPlaceStep)Step.RunStep)
+            {
+                case EGlassAlignGlassTransferPlaceStep.Start:
+                    Log.Debug("Glass Transfer to Align Start");
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignGlassTransferPlaceStep.CylDown_ZAxisUp:
+                    Log.Debug("Move Align Cylinder Down / ZAxis Ready");
+                    AlignCylUpDown(false);
+                    ZAxis.MoveAbs(ZAxisReadyPosition);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsAlignCylDown && ZAxis.IsOnPosition(ZAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignGlassTransferPlaceStep.CylDown_ZAxisUp_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        if (IsAlignCylDown == false)
+                        {
+                            RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_AlignCylinder_Down_Fail
+                                : EWarning.GlassAlignRight_AlignCylinder_Down_Fail));
+                            break;
+                        }
+
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferInShuttleLeft_ZAxis_MoveReady_Fail
+                            : EWarning.TransferInShuttleRight_ZAxis_MoveReady_Fail));
+                        break;
+                    }
+                    Log.Debug("Move Align Cylinder Down / ZAxis Ready Done");
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignGlassTransferPlaceStep.YAxis_MoveReady:
+                    Log.Debug($"{YAxis} move to Ready");
+                    YAxis.MoveAbs(YAxisReadyPosition);
+                    Wait((int)_commonRecipe.MotionMoveTimeOut * 1000, () => YAxis.IsOnPosition(YAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignGlassTransferPlaceStep.YAxis_MoveReady_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferInShuttleLeft_YAxis_MoveReady_Fail :
+                                                          EWarning.TransferInShuttleRight_YAxis_MoveReady_Fail));
+                        break;
+                    }
+                    Log.Debug($"{YAxis} move to Ready Done");
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignGlassTransferPlaceStep.Set_FlagRequestGlass:
+                    Log.Debug("Set Flag Request Glass");
+                    OutFlag_TransferInShuttleGlassRequest = true;
+
+                    Log.Debug("Wait Glass Transfer Place Done");
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignGlassTransferPlaceStep.Wait_GlassTransferPlace_Done:
+                    if (InFlag_GlassTransferPlaceDone == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
+                    Log.Debug("Clear Flag Request Glass");
+                    OutFlag_TransferInShuttleGlassRequest = false;
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignGlassTransferPlaceStep.End:
+                    if (Parent?.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        break;
+                    }
+
+                    Log.Info("Set Sequence Align Glass");
+                    Sequence = port == EPort.Left ? ESequence.AlignGlassLeft : ESequence.AlignGlassRight;
+                    break;
+            }
+        }
+
+        private void Sequence_AlignGlass()
+        {
+            switch ((EGlassAlignStep)Step.RunStep)
+            {
+                case EGlassAlignStep.Start:
+                    Log.Debug("Align Glass Start");
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignStep.Vacuum_On_1st:
+                    Log.Debug("Vacuum On");
+                    AlignVacOnOff(true);
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac1 : _devices.Inputs.AlignStageRVac1, true);
+                    SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac2 : _devices.Inputs.AlignStageRVac2, true);
+                    SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac3 : _devices.Inputs.AlignStageRVac3, true);
+#endif
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsTransfer_VacDetect || _machineStatus.IsDryRunMode);
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignStep.Vacuum_On_1st_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_Vacuum_Fail
+                                                                : EWarning.GlassAlignRight_Vacuum_Fail));
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignStep.Cyl_Align_Up:
+                    Log.Debug("Cylinder Align Up");
+                    AlignCylUpDown(true);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsAlignCylUp);
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignStep.Cyl_Align_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_AlignCylinder_Up_Fail : EWarning.GlassAlignRight_AlignCylinder_Up_Fail));
+                        break;
+                    }
+                    Log.Debug("Cylinder Align Up Done");
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignStep.Vacuum_Off:
+                    Log.Debug("Vacuum Off");
+                    AlignVacOnOff(false);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignStep.Wait_GlassDetect:
+                    if (IsAlign_GlassDetect == false && _machineStatus.IsDryRunMode == false)
+                    {
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_GlassNotDetect : EWarning.GlassAlignRight_GlassNotDetect));
+                        break;
+                    }
+                    Log.Debug("Glass Align Done");
+                    Wait(1000);
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignStep.Vacuum_On_2nd:
+                    Log.Debug("Vacuum On 2nd");
+                    AlignVacOnOff(true);
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsTransfer_VacDetect);
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignStep.Vacuum_On_2nd_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)(port == EPort.Left
+                            ? EWarning.GlassAlignLeft_Vacuum_Fail
+                            : EWarning.GlassAlignRight_Vacuum_Fail));
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignStep.Cyl_Align_Down:
+                    Log.Debug("Cylinder Align Down");
+                    AlignCylUpDown(false);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsAlignCylDown);
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignStep.Cyl_Align_Down_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)(port == EPort.Left
+                            ? EWarning.GlassAlignLeft_AlignCylinder_Down_Fail
+                            : EWarning.GlassAlignRight_AlignCylinder_Down_Fail));
+                        break;
+                    }
+                    Log.Debug("Cylinder Align Down Done");
+                    Step.RunStep++;
+                    break;
+                case EGlassAlignStep.End:
+                    if (Parent?.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        break;
+                    }
+                    Log.Info("Sequence Transfer In Shuttle Pick");
+                    Sequence = port == EPort.Left ? ESequence.WETCleanLeftLoad : ESequence.WETCleanRightLoad;
                     break;
             }
         }
@@ -399,7 +631,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferInShuttlePlaceStep.Wait_WETCleanRequestLoad:
-                    if (FlagWETCleanRequestLoad == false)
+                    if (InFlag_WETCleanRequestLoad == false)
                     {
                         Wait(20);
                         break;
@@ -424,7 +656,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferInShuttlePlaceStep.Vacuum_Off:
                     Log.Debug("Vacuum Off");
-                    GlassVac.Value = false;
+                    TransferVac.Value = false;
                     Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
@@ -451,7 +683,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait WET Clean Load Done Received");
                     break;
                 case ETransferInShuttlePlaceStep.Wait_WETCleanPlaceDoneReceived:
-                    if (FlagWETCleanRequestLoad == true)
+                    if (InFlag_WETCleanRequestLoad == true)
                     {
                         Wait(20);
                         break;
@@ -467,218 +699,52 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Info("Sequence Transfer In Shuttle Pick");
-                    Sequence = port == EPort.Left ? ESequence.TransferInShuttleLeftPick : ESequence.TransferInShuttleRightPick;
+                    Sequence = port == EPort.Left ? ESequence.GlassTransferLeft : ESequence.GlassTransferRight;
                     break;
             }
         }
+        #endregion
 
-        private void Sequence_TransferInShuttlePick()
+        #region Privates Methods
+        private void AlignCylUpDown(bool isUp)
         {
-            switch ((ETransferInShuttlePickStep)Step.RunStep)
+            if (isUp)
             {
-                case ETransferInShuttlePickStep.Start:
-                    Log.Debug("Transfer In Shuttle Pick Start");
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.Cyl_Rotate_0D:
-                    Log.Debug("Cylinder Rotate 0 Degree");
-                    RotCyl.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => RotCyl.IsBackward);
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.Cyl_Rotate_0D_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferInShuttleLeft_RotateCylinder_0D_Fail :
-                                                          EWarning.TransferInShuttleRight_RotateCylinder_0D_Fail));
-                        break;
-                    }
-                    Log.Debug("Cylinder Rotate 0 Degree Done");
-                    Log.Debug("Wait Align Request Pick");
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.Wait_GlassAlignRequest_Pick:
-                    if (FlagGlassAlignRequestPick == false)
-                    {
-                        Wait(20);
-                        break;
-                    }
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.GlassDetect_Check:
-                    Log.Debug("Glass Detect Check");
-                    if (IsGlassDetect1 || _machineStatus.IsDryRunMode)
-                    {
-#if SIMULATION
-                        SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect1 : _devices.Inputs.AlignStageRGlassDetect1, false);
-#endif
-                        Log.Debug("Transfer In Shuttle Pick Glass 1");
-                        Step.RunStep++;
-                        break;
-                    }
-                    if (IsGlassDetect2)
-                    {
-#if SIMULATION
-                        SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect2 : _devices.Inputs.AlignStageRGlassDetect2, false);
-#endif
-                        Log.Debug("Transfer In Shuttle Pick Glass 2");
-                        Step.RunStep = (int)ETransferInShuttlePickStep.YAxis_Move_PickPosition2;
-                        break;
-                    }
-                    if (IsGlassDetect3)
-                    {
-#if SIMULATION
-                        SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect3 : _devices.Inputs.AlignStageRGlassDetect3, false);
-#endif
-                        Log.Debug("Transfer In Shuttle Pick Glass 3");
-                        Step.RunStep = (int)ETransferInShuttlePickStep.YAxis_Move_PickPosition3;
-                        break;
-                    }
-                    break;
-                case ETransferInShuttlePickStep.YAxis_Move_PickPosition1:
-                    Log.Debug("Y Axis Move Pick Position 1");
-                    YAxis.MoveAbs(YAxisPickPosition1);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisPickPosition1));
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.YAxis_Move_PickPosition1_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MovePickPosition1_Fail :
-                                                        EAlarm.TransferInShuttleRight_YAxis_MovePickPosition1_Fail));
-                        break;
-                    }
-                    Log.Debug("Y Axis Move Pick Position 1 Done");
-                    Step.RunStep = (int)ETransferInShuttlePickStep.ZAxis_Move_PickPosition;
-                    break;
-                case ETransferInShuttlePickStep.YAxis_Move_PickPosition2:
-                    Log.Debug("Y Axis Move Pick Position 2");
-                    YAxis.MoveAbs(YAxisPickPosition2);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisPickPosition2));
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.YAxis_Move_PickPosition2_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MovePickPosition2_Fail :
-                                                        EAlarm.TransferInShuttleRight_YAxis_MovePickPosition2_Fail));
-                        break;
-                    }
-                    Log.Debug("Y Axis Move Pick Position 2 Done");
-                    Step.RunStep = (int)ETransferInShuttlePickStep.ZAxis_Move_PickPosition;
-                    break;
-                case ETransferInShuttlePickStep.YAxis_Move_PickPosition3:
-                    Log.Debug("Y Axis Move Pick Position 3");
-                    YAxis.MoveAbs(YAxisPickPosition3);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisPickPosition3));
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.YAxis_Move_PickPosition3_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MovePickPosition3_Fail :
-                                                        EAlarm.TransferInShuttleRight_YAxis_MovePickPosition3_Fail));
-                        break;
-                    }
-                    Log.Debug("Y Axis Move Pick Position 3 Done");
-                    Step.RunStep = (int)ETransferInShuttlePickStep.ZAxis_Move_PickPosition;
-                    break;
-                case ETransferInShuttlePickStep.ZAxis_Move_PickPosition:
-                    Log.Debug("Z Axis Move Pick Position");
-                    ZAxis.MoveAbs(ZAxisPickPosition);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisPickPosition));
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.ZAxis_Move_PickPosition_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_ZAxis_MovePickPosition_Fail :
-                                                        EAlarm.TransferInShuttleRight_ZAxis_MovePickPosition_Fail));
-                        break;
-                    }
-                    Log.Debug("Z Axis Move Pick Position Done");
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.Vacuum_On:
-                    Log.Debug("Vacuum On");
-                    GlassVac.Value = true;
-#if SIMULATION
-                    SimulationInputSetter.SetSimInput(GlassVacuumInput, true);
-#endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect || _machineStatus.IsDryRunMode);
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.Vacuum_On_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferInShuttleLeft_Vacuum_Fail
-                                                                : EWarning.TransferInShuttleRight_Vacuum_Fail));
-                        break;
-                    }
-#if SIMULATION
-                    SimulationInputSetter.SetSimInput(GlassVacuumInput, false);
-#endif
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.ZAxis_Move_ReadyPosition:
-                    Log.Debug("Z Axis Move Ready Position");
-                    ZAxis.MoveAbs(ZAxisReadyPosition);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisReadyPosition));
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.ZAxis_Move_ReadyPosition_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_ZAxis_MoveReadyPosition_Fail :
-                                                        EAlarm.TransferInShuttleRight_ZAxis_MoveReadyPosition_Fail));
-                        break;
-                    }
-                    Log.Debug("Z Axis Move Ready Position Done");
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.YAxis_Move_ReadyPosition:
-                    Log.Debug("Y Axis Move Ready Position");
-                    YAxis.MoveAbs(YAxisReadyPosition);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisReadyPosition));
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.YAxis_Move_ReadyPosition_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MoveReadyPosition_Fail :
-                                                        EAlarm.TransferInShuttleRight_YAxis_MoveReadyPosition_Fail));
-                        break;
-                    }
-                    Log.Debug("Y Axis Move Ready Position Done");
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.Set_FlagTransferInShuttlePickDone:
-                    Log.Debug("Set Flag Transfer In Shuttle Pick Done");
-                    FlagTransferInShuttlePickDone = true;
-                    Log.Debug("Wait Glass Align Pick Done Received");
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.Wait_GlassAlignPickDoneReceived:
-                    if (FlagGlassAlignRequestPick == true)
-                    {
-                        Wait(20);
-                        break;
-                    }
-                    Log.Debug("Clear Flag Transfer In Shuttle Pick Done");
-                    FlagTransferInShuttlePickDone = false;
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttlePickStep.End:
-                    if (Parent?.Sequence != ESequence.AutoRun)
-                    {
-                        Sequence = ESequence.Stop;
-                        break;
-                    }
-
-                    Log.Info("Sequence WET Clean Load");
-                    Sequence = port == EPort.Left ? ESequence.WETCleanLeftLoad : ESequence.WETCleanRightLoad;
-                    break;
+                AlignCyl1.Forward();
+                AlignCyl2.Forward();
+                AlignCyl3.Forward();
             }
+            else
+            {
+                AlignCyl1.Backward();
+                AlignCyl2.Backward();
+                AlignCyl3.Backward();
+            }
+        }
+
+        private void AlignVacOnOff(bool bOnOff)
+        {
+            AlignVac1.Value = bOnOff;
+            AlignVac2.Value = bOnOff;
+            AlignVac3.Value = bOnOff;
+
+            AlignBlow1.Value = !bOnOff;
+            AlignBlow2.Value = !bOnOff;
+            AlignBlow3.Value = !bOnOff;
+            if (bOnOff == false)
+            {
+                Task.Delay(100).ContinueWith(t =>
+                {
+                    AlignBlow1.Value = false;
+                    AlignBlow2.Value = false;
+                    AlignBlow3.Value = false;
+                });
+            }
+#if SIMULATION
+            SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac1 : _devices.Inputs.AlignStageRVac1, bOnOff);
+            SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac2 : _devices.Inputs.AlignStageRVac2, bOnOff);
+            SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac3 : _devices.Inputs.AlignStageRVac3, bOnOff);
+#endif
         }
         #endregion
     }

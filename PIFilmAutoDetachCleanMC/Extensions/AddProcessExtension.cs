@@ -34,8 +34,6 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddKeyedScoped<IProcess<ESequence>, DetachProcess>(EProcess.Detach.ToString());
 
                 services.AddKeyedScoped<IProcess<ESequence>, GlassTransferProcess>(EProcess.GlassTransfer.ToString());
-                services.AddKeyedScoped<IProcess<ESequence>, GlassAlignProcess>(EProcess.GlassAlignLeft.ToString());
-                services.AddKeyedScoped<IProcess<ESequence>, GlassAlignProcess>(EProcess.GlassAlignRight.ToString());
                 services.AddKeyedScoped<IProcess<ESequence>, TransferInShuttleProcess>(EProcess.TransferInShuttleLeft.ToString());
                 services.AddKeyedScoped<IProcess<ESequence>, TransferInShuttleProcess>(EProcess.TransferInShuttleRight.ToString());
                 services.AddKeyedScoped<IProcess<ESequence>, CleanProcess>(EProcess.WETCleanLeft.ToString());

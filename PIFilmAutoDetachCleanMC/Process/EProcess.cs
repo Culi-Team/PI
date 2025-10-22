@@ -17,8 +17,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         Detach,
         RemoveFilm,
         GlassTransfer,
-        GlassAlignLeft,
-        GlassAlignRight,
         TransferInShuttleLeft,
         TransferInShuttleRight,
         WETCleanLeft,
