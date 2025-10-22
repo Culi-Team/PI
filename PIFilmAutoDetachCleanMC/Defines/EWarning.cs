@@ -32,6 +32,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         InWorkConveyor_SupportCV_Down_Fail,
         InWorkConveyor_FixCylinder_Backward_Fail,
         InWorkConveyor_FixCylinder_Forward_Fail,
+        InWorkConveyor_CSTSensorStatus_Fail,
 
         //BufferConveyor
         BufferConveyor = 3000,
@@ -52,6 +53,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         OutWorkConveyor_SupportCV_Down_Fail,
         OutWorkConveyor_FixCylinder_Backward_Fail,
         OutWorkConveyor_FixCylinder_Forward_Fail,
+        OutWorkConveyor_CSTSensorStatus_Fail,
 
         //OutConveyor
         OutConveyor = 5000,

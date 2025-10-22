@@ -352,7 +352,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationReadyStep.End:
-                    IsWarning = false;
                     Log.Debug("Initialize End");
                     Sequence = ESequence.Stop;
                     break;

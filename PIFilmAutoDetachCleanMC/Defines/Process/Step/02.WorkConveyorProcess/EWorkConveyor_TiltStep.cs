@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum EWorkConveyorTiltStep
+    public enum EWorkConveyor_TiltStep
     {
         Start,
         Cyl_SupportCV_Down,

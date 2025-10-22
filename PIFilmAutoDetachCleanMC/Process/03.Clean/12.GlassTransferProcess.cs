@@ -388,7 +388,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EGlassTransferReadyStep.End:
-                    IsWarning = false;
                     Log.Debug("Initialize End");
                     Sequence = ESequence.Stop;
                     break;

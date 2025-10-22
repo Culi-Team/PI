@@ -190,7 +190,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
-                    IsWarning = false;
                     Sequence = ESequence.Stop;
                     break;
                 case ESequence.RobotPlaceFixtureToVinylClean:

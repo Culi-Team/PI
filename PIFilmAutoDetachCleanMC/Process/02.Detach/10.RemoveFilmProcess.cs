@@ -386,7 +386,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERemoveFilmReadyStep.End:
                     Log.Debug("Initialize End");
-                    IsWarning = false;
                     Sequence = ESequence.Stop;
                     break;
                 default:
