@@ -63,15 +63,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             Application.Current.Dispatcher.BeginInvoke(new Action(() =>
             {
-                if (CurrentFrameVM is AutoViewModel vm)
-                {
-                    vm.EnableTimer();
-                }
-                else
-                {
-                    _viewModelProvider.GetViewModel<AutoViewModel>().DisableTimer();
-                }
-
                 OnPropertyChanged(nameof(CurrentFrameVM));
             }), DispatcherPriority.DataBind);
         }

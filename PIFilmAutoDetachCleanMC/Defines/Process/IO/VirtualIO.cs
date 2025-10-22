@@ -35,10 +35,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         private readonly IDOutputDevice _detachOutput;
         private readonly IDInputDevice _glassTransferInput;
         private readonly IDOutputDevice _glassTransferOutput;
-        private readonly IDInputDevice _glassAlignLeftInput;
-        private readonly IDOutputDevice _glassAlignLeftOutput;
-        private readonly IDInputDevice _glassAlignRightInput;
-        private readonly IDOutputDevice _glassAlignRightOutput;
         private readonly IDInputDevice _transferInShuttleLeftInput;
         private readonly IDOutputDevice _transferInShuttleLeftOutput;
         private readonly IDInputDevice _transferInShuttleRightInput;
@@ -87,10 +83,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
                          [FromKeyedServices("DetachOutput")] IDOutputDevice detachOutput,
                          [FromKeyedServices("GlassTransferInput")] IDInputDevice glassTransferInput,
                          [FromKeyedServices("GlassTransferOutput")] IDOutputDevice glassTransferOutput,
-                         [FromKeyedServices("GlassAlignLeftInput")] IDInputDevice glassAlignLeftInput,
-                         [FromKeyedServices("GlassAlignLeftOutput")] IDOutputDevice glassAlignLeftOutput,
-                         [FromKeyedServices("GlassAlignRightInput")] IDInputDevice glassAlignRightInput,
-                         [FromKeyedServices("GlassAlignRightOutput")] IDOutputDevice glassAlignRightOutput,
                          [FromKeyedServices("TransferInShuttleLeftInput")] IDInputDevice transferInShuttleLeftInput,
                          [FromKeyedServices("TransferInShuttleLeftOutput")] IDOutputDevice transferInShuttleLeftOutput,
                          [FromKeyedServices("TransferInShuttleRightInput")] IDInputDevice transferInShuttleRightInput,
@@ -139,10 +131,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
             _detachOutput = detachOutput;
             _glassTransferInput = glassTransferInput;
             _glassTransferOutput = glassTransferOutput;
-            _glassAlignLeftInput = glassAlignLeftInput;
-            _glassAlignLeftOutput = glassAlignLeftOutput;
-            _glassAlignRightInput = glassAlignRightInput;
-            _glassAlignRightOutput = glassAlignRightOutput;
             _transferInShuttleLeftInput = transferInShuttleLeftInput;
             _transferInShuttleLeftOutput = transferInShuttleLeftOutput;
             _transferInShuttleRightInput = transferInShuttleRightInput;
@@ -208,11 +196,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
             _glassTransferInput.Initialize();
             _glassTransferOutput.Initialize();
-
-            _glassAlignLeftInput.Initialize();
-            _glassAlignLeftOutput.Initialize();
-            _glassAlignRightInput.Initialize();
-            _glassAlignRightOutput.Initialize();
 
             _transferInShuttleLeftInput.Initialize();
             _transferInShuttleRightInput.Initialize();

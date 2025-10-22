@@ -58,6 +58,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
             statusUpdateTimer = new System.Timers.Timer(100);
             statusUpdateTimer.Elapsed +=StatusUpdateTimerHandler;
+            statusUpdateTimer.Start();
         }
         #endregion
 

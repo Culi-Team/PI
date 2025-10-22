@@ -253,7 +253,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                 _devices.RollerList.SetDirection();
 
-                foreach (var motion in _devices.Motions.All!) { motion.ClearPosition(); }
+                //foreach (var motion in _devices.Motions.All!) { motion.ClearPosition(); }
 
                 MessageBoxEx.Show(Application.Current.Resources["str_OriginSuccess"].ToString(), false);
 
