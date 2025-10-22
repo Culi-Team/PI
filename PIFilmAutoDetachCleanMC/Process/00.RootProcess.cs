@@ -250,6 +250,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             if (Childs!.Count(child => child.ProcessStatus != EProcessStatus.OriginDone) == 0)
             {
                 _machineStatus.OriginDone = true;
+                _machineStatus.MachineReadyDone = false;
 
                 _devices.RollerList.SetDirection();
 
@@ -448,6 +449,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.Ready:
                     if (Childs!.Count(child => child.Sequence != ESequence.Stop) == 0)
                     {
+                        _machineStatus.OriginDone = true;
+
                         ProcessMode = EProcessMode.Stop;
                         Log.Info("Initialize done");
                     }
@@ -469,6 +472,15 @@ namespace PIFilmAutoDetachCleanMC.Process
         private void ProcessModeUpdatedHandler(object? sender, EventArgs e)
         {
             _machineStatus.CurrentProcessMode = this.ProcessMode;
+
+            // Clear MachineReadyDone when machine by Alert
+            if (this.ProcessMode == EProcessMode.ToWarning ||
+                this.ProcessMode == EProcessMode.Warning ||
+                this.ProcessMode == EProcessMode.ToAlarm ||
+                this.ProcessMode == EProcessMode.Alarm)
+            {
+                _machineStatus.MachineReadyDone = false;
+            }
         }
 
         private void CheckRealTimeAlarmStatus()
@@ -578,6 +590,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                         return;
                     }
 
+                    if (_machineStatus.MachineReadyDone == false)
+                    {
+                        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_MachineNeedToBeReadyBeforeRun"]);
+                        _machineStatus.OPCommand = EOperationCommand.None;
+                        return;
+                    }
+
                     if (Childs!.Any(p => p.IsAlarm))
                     {
                         MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_MachineNeedToBeOriginBeforeRun"]);
@@ -608,6 +627,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EOperationCommand.Stop:
                     foreach (var motion in _devices.Motions.All!) { motion.Stop(); }
                     foreach (var roller in _devices.RollerList.All!) { roller.Stop(); }
+
+                    _machineStatus.MachineReadyDone = false;
 
                     ProcessMode = EProcessMode.ToStop;
                     _machineStatus.OPCommand = EOperationCommand.None;

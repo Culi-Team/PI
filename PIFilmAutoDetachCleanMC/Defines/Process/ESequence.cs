@@ -10,6 +10,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Stop,
 
         AutoRun,
+        /// <summary>
+        /// Move Units to non-collision positions before starting Auto Run
+        /// </summary>
         Ready,
 
         [Description("In Conveyor Load")]

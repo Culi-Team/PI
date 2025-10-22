@@ -114,6 +114,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        public bool MachineReadyDone { get; set; }
+
         public bool OriginDone
         {
             get { return _originDone; }
