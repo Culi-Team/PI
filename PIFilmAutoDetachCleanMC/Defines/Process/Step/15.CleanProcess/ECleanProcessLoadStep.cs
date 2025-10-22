@@ -18,10 +18,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_UnClamp_Wait,
         Set_FlagCleanRequestLoad,
         Wait_CleanLoadDone,
-        Vacuum_On,
-        Vacuum_Check,
         Cyl_Clamp,
         Cyl_Clamp_Wait,
+        Vacuum_On,
+        Vacuum_Check,
         End
     }
 }

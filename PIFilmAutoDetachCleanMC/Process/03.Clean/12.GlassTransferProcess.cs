@@ -252,7 +252,24 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseAlarm((int)EAlarm.GlassTransfer_YAxis_Origin_Fail);
                         break;
                     }
+
+                    Wait(200);
                     Log.Debug("Glass Transfer Y Axis Origin Done");
+                    Step.OriginStep++;
+                    break;
+                case EGlassTransferOriginStep.YAxis_Move_ReadyPosition:
+                    Log.Debug("Y Axis Move Ready Position");
+                    YAxis.MoveAbs(_glassTransferRecipe.YAxisReadyPosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(_glassTransferRecipe.YAxisReadyPosition));
+                    Step.OriginStep++;
+                    break;
+                case EGlassTransferOriginStep.YAxis_Move_ReadyPositionWait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)EAlarm.GlassTransfer_YAxis_MoveReadyPosition_Fail);
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Ready Position Done");
                     Step.OriginStep++;
                     break;
                 case EGlassTransferOriginStep.End:

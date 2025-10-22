@@ -223,24 +223,28 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         Sequence_TransferInShuttlePick();
                     }
+                    else Sequence = ESequence.Stop;
                     break;
                 case ESequence.TransferInShuttleRightPick:
                     if (port == EPort.Right)
                     {
                         Sequence_TransferInShuttlePick();
                     }
+                    else Sequence = ESequence.Stop;
                     break;
                 case ESequence.WETCleanLeftLoad:
                     if (port == EPort.Left)
                     {
                         Sequence_WETCleanLoad();
                     }
+                    else Sequence = ESequence.Stop;
                     break;
                 case ESequence.WETCleanRightLoad:
                     if (port == EPort.Right)
                     {
                         Sequence_WETCleanLoad();
                     }
+                    else Sequence = ESequence.Stop;
                     break;
                 default:
                     Sequence = ESequence.Stop;

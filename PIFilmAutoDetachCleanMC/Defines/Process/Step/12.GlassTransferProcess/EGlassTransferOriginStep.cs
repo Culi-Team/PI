@@ -17,6 +17,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         ZAxis_Origin_Wait,
         YAxis_Origin,
         YAxis_Origin_Wait,
+
+        YAxis_Move_ReadyPosition,
+        YAxis_Move_ReadyPositionWait,
         End
     }
 }

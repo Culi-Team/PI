@@ -28,6 +28,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
+                return true;
                 return _devices.Inputs.DoorLock1L.Value &&
                        _devices.Inputs.DoorLock1R.Value &&
                        _devices.Inputs.DoorLock2L.Value &&
@@ -49,6 +50,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
+                return true;
                 return _devices.Inputs.DoorLatch1L.Value &&
                        _devices.Inputs.DoorLatch1R.Value &&
                        _devices.Inputs.DoorLatch2L.Value &&

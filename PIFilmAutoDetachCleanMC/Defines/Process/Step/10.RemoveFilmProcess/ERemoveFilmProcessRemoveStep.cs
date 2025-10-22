@@ -33,7 +33,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_Transfer_Backward,
         Cyl_Transfer_Backward_Wait,
 
-        Set_Flag_RemoveFilmRequestUnload,
         End
     }
 }

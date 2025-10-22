@@ -327,33 +327,37 @@ namespace PIFilmAutoDetachCleanMC.Process
                     IsWarning = false;
                     Sequence = ESequence.Stop;
                     break;
-                case ESequence.InConveyorLoad:
-                    break;
                 case ESequence.InWorkCSTLoad:
                     if (port == EPort.Right) Sequence_Load();
+                    else Sequence = ESequence.Stop;
                     break;
                 case ESequence.InWorkCSTUnLoad:
                     if (port == EPort.Right) Sequence_Unload();
+                    else Sequence = ESequence.Stop;
                     break;
                 case ESequence.InWorkCSTTilt:
                     if (port == EPort.Right) Sequence_Tilt();
+                    else Sequence = ESequence.Stop;
                     break;
                 case ESequence.OutWorkCSTLoad:
                     if (port == EPort.Left) Sequence_Load();
+                    else Sequence = ESequence.Stop;
                     break;
                 case ESequence.OutWorkCSTUnLoad:
                     if (port == EPort.Left) Sequence_Unload();
+                    else Sequence = ESequence.Stop;
                     break;
                 case ESequence.OutWorkCSTTilt:
                     if (port == EPort.Left) Sequence_Tilt();
-                    break;
-                case ESequence.OutConveyorUnload:
+                    else Sequence = ESequence.Stop;
                     break;
                 case ESequence.RobotPickFixtureFromCST:
                     if (port == EPort.Right) Sequence_PickPlace();
+                    else Sequence = ESequence.Stop;
                     break;
                 case ESequence.RobotPlaceFixtureToOutWorkCST:
                     if (port == EPort.Left) Sequence_PickPlace();
+                    else Sequence = ESequence.Stop;
                     break;
                 default:
                     Sequence = ESequence.Stop;

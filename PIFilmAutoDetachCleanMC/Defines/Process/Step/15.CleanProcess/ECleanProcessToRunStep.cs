@@ -13,6 +13,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_Up_Wait,
         FeedingRollerDetect_Check,
         Wiper_Check,
+        Set_Torque,
+        Winder_UnWinder_Run,
         Set_Pressure,
         Dispense_Remain,
         Dispense_Remain_Wait,

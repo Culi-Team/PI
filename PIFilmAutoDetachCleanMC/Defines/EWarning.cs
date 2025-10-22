@@ -114,8 +114,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         //Remove Film
         RemoveFilm = 11000,
-        RemoveFilm_FixCylinder_Backward_Fail,
-        RemoveFilm_FixCylinder_Forward_Fail,
+        RemoveFilm_ClampCylinder_UnClamp_Fail,
+        RemoveFilm_ClampCylinder_Clamp_Fail,
         RemoveFilm_TransferCylinder_Backward_Fail,
         RemoveFilm_TransferCylinder_Forward_Fail,
         RemoveFilm_UpDownCylinder1_Up_Fail,
@@ -126,8 +126,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         RemoveFilm_PusherCylinder1_Down_Fail,
         RemoveFilm_PusherCylinder2_Up_Fail,
         RemoveFilm_PusherCylinder2_Down_Fail,
-        RemoveFilm_ClampCylinder_Clamp_Fail,
-        RemoveFilm_ClampCylinder_UnClamp_Fail,
+        RemoveFilm_FilmClampCylinder_Clamp_Fail,
+        RemoveFilm_FilmClampCylinder_UnClamp_Fail,
         RemoveFilm_Full_Tape,
         RemoveFilm_Fixture_NotDetect,
 
@@ -251,9 +251,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         //Unload Glass Left
         UnloadTransferLeft = 23000,
+        UnloadTransferLeft_VacuumOn_Fail,
+
 
         //Unload Glass Right
         UnloadTransferRight = 24000,
+        UnloadTransferRight_VacuumOn_Fail,
 
         //Unload Align
         UnloadAlign = 25000,

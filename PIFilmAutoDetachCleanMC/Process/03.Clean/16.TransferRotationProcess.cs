@@ -40,7 +40,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder TransferCyl => port == EPort.Left ? _devices.Cylinders.TransferRotationL_BwFwCyl :
                                                       _devices.Cylinders.TransferRotationR_BwFwCyl;
 
-        private ICylinder UpDownCyl => port == EPort.Left ? _devices.Cylinders.TransferRotationLeft_UpDownCyl :
+        private ICylinder UpDownCyl => port == EPort.Left ? _devices.Cylinders.TransferRotationL_UpDownCyl :
                                                             _devices.Cylinders.TransferRotationR_UpDownCyl;
 
         public IDOutput GlassVac1OnOff => port == EPort.Left ? _devices.Outputs.TrRotateLeftVac1OnOff :
@@ -234,36 +234,42 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         Sequence_WETCleanUnload();
                     }
+                    else Sequence = ESequence.Stop;
                     break;
                 case ESequence.WETCleanRightUnload:
                     if (port == EPort.Right)
                     {
                         Sequence_WETCleanUnload();
                     }
+                    else Sequence = ESequence.Stop;
                     break;
                 case ESequence.TransferRotationLeft:
                     if (port == EPort.Left)
                     {
                         Sequence_TransferRotation();
                     }
+                    else Sequence = ESequence.Stop;
                     break;
                 case ESequence.TransferRotationRight:
                     if (port == EPort.Right)
                     {
                         Sequence_TransferRotation();
                     }
+                    else Sequence = ESequence.Stop;
                     break;
                 case ESequence.AFCleanLeftLoad:
                     if (port == EPort.Left)
                     {
                         Sequence_AFCleanLoad();
                     }
+                    else Sequence = ESequence.Stop;
                     break;
                 case ESequence.AFCleanRightLoad:
                     if (port == EPort.Right)
                     {
                         Sequence_AFCleanLoad();
                     }
+                    else Sequence = ESequence.Stop;
                     break;
                 default:
                     Sequence = ESequence.Stop;
@@ -495,20 +501,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Transfer Rotation Start");
                     Step.RunStep++;
                     break;
-                case ETransferRotationStep.TransferCyl_Forward:
-                    Log.Debug("Transfer Cylinder Forward");
-                    TransferCyl.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => TransferCyl.IsForward);
+                case ETransferRotationStep.TransferCyl_Backward:
+                    Log.Debug("Transfer Cylinder Backward");
+                    TransferCyl.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => TransferCyl.IsBackward);
                     Step.RunStep++;
                     break;
-                case ETransferRotationStep.TransferCyl_Forward_Wait:
+                case ETransferRotationStep.TransferCyl_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_Cylinder_Forward_Fail :
-                                                          EWarning.TransferRotationRight_Cylinder_Forward_Fail));
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_Cylinder_Backward_Fail :
+                                                          EWarning.TransferRotationRight_Cylinder_Backward_Fail));
                         break;
                     }
-                    Log.Debug("Transfer Cylinder Forward Done");
+                    Log.Debug("Transfer Cylinder Backward Done");
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.ZAxis_Move_TransferBeforeRotatePosition:
@@ -525,6 +531,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Z Axis Move Transfer Before Rotate Position Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.TransferCyl_Forward:
+                    Log.Debug("Transfer Cylinder Forward");
+                    TransferCyl.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => TransferCyl.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.TransferCyl_Forward_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_Cylinder_Forward_Fail :
+                                                          EWarning.TransferRotationRight_Cylinder_Forward_Fail));
+                        break;
+                    }
+                    Log.Debug("Transfer Cylinder Forward Done");
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassRotVac_On:
@@ -646,7 +668,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassVac2_On_Check:
-                    if (GlassVac2 != true && !_machineStatus.IsDryRunMode)
+                    if (GlassVac2 == false && !_machineStatus.IsDryRunMode)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_GlassVacAfterRotate_Check_Fail :
                                                           EWarning.TransferRotationRight_GlassVacAfterRotate_Check_Fail));

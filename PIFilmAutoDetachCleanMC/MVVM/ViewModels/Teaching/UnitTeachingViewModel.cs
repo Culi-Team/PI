@@ -322,9 +322,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     var transferInShuttleLZAxis = devices.Motions.TransferInShuttleLZAxis;
                     var transferInShuttleRZAxis = devices.Motions.TransferInShuttleRZAxis;
                     if ((transferInShuttleLZAxis != null && transferInShuttleLZAxis.Status.ActualPosition
-                        != recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition)
+                        > recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition)
                         || (transferInShuttleRZAxis != null && transferInShuttleRZAxis.Status.ActualPosition
-                        != recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisReadyPosition))
+                        > recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[Transfer InShuttle Left Z Axis] ," +
                             $"\n [Transfer InShuttle Right Z Axis]," +

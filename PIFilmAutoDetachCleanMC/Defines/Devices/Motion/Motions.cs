@@ -71,7 +71,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IMotion InShuttleLYAxis => AjinMotions.All.First(m => m.Id == (int)EMotionAjin.InShuttleLYAxis);
         public IMotion OutShuttleLYAxis => AjinMotions.All.First(m => m.Id == (int)EMotionAjin.OutShuttleLYAxis);
 
-        public void CleanHorizontal(EClean cleanUnit, double positionX, double positionY, int count, double vel = 500, double acc = 2000, double dec = 2000)
+        public void CleanHorizontal(EClean cleanUnit, double positionX, double positionY, int count, double vel = 200, double acc = 0.25, double dec = 0.25)
         {
             switch (cleanUnit)
             {
@@ -91,7 +91,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
             AXM.AxmContiBeginNode((int)cleanUnit);
 
-            double YStep = 5.0 / count;
+            double YStep = 0.1 / count;
 
             double x = 0;
             double y = positionY;
@@ -100,7 +100,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
             double[] startPos = { positionX, positionY };
             AXM.AxmLineMove((int)cleanUnit, startPos, vel, acc, dec);
 
-            while (y <= positionY + 5)
+            while (y <= positionY + 0.1)
             {
                 x = toRight ? positionX - 150 : positionX;
                 double[] pos1 = { x, y };
@@ -109,7 +109,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
                 y += YStep;
 
-                if (y <= positionY + 5)
+                if (y <= positionY + 0.1)
                 {
                     double[] pos2 = { x, y };
                     AXM.AxmLineMove((int)cleanUnit, pos2, vel, acc, dec);
@@ -129,7 +129,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
             return uInMotion == 1;
         }
 
-        public void CleanVertical(EClean cleanUnit, double positionX, double positionY, int count, double vel = 500, double acc = 2000, double dec = 2000)
+        public void CleanVertical(EClean cleanUnit, double positionX, double positionY, int count, double vel = 200, double acc = 0.25, double dec = 0.25)
         {
             switch (cleanUnit)
             {
@@ -149,7 +149,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
             AXM.AxmContiBeginNode((int)cleanUnit);
 
-            double YStep = 100.0 / count;
+            double YStep = 80.0 / count;
 
             double x = 0;
             double y = positionY;
@@ -158,7 +158,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
             double[] startPos = { positionX, positionY };
             AXM.AxmLineMove((int)cleanUnit, startPos, vel, acc, dec);
 
-            while (y <= positionY + 100)
+            while (y <= positionY + 80)
             {
                 x = toRight ? positionX - 60 : positionX;
                 double[] pos1 = { x, y };
@@ -167,7 +167,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
                 y += YStep;
 
-                if (y <= positionY + 100)
+                if (y <= positionY + 80)
                 {
                     double[] pos2 = { x, y };
                     AXM.AxmLineMove((int)cleanUnit, pos2, vel, acc, dec);

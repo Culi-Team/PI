@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum ERemoveFilmThrowStep
+    public enum ERemoveFilmRobotPickFromRemoveZoneStep
     {
         Start,
-        Cyl_UpDown1_Down,
-        Cyl_UpDown1_Down_Wait,
         Cyl_UnClamp,
         Cyl_UnClamp_Wait,
+
+        Set_Flag_RemoveFilmRequestUnload,
+        Cyl_UpDown1_Down,
+        Cyl_UpDown1_Down_Wait,
+        
+        FilmCyl_UnClamp,
+        FilmCyl_UnClamp_Wait,
+
         Cyl_UpDown2_Down_1st,
         Cyl_UpDown2_Down_1st_Wait,
         Cyl_UpDown2_Up_1st,

@@ -227,7 +227,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             ObservableCollection<ICylinder> cylinders = new ObservableCollection<ICylinder>();
             cylinders.Add(Cylinders.TransferRotationL_RotationCyl);
             cylinders.Add(Cylinders.TransferRotationL_BwFwCyl);
-            cylinders.Add(Cylinders.TransferRotationLeft_UpDownCyl);
+            cylinders.Add(Cylinders.TransferRotationL_UpDownCyl);
             return cylinders;
         }
 
@@ -617,6 +617,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.UnloadTransferLVac);
             inputs.Add(Inputs.UnloadGlassAlignVac1);
             inputs.Add(Inputs.UnloadGlassAlignVac2);
+            inputs.Add(Inputs.UnloadGlassAlignVac3);
+            inputs.Add(Inputs.UnloadGlassAlignVac4);
             inputs.Add(Inputs.UnloadRobotCyl1Up);
             inputs.Add(Inputs.UnloadRobotCyl1Down);
             inputs.Add(Inputs.UnloadRobotCyl2Up);
@@ -636,6 +638,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
             inputs.Add(Inputs.UnloadTransferRVac);
+            inputs.Add(Inputs.UnloadGlassAlignVac1);
+            inputs.Add(Inputs.UnloadGlassAlignVac2);
             inputs.Add(Inputs.UnloadGlassAlignVac3);
             inputs.Add(Inputs.UnloadGlassAlignVac4);
             inputs.Add(Inputs.UnloadRobotCyl1Up);
@@ -1069,6 +1073,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.UnloadTransferLVacOnOff);
             outputs.Add(Outputs.UnloadGlassAlignVac1OnOff);
             outputs.Add(Outputs.UnloadGlassAlignVac2OnOff);
+            outputs.Add(Outputs.UnloadGlassAlignVac3OnOff);
+            outputs.Add(Outputs.UnloadGlassAlignVac4OnOff);
             outputs.Add(Outputs.UnloadRobotCyl1Down);
             outputs.Add(Outputs.UnloadRobotCyl2Down);
             outputs.Add(Outputs.UnloadRobotCyl3Down);
@@ -1084,6 +1090,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
             outputs.Add(Outputs.UnloadTransferRVacOnOff);
+            outputs.Add(Outputs.UnloadGlassAlignVac1OnOff);
+            outputs.Add(Outputs.UnloadGlassAlignVac2OnOff);
             outputs.Add(Outputs.UnloadGlassAlignVac3OnOff);
             outputs.Add(Outputs.UnloadGlassAlignVac4OnOff);
             outputs.Add(Outputs.UnloadRobotCyl1Down);

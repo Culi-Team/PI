@@ -9,10 +9,15 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ETransferRotationStep
     {
         Start,
-        TransferCyl_Forward,
-        TransferCyl_Forward_Wait,
+        TransferCyl_Backward,
+        TransferCyl_Backward_Wait,
+
         ZAxis_Move_TransferBeforeRotatePosition,
         ZAxis_Move_TransferBeforeRotatePosition_Wait,
+
+        TransferCyl_Forward,
+        TransferCyl_Forward_Wait,
+
         GlassRotVac_On,
         GlassVac1_Off,
         GlassRotVac_On_Check,

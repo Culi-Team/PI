@@ -52,6 +52,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 OnPropertyChanged(nameof(Temperature));
                 OnPropertyChanged(nameof(Humidity));
+
+                double torque = Devices.TorqueControllers.AFCleanRightWinder.GetValue();
             };
 
             statusUpdateTimer = new System.Timers.Timer(100);

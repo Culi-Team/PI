@@ -123,7 +123,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
         public ICylinder TransferRotationL_RotationCyl { get; }
         public ICylinder TransferRotationL_BwFwCyl { get; }
         public ICylinder TransferRotationR_UpDownCyl { get; }
-        public ICylinder TransferRotationLeft_UpDownCyl { get; }
+        public ICylinder TransferRotationL_UpDownCyl { get; }
 
         // AF Clean
         public ICylinder AFCleanR_PusherCyl { get; }
@@ -488,12 +488,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             WetCleanR_BrushCyl = _cylinderFactory
                 .Create(_inputs.WetCleanBrushRightDown, _inputs.WetCleanBrushRightUp, _outputs.WetCleanBrushRightDown, null)
                 .SetIdentity((int)ECylinder.WetCleanR_BrushCyl, ECylinder.WetCleanR_BrushCyl.ToString());
-            WetCleanR_BrushCyl.CylinderType = ECylinderType.UpDown;
+            WetCleanR_BrushCyl.CylinderType = ECylinderType.UpDownReverse;
 
             WetCleanL_BrushCyl = _cylinderFactory
                 .Create(_inputs.WetCleanBrushLeftDown, _inputs.WetCleanBrushLeftUp, _outputs.WetCleanBrushLeftDown, null)
                 .SetIdentity((int)ECylinder.WetCleanL_BrushCyl, ECylinder.WetCleanL_BrushCyl.ToString());
-            WetCleanL_BrushCyl.CylinderType = ECylinderType.UpDown;
+            WetCleanL_BrushCyl.CylinderType = ECylinderType.UpDownReverse;
 
             WetCleanR_ClampCyl1 = _cylinderFactory
                 .Create(_inputs.InShuttleRClamp1FW, _inputs.InShuttleRClamp1BW, _outputs.InShuttleRClampFw, _outputs.InShuttleRClampBw)
@@ -539,12 +539,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             TransferRotationR_UpDownCyl = _cylinderFactory
                 .Create(_inputs.TrRotateRightDown, _inputs.TrRotateRightUp, _outputs.TrRotateRightDown, _outputs.TrRotateRightUp)
                 .SetIdentity((int)ECylinder.TransferRotationR_UpDownCyl, ECylinder.TransferRotationR_UpDownCyl.ToString());
-            TransferRotationR_UpDownCyl.CylinderType = ECylinderType.UpDown;
+            TransferRotationR_UpDownCyl.CylinderType = ECylinderType.UpDownReverse;
 
-            TransferRotationLeft_UpDownCyl = _cylinderFactory
+            TransferRotationL_UpDownCyl = _cylinderFactory
                 .Create(_inputs.TrRotateLeftDown, _inputs.TrRotateLeftUp, _outputs.TrRotateLeftDown, _outputs.TrRotateLeftUp)
                 .SetIdentity((int)ECylinder.TransferRotationLeft_UpDownCyl, ECylinder.TransferRotationLeft_UpDownCyl.ToString());
-            TransferRotationLeft_UpDownCyl.CylinderType = ECylinderType.UpDown;
+            TransferRotationL_UpDownCyl.CylinderType = ECylinderType.UpDownReverse;
 
 
             // AF Clean
@@ -561,12 +561,12 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             AFCleanR_BrushCyl = _cylinderFactory
                 .Create(_inputs.AfCleanBrushRightDown, _inputs.AfCleanBrushRightUp, _outputs.AfCleanBrushRightDown, null)
                 .SetIdentity((int)ECylinder.AFCleanR_BrushCyl, ECylinder.AFCleanR_BrushCyl.ToString());
-            AFCleanR_BrushCyl.CylinderType = ECylinderType.UpDown;
+            AFCleanR_BrushCyl.CylinderType = ECylinderType.UpDownReverse;
 
             AFCleanL_BrushCyl = _cylinderFactory
                 .Create(_inputs.AfCleanBrushLeftDown, _inputs.AfCleanBrushLeftUp, _outputs.AfCleanBrushLeftDown, null)
                 .SetIdentity((int)ECylinder.AFCleanL_BrushCyl, ECylinder.AFCleanL_BrushCyl.ToString());
-            AFCleanL_BrushCyl.CylinderType = ECylinderType.UpDown;
+            AFCleanL_BrushCyl.CylinderType = ECylinderType.UpDownReverse;
 
             // Robot 2 Unload
             UnloadRobot_UpDownCyl1 = _cylinderFactory
