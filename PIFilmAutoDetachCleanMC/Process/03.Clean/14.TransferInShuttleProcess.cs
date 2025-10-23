@@ -500,7 +500,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac2 : _devices.Inputs.AlignStageRVac2, true);
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac3 : _devices.Inputs.AlignStageRVac3, true);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsTransfer_VacDetect || _machineStatus.IsDryRunMode);
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsAlign_VacDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Vacuum_On_1st_Wait:
@@ -546,7 +546,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassAlignStep.Vacuum_On_2nd:
                     Log.Debug("Vacuum On 2nd");
                     AlignVacOnOff(true);
-                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsTransfer_VacDetect);
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsAlign_VacDetect);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Vacuum_On_2nd_Wait:
@@ -590,19 +590,151 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void Sequence_WETCleanLoad()
         {
-            switch ((ETransferInShuttlePlaceStep)Step.RunStep)
+            switch ((ETransferInShuttleWETCleanLoadStep)Step.RunStep)
             {
-                case ETransferInShuttlePlaceStep.Start:
+                case ETransferInShuttleWETCleanLoadStep.Start:
                     Log.Debug("WET Clean Load Start");
                     Step.RunStep++;
                     break;
-                case ETransferInShuttlePlaceStep.YAxis_Move_PlacePosition:
+                case ETransferInShuttleWETCleanLoadStep.Cyl_Rotate_0D:
+                    Log.Debug("Cylinder Rotate 0 Degree");
+                    RotCyl.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => RotCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.Cyl_Rotate_0D_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferInShuttleLeft_RotateCylinder_0D_Fail :
+                                                          EWarning.TransferInShuttleRight_RotateCylinder_0D_Fail));
+                        break;
+                    }
+                    Log.Debug("Cylinder Rotate 0 Degree Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.GlassDetect_Check:
+                    if (_machineStatus.IsDryRunMode || IsAlign_GlassDetect1)
+                    {
+                        Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.YAxis_Move_PickPosition1;
+                        break;
+                    }
+                    if (IsAlign_GlassDetect2)
+                    {
+                        Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.YAxis_Move_PickPosition2;
+                        break;
+                    }
+                    if (IsAlign_GlassDetect3)
+                    {
+                        Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.YAxis_Move_PickPosition3;
+                        break;
+                    }
+
+                    Log.Info("Sequence Glass Transfer");
+                    Sequence = port == EPort.Left ? ESequence.GlassTransferLeft : ESequence.GlassTransferRight;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.YAxis_Move_PickPosition1:
+                    Log.Debug("Y Axis Move Pick Position 1");
+                    YAxis.MoveAbs(YAxisPickPosition1);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisPickPosition1));
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.YAxis_Move_PickPosition1_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MovePickPosition1_Fail :
+                                                        EAlarm.TransferInShuttleRight_YAxis_MovePickPosition1_Fail));
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Pick Position 1 Done");
+                    Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.ZAxis_Move_PickPosition;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.YAxis_Move_PickPosition2:
+                    Log.Debug("Y Axis Move Pick Position 2");
+                    YAxis.MoveAbs(YAxisPickPosition2);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisPickPosition2));
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.YAxis_Move_PickPosition2_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MovePickPosition2_Fail :
+                                                        EAlarm.TransferInShuttleRight_YAxis_MovePickPosition2_Fail));
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Pick Position 2 Done");
+                    Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.ZAxis_Move_PickPosition;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.YAxis_Move_PickPosition3:
+                    Log.Debug("Y Axis Move Pick Position 3");
+                    YAxis.MoveAbs(YAxisPickPosition3);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisPickPosition3));
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.YAxis_Move_PickPosition3_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MovePickPosition3_Fail :
+                                                        EAlarm.TransferInShuttleRight_YAxis_MovePickPosition3_Fail));
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Pick Position 3 Done");
+                    Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.ZAxis_Move_PickPosition;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_PickPosition:
+                    Log.Debug("Z Axis Move Pick Position");
+                    ZAxis.MoveAbs(ZAxisPickPosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisPickPosition));
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_PickPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_ZAxis_MovePickPosition_Fail :
+                                                        EAlarm.TransferInShuttleRight_ZAxis_MovePickPosition_Fail));
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Pick Position Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.Vacuum_On:
+                    Log.Debug("Vacuum On");
+                    TransferVac.Value = true;
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsTransfer_VacDetect || _machineStatus.IsDryRunMode);
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.Vacuum_On_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferInShuttleLeft_Vacuum_Fail :
+                                                        EWarning.TransferInShuttleRight_Vacuum_Fail));
+                        break;
+                    }
+                    Log.Debug("Vacuum On Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_ReadyPosition_1st:
+                    Log.Debug("Z Axis Move Ready Position 1st");
+                    ZAxis.MoveAbs(ZAxisReadyPosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_ReadyPosition_1st_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_ZAxis_MoveReadyPosition_Fail :
+                                                        EAlarm.TransferInShuttleRight_ZAxis_MoveReadyPosition_Fail));
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Ready Position 1st Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.YAxis_Move_PlacePosition:
                     Log.Debug("Y Axis Move Place Position");
                     YAxis.MoveAbs(YAxisPlacePosition);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisPlacePosition));
                     Step.RunStep++;
                     break;
-                case ETransferInShuttlePlaceStep.YAxis_Move_PlacePosition_Wait:
+                case ETransferInShuttleWETCleanLoadStep.YAxis_Move_PlacePosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MovePlacePosition_Fail :
@@ -612,13 +744,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Y Axis Move Place Position Done");
                     Step.RunStep++;
                     break;
-                case ETransferInShuttlePlaceStep.Cyl_Rotate_180D:
+                case ETransferInShuttleWETCleanLoadStep.Cyl_Rotate_180D:
                     Log.Debug("Cylinder Rotate 180 Degree");
                     RotCyl.Forward();
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => RotCyl.IsForward);
                     Step.RunStep++;
                     break;
-                case ETransferInShuttlePlaceStep.Cyl_Rotate_180D_Wait:
+                case ETransferInShuttleWETCleanLoadStep.Cyl_Rotate_180D_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.TransferInShuttleLeft_RotateCylinder_180D_Fail :
@@ -629,7 +761,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait WET Clean Request Load");
                     Step.RunStep++;
                     break;
-                case ETransferInShuttlePlaceStep.Wait_WETCleanRequestLoad:
+                case ETransferInShuttleWETCleanLoadStep.Wait_WETCleanRequestLoad:
                     if (InFlag_WETCleanRequestLoad == false)
                     {
                         Wait(20);
@@ -637,13 +769,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.RunStep++;
                     break;
-                case ETransferInShuttlePlaceStep.ZAxis_Move_PlacePosition:
+                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_PlacePosition:
                     Log.Debug("Z Axis Move Place Position");
                     ZAxis.MoveAbs(ZAxisPlacePosition);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisPlacePosition));
                     Step.RunStep++;
                     break;
-                case ETransferInShuttlePlaceStep.ZAxis_Move_PlacePosition_Wait:
+                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_PlacePosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_ZAxis_MovePlacePosition_Fail :
@@ -653,19 +785,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Z Axis Move Place Position Done");
                     Step.RunStep++;
                     break;
-                case ETransferInShuttlePlaceStep.Vacuum_Off:
+                case ETransferInShuttleWETCleanLoadStep.Vacuum_Off:
                     Log.Debug("Vacuum Off");
                     TransferVac.Value = false;
                     Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
-                case ETransferInShuttlePlaceStep.ZAxis_Move_ReadyPosition:
+                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_ReadyPosition_2nd:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(ZAxisReadyPosition);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisReadyPosition));
                     Step.RunStep++;
                     break;
-                case ETransferInShuttlePlaceStep.ZAxis_Move_ReadyPosition_Wait:
+                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_ReadyPosition_2nd_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_ZAxis_MoveReadyPosition_Fail :
@@ -675,13 +807,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Z Axis Move Ready Position Done");
                     Step.RunStep++;
                     break;
-                case ETransferInShuttlePlaceStep.Set_FlagWETCleanLoadDone:
+                case ETransferInShuttleWETCleanLoadStep.Set_FlagWETCleanLoadDone:
                     Log.Debug("Set Flag WET Clean Load Done");
                     FlagWetCleanLoadDone = true;
                     Step.RunStep++;
                     Log.Debug("Wait WET Clean Load Done Received");
                     break;
-                case ETransferInShuttlePlaceStep.Wait_WETCleanPlaceDoneReceived:
+                case ETransferInShuttleWETCleanLoadStep.Wait_WETCleanPlaceDoneReceived:
                     if (InFlag_WETCleanRequestLoad == true)
                     {
                         Wait(20);
@@ -691,14 +823,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                     FlagWetCleanLoadDone = false;
                     Step.RunStep++;
                     break;
-                case ETransferInShuttlePlaceStep.End:
+                case ETransferInShuttleWETCleanLoadStep.End:
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         break;
                     }
-                    Log.Info("Sequence Transfer In Shuttle Pick");
-                    Sequence = port == EPort.Left ? ESequence.GlassTransferLeft : ESequence.GlassTransferRight;
+
+                    Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.GlassDetect_Check;
+
                     break;
             }
         }

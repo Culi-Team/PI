@@ -55,7 +55,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Outputs
-        private IDOutput OutCompleteButtonLamp => _devices.Outputs.OutCompleteButtonLamp;
         private IDOutput OutMutingButtonLamp => _devices.Outputs.OutMutingButtonLamp;
         private IDOutput OutCstMutingLightCurtain => _devices.Outputs.OutCstLightCurtainMuting;
         private IDOutput OutCstInterlockLightCurtain => _devices.Outputs.OutCstLightCurtainInterlock;

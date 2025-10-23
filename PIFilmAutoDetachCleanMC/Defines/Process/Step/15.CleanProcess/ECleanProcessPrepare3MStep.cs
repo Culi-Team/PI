@@ -9,11 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ECleanProcessPrepare3MStep
     {
         Start,
-        UnWinder_Stop,
         Feeding_Forward,
         Feeding_Forward_Wait,
-        
-        UnWinder_Run,
 
         Dispense_Port1,
         Dispense_Port1_Wait,
@@ -33,11 +30,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Dispense_Port6,
         Dispense_Port6_Wait,
 
-        Winder_Stop,
         Feeding_Backward,
         Feeding_Backward_Wait,
 
-        Winder_Run,
         End,
     }
 }

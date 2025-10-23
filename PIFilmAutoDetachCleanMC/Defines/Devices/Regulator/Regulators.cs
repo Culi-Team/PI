@@ -19,11 +19,20 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Regulator
             WetCleanRRegulator = wetCleanRRegulator;
             AfCleanLRegulator = afCleanLRegulator;
             AfCleanRRegulator = afCleanRRegulator;
+
+            All = new[]
+            {
+                WetCleanLRegulator,
+                WetCleanRRegulator,
+                AfCleanLRegulator,
+                AfCleanRRegulator
+            };
         }
 
         public IRegulator WetCleanLRegulator { get; }
         public IRegulator WetCleanRRegulator { get; }
         public IRegulator AfCleanLRegulator { get; }
         public IRegulator AfCleanRRegulator { get; }
+        public IReadOnlyList<IRegulator> All { get; }
     }
 }
