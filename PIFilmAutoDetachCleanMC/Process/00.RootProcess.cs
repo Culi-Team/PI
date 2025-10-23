@@ -492,6 +492,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             if (IsMainAirSupplied == false)
             {
                 Childs!.ToList().ForEach(p => p.IsAlarm = true);
+                foreach (var regulator in _devices.Regulators.All)
+                {
+                    regulator.SetPressure(0);
+                }
                 RaiseAlarm((int)EAlarm.MainAirNotSupplied);
                 return;
             }
