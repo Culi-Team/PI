@@ -290,7 +290,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EBufferConveyor_ReadyStep.Stoppers_Up:
                     BufferStopper1.Forward();
                     BufferStopper2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout, () => BufferStopper1.IsForward && BufferStopper2.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => BufferStopper1.IsForward && BufferStopper2.IsForward);
                     Step.RunStep++;
                     break;
                 case EBufferConveyor_ReadyStep.Stoppers_UpWait:
