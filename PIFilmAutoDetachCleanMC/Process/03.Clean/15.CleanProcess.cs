@@ -39,6 +39,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDOutputDevice _afCleanRightOutput;
         private readonly MachineStatus _machineStatus;
 
+        private int GlassCleanCount { get; set; } = 0;
+
         private bool Is3MPrepareDone { get; set; } = false;
 
         private EPort port => cleanType == EClean.WETCleanLeft || cleanType == EClean.AFCleanLeft ? EPort.Left : EPort.Right;
@@ -435,6 +437,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private double XAxisCleanVerticalPosition => cleanRecipe.XAxisCleanVerticalPosition;
         private double YAxisCleanVerticalPosition => cleanRecipe.YAxisCleanVerticalPosition;
         private double TAxisCleanVerticalPosition => cleanRecipe.TAxisCleanVerticalPosition;
+
+        private double XAxisCleanShuttlePosition => cleanRecipe.XAxisCleanShuttlePosition;
+        private double YAxisCleanShuttlePosition => cleanRecipe.YAxisCleanShuttlePosition;
+        private double TAxisCleanShuttlePosition => cleanRecipe.TAxisCleanShuttlePosition;
         #endregion
 
         #region Flags
@@ -845,6 +851,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     else Sequence = ESequence.Stop;
                     break;
+                case ESequence.InShuttleCleanLeft:
+                    if (cleanType == EClean.WETCleanLeft)
+                    {
+                        Sequence_CleanShuttle();
+                    }
+                    else Sequence = ESequence.Stop;
+                    break;
+                case ESequence.InShuttleCleanRight:
+                    if (cleanType == EClean.WETCleanRight)
+                    {
+                        Sequence_CleanShuttle();
+                    }
+                    else Sequence = ESequence.Stop;
+                    break;
                 case ESequence.WETCleanLeftUnload:
                     if (cleanType == EClean.WETCleanLeft)
                     {
@@ -884,6 +904,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (cleanType == EClean.AFCleanRight)
                     {
                         Sequence_Clean();
+                    }
+                    else Sequence = ESequence.Stop;
+                    break;
+                case ESequence.OutShuttleCleanLeft:
+                    if (cleanType == EClean.AFCleanLeft)
+                    {
+                        Sequence_CleanShuttle();
+                    }
+                    else Sequence = ESequence.Stop;
+                    break;
+                case ESequence.OutShuttleCleanRight:
+                    if (cleanType == EClean.AFCleanRight)
+                    {
+                        Sequence_CleanShuttle();
                     }
                     else Sequence = ESequence.Stop;
                     break;
@@ -1720,6 +1754,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.Stop;
                         break;
                     }
+
+                    GlassCleanCount++;
+
                     if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
                         Log.Info("Sequence WET Clean Unload");
@@ -1930,6 +1967,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
+                        break;
+                    }
+
+                    if(cleanRecipe.IsCleanShuttle && cleanRecipe.CleanShuttleCycle >= GlassCleanCount)
+                    {
+                        if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                        {
+                            Log.Info("Sequence In Shuttle Clean");
+                            Sequence = port == EPort.Left ? ESequence.InShuttleCleanLeft : ESequence.InShuttleCleanRight;
+                            break;
+                        }
+
+                        Log.Info("Sequence Out Shuttle Clean");
+                        Sequence = port == EPort.Left ? ESequence.OutShuttleCleanLeft : ESequence.OutShuttleCleanRight;
                         break;
                     }
 
@@ -2150,6 +2201,233 @@ namespace PIFilmAutoDetachCleanMC.Process
             });
             prepare3MThread.Start();
         }
-        #endregion
+
+        private void Sequence_CleanShuttle()
+        {
+            switch ((ECleanProcessCleanShuttleStep)Step.RunStep)
+            {
+                case ECleanProcessCleanShuttleStep.Start:
+                    Log.Debug("Clean Shuttle Start");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanShuttleStep.Cyl_Up:
+                    Log.Debug("Cylinder Up");
+                    BrushCyl.Backward();
+                    PushCyl.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => BrushCyl.IsBackward && PushCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanShuttleStep.Cyl_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        if (BrushCyl.IsBackward == false)
+                        {
+                            EWarning? warning = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EWarning.WETCleanLeft_BrushCylinder_Up_Fail,
+                                EClean.WETCleanRight => EWarning.WETCleanRight_BrushCylinder_Up_Fail,
+                                EClean.AFCleanLeft => EWarning.AFCleanLeft_BrushCylinder_Up_Fail,
+                                EClean.AFCleanRight => EWarning.AFCleanRight_BrushCylinder_Up_Fail,
+                                _ => null
+                            };
+                            RaiseWarning((int)warning!);
+                            break;
+                        }
+                        if (PushCyl.IsBackward == false)
+                        {
+                            EWarning? warning = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EWarning.WETCleanLeft_PusherCylinder_Up_Fail,
+                                EClean.WETCleanRight => EWarning.WETCleanRight_PusherCylinder_Up_Fail,
+                                EClean.AFCleanLeft => EWarning.AFCleanLeft_PusherCylinder_Up_Fail,
+                                EClean.AFCleanRight => EWarning.AFCleanRight_PusherCylinder_Up_Fail,
+                                _ => null
+                            };
+                            RaiseWarning((int)warning!);
+                            break;
+                        }
+                    }
+                    Log.Debug("Cylinder Up Done");
+                    if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                    {
+                        Step.RunStep++;
+                        break;
+                    }
+                    Step.RunStep = (int)ECleanProcessCleanShuttleStep.YAxis_MoveReadyPosition;
+                    break;
+                case ECleanProcessCleanShuttleStep.Clamp_Cyl_Unclamp:
+                    Log.Debug("Clamp Cylinder Unclamp");
+                    ClampCyl1.Backward();
+                    ClampCyl2.Backward();
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => ClampCyl1.IsBackward && ClampCyl2.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanShuttleStep.Clamp_Cyl_Unclamp_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.WETCleanLeft_ClampCylinder_Unclamp_Fail :
+                                                          EWarning.WETCleanRight_ClampCylinder_Unclamp_Fail));
+                        break;
+                    }
+                    Log.Debug("Clamp Cylinder Unclamp Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanShuttleStep.YAxis_MoveReadyPosition:
+                    Log.Debug("Y Axis Move Ready Position");
+                    YAxis.MoveAbs(YAxisReadyPosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanShuttleStep.YAxis_MoveReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        EAlarm? alarm = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EAlarm.WETCleanLeft_YAxis_MoveReadyPosition_Fail,
+                            EClean.WETCleanRight => EAlarm.WETCleanRight_YAxis_MoveReadyPosition_Fail,
+                            EClean.AFCleanLeft => EAlarm.AFCleanLeft_YAxis_MoveReadyPosition_Fail,
+                            EClean.AFCleanRight => EAlarm.AFCleanRight_YAxis_MoveReadyPosition_Fail,
+                            _ => null
+                        };
+                        RaiseAlarm((int)alarm!);
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanShuttleStep.XTAxis_MoveCleanShuttlePosition:
+                    Log.Debug("X T Axis Move Clean Shuttle Position");
+                    XAxis.MoveAbs(XAxisCleanShuttlePosition);
+                    TAxis.MoveAbs(TAxisCleanShuttlePosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => XAxis.IsOnPosition(XAxisCleanShuttlePosition) &&
+                                                               TAxis.IsOnPosition(TAxisCleanShuttlePosition));
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanShuttleStep.XTAxis_MoveCleanShuttlePosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        if (XAxis.IsOnPosition(XAxisCleanShuttlePosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_XAxis_MoveCleanShuttlePosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_XAxis_MoveCleanShuttlePosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_XAxis_MoveCleanShuttlePosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_XAxis_MoveCleanShuttlePosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+                        if (TAxis.IsOnPosition(TAxisCleanShuttlePosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_TAxis_MoveCleanShuttlePosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_TAxis_MoveCleanShuttlePosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_TAxis_MoveCleanShuttlePosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_TAxis_MoveCleanShuttlePosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+                    }
+                    Log.Debug("X T Axis Move Clean Shuttle Position Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanShuttleStep.YAxis_MoveCleanShuttlePosition:
+                    Log.Debug("Y Axis Move Clean Shuttle Position");
+                    YAxis.MoveAbs(YAxisCleanShuttlePosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisCleanShuttlePosition));
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanShuttleStep.YAxis_MoveCleanShuttlePosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        EAlarm? alarm = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EAlarm.WETCleanLeft_YAxis_MoveCleanShuttlePosition_Fail,
+                            EClean.WETCleanRight => EAlarm.WETCleanRight_YAxis_MoveCleanShuttlePosition_Fail,
+                            EClean.AFCleanLeft => EAlarm.AFCleanLeft_YAxis_MoveCleanShuttlePosition_Fail,
+                            EClean.AFCleanRight => EAlarm.AFCleanRight_YAxis_MoveCleanShuttlePosition_Fail,
+                            _ => null
+                        };
+                        RaiseAlarm((int)alarm!);
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Clean Shuttle Position Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanShuttleStep.Brush_Cyl_Down:
+                    Log.Debug("Brush Cylinder Down");
+                    BrushCyl.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => BrushCyl.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanShuttleStep.Brush_Cyl_Down_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_BrushCylinder_Down_Fail,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_BrushCylinder_Down_Fail,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_BrushCylinder_Down_Fail,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_BrushCylinder_Down_Fail,
+                            _ => null
+                        };
+                        RaiseWarning((int)warning!);
+                        break;
+                    }
+                    Log.Debug("Brush Cylinder Down Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanShuttleStep.CleanShuttle:
+                    Log.Debug("Clean Shuttle");
+#if !SIMULATION
+                    _devices.Motions.CleanHorizontal(cleanType, XAxisCleanShuttlePosition, YAxisCleanShuttlePosition, cleanRecipe.CleanHorizontalCount);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _devices.Motions.IsContiMotioning(cleanType) == false);
+#else
+                    Thread.Sleep(100);
+#endif
+                    break;
+                case ECleanProcessCleanShuttleStep.CleanShuttle_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        EAlarm? alarm = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EAlarm.WETCleanLeft_CleanShuttle_Fail,
+                            EClean.WETCleanRight => EAlarm.WETCleanRight_CleanShuttle_Fail,
+                            EClean.AFCleanLeft => EAlarm.AFCleanLeft_CleanShuttle_Fail,
+                            EClean.AFCleanRight => EAlarm.AFCleanRight_CleanShuttle_Fail,
+                            _ => null
+                        };
+                        RaiseAlarm((int)alarm!);
+                        break;
+                    }
+                    Log.Debug("Clean Shuttle Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessCleanShuttleStep.End:
+                    if (Parent?.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        break;
+                    }
+
+                    GlassCleanCount = 0;
+
+                    if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                    {
+                        Log.Info("Sequence WET Clean Load");
+                        Sequence = port == EPort.Left ? ESequence.WETCleanLeftLoad : ESequence.WETCleanRightLoad;
+                        break;
+                    }
+                    Log.Info("Sequence AF Clean Load");
+                    Sequence = port == EPort.Left ? ESequence.AFCleanLeftLoad : ESequence.AFCleanRightLoad;
+                    break;
+            }
+        }
+#endregion
     }
 }

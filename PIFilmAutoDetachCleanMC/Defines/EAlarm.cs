@@ -143,6 +143,10 @@
         WETCleanLeft_XAxis_MoveReadyPosition_Fail,
         WETCleanLeft_YAxis_MoveReadyPosition_Fail,
         WETCleanLeft_TAxis_MoveReadyPosition_Fail,
+        WETCleanLeft_XAxis_MoveCleanShuttlePosition_Fail,
+        WETCleanLeft_YAxis_MoveCleanShuttlePosition_Fail,
+        WETCleanLeft_TAxis_MoveCleanShuttlePosition_Fail,
+        WETCleanLeft_CleanShuttle_Fail,
 
         //WET Clean Right
         WETCleanRight = 18000,
@@ -170,6 +174,10 @@
         WETCleanRight_XAxis_MoveReadyPosition_Fail,
         WETCleanRight_YAxis_MoveReadyPosition_Fail,
         WETCleanRight_TAxis_MoveReadyPosition_Fail,
+        WETCleanRight_XAxis_MoveCleanShuttlePosition_Fail,
+        WETCleanRight_YAxis_MoveCleanShuttlePosition_Fail,
+        WETCleanRight_TAxis_MoveCleanShuttlePosition_Fail,
+        WETCleanRight_CleanShuttle_Fail,
 
         //Transfer Rotation Left
         TransferRotationLeft = 19000,
@@ -217,6 +225,10 @@
         AFCleanLeft_XAxis_MoveReadyPosition_Fail,
         AFCleanLeft_YAxis_MoveReadyPosition_Fail,
         AFCleanLeft_TAxis_MoveReadyPosition_Fail,
+        AFCleanLeft_XAxis_MoveCleanShuttlePosition_Fail,
+        AFCleanLeft_YAxis_MoveCleanShuttlePosition_Fail,
+        AFCleanLeft_TAxis_MoveCleanShuttlePosition_Fail,
+        AFCleanLeft_CleanShuttle_Fail,
 
         //AF Clean Right
         AFCleanRight = 22000,
@@ -244,6 +256,10 @@
         AFCleanRight_XAxis_MoveReadyPosition_Fail,
         AFCleanRight_YAxis_MoveReadyPosition_Fail,
         AFCleanRight_TAxis_MoveReadyPosition_Fail,
+        AFCleanRight_XAxis_MoveCleanShuttlePosition_Fail,
+        AFCleanRight_YAxis_MoveCleanShuttlePosition_Fail,
+        AFCleanRight_TAxis_MoveCleanShuttlePosition_Fail,
+        AFCleanRight_CleanShuttle_Fail,
 
         //Unload Glass Left
         UnloadTransferLeft = 23000,

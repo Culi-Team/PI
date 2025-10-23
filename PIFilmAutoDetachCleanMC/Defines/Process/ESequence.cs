@@ -84,6 +84,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         WETCleanLeft,
         [Description("WET Clean")]
         WETCleanRight,
+        [Description("Shuttle Clean")]
+        InShuttleCleanLeft,
+        [Description("Shuttle Clean")]
+        InShuttleCleanRight,
         [Description("WET Clean Unload")]
         WETCleanLeftUnload,
         [Description("WET Clean Unload")]
@@ -102,6 +106,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         AFCleanLeft,
         [Description("AF Clean")]
         AFCleanRight,
+        [Description("Shuttle Clean")]
+        OutShuttleCleanLeft,
+        [Description("Shuttle Clean")]
+        OutShuttleCleanRight,
         [Description("AF Clean Unload")]
         AFCleanLeftUnload,
         [Description("AF Clean Unload")]
@@ -190,6 +198,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         WETCleanLeft,
         [Description("WET Clean")]
         WETCleanRight,
+        [Description("Shuttle Clean")]
+        InShuttleCleanLeft,
+        [Description("Shuttle Clean")]
+        InShuttleCleanRight,
         [Description("WET Clean Unload")]
         WETCleanLeftUnload,
         [Description("WET Clean Unload")]
@@ -208,6 +220,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         AFCleanLeft,
         [Description("AF Clean")]
         AFCleanRight,
+        [Description("Shuttle Clean")]
+        OutShuttleCleanLeft,
+        [Description("Shuttle Clean")]
+        OutShuttleCleanRight,
         [Description("AF Clean Unload")]
         AFCleanLeftUnload,
         [Description("AF Clean Unload")]

@@ -585,6 +585,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         {
                             ESemiSequence.WETCleanLeftLoad,
                             ESemiSequence.WETCleanLeft,
+                            ESemiSequence.InShuttleCleanLeft,
                         }
                     };
                 case "WET Clean Right":
@@ -599,6 +600,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         {
                             ESemiSequence.WETCleanRightLoad,
                             ESemiSequence.WETCleanRight,
+                            ESemiSequence.InShuttleCleanRight,
                         }
                     };
                 case "Transfer Rotation Left":
@@ -643,6 +645,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         {
                             ESemiSequence.AFCleanLeftLoad,
                             ESemiSequence.AFCleanLeft,
+                            ESemiSequence.OutShuttleCleanLeft,
                         }
                     };
                 case "AFClean Right":
@@ -657,6 +660,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         {
                             ESemiSequence.AFCleanRightLoad,
                             ESemiSequence.AFCleanRight,
+                            ESemiSequence.OutShuttleCleanRight,
                         }
                     };
                 case "Unload Transfer Left":
