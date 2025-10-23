@@ -91,7 +91,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                                                : _devices.Cylinders.TransferInShuttleR_RotateCyl;
         #endregion
 
-        #region Positions
+        #region Recipes Value
         private double YAxisReadyPosition => port == EPort.Left ? _transferInShuttleLeftRecipe.YAxisReadyPosition
                                                         : _transferInShuttleRightRecipe.YAxisReadyPosition;
 
@@ -116,6 +116,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private double ZAxisPlacePosition => port == EPort.Left ? _transferInShuttleLeftRecipe.ZAxisPlacePosition
                                                                 : _transferInShuttleRightRecipe.ZAxisPlacePosition;
 
+        private bool IsPortDisable => port == EPort.Left ? _commonRecipe.DisableLeftPort : _commonRecipe.DisableRightPort;
         #endregion
 
         #region Inputs
@@ -410,6 +411,13 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EGlassAlignGlassTransferPlaceStep)Step.RunStep)
             {
                 case EGlassAlignGlassTransferPlaceStep.Start:
+                    if (IsPortDisable)
+                    {
+                        Log.Info("Port is disabled, now just STOP");
+                        Sequence = ESequence.Stop;
+                        break;
+                    }
+
                     Log.Debug("Glass Transfer to Align Start");
                     Step.RunStep++;
                     break;
