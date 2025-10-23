@@ -226,13 +226,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Private Methods
         private void Sequence_AutoRun()
         {
-            switch ((EBufferConveyorAutoRunStep)Step.RunStep)
+            switch ((EBufferConveyor_AutoRunStep)Step.RunStep)
             {
-                case EBufferConveyorAutoRunStep.Start:
+                case EBufferConveyor_AutoRunStep.Start:
                     Log.Debug("Auto Run Start");
                     Step.RunStep++;
                     break;
-                case EBufferConveyorAutoRunStep.CSTDetect_Check:
+                case EBufferConveyor_AutoRunStep.CSTDetect_Check:
                     if(_machineStatus.IsDryRunMode)
                     {
                         Log.Info("Sequence Out Work CST Load");
@@ -263,9 +263,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     break;
-                case EBufferConveyorAutoRunStep.End:
+                case EBufferConveyor_AutoRunStep.End:
                     break;
             }
+        }
+
+        private void Sequence_Ready()
+        {
+
         }
 
         private void Sequence_InWorkCSTUnload()
