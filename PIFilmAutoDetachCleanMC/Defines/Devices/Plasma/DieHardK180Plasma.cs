@@ -34,15 +34,15 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
 
         #region Properties
         //KV
-        public double Voltage => AnalogConverter.Convert(_analogInputs.PlasmaVoltage.Volt, 0.0, 5.0, 0, 15);
+        public double Voltage => AnalogConverter.Convert(_analogInputs.PlasmaVoltage.Volt, 0.0, 4095.5, 0, 15);
         //KW
-        public double Power => AnalogConverter.Convert(_analogInputs.PlasmaPower.Volt, 0.0, 5.0, 0, 2.5);
+        public double Power => AnalogConverter.Convert(_analogInputs.PlasmaPower.Volt, 0.0, 4095.5, 0, 2.5);
         //LPM
-        public double N2FlowRate => AnalogConverter.Convert(_analogInputs.PlasmaN2FlowRate.Volt, 1.0, 5.0, 0, 1000);
+        public double N2FlowRate => AnalogConverter.Convert(_analogInputs.PlasmaN2FlowRate.Volt, 819.1, 4095.5, 0, 1000);
         //LPM
-        public double CDAFlowRate => AnalogConverter.Convert(_analogInputs.PlasmaCDAFlowRate.Volt, 1.0, 5.0, 0, 10);
+        public double CDAFlowRate => AnalogConverter.Convert(_analogInputs.PlasmaCDAFlowRate.Volt, 819.1, 4095.5, 0, 10);
         //C
-        public double Temperature => AnalogConverter.Convert(_analogInputs.PlasmaTemperature.Volt, 1.0, 5.0, 0, 100);
+        public double Temperature => AnalogConverter.Convert(_analogInputs.PlasmaTemperature.Volt, 819.1, 4095.5, 0, 100);
         #endregion
 
         #region Public Methods

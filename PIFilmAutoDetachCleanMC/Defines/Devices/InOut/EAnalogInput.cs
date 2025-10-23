@@ -8,7 +8,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
 {
     public enum EAnalogInput
     {
-        PLASMA_VOLTAGE = 1,
+        PLASMA_VOLTAGE = 0,
         PLASMA_POWER,
         PLASMA_N2_FLOW_RATE,
         PLASMA_CDA_FLOW_RATE,
