@@ -241,6 +241,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private void Sequence_Ready()
+        {
+
+        }
+
         private void Sequence_InWorkCSTLoad()
         {
             switch ((EInWorkConveyorProcessInWorkCSTLoadStep)Step.RunStep)

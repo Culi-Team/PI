@@ -43,6 +43,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         BufferConveyor_Stopper2_Down_Fail,
         BufferConveyor_Stopper_Up_Fail,
         BufferConveyor_Stopper_Down_Fail,
+        BufferConveyor_CSTSensorStatus_Fail,
 
         //OutWorkConveyor
         OutWorkConveyor = 4000,

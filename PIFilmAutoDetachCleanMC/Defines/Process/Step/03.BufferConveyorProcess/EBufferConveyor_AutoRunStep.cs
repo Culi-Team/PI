@@ -12,11 +12,4 @@ namespace PIFilmAutoDetachCleanMC.Defines
         CSTDetect_Check,
         End
     }
-
-    public enum EBufferConveyor_ReadyStep
-    {
-        Start,
-        CSTDetect_Check,
-        End
-    }
 }

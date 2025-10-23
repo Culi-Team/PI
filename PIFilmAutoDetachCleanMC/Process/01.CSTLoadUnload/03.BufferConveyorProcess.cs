@@ -49,7 +49,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Inputs
         private bool BufferDetect1 => _devices.Inputs.BufferCstDetect1.Value;
         private bool BufferDetect2 => _devices.Inputs.BufferCstDetect2.Value;
-
         #endregion
 
         #region Cylinders
@@ -161,7 +160,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
-                    Sequence = ESequence.Stop;
+                    Sequence_Ready();
                     break;
                 case ESequence.InWorkCSTUnLoad:
                     Sequence_InWorkCSTUnload();
@@ -270,7 +269,44 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void Sequence_Ready()
         {
+            switch ((EBufferConveyor_ReadyStep)Step.RunStep)
+            {
+                case EBufferConveyor_ReadyStep.Start:
+                    Log.Debug("Ready Start");
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyor_ReadyStep.SensorStatus_Check:
+                    if ((BufferDetect1 && BufferDetect2) == false &&
+                        (BufferDetect1 || BufferDetect2) == true)
+                    {
+                        // Just some of one all sensor detect cassette
+                        // cassette may not in safety position
+                        RaiseWarning(EWarning.BufferConveyor_CSTSensorStatus_Fail);
+                        break;
+                    }
+                    
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyor_ReadyStep.Stoppers_Up:
+                    BufferStopper1.Forward();
+                    BufferStopper2.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout, () => BufferStopper1.IsForward && BufferStopper2.IsForward);
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyor_ReadyStep.Stoppers_UpWait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning(EWarning.BufferConveyor_Stopper_Up_Fail);
+                        break;
+                    }
 
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyor_ReadyStep.End:
+                    Log.Debug("Ready End");
+                    Sequence = ESequence.Stop;
+                    break;
+            }
         }
 
         private void Sequence_InWorkCSTUnload()
