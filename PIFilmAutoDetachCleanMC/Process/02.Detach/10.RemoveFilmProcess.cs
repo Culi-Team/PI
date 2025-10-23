@@ -51,7 +51,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool IsClampCylinderClamp => ClampCyl1.IsForward && ClampCyl2.IsForward && ClampCyl3.IsForward && ClampCyl4.IsForward;
         #endregion
 
-
         #region Contructor
         public RemoveFilmProcess(Devices devices,
             CommonRecipe commonRecipe,
@@ -68,6 +67,22 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Flags
+        private bool FlagRobotOriginDone
+        {
+            get
+            {
+                return _removeFilmInput[(int)ERemoveFilmProcessInput.ROBOT_ORIGIN_DONE];
+            }
+        }
+
+        private bool FlagRobotReadyDone
+        {
+            get
+            {
+                return _removeFilmInput[(int)ERemoveFilmProcessInput.ROBOT_READY_DONE];
+            }
+        }
+
         private bool FlagFixtureTransferDone
         {
             get
@@ -99,6 +114,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                 return _removeFilmInput[(int)ERemoveFilmProcessInput.REMOVE_FILM_UNLOAD_DONE];
             }
         }
+
+        private bool FlagRemoveFilmOriginDone
+        {
+            set
+            {
+                _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_ORIGIN_DONE] = value;
+            }
+        }
+
+        private bool FlagRemoveFilmReadyDone
+        {
+            set
+            {
+                _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_READY_DONE] = value;
+            }
+        }
         #endregion
 
         #region Override Methods
@@ -108,6 +139,14 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ERemoveFilmProcessOriginStep.Start:
                     Log.Debug("Remove Film Process Start");
+                    Step.OriginStep++;
+                    break;
+                case ERemoveFilmProcessOriginStep.Wait_Robot_Origin:
+                    if(FlagRobotOriginDone == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
                     Step.OriginStep++;
                     break;
                 case ERemoveFilmProcessOriginStep.Fix_Cyl_Backward:
@@ -200,6 +239,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ERemoveFilmProcessOriginStep.End:
+                    FlagRemoveFilmOriginDone = true;
                     Log.Debug("Remove Film Process Origin End");
                     ProcessStatus = EProcessStatus.OriginDone;
                     Step.OriginStep++;
@@ -304,12 +344,15 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ERemoveFilmReadyStep)Step.RunStep)
             {
                 case ERemoveFilmReadyStep.Start:
-                    if (IsOriginOrInitSelected == false)
+                    Log.Debug("Initialize Start");
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmReadyStep.Wait_Robot_Ready:
+                    if (FlagRobotReadyDone == false)
                     {
-                        Sequence = ESequence.Stop;
+                        Wait(20);
                         break;
                     }
-                    Log.Debug("Initialize Start");
                     Step.RunStep++;
                     break;
                 case ERemoveFilmReadyStep.Cyl_Up:
@@ -363,7 +406,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmReadyStep.Cyl_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning(EWarning.RemoveFilm_TransferCylinder_Backward_Fail);
                         break;
                     }
                     Log.Debug("Cylinder Backward Done");
@@ -378,13 +421,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmReadyStep.Cyl_UnClamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning(EWarning.RemoveFilm_FilmClampCylinder_UnClamp_Fail);
                         break;
                     }
                     Log.Debug("Cylinder UnClamp Done");
                     Step.RunStep++;
                     break;
                 case ERemoveFilmReadyStep.End:
+                    FlagRemoveFilmReadyDone = true;
                     Log.Debug("Initialize End");
                     Sequence = ESequence.Stop;
                     break;

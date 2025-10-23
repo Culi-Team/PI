@@ -12,7 +12,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         DETACH_DONE,
         REMOVE_FILM_DONE,
         DETACH_ORIGIN_DONE,
+        DETACH_READY_DONE,
 
-        ROBOT_ORIGIN_DONE,
+        REMOVE_FILM_ORIGIN_DONE,
+        REMOVE_FILM_READY_DONE,
     }
 }

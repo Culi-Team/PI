@@ -296,18 +296,26 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 MapTo(_robotLoadOutput[ERobotLoadProcessOutput.REMOVE_FILM_UNLOAD_DONE]);
             _removeFilmInput[ERemoveFilmProcessInput.FIXTURE_TRANSFER_DONE].
                 MapTo(_transferFixtureOutput[ETransferFixtureProcessOutput.FIXTURE_TRANSFER_DONE]);
+            _removeFilmInput[ERemoveFilmProcessInput.ROBOT_ORIGIN_DONE].
+                MapTo(_robotLoadOutput[ERobotLoadProcessOutput.ROBOT_ORIGIN_DONE]);
+            _removeFilmInput[ERemoveFilmProcessInput.ROBOT_READY_DONE].
+                MapTo(_robotLoadOutput[ERobotLoadProcessOutput.ROBOT_READY_DONE]);
 
             //Transfer Fixture Input Mapping
             _transferFixtureInput[ETransferFixtureProcessInput.DETACH_ORIGIN_DONE].
                 MapTo(_detachOutput[EDetachProcessOutput.DETACH_ORIGIN_DONE]);
+            _transferFixtureInput[ETransferFixtureProcessInput.DETACH_READY_DONE].
+                MapTo(_detachOutput[EDetachProcessOutput.DETACH_READY_DONE]);
             _transferFixtureInput[ETransferFixtureProcessInput.DETACH_DONE].
                 MapTo(_detachOutput[EDetachProcessOutput.DETACH_DONE]);
             _transferFixtureInput[ETransferFixtureProcessInput.FIXTURE_ALIGN_DONE].
                 MapTo(_fixtureAlignOutput[EFixtureAlignProcessOutput.FIXTURE_ALIGN_DONE]);
             _transferFixtureInput[ETransferFixtureProcessInput.REMOVE_FILM_DONE].
                 MapTo(_removeFilmOutput[ERemoveFilmProcessOutput.REMOVE_FILM_DONE]);
-            _transferFixtureInput[ETransferFixtureProcessInput.ROBOT_ORIGIN_DONE].
-                MapTo(_robotLoadOutput[ERobotLoadProcessOutput.ROBOT_ORIGIN_DONE]);
+            _transferFixtureInput[ETransferFixtureProcessInput.REMOVE_FILM_ORIGIN_DONE].
+                MapTo(_removeFilmOutput[ERemoveFilmProcessOutput.REMOVE_FILM_ORIGIN_DONE]);
+            _transferFixtureInput[ETransferFixtureProcessInput.REMOVE_FILM_READY_DONE].
+                MapTo(_removeFilmOutput[ERemoveFilmProcessOutput.REMOVE_FILM_READY_DONE]);
 
             //Detach Input Mapping
             _detachInput[EDetachProcessInput.FIXTURE_TRANSFER_DONE].

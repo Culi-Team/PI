@@ -18,5 +18,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         ROBOT_PLACE_OUT_CST_DONE,
 
         ROBOT_ORIGIN_DONE,
+        ROBOT_READY_DONE,
     }
 }

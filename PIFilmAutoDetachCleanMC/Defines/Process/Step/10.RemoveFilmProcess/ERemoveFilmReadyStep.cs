@@ -9,6 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ERemoveFilmReadyStep
     {
         Start,
+
+        Wait_Robot_Ready,
         Cyl_Up,
         Cyl_Up_Wait,
 

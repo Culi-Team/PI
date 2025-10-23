@@ -80,6 +80,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _robotLoadOutput[(int)ERobotLoadProcessOutput.ROBOT_ORIGIN_DONE] = value;
             }
         }
+
+        private bool FlagRobotReadyDone
+        {
+            set
+            {
+                _robotLoadOutput[(int)ERobotLoadProcessOutput.ROBOT_READY_DONE] = value;
+            }
+        }
         private bool FlagVinylCleanRequestLoad
         {
             get
@@ -619,11 +627,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ERobotLoadReadyStep)Step.RunStep)
             {
                 case ERobotLoadReadyStep.Start:
-                    if (IsOriginOrInitSelected == false)
-                    {
-                        Sequence = ESequence.Stop;
-                        break;
-                    }
                     Log.Debug("Ready Start");
                     Step.RunStep++;
                     break;
@@ -825,6 +828,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadReadyStep.End:
+                    FlagRobotReadyDone = true;
                     Log.Debug("Ready run end");
                     Sequence = ESequence.Stop;
                     break;

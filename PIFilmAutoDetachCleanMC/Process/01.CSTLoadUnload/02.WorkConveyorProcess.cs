@@ -466,7 +466,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyor_ReadyStep.Support_Down:
-                    Log.Debug($"{CVSupportCyl1} & {CVSupportCyl2} move down");
+                    Log.Debug($"{CVSupportCyl1} and {CVSupportCyl2} move down");
                     CVSupportCyl1.Backward();
                     CVSupportCyl2.Backward();
                     Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => CVSupportCyl1.IsBackward && CVSupportCyl2.IsBackward);
@@ -480,7 +480,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    Log.Debug($"{CVSupportCyl1} & {CVSupportCyl2} move down done");
+                    Log.Debug($"{CVSupportCyl1} and {CVSupportCyl2} move down done");
                     Step.RunStep++;
                     break;
                 case EWorkConveyor_ReadyStep.End:
