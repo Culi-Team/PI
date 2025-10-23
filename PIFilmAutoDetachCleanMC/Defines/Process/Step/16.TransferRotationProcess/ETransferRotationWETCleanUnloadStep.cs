@@ -9,6 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ETransferRotationWETCleanUnloadStep
     {
         Start,
+        Cyl_Up,
+        Cyl_Up_Wait,
         Set_FlagTransferRotationReadyPick,
         Wait_WETCleanRequestUnload,
         ZAxis_Move_PickPosition,

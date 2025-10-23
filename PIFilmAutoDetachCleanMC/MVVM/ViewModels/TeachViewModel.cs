@@ -127,17 +127,17 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
             UnitTeachingViewModel TransferInShuttleLeftUnitTeaching = new UnitTeachingViewModel("Transfer In Shuttle Left", recipeSelector);
             TransferInShuttleLeftUnitTeaching.Cylinders = Devices.GetTransferInShuttleLeftCylinders();
-            TransferInShuttleLeftUnitTeaching.Motions = Devices.GetTransferShutterLeftMotions();
-            TransferInShuttleLeftUnitTeaching.Inputs = Devices.GetTransferShutterLeftInputs();
-            TransferInShuttleLeftUnitTeaching.Outputs = Devices.GetTransferShutterLeftOutputs();
+            TransferInShuttleLeftUnitTeaching.Motions = Devices.GetTransferInShuttleLeftMotions();
+            TransferInShuttleLeftUnitTeaching.Inputs = Devices.GetTransferInShuttleLeftInputs();
+            TransferInShuttleLeftUnitTeaching.Outputs = Devices.GetTransferInShuttleLeftOutputs();
             TransferInShuttleLeftUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe;
             TransferInShuttleLeftUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage");
 
             UnitTeachingViewModel TransferInShuttleRightUnitTeaching = new UnitTeachingViewModel("Transfer In Shuttle Right", recipeSelector);
             TransferInShuttleRightUnitTeaching.Cylinders = Devices.GetTransferInShuttleRightCylinders();
-            TransferInShuttleRightUnitTeaching.Motions = Devices.GetTransferShutterRightMotions();
-            TransferInShuttleRightUnitTeaching.Inputs = Devices.GetTransferShutterRightInputs();
-            TransferInShuttleRightUnitTeaching.Outputs = Devices.GetTransferShutterRightOutputs();
+            TransferInShuttleRightUnitTeaching.Motions = Devices.GetTransferInShuttleRightMotions();
+            TransferInShuttleRightUnitTeaching.Inputs = Devices.GetTransferInShuttleRightInputs();
+            TransferInShuttleRightUnitTeaching.Outputs = Devices.GetTransferShuttleRightOutputs();
             TransferInShuttleRightUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.TransferInShuttleRightRecipe;
             TransferInShuttleRightUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage");
 

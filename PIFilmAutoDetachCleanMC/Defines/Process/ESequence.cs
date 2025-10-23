@@ -176,7 +176,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         [Description("Glass Align Left")]
         AlignGlassLeft,
-        [Description("Glass Align Left")]
+        [Description("Glass Align Right")]
         AlignGlassRight,
 
         [Description("WET Clean Load")]

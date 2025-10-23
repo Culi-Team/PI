@@ -141,6 +141,8 @@
         WETCleanLeft_RFeedingAxis_MoveBackward_Fail,
         WETCleanLeft_SyringePump_Origin_Fail,
         WETCleanLeft_XAxis_MoveReadyPosition_Fail,
+        WETCleanLeft_YAxis_MoveReadyPosition_Fail,
+        WETCleanLeft_TAxis_MoveReadyPosition_Fail,
 
         //WET Clean Right
         WETCleanRight = 18000,
@@ -166,6 +168,8 @@
         WETCleanRight_RFeedingAxis_MoveBackward_Fail,
         WETCleanRight_SyringePump_Origin_Fail,
         WETCleanRight_XAxis_MoveReadyPosition_Fail,
+        WETCleanRight_YAxis_MoveReadyPosition_Fail,
+        WETCleanRight_TAxis_MoveReadyPosition_Fail,
 
         //Transfer Rotation Left
         TransferRotationLeft = 19000,
@@ -175,6 +179,7 @@
         TransferRotationLeft_ZAxis_Move_TransferBeforeRotatePosition_Fail,
         TransferRotationLeft_ZAxis_Move_TransferAfterRotatePosition_Fail,
         TransferRotationLeft_ZAxis_MovePlacePosition_Fail,
+        TransferRotationLeft_ZAxis_MoveTransferReadyPosition_Fail,
 
         //Transfer Rotation Right
         TransferRotationRight = 20000,
@@ -184,6 +189,7 @@
         TransferRotationRight_ZAxis_Move_TransferBeforeRotatePosition_Fail,
         TransferRotationRight_ZAxis_Move_TransferAfterRotatePosition_Fail,
         TransferRotationRight_ZAxis_MovePlacePosition_Fail,
+        TransferRotationRight_ZAxis_MoveTransferReadyPosition_Fail,
 
         //AF Clean Left
         AFCleanLeft = 21000,
@@ -209,6 +215,8 @@
         AFCleanLeft_RFeedingAxis_MoveBackward_Fail,
         AFCleanLeft_SyringePump_Origin_Fail,
         AFCleanLeft_XAxis_MoveReadyPosition_Fail,
+        AFCleanLeft_YAxis_MoveReadyPosition_Fail,
+        AFCleanLeft_TAxis_MoveReadyPosition_Fail,
 
         //AF Clean Right
         AFCleanRight = 22000,
@@ -234,6 +242,8 @@
         AFCleanRight_RFeedingAxis_MoveBackward_Fail,
         AFCleanRight_SyringePump_Origin_Fail,
         AFCleanRight_XAxis_MoveReadyPosition_Fail,
+        AFCleanRight_YAxis_MoveReadyPosition_Fail,
+        AFCleanRight_TAxis_MoveReadyPosition_Fail,
 
         //Unload Glass Left
         UnloadTransferLeft = 23000,

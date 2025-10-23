@@ -417,6 +417,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
         private double XAxisReadyPosition => cleanRecipe.XAxisReadyPosition;
+        private double YAxisReadyPosition => cleanRecipe.YAxisReadyPosition;
+        private double TAxisReadyPosition => cleanRecipe.TAxisReadyPosition;
 
         private double XAxisLoadPosition => cleanRecipe.XAxisLoadPosition;
         private double YAxisLoadPosition => cleanRecipe.YAxisLoadPosition;
@@ -533,7 +535,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.PreProcessStep++;
                     break;
                 case ECleanPreProcessStep.Wiper_Detect_Check:
-                    if (!_machineStatus.IsDryRunMode && (WiperCleanDetect1 == false || WiperCleanDetect2 == false || WiperCleanDetect3 == false))
+                    if (_machineStatus.IsDryRunMode == false && _machineStatus.MachineTestMode == false && (WiperCleanDetect1 == false || WiperCleanDetect2 == false || WiperCleanDetect3 == false))
                     {
                         EWarning? warning = cleanType switch
                         {
@@ -975,7 +977,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ECleanProcessToRunStep.Wiper_Check:
                     Log.Debug("Wiper Clean Detect Check");
-                    if (!_machineStatus.IsDryRunMode && (WiperCleanDetect1 == false || WiperCleanDetect2 == false || WiperCleanDetect3 == false))
+                    if (_machineStatus.IsDryRunMode == false && _machineStatus.MachineTestMode == false && (WiperCleanDetect1 == false || WiperCleanDetect2 == false || WiperCleanDetect3 == false))
                     {
                         EWarning? warning = cleanType switch
                         {
@@ -997,8 +999,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.Winder_UnWinder_Run:
-                    Winder.Run();
-                    UnWinder.Run();
+                    Winder.Run(false);
+                    UnWinder.Run(false);
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.Set_Pressure:
@@ -1312,7 +1314,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Clear Flag Request Load");
                     FlagCleanRequestLoad = false;
-                    Step.RunStep++;
+                    if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                    {
+                        Step.RunStep++;
+                        break;
+                    }
+
+                    Step.RunStep = (int)ECleanProcessLoadStep.Vacuum_On;
                     break;
                 case ECleanProcessLoadStep.Cyl_Clamp:
                     Log.Debug("Cylinder Clamp");
@@ -1805,21 +1813,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("X Y T Axis Move Unload Position Done");
-                    Step.RunStep++;
-                    break;
-                case ECleanProcessUnloadStep.Vacuum_Off:
-                    Log.Debug("Vacuum Off");
-                    GlassVac.Value = false;
-#if SIMULATION
-                    SimulationInputSetter.SetSimInput(VacDetect, false);
-#endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
                         Step.RunStep++;
                         break;
                     }
-                    Step.RunStep = (int)ECleanProcessUnloadStep.Set_FlagRequestUnload;
+                    Step.RunStep = (int)ECleanProcessUnloadStep.Vacuum_Off;
                     break;
                 case ECleanProcessUnloadStep.Cyl_UnClamp:
                     Log.Debug("Cylinder UnClamp");
@@ -1838,6 +1837,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder UnClamp Done");
                     Step.RunStep++;
                     break;
+                case ECleanProcessUnloadStep.Vacuum_Off:
+                    Log.Debug("Vacuum Off");
+                    GlassVac.Value = false;
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(VacDetect, false);
+#endif
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Step.RunStep++;
+                    break;
                 case ECleanProcessUnloadStep.Set_FlagRequestUnload:
                     Log.Debug("Set Flag Request Unload");
                     FlagCleanRequestUnload = true;
@@ -1852,6 +1860,71 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Clear Flag Request Unload");
                     FlagCleanRequestUnload = false;
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessUnloadStep.YAxis_MoveReadyPosition:
+                    Log.Debug("Y Axis Move Ready Position");
+                    YAxis.MoveAbs(YAxisReadyPosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessUnloadStep.YAxis_MoveReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        EAlarm? alarm = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EAlarm.WETCleanLeft_YAxis_MoveReadyPosition_Fail,
+                            EClean.WETCleanRight => EAlarm.WETCleanRight_YAxis_MoveReadyPosition_Fail,
+                            EClean.AFCleanLeft => EAlarm.AFCleanLeft_YAxis_MoveReadyPosition_Fail,
+                            EClean.AFCleanRight => EAlarm.AFCleanRight_YAxis_MoveReadyPosition_Fail,
+                            _ => null
+                        };
+                        RaiseAlarm((int)alarm!);
+                        break;
+                    }
+                    Log.Debug("Y Axis Move Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessUnloadStep.XTAxis_MoveReadyPosition:
+                    Log.Debug("X T Axis Move Ready Position");
+                    XAxis.MoveAbs(XAxisReadyPosition);
+                    TAxis.MoveAbs(TAxisReadyPosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => XAxis.IsOnPosition(XAxisReadyPosition) &&
+                                                               TAxis.IsOnPosition(TAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessUnloadStep.XTAxis_MoveReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        if (XAxis.IsOnPosition(XAxisReadyPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_XAxis_MoveReadyPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_XAxis_MoveReadyPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_XAxis_MoveReadyPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_XAxis_MoveReadyPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+                        if (TAxis.IsOnPosition(TAxisReadyPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_TAxis_MoveReadyPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_TAxis_MoveReadyPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_TAxis_MoveReadyPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_TAxis_MoveReadyPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+                    }
+
+                    Log.Debug("X T Axis Move Ready Position Done");
                     Step.RunStep++;
                     break;
                 case ECleanProcessUnloadStep.End:
@@ -1890,12 +1963,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                             Log.Debug("Prepare 3M Start");
                             prepare3MStep++;
                             break;
-                        case ECleanProcessPrepare3MStep.UnWinder_Stop:
-                            Log.Debug("UnWinder Stop");
-                            UnWinder.Stop();
-                            prepare3MStep++;
-                            Thread.Sleep(100);
-                            break;
                         case ECleanProcessPrepare3MStep.Feeding_Forward:
                             Log.Debug("R Feeding Axis Move Forward");
                             feedingAxisCurrentPos = FeedingAxis.Status.ActualPosition;
@@ -1923,11 +1990,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 break;
                             }
                             Log.Debug("R Feeding Axis Move Forward Done");
-                            prepare3MStep++;
-                            break;
-                        case ECleanProcessPrepare3MStep.UnWinder_Run:
-                            Log.Debug("UnWinder Run");
-                            UnWinder.Run();
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.Dispense_Port1:
@@ -2033,7 +2095,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         case ECleanProcessPrepare3MStep.Dispense_Port6:
                             if (cleanRecipe.UsePort6 == false)
                             {
-                                prepare3MStep = (int)ECleanProcessPrepare3MStep.Winder_Stop;
+                                prepare3MStep = (int)ECleanProcessPrepare3MStep.Feeding_Backward;
                                 break;
                             }
                             Log.Debug("Dispense Port 6");
@@ -2048,11 +2110,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 break;
                             }
                             Log.Debug("Dispense Port 6 Done");
-                            prepare3MStep++;
-                            break;
-                        case ECleanProcessPrepare3MStep.Winder_Stop:
-                            Log.Debug("Winder Stop");
-                            Winder.Stop();
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.Feeding_Backward:
@@ -2082,11 +2139,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 break;
                             }
                             Log.Debug("R Feeding Axis Move Backward Done");
-                            prepare3MStep++;
-                            break;
-                        case ECleanProcessPrepare3MStep.Winder_Run:
-                            Log.Debug("Winder Run");
-                            Winder.Run();
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.End:
