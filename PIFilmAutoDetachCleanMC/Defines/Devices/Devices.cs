@@ -426,7 +426,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.LoadRobStopmess);
             inputs.Add(Inputs.LoadRobPeriRdy);
             inputs.Add(Inputs.LoadRobAlarmStop);
-            inputs.Add(Inputs.LoadRobUserSaf);
+            inputs.Add(Inputs.LoadRobInReady);
             inputs.Add(Inputs.LoadRobIoActconf);
             inputs.Add(Inputs.LoadRobOnPath);
             inputs.Add(Inputs.LoadRobProAct);
@@ -441,7 +441,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.LoadRobStopmess);
             inputs.Add(Inputs.LoadRobPeriRdy);
             inputs.Add(Inputs.LoadRobAlarmStop);
-            inputs.Add(Inputs.LoadRobUserSaf);
+            inputs.Add(Inputs.LoadRobInReady);
             inputs.Add(Inputs.LoadRobIoActconf);
             inputs.Add(Inputs.LoadRobOnPath);
             inputs.Add(Inputs.LoadRobProAct);
