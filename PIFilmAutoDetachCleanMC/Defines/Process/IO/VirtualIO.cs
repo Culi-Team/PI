@@ -298,8 +298,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 MapTo(_transferFixtureOutput[ETransferFixtureProcessOutput.FIXTURE_TRANSFER_DONE]);
             _removeFilmInput[ERemoveFilmProcessInput.ROBOT_ORIGIN_DONE].
                 MapTo(_robotLoadOutput[ERobotLoadProcessOutput.ROBOT_ORIGIN_DONE]);
-            _removeFilmInput[ERemoveFilmProcessInput.ROBOT_READY_DONE].
-                MapTo(_robotLoadOutput[ERobotLoadProcessOutput.ROBOT_READY_DONE]);
 
             //Transfer Fixture Input Mapping
             _transferFixtureInput[ETransferFixtureProcessInput.DETACH_ORIGIN_DONE].
@@ -336,12 +334,18 @@ namespace PIFilmAutoDetachCleanMC.Defines
             _glassTransferInput[EGlassTransferProcessInput.TRANSFER_IN_SHUTTLE_RIGHT_GLASS_REQUEST].
                 MapTo(_transferInShuttleRightOutput[ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_GLASS_REQUEST]);
 
+            _glassTransferInput[EGlassTransferProcessInput.TRANSFER_IN_SHUTTLE_L_IN_SAFE_POS].
+                MapTo(_transferInShuttleLeftOutput[ETransferInShuttleProcessOutput.IN_SAFETY_POSITION]);
+            _glassTransferInput[EGlassTransferProcessInput.TRANSFER_IN_SHUTTLE_R_IN_SAFE_POS].
+                MapTo(_transferInShuttleRightOutput[ETransferInShuttleProcessOutput.IN_SAFETY_POSITION]);
+
             // TransferInShuttle Input Mapping
             // Left
             _transferInShuttleLeftInput[ETransferInShuttleProcessInput.WET_CLEAN_REQ_LOAD].
                 MapTo(_wetCleanLeftOutput[ECleanProcessOutput.REQ_LOAD]);
             _transferInShuttleLeftInput[ETransferInShuttleProcessInput.GLASS_TRANSFER_PLACE_DONE].
                 MapTo(_glassTransferOutput[EGlassTransferProcessOutput.GLASS_TRANSFER_LEFT_PLACE_DONE]);
+
             // Right
             _transferInShuttleRightInput[ETransferInShuttleProcessInput.WET_CLEAN_REQ_LOAD].
                 MapTo(_wetCleanRightOutput[ECleanProcessOutput.REQ_LOAD]);
@@ -357,6 +361,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 MapTo(_transferRotationLeftOutput[ETransferRotationProcessOutput.WET_CLEAN_UNLOAD_DONE]);
             _wetCleanLeftInput[ECleanProcessInput.TRANSFER_ROTATION_READY_PICK_PLACE].
                 MapTo(_transferRotationLeftOutput[ETransferRotationProcessOutput.TRANSFER_ROTATION_READY_PICK]);
+            _wetCleanLeftInput[ECleanProcessInput.TRANSFER_IN_SHUTTLE_IN_SAFE_POS].
+                MapTo(_transferInShuttleLeftOutput[ETransferInShuttleProcessOutput.IN_SAFETY_POSITION]);
+
             // Right
             _wetCleanRightInput[ECleanProcessInput.LOAD_DONE].
                 MapTo(_transferInShuttleRightOutput[ETransferInShuttleProcessOutput.WET_CLEAN_LOAD_DONE]);
@@ -364,6 +371,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 MapTo(_transferRotationRightOutput[ETransferRotationProcessOutput.WET_CLEAN_UNLOAD_DONE]);
             _wetCleanRightInput[ECleanProcessInput.TRANSFER_ROTATION_READY_PICK_PLACE].
                 MapTo(_transferRotationRightOutput[ETransferRotationProcessOutput.TRANSFER_ROTATION_READY_PICK]);
+            _wetCleanRightInput[ECleanProcessInput.TRANSFER_IN_SHUTTLE_IN_SAFE_POS].
+                MapTo(_transferInShuttleRightOutput[ETransferInShuttleProcessOutput.IN_SAFETY_POSITION]);
 
             //AF Clean
             //Left

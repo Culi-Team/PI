@@ -15,5 +15,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         TRANSFER_IN_SHUTTLE_L_ORIGIN_DONE,
         TRANSFER_IN_SHUTTLE_R_ORIGIN_DONE,
+
+        TRANSFER_IN_SHUTTLE_L_IN_SAFE_POS,
+        TRANSFER_IN_SHUTTLE_R_IN_SAFE_POS,
     }
 }

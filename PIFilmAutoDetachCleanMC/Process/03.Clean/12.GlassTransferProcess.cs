@@ -109,6 +109,22 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private bool InFlag_TransfferInShuttleLeft_InSafePos
+        {
+            get
+            {
+                return _glassTransferInput[(int)EGlassTransferProcessInput.TRANSFER_IN_SHUTTLE_L_IN_SAFE_POS];
+            }
+        }
+
+        private bool InFlag_TransfferInShuttleRight_InSafePos
+        {
+            get
+            {
+                return _glassTransferInput[(int)EGlassTransferProcessInput.TRANSFER_IN_SHUTTLE_R_IN_SAFE_POS];
+            }
+        }
+
         private bool FlagGlassTransferPickDone
         {
             set
@@ -357,22 +373,61 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Initialize Start");
                     Step.RunStep++;
                     break;
-                case EGlassTransferReadyStep.ZAxis_Move_ReadyPosition:
-                    Log.Debug("Z Axis Move Ready Position");
-                    ZAxis.MoveAbs(_glassTransferRecipe.ZAxisReadyPosition);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(_glassTransferRecipe.ZAxisReadyPosition));
+                case EGlassTransferReadyStep.TransInShuttle_SafePos_Wait:
+                    if (InFlag_TransfferInShuttleLeft_InSafePos == false &&
+                        InFlag_TransfferInShuttleRight_InSafePos == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
+                    Log.Debug("Both TransInShuttle_SafePos detect");
                     Step.RunStep++;
                     break;
-                case EGlassTransferReadyStep.ZAxis_Move_ReadyPosition_Wait:
+                case EGlassTransferReadyStep.ZAxis_MoveReady_CylUp:
+                    if (ZAxis.IsOnPosition(_glassTransferRecipe.ZAxisReadyPosition) &&
+                        CylinderUpDown1.IsBackward && CylinderUpDown2.IsBackward && CylinderUpDown3.IsBackward)
+                    {
+                        Step.RunStep = (int)EGlassTransferReadyStep.YAxis_Move_ReadyPosition;
+                        break;
+                    }
+
+                    Log.Debug("Z Axis and Cylinders Move Ready Position");
+                    ZAxis.MoveAbs(_glassTransferRecipe.ZAxisReadyPosition);
+                    CylinderUpDown1.Backward();
+                    CylinderUpDown2.Backward();
+                    CylinderUpDown3.Backward();
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
+                        () => ZAxis.IsOnPosition(_glassTransferRecipe.ZAxisReadyPosition) &&
+                        CylinderUpDown1.IsBackward && CylinderUpDown2.IsBackward && CylinderUpDown3.IsBackward);
+
+                    Step.RunStep++;
+                    break;
+                case EGlassTransferReadyStep.ZAxis_MoveReady_CylUp_Wait:
                     if (WaitTimeOutOccurred)
                     {
+                        if (CylinderUpDown1.IsBackward == false ||
+                            CylinderUpDown2.IsBackward == false ||
+                            CylinderUpDown3.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.GlassTransfer_UpDownCylinder_Up_Fail);
+                            break;
+                        }
+
                         RaiseAlarm((int)EAlarm.GlassTransfer_ZAxis_MoveReadyPosition_Fail);
                         break;
                     }
-                    Log.Debug("Z Axis Move Ready Position Done");
+
+                    Log.Debug("Z Axis and Cylinders Move Ready Position Done");
                     Step.RunStep++;
                     break;
                 case EGlassTransferReadyStep.YAxis_Move_ReadyPosition:
+                    if (YAxis.IsOnPosition(_glassTransferRecipe.YAxisReadyPosition))
+                    {
+                        Step.RunStep = (int)EGlassTransferReadyStep.End;
+                        break;
+                    }
+
                     Log.Debug("Y Axis Move Ready Position");
                     YAxis.MoveAbs(_glassTransferRecipe.YAxisReadyPosition);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(_glassTransferRecipe.YAxisReadyPosition));
@@ -384,6 +439,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseAlarm((int)EAlarm.GlassTransfer_YAxis_MoveReadyPosition_Fail);
                         break;
                     }
+
                     Log.Debug("Y Axis Move Ready Position Done");
                     Step.RunStep++;
                     break;

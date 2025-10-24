@@ -171,13 +171,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Private Methods
         private void Sequence_AutoRun()
         {
-            switch ((EFixtureAlignAutoRunStep)Step.RunStep)
+            switch ((EFixtureAlign_AutoRunStep)Step.RunStep)
             {
-                case EFixtureAlignAutoRunStep.Start:
+                case EFixtureAlign_AutoRunStep.Start:
                     Log.Debug("AutoRun Start");
                     Step.RunStep++;
                     break;
-                case EFixtureAlignAutoRunStep.FixtureDetectCheck:
+                case EFixtureAlign_AutoRunStep.FixtureDetectCheck:
                     Log.Debug("Fixture Detect Check");
                     if (_machineStatus.IsDryRunMode)
                     {
@@ -194,7 +194,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Info("Sequence Robot Place Fixture To Align");
                     Sequence = ESequence.RobotPlaceFixtureToAlign;
                     break;
-                case EFixtureAlignAutoRunStep.End:
+                case EFixtureAlign_AutoRunStep.End:
                     break;
             }
         }

@@ -1,6 +1,6 @@
 ﻿namespace PIFilmAutoDetachCleanMC.Defines.Process
 {
-    public enum ERobotLoadReadyStep
+    public enum ERobotLoad_ReadyStep
     {
         Start,
 
@@ -28,10 +28,13 @@
         SetModel_Check,
 
         RobotHomePosition_Check,
+
         RobotSeqHome,
         RobotSeqHome_Check,
         RobotReady,
         RobotReady_Check,
+
+        Set_RobotReadyFlag,
 
         Send_CassettePitch,
         Send_CassettePitch_Check,

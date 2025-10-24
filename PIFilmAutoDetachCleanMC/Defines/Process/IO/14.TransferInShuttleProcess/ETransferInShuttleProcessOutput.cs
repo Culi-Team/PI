@@ -13,5 +13,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         TRANSFER_IN_SHUTTLE_GLASS_REQUEST,
 
         WET_CLEAN_LOAD_DONE,
+
+        IN_SAFETY_POSITION,
     }
 }

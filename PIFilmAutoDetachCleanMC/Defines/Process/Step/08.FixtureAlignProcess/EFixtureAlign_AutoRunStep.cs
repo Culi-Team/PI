@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum EFixtureAlignAutoRunStep
+    public enum EFixtureAlign_AutoRunStep
     {
         Start,
         FixtureDetectCheck,

@@ -11,5 +11,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         GLASS_TRANSFER_PLACE_DONE,
 
         WET_CLEAN_REQ_LOAD,
+
+        /// <summary>
+        /// Transfer In Shuttle current in safety Position, Glass Transfer is safe to move
+        /// </summary>
+        TRANSFER_IN_SAFETY_POS,
     }
 }

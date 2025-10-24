@@ -485,6 +485,13 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private bool FlagTransferInShuttle_InSafePosition
+        {
+            get
+            {
+                return Inputs[(int)ECleanProcessInput.TRANSFER_IN_SHUTTLE_IN_SAFE_POS];
+            }
+        }
         #endregion
 
         #region Constructor
@@ -1148,7 +1155,18 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.Stop;
                         break;
                     }
-                    Log.Debug("Initialize Start");
+
+                    Log.Debug("Ready Start");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessReadyStep.TransInShuttle_SafePos_Wait:
+                    if (FlagTransferInShuttle_InSafePosition == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
+                    Log.Debug("TransInShuttle_SafePos detect");
                     Step.RunStep++;
                     break;
                 case ECleanProcessReadyStep.Cyl_Up:
@@ -1214,7 +1232,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessReadyStep.End:
-                    Log.Debug("Initialize End");
+                    Log.Debug("Ready End");
                     Sequence = ESequence.Stop;
                     break;
             }

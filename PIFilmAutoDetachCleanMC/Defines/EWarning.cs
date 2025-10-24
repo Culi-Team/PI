@@ -104,6 +104,14 @@ namespace PIFilmAutoDetachCleanMC.Defines
         TransferFixture_UpDownCylinder_Down_Fail,
         TransferFixture_ClampCylinder_Clamp_Fail,
         TransferFixture_ClampCylinder_UnClamp_Fail,
+        /// <summary>
+        /// Remove Fixture and Unclamp before start
+        /// </summary>
+        TransferFixture_TransHand1_MayContainsFixture,
+        /// <summary>
+        /// Remove Fixture and Unclamp before start
+        /// </summary>
+        TransferFixture_TransHand2_MayContainsFixture,
 
         //Detach
         Detach = 10000,

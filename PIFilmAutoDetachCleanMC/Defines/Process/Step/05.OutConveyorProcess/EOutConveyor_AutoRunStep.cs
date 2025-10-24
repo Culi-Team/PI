@@ -6,18 +6,10 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum ERemoveFilmReadyStep
+    public enum EOutConveyor_AutoRunStep
     {
         Start,
-        Cyl_Up,
-        Cyl_Up_Wait,
-
-        CylTransfer_Backward,
-        CylTransfer_Backward_Wait,
-
-        Cyl_UnClamp,
-        Cyl_UnClamp_Wait,
-
+        CSTDetect_Check,
         End
     }
 }

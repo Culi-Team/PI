@@ -9,8 +9,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EGlassTransferReadyStep
     {
         Start,
-        ZAxis_Move_ReadyPosition,
-        ZAxis_Move_ReadyPosition_Wait,
+
+        TransInShuttle_SafePos_Wait,
+
+        ZAxis_MoveReady_CylUp,
+        ZAxis_MoveReady_CylUp_Wait,
         YAxis_Move_ReadyPosition,
         YAxis_Move_ReadyPosition_Wait,
         End

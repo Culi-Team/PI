@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum ERemoveFilmProcessInput
+    public enum ERemoveFilm_AutoRunStep
     {
-        REMOVE_FILM_UNLOAD_DONE,
-        FIXTURE_TRANSFER_DONE,
-
-        ROBOT_ORIGIN_DONE,
+        Start,
+        FixtureDetect_Check,
+        End
     }
 }

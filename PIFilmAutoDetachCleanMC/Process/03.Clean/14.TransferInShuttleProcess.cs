@@ -46,7 +46,15 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagWetCleanLoadDone
+        private bool OutFlag_TransferInShuttleInSafePosition
+        {
+            set
+            {
+                OutputFlagss[(int)ETransferInShuttleProcessOutput.IN_SAFETY_POSITION] = value;
+            }
+        }
+
+        private bool OutFlag_WetCleanLoadDone
         {
             set
             {
@@ -119,6 +127,17 @@ namespace PIFilmAutoDetachCleanMC.Process
                                                                 : _transferInShuttleRightRecipe.ZAxisPlacePosition;
 
         private bool IsPortDisable => port == EPort.Left ? _commonRecipe.DisableLeftPort : _commonRecipe.DisableRightPort;
+
+        private bool IsInSafePosition
+        {
+            get
+            {
+                bool isZAxisSafePos = ZAxis.IsOnPosition(ZAxisReadyPosition);
+                bool isYAxisSafePos = YAxis.IsOnPosition(YAxisReadyPosition);
+
+                return isZAxisSafePos && isYAxisSafePos;
+            }
+        }
         #endregion
 
         #region Inputs
@@ -332,6 +351,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Initialize Start");
                     Step.RunStep++;
                     break;
+                case ETransferInShuttleReadyStep.SafetyPosition_Check:
+                    if (IsInSafePosition)
+                    {
+                        Step.RunStep = (int)ETransferInShuttleReadyStep.Flag_InSafePosition_Set;
+                        break;
+                    }
+
+                    Step.RunStep++;
+                    break;
                 case ETransferInShuttleReadyStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(ZAxisReadyPosition);
@@ -363,6 +391,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Y Axis Move Ready Position Done");
                     Step.RunStep++;
+                    break;
+                case ETransferInShuttleReadyStep.Flag_InSafePosition_Set:
+                    Log.Info("Set TransferInShuttleInSafePosition Flag");
+
+                    OutFlag_TransferInShuttleInSafePosition = true;
+                    Sequence = ESequence.Stop;
                     break;
                 case ETransferInShuttleReadyStep.End:
                     Log.Debug("Initialize End");
@@ -835,7 +869,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferInShuttleWETCleanLoadStep.Set_FlagWETCleanLoadDone:
                     Log.Debug("Set Flag WET Clean Load Done");
-                    FlagWetCleanLoadDone = true;
+                    OutFlag_WetCleanLoadDone = true;
                     Step.RunStep++;
                     Log.Debug("Wait WET Clean Load Done Received");
                     break;
@@ -846,7 +880,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Clear Flag WET Clean Load Done");
-                    FlagWetCleanLoadDone = false;
+                    OutFlag_WetCleanLoadDone = false;
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleWETCleanLoadStep.End:
