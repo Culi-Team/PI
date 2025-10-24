@@ -34,8 +34,6 @@
         RobotReady,
         RobotReady_Check,
 
-        Set_RobotReadyFlag,
-
         Send_CassettePitch,
         Send_CassettePitch_Check,
 

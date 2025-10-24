@@ -756,7 +756,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (InHome.Value || InReady.Value)
                     {
                         Log.Debug($"Robot load in {(InHome.Value ? "HOME" : "READY")} position");
-                        Step.RunStep = (int)ERobotLoad_ReadyStep.Set_RobotReadyFlag;
+                        Step.RunStep = (int)ERobotLoad_ReadyStep.Send_CassettePitch;
                         break;
                     }
 
@@ -801,11 +801,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     Log.Debug("Robot Move Ready Position Done");
-                    Step.RunStep++;
-                    break;
-                case ERobotLoad_ReadyStep.Set_RobotReadyFlag:
-                    Log.Debug("Set Flag ROBOT READY DONE");
-                    FlagRobotReadyDone = true;
                     Step.RunStep++;
                     break;
                 case ERobotLoad_ReadyStep.Send_CassettePitch:
