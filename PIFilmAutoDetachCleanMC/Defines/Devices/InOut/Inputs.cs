@@ -122,7 +122,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput LoadRobStopmess => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_LOAD_STOPMESS);
         public IDInput LoadRobPeriRdy => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_LOAD_PERI_RDY);
         public IDInput LoadRobAlarmStop => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_LOAD_ALARM_STOP);
-        public IDInput LoadRobUserSaf => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_LOAD_USER_SAF);
+        public IDInput LoadRobInReady => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_LOAD_IN_READY);
         public IDInput LoadRobIoActconf => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_LOAD_IO_ACTCONF);
         public IDInput LoadRobOnPath => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_LOAD_ON_PATH);
         public IDInput LoadRobProAct => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.ROBOT_LOAD_PRO_ACT);
