@@ -190,7 +190,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
-                    Sequence = ESequence.Stop;
+                    Sequence_Ready();
                     break;
                 case ESequence.RobotPlaceFixtureToVinylClean:
                     Sequence_RobotPlaceFixtureToVinylClean();
@@ -237,13 +237,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Private Methods
         private void Sequence_AutoRun()
         {
-            switch ((EVinylCleanProcessAutoRunStep)Step.RunStep)
+            switch ((EVinylCleanProcess_AutoRunStep)Step.RunStep)
             {
-                case EVinylCleanProcessAutoRunStep.Start:
+                case EVinylCleanProcess_AutoRunStep.Start:
                     Log.Debug("Auto Run Start");
                     Step.RunStep++;
                     break;
-                case EVinylCleanProcessAutoRunStep.FixtureDetect_Check:
+                case EVinylCleanProcess_AutoRunStep.FixtureDetect_Check:
                     if (IsFixtureDetect)
                     {
                         Log.Info("Sequence Vinyl Clean");
@@ -252,7 +252,71 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.RunStep++;
                     break;
-                case EVinylCleanProcessAutoRunStep.End:
+                case EVinylCleanProcess_AutoRunStep.End:
+                    Log.Info("Sequence Robot Place Fixture To Vinyl Clean");
+                    Sequence = ESequence.RobotPlaceFixtureToVinylClean;
+                    break;
+            }
+        }
+
+        private void Sequence_Ready()
+        {
+            switch ((EVinylCleanProcess_ReadyStep)Step.RunStep)
+            {
+                case EVinylCleanProcess_ReadyStep.Start:
+                    Log.Debug("Ready Start");
+                    Step.RunStep++;
+                    break;
+                case EVinylCleanProcess_ReadyStep.PusherCylDown:
+                    if (PusherCyl.IsBackward)
+                    {
+                        Step.RunStep = (int)EVinylCleanProcess_ReadyStep.RollerCylBackward;
+                        break;
+                    }
+
+                    Log.Debug($"{PusherCyl} move down");
+                    PusherCyl.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PusherCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case EVinylCleanProcess_ReadyStep.PusherCylDown_Check:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.VinylClean_PusherCylinder_Down_Fail);
+                        break;
+                    }
+
+                    Log.Debug("Vinyl Clean Cylinder Roller Down Done");
+                    Step.RunStep++;
+                    break;
+                case EVinylCleanProcess_ReadyStep.RollerCylBackward:
+                    if (RollerFwBwCyl.IsBackward)
+                    {
+                        Step.RunStep = (int)EVinylCleanProcess_ReadyStep.End;
+                        break;
+                    }
+
+                    Log.Debug("Vinyl Clean Cylinder Roller Backward");
+                    RollerFwBwCyl.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => RollerFwBwCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case EVinylCleanProcess_ReadyStep.RollerCylBackward_Check:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.VinylClean_RollerBwFwCylinder_Backward_Fail);
+                        break;
+                    }
+                    Log.Debug("Vinyl Clean Cylinder Roller Backward Done");
+                    Step.RunStep++;
+                    break;
+                case EVinylCleanProcess_ReadyStep.End:
+                    Log.Debug("Ready End");
+                    if (Parent?.Sequence != ESequence.AutoRun)
+                    {
+                        Sequence = ESequence.Stop;
+                        break;
+                    }
                     Log.Info("Sequence Robot Place Fixture To Vinyl Clean");
                     Sequence = ESequence.RobotPlaceFixtureToVinylClean;
                     break;

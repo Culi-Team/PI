@@ -355,14 +355,23 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.RunStep++;
                     break;
-                case ERemoveFilmReadyStep.Cyl_Up:
+                case ERemoveFilmReadyStep.CylUpDown_CylPusher_MoveBackward:
+                    if (UpDownCyl1.IsBackward && UpDownCyl2.IsBackward && PusherCyl1.IsBackward && PusherCyl2.IsBackward)
+                    {
+                        Step.RunStep = (int)ERemoveFilmReadyStep.CylTransfer_Backward;
+                        break;
+                    }
+
                     Log.Debug("Cylinder Up");
                     UpDownCyl1.Backward();
                     UpDownCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => UpDownCyl1.IsBackward && UpDownCyl2.IsBackward);
+                    PusherCyl1.Backward();
+                    PusherCyl2.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,
+                        () => UpDownCyl1.IsBackward && UpDownCyl2.IsBackward && PusherCyl1.IsBackward && PusherCyl2.IsBackward);
                     Step.RunStep++;
                     break;
-                case ERemoveFilmReadyStep.Cyl_Up_Wait:
+                case ERemoveFilmReadyStep.CylUpDown_CylPusher_MoveBackward_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         if (UpDownCyl1.IsBackward == false)
@@ -370,22 +379,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                             RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder1_Up_Fail);
                             break;
                         }
-                        RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder2_Up_Fail);
-                        break;
-                    }
-                    Log.Debug("Cylinder Up Done");
-                    Step.RunStep++;
-                    break;
-                case ERemoveFilmReadyStep.Cyl_Puhser_Down:
-                    Log.Debug("Cylinder Pusher Down");
-                    PusherCyl1.Backward();
-                    PusherCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PusherCyl1.IsBackward && PusherCyl2.IsBackward);
-                    Step.RunStep++;
-                    break;
-                case ERemoveFilmReadyStep.Cyl_Pusher_Down_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
+                        if (UpDownCyl2.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder2_Up_Fail);
+                            break;
+                        }
                         if (PusherCyl1.IsBackward == false)
                         {
                             RaiseWarning((int)EWarning.RemoveFilm_PusherCylinder1_Down_Fail);
@@ -394,25 +392,36 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.RemoveFilm_PusherCylinder2_Down_Fail);
                         break;
                     }
-                    Log.Debug("Cylinder Pusher Down Done");
+                    Log.Debug("Cylinder Up Done");
                     Step.RunStep++;
                     break;
-                case ERemoveFilmReadyStep.Cyl_Backward:
+                case ERemoveFilmReadyStep.CylTransfer_Backward:
+                    if (TransferCyl.IsBackward)
+                    {
+                        Step.RunStep = (int)ERemoveFilmReadyStep.Cyl_UnClamp;
+                        break;
+                    }
+
                     Log.Debug("Cylinder Backward");
                     TransferCyl.Backward();
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => TransferCyl.IsBackward);
                     Step.RunStep++;
                     break;
-                case ERemoveFilmReadyStep.Cyl_Backward_Wait:
+                case ERemoveFilmReadyStep.CylTransfer_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning(EWarning.RemoveFilm_TransferCylinder_Backward_Fail);
+                        //Timeout ALARM
                         break;
                     }
                     Log.Debug("Cylinder Backward Done");
                     Step.RunStep++;
                     break;
                 case ERemoveFilmReadyStep.Cyl_UnClamp:
+                    if (FilmClampCyl1.IsBackward && FilmClampCyl2.IsBackward && FilmClampCyl3.IsBackward)
+                    {
+                        Step.RunStep = (int)ERemoveFilmReadyStep.End;
+                    }
+
                     Log.Debug("Cylinder UnClamp");
                     FilmClampCylClampUnClamp(false);
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FilmClampCyl1.IsBackward && FilmClampCyl2.IsBackward && FilmClampCyl3.IsBackward);
@@ -421,19 +430,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmReadyStep.Cyl_UnClamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning(EWarning.RemoveFilm_FilmClampCylinder_UnClamp_Fail);
+                        //Timeout ALARM
                         break;
                     }
                     Log.Debug("Cylinder UnClamp Done");
                     Step.RunStep++;
                     break;
                 case ERemoveFilmReadyStep.End:
-                    FlagRemoveFilmReadyDone = true;
                     Log.Debug("Initialize End");
                     Sequence = ESequence.Stop;
-                    break;
-                default:
-                    Wait(20);
                     break;
             }
         }

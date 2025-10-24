@@ -325,15 +325,29 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Initialize Start");
                     Step.RunStep++;
                     break;
-                case EDetachReadyStep.ZAxis_Move_ReadyPosition:
-                    Log.Debug("Z Axis Move Ready Position");
+                case EDetachReadyStep.ZAxis_MoveReady_CylDetach_MoveBackward:
+                    if (DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisReadyPosition) &&
+                        ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisReadyPosition) &&
+                        DetachCyl1.IsBackward && DetachCyl2.IsBackward)
+                    {
+                        Step.RunStep = (int)EDetachReadyStep.End;
+                    }
+
+                    Log.Debug("Z Axis / Cylinder Move Ready Position");
+
                     DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisReadyPosition);
                     ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisReadyPosition);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisReadyPosition) &&
-                                                               ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisReadyPosition));
+                    DetachCyl1.Backward();
+                    DetachCyl2.Backward();
+
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
+                        () => DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisReadyPosition)
+                        && ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisReadyPosition)
+                        && DetachCyl1.IsBackward && DetachCyl2.IsBackward);
+
                     Step.RunStep++;
                     break;
-                case EDetachReadyStep.ZAxis_Move_ReadyPosition_Wait:
+                case EDetachReadyStep.ZAxis_MoveReady_CylDetach_MoveBackward_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         if (DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisReadyPosition) == false)
@@ -341,32 +355,24 @@ namespace PIFilmAutoDetachCleanMC.Process
                             RaiseAlarm((int)EAlarm.Detach_ZAxis_MoveReadyPosition_Fail);
                             break;
                         }
-                        RaiseAlarm((int)EAlarm.Detach_ShuttleTransferZAxis_MoveReadyPosition_Fail);
-                        break;
-                    }
-                    Log.Debug("Z Axis Move Ready Position Done");
-                    Step.RunStep++;
-                    break;
-                case EDetachReadyStep.Cylinder_Up:
-                    Log.Debug("Cylinder Up");
-                    DetachCyl1.Backward();
-                    DetachCyl2.Backward();
-                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => DetachCyl1.IsBackward && DetachCyl2.IsBackward);
-                    Step.RunStep++;
-                    break;
-                case EDetachReadyStep.Cylinder_Up_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
+                        if (ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisReadyPosition) == false)
+                        {
+                            RaiseAlarm((int)EAlarm.Detach_ShuttleTransferZAxis_MoveReadyPosition_Fail);
+                            break;
+                        }
                         if (DetachCyl1.IsBackward == false)
                         {
                             RaiseWarning((int)EWarning.Detach_DetachCylinder1_Up_Fail);
                             break;
                         }
-                        RaiseWarning((int)EWarning.Detach_DetachCylinder2_Up_Fail);
+                        if (DetachCyl2.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.Detach_DetachCylinder2_Up_Fail);
+                            break;
+                        }
                         break;
                     }
-
-                    Log.Debug("Cylinder Up Done");
+                    Log.Debug("Z Axis / Cylinder Move Ready Position Done");
                     Step.RunStep++;
                     break;
                 case EDetachReadyStep.End:

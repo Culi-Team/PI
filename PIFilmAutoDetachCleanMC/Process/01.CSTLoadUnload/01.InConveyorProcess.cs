@@ -148,7 +148,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
-                    Sequence = ESequence.Stop;
+                    Sequence_Ready();
                     break;
                 case ESequence.InConveyorLoad:
                     Sequence_InConveyorLoad();
@@ -208,13 +208,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Private Methods
         private void Sequence_AutoRun()
         {
-            switch ((EInConveyorAutoRunStep)Step.RunStep)
+            switch ((EInConveyor_AutoRunStep)Step.RunStep)
             {
-                case EInConveyorAutoRunStep.Start:
+                case EInConveyor_AutoRunStep.Start:
                     Log.Debug("Auto Run Start");
                     Step.RunStep++;
                     break;
-                case EInConveyorAutoRunStep.CSTDetect_Check:
+                case EInConveyor_AutoRunStep.CSTDetect_Check:
                     if (CST_Det2 && StopperCylinder.IsForward)
                     {
                         Log.Info("Sequence In Work CST Load");
@@ -229,12 +229,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (_machineStatus.IsDryRunMode)
                     {
                         Log.Info("Dry Run Mode Skip In Conveyor Auto Run");
-                        Step.RunStep = (int)EInConveyorAutoRunStep.End;
+                        Step.RunStep = (int)EInConveyor_AutoRunStep.End;
                         break;
                     }
                     Step.RunStep++;
                     break;
-                case EInConveyorAutoRunStep.End:
+                case EInConveyor_AutoRunStep.End:
                     Log.Info("Sequence In Conveyor Load");
                     Sequence = ESequence.InConveyorLoad;
                     break;
@@ -243,7 +243,46 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void Sequence_Ready()
         {
+            switch ((EInConveyor_ReadyStep)Step.RunStep)
+            {
+                case EInConveyor_ReadyStep.Start:
+                    Log.Debug("Ready Start");
+                    Step.RunStep++;
+                    break;
+                case EInConveyor_ReadyStep.SensorStatus_Check:
+                    if (CST_Det2 && StopperCylinder.IsBackward)
+                    {
+                        RaiseWarning((int)EWarning.InConveyor_CST_Position_Error);
+                        break;
+                    }
+                    if (StopperCylinder.IsForward)
+                    {
+                        Step.RunStep = (int)EInConveyor_ReadyStep.End;
+                        break;
+                    }
 
+                    Step.RunStep++;
+                    break;
+                case EInConveyor_ReadyStep.StopperUp:
+                    Log.Debug($"Move {StopperCylinder} up");
+                    StopperCylinder.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => StopperCylinder.IsForward);
+                    Step.RunStep++;
+                    break;
+                case EInConveyor_ReadyStep.StopperUp_Check:
+
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.InConveyor_CST_Stopper_Up_Fail);
+                        break;
+                    }
+
+                    Log.Debug($"Move {StopperCylinder} up done");
+                    Step.RunStep++;
+                    break;
+                case EInConveyor_ReadyStep.End:
+                    break;
+            }
         }
 
         private void Sequence_InWorkCSTLoad()

@@ -9,10 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EDetachReadyStep
     {
         Start,
-        ZAxis_Move_ReadyPosition,
-        ZAxis_Move_ReadyPosition_Wait,
-        Cylinder_Up,
-        Cylinder_Up_Wait,
+        ZAxis_MoveReady_CylDetach_MoveBackward,
+        ZAxis_MoveReady_CylDetach_MoveBackward_Wait,
         End
     }
 }
