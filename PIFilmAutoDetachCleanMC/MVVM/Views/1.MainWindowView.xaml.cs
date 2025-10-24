@@ -6,17 +6,16 @@ using System.Windows.Navigation;
 using PIFilmAutoDetachCleanMC.Factories;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
 using PIFilmAutoDetachCleanMC.Process;
+using PIFilmAutoDetachCleanMC.Services;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.Views
 {
-    /// <summary>
-    /// Interaction logic for MainWindowView.xaml
-    /// </summary>
     public partial class MainWindowView : Window
     {
         private readonly INavigationService _navigationService;
         private readonly ViewModelProvider _viewModelProvider;
         private readonly MachineStatus _machineStatus;
+        private readonly TouchDetectionService _touchDetectionService;
 
         public MainWindowView(INavigationService navigationService,
             ViewModelProvider viewModelProvider,
@@ -25,7 +24,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             _navigationService = navigationService;
             _viewModelProvider = viewModelProvider;
             _machineStatus = machineStatus;
+            _touchDetectionService = new TouchDetectionService(machineStatus);
+            
             InitializeComponent();
+            this.TouchDown += MainWindowView_TouchDown;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -40,7 +42,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             if (_machineStatus.ActiveScreen != vm.Screen) return;
 
             _navigationService.NavigateTo<InitDeinitViewModel>();
-
             _viewModelProvider.GetViewModel<InitDeinitViewModel>().Initialization();
         }
 
@@ -49,9 +50,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             if (Environment.ExitCode != 100)
             {
                 e.Cancel = true;
-
                 _viewModelProvider.GetViewModel<HeaderViewModel>().ApplicationCloseCommand.Execute(null);
             }
+        }
+
+        private void MainWindowView_TouchDown(object sender, TouchEventArgs e)
+        {
+            var touchPoint = e.GetTouchPoint(this);
+            _touchDetectionService.HandleTouchEvent(touchPoint.Position, this);
         }
     }
 }
