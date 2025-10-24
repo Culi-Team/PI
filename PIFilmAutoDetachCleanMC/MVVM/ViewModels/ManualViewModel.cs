@@ -547,9 +547,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     return new ManualUnitViewModel("Transfer In Shuttle Left")
                     {
                         Cylinders = Devices.GetTransferInShuttleLeftCylinders(),
-                        Motions = Devices.GetTransferShutterLeftMotions(),
-                        Inputs = Devices.GetTransferShutterLeftInputs(),
-                        Outputs = Devices.GetTransferShutterLeftOutputs(),
+                        Motions = Devices.GetTransferInShuttleLeftMotions(),
+                        Inputs = Devices.GetTransferInShuttleLeftInputs(),
+                        Outputs = Devices.GetTransferInShuttleLeftOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage"),
                         SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
@@ -562,9 +562,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     return new ManualUnitViewModel("Transfer In Shuttle Right")
                     {
                         Cylinders = Devices.GetTransferInShuttleRightCylinders(),
-                        Motions = Devices.GetTransferShutterRightMotions(),
-                        Inputs = Devices.GetTransferShutterRightInputs(),
-                        Outputs = Devices.GetTransferShutterRightOutputs(),
+                        Motions = Devices.GetTransferInShuttleRightMotions(),
+                        Inputs = Devices.GetTransferInShuttleRightInputs(),
+                        Outputs = Devices.GetTransferShuttleRightOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage"),
                         SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
@@ -585,6 +585,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         {
                             ESemiSequence.WETCleanLeftLoad,
                             ESemiSequence.WETCleanLeft,
+                            ESemiSequence.InShuttleCleanLeft,
                         }
                     };
                 case "WET Clean Right":
@@ -599,6 +600,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         {
                             ESemiSequence.WETCleanRightLoad,
                             ESemiSequence.WETCleanRight,
+                            ESemiSequence.InShuttleCleanRight,
                         }
                     };
                 case "Transfer Rotation Left":
@@ -612,6 +614,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
                             ESemiSequence.WETCleanLeftUnload,
+                            ESemiSequence.TransferRotationLeft,
                             ESemiSequence.AFCleanLeftLoad,
                         }
                     };
@@ -626,6 +629,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
                             ESemiSequence.WETCleanRightUnload,
+                            ESemiSequence.TransferRotationRight,
                             ESemiSequence.AFCleanRightLoad,
                         }
                     };
@@ -641,6 +645,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         {
                             ESemiSequence.AFCleanLeftLoad,
                             ESemiSequence.AFCleanLeft,
+                            ESemiSequence.OutShuttleCleanLeft,
                         }
                     };
                 case "AFClean Right":
@@ -655,6 +660,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         {
                             ESemiSequence.AFCleanRightLoad,
                             ESemiSequence.AFCleanRight,
+                            ESemiSequence.OutShuttleCleanRight,
                         }
                     };
                 case "Unload Transfer Left":

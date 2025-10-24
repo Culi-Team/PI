@@ -260,7 +260,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    _navigationService.NavigateTo<InitializeViewModel>();
+                    if (MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_AreYouSureYouWantToSetMachineReady"], (string)Application.Current.Resources["str_Confirm"]) == false)
+                    {
+                        return;
+                    }
+                    Log.Debug("Ready Button Click");
+                    MachineStatus.OPCommand = EOperationCommand.Ready;
                 });
             }
         }

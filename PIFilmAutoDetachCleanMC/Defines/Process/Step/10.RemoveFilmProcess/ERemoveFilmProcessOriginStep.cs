@@ -9,6 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ERemoveFilmProcessOriginStep
     {
         Start,
+        Wait_Robot_Origin,
+
         Fix_Cyl_Backward,
         Fix_Cyl_Backward_Wait,
         Pusher_Cyl_Down,

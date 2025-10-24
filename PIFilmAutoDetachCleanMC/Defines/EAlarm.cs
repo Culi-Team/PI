@@ -102,7 +102,7 @@
         TransferInShuttleLeft_YAxis_MovePickPosition2_Fail,
         TransferInShuttleLeft_YAxis_MovePickPosition3_Fail,
         TransferInShuttleLeft_ZAxis_MovePickPosition_Fail,
-
+        TransferInShuttleLeft_ZAxis_MoveTransferPosition_Fail,
 
         //Transfer In Shuttle Right
         TransferInShuttleRight = 16000,
@@ -116,6 +116,7 @@
         TransferInShuttleRight_YAxis_MovePickPosition2_Fail,
         TransferInShuttleRight_YAxis_MovePickPosition3_Fail,
         TransferInShuttleRight_ZAxis_MovePickPosition_Fail,
+        TransferInShuttleRight_ZAxis_MoveTransferPosition_Fail,
 
         //WET Clean Left
         WETCleanLeft = 17000,
@@ -141,6 +142,12 @@
         WETCleanLeft_RFeedingAxis_MoveBackward_Fail,
         WETCleanLeft_SyringePump_Origin_Fail,
         WETCleanLeft_XAxis_MoveReadyPosition_Fail,
+        WETCleanLeft_YAxis_MoveReadyPosition_Fail,
+        WETCleanLeft_TAxis_MoveReadyPosition_Fail,
+        WETCleanLeft_XAxis_MoveCleanShuttlePosition_Fail,
+        WETCleanLeft_YAxis_MoveCleanShuttlePosition_Fail,
+        WETCleanLeft_TAxis_MoveCleanShuttlePosition_Fail,
+        WETCleanLeft_CleanShuttle_Fail,
 
         //WET Clean Right
         WETCleanRight = 18000,
@@ -166,6 +173,12 @@
         WETCleanRight_RFeedingAxis_MoveBackward_Fail,
         WETCleanRight_SyringePump_Origin_Fail,
         WETCleanRight_XAxis_MoveReadyPosition_Fail,
+        WETCleanRight_YAxis_MoveReadyPosition_Fail,
+        WETCleanRight_TAxis_MoveReadyPosition_Fail,
+        WETCleanRight_XAxis_MoveCleanShuttlePosition_Fail,
+        WETCleanRight_YAxis_MoveCleanShuttlePosition_Fail,
+        WETCleanRight_TAxis_MoveCleanShuttlePosition_Fail,
+        WETCleanRight_CleanShuttle_Fail,
 
         //Transfer Rotation Left
         TransferRotationLeft = 19000,
@@ -175,6 +188,7 @@
         TransferRotationLeft_ZAxis_Move_TransferBeforeRotatePosition_Fail,
         TransferRotationLeft_ZAxis_Move_TransferAfterRotatePosition_Fail,
         TransferRotationLeft_ZAxis_MovePlacePosition_Fail,
+        TransferRotationLeft_ZAxis_MoveTransferReadyPosition_Fail,
 
         //Transfer Rotation Right
         TransferRotationRight = 20000,
@@ -184,6 +198,7 @@
         TransferRotationRight_ZAxis_Move_TransferBeforeRotatePosition_Fail,
         TransferRotationRight_ZAxis_Move_TransferAfterRotatePosition_Fail,
         TransferRotationRight_ZAxis_MovePlacePosition_Fail,
+        TransferRotationRight_ZAxis_MoveTransferReadyPosition_Fail,
 
         //AF Clean Left
         AFCleanLeft = 21000,
@@ -209,6 +224,12 @@
         AFCleanLeft_RFeedingAxis_MoveBackward_Fail,
         AFCleanLeft_SyringePump_Origin_Fail,
         AFCleanLeft_XAxis_MoveReadyPosition_Fail,
+        AFCleanLeft_YAxis_MoveReadyPosition_Fail,
+        AFCleanLeft_TAxis_MoveReadyPosition_Fail,
+        AFCleanLeft_XAxis_MoveCleanShuttlePosition_Fail,
+        AFCleanLeft_YAxis_MoveCleanShuttlePosition_Fail,
+        AFCleanLeft_TAxis_MoveCleanShuttlePosition_Fail,
+        AFCleanLeft_CleanShuttle_Fail,
 
         //AF Clean Right
         AFCleanRight = 22000,
@@ -234,6 +255,12 @@
         AFCleanRight_RFeedingAxis_MoveBackward_Fail,
         AFCleanRight_SyringePump_Origin_Fail,
         AFCleanRight_XAxis_MoveReadyPosition_Fail,
+        AFCleanRight_YAxis_MoveReadyPosition_Fail,
+        AFCleanRight_TAxis_MoveReadyPosition_Fail,
+        AFCleanRight_XAxis_MoveCleanShuttlePosition_Fail,
+        AFCleanRight_YAxis_MoveCleanShuttlePosition_Fail,
+        AFCleanRight_TAxis_MoveCleanShuttlePosition_Fail,
+        AFCleanRight_CleanShuttle_Fail,
 
         //Unload Glass Left
         UnloadTransferLeft = 23000,

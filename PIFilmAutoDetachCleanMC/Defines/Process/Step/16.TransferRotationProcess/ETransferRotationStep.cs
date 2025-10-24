@@ -12,13 +12,20 @@ namespace PIFilmAutoDetachCleanMC.Defines
         TransferCyl_Backward,
         TransferCyl_Backward_Wait,
 
-        ZAxis_Move_TransferBeforeRotatePosition,
-        ZAxis_Move_TransferBeforeRotatePosition_Wait,
+        Cyl_Rotate_0D,
+        Cyl_Rotate_0D_Wait,
+
+        ZAxis_Move_TransferReadyPosition,
+        ZAxis_Move_TransferReadyPosition_Wait,
 
         TransferCyl_Forward,
         TransferCyl_Forward_Wait,
 
         GlassRotVac_On,
+
+        ZAxis_Move_TransferBeforeRotatePosition,
+        ZAxis_Move_TransferBeforeRotatePosition_Wait,
+
         GlassVac1_Off,
         GlassRotVac_On_Check,
         ZAxis_Move_ReadyPosition,
@@ -33,10 +40,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
         ZAxis_Move_TransferAfterRotatePositon_Wait,
 
         GlassVac2_On,
-        GlassVac2_On_Wait,
         GlassRotVac_Off,
 
         GlassVac2_On_Check,
+
+        ZAxis_MoveReadyPosition,
+        ZAxis_MoveReadyPosition_Wait,
 
         Cyl_Backward,
         Cyl_Backward_Wait,

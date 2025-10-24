@@ -27,7 +27,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     if (Recipe is CSTLoadUnloadRecipe cstLoadUnloadRecipe == false) return;
                     Devices devices = App.AppHost!.Services.GetRequiredService<Devices>();
 
-                    cstLoadUnloadRecipe.FirstFixtureDistance = AnalogConverter.Convert(devices.AnalogInputs.Laser.Volt, 0.0, 10.0, 0, 5000.0);
+                    cstLoadUnloadRecipe.FirstFixtureDistance = AnalogConverter.Convert(devices.AnalogInputs.Laser.Volt, 0.0, 8191.0, 0, 800.0);
                 });
             }
         }

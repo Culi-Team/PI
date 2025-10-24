@@ -109,6 +109,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             {
                 return new RelayCommand(() =>
                 {
+                    if(this is VinylCleanTeachingViewModel)
+                    {
+                        UnWinder.SetTorque(((VinylCleanRecipe)Recipe).UnWinderTorque);
+                        return;
+                    }
                     UnWinder.SetTorque(((CleanRecipe)Recipe).UnWinderTorque);
                 });
             }
@@ -120,7 +125,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             {
                 return new RelayCommand(() =>
                 {
-                    Winder.Run();
+                    Winder.Run(false);
                 });
             }
         }

@@ -9,6 +9,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ERemoveFilmProcessInput
     {
         REMOVE_FILM_UNLOAD_DONE,
-        FIXTURE_TRANSFER_DONE
+        FIXTURE_TRANSFER_DONE,
+
+        ROBOT_ORIGIN_DONE,
+        ROBOT_READY_DONE,
     }
 }

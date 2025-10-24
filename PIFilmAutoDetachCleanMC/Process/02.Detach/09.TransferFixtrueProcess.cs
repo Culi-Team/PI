@@ -59,11 +59,19 @@ namespace PIFilmAutoDetachCleanMC.Process
         }
 
         #region Flags
-        private bool FlagRobotOriginDone
+        private bool FlagRemoveFilmOriginDone
         {
             get
             {
-                return _transferFixtureInput[(int)ETransferFixtureProcessInput.ROBOT_ORIGIN_DONE];
+                return _transferFixtureInput[(int)ETransferFixtureProcessInput.REMOVE_FILM_ORIGIN_DONE];
+            }
+        }
+
+        private bool FlagRemoveFilmReadyDone
+        {
+            get
+            {
+                return _transferFixtureInput[(int)ETransferFixtureProcessInput.REMOVE_FILM_READY_DONE];
             }
         }
 
@@ -161,8 +169,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     Log.Debug("Wait Detach and Robot Origin");
                     break;
-                case ETransferFixtureOriginStep.Wait_Detach_Robot_OriginDone:
-                    if (FlagDetachProcessOriginDone == false || FlagRobotOriginDone == false)
+                case ETransferFixtureOriginStep.Wait_Detach_RemoveFilm_OriginDone:
+                    if (FlagDetachProcessOriginDone == false || FlagRemoveFilmOriginDone == false)
                     {
                         Wait(20);
                         break;
@@ -224,7 +232,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
-                    IsWarning = false;
                     Sequence = ESequence.Stop;
                     break;
                 case ESequence.TransferFixture:

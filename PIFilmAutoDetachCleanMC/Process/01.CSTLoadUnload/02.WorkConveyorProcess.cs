@@ -43,7 +43,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private double TAxisUnloadPosition => port == EPort.Right ? _cstLoadUnloadRecipe.InCstTAxisUnloadPosition : _cstLoadUnloadRecipe.OutCstTAxisUnloadPosition;
         private ITray<ETrayCellStatus> Cassette => port == EPort.Right ? _cassetteList.CassetteIn : _cassetteList.CassetteOut;
         private bool CassetteWorkDone => Cassette.Cells.Any(c => c.Status == ETrayCellStatus.Ready || c.Status == ETrayCellStatus.Working) == false;
-        private double DistanceFirstFixture => AnalogConverter.Convert(LaserSensor.Volt, 0, 10, 0.0, 5000.0);
+        private double DistanceFirstFixture => AnalogConverter.Convert(LaserSensor.Volt, 0, 8191.0, 0.0, 800.0);
         #endregion
 
         #region Constructor
@@ -324,8 +324,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
-                    IsWarning = false;
-                    Sequence = ESequence.Stop;
+                    Sequence_Ready();
                     break;
                 case ESequence.InWorkCSTLoad:
                     if (port == EPort.Right) Sequence_Load();
@@ -445,22 +444,68 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private void Sequence_Ready()
+        {
+            switch ((EWorkConveyor_ReadyStep)Step.RunStep)
+            {
+                case EWorkConveyor_ReadyStep.Start:
+                    Log.Debug("Ready Start");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyor_ReadyStep.SensorStatus_Check:
+                    if (IsCassetteDetect == false &&
+                        (Detect1 || Detect2 || Detect3) == true)
+                    {
+                        // Just some of one all sensor detect cassette
+                        // cassette may not in safety position
+                        RaiseWarning((int)(port == EPort.Right
+                            ? EWarning.InWorkConveyor_CSTSensorStatus_Fail
+                            : EWarning.OutWorkConveyor_CSTSensorStatus_Fail));
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyor_ReadyStep.Support_Down:
+                    Log.Debug($"{CVSupportCyl1} and {CVSupportCyl2} move down");
+                    CVSupportCyl1.Backward();
+                    CVSupportCyl2.Backward();
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => CVSupportCyl1.IsBackward && CVSupportCyl2.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyor_ReadyStep.Support_DownWait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_SupportCV_Down_Fail :
+                                                           EWarning.OutWorkConveyor_SupportCV_Down_Fail));
+                        break;
+                    }
+
+                    Log.Debug($"{CVSupportCyl1} and {CVSupportCyl2} move down done");
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyor_ReadyStep.End:
+                    Log.Debug("Ready End");
+                    Sequence = ESequence.Stop;
+                    break;
+            }
+        }
+
         private void Sequence_Tilt()
         {
-            switch ((EWorkConveyorTiltStep)Step.RunStep)
+            switch ((EWorkConveyor_TiltStep)Step.RunStep)
             {
-                case EWorkConveyorTiltStep.Start:
+                case EWorkConveyor_TiltStep.Start:
                     Log.Debug("Tilt Start");
                     Step.RunStep++;
                     break;
-                case EWorkConveyorTiltStep.Cyl_SupportCV_Down:
+                case EWorkConveyor_TiltStep.Cyl_SupportCV_Down:
                     Log.Debug("Cylinder Support Conveyor Down");
                     CVSupportCyl1.Backward();
                     CVSupportCyl2.Backward();
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => CVSupportCyl1.IsBackward && CVSupportCyl2.IsBackward);
                     Step.RunStep++;
                     break;
-                case EWorkConveyorTiltStep.Cyl_SupportCV_Down_Wait:
+                case EWorkConveyor_TiltStep.Cyl_SupportCV_Down_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_SupportCV_Down_Fail :
@@ -470,14 +515,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Support Conveyor Down Done");
                     Step.RunStep++;
                     break;
-                case EWorkConveyorTiltStep.Cyl_Fix_Forward:
+                case EWorkConveyor_TiltStep.Cyl_Fix_Forward:
                     Log.Debug("Align Cylinder Forward");
                     AlignCylinder1.Forward();
                     AlignCylinder2.Forward();
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCylinder1.IsForward && AlignCylinder2.IsForward);
                     Step.RunStep++;
                     break;
-                case EWorkConveyorTiltStep.Cyl_Fix_Forward_Wait:
+                case EWorkConveyor_TiltStep.Cyl_Fix_Forward_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_FixCylinder_Forward_Fail :
@@ -487,13 +532,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Fix Forward Done");
                     Step.RunStep++;
                     break;
-                case EWorkConveyorTiltStep.TAxis_Move_WorkPosition:
+                case EWorkConveyor_TiltStep.TAxis_Move_WorkPosition:
                     Log.Debug("T Axis Move Work Position");
                     TAxis.MoveAbs(TAxisWorkPosition);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => TAxis.IsOnPosition(TAxisWorkPosition));
                     Step.RunStep++;
                     break;
-                case EWorkConveyorTiltStep.TAxis_Move_WorkPosition_Wait:
+                case EWorkConveyor_TiltStep.TAxis_Move_WorkPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseAlarm((int)(port == EPort.Right ? EAlarm.InWorkConveyor_TAxis_MoveWorkPosition_Fail :
@@ -503,13 +548,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("T Axis Move Work Position Done");
                     Step.RunStep++;
                     break;
-                case EWorkConveyorTiltStep.Cyl_Tilt_Up:
+                case EWorkConveyor_TiltStep.Cyl_Tilt_Up:
                     Log.Debug("Cylinder Tilt Up");
                     TiltCylinder.Forward();
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => TiltCylinder.IsForward);
                     Step.RunStep++;
                     break;
-                case EWorkConveyorTiltStep.Cyl_Tilt_Up_Wait:
+                case EWorkConveyor_TiltStep.Cyl_Tilt_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_TiltCylinder_Up_Fail :
@@ -519,7 +564,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Tilt Up Done");
                     Step.RunStep++;
                     break;
-                case EWorkConveyorTiltStep.End:
+                case EWorkConveyor_TiltStep.End:
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
@@ -938,7 +983,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             if (bInDirection)
             {
                 //InWorkConveyor
-                if(port == EPort.Right)
+                if (port == EPort.Right)
                 {
                     Roller1.SetDirection(true);
                     Roller2.SetDirection(true);
@@ -948,7 +993,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 {
                     Roller1.SetDirection(false);
                     Roller2.SetDirection(false);
-                }    
+                }
                 Roller1.Run();
                 Roller2.Run();
                 RollerSupport1.Run();
@@ -956,7 +1001,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             else
             {
                 //InWorkConveyor
-                if(port == EPort.Right)
+                if (port == EPort.Right)
                 {
                     Roller1.SetDirection(false);
                     Roller2.SetDirection(false);

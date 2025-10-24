@@ -28,20 +28,21 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _devices.Inputs.DoorLock1L.Value &&
-                       _devices.Inputs.DoorLock1R.Value &&
-                       _devices.Inputs.DoorLock2L.Value &&
-                       _devices.Inputs.DoorLock2R.Value &&
-                       _devices.Inputs.DoorLock3L.Value &&
-                       _devices.Inputs.DoorLock3R.Value &&
-                       _devices.Inputs.DoorLock4L.Value &&
-                       _devices.Inputs.DoorLock4R.Value &&
-                       _devices.Inputs.DoorLock5L.Value &&
-                       _devices.Inputs.DoorLock5R.Value &&
-                       _devices.Inputs.DoorLock6L.Value &&
-                       _devices.Inputs.DoorLock6R.Value &&
-                       _devices.Inputs.DoorLock7L.Value &&
-                       _devices.Inputs.DoorLock7R.Value;
+                return true;
+                //return _devices.Inputs.DoorLock1L.Value &&
+                //       _devices.Inputs.DoorLock1R.Value &&
+                //       _devices.Inputs.DoorLock2L.Value &&
+                //       _devices.Inputs.DoorLock2R.Value &&
+                //       _devices.Inputs.DoorLock3L.Value &&
+                //       _devices.Inputs.DoorLock3R.Value &&
+                //       _devices.Inputs.DoorLock4L.Value &&
+                //       _devices.Inputs.DoorLock4R.Value &&
+                //       _devices.Inputs.DoorLock5L.Value &&
+                //       _devices.Inputs.DoorLock5R.Value &&
+                //       _devices.Inputs.DoorLock6L.Value &&
+                //       _devices.Inputs.DoorLock6R.Value &&
+                //       _devices.Inputs.DoorLock7L.Value &&
+                //       _devices.Inputs.DoorLock7R.Value;
             }
         }
 
@@ -49,20 +50,21 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _devices.Inputs.DoorLatch1L.Value &&
-                       _devices.Inputs.DoorLatch1R.Value &&
-                       _devices.Inputs.DoorLatch2L.Value &&
-                       _devices.Inputs.DoorLatch2R.Value &&
-                       _devices.Inputs.DoorLatch3L.Value &&
-                       _devices.Inputs.DoorLatch3R.Value &&
-                       _devices.Inputs.DoorLatch4L.Value &&
-                       _devices.Inputs.DoorLatch4R.Value &&
-                       _devices.Inputs.DoorLatch5L.Value &&
-                       _devices.Inputs.DoorLatch5R.Value &&
-                       _devices.Inputs.DoorLatch6L.Value &&
-                       _devices.Inputs.DoorLatch6R.Value &&
-                       _devices.Inputs.DoorLatch7L.Value &&
-                       _devices.Inputs.DoorLatch7R.Value;
+                //return _devices.Inputs.DoorLatch1L.Value &&
+                //       _devices.Inputs.DoorLatch1R.Value &&
+                //       _devices.Inputs.DoorLatch2L.Value &&
+                //       _devices.Inputs.DoorLatch2R.Value &&
+                //       _devices.Inputs.DoorLatch3L.Value &&
+                //       _devices.Inputs.DoorLatch3R.Value &&
+                //       _devices.Inputs.DoorLatch4L.Value &&
+                //       _devices.Inputs.DoorLatch4R.Value &&
+                //       _devices.Inputs.DoorLatch5L.Value &&
+                //       _devices.Inputs.DoorLatch5R.Value &&
+                //       _devices.Inputs.DoorLatch6L.Value &&
+                //       _devices.Inputs.DoorLatch6R.Value &&
+                //       _devices.Inputs.DoorLatch7L.Value &&
+                //       _devices.Inputs.DoorLatch7R.Value;
+                return true;
             }
         }
 
@@ -132,8 +134,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 }
                 if (IsAutoMode == false || IsManualMode == true)
                 {
-                    Childs!.ToList().ForEach(p => p.IsWarning = true);
-
                     RaiseWarning((int)EWarning.ManualModeSwitch);
                 }
             }
@@ -227,10 +227,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 foreach (var motion in _devices.Motions.All!) { motion.Stop(); }
 
-                // Set Robot process Warning , Need Initialize before Run
-                Childs!.First(p => p.Name == EProcess.RobotLoad.ToString()).IsWarning = true;
-                Childs!.First(p => p.Name == EProcess.RobotUnload.ToString()).IsWarning = true;
-
                 _devices.Outputs.Lamp_Alarm();
                 ProcessMode = EProcessMode.Warning;
                 Log.Info("ToWarning Done, Warning");
@@ -250,6 +246,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             if (Childs!.Count(child => child.ProcessStatus != EProcessStatus.OriginDone) == 0)
             {
                 _machineStatus.OriginDone = true;
+                _machineStatus.MachineReadyDone = false;
 
                 _devices.RollerList.SetDirection();
 
@@ -448,6 +445,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.Ready:
                     if (Childs!.Count(child => child.Sequence != ESequence.Stop) == 0)
                     {
+                        _machineStatus.OriginDone = true;
+
                         ProcessMode = EProcessMode.Stop;
                         Log.Info("Initialize done");
                     }
@@ -469,6 +468,15 @@ namespace PIFilmAutoDetachCleanMC.Process
         private void ProcessModeUpdatedHandler(object? sender, EventArgs e)
         {
             _machineStatus.CurrentProcessMode = this.ProcessMode;
+
+            // Clear MachineReadyDone when machine by Alert
+            if (this.ProcessMode == EProcessMode.ToWarning ||
+                this.ProcessMode == EProcessMode.Warning ||
+                this.ProcessMode == EProcessMode.ToAlarm ||
+                this.ProcessMode == EProcessMode.Alarm)
+            {
+                _machineStatus.MachineReadyDone = false;
+            }
         }
 
         private void CheckRealTimeAlarmStatus()
@@ -582,16 +590,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                         return;
                     }
 
-                    if (Childs!.Any(p => p.IsAlarm))
+                    if (_machineStatus.MachineReadyDone == false)
                     {
-                        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_MachineNeedToBeOriginBeforeRun"]);
+                        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_MachineNeedToBeReadyBeforeRun"]);
                         _machineStatus.OPCommand = EOperationCommand.None;
                         return;
                     }
 
-                    if (Childs!.Any(p => p.IsWarning))
+                    if (Childs!.Any(p => p.IsAlarm))
                     {
-                        MessageBoxEx.ShowDialog("Machine Need To Be Initialize Before Run");
+                        MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_MachineNeedToBeOriginBeforeRun"]);
                         _machineStatus.OPCommand = EOperationCommand.None;
                         return;
                     }
@@ -612,6 +620,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EOperationCommand.Stop:
                     foreach (var motion in _devices.Motions.All!) { motion.Stop(); }
                     foreach (var roller in _devices.RollerList.All!) { roller.Stop(); }
+
+                    _machineStatus.MachineReadyDone = false;
 
                     ProcessMode = EProcessMode.ToStop;
                     _machineStatus.OPCommand = EOperationCommand.None;

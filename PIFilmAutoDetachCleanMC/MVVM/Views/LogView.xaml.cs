@@ -336,7 +336,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                 {
                     retryCount++;
                     if (retryCount >= maxRetry)
+                    {
                         MessageBox.Show(ex.Message);
+                        return new List<LogEntry>();
+                    }
 
                     System.Threading.Thread.Sleep(delayMs);
                 }

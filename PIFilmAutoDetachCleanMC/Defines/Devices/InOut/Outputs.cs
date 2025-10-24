@@ -64,9 +64,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput OutCvSupportBufferDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CV_SUPPORT_BUFFER_DOWN);
         public IDOutput OutCvSupportUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CV_SUPPORT_UP);
         public IDOutput OutCvSupportDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CV_SUPPORT_DOWN);
-        public IDOutput InCompleteButtonLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_COMPLETE_BUTTON_LAMP);
         public IDOutput InMutingButtonLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_MUTING_BUTTON_LAMP);
-        public IDOutput OutCompleteButtonLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_COMPLETE_BUTTON_LAMP);
         public IDOutput OutMutingButtonLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_MUTING_BUTTON_LAMP);
         public IDOutput InCstLightCurtainReset => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.IN_CST_LIGHT_CURTAIN_RESET);
         public IDOutput OutCstLightCurtainReset => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_CST_LIGHT_CURTAIN_RESET);
@@ -117,7 +115,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput RemoveZoneFilm2Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_2_UNCLAMP);
         public IDOutput RemoveZoneFilm3Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_3_CLAMP);
         public IDOutput RemoveZoneFilm3Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_3_UNCLAMP);
-        public IDOutput RemoveZoneIonRunStop => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_ION_RUN_STOP);
         public IDOutput RemoveZonePusherCyl1Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_PUSHER_CYL_1_UP);
         public IDOutput RemoveZonePusherCyl1Down => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_PUSHER_CYL_1_DOWN);
         public IDOutput RemoveZonePusherCyl2Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_PUSHER_CYL_2_UP);
@@ -143,7 +140,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput FixtureAlignCyl1Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.FIXTURE_ALIGN_CYL_1_FW);
         public IDOutput FixtureAlignCyl2Bw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.FIXTURE_ALIGN_CYL_2_BW);
         public IDOutput FixtureAlignCyl2Fw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.FIXTURE_ALIGN_CYL_2_FW);
-        public IDOutput AlignFixtureIonRunStop => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_FIXTURE_ION_RUN_STOP);
         public IDOutput AlignStageLVac1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_L_VAC_1_ON_OFF);
         public IDOutput AlignStageLVac2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_L_VAC_2_ON_OFF);
         public IDOutput AlignStageLVac3OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.ALIGN_STAGE_L_VAC_3_ON_OFF);

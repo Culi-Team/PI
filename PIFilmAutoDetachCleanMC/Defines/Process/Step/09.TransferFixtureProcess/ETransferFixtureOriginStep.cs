@@ -12,7 +12,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         FixtureDetectCheck,
         Unclamp,
         Unclamp_Wait,
-        Wait_Detach_Robot_OriginDone,
+        Wait_Detach_RemoveFilm_OriginDone,
         CylUp,
         CylUp_Wait,
         YAxis_Origin,

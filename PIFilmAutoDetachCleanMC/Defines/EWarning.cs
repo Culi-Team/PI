@@ -32,6 +32,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         InWorkConveyor_SupportCV_Down_Fail,
         InWorkConveyor_FixCylinder_Backward_Fail,
         InWorkConveyor_FixCylinder_Forward_Fail,
+        InWorkConveyor_CSTSensorStatus_Fail,
 
         //BufferConveyor
         BufferConveyor = 3000,
@@ -42,6 +43,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         BufferConveyor_Stopper2_Down_Fail,
         BufferConveyor_Stopper_Up_Fail,
         BufferConveyor_Stopper_Down_Fail,
+        BufferConveyor_CSTSensorStatus_Fail,
 
         //OutWorkConveyor
         OutWorkConveyor = 4000,
@@ -52,6 +54,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         OutWorkConveyor_SupportCV_Down_Fail,
         OutWorkConveyor_FixCylinder_Backward_Fail,
         OutWorkConveyor_FixCylinder_Forward_Fail,
+        OutWorkConveyor_CSTSensorStatus_Fail,
 
         //OutConveyor
         OutConveyor = 5000,
@@ -162,6 +165,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         TransferInShuttleLeft_Vacuum_Fail,
         TransferInShuttleLeft_ZAxis_MoveReady_Fail,
         TransferInShuttleLeft_YAxis_MoveReady_Fail,
+        TransferInShuttleLeft_BrushCylinder_Up_Fail,
+        TransferInShuttleLeft_BrushCylinder_Down_Fail,
 
         //Transfer In Shuttle Right
         TransferInShuttleRight = 16000,
@@ -170,6 +175,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         TransferInShuttleRight_Vacuum_Fail,
         TransferInShuttleRight_ZAxis_MoveReady_Fail,
         TransferInShuttleRight_YAxis_MoveReady_Fail,
+        TransferInShuttleRight_BrushCylinder_Up_Fail,
+        TransferInShuttleRight_BrushCylinder_Down_Fail,
 
         //WET Clean Left
         WETCleanLeft = 17000,

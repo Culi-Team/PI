@@ -54,10 +54,11 @@ namespace PIFilmAutoDetachCleanMC.Extensions
 #else
                 services.AddKeyedSingleton<IAInputDevice>("AnalogInputDevice#1", (services, obj) =>
                 {
-                    return new AjinAnalogInputDevice<EAnalogInput>()
+                    return new InovanceAnalogInputDevice<EAnalogInput>()
                     {
-                        Id = 9,
+                        Id = 28,
                         Name = "AnalogInputDevice",
+                        MotionMaster = (MotionMasterInovance)services.GetRequiredKeyedService<IMotionMaster>("InovanceMaster#1")
                     };
                 });
 #endif

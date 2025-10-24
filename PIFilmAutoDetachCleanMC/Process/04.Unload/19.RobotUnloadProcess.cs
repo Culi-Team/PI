@@ -687,7 +687,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotUnloadReadyStep.End:
                     Log.Debug("Ready run end");
-                    IsWarning = false;
                     Sequence = ESequence.Stop;
                     break;
                 default:

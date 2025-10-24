@@ -49,7 +49,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Inputs
         private bool BufferDetect1 => _devices.Inputs.BufferCstDetect1.Value;
         private bool BufferDetect2 => _devices.Inputs.BufferCstDetect2.Value;
-
         #endregion
 
         #region Cylinders
@@ -161,8 +160,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
-                    IsWarning = false;
-                    Sequence = ESequence.Stop;
+                    Sequence_Ready();
                     break;
                 case ESequence.InWorkCSTUnLoad:
                     Sequence_InWorkCSTUnload();
@@ -227,13 +225,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Private Methods
         private void Sequence_AutoRun()
         {
-            switch ((EBufferConveyorAutoRunStep)Step.RunStep)
+            switch ((EBufferConveyor_AutoRunStep)Step.RunStep)
             {
-                case EBufferConveyorAutoRunStep.Start:
+                case EBufferConveyor_AutoRunStep.Start:
                     Log.Debug("Auto Run Start");
                     Step.RunStep++;
                     break;
-                case EBufferConveyorAutoRunStep.CSTDetect_Check:
+                case EBufferConveyor_AutoRunStep.CSTDetect_Check:
                     if(_machineStatus.IsDryRunMode)
                     {
                         Log.Info("Sequence Out Work CST Load");
@@ -264,7 +262,49 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     break;
-                case EBufferConveyorAutoRunStep.End:
+                case EBufferConveyor_AutoRunStep.End:
+                    break;
+            }
+        }
+
+        private void Sequence_Ready()
+        {
+            switch ((EBufferConveyor_ReadyStep)Step.RunStep)
+            {
+                case EBufferConveyor_ReadyStep.Start:
+                    Log.Debug("Ready Start");
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyor_ReadyStep.SensorStatus_Check:
+                    if ((BufferDetect1 && BufferDetect2) == false &&
+                        (BufferDetect1 || BufferDetect2) == true)
+                    {
+                        // Just some of one all sensor detect cassette
+                        // cassette may not in safety position
+                        RaiseWarning(EWarning.BufferConveyor_CSTSensorStatus_Fail);
+                        break;
+                    }
+                    
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyor_ReadyStep.Stoppers_Up:
+                    BufferStopper1.Forward();
+                    BufferStopper2.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => BufferStopper1.IsForward && BufferStopper2.IsForward);
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyor_ReadyStep.Stoppers_UpWait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning(EWarning.BufferConveyor_Stopper_Up_Fail);
+                        break;
+                    }
+
+                    Step.RunStep++;
+                    break;
+                case EBufferConveyor_ReadyStep.End:
+                    Log.Debug("Ready End");
+                    Sequence = ESequence.Stop;
                     break;
             }
         }

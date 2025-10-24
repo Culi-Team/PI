@@ -10,5 +10,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         REMOVE_FILM_REQ_UNLOAD,
         REMOVE_FILM_DONE,
+
+        REMOVE_FILM_ORIGIN_DONE,
+        REMOVE_FILM_READY_DONE,
     }
 }

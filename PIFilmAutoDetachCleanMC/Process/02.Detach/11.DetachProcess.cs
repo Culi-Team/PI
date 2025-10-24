@@ -70,11 +70,19 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
         #region Flags
-        private bool FlagOriginDone
+        private bool FlagDetachOriginDone
         {
             set
             {
                 _detachOutput[(int)EDetachProcessOutput.DETACH_ORIGIN_DONE] = value;
+            }
+        }
+
+        private bool FlagDetachReadyDone
+        {
+            set
+            {
+                _detachOutput[(int)EDetachProcessOutput.DETACH_READY_DONE] = value;
             }
         }
 
@@ -147,7 +155,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Override Methods
         public override bool ProcessToOrigin()
         {
-            FlagOriginDone = false;
+            FlagDetachOriginDone = false;
             return base.ProcessToOrigin();
         }
         public override bool ProcessToRun()
@@ -259,7 +267,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EDetachProcessOriginStep.End:
                     Log.Debug("Origin End");
-                    FlagOriginDone = true;
+                    FlagDetachOriginDone = true;
                     ProcessStatus = EProcessStatus.OriginDone;
                     Step.OriginStep++;
                     break;
@@ -362,7 +370,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachReadyStep.End:
-                    IsWarning = false;
+                    FlagDetachReadyDone = true;
                     Log.Debug("Initialize End");
                     Sequence = ESequence.Stop;
                     break;

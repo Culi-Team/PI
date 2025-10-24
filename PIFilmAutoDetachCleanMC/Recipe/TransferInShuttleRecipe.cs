@@ -17,6 +17,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private double yAxisPickPosition3;
         private double zAxisPickPosition;
         private double yAxisPlacePosition;
+        private double zAxisTransferPosition;
         private double zAxisPlacePosition;
 
         [SingleRecipeDescription(Description = "Y Axis Ready Position", Unit = Unit.mm)]
@@ -90,6 +91,19 @@ namespace PIFilmAutoDetachCleanMC.Recipe
                 zAxisPickPosition = value; 
             }
         }
+
+        [SingleRecipeDescription(Description = "Z Axis Transfer Position", Unit = Unit.mm)]
+        [SinglePositionTeaching(Motion = "ZAxis")]
+        public double ZAxisTransferPosition
+        {
+            get { return zAxisTransferPosition; }
+            set 
+            {
+                OnRecipeChanged(zAxisTransferPosition, value);
+                zAxisTransferPosition = value; 
+            }
+        }
+
 
         [SingleRecipeDescription(Description = "Y Axis Place Position", Unit = Unit.mm)]
         [SinglePositionTeaching(Motion = "YAxis")]

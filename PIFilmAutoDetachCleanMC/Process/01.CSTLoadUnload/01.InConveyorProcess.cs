@@ -57,7 +57,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Outputs
-        private IDOutput InCompleteButtonLamp => _devices.Outputs.InCompleteButtonLamp;
         private IDOutput InMutingButtonLamp => _devices.Outputs.InMutingButtonLamp;
         private IDOutput InCstMutingLightCurtain => _devices.Outputs.InCstLightCurtainMuting;
         private IDOutput InCstInterlockLightCurtain => _devices.Outputs.InCstLightCurtainInterlock;
@@ -149,7 +148,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
-                    IsWarning = false;
                     Sequence = ESequence.Stop;
                     break;
                 case ESequence.InConveyorLoad:
@@ -241,6 +239,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence = ESequence.InConveyorLoad;
                     break;
             }
+        }
+
+        private void Sequence_Ready()
+        {
+
         }
 
         private void Sequence_InWorkCSTLoad()
