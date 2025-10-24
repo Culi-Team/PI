@@ -102,7 +102,7 @@
         TransferInShuttleLeft_YAxis_MovePickPosition2_Fail,
         TransferInShuttleLeft_YAxis_MovePickPosition3_Fail,
         TransferInShuttleLeft_ZAxis_MovePickPosition_Fail,
-
+        TransferInShuttleLeft_ZAxis_MoveTransferPosition_Fail,
 
         //Transfer In Shuttle Right
         TransferInShuttleRight = 16000,
@@ -116,6 +116,7 @@
         TransferInShuttleRight_YAxis_MovePickPosition2_Fail,
         TransferInShuttleRight_YAxis_MovePickPosition3_Fail,
         TransferInShuttleRight_ZAxis_MovePickPosition_Fail,
+        TransferInShuttleRight_ZAxis_MoveTransferPosition_Fail,
 
         //WET Clean Left
         WETCleanLeft = 17000,

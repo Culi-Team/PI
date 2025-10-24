@@ -719,6 +719,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.RunStep++;
                     break;
+                case ETransferRotationStep.ZAxis_MoveReadyPosition:
+                    Log.Debug("Z Axis Move Ready Position");
+                    ZAxis.MoveAbs(ZAxisReadyPosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.ZAxis_MoveReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferRotationLeft_ZAxis_MoveReadyPosition_Fail :
+                                                        EAlarm.TransferRotationRight_ZAxis_MoveReadyPosition_Fail));
+                        break;
+                    }
+                    Log.Debug("Z Axis Move Ready Position Done");
+                    Step.RunStep++;
+                    break;
                 case ETransferRotationStep.Cyl_Backward:
                     Log.Debug("Cylinder Backward");
                     TransferCyl.Backward();

@@ -30,8 +30,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Vacuum_On,
         Vacuum_On_Wait,
 
-        ZAxis_Move_ReadyPosition_1st,
-        ZAxis_Move_ReadyPosition_1st_Wait,
+        Brush_Cyl_Up,
+        Brush_Cyl_Up_Wait,
+
+        ZAxis_Move_TransferReadyPosition,
+        ZAxis_Move_TransferReadyPosition_Wait,
 
         YAxis_Move_PlacePosition,
         YAxis_Move_PlacePosition_Wait,
@@ -46,8 +49,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         Vacuum_Off,
 
-        ZAxis_Move_ReadyPosition_2nd,
-        ZAxis_Move_ReadyPosition_2nd_Wait,
+        ZAxis_Move_ReadyPosition,
+        ZAxis_Move_ReadyPosition_Wait,
 
         Set_FlagWETCleanLoadDone,
         Wait_WETCleanPlaceDoneReceived,

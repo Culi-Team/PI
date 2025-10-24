@@ -44,6 +44,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         GlassVac2_On_Check,
 
+        ZAxis_MoveReadyPosition,
+        ZAxis_MoveReadyPosition_Wait,
+
         Cyl_Backward,
         Cyl_Backward_Wait,
 

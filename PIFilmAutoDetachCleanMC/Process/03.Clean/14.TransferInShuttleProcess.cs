@@ -109,6 +109,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private double ZAxisPickPosition => port == EPort.Left ? _transferInShuttleLeftRecipe.ZAxisPickPosition
                                                                : _transferInShuttleRightRecipe.ZAxisPickPosition;
+        private double ZAxisTransferPosition => port == EPort.Left ? _transferInShuttleLeftRecipe.ZAxisTransferPosition
+                                                                : _transferInShuttleRightRecipe.ZAxisTransferPosition;
 
         private double YAxisPlacePosition => port == EPort.Left ? _transferInShuttleLeftRecipe.YAxisPlacePosition
                                                                 : _transferInShuttleRightRecipe.YAxisPlacePosition;
@@ -720,20 +722,36 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Vacuum On Done");
                     Step.RunStep++;
                     break;
-                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_ReadyPosition_1st:
-                    Log.Debug("Z Axis Move Ready Position 1st");
-                    ZAxis.MoveAbs(ZAxisReadyPosition);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisReadyPosition));
+                case ETransferInShuttleWETCleanLoadStep.Brush_Cyl_Up:
+                    Log.Debug("Brush Cylinder Up");
+                    BrushCyl.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => BrushCyl.IsForward);
                     Step.RunStep++;
                     break;
-                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_ReadyPosition_1st_Wait:
+                case ETransferInShuttleWETCleanLoadStep.Brush_Cyl_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferInShuttleLeft_BrushCylinder_Up_Fail :
+                                                          EWarning.TransferInShuttleRight_BrushCylinder_Up_Fail));
+                        break;
+                    }
+                    Log.Debug("Brush Cylinder Up Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_TransferReadyPosition:
+                    Log.Debug("Z Axis Move Transfer Position");
+                    ZAxis.MoveAbs(ZAxisTransferPosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisTransferPosition));
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_TransferReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_ZAxis_MoveReadyPosition_Fail :
                                                         EAlarm.TransferInShuttleRight_ZAxis_MoveReadyPosition_Fail));
                         break;
                     }
-                    Log.Debug("Z Axis Move Ready Position 1st Done");
+                    Log.Debug("Z Axis Move Transfer Position Done");
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleWETCleanLoadStep.YAxis_Move_PlacePosition:
@@ -799,13 +817,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
-                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_ReadyPosition_2nd:
+                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
                     ZAxis.MoveAbs(ZAxisReadyPosition);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisReadyPosition));
                     Step.RunStep++;
                     break;
-                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_ReadyPosition_2nd_Wait:
+                case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_ZAxis_MoveReadyPosition_Fail :
@@ -839,7 +857,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.GlassDetect_Check;
-
                     break;
             }
         }

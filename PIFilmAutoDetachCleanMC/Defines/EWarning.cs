@@ -165,6 +165,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         TransferInShuttleLeft_Vacuum_Fail,
         TransferInShuttleLeft_ZAxis_MoveReady_Fail,
         TransferInShuttleLeft_YAxis_MoveReady_Fail,
+        TransferInShuttleLeft_BrushCylinder_Up_Fail,
+        TransferInShuttleLeft_BrushCylinder_Down_Fail,
 
         //Transfer In Shuttle Right
         TransferInShuttleRight = 16000,
@@ -173,6 +175,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         TransferInShuttleRight_Vacuum_Fail,
         TransferInShuttleRight_ZAxis_MoveReady_Fail,
         TransferInShuttleRight_YAxis_MoveReady_Fail,
+        TransferInShuttleRight_BrushCylinder_Up_Fail,
+        TransferInShuttleRight_BrushCylinder_Down_Fail,
 
         //WET Clean Left
         WETCleanLeft = 17000,
