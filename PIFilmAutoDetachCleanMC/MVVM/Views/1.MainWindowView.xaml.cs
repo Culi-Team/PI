@@ -6,12 +6,10 @@ using System.Windows.Navigation;
 using PIFilmAutoDetachCleanMC.Factories;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
 using PIFilmAutoDetachCleanMC.Process;
+using PIFilmAutoDetachCleanMC.Services;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.Views
 {
-    /// <summary>
-    /// Interaction logic for MainWindowView.xaml
-    /// </summary>
     public partial class MainWindowView : Window
     {
         private readonly INavigationService _navigationService;
@@ -25,6 +23,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             _navigationService = navigationService;
             _viewModelProvider = viewModelProvider;
             _machineStatus = machineStatus;
+            
             InitializeComponent();
         }
 
@@ -40,7 +39,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             if (_machineStatus.ActiveScreen != vm.Screen) return;
 
             _navigationService.NavigateTo<InitDeinitViewModel>();
-
             _viewModelProvider.GetViewModel<InitDeinitViewModel>().Initialization();
         }
 
@@ -49,9 +47,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             if (Environment.ExitCode != 100)
             {
                 e.Cancel = true;
-
                 _viewModelProvider.GetViewModel<HeaderViewModel>().ApplicationCloseCommand.Execute(null);
             }
         }
+
     }
 }
