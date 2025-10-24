@@ -16,9 +16,18 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             get => new RelayCommand<string>((screenName) =>
             {
-                var currentScreen = _machineStatus.ActiveScreen;
-                var newScreen = currentScreen == EScreen.RightScreen ? EScreen.LeftScreen : EScreen.RightScreen;
-                _machineStatus.ActiveScreen = newScreen;
+                var confirm = MessageBoxEx.ShowDialog($"Machine controlled by another screen.\r\nCheck safety before taking control.");
+
+                if (confirm != true) return;
+
+                if (_machineStatus.ActiveScreen == Defines.EScreen.RightScreen)
+                {
+                    _machineStatus.ActiveScreen = Defines.EScreen.LeftScreen;
+                }
+                else
+                {
+                    _machineStatus.ActiveScreen = Defines.EScreen.RightScreen;
+                }
             });
         }
 

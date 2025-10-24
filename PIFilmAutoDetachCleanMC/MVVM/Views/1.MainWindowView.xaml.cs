@@ -15,7 +15,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         private readonly INavigationService _navigationService;
         private readonly ViewModelProvider _viewModelProvider;
         private readonly MachineStatus _machineStatus;
-        private readonly TouchDetectionService _touchDetectionService;
 
         public MainWindowView(INavigationService navigationService,
             ViewModelProvider viewModelProvider,
@@ -24,10 +23,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             _navigationService = navigationService;
             _viewModelProvider = viewModelProvider;
             _machineStatus = machineStatus;
-            _touchDetectionService = new TouchDetectionService(machineStatus);
             
             InitializeComponent();
-            this.TouchDown += MainWindowView_TouchDown;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -54,10 +51,5 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             }
         }
 
-        private void MainWindowView_TouchDown(object sender, TouchEventArgs e)
-        {
-            var touchPoint = e.GetTouchPoint(this);
-            _touchDetectionService.HandleTouchEvent(touchPoint.Position, this);
-        }
     }
 }
