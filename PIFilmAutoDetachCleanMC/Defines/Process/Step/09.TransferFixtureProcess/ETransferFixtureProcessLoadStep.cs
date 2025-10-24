@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
+    // TODO: SIMPLY STEPS
     public enum ETransferFixtureProcessLoadStep
     {
         Start,
@@ -29,6 +30,16 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_Down_2nd_Wait,
         Cyl_UnClamp,
         Cyl_UnClamp_Wait,
+
+        Cyl_Up_3rd,
+        Cyl_Up_3rd_Wait,
+
+        YAxis_Move_LoadPosition_2nd,
+        YAxis_Move_LoadPosition_2nd_Wait,
+
+        Cyl_Down_3rd,
+        Cyl_Down_3rd_Wait,
+
         SetFlagTransferDone,
         WaitProcesses_ReceiveTransferDone,
 

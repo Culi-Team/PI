@@ -343,11 +343,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ETransferInShuttleReadyStep)Step.RunStep)
             {
                 case ETransferInShuttleReadyStep.Start:
-                    if (IsOriginOrInitSelected == false)
-                    {
-                        Sequence = ESequence.Stop;
-                        break;
-                    }
                     Log.Debug("Initialize Start");
                     Step.RunStep++;
                     break;
@@ -396,7 +391,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Info("Set TransferInShuttleInSafePosition Flag");
 
                     OutFlag_TransferInShuttleInSafePosition = true;
-                    Sequence = ESequence.Stop;
+                    Step.RunStep++;
                     break;
                 case ETransferInShuttleReadyStep.End:
                     Log.Debug("Initialize End");
@@ -418,8 +413,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         Log.Info("Sequence WET Clean Load");
                         Sequence = port == EPort.Left ? ESequence.WETCleanLeftLoad : ESequence.WETCleanRightLoad;
-
-                        Step.RunStep = (int)ETransferInShuttleAutoRunStep.End;
+                        break;
                     }
 
                     Step.RunStep++;
@@ -429,8 +423,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         Log.Info("Glass Detect on Align unit, Now align glass");
                         Sequence = port == EPort.Left ? ESequence.AlignGlassLeft : ESequence.AlignGlassRight;
-
-                        Step.RunStep = (int)ETransferInShuttleAutoRunStep.End;
+                        break;
                     }
 
                     Step.RunStep++;
@@ -559,7 +552,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassAlignStep.Cyl_Align_Up:
                     Log.Debug("Cylinder Align Up");
                     AlignCylUpDown(true);
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsAlignCylUp);
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => IsAlignCylUp);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Cyl_Align_Up_Wait:
@@ -654,6 +647,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Cylinder Rotate 0 Degree Done");
+                    if(TransferVac.Value)
+                    {
+                        Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.YAxis_Move_PlacePosition;
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleWETCleanLoadStep.GlassDetect_Check:
@@ -690,6 +688,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Y Axis Move Pick Position 1 Done");
+                    AlignVac1.Value = false;
                     Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.ZAxis_Move_PickPosition;
                     break;
                 case ETransferInShuttleWETCleanLoadStep.YAxis_Move_PickPosition2:
@@ -705,6 +704,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                                                         EAlarm.TransferInShuttleRight_YAxis_MovePickPosition2_Fail));
                         break;
                     }
+                    AlignVac2.Value = false;
                     Log.Debug("Y Axis Move Pick Position 2 Done");
                     Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.ZAxis_Move_PickPosition;
                     break;
@@ -721,6 +721,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                                                         EAlarm.TransferInShuttleRight_YAxis_MovePickPosition3_Fail));
                         break;
                     }
+                    AlignVac3.Value = false;
                     Log.Debug("Y Axis Move Pick Position 3 Done");
                     Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.ZAxis_Move_PickPosition;
                     break;
@@ -890,7 +891,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.GlassDetect_Check;
+                    Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.Cyl_Rotate_0D;
                     break;
             }
         }

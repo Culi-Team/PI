@@ -12,13 +12,19 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Move_RemoveZonePickPosition,
         Move_RemoveZonePickPosition_Wait,
 
-        Contact,
-        Contact_Wait,
+        Align,
+        Align_Wait,
+
+        Clamp, 
+        Clamp_Wait,
 
         Move_RemoveZoneReadyPosition,
         Move_RemoveZoneReadyPosition_Wait,
 
         Set_FlagRemoveZoneUnloadDone,
+
+        Flag_RemoveZoneUnloadRequestClear_Wait,
+
         End
     }
 }

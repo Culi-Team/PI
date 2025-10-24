@@ -268,12 +268,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 MapTo(_outWorkConveyorOutput[EWorkConveyorProcessOutput.CST_READY]);
             _robotLoadInput[ERobotLoadProcessInput.VINYL_CLEAN_REQ_LOAD].
                 MapTo(_vinylCleanOutput[EVinylCleanProcessOutput.VINYL_CLEAN_REQ_LOAD]);
-            _robotLoadInput[ERobotLoadProcessInput.VINYL_CLEAN_RECEIVE_LOAD_DONE].
-                MapTo(_vinylCleanOutput[EVinylCleanProcessOutput.VINYL_CLEAN_RECEIVE_LOAD_DONE]);
             _robotLoadInput[ERobotLoadProcessInput.VINYL_CLEAN_REQ_UNLOAD].
                 MapTo(_vinylCleanOutput[EVinylCleanProcessOutput.VINYL_CLEAN_REQ_UNLOAD]);
-            _robotLoadInput[ERobotLoadProcessInput.VINYL_CLEAN_RECEIVE_UNLOAD_DONE].
-                MapTo(_vinylCleanOutput[EVinylCleanProcessOutput.VINYL_CLEAN_RECEIVE_UNLOAD_DONE]);
             _robotLoadInput[ERobotLoadProcessInput.FIXTURE_ALIGN_REQ_LOAD].
                 MapTo(_fixtureAlignOutput[EFixtureAlignProcessOutput.FIXTURE_ALIGN_REQ_LOAD]);
             _robotLoadInput[ERobotLoadProcessInput.REMOVE_FILM_REQ_UNLOAD].

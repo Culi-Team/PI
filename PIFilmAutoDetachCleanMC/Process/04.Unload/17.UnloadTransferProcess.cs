@@ -264,11 +264,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EUnloadTransferReadyStep)Step.RunStep)
             {
                 case EUnloadTransferReadyStep.Start:
-                    if (IsOriginOrInitSelected == false)
-                    {
-                        Sequence = ESequence.Stop;
-                        break;
-                    }
                     Log.Debug("Initialize Start");
                     Step.RunStep++;
                     break;

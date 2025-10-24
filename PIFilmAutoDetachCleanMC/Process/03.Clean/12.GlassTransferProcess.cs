@@ -45,11 +45,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool GlassTransferVac2 => _devices.Inputs.GlassTransferVac2.Value;
         private bool GlassTransferVac3 => _devices.Inputs.GlassTransferVac3.Value;
 
-        private bool IsVac1Detect => GlassTransferVac1 == true;
-        private bool IsVac2Detect => GlassTransferVac2 == true;
-        private bool IsVac3Detect => GlassTransferVac3 == true;
-
-        private bool IsVacDetect => IsVac1Detect && IsVac2Detect && IsVac3Detect;
+        private bool IsVacDetect => GlassTransferVac1 && GlassTransferVac2 && GlassTransferVac3;
 
         private double YAxisPlacePosition
         {
@@ -365,11 +361,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EGlassTransferReadyStep)Step.RunStep)
             {
                 case EGlassTransferReadyStep.Start:
-                    if (IsOriginOrInitSelected == false)
-                    {
-                        Sequence = ESequence.Stop;
-                        break;
-                    }
                     Log.Debug("Initialize Start");
                     Step.RunStep++;
                     break;
@@ -541,7 +532,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassTransferPickStep.Vacuum_On:
                     Log.Debug("Vacuum On");
                     VacOnOff(true);
-                    Wait((int)_commonRecipe.VacDelay * 1000, () => IsVacDetect || _machineStatus.IsDryRunMode);
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EGlassTransferPickStep.Vacuum_On_Wait:

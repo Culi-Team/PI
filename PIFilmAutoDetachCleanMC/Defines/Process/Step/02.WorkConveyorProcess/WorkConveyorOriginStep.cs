@@ -9,7 +9,14 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EWorkConveyorOriginStep
     {
         Start,
+
+        SensorStatus_Check,
+
         Wait_RobotLoadOriginDone,
+
+        Cyl_Fix_Forward,
+        Cyl_Fix_Forward_Wait,
+
         Cyl_Tilt_Down,
         Cyl_Tilt_Down_Wait,
         SupportCV_Down,

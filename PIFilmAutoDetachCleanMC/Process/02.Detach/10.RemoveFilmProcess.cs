@@ -43,7 +43,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _devices.Inputs.RemoveZoneFixtureDetect.Value || _machineStatus.IsDryRunMode || _machineStatus.MachineTestMode;
+                return _devices.Inputs.RemoveZoneFixtureDetect.Value || _machineStatus.IsDryRunMode;
             }
         }
 
@@ -407,7 +407,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilm_ReadyStep.CylTransfer_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.RemoveFilm_TransferCylinder_Backward_Fail);
                         break;
                     }
                     Log.Debug("Cylinder Backward Done");
@@ -417,6 +417,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (FilmClampCyl1.IsBackward && FilmClampCyl2.IsBackward && FilmClampCyl3.IsBackward)
                     {
                         Step.RunStep = (int)ERemoveFilm_ReadyStep.End;
+                        break;
                     }
 
                     Log.Debug("Cylinder UnClamp");
@@ -427,7 +428,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilm_ReadyStep.Cyl_UnClamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        //Timeout ALARM
+                        RaiseWarning((int)EWarning.RemoveFilm_ClampCylinder_UnClamp_Fail);
                         break;
                     }
                     Log.Debug("Cylinder UnClamp Done");
@@ -485,11 +486,25 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERemoveFilmProcessTransferFixtureUnloadStep.Fixture_Detect_Check:
+                    if (_machineStatus.FixtureExistStatus[1] == false)
+                    {
+                        // No up-stream fixture exist before transfer
+                        if (Parent?.Sequence != ESequence.AutoRun)
+                        {
+                            Sequence = ESequence.Stop;
+                            break;
+                        }
+
+                        Sequence = ESequence.TransferFixture;
+                        break;
+                    }
+
                     if (IsFixtureDetect == false && _machineStatus.IsDryRunMode == false)
                     {
                         RaiseWarning((int)EWarning.RemoveFilm_Fixture_NotDetect);
                         break;
                     }
+
                     Step.RunStep++;
                     break;
                 case ERemoveFilmProcessTransferFixtureUnloadStep.End:
@@ -787,6 +802,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
+                    FlagRemoveFilmRequestUnload = false;
+                    Log.Info("FlagRemoveFilmRequestUnload clear");
                     Step.RunStep++;
                     break;
                 case ERemoveFilmRobotPickFromRemoveZoneStep.End:

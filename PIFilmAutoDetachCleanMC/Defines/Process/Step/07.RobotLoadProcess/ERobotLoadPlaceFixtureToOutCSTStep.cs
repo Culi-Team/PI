@@ -14,8 +14,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Move_OutCSTPlacePosition,
         Move_OutCSTPlacePosition_Wait,
 
-        UnContact,
-        UnContact_Wait,
+        UnClamp,
+        UnClamp_Wait,
+
+        UnAlign,
+        UnAlign_Wait,
 
         Move_OutCSTReadyPosition,
         Move_OutCSTReadyPosition_Wait,

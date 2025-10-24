@@ -445,7 +445,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ESequence.Ready:
                     if (Childs!.Count(child => child.Sequence != ESequence.Stop) == 0)
                     {
-                        _machineStatus.OriginDone = true;
+                        _machineStatus.MachineReadyDone = true;
 
                         ProcessMode = EProcessMode.Stop;
                         Log.Info("Initialize done");

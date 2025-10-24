@@ -14,8 +14,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         {
             get => new RelayCommand<string>((screenName) =>
             {
-                var detectedScreen = DetectTouchPosition();
-                _machineStatus.ActiveScreen = detectedScreen;
+                //var detectedScreen = DetectTouchPosition();
+                if (_machineStatus.ActiveScreen == Defines.EScreen.RightScreen)
+                    _machineStatus.ActiveScreen = Defines.EScreen.LeftScreen;
+                else _machineStatus.ActiveScreen = Defines.EScreen.RightScreen;
             });
         }
 

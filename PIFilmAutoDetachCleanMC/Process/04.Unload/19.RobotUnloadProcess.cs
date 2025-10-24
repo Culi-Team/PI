@@ -498,11 +498,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ERobotUnloadReadyStep)Step.RunStep)
             {
                 case ERobotUnloadReadyStep.Start:
-                    if (IsOriginOrInitSelected == false)
-                    {
-                        Sequence = ESequence.Stop;
-                        break;
-                    }
                     Log.Debug("Ready Start");
                     Step.RunStep++;
                     break;

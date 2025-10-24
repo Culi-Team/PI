@@ -312,11 +312,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ETransferRotationReadyStep)Step.RunStep)
             {
                 case ETransferRotationReadyStep.Start:
-                    if (IsOriginOrInitSelected == false)
-                    {
-                        Sequence = ESequence.Stop;
-                        break;
-                    }
                     Log.Debug("Initialize Start");
                     Step.RunStep++;
                     break;

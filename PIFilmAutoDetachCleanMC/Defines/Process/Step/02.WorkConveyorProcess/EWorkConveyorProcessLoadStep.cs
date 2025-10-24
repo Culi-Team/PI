@@ -10,8 +10,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         Start,
 
-        Cyl_Tilt_Down,
-        Cyl_Tilt_Down_Wait,
+        CylTilt_Supporter_Down,
+        CylTilt_Supporter_Down_Wait,
 
         TAxis_Move_LoadPosition,
         TAxis_Move_MoveLoadPosition_Wait,

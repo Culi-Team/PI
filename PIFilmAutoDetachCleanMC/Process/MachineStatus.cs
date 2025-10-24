@@ -21,7 +21,14 @@ namespace PIFilmAutoDetachCleanMC.Process
         public event Action? ActiveScreenChanged;
         #endregion
 
+        public MachineStatus(Inputs inputs)
+        {
+            _inputs = inputs;
+            _fixtureExistStatus = new List<bool>() { false, false, false };
+        }
+
         public const int DryRunVacuumDurationMilliseconds = 1000;
+        private readonly Inputs _inputs;
 
         public EScreen ActiveScreen
         {
@@ -144,6 +151,16 @@ namespace PIFilmAutoDetachCleanMC.Process
         }
 
         public bool MachineTestMode { get; set; }
+
+        public void RecordFixtureExistStatus()
+        {
+            _fixtureExistStatus[0] = _inputs.AlignFixtureDetect.Value;
+            _fixtureExistStatus[1] = _inputs.DetachFixtureDetect.Value;
+            _fixtureExistStatus[2] = _inputs.RemoveZoneFixtureDetect.Value;
+        }
+
+        public IReadOnlyList<bool> FixtureExistStatus => _fixtureExistStatus;
+        private readonly List<bool> _fixtureExistStatus;
 
         #region Privates
         private EMachineRunMode _machineRunMode;

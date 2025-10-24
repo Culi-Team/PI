@@ -4,9 +4,11 @@
     {
         Start,
 
-        Status_Check,
+        ErrorStatus_Check,
 
         RobotReady_Wait,
+
+        PositionStatus_Check,
 
         Cylinder_Up,
         Cylinder_Up_Wait,

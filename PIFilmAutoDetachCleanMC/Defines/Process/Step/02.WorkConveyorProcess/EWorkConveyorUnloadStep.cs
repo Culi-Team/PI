@@ -9,11 +9,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EWorkConveyorUnloadStep
     {
         Start,
-        Cyl_Tilt_Down,
-        Cyl_Tilt_Down_Wait,
 
-        Support_CV_Down,
-        Support_CV_Down_Wait,
+        CylTilt_Supporter_Down,
+        CylTilt_Supporter_Down_Wait,
 
         TAxis_MoveLoadPosition,
         TAxis_MoveLoadPosition_Wait,

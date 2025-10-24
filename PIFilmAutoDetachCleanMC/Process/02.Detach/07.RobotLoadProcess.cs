@@ -122,27 +122,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagVinylCleanReceiveLoadDone
-        {
-            get
-            {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.VINYL_CLEAN_RECEIVE_LOAD_DONE];
-            }
-        }
-
         private bool FlagVinylCleanUnloadDone
         {
             set
             {
                 _robotLoadOutput[(int)ERobotLoadProcessOutput.VINYL_CLEAN_UNLOAD_DONE] = value;
-            }
-        }
-
-        private bool FlagVinylCleanReceiveUnloadDone
-        {
-            get
-            {
-                return _robotLoadInput[(int)ERobotLoadProcessInput.VINYL_CLEAN_RECEIVE_UNLOAD_DONE];
             }
         }
 
@@ -573,13 +557,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoad_AutoRunStep.Check_Flag_VinylCleanRequestFixture:
                     if (FlagVinylCleanRequestLoad && FlagInCSTReady)
                     {
-                        Log.Debug("Clear Flag Vinyl Clean Load Done");
-                        FlagVinylCleanLoadDone = false;
-
                         Log.Info("Sequence Robot Pick Fixture From CST");
                         Sequence = ESequence.RobotPickFixtureFromCST;
                         break;
                     }
+
                     Step.RunStep++;
                     break;
                 case ERobotLoad_AutoRunStep.Check_Flag_RemoveFilm:
@@ -587,28 +569,23 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         if (FlagRemoveFilmRequestUnload)
                         {
-                            _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_REQ_UNLOAD] = false;
-                            Log.Debug("Clear Flag Remove Film Unload Done");
-                            FlagRemoveFilmUnloadDone = false;
-
                             Log.Info("Sequence Robot Pick Fixture From Remove Zone");
                             Sequence = ESequence.RobotPickFixtureFromRemoveZone;
                             break;
                         }
                         break;
                     }
+
                     Step.RunStep++;
                     break;
                 case ERobotLoad_AutoRunStep.Check_Flag_VinylCleanRequestUnload:
                     if (FlagVinylCleanRequestUnload)
                     {
-                        Log.Debug("Clear Flag Vinyl Clean Unload Done");
-                        FlagVinylCleanUnloadDone = false;
-
                         Log.Info("Sequence Robot Pick Fixture From Vinyl Clean");
                         Sequence = ESequence.RobotPickFixtureFromVinylClean;
                         break;
                     }
+
                     Step.RunStep = (int)ERobotLoad_AutoRunStep.Check_Flag_VinylCleanRequestFixture;
                     break;
                 case ERobotLoad_AutoRunStep.End:
@@ -786,7 +763,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug($"Send Robot Motion Command {ERobotCommand.READY}");
                     if (SendCommand(ERobotCommand.READY, 10, 15))
                     {
-                        Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.READY)));
+                        Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.HOME)));
                         Step.RunStep++;
                         break;
                     }
@@ -879,8 +856,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPickFixtureFromCSTStep.Move_InCST_PickPositon:
                     paras = new string[]
                     {
-                        CurrentInWorkCSTFixtureIndex.ToString(),
                         "1",
+                        CurrentInWorkCSTFixtureIndex.ToString(),
                         "0",
                         "0",
                         "0",
@@ -909,6 +886,21 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug($"Robot Move Motion Command {ERobotCommand.S1_RDY_PP} Done");
                     Step.RunStep++;
                     break;
+                case ERobotLoadPickFixtureFromCSTStep.Cyl_Align:
+                    Log.Debug("Cylinder Align");
+                    AlignCyl.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPickFixtureFromCSTStep.Cyl_Align_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.RobotLoad_Cylinder_Align_Fail);
+                        break;
+                    }
+                    Log.Debug("Cylinder Align Done");
+                    Step.RunStep++;
+                    break;
                 case ERobotLoadPickFixtureFromCSTStep.Cyl_Clamp:
                     Log.Debug("Cylinder Clamp");
                     ClampCyl1.Forward();
@@ -925,21 +917,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Clamp Done");
                     Step.RunStep++;
                     break;
-                case ERobotLoadPickFixtureFromCSTStep.Cyl_Align:
-                    Log.Debug("Cylinder Align");
-                    AlignCyl.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl.IsForward);
-                    Step.RunStep++;
-                    break;
-                case ERobotLoadPickFixtureFromCSTStep.Cyl_Align_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnAlign_Fail);
-                        break;
-                    }
-                    Log.Debug("Cylinder Align Done");
-                    Step.RunStep++;
-                    break;
+
                 case ERobotLoadPickFixtureFromCSTStep.Move_InCST_ReadyPositon:
                     Log.Debug("Move In Cassette Ready Position");
                     if (SendCommand(ERobotCommand.S1_PP_RDY, LowSpeed, HightSpeed, paras))
@@ -996,12 +974,12 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private void Sequence_RobotPickPlaceVinylClean(bool bPick)
+        private void Sequence_RobotPickPlaceVinylClean(bool isUnload)
         {
             switch ((ERobotLoadPickPlaceFixtureVinylCleanStep)Step.RunStep)
             {
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.Start:
-                    Log.Debug("Robot" + (bPick ? " Pick" : " Place") + " Fixture Vinyl Clean Start");
+                    Log.Debug("Robot" + (isUnload ? " Pick" : " Place") + " Fixture Vinyl Clean Start");
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.Move_VinylClean_PickPlacePosition:
@@ -1022,7 +1000,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug($"Robot Move Motion Command {ERobotCommand.S2_RDY_PP} Done");
-                    if (bPick)
+                    if (isUnload)
                     {
                         Step.RunStep++;
                         break;
@@ -1113,7 +1091,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.SetFlag_VinylCleanLoadUnloadDone:
-                    if (bPick)
+                    if (isUnload)
                     {
                         Log.Debug("Set Flag Vinyl Clean Unload Done");
                         FlagVinylCleanUnloadDone = true;
@@ -1121,29 +1099,32 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep++;
                         break;
                     }
+
                     Log.Debug("Set Flag Vinyl Clean Load Done");
                     FlagVinylCleanLoadDone = true;
                     Log.Debug("Wait Vinyl Clean Receive Load Done");
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.Wait_VinylCleanReceiveLoadUnloadDone:
-                    if (bPick)
+                    if (isUnload)
                     {
-                        if (FlagVinylCleanReceiveUnloadDone == false)
+                        if (FlagVinylCleanRequestUnload == true)
                         {
                             Wait(20);
                             break;
                         }
+
                         Log.Debug("Clear Flag Vinyl Clean Unload Done");
                         FlagVinylCleanUnloadDone = false;
                         Step.RunStep++;
                         break;
                     }
-                    if (FlagVinylCleanReceiveLoadDone == false)
+                    if (FlagVinylCleanRequestLoad == false)
                     {
                         Wait(20);
                         break;
                     }
+
                     Log.Debug("Clear Flag Vinyl Clean Load Done");
                     FlagVinylCleanLoadDone = false;
                     Step.RunStep++;
@@ -1158,7 +1139,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.Wait_NextSequence:
-                    if (bPick)
+                    if (isUnload)
                     {
                         Log.Info("Sequence Place Fixture To Align");
                         Sequence = ESequence.RobotPlaceFixtureToAlign;
@@ -1365,30 +1346,37 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug($"Robot Move Motion Command {ERobotCommand.S4_RDY_PP} Done");
                     Step.RunStep++;
                     break;
-                case ERobotLoadPickFixtureFromRemoveZoneStep.Contact:
+                case ERobotLoadPickFixtureFromRemoveZoneStep.Align:
                     Log.Debug("Contact");
                     AlignCyl.Forward();
-                    ClampCyl1.Forward();
-                    ClampCyl2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl.IsForward && ClampCyl1.IsForward && ClampCyl2.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl.IsForward);
                     Step.RunStep++;
                     break;
-                case ERobotLoadPickFixtureFromRemoveZoneStep.Contact_Wait:
+                case ERobotLoadPickFixtureFromRemoveZoneStep.Align_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        if (AlignCyl.IsForward == false)
-                        {
-                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnAlign_Fail);
-                            break;
-                        }
-                        if (ClampCyl1.IsForward == false || ClampCyl2.IsForward == false)
-                        {
-                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_Clamp_Fail);
-                            break;
-                        }
+                        RaiseWarning((int)EWarning.RobotLoad_Cylinder_Align_Fail);
                         break;
                     }
-                    Log.Debug("Contact Done");
+
+                    Log.Debug("Align Done");
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPickFixtureFromRemoveZoneStep.Clamp:
+                    Log.Debug("Clamp");
+                    ClampCyl1.Forward();
+                    ClampCyl2.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => ClampCyl1.IsForward && ClampCyl2.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPickFixtureFromRemoveZoneStep.Clamp_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.RobotLoad_Cylinder_Clamp_Fail);
+                        break;
+                    }
+
+                    Log.Debug("Load Robot Clamp Done");
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromRemoveZoneStep.Move_RemoveZoneReadyPosition:
@@ -1419,6 +1407,17 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(_devices.Inputs.RemoveZoneFixtureDetect, false);
 #endif
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPickFixtureFromRemoveZoneStep.Flag_RemoveZoneUnloadRequestClear_Wait:
+                    if (FlagRemoveFilmRequestUnload == true)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
+                    FlagRemoveFilmUnloadDone = false;
+                    Log.Debug("FlagRemoveFilmUnloadDone Clear");
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromRemoveZoneStep.End:
@@ -1487,30 +1486,36 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug($"Robot Move Motion Command {ERobotCommand.S5_RDY_PP} Done");
                     Step.RunStep++;
                     break;
-                case ERobotLoadPlaceFixtureToOutCSTStep.UnContact:
-                    Log.Debug("UnContact");
-                    AlignCyl.Backward();
+                case ERobotLoadPlaceFixtureToOutCSTStep.UnClamp:
+                    Log.Debug("Load Robot UnClamp");
                     ClampCyl1.Backward();
                     ClampCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl.IsBackward && ClampCyl1.IsBackward && ClampCyl2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => ClampCyl1.IsBackward && ClampCyl2.IsBackward);
                     Step.RunStep++;
                     break;
-                case ERobotLoadPlaceFixtureToOutCSTStep.UnContact_Wait:
+                case ERobotLoadPlaceFixtureToOutCSTStep.UnClamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        if (AlignCyl.IsBackward == false)
-                        {
-                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_Align_Fail);
-                            break;
-                        }
-                        if (ClampCyl1.IsBackward == false || ClampCyl2.IsBackward == false)
-                        {
-                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnClamp_Fail);
-                            break;
-                        }
+                        RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnClamp_Fail);
                         break;
                     }
-                    Log.Debug("UnContact Done");
+                    Log.Debug("UnClamp Done");
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPlaceFixtureToOutCSTStep.UnAlign:
+                    Log.Debug("Robot Load UnAlign");
+                    AlignCyl.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPlaceFixtureToOutCSTStep.UnAlign_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnAlign_Fail);
+                        break;
+                    }
+
+                    Log.Debug("UnAlign Done");
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Move_OutCSTReadyPosition:

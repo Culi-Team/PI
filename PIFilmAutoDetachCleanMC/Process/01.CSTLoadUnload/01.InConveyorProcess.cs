@@ -281,6 +281,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EInConveyor_ReadyStep.End:
+                    Log.Debug("Ready End");
+                    Sequence = ESequence.Stop;
                     break;
             }
         }

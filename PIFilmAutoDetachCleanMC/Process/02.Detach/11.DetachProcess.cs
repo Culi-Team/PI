@@ -317,11 +317,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EDetachReadyStep)Step.RunStep)
             {
                 case EDetachReadyStep.Start:
-                    if (IsOriginOrInitSelected == false)
-                    {
-                        Sequence = ESequence.Stop;
-                        break;
-                    }
                     Log.Debug("Initialize Start");
                     Step.RunStep++;
                     break;
@@ -331,6 +326,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         DetachCyl1.IsBackward && DetachCyl2.IsBackward)
                     {
                         Step.RunStep = (int)EDetachReadyStep.End;
+                        break;
                     }
 
                     Log.Debug("Z Axis / Cylinder Move Ready Position");
@@ -365,11 +361,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                             RaiseWarning((int)EWarning.Detach_DetachCylinder1_Up_Fail);
                             break;
                         }
-                        if (DetachCyl2.IsBackward == false)
-                        {
-                            RaiseWarning((int)EWarning.Detach_DetachCylinder2_Up_Fail);
-                            break;
-                        }
+
+                        RaiseWarning((int)EWarning.Detach_DetachCylinder2_Up_Fail);
                         break;
                     }
                     Log.Debug("Z Axis / Cylinder Move Ready Position Done");
@@ -856,6 +849,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EDetachProcessTransferFixtureLoadStep.Clear_FlagDetachDone:
                     FlagDetachDone = false;
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessTransferFixtureLoadStep.Fixture_Detect_Check:
+                    if (_machineStatus.FixtureExistStatus[0] == false)
+                    {
+                        // No up-stream fixture exist before transfer
+                        if (Parent?.Sequence != ESequence.AutoRun)
+                        {
+                            Sequence = ESequence.Stop;
+                            break;
+                        }
+
+                        Sequence = ESequence.TransferFixture;
+                        break;
+                    }
+
                     Step.RunStep++;
                     break;
                 case EDetachProcessTransferFixtureLoadStep.End:

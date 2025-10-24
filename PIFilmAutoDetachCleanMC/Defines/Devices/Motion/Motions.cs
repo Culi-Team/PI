@@ -89,6 +89,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
                     break;
             }
 
+            EPort port = cleanUnit == EClean.WETCleanLeft || cleanUnit == EClean.AFCleanLeft ? EPort.Left : EPort.Right;
             AXM.AxmContiBeginNode((int)cleanUnit);
 
             double YStep = 0.1 / count;
@@ -100,16 +101,30 @@ namespace PIFilmAutoDetachCleanMC.Defines
             double[] startPos = { positionX, positionY };
             AXM.AxmLineMove((int)cleanUnit, startPos, vel, acc, dec);
 
-            while (y <= positionY + 0.1)
+            while (port == EPort.Right ? y <= positionY + 0.1 : y >= positionY - 0.1)
             {
-                x = toRight ? positionX - 150 : positionX;
+                if (port == EPort.Right)
+                {
+                    x = toRight ? positionX - 150 : positionX;
+                }
+                else
+                {
+                    x = toRight ? positionX + 150 : positionX;
+                }
                 double[] pos1 = { x, y };
 
                 AXM.AxmLineMove((int)cleanUnit, pos1, vel, acc, dec);
 
-                y += YStep;
+                if (port == EPort.Right)
+                {
+                    y += YStep;
+                }
+                else
+                {
+                    y -= YStep;
+                }
 
-                if (y <= positionY + 0.1)
+                if (port == EPort.Right ? y <= positionY + 0.1 : y >= positionY - 0.1)
                 {
                     double[] pos2 = { x, y };
                     AXM.AxmLineMove((int)cleanUnit, pos2, vel, acc, dec);
@@ -147,6 +162,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                     break;
             }
 
+            EPort port = cleanUnit == EClean.WETCleanLeft || cleanUnit == EClean.AFCleanLeft ? EPort.Left : EPort.Right;
+
             AXM.AxmContiBeginNode((int)cleanUnit);
 
             double YStep = 80.0 / count;
@@ -158,16 +175,30 @@ namespace PIFilmAutoDetachCleanMC.Defines
             double[] startPos = { positionX, positionY };
             AXM.AxmLineMove((int)cleanUnit, startPos, vel, acc, dec);
 
-            while (y <= positionY + 80)
+            while (port == EPort.Right ? y <= positionY + 80 : y >= positionY - 80)
             {
-                x = toRight ? positionX - 60 : positionX;
+                if (port == EPort.Right)
+                {
+                    x = toRight ? positionX - 60 : positionX;
+                }
+                else
+                {
+                    x = toRight ? positionX + 60 : positionX;
+                }
                 double[] pos1 = { x, y };
 
                 AXM.AxmLineMove((int)cleanUnit, pos1, vel, acc, dec);
 
-                y += YStep;
+                if (port == EPort.Right)
+                {
+                    y += YStep;
+                }
+                else
+                {
+                    y -= YStep;
+                }
 
-                if (y <= positionY + 80)
+                if (port == EPort.Right ? y <= positionY + 80 : y >= positionY - 80)
                 {
                     double[] pos2 = { x, y };
                     AXM.AxmLineMove((int)cleanUnit, pos2, vel, acc, dec);

@@ -9,9 +9,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EVinylCleanProcessOutput
     {
         VINYL_CLEAN_REQ_LOAD,
-        VINYL_CLEAN_RECEIVE_LOAD_DONE,
 
         VINYL_CLEAN_REQ_UNLOAD,
-        VINYL_CLEAN_RECEIVE_UNLOAD_DONE,
     }
 }

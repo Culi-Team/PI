@@ -1150,17 +1150,12 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((ECleanProcessReadyStep)Step.RunStep)
             {
                 case ECleanProcessReadyStep.Start:
-                    if (IsOriginOrInitSelected == false)
-                    {
-                        Sequence = ESequence.Stop;
-                        break;
-                    }
-
                     Log.Debug("Ready Start");
                     Step.RunStep++;
                     break;
                 case ECleanProcessReadyStep.TransInShuttle_SafePos_Wait:
-                    if (FlagTransferInShuttle_InSafePosition == false)
+                    if (FlagTransferInShuttle_InSafePosition == false &&
+                        (cleanType == EClean.WETCleanRight || cleanType == EClean.WETCleanLeft))
                     {
                         Wait(20);
                         break;
@@ -1719,7 +1714,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Clean Vertical");
 #if !SIMULATION
                     _devices.Motions.CleanVertical(cleanType, XAxisCleanVerticalPosition, YAxisCleanVerticalPosition, cleanRecipe.CleanVerticalCount);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _devices.Motions.IsContiMotioning(cleanType));
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _devices.Motions.IsContiMotioning(cleanType) == false);
 #else
                     Thread.Sleep(100);
 #endif
