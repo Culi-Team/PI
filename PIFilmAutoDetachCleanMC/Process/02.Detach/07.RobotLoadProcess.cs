@@ -760,7 +760,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoad_ReadyStep.RobotReady:
                     Log.Debug("Start Move Ready Position Robot Load");
-                    Log.Debug($"Send Robot Motion Command {ERobotCommand.READY}");
+                    Log.Debug($"Send Robot Motion Command {ERobotCommand.HOME}");
                     if (SendCommand(ERobotCommand.READY, 10, 15))
                     {
                         Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.HOME)));
@@ -1119,7 +1119,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep++;
                         break;
                     }
-                    if (FlagVinylCleanRequestLoad == false)
+
+                    if (FlagVinylCleanRequestLoad == true)
                     {
                         Wait(20);
                         break;

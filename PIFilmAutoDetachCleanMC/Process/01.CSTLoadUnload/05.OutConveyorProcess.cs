@@ -397,7 +397,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EOutConveyorProcessOutWorkCSTUnloadStep.Wait_OutWorkCSTUnloadDone:
-                    if ((CSTDetect1 == true && CSTDetect2 == true) || _machineStatus.IsDryRunMode)
+                    if ((CSTDetect2 == true) || _machineStatus.IsDryRunMode)
                     {
                         Log.Debug("Clear Flag Out Conveyor Ready");
                         FlagOutConveyorReady = false;
