@@ -564,7 +564,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         Cylinders = Devices.GetTransferInShuttleRightCylinders(),
                         Motions = Devices.GetTransferInShuttleRightMotions(),
                         Inputs = Devices.GetTransferInShuttleRightInputs(),
-                        Outputs = Devices.GetTransferShuttleRightOutputs(),
+                        Outputs = Devices.GetTransferInShuttleRightOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage"),
                         SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {

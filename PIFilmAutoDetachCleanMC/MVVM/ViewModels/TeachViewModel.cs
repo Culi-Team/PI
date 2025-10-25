@@ -137,7 +137,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             TransferInShuttleRightUnitTeaching.Cylinders = Devices.GetTransferInShuttleRightCylinders();
             TransferInShuttleRightUnitTeaching.Motions = Devices.GetTransferInShuttleRightMotions();
             TransferInShuttleRightUnitTeaching.Inputs = Devices.GetTransferInShuttleRightInputs();
-            TransferInShuttleRightUnitTeaching.Outputs = Devices.GetTransferShuttleRightOutputs();
+            TransferInShuttleRightUnitTeaching.Outputs = Devices.GetTransferInShuttleRightOutputs();
             TransferInShuttleRightUnitTeaching.Recipe = RecipeSelector.CurrentRecipe.TransferInShuttleRightRecipe;
             TransferInShuttleRightUnitTeaching.Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferShutterImage");
 

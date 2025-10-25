@@ -329,6 +329,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");
+                    if(GlassVac2)
+                    {
+                        Step.RunStep = (int)ETransferRotationReadyStep.End;
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case ETransferRotationReadyStep.Cyl_Up:

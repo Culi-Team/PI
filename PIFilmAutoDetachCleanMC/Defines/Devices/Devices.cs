@@ -536,6 +536,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.AlignStageLGlassDetect1);
             inputs.Add(Inputs.AlignStageLGlassDetect2);
             inputs.Add(Inputs.AlignStageLGlassDetect3);
+            inputs.Add(Inputs.AlignStageLVac1);
+            inputs.Add(Inputs.AlignStageLVac2);
+            inputs.Add(Inputs.AlignStageLVac3);
             inputs.Add(Inputs.AlignStageL1Align);
             inputs.Add(Inputs.AlignStageL1Unalign);
             inputs.Add(Inputs.AlignStageL2Align);
@@ -573,6 +576,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.AlignStageRGlassDetect1);
             inputs.Add(Inputs.AlignStageRGlassDetect2);
             inputs.Add(Inputs.AlignStageRGlassDetect3);
+            inputs.Add(Inputs.AlignStageRVac1);
+            inputs.Add(Inputs.AlignStageRVac2);
+            inputs.Add(Inputs.AlignStageRVac3);
             inputs.Add(Inputs.AlignStageR1Align);
             inputs.Add(Inputs.AlignStageR1Unalign);
             inputs.Add(Inputs.AlignStageR2Align);
@@ -784,6 +790,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetUnloadAlignInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Inputs.UnloadGlassAlignVac1);
+            inputs.Add(Inputs.UnloadGlassAlignVac2);
+            inputs.Add(Inputs.UnloadGlassAlignVac3);
+            inputs.Add(Inputs.UnloadGlassAlignVac4);
             inputs.Add(Inputs.UnloadGlassDetect1);
             inputs.Add(Inputs.UnloadGlassDetect2);
             inputs.Add(Inputs.UnloadGlassDetect3);
@@ -1046,7 +1056,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             return outputs;
         }
 
-        public ObservableCollection<IDOutput> GetTransferShuttleRightOutputs()
+        public ObservableCollection<IDOutput> GetTransferInShuttleRightOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
             outputs.Add(Outputs.TransferInShuttleRVacOnOff);

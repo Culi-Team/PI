@@ -423,6 +423,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Unload Transfer Place Start");
                     Step.RunStep++;
                     break;
+                case EUnloadAlignUnloadTransferPlaceStep.Vacuum_On:
+                    Log.Debug("Vacuum On");
+                    VacOnOff(true);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Step.RunStep++;
+                    break;
                 case EUnloadAlignUnloadTransferPlaceStep.GlassVac_Check:
                     Log.Debug("Glass Vacuum Check");
                     if (IsGlassVac || _machineStatus.IsDryRunMode)

@@ -419,7 +419,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleAutoRunStep.Align_GlassCheck:
-                    if (IsAlign_GlassDetect)
+                    if (IsAlign_GlassDetect || IsAlign_VacDetect)
                     {
                         Log.Info("Glass Detect on Align unit, Now align glass");
                         Sequence = port == EPort.Left ? ESequence.AlignGlassLeft : ESequence.AlignGlassRight;
