@@ -14,8 +14,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         DetachCyl_Up,
         DetachCyl_Up_Wait,
 
-        Cyl_Fix_Backward,
-        Cyl_Fix_Backward_Wait,
+        Cyl_Clamp_Backward,
+        Cyl_Clamp_Backward_Wait,
 
         ShtTransferXAxis_Origin,
         ShtTransferXAxis_Origin_Wait,

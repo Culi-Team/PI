@@ -11,8 +11,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Start,
         Wait_Robot_Origin,
 
-        Fix_Cyl_Backward,
-        Fix_Cyl_Backward_Wait,
+        Clamp_Cyl_Backward,
+        Clamp_Cyl_Backward_Wait,
         Pusher_Cyl_Down,
         Pusher_Cyl_Down_Wait,
         Cyl_Up,

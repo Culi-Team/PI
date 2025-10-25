@@ -14,8 +14,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         Wait_RobotLoadOriginDone,
 
-        Cyl_Fix_Forward,
-        Cyl_Fix_Forward_Wait,
+        Cyl_Align_Forward,
+        Cyl_Align_Forward_Wait,
 
         Cyl_Tilt_Down,
         Cyl_Tilt_Down_Wait,
@@ -23,8 +23,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         SupportCV_Down_Wait,
         TAxis_Origin,
         TAxis_Origin_Wait,
-        Cyl_Fix_Backward,
-        Cyl_Fix_Backward_Wait,
+        Cyl_Align_Backward,
+        Cyl_Align_Backward_Wait,
         Conveyor_Stop,
         End
     }

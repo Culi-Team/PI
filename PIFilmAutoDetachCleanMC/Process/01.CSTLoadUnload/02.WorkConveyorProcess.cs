@@ -242,7 +242,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                     Step.OriginStep++;
                     break;
-                case EWorkConveyorOriginStep.Cyl_Fix_Forward:
+                case EWorkConveyorOriginStep.Cyl_Align_Forward:
                     if (IsCassetteDetect == false)
                     {
                         Step.OriginStep = (int)EWorkConveyorOriginStep.Cyl_Tilt_Down;
@@ -256,7 +256,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         () => AlignCylinder1.IsForward && AlignCylinder2.IsForward);
                     Step.OriginStep++;
                     break;
-                case EWorkConveyorOriginStep.Cyl_Fix_Forward_Wait:
+                case EWorkConveyorOriginStep.Cyl_Align_Forward_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Right
@@ -318,14 +318,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("T Axis Origin Done");
                     Step.OriginStep++;
                     break;
-                case EWorkConveyorOriginStep.Cyl_Fix_Backward:
+                case EWorkConveyorOriginStep.Cyl_Align_Backward:
                     Log.Debug("Align Cylinder Backward");
                     AlignCylinder1.Backward();
                     AlignCylinder2.Backward();
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCylinder1.IsBackward && AlignCylinder2.IsBackward);
                     Step.OriginStep++;
                     break;
-                case EWorkConveyorOriginStep.Cyl_Fix_Backward_Wait:
+                case EWorkConveyorOriginStep.Cyl_Align_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_FixCylinder_Backward_Fail :

@@ -144,19 +144,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.OriginStep++;
                     break;
-                case ERemoveFilmProcessOriginStep.Fix_Cyl_Backward:
-                    Log.Debug("Remove Film Process Fix Cylinder Backward");
+                case ERemoveFilmProcessOriginStep.Clamp_Cyl_Backward:
+                    Log.Debug("Remove Film Process Clamp Cylinder Backward");
                     ClampCylClampUnclamp(false);
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderUnClamp);
                     Step.OriginStep++;
                     break;
-                case ERemoveFilmProcessOriginStep.Fix_Cyl_Backward_Wait:
+                case ERemoveFilmProcessOriginStep.Clamp_Cyl_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.RemoveFilm_ClampCylinder_UnClamp_Fail);
                         break;
                     }
-                    Log.Debug("Remove Film Process Fix Cylinder Backward Done");
+                    Log.Debug("Remove Film Process Clamp Cylinder Backward Done");
                     Step.OriginStep++;
                     break;
                 case ERemoveFilmProcessOriginStep.Pusher_Cyl_Down:
@@ -529,19 +529,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Remove Start");
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRemoveStep.Fix_Cyl_Forward:
-                    Log.Debug("Fix Cylinder Forward");
+                case ERemoveFilmProcessRemoveStep.Clamp_Cyl_Forward:
+                    Log.Debug("Clamp Cylinder Forward");
                     ClampCylClampUnclamp(true);
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderClamp);
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessRemoveStep.Fix_Cyl_Forward_Wait:
+                case ERemoveFilmProcessRemoveStep.Clamp_Cyl_Forward_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.RemoveFilm_ClampCylinder_Clamp_Fail);
                         break;
                     }
-                    Log.Debug("Fix Cylinder Forward");
+                    Log.Debug("Clamp Cylinder Forward");
                     Step.RunStep++;
                     break;
                 case ERemoveFilmProcessRemoveStep.Cyl_Transfer_Forward:

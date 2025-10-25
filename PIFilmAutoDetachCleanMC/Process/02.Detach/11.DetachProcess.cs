@@ -235,19 +235,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Detach Cylinder Up Done");
                     Step.OriginStep++;
                     break;
-                case EDetachProcessOriginStep.Cyl_Fix_Backward:
-                    Log.Debug("Cylinder Fix Fixture Backward");
+                case EDetachProcessOriginStep.Cyl_Clamp_Backward:
+                    Log.Debug("Cylinder Clamp Fixture Backward");
                     ClampCylinderFwBw(false);
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderBw);
                     Step.OriginStep++;
                     break;
-                case EDetachProcessOriginStep.Cyl_Fix_Backward_Wait:
+                case EDetachProcessOriginStep.Cyl_Clamp_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.Detach_FixCylinder_Backward_Fail);
                         break;
                     }
-                    Log.Debug("Cylinder Fix Fixture Backward Done");
+                    Log.Debug("Cylinder Clamp Fixture Backward Done");
                     Step.OriginStep++;
                     break;
                 case EDetachProcessOriginStep.ShtTransferXAxis_Origin:
