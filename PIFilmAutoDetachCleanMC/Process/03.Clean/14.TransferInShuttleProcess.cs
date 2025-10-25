@@ -583,7 +583,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassAlignStep.Vacuum_On_2nd:
                     Log.Debug("Vacuum On 2nd");
                     AlignVacOnOff(true);
-                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsAlign_VacDetect);
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsAlign_VacDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Vacuum_On_2nd_Wait:

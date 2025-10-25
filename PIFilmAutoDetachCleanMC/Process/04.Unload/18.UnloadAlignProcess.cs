@@ -377,7 +377,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(GlassVac3, false);
                     SimulationInputSetter.SetSimInput(GlassVac4, false);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsGlassVac || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EUnloadAlignRobotPickStep.Set_FlagRequestRobotUnload:
@@ -431,7 +431,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EUnloadAlignUnloadTransferPlaceStep.GlassVac_Check:
                     Log.Debug("Glass Vacuum Check");
-                    if (IsGlassVac || _machineStatus.IsDryRunMode)
+                    if (IsGlassVac && !_machineStatus.IsDryRunMode)
                     {
                         Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.End;
                         break;
@@ -454,7 +454,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     FlagUnloadAlignReady = false;
 
                     Wait(200);
-                    Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.GlassVac_Check;
+                    if (!_machineStatus.IsDryRunMode)
+                    {
+                        Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.GlassVac_Check;
+                        break;
+                    }
+                    Step.RunStep++;
                     break;
                 case EUnloadAlignUnloadTransferPlaceStep.End:
                     Log.Debug("Unload Transfer Place End");

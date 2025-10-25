@@ -301,7 +301,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EOutConveyorUnloadStep.CSTDetect_Check:
-                    if (CSTDetect2 == true)
+                    if (CSTDetect2 == true && !_machineStatus.IsDryRunMode)
                     {
                         Step.RunStep = (int)EOutConveyorUnloadStep.Conveyor_Stop;
                         break;
@@ -311,7 +311,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EOutConveyorUnloadStep.Conveyor_Run:
                     ConveyorRunStop(true);
-                    Step.RunStep = (int)EOutConveyorUnloadStep.CSTDetect_Check;
+                    if (!_machineStatus.IsDryRunMode)
+                    {
+                        Step.RunStep = (int)EOutConveyorUnloadStep.CSTDetect_Check;
+                        break;
+                    }
+                    Step.RunStep++;
                     break;
                 case EOutConveyorUnloadStep.Conveyor_Stop:
                     ConveyorRunStop(false);
