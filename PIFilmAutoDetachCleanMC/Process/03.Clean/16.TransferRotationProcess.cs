@@ -368,7 +368,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationAutoRunStep.GlassVac_Check:
-                    if ((GlassVac1 || GlassRotVac) && _machineStatus.IsDryRunMode == false)
+                    if (GlassVac1 || GlassRotVac)
                     {
                         Log.Info("Sequence Transfer Rotation");
                         Sequence = port == EPort.Left ? ESequence.TransferRotationLeft : ESequence.TransferRotationRight;

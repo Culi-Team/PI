@@ -1025,7 +1025,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Contact");
                     ClampCyl1.Forward();
                     ClampCyl2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsFixtureDetect);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => ClampCyl1.IsForward && ClampCyl2.IsForward);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.CylClamp_Wait:

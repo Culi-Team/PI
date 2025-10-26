@@ -477,7 +477,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadAutoRunStep.GlassVac_Check:
-                    if ((GlassVac1 || GlassVac2 || GlassVac3 || GlassVac4) && _machineStatus.IsDryRunMode == false)
+                    if (GlassVac1 || GlassVac2 || GlassVac3 || GlassVac4)
                     {
                         PlasmaPrepare();
                         Log.Info("Sequence Unload Robot Plasma");
@@ -825,6 +825,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.Plasma_Prepare:
+                    if (_machineStatus.IsDryRunMode)
+                    {
+                        Log.Debug("Dryrun mode");
+                        Step.RunStep++;
+                        break;
+                    }
                     PlasmaPrepare();
                     Step.RunStep++;
                     break;
@@ -891,7 +897,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPlasmaStep.Wait_PlasmaPrepareDone:
-                    if (IsPlasmaPrepare == false)
+                    if (IsPlasmaPrepare == false && !_machineStatus.IsDryRunMode)
                     {
                         Wait(20);
                         break;

@@ -1163,6 +1163,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDOutput> GetWETCleanLeftOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            outputs.Add(Outputs.InShuttleLClampFw);
+            outputs.Add(Outputs.InShuttleLClampBw);
             outputs.Add(Outputs.WetCleanPusherLeftUp);
             outputs.Add(Outputs.WetCleanPusherLeftDown);
             outputs.Add(Outputs.WetCleanBrushLeftDown);
@@ -1173,6 +1175,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDOutput> GetWETCleanRightOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            outputs.Add(Outputs.InShuttleRClampFw);
+            outputs.Add(Outputs.InShuttleRClampBw);
             outputs.Add(Outputs.WetCleanPusherRightUp);
             outputs.Add(Outputs.WetCleanPusherRightDown);
             outputs.Add(Outputs.WetCleanBrushRightDown);

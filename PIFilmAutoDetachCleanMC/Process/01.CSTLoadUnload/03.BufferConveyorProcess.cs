@@ -387,6 +387,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(_devices.Inputs.BufferCstDetect1, true);
                     SimulationInputSetter.SetSimInput(_devices.Inputs.BufferCstDetect2, true);
 #endif
+                    if (_machineStatus.IsDryRunMode)
+                    {
+                        Log.Debug("Dry run mode");
+                        Step.RunStep++;
+                        break;
+                    }
                     Step.RunStep = (int)EBufferConveyorInWorkCSTUnloadStep.CSTDetect_Check;
                     break;
                 case EBufferConveyorInWorkCSTUnloadStep.Conveyor_Stop:

@@ -409,7 +409,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleAutoRunStep.Transfer_VacCheck:
-                    if (IsTransfer_VacDetect && _machineStatus.IsDryRunMode == false)
+                    if (IsTransfer_VacDetect)
                     {
                         Log.Info("Sequence WET Clean Load");
                         Sequence = port == EPort.Left ? ESequence.WETCleanLeftLoad : ESequence.WETCleanRightLoad;
@@ -587,7 +587,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassAlignStep.Vacuum_On_2nd:
                     Log.Debug("Vacuum On 2nd");
                     AlignVacOnOff(true);
-                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsAlign_VacDetect);
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsAlign_VacDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Vacuum_On_2nd_Wait:
