@@ -110,6 +110,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cassette
             string backupTrayAndCassette = JsonConvert.SerializeObject(this, Formatting.Indented, settings);
             string backupTrayAndCassetteFile = Path.Combine(BackupFolder, "CassetteList.json");
 
+            Directory.CreateDirectory(BackupFolder);
+
             File.WriteAllText(backupTrayAndCassetteFile, backupTrayAndCassette);
         }
 
@@ -125,6 +127,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cassette
 
             if (File.Exists(backupTrayAndCassetteFile) == false)
             {
+                Directory.CreateDirectory(BackupFolder);
                 File.WriteAllText(backupTrayAndCassetteFile, JsonConvert.SerializeObject(this, settings));
             }
             string backupTrayAndCassetteFileContent = File.ReadAllText(backupTrayAndCassetteFile);
