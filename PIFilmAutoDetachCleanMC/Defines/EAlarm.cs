@@ -44,7 +44,8 @@
         //Robot Load
         RobotLoad = 7000,
         RobotLoad_MoveMotionCommand_Timeout,
-        
+        RobotLoad_EmergencyStop_Active,
+
         //Align Fixture
         AlignFixture = 8000,
 
@@ -296,6 +297,6 @@
         //Robot Unload
         RobotUnload = 26000,
         RobotUnload_MoveMotionCommand_Timeout,
-        
+        RobotUnload_EmergencyStop_Active,
     }
 }
