@@ -456,7 +456,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                if(cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                 {
                     return Inputs[(int)ECleanProcessInput.AF_CLEAN_CLEANING];
                 }
@@ -465,7 +465,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
             set
             {
-                if(cleanType == EClean.AFCleanLeft || cleanType == EClean.AFCleanRight)
+                if (cleanType == EClean.AFCleanLeft || cleanType == EClean.AFCleanRight)
                 {
                     Outputs[(int)ECleanProcessOutput.AF_CLEAN_CLEANING] = value;
                 }
@@ -1087,36 +1087,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug($"Set Pressure : {cleanRecipe.CylinderPressure}");
                     Regulator.SetPressure(cleanRecipe.CylinderPressure);
                     Step.ToRunStep++;
+                    break;
 
-                    // TODO: Remove tmp code
-                    Step.ToRunStep = (int)ECleanProcessToRunStep.Clear_Flags;
-                    break;
-                case ECleanProcessToRunStep.Dispense_Remain:
-                    SyringePump.Dispense(1.0, 7);
-                    Thread.Sleep(100);
-                    Step.ToRunStep++;
-                    break;
-                case ECleanProcessToRunStep.Dispense_Remain_Wait:
-                    if (SyringePump.IsReady() == false)
-                    {
-                        Thread.Sleep(100);
-                        break;
-                    }
-                    Step.ToRunStep++;
-                    break;
-                case ECleanProcessToRunStep.Fill:
-                    SyringePump.Fill(1.0);
-                    Thread.Sleep(100);
-                    Step.ToRunStep++;
-                    break;
-                case ECleanProcessToRunStep.Fill_Wait:
-                    if (SyringePump.IsReady() == false)
-                    {
-                        Thread.Sleep(100);
-                        break;
-                    }
-                    Step.ToRunStep++;
-                    break;
                 case ECleanProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
                     ((MappableOutputDevice<ECleanProcessOutput>)Outputs).ClearOutputs();
@@ -1142,6 +1114,32 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ECleanProcessAutoRunStep.Start:
                     Log.Debug("Auto Run Start");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessAutoRunStep.Dispense_Remain:
+                    SyringePump.Dispense(1.0, 7);
+                    Thread.Sleep(100);
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessAutoRunStep.Dispense_Remain_Wait:
+                    if (SyringePump.IsReady() == false)
+                    {
+                        Thread.Sleep(100);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessAutoRunStep.Fill:
+                    SyringePump.Fill(1.0);
+                    Thread.Sleep(100);
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessAutoRunStep.Fill_Wait:
+                    if (SyringePump.IsReady() == false)
+                    {
+                        Thread.Sleep(100);
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case ECleanProcessAutoRunStep.VacDetect_Check:
@@ -1482,7 +1480,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.Wait_WETCleanUnloadDone:
-                    if(FlagWETCleanUnloading == true)
+                    if (FlagWETCleanUnloading == true && Parent?.Sequence == ESequence.AutoRun)
                     {
                         Wait(20);
                         break;
@@ -1500,7 +1498,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep++;
                         break;
                     }
-                    Step.RunStep = (int)ECleanProcessCleanStep.Wait_3M_PrepareDone;
+                    Step.RunStep = (int)ECleanProcessCleanStep.Vacuum_On;
                     break;
                 case ECleanProcessCleanStep.Cyl_Clamp:
                     Log.Debug("Cylinder Clamp");
@@ -1521,15 +1519,25 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ECleanProcessCleanStep.Vacuum_On:
                     GlassVac.Value = true;
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect);
                     Step.RunStep++;
                     break;
-                case ECleanProcessCleanStep.Wait_3M_PrepareDone:
-                    if (Is3MPrepareDone == false)
+                case ECleanProcessCleanStep.Vacuum_On_Wait:
+                    if (WaitTimeOutOccurred)
                     {
-                        Wait(20);
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_Vacuum_Detect_Fail,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_Vacuum_Detect_Fail,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_Vacuum_Detect_Fail,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_Vacuum_Detect_Fail,
+                            _ => null
+                        };
+
+                        RaiseWarning((int)warning!);
                         break;
                     }
-                    Is3MPrepareDone = false;
+
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.Axis_MoveCleanHorizontalPosition:
@@ -1596,6 +1604,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("T Axis Move Clean Horizontal Position Done");
                     Step.RunStep++;
                     break;
+                case ECleanProcessCleanStep.Wait_3M_PrepareDone:
+                    if (Is3MPrepareDone == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Is3MPrepareDone = false;
+                    Step.RunStep++;
+                    break;
+
                 case ECleanProcessCleanStep.CylPusher_Down_CleanHorizontal:
                     //Log.Debug("Cylinder Pusher Down");
                     //PushCyl.Forward();
@@ -1808,7 +1826,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Cylinder Pusher Up Done");
-                    if(cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                    if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
                         Step.RunStep = (int)ECleanProcessCleanStep.End;
                         break;
@@ -2066,7 +2084,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    if(cleanRecipe.IsCleanShuttle && cleanRecipe.CleanShuttleCycle >= GlassCleanCount)
+                    if (cleanRecipe.IsCleanShuttle && cleanRecipe.CleanShuttleCycle >= GlassCleanCount)
                     {
                         if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                         {
@@ -2524,6 +2542,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
             }
         }
-#endregion
+        #endregion
     }
 }

@@ -656,7 +656,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    Log.Info("Sequence Remove Film Throw");
+                    Log.Info("Sequence Robot Pick Fixture From Remove Zone");
                     Sequence = ESequence.RobotPickFixtureFromRemoveZone;
                     break;
             }

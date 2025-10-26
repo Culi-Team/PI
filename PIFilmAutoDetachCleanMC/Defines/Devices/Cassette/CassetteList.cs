@@ -75,6 +75,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cassette
             CassetteOut.Rows = _recipeSelector.CurrentRecipe.CstLoadUnloadRecipe.CasetteRows;
             CassetteOut.Columns = 1;
             CassetteOut.GenerateCells();
+
+            SubscribeCellClickedEvent();
         }
 
         public void SubscribeCellClickedEvent()

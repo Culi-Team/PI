@@ -429,7 +429,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleAutoRunStep.End:
-                    Log.Info("Sequence Transfer In Shuttle Pick");
+                    Log.Info("Sequence Glass Transfer");
                     Sequence = port == EPort.Left ? ESequence.GlassTransferLeft : ESequence.GlassTransferRight;
                     break;
             }
@@ -576,7 +576,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_GlassNotDetect : EWarning.GlassAlignRight_GlassNotDetect));
                         break;
                     }
+
                     Log.Debug("Glass Align Done");
+                    AlignBlow1.Value = true;
+                    AlignBlow2.Value = true;
+                    AlignBlow3.Value = true;
                     Wait(1000);
                     Step.RunStep++;
                     break;
@@ -619,7 +623,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.Stop;
                         break;
                     }
-                    Log.Info("Sequence Transfer In Shuttle Pick");
+                    Log.Info("Sequence WET Clean Load");
                     Sequence = port == EPort.Left ? ESequence.WETCleanLeftLoad : ESequence.WETCleanRightLoad;
                     break;
             }
@@ -647,7 +651,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Cylinder Rotate 0 Degree Done");
-                    if(TransferVac.Value)
+                    if(IsTransfer_VacDetect)
                     {
                         Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.YAxis_Move_PlacePosition;
                         break;
@@ -931,6 +935,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     AlignBlow2.Value = false;
                     AlignBlow3.Value = false;
                 });
+            }
+            else
+            {
+                AlignBlow1.Value = false;
+                AlignBlow2.Value = false;
+                AlignBlow3.Value = false;
             }
 #if SIMULATION
             SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLVac1 : _devices.Inputs.AlignStageRVac1, bOnOff);

@@ -37,6 +37,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
         DispensePort6_Wait,
         End
     }
+
+    public enum ESyringePumpInitializeStep
+    {
+        Initialize,
+        Initialize_Wait,
+
+        DispenseCount_Check,
+
+        Dispense_Port8,
+        Dispense_Port8_Wait,
+
+        Fill_Port7,
+        Fill_Port7_Wait,
+
+        End
+    }
     public class CleanUnitTeachingViewModel : UnitTeachingViewModel
     {
         public CleanUnitTeachingViewModel(string name, RecipeSelector recipeSelector) : base(name, recipeSelector)
@@ -331,6 +347,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 return new RelayCommand(() =>
                 {
                     isSyringePumpRunTest = false;
+                    isSyringePumpInitialize = false;
                     SyringePump.Stop();
                 });
             }
@@ -342,12 +359,84 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             {
                 return new RelayCommand(() =>
                 {
-                    SyringePump.Initialize();
+                    isSyringePumpInitialize = true;
+                    int step = 0;
+                    int dispenseCount = 0;
+                    Thread thread = new Thread(() =>
+                    {
+                        while (isSyringePumpInitialize)
+                        {
+                            switch ((ESyringePumpInitializeStep)step)
+                            {
+                                case ESyringePumpInitializeStep.Initialize:
+                                    SyringePump.SetSpeed(1);
+                                    Thread.Sleep(200);
+                                    SyringePump.SetAcceleration(20);
+                                    Thread.Sleep(200);
+                                    SyringePump.SetDeccelation(20);
+                                    Thread.Sleep(200);
+
+                                    SyringePump.Initialize();
+                                    Thread.Sleep(100);
+                                    step++;
+                                    break;
+                                case ESyringePumpInitializeStep.Initialize_Wait:
+                                    if (SyringePump.IsReady() == false)
+                                    {
+                                        Thread.Sleep(100);
+                                        break;
+                                    }
+                                    step++;
+                                    break;
+                                case ESyringePumpInitializeStep.DispenseCount_Check:
+                                    if (dispenseCount >= 5)
+                                    {
+                                        step = (int)ESyringePumpInitializeStep.End;
+                                        break;
+                                    }
+                                    step++;
+                                    break;
+                                case ESyringePumpInitializeStep.Dispense_Port8:
+                                    SyringePump.Dispense(1.0, 8);
+                                    Thread.Sleep(100);
+                                    step++;
+                                    break;
+                                case ESyringePumpInitializeStep.Dispense_Port8_Wait:
+                                    if (SyringePump.IsReady() == false)
+                                    {
+                                        Thread.Sleep(100);
+                                        break;
+                                    }
+                                    step++;
+                                    break;
+                                case ESyringePumpInitializeStep.Fill_Port7:
+                                    SyringePump.Fill(1.0);
+                                    Thread.Sleep(100);
+                                    step++;
+                                    break;
+                                case ESyringePumpInitializeStep.Fill_Port7_Wait:
+                                    if (SyringePump.IsReady() == false)
+                                    {
+                                        Thread.Sleep(100);
+                                        break;
+                                    }
+
+                                    dispenseCount++;
+                                    step = (int)ESyringePumpInitializeStep.DispenseCount_Check;
+                                    break;
+                                case ESyringePumpInitializeStep.End:
+                                    isSyringePumpInitialize = false;
+                                    break;
+                            }
+                        }
+                    });
+                    thread.Start();
                 });
             }
         }
 
         private bool isSyringePumpRunTest = false;
+        private bool isSyringePumpInitialize = false;
 
         private void PressureUpdateTimer_Tick(object? sender, EventArgs e)
         {

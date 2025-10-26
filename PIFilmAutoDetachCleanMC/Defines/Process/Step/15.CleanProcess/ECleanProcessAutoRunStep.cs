@@ -9,6 +9,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ECleanProcessAutoRunStep
     {
         Start,
+        Dispense_Remain,
+        Dispense_Remain_Wait,
+        Fill,
+        Fill_Wait,
+
         VacDetect_Check,
         End
     }

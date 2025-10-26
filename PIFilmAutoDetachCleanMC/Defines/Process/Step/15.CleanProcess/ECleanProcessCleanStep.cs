@@ -14,13 +14,17 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         Cyl_Clamp,
         Cyl_Clamp_Wait,
+
         Vacuum_On,
-        Wait_3M_PrepareDone,
+        Vacuum_On_Wait,
+
         Axis_MoveCleanHorizontalPosition,
         Axis_MoveCleanHorizontalPosition_Wait,
 
         TAxis_Move_CleanHorizontalPosition,
         TAxis_Move_CleanHorizontalPosition_Wait,
+
+        Wait_3M_PrepareDone,
 
         CylPusher_Down_CleanHorizontal,
         CylPusher_Down_CleanHorizontal_Wait,

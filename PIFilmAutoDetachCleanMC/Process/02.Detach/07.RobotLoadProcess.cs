@@ -25,7 +25,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly Devices _devices;
         private readonly IDInputDevice _robotLoadInput;
         private readonly IDOutputDevice _robotLoadOutput;
-        private readonly IDOutputDevice _removeFilmOutput;
         private readonly CassetteList _cassetteList;
         private readonly MachineStatus _machineStatus;
         private readonly CWorkData _workData;
@@ -200,7 +199,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             _machineStatus = machineStatus;
             _robotLoadInput = robotLoadInput;
             _robotLoadOutput = robotLoadOutput;
-            _removeFilmOutput = removeFilmOutput;
             _cassetteList = cassetteList;
             _workData = workData;
         }
@@ -1152,7 +1150,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         {
                             if (FlagRemoveFilmRequestUnload)
                             {
-                                _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_REQ_UNLOAD] = false;
                                 Log.Info("Sequence Robot Pick Fixture From Remove Zone");
                                 Sequence = ESequence.RobotPickFixtureFromRemoveZone;
                                 break;
@@ -1295,10 +1292,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         if (FlagRemoveFilmRequestUnload)
                         {
-                            _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_REQ_UNLOAD] = false;
-                            Log.Debug("Clear Flag Remove Film Unload Done");
-                            FlagRemoveFilmUnloadDone = false;
-
                             Log.Info("Sequence Robot Pick Fixture From Remove Zone");
                             Sequence = ESequence.RobotPickFixtureFromRemoveZone;
                             break;
@@ -1457,8 +1450,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadPlaceFixtureToOutCSTStep.Move_OutCSTPlacePosition:
                     paras = new string[]
                     {
-                        CurrentInWorkCSTFixtureIndex.ToString(),
                         "1",
+                        CurrentOutWorkCSTFixtureIndex.ToString(),
                         "0",
                         "0",
                         "0",
@@ -1591,10 +1584,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     if (FlagRemoveFilmRequestUnload)
                     {
-                        _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_REQ_UNLOAD] = false;
-                        Log.Debug("Clear Flag Remove Film Unload Done");
-                        FlagRemoveFilmUnloadDone = false;
-
                         Log.Info("Sequence Robot Pick Fixture From Remove Zone");
                         Sequence = ESequence.RobotPickFixtureFromRemoveZone;
                         break;
