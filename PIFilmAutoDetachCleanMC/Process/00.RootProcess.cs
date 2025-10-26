@@ -511,15 +511,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                 return;
             }
 
-            if (RobotLoadAlarmStop || RobotUnloadAlarmStop)
+            if (RobotLoadAlarmStop == false || RobotUnloadAlarmStop == false)
             {
-                RaiseWarning(isLoadRobot
-                             ? (int)EWarning.RobotLoad_EmergencyStop_Active
-                             : (int)EWarning.RobotUnload_EmergencyStop_Active);
+                RaiseAlarm(isLoadRobot
+                             ? (int)EAlarm.RobotLoad_EmergencyStop_Active
+                             : (int)EAlarm.RobotUnload_EmergencyStop_Active);
                 return;
             }
 
-            if(RobotLoadUserSaf ||  RobotUnloadUserSaf)
+            if(RobotLoadUserSaf == false ||  RobotUnloadUserSaf == false)
             {
                 RaiseWarning(isLoadRobot
                              ? (int)EWarning.RobotLoad_SafetyFenceSwitch_Not_Active
