@@ -78,6 +78,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDInput StopMess => _devices.Inputs.UnloadRobStopmess;
         private IDInput ProACT => _devices.Inputs.UnloadRobProAct;
         private IDInput InHome => _devices.Inputs.UnloadRobInHome;
+        private IDInput IOActCONF => _devices.Inputs.UnloadRobIoActconf;
         #endregion
 
         #region Outputs
@@ -138,6 +139,39 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
+        public override bool ProcessToStop()
+        {
+            switch ((ERobotUnloadToStopStep)Step.RunStep)
+            {
+                case ERobotUnloadToStopStep.Start:
+                    Log.Debug("To Stop Start");
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadToStopStep.Stop:
+                    Log.Debug("Stop Robot Unload");
+                    _robotUnload.SendCommand(RobotHelpers.RobotStop);
+
+                    Wait(5000, () => _robotUnload.ReadResponse("Stop complete,0\r\n"));
+
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadToStopStep.Stop_Check:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.RobotUnload_Stop_Fail);
+                        break;
+                    }
+
+                    Log.Debug("Robot Load Stop Complete");
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadToStopStep.End:
+                    Log.Debug("To Stop End");
+                    ProcessStatus = EProcessStatus.ToStopDone;
+                    break;
+            }
+            return true;
+        }
         public override bool ProcessToOrigin()
         {
             switch ((ERobotUnloadToOriginStep)Step.OriginStep)
@@ -163,6 +197,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     Log.Debug("Robot unload is connected.");
+                    Step.OriginStep++;
+                    break;
+                case ERobotUnloadToOriginStep.IOActCONF_Check:
+                    if (IOActCONF.Value == false)
+                    {
+                        RaiseWarning((int)EWarning.RobotUnload_Automatic_External_Not_active);
+                        break;
+                    }
+
+                    Log.Debug($"Automatic External active check done");
                     Step.OriginStep++;
                     break;
                 case ERobotUnloadToOriginStep.EnableOutput:
@@ -341,7 +385,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotUnloadOriginStep.Robot_Origin:
                     Log.Debug("Start Origin Robot Unload");
                     Log.Debug($"Send Robot Motion Command {ERobotCommand.HOME}");
-                    if (SendCommand(ERobotCommand.HOME, 10, 30))
+                    if (SendCommand(ERobotCommand.HOME, 10, 10))
                     {
                         Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.HOME)));
                         Step.OriginStep++;
@@ -408,6 +452,16 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EUnloadRobotToRunStep.Start:
                     Log.Debug("To Run Start");
+                    Step.ToRunStep++;
+                    break;
+                case EUnloadRobotToRunStep.IOActCONF_Check:
+                    if (IOActCONF.Value == false)
+                    {
+                        RaiseWarning((int)EWarning.RobotUnload_Automatic_External_Not_active);
+                        break;
+                    }
+
+                    Log.Debug($"Automatic External active check done");
                     Step.ToRunStep++;
                     break;
                 case EUnloadRobotToRunStep.Clear_Flags:
@@ -661,7 +715,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotUnloadReadyStep.RobotHome:
                     Log.Debug("Start Home Robot Unload");
                     Log.Debug($"Send Robot Motion Command {ERobotCommand.HOME}");
-                    if (SendCommand(ERobotCommand.HOME, 10, 20))
+                    if (SendCommand(ERobotCommand.HOME, 10, 10))
                     {
                         Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.HOME)));
                         Step.RunStep++;

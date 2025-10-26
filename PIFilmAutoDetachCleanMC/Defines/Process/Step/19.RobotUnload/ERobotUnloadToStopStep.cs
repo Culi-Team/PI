@@ -1,10 +1,10 @@
 ﻿namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum EUnloadRobotToRunStep
+    public enum ERobotUnloadToStopStep
     {
         Start,
-        IOActCONF_Check,
-        Clear_Flags,
+        Stop,
+        Stop_Check,
         End
     }
 }

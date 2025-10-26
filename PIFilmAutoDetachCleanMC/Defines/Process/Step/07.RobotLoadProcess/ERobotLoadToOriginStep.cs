@@ -12,6 +12,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Clear_FlagOriginDone,
         ReConnectIfRequired,
         CheckConnection,
+        IOActCONF_Check,
 
         EnableOutput,
         RobotMotionOnCheck,

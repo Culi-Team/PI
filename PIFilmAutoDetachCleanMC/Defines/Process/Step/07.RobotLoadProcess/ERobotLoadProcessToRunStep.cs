@@ -9,6 +9,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ERobotLoadProcessToRunStep
     {
         Start,
+        IOActCONF_Check,
         Clear_Flags,
         End
     }

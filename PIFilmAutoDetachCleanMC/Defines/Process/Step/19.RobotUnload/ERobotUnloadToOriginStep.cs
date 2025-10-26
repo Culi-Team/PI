@@ -11,6 +11,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Start,
         ReConnectIfRequired,
         CheckConnection,
+        IOActCONF_Check,
 
         EnableOutput,
         RobotMotionOnCheck,

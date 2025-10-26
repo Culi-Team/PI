@@ -87,6 +87,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         RobotLoad_No_Ready_Response,
         RobotLoad_SetCassettePitch_Fail,
         RobotLoad_SendMotionCommand_Fail,
+        RobotLoad_Stop_Fail,
+        RobotLoad_EmergencyStop_Active,
+        RobotLoad_SafetyFenceSwitch_Not_Active,
+        RobotLoad_Automatic_External_Not_active,
 
 
         //Fixture Align
@@ -296,5 +300,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         RobotUnload_SetModel_Fail,
         RobotUnload_No_Ready_Response,
         RobotUnload_SendMotionCommand_Fail,
+        RobotUnload_Stop_Fail,
+        RobotUnload_EmergencyStop_Active,
+        RobotUnload_SafetyFenceSwitch_Not_Active,
+        RobotUnload_Automatic_External_Not_active,
     }
 }
