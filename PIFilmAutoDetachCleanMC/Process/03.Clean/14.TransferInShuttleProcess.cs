@@ -409,7 +409,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleAutoRunStep.Transfer_VacCheck:
-                    if (IsTransfer_VacDetect && _machineStatus.IsDryRunMode == false)
+                    if (IsTransfer_VacDetect)
                     {
                         Log.Info("Sequence WET Clean Load");
                         Sequence = port == EPort.Left ? ESequence.WETCleanLeftLoad : ESequence.WETCleanRightLoad;

@@ -315,7 +315,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadTransferAutoRunStep.GlassVac_Check:
-                    if (IsVacDetect && _machineStatus.IsDryRunMode == false)
+                    if (IsVacDetect)
                     {
                         Log.Info("Sequence Unload Transfer Place");
                         Sequence = port == EPort.Left ? ESequence.UnloadTransferLeftPlace : ESequence.UnloadTransferRightPlace;

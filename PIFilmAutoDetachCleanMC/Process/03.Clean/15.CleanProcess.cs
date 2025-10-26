@@ -1145,7 +1145,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessAutoRunStep.VacDetect_Check:
-                    if (IsVacDetect && _machineStatus.IsDryRunMode == false)
+                    if (IsVacDetect)
                     {
                         Sequence_Prepare3M();
                         if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)

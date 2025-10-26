@@ -18,6 +18,7 @@ namespace PIFilmAutoDetachCleanMC.Process
     public class UnloadAlignProcess : ProcessBase<ESequence>
     {
         #region Privates
+        private EPort port => Name == EProcess.UnloadTransferLeft.ToString() ? EPort.Left : EPort.Right;
         private readonly Devices _devices;
         private readonly CommonRecipe _commonRecipe;
         private readonly IDInputDevice _unloadAlignInput;
@@ -260,7 +261,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadAlignAutoRunStep.GlassVac_Check:
-                    if ((IsGlassVac || IsGlassDetect) && _machineStatus.IsDryRunMode == false)
+                    if (IsGlassVac || IsGlassDetect)
                     {
                         Log.Info("Sequence Unload Align Glass");
                         Sequence = ESequence.UnloadAlignGlass;
@@ -270,7 +271,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EUnloadAlignAutoRunStep.End:
                     Log.Info("Sequence Unload Transfer Place");
-                    Sequence = ESequence.UnloadTransferLeftPlace;
+                    Sequence = port == EPort.Left ? ESequence.UnloadTransferLeftPlace : ESequence.UnloadTransferRightPlace;
                     break;
             }
         }

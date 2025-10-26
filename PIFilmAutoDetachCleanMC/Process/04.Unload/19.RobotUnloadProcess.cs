@@ -477,7 +477,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadAutoRunStep.GlassVac_Check:
-                    if ((GlassVac1 || GlassVac2 || GlassVac3 || GlassVac4) && _machineStatus.IsDryRunMode == false)
+                    if (GlassVac1 || GlassVac2 || GlassVac3 || GlassVac4)
                     {
                         PlasmaPrepare();
                         Log.Info("Sequence Unload Robot Plasma");
