@@ -29,7 +29,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             AnalogInputs analogInputs,
             MachineStatus machineStatus,
             SyringePumps syringePumps,
-            CSTLoadUnloadRecipe cstLoadUnloadRecipe)
+            CSTLoadUnloadRecipe cstLoadUnloadRecipe,
+            [FromKeyedServices("VinylCleanEncoder")] IMotion vinylCleanEncoder)
         {
             Inputs = inputs;
             Outputs = outputs;
@@ -40,6 +41,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             Regulators = regulators;
             AnalogInputs = analogInputs;
             SyringePumps = syringePumps;
+            VinylCleanEncoder = vinylCleanEncoder;
             CylinderInterlockConfigurator.Configure(this, cstLoadUnloadRecipe);
         }
 
@@ -52,6 +54,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public Regulators Regulators { get; }
         public AnalogInputs AnalogInputs { get; }
         public SyringePumps SyringePumps { get; }
+        public IMotion VinylCleanEncoder { get; }
 
         #region Public Methods
 

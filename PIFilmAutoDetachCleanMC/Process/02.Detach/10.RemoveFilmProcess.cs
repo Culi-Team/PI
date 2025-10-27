@@ -434,6 +434,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERemoveFilm_ReadyStep.End:
+                    FlagRemoveFilmReadyDone = true;
                     Log.Debug("Initialize End");
                     Sequence = ESequence.Stop;
                     break;
