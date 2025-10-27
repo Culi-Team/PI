@@ -38,7 +38,7 @@
                             <ItemsControl ItemsSource="{Binding Inputs}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <ui:DInputView Width="300"
+                                        <ui:DInputView Width="330"
                                                        DataContext="{Binding }" />
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -51,7 +51,7 @@
                             <ItemsControl ItemsSource="{Binding Outputs}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <ui:DOutputView Width="300"
+                                        <ui:DOutputView Width="330"
                                                         DataContext="{Binding }" />
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
