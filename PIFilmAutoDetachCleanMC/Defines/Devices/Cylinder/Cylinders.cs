@@ -518,32 +518,32 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder
             // Transfer Rotate
             TransferRotationR_RotationCyl = _cylinderFactory
                 .Create(_inputs.TrRotateRight180Degree, _inputs.TrRotateRight0Degree, _outputs.TrRotateRight180Degree, _outputs.TrRotateRight0Degree)
-                .SetIdentity((int)ECylinder.TransferRotationR_RotationCyl, ECylinder.TransferRotationR_RotationCyl.ToString());
+                .SetIdentity((int)ECylinder.TrRotationR_RotationCyl, ECylinder.TrRotationR_RotationCyl.ToString());
             TransferRotationR_RotationCyl.CylinderType = ECylinderType.FlipUnflip;
 
             TransferRotationR_BwFwCyl = _cylinderFactory
                 .Create(_inputs.TrRotateRightFw, _inputs.TrRotateRightBw, _outputs.TrRotateRightFw, _outputs.TrRotateRightBw)
-                .SetIdentity((int)ECylinder.TransferRotationR_BwFwCyl, ECylinder.TransferRotationR_BwFwCyl.ToString());
+                .SetIdentity((int)ECylinder.TrRotationR_BwFwCyl, ECylinder.TrRotationR_BwFwCyl.ToString());
             TransferRotationR_BwFwCyl.CylinderType = ECylinderType.ForwardBackward;
 
             TransferRotationL_RotationCyl = _cylinderFactory
                 .Create(_inputs.TrRotateLeft180Degree, _inputs.TrRotateLeft0Degree, _outputs.TrRotateLeft180Degree, _outputs.TrRotateLeft0Degree)
-                .SetIdentity((int)ECylinder.TransferRotationL_RotationCyl, ECylinder.TransferRotationL_RotationCyl.ToString());
+                .SetIdentity((int)ECylinder.TrRotationL_RotationCyl, ECylinder.TrRotationL_RotationCyl.ToString());
             TransferRotationL_RotationCyl.CylinderType = ECylinderType.FlipUnflip;
 
             TransferRotationL_BwFwCyl = _cylinderFactory
                 .Create(_inputs.TrRotateLeftFw, _inputs.TrRotateLeftBw, _outputs.TrRotateLeftFw, _outputs.TrRotateLeftBw)
-                .SetIdentity((int)ECylinder.TransferRotationL_BwFwCyl, ECylinder.TransferRotationL_BwFwCyl.ToString());
+                .SetIdentity((int)ECylinder.TrRotationL_BwFwCyl, ECylinder.TrRotationL_BwFwCyl.ToString());
             TransferRotationL_BwFwCyl.CylinderType = ECylinderType.ForwardBackward;
 
             TransferRotationR_UpDownCyl = _cylinderFactory
                 .Create(_inputs.TrRotateRightDown, _inputs.TrRotateRightUp, _outputs.TrRotateRightDown, _outputs.TrRotateRightUp)
-                .SetIdentity((int)ECylinder.TransferRotationR_UpDownCyl, ECylinder.TransferRotationR_UpDownCyl.ToString());
+                .SetIdentity((int)ECylinder.TrRotationR_UpDownCyl, ECylinder.TrRotationR_UpDownCyl.ToString());
             TransferRotationR_UpDownCyl.CylinderType = ECylinderType.UpDownReverse;
 
             TransferRotationL_UpDownCyl = _cylinderFactory
                 .Create(_inputs.TrRotateLeftDown, _inputs.TrRotateLeftUp, _outputs.TrRotateLeftDown, _outputs.TrRotateLeftUp)
-                .SetIdentity((int)ECylinder.TransferRotationLeft_UpDownCyl, ECylinder.TransferRotationLeft_UpDownCyl.ToString());
+                .SetIdentity((int)ECylinder.TrRotationL_UpDownCyl, ECylinder.TrRotationL_UpDownCyl.ToString());
             TransferRotationL_UpDownCyl.CylinderType = ECylinderType.UpDownReverse;
 
 

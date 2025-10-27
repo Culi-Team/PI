@@ -30,8 +30,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         InWorkConveyor_TiltCylinder_Down_Fail,
         InWorkConveyor_SupportCV_Up_Fail,
         InWorkConveyor_SupportCV_Down_Fail,
-        InWorkConveyor_FixCylinder_Backward_Fail,
-        InWorkConveyor_FixCylinder_Forward_Fail,
+        InWorkConveyor_AlignCylinder_Backward_Fail,
+        InWorkConveyor_AlignCylinder_Forward_Fail,
         InWorkConveyor_CSTSensorStatus_Fail,
 
         //BufferConveyor
@@ -52,8 +52,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         OutWorkConveyor_TiltCylinder_Down_Fail,
         OutWorkConveyor_SupportCV_Up_Fail,
         OutWorkConveyor_SupportCV_Down_Fail,
-        OutWorkConveyor_FixCylinder_Backward_Fail,
-        OutWorkConveyor_FixCylinder_Forward_Fail,
+        OutWorkConveyor_AlignCylinder_Backward_Fail,
+        OutWorkConveyor_AlignCylinder_Forward_Fail,
         OutWorkConveyor_CSTSensorStatus_Fail,
 
         //OutConveyor
@@ -64,8 +64,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         //VinylClean
         VinylClean = 6000,
         VinylClean_Fixture_NotDetect,
-        VinylClean_FixtureCylinder_Clamp_Fail,
-        VinylClean_FixtureCylinder_UnClamp_Fail,
+        VinylClean_ClampCylinder_Clamp_Fail,
+        VinylClean_ClampCylinder_UnClamp_Fail,
         VinylClean_PusherCylinder_Up_Fail,
         VinylClean_PusherCylinder_Down_Fail,
         VinylClean_RollerBwFwCylinder_Backward_Fail,
@@ -119,8 +119,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         //Detach
         Detach = 10000,
         DetachFail = 10001,
-        Detach_FixCylinder_Backward_Fail,
-        Detach_FixCylinder_Forward_Fail,
+        Detach_ClampCylinder_Backward_Fail,
+        Detach_ClampCylinder_Forward_Fail,
         Detach_DetachCylinder1_Up_Fail,
         Detach_DetachCylinder1_Down_Fail,
         Detach_DetachCylinder2_Up_Fail,

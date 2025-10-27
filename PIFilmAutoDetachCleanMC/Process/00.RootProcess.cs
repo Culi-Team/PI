@@ -23,7 +23,6 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private readonly IAlertService _warningService;
         private readonly object _lockAlarm = new object();
-        private bool isLoadRobot => Name == EProcess.RobotLoad.ToString();
 
         private bool DoorSensor
         {
@@ -75,7 +74,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool IsLightCurtainLeftDetect => _devices.Inputs.OutCstLightCurtainAlarmDetect.Value;
         private bool IsLightCurtainRightDetect => _devices.Inputs.InCstLightCurtainAlarmDetect.Value;
         private bool RobotLoadAlarmStop => _devices.Inputs.LoadRobAlarmStop.Value;
-        private bool RobotLoadUserSaf => _devices.Inputs.LoadRobUserSaf.Value;
+        private bool RobotLoadUserSaf => _devices.Inputs.UnloadRobUserSaf.Value;
         private bool RobotUnloadAlarmStop => _devices.Inputs.UnloadRobAlarmStop.Value;
         private bool RobotUnloadUserSaf => _devices.Inputs.UnloadRobUserSaf.Value;
         private bool IsMainAirSupplied => _devices.Inputs.MainAir1.Value && _devices.Inputs.MainAir2.Value && _devices.Inputs.MainAir3.Value && _devices.Inputs.MainAir4.Value;
@@ -513,7 +512,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
             if (RobotLoadAlarmStop == false || RobotUnloadAlarmStop == false)
             {
-                RaiseAlarm(isLoadRobot
+                RaiseAlarm(RobotLoadAlarmStop == false
                              ? (int)EAlarm.RobotLoad_EmergencyStop_Active
                              : (int)EAlarm.RobotUnload_EmergencyStop_Active);
                 return;
@@ -521,7 +520,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
             if(RobotLoadUserSaf == false ||  RobotUnloadUserSaf == false)
             {
-                RaiseWarning(isLoadRobot
+                RaiseWarning(RobotLoadUserSaf == false
                              ? (int)EWarning.RobotLoad_SafetyFenceSwitch_Not_Active
                              : (int)EWarning.RobotUnload_SafetyFenceSwitch_Not_Active);
                 return;

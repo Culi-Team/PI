@@ -339,7 +339,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessVinylCleanStep.Cyl_Clamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning((int)EWarning.VinylClean_FixtureCylinder_Clamp_Fail);
+                        RaiseWarning((int)EWarning.VinylClean_ClampCylinder_Clamp_Fail);
                         break;
                     }
                     Log.Debug("Vinyl Clean Cylinder Clamp Done");
@@ -437,7 +437,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessRobotPickFixtureFromVinylClean.Cyl_UnClamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning((int)EWarning.VinylClean_FixtureCylinder_UnClamp_Fail);
+                        RaiseWarning((int)EWarning.VinylClean_ClampCylinder_UnClamp_Fail);
                         break;
                     }
                     Log.Debug("Vinyl Clean Cylinder UnClamp Done");
@@ -492,7 +492,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_UnClamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning((int)EWarning.VinylClean_FixtureCylinder_UnClamp_Fail);
+                        RaiseWarning((int)EWarning.VinylClean_ClampCylinder_UnClamp_Fail);
                         break;
                     }
                     Log.Debug("Vinyl Clean Cylinder UnClamp Done");

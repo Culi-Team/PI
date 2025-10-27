@@ -113,13 +113,13 @@ namespace PIFilmAutoDetachCleanMC.Defines.Cylinder
         WetCleanL_ClampCyl1,
         WetCleanL_ClampCyl2,
 
-        // Transfer Rotate
-        TransferRotationR_RotationCyl,
-        TransferRotationR_BwFwCyl,
-        TransferRotationL_RotationCyl,
-        TransferRotationL_BwFwCyl,
-        TransferRotationR_UpDownCyl,
-        TransferRotationLeft_UpDownCyl,
+        // Transfer Rotation
+        TrRotationR_RotationCyl,
+        TrRotationR_BwFwCyl,
+        TrRotationL_RotationCyl,
+        TrRotationL_BwFwCyl,
+        TrRotationR_UpDownCyl,
+        TrRotationL_UpDownCyl,
 
         // AF Clean
         AFCleanR_PusherCyl,

@@ -397,7 +397,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         }
 
 
-        [SingleRecipeDescription(Description = "Use Syringe Pump Port 1", Unit = Unit.ETC)]
+        [SingleRecipeDescription(Description = "Use Syringe Pump Port 1",
+            Detail ="Check to enable Syring Pump Port 1")]
         public bool UsePort1
         {
             get { return usePort1; }
@@ -408,7 +409,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             }
         }
 
-        [SingleRecipeDescription(Description = "Use Syringe Pump Port 2", Unit = Unit.ETC)]
+        [SingleRecipeDescription(Description = "Use Syringe Pump Port 2",
+            Detail = "Check to enable Syring Pump Port 2")]
         public bool UsePort2
         {
             get { return usePort2; }
@@ -419,7 +421,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             }
         }
 
-        [SingleRecipeDescription(Description = "Use Syringe Pump Port 3", Unit = Unit.ETC)]
+        [SingleRecipeDescription(Description = "Use Syringe Pump Port 3",
+            Detail = "Check to enable Syring Pump Port 3")]
         public bool UsePort3
         {
             get { return usePort3; }
@@ -430,7 +433,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             }
         }
 
-        [SingleRecipeDescription(Description = "Use Syringe Pump Port 4", Unit = Unit.ETC)]
+        [SingleRecipeDescription(Description = "Use Syringe Pump Port 4",
+            Detail = "Check to enable Syring Pump Port 4")]
         public bool UsePort4
         {
             get { return usePort4; }
@@ -441,7 +445,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             }
         }
 
-        [SingleRecipeDescription(Description = "Use Syringe Pump Port 5", Unit = Unit.ETC)]
+        [SingleRecipeDescription(Description = "Use Syringe Pump Port 5",
+            Detail = "Check to enable Syring Pump Port 5")]
         public bool UsePort5
         {
             get { return usePort5; }
@@ -452,7 +457,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             }
         }
 
-        [SingleRecipeDescription(Description = "Use Syringe Pump Port 6", Unit = Unit.ETC)]
+        [SingleRecipeDescription(Description = "Use Syringe Pump Port 6",
+            Detail = "Check to enable Syring Pump Port 6")]
         public bool UsePort6
         {
             get { return usePort6; }
@@ -463,7 +469,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             }
         }
 
-        [SingleRecipeDescription(Description = "Clean Vertical", Unit = Unit.ETC)]
+        [SingleRecipeDescription(Description = "Clean Vertical",
+            Detail = "Check to enable Clean Vertical")]
         public bool IsCleanVertical
         {
             get { return isCleanVertical; }
@@ -474,7 +481,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             }
         }
 
-        [SingleRecipeDescription(Description = "Clean Shuttle", Unit = Unit.ETC)]
+        [SingleRecipeDescription(Description = "Clean Shuttle",
+            Detail = "Check to enable Clean Shuttle")]
         public bool IsCleanShuttle
         {
             get { return isCleanShuttle; }

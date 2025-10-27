@@ -244,7 +244,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachProcessOriginStep.Cyl_Clamp_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning((int)EWarning.Detach_FixCylinder_Backward_Fail);
+                        RaiseWarning((int)EWarning.Detach_ClampCylinder_Backward_Fail);
                         break;
                     }
                     Log.Debug("Cylinder Clamp Fixture Backward Done");
@@ -385,7 +385,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.ShuttleTransfer_Vac_Check:
-                    if (IsGlassShuttleVacAll)
+                    if (IsGlassShuttleVacAll && _machineStatus.IsDryRunMode == false)
                     {
                         Log.Info("Sequence Detach Unload");
                         Sequence = ESequence.DetachUnload;
@@ -394,7 +394,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.Fixture_Detect_Check:
-                    if (IsFixtureDetect)
+                    if (IsFixtureDetect && _machineStatus.IsDryRunMode == false)
                     {
                         Log.Info("Sequence Detach");
                         Sequence = ESequence.Detach;
@@ -527,7 +527,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachStep.Cyl_Fix_Forward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning((int)EWarning.Detach_FixCylinder_Forward_Fail);
+                        RaiseWarning((int)EWarning.Detach_ClampCylinder_Forward_Fail);
                         break;
                     }
                     Log.Debug("Clamp Cylinder Forward Done");
@@ -750,7 +750,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachStep.Cyl_Fix_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning((int)EWarning.Detach_FixCylinder_Backward_Fail);
+                        RaiseWarning((int)EWarning.Detach_ClampCylinder_Backward_Fail);
                         break;
                     }
                     Log.Debug("Detach Fix Cylinder Backward Done");
@@ -828,7 +828,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachProcessTransferFixtureLoadStep.Cyl_Clamp_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning((int)EWarning.Detach_FixCylinder_Backward_Fail);
+                        RaiseWarning((int)EWarning.Detach_ClampCylinder_Backward_Fail);
                         break;
                     }
                     Log.Debug("Clamp Cylinder Backward Done");

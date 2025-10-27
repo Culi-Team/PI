@@ -260,8 +260,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Right
-                            ? EWarning.InWorkConveyor_FixCylinder_Forward_Fail
-                            : EWarning.OutWorkConveyor_FixCylinder_Forward_Fail));
+                            ? EWarning.InWorkConveyor_AlignCylinder_Forward_Fail
+                            : EWarning.OutWorkConveyor_AlignCylinder_Forward_Fail));
                         break;
                     }
 
@@ -328,8 +328,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorOriginStep.Cyl_Align_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_FixCylinder_Backward_Fail :
-                                                           EWarning.OutWorkConveyor_FixCylinder_Backward_Fail));
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_AlignCylinder_Backward_Fail :
+                                                           EWarning.OutWorkConveyor_AlignCylinder_Backward_Fail));
                         break;
                     }
                     Log.Debug("Cylinder Fix Backward Done");
@@ -565,8 +565,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyor_TiltStep.Cyl_Fix_Forward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_FixCylinder_Forward_Fail :
-                                                           EWarning.OutWorkConveyor_FixCylinder_Forward_Fail));
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_AlignCylinder_Forward_Fail :
+                                                           EWarning.OutWorkConveyor_AlignCylinder_Forward_Fail));
                         break;
                     }
                     Log.Debug("Cylinder Fix Forward Done");
@@ -768,8 +768,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorProcessLoadStep.Cyl_Fix_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_FixCylinder_Backward_Fail :
-                                                           EWarning.OutWorkConveyor_FixCylinder_Backward_Fail));
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_AlignCylinder_Backward_Fail :
+                                                           EWarning.OutWorkConveyor_AlignCylinder_Backward_Fail));
                         break;
                     }
                     Log.Debug("Cylinder Fix Backward Done");
@@ -931,8 +931,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorUnloadStep.Cyl_Fix_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_FixCylinder_Backward_Fail :
-                                                           EWarning.OutWorkConveyor_FixCylinder_Backward_Fail));
+                        RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_AlignCylinder_Backward_Fail :
+                                                           EWarning.OutWorkConveyor_AlignCylinder_Backward_Fail));
                         break;
                     }
                     Log.Debug("Cylinder Fix Backward Done");
