@@ -225,7 +225,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EOutConveyor_AutoRunStep.CSTDetect_Check:
-                    if ((CSTDetect1 || CSTDetect2) && _machineStatus.IsDryRunMode == false)
+                    if (CSTDetect1 || CSTDetect2)
                     {
                         Log.Info("Sequence Out CST Unload");
                         Sequence = ESequence.OutConveyorUnload;

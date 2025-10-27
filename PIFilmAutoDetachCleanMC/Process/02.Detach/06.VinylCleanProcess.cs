@@ -573,7 +573,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Fixture_Detect_Check:
-                    if (IsFixtureDetect == false)
+                    if (IsFixtureDetect == false && !_machineStatus.IsDryRunMode)
                     {
                         RaiseWarning((int)EWarning.VinylClean_Fixture_NotDetect);
                         break;
