@@ -6,7 +6,7 @@
 
         ErrorStatus_Check,
 
-        RobotReady_Wait,
+        Wait_RemoveFilm_and_Detach,
 
         PositionStatus_Check,
 

@@ -250,6 +250,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     AlignBlow4.Value = false;
                 });
             }
+            else
+            {
+                AlignBlow1.Value = false;
+                AlignBlow2.Value = false;
+                AlignBlow3.Value = false;
+                AlignBlow4.Value = false;
+            }
         }
 
         private void Sequence_AutoRun()

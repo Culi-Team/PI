@@ -78,6 +78,14 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private bool FlagDetachReadyDone
+        {
+            get
+            {
+                return _transferFixtureInput[(int)ETransferFixtureProcessInput.DETACH_READY_DONE];
+            }
+        }
+
         private bool FlagDetachProcessOriginDone
         {
             get
@@ -303,14 +311,13 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                     Step.RunStep++;
                     break;
-                case ETransferFixtureProcess_ReadyStep.RobotReady_Wait:
-                    if (RobotInReady.Value == false && RobotInHome.Value == false)
+                case ETransferFixtureProcess_ReadyStep.Wait_RemoveFilm_and_Detach:
+                    if (FlagRemoveFilmReadyDone == false || FlagDetachReadyDone == false)
                     {
                         Wait(20);
                         break;
                     }
 
-                    Log.Debug("Robot Safety Detect");
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcess_ReadyStep.PositionStatus_Check:
