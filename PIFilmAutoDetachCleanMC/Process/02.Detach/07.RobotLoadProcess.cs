@@ -599,12 +599,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoad_AutoRunStep.Start:
                     Log.Debug("Auto Run Start");
                     _workData.TaktTime.TaktTimeCounter = Environment.TickCount;
-                    if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Sequence Robot Pick Fixture from CST");
-                        Sequence = ESequence.RobotPickFixtureFromCST;
-                        break;
-                    }
                     Step.RunStep++;
                     break;
                 case ERobotLoad_AutoRunStep.Check_Flag_VinylCleanRequestFixture:
@@ -618,7 +612,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoad_AutoRunStep.Check_Flag_RemoveFilm:
-                    if (_devices.Inputs.RemoveZoneFixtureDetect.Value)
+                    if (_devices.Inputs.RemoveZoneFixtureDetect.Value && !_machineStatus.IsDryRunMode)
                     {
                         if (FlagRemoveFilmRequestUnload)
                         {

@@ -462,7 +462,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorAutoRunStep.Cassette_Check:
-                    if (IsCassetteDetect || _machineStatus.IsDryRunMode)
+                    if (IsCassetteDetect)
                     {
                         Log.Info("Sequence Tilt");
                         Sequence = port == EPort.Right ? ESequence.InWorkCSTTilt : ESequence.OutWorkCSTTilt;

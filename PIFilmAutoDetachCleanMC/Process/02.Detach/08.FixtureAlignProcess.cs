@@ -179,12 +179,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EFixtureAlign_AutoRunStep.FixtureDetectCheck:
                     Log.Debug("Fixture Detect Check");
-                    if (_machineStatus.IsDryRunMode)
-                    {
-                        Log.Info("Sequence Fixture Align");
-                        Sequence = ESequence.FixtureAlign;
-                        break;
-                    }
                     if (IsFixtureDetect)
                     {
                         Log.Info("Sequence Fixture Align");
