@@ -25,6 +25,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly IDInputDevice _detachInput;
         private readonly IDOutputDevice _detachOutput;
         private readonly MachineStatus _machineStatus;
+
+        private Queue<EDetachStep> DetachSteps = new Queue<EDetachStep>();
+
         private IMotion DetachGlassZAxis => _devices.Motions.DetachGlassZAxis;
         private IMotion ShuttleTransferXAxis => _devices.Motions.ShuttleTransferXAxis;
         private IMotion ShuttleTransferZAxis => _devices.Motions.ShuttleTransferZAxis;
@@ -516,29 +519,38 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EDetachStep.Start:
                     Log.Debug("Detach Start");
+                    DetachSteps = new Queue<EDetachStep>(ProcessesWorkSequence.DetachSequence);
                     Step.RunStep++;
                     break;
-                case EDetachStep.Cyl_Fix_Forward:
+                case EDetachStep.StepQueue_EmptyCheck:
+                    if (DetachSteps.Count <= 0)
+                    {
+                        Step.RunStep = (int)EDetachStep.End;
+                        break;
+                    }
+                    Step.RunStep = (int)DetachSteps.Dequeue();
+                    break;
+                case EDetachStep.Cyl_Clamp_Forward:
                     Log.Debug("Clamp Cylinder Forward");
                     ClampCylinderFwBw(true);
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderFw);
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
-                case EDetachStep.Cyl_Fix_Forward_Wait:
+                case EDetachStep.Cyl_Clamp_Forward_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.Detach_ClampCylinder_Forward_Fail);
                         break;
                     }
                     Log.Debug("Clamp Cylinder Forward Done");
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.ShuttleZAxis_Move_ReadyPosition:
                     Log.Debug("Shuttle Transfer Z Axis Move to Ready Position");
                     ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisReadyPosition);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
                         () => { return ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisReadyPosition); });
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.ShuttleZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -547,14 +559,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Shuttle Transfer Z Axis Move to Ready Position Done");
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.XAxis_Move_DetachPosition:
                     Log.Debug("Shuttle Transfer X Axis Move to Detach Position");
                     ShuttleTransferXAxis.MoveAbs(_detachRecipe.ShuttleTransferXAxisDetachPosition);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
                         () => { return ShuttleTransferXAxis.IsOnPosition(_detachRecipe.ShuttleTransferXAxisDetachPosition); });
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.XAxis_Move_DetachPosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -563,10 +575,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Shuttle Transfer X Axis Move to Detach Position Done");
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
-                case EDetachStep.ZAxis_Move_ReadyDetachPosition_1st:
-                    Log.Debug("Detach Glass Z Axis Move to Ready Detach Position 1st");
+                case EDetachStep.ZAxis_Move_ReadyDetachPosition:
+                    Log.Debug("Detach Glass Z Axis Move to Ready Detach Position");
                     DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisDetachReadyPosition1);
                     ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisDetachReadyPosition);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
@@ -575,23 +587,23 @@ namespace PIFilmAutoDetachCleanMC.Process
                             return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetachReadyPosition1) &&
                                          ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetachReadyPosition);
                         });
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
-                case EDetachStep.ZAxis_Move_ReadyDetachPosition_Wait_1st:
+                case EDetachStep.ZAxis_Move_ReadyDetachPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseAlarm((int)EAlarm.Detach_ZAxis_MoveDetachReadyPosition_Fail);
                         break;
                     }
-                    Log.Debug("Detach Glass Z Axis Move to Ready Detach Position 1st Done");
-                    Log.Debug("Shuttle Transfer Z Axis Move to Ready Detach Position 1st Done");
-                    Step.RunStep++;
+                    Log.Debug("Detach Glass Z Axis Move to Ready Detach Position Done");
+                    Log.Debug("Shuttle Transfer Z Axis Move to Ready Detach Position Done");
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.Cyl_Detach1_Down:
                     Log.Debug("Detach Cylinder 1 Down");
                     DetachCyl1.Forward();
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => DetachCyl1.IsForward);
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.Cyl_Detach1_Down_Wait:
                     if (WaitTimeOutOccurred)
@@ -600,7 +612,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Detach Cylinder 1 Down Done");
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.ZAxis_Move_Detach1Position:
                     Log.Debug("Detach Glass Z Axis Move to Detach 1 Position");
@@ -611,7 +623,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
                         () => DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetach1Position)
                               && ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetach1Position));
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.ZAxis_Move_Detach1Position_Wait:
                     if (WaitTimeOutOccurred)
@@ -621,41 +633,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Detach Glass Z Axis Move to Detach 1 Position Done");
                     Log.Debug("Shuttle Transfer Z Axis Move to Detach 1 Position Done");
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.Vacuum_On:
                     Log.Debug("Glass Shuttle Vacuum On");
                     GlassShuttleVacOnOff(true);
                     Wait((int)_commonRecipe.VacDelay * 1000);
-                    Step.RunStep++;
-                    break;
-                case EDetachStep.ZAxis_Move_ReadyDetachPosition_2nd:
-                    Log.Debug("Detach Glass Z Axis Move to Ready Detach Position 2nd");
-                    DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisDetachReadyPosition2);
-                    ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisDetachReadyPosition);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
-                        () =>
-                        {
-                            return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetachReadyPosition2) &&
-                                         ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetachReadyPosition);
-                        });
-                    Step.RunStep++;
-                    break;
-                case EDetachStep.ZAxis_Move_ReadyDetachPosition_Wait_2nd:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseAlarm((int)EAlarm.Detach_ZAxis_MoveDetachReadyPosition_Fail);
-                        break;
-                    }
-                    Log.Debug("Detach Glass Z Axis Move to Ready Detach Position 2nd Done");
-                    Log.Debug("Shuttle Transfer Z Axis Move to Ready Detach Position 2nd Done");
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.Cyl_Detach2_Down:
                     Log.Debug("Detach Cylinder 2 Down");
                     DetachCyl2.Forward();
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => DetachCyl2.IsForward);
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.Cyl_Detach2_Down_Wait:
                     if (WaitTimeOutOccurred)
@@ -664,7 +654,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Detach Cylinder 2 Down Done");
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.ZAxis_Move_Detach2Position:
                     Log.Debug("Detach Glass Z Axis Move to Detach 2 Position");
@@ -677,7 +667,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetach2Position) &&
                         ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetach2Position);
                     });
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.ZAxis_Move_Detach2Position_Wait:
                     if (WaitTimeOutOccurred)
@@ -687,7 +677,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Detach Glass Z Axis Move to Detach 2 Position Done");
                     Log.Debug("Shuttle Transfer Z Axis Move to Detach 2 Position Done");
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Detach Glass Z Axis Move Ready Position");
@@ -699,7 +689,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisReadyPosition) &&
                         ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisReadyPosition);
                     });
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.ZAxis_Move_ReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
@@ -709,57 +699,50 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Detach Glass Z Axis Move Ready Position Done");
                     Log.Debug("Shuttle Transfer Z Axis Move Ready Position Done");
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
-                case EDetachStep.Cyl_Detach1_Up:
+                case EDetachStep.Cyl_Detach_Up:
                     Log.Debug("Cylinder Detach 1 Up");
-                    DetachCyl1.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => DetachCyl1.IsBackward);
-                    Step.RunStep++;
-                    break;
-                case EDetachStep.Cyl_Detach1_Up_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)EWarning.Detach_DetachCylinder1_Up_Fail);
-                        break;
-                    }
-                    Log.Debug("Cylinder Detach 1 Up Done");
-                    Step.RunStep++;
-                    break;
-                case EDetachStep.Cyl_Detach2_Up:
                     Log.Debug("Cylinder Detach 2 Up");
                     DetachCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => DetachCyl2.IsBackward);
-                    Step.RunStep++;
+                    DetachCyl1.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => DetachCyl1.IsBackward && DetachCyl2.IsBackward);
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
-                case EDetachStep.Cyl_Detach2_Up_Wait:
+                case EDetachStep.Cyl_Detach_Up_Wait:
                     if (WaitTimeOutOccurred)
                     {
+                        if (DetachCyl1.IsBackward == false)
+                        {
+                            RaiseWarning((int)EWarning.Detach_DetachCylinder1_Up_Fail);
+                            break;
+                        }
                         RaiseWarning((int)EWarning.Detach_DetachCylinder2_Up_Fail);
                         break;
                     }
+                    Log.Debug("Cylinder Detach 1 Up Done");
                     Log.Debug("Cylinder Detach 2 Up Done");
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
-                case EDetachStep.Cyl_Fix_Backward:
-                    Log.Debug("Detach Fix Cylinder Backward");
+                case EDetachStep.Cyl_Clamp_Backward:
+                    Log.Debug("Clamp Cylinder Backward");
                     ClampCylinderFwBw(false);
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderBw);
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
-                case EDetachStep.Cyl_Fix_Backward_Wait:
+                case EDetachStep.Cyl_Clamp_Backward_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.Detach_ClampCylinder_Backward_Fail);
                         break;
                     }
-                    Log.Debug("Detach Fix Cylinder Backward Done");
-                    Step.RunStep++;
+                    Log.Debug("Clamp Cylinder Backward Done");
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.Set_FlagDetachDone:
                     Log.Debug("Set Flag Detach Done");
                     FlagDetachDone = true;
-                    Step.RunStep++;
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.End:
                     Log.Debug("Detach End");

@@ -27,18 +27,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private string selectedModel;
         private RecipeBase _selectedRecipe;
         private readonly Motions _motions;
-        private readonly IMotion _vinylCleanEncoder;
         private readonly IConfiguration _configuration;
         public DataViewModel(RecipeSelector recipeSelector,
             Motions motions,
-            [FromKeyedServices("VinylCleanEncoder")] IMotion vinylCleanEncoder,
             IConfiguration configuration,
             CassetteList cassetteList,
             MachineStatus machineStatus)
         {
             RecipeSelector = recipeSelector;
             _motions = motions;
-            _vinylCleanEncoder = vinylCleanEncoder;
             _configuration = configuration;
             CassetteList = cassetteList;
             MachineStatus = machineStatus;

@@ -9,8 +9,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EDetachStep
     {
         Start,
-        Cyl_Fix_Forward,
-        Cyl_Fix_Forward_Wait,
+
+        StepQueue_EmptyCheck,
+
+        Cyl_Clamp_Forward,
+        Cyl_Clamp_Forward_Wait,
 
         ShuttleZAxis_Move_ReadyPosition,
         ShuttleZAxis_Move_ReadyPosition_Wait,
@@ -18,9 +21,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         XAxis_Move_DetachPosition,
         XAxis_Move_DetachPosition_Wait,
 
-
-        ZAxis_Move_ReadyDetachPosition_1st,
-        ZAxis_Move_ReadyDetachPosition_Wait_1st,
+        ZAxis_Move_ReadyDetachPosition,
+        ZAxis_Move_ReadyDetachPosition_Wait,
 
         Cyl_Detach1_Down,
         Cyl_Detach1_Down_Wait,
@@ -28,9 +30,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         ZAxis_Move_Detach1Position_Wait,
 
         Vacuum_On,
-
-        ZAxis_Move_ReadyDetachPosition_2nd,
-        ZAxis_Move_ReadyDetachPosition_Wait_2nd,
 
         Cyl_Detach2_Down,
         Cyl_Detach2_Down_Wait,
@@ -40,17 +39,13 @@ namespace PIFilmAutoDetachCleanMC.Defines
         ZAxis_Move_ReadyPosition,
         ZAxis_Move_ReadyPosition_Wait,
 
-        Cyl_Detach1_Up,
-        Cyl_Detach1_Up_Wait,
+        Cyl_Detach_Up,
+        Cyl_Detach_Up_Wait,
 
-        Cyl_Detach2_Up,
-        Cyl_Detach2_Up_Wait,
-
-        Cyl_Fix_Backward,
-        Cyl_Fix_Backward_Wait,
+        Cyl_Clamp_Backward,
+        Cyl_Clamp_Backward_Wait,
 
         Set_FlagDetachDone,
-
 
         End
     }

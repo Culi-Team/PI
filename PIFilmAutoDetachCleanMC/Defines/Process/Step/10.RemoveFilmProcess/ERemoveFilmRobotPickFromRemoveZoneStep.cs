@@ -9,24 +9,24 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ERemoveFilmRobotPickFromRemoveZoneStep
     {
         Start,
+
+        StepQueue_EmptyCheck,
+
         Cyl_UnClamp,
         Cyl_UnClamp_Wait,
 
         Set_Flag_RemoveFilmRequestUnload,
         Cyl_UpDown1_Down,
         Cyl_UpDown1_Down_Wait,
-        
+
         FilmCyl_UnClamp,
         FilmCyl_UnClamp_Wait,
 
-        Cyl_UpDown2_Down_1st,
-        Cyl_UpDown2_Down_1st_Wait,
-        Cyl_UpDown2_Up_1st,
-        Cyl_UpDown2_Up_1st_Wait,
-        Cyl_UpDown2_Down_2nd,
-        Cyl_UpDown2_Down_2nd_Wait,
-        Cyl_UpDown2_Up_2nd,
-        Cyl_UpDown2_Up_2nd_Wait,
+        Cyl_UpDown2_Down,
+        Cyl_UpDown2_Down_Wait,
+        Cyl_UpDown2_Up,
+        Cyl_UpDown2_Up_Wait,
+
         Cyl_UpDown1_Up,
         Cyl_UpDown1_Up_Wait,
         Wait_RemoveFilmUnloadDone,
