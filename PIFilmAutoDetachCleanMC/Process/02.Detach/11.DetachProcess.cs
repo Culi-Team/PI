@@ -385,7 +385,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.ShuttleTransfer_Vac_Check:
-                    if (IsGlassShuttleVacAll && _machineStatus.IsDryRunMode == false)
+                    if (IsGlassShuttleVacAll)
                     {
                         Log.Info("Sequence Detach Unload");
                         Sequence = ESequence.DetachUnload;
@@ -394,7 +394,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.Fixture_Detect_Check:
-                    if (IsFixtureDetect && _machineStatus.IsDryRunMode == false)
+                    if (IsFixtureDetect)
                     {
                         Log.Info("Sequence Detach");
                         Sequence = ESequence.Detach;
