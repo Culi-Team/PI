@@ -382,7 +382,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                         != recipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisLoadPosition)
                         && (devices.Cylinders.TransferInShuttleL_RotateCyl.IsBackward == false
                         || transferRotationLZAxis != null && transferRotationLZAxis.Status.ActualPosition
-                        != recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition))
+                        > recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[WetCleanBrushLeftUpDown] ," +
                             $"\n [WetCleanBrushLeftUpDown] ," +
@@ -436,7 +436,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                         != recipeSelector.CurrentRecipe.WetCleanLeftRecipe.XAxisLoadPosition)
                         && (devices.Cylinders.TransferInShuttleL_RotateCyl.IsBackward == false
                         || transferRotationLZAxis != null && transferRotationLZAxis.Status.ActualPosition
-                        != recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition))
+                        > recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[WetCleanBrushLeftUpDown] ," +
                             $"\n need [Backward] before move to " +
@@ -463,7 +463,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                         != recipeSelector.CurrentRecipe.AfCleanRightRecipe.XAxisLoadPosition)
                         && (devices.Cylinders.TransferInShuttleR_RotateCyl.IsBackward == false
                         || transferRotationRZAxis != null && transferRotationRZAxis.Status.ActualPosition
-                        != recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisReadyPosition))
+                        > recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[WetCleanBrushLeftUpDown] ," +
                             $"\n [WetCleanBrushLeftUpDown] ," +
@@ -518,7 +518,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                         != recipeSelector.CurrentRecipe.WetCleanRightRecipe.XAxisLoadPosition)
                         && (devices.Cylinders.TransferInShuttleR_RotateCyl.IsBackward == false
                         || transferRotationRZAxis != null && transferRotationRZAxis.Status.ActualPosition
-                        != recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisReadyPosition))
+                        > recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[AFCleanBrushRightUpDown] ," +
                             $"\n [AFCleanPusherRightUpDown] ," +
@@ -539,7 +539,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 {
                     var glassUnloadLAxis = devices.Motions.GlassUnloadLZAxis;
                     if (glassUnloadLAxis != null && glassUnloadLAxis.Status.ActualPosition
-                        != recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisReadyPosition)
+                        > recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisReadyPosition)
                     {
                         MessageBoxEx.ShowDialog($"[Glass Unload Left Z Axis] ," +
                             $"\n need move to [Ready Position] before move to " +
@@ -559,7 +559,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 {
                     var glassUnloadRAxis = devices.Motions.GlassUnloadRZAxis;
                     if (glassUnloadRAxis != null && glassUnloadRAxis.Status.ActualPosition
-                        != recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisReadyPosition)
+                        > recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisReadyPosition)
                     {
                         MessageBoxEx.ShowDialog($"[Glass Unload Right Z Axis] ," +
                             $"\n move to [Ready Position] before move to " +
