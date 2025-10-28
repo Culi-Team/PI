@@ -16,6 +16,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private double cleanVolume;
         private int cleanHorizontalCount;
         private int cleanVerticalCount;
+        private double cleanHorizontalSpeed;
+        private int cleanVerticalSpeed;
         private double cylinderPushPressure;
 
         private double rFeedingAxisForwardDistance;
@@ -109,6 +111,17 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             }
         }
 
+        [SingleRecipeDescription(Description = "Clean Horizontal Speed", Unit = Unit.mmPerSecond)]
+        public double CleanHorizontalSpeed
+        {
+            get { return cleanHorizontalSpeed; }
+            set 
+            {
+                OnRecipeChanged(cleanHorizontalSpeed, value);
+                cleanHorizontalSpeed = value; 
+            }
+        }
+
         [SingleRecipeDescription(Description = "Clean Vertical Count", Unit = Unit.ETC)]
         [SingleRecipeMinMax(Max = 50, Min = 1)]
         public int CleanVerticalCount
@@ -118,6 +131,18 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             {
                 OnRecipeChanged(cleanVerticalCount, value);
                 cleanVerticalCount = value;
+            }
+        }
+
+
+        [SingleRecipeDescription(Description = "Clean Vertical Speed", Unit = Unit.mmPerSecond)]
+        public int CleanVerticalSpeed
+        {
+            get { return cleanVerticalSpeed; }
+            set 
+            {
+                OnRecipeChanged(cleanVerticalSpeed, value);
+                cleanVerticalSpeed = value; 
             }
         }
 

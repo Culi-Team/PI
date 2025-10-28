@@ -154,8 +154,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         public void RecordFixtureExistStatus()
         {
-            _fixtureExistStatus[0] = _inputs.AlignFixtureDetect.Value;
-            _fixtureExistStatus[1] = _inputs.DetachFixtureDetect.Value;
+            _fixtureExistStatus[0] = _inputs.AlignFixtureDetect.Value || IsDryRunMode;
+            _fixtureExistStatus[1] = _inputs.DetachFixtureDetect.Value || IsDryRunMode;
             _fixtureExistStatus[2] = _inputs.RemoveZoneFixtureDetect.Value;
         }
 

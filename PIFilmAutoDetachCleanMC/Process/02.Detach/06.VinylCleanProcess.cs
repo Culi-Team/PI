@@ -333,7 +333,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Vinyl Clean Cylinder Clamp");
                     FixtureClampCyl1.Forward();
                     FixtureClampCyl2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => FixtureClampCyl1.IsForward && FixtureClampCyl2.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,
+                        () => (FixtureClampCyl1.IsForward && FixtureClampCyl2.IsForward) || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessVinylCleanStep.Cyl_Clamp_Wait:

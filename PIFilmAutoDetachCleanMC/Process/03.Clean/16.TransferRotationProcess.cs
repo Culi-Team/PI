@@ -460,7 +460,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                                                           EWarning.TransferRotationRight_GlassVacuum1_Check_Fail));
                         break;
                     }
-                    Step.RunStep++;
+
+                    //SemiAuto 
+                    if(Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Step.RunStep++;
+                        break;
+                    }
+                    Step.RunStep = (int)ETransferRotationWETCleanUnloadStep.ZAxis_Move_TransferReadyPosition;
                     break;
                 case ETransferRotationWETCleanUnloadStep.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
@@ -476,6 +483,23 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Positon Done");
+                    Step.RunStep = (int)ETransferRotationWETCleanUnloadStep.Set_FlagWETCleanUnloadDone;
+                    break;
+                case ETransferRotationWETCleanUnloadStep.ZAxis_Move_TransferReadyPosition:
+                    Log.Debug("Z Axis Move Transfer Ready Position");
+                    ZAxis.MoveAbs(ZAxisTransferReadyPosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisTransferReadyPosition));
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationWETCleanUnloadStep.ZAxis_Move_TransferReadyPosition_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm(port == EPort.Left ? EAlarm.TransferRotationLeft_ZAxis_MoveTransferReadyPosition_Fail :
+                                                        EAlarm.TransferRotationRight_ZAxis_MoveTransferReadyPosition_Fail);
+                        break;
+                    }
+
+                    Log.Debug("Z Axis Move Transfer Ready Position Done");
                     Step.RunStep++;
                     break;
                 case ETransferRotationWETCleanUnloadStep.Set_FlagWETCleanUnloadDone:

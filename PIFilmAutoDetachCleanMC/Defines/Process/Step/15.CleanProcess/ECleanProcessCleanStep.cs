@@ -21,9 +21,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Axis_MoveCleanHorizontalPosition,
         Axis_MoveCleanHorizontalPosition_Wait,
 
-        TAxis_Move_CleanHorizontalPosition,
-        TAxis_Move_CleanHorizontalPosition_Wait,
-
         Wait_3M_PrepareDone,
 
         CylPusher_Down_CleanHorizontal,

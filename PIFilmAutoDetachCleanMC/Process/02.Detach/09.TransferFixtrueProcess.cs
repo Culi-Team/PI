@@ -297,12 +297,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcess_ReadyStep.ErrorStatus_Check:
-                    if (CylUpDown.IsForward && CylClamp1_1.IsForward && CylClamp1_2.IsForward)
+                    if (CylUpDown.IsForward && CylClamp1_1.IsForward && CylClamp1_2.IsForward && _machineStatus.IsDryRunMode == false)
                     {
                         RaiseWarning((int)EWarning.TransferFixture_TransHand1_MayContainsFixture);
                         break;
                     }
-                    if (CylUpDown.IsForward && CylClamp2_1.IsForward && CylClamp2_2.IsForward)
+                    if (CylUpDown.IsForward && CylClamp2_1.IsForward && CylClamp2_2.IsForward && _machineStatus.IsDryRunMode == false)
                     {
                         RaiseWarning((int)EWarning.TransferFixture_TransHand2_MayContainsFixture);
                         break;
@@ -324,7 +324,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         CylUpDown.IsBackward)
                     {
                         Log.Info("Unit is already in Safety Position");
-                        Step.RunStep = (int)ETransferFixtureProcess_ReadyStep.End;
+                        Step.RunStep = (int)ETransferFixtureProcess_ReadyStep.Cylinder_Unclamp;
                         break;
                     }
 
@@ -378,7 +378,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcess_ReadyStep.Cylinder_Down:
                     if (CylUpDown.IsBackward)
                     {
-                        Step.RunStep = (int)ETransferFixtureProcess_ReadyStep.End;
+                        Step.RunStep = (int)ETransferFixtureProcess_ReadyStep.Cylinder_Unclamp;
                         break;
                     }
 
@@ -395,6 +395,32 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     Log.Debug("Cylinder Down Move Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcess_ReadyStep.Cylinder_Unclamp:
+                    if (IsUnClamp)
+                    {
+                        Step.RunStep = (int)ETransferFixtureProcess_ReadyStep.End;
+                        break;
+                    }
+
+                    ClampUnClamp(false);
+
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000),
+                        () => IsUnClamp);
+
+                    Log.Debug("Cylinder Unclamp Move");
+
+                    Step.RunStep++;
+                    break;
+                case ETransferFixtureProcess_ReadyStep.Cylinder_Unclamp_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.TransferFixture_ClampCylinder_UnClamp_Fail);
+                        break;
+                    }
+
+                    Log.Debug("Cylinder Unclamp Move Done");
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcess_ReadyStep.End:
