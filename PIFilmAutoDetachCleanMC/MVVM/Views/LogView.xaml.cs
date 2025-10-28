@@ -102,7 +102,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             {
                 if (LogTreeView.SelectedItem is FileSystemNode selectedNode && !selectedNode.IsDirectory)
                 {
-                    currentLogEntries = SafeLoadLogEntries(selectedNode.Path);
+                    currentLogEntries = viewModel.LoadLogEntries(selectedNode.Path);
                     LogDataGrid.ItemsSource = currentLogEntries;
                     InitializeFilterSourceComboBox();
                 }

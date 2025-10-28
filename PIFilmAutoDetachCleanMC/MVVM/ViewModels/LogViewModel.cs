@@ -5,6 +5,7 @@ using PIFilmAutoDetachCleanMC.Defines.LogHistory;
 using PIFilmAutoDetachCleanMC.Defines.Logs;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Xml.Linq;
 
@@ -22,19 +23,27 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
         public List<LogEntry> LoadLogEntries(string filePath)
         {
-            using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            {
-                XDocument doc = XDocument.Load(stream);
-                var entries = doc.Element("activity")?.Elements("entry") ?? Enumerable.Empty<XElement>();
+            var logEntries = new List<LogEntry>();
+            var lines = File.ReadAllLines(filePath);
 
-                return entries.Select(entry => new LogEntry
+            // Mẫu regex tương ứng với format: [HH:mm:ss.fff],LEVEL ,LOGGER ,MESSAGE
+            var regex = new Regex(@"\[(?<time>[0-9:\.]+)\],(?<type>\w+)\s*,(?<source>.{0,18}),(?<message>.*)");
+
+            foreach (var line in lines)
+            {
+                var match = regex.Match(line);
+                if (match.Success)
                 {
-                    Time = entry.Element("time")?.Value,
-                    Type = entry.Element("type")?.Value,
-                    Source = entry.Element("source")?.Value,
-                    Description = entry.Element("description")?.Value,
-                }).ToList();
+                    logEntries.Add(new LogEntry
+                    {
+                        Time = match.Groups["time"].Value.Trim(),
+                        Type = match.Groups["type"].Value.Trim(),
+                        Source = match.Groups["source"].Value.Trim(),
+                        Description = match.Groups["message"].Value.Trim()
+                    });
+                }
             }
+            return logEntries;
         }
 
         public void LoadLogFiles()
@@ -78,7 +87,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     parentNode.Children.Add(dirNode);
                 }
 
-                foreach (var file in Directory.GetFiles(path, "*.xml"))
+                foreach (var file in Directory.GetFiles(path, "*.txt"))
                 {
                     var fileInfo = new FileInfo(file);
                     var fileNode = new FileSystemNode
