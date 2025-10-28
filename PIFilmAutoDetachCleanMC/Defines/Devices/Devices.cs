@@ -29,7 +29,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             AnalogInputs analogInputs,
             MachineStatus machineStatus,
             SyringePumps syringePumps,
-            CSTLoadUnloadRecipe cstLoadUnloadRecipe)
+            CSTLoadUnloadRecipe cstLoadUnloadRecipe,
+            [FromKeyedServices("VinylCleanEncoder")] IMotion vinylCleanEncoder)
         {
             Inputs = inputs;
             Outputs = outputs;
@@ -40,6 +41,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             Regulators = regulators;
             AnalogInputs = analogInputs;
             SyringePumps = syringePumps;
+            VinylCleanEncoder = vinylCleanEncoder;
             CylinderInterlockConfigurator.Configure(this, cstLoadUnloadRecipe);
         }
 
@@ -52,6 +54,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public Regulators Regulators { get; }
         public AnalogInputs AnalogInputs { get; }
         public SyringePumps SyringePumps { get; }
+        public IMotion VinylCleanEncoder { get; }
 
         #region Public Methods
 
@@ -423,14 +426,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetRobotLoadInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            inputs.Add(Inputs.LoadRobStopmess);
-            inputs.Add(Inputs.LoadRobPeriRdy);
-            inputs.Add(Inputs.LoadRobAlarmStop);
-            inputs.Add(Inputs.LoadRobUserSaf);
-            inputs.Add(Inputs.LoadRobIoActconf);
-            inputs.Add(Inputs.LoadRobInReady);
-            inputs.Add(Inputs.LoadRobProAct);
-            inputs.Add(Inputs.LoadRobInHome);
             inputs.Add(Inputs.RobotFixtureAlignFw);
             inputs.Add(Inputs.RobotFixtureAlignBw);
             inputs.Add(Inputs.RobotFixture1Clamp);
@@ -533,6 +528,9 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetTransferInShuttleLeftInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Inputs.TransferInShuttleLVac);
+            inputs.Add(Inputs.TransferInShuttleL0Degree);
+            inputs.Add(Inputs.TransferInShuttleL180Degree);
             inputs.Add(Inputs.AlignStageLGlassDetect1);
             inputs.Add(Inputs.AlignStageLGlassDetect2);
             inputs.Add(Inputs.AlignStageLGlassDetect3);
@@ -547,9 +545,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.AlignStageL3Unalign);
             inputs.Add(Inputs.AlignStageLBrushCylUp);
             inputs.Add(Inputs.AlignStageLBrushCylDown);
-            inputs.Add(Inputs.TransferInShuttleLVac);
-            inputs.Add(Inputs.TransferInShuttleL0Degree);
-            inputs.Add(Inputs.TransferInShuttleL180Degree);
+            
             return inputs;
         }
 
@@ -1030,13 +1026,13 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             outputs.Add(Outputs.AlignStageL1Align);
             outputs.Add(Outputs.AlignStageL2Align);
             outputs.Add(Outputs.AlignStageL3Align);
-            outputs.Add(Outputs.AlignStageLBrushCylUp);
             outputs.Add(Outputs.AlignStageLVac1OnOff);
             outputs.Add(Outputs.AlignStageLVac2OnOff);
             outputs.Add(Outputs.AlignStageLVac3OnOff);
             outputs.Add(Outputs.AlignStageLBlow1OnOff);
             outputs.Add(Outputs.AlignStageLBlow2OnOff);
             outputs.Add(Outputs.AlignStageLBlow3OnOff);
+            outputs.Add(Outputs.AlignStageLBrushCylUp);
             return outputs;
         }
 

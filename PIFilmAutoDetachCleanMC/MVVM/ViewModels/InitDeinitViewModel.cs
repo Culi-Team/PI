@@ -205,6 +205,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _devices.Motions.AjinMaster.Connect();
                         _devices.Motions.InovanceMaster.Connect();
 
+                        _devices.VinylCleanEncoder.Connect();
+
                         _devices.Motions.All.ForEach(m => m.Connect());
 
                         _devices.RollerList.All.ForEach(s => s.Connect());
@@ -245,6 +247,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         if (_robotUnload.IsConnected == false)
                         {
                             ErrorMessages.Add("Robot Unload is not connected");
+                        }
+
+                        if(_devices.VinylCleanEncoder.IsConnected == false)
+                        {
+                            ErrorMessages.Add("Vinyl Clean Encoder is not connected");
                         }
 
                         _devices.Motions.All.ForEach(m => m.Initialization());

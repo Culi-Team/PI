@@ -4,6 +4,7 @@ using EQX.Core.Common;
 using EQX.Core.Communication;
 using EQX.Core.Communication.Modbus;
 using EQX.Core.InOut;
+using EQX.Core.Motion;
 using EQX.Core.Robot;
 using EQX.Core.Sequence;
 using EQX.Device.Indicator;
@@ -463,6 +464,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     return new ManualUnitViewModel("Vinyl Clean")
                     {
                         Cylinders = Devices.GetVinylCleanCylinders(),
+                        Motions = new ObservableCollection<IMotion> { Devices.VinylCleanEncoder },
                         Inputs = Devices.GetVinylCleanInputs(),
                         Outputs = Devices.GetVinylCleanOutputs(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("VinylCleanImage"),

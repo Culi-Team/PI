@@ -12,6 +12,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Start,
         Wait_Align_And_Detach_Done,
         Check_Y_Position,
+        StepQueue_EmptyCheck,
+
         Cyl_Up,
         Cyl_Up_Wait,
         YAxis_Move_LoadPosition,
@@ -20,25 +22,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_Down_Wait,
         Cyl_Clamp,
         Cyl_Clamp_Wait,
-
-        Cyl_Up_2nd,
-        Cyl_Up_2nd_Wait,
         Wait_RemoveFilm_Done,
         YAxis_Move_UnloadPosition,
         YAxis_Move_UnloadPosition_Wait,
-        Cyl_Down_2nd,
-        Cyl_Down_2nd_Wait,
         Cyl_UnClamp,
         Cyl_UnClamp_Wait,
-
-        Cyl_Up_3rd,
-        Cyl_Up_3rd_Wait,
-
-        YAxis_Move_LoadPosition_2nd,
-        YAxis_Move_LoadPosition_2nd_Wait,
-
-        Cyl_Down_3rd,
-        Cyl_Down_3rd_Wait,
 
         SetFlagTransferDone,
         WaitProcesses_ReceiveTransferDone,
