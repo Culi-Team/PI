@@ -25,11 +25,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         GlassDetect_Check,
 
-        Set_FlagRobotPickDone,
-        Wait_UnloadAlign_PickDoneReceived,
-
         Robot_MoveBack_ReadyPickPosition,
         Robot_MoveBack_ReadyPickPosition_Wait,
+
+        Set_FlagRobotPickDone,
+        Wait_UnloadAlign_PickDoneReceived,
 
         Plasma_Prepare,
         

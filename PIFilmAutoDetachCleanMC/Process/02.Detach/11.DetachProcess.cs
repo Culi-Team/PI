@@ -439,7 +439,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachUnloadStep.XAxis_Move_DetachCheck_Position:
                     Log.Debug("Shuttle Transfer X Axis Move to Detach Check Position");
                     ShuttleTransferXAxis.MoveAbs(_detachRecipe.ShuttleTransferXAxisDetachCheckPosition,
-                        ShuttleTransferXAxis.Parameter.Velocity * 0.1);
+                        ShuttleTransferXAxis.Parameter.Velocity * 0.3);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
                         () => { return ShuttleTransferXAxis.IsOnPosition(_detachRecipe.ShuttleTransferXAxisDetachCheckPosition); });
                     Step.RunStep++;

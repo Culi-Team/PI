@@ -557,12 +557,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                         if (motion.Status.IsAlarm)
                         {
                             motion.AlarmReset();
+                            Thread.Sleep(200);
                         }
 
                         motion.MotionOn();
                     }
 
-                    Thread.Sleep(2000);
+                    Thread.Sleep(1000);
 
                     if (_devices.Motions.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
                     {

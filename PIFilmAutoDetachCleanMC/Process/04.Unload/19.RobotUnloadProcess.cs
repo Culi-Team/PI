@@ -842,6 +842,26 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.RunStep++;
                     break;
+                case ERobotUnloadPickStep.Robot_MoveBack_ReadyPickPosition:
+                    Log.Debug("Robot Move Back Ready Pick Position");
+                    if (SendCommand(ERobotCommand.S1_PP_RDY, LowSpeed, HightSpeed))
+                    {
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S1_PP_RDY)));
+                        Step.RunStep++;
+                        break;
+                    }
+                    RaiseWarning((int)EWarning.RobotUnload_SendMotionCommand_Fail);
+                    break;
+                case ERobotUnloadPickStep.Robot_MoveBack_ReadyPickPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)EAlarm.RobotUnload_MoveMotionCommand_Timeout);
+                        break;
+                    }
+
+                    Log.Debug($"Robot Move Motion Command {ERobotCommand.S1_PP_RDY} Done");
+                    Step.RunStep++;
+                    break;
                 case ERobotUnloadPickStep.Set_FlagRobotPickDone:
                     Log.Debug("Set Flag Robot Pick Done");
                     FlagRobotUnloadPickDone = true;
@@ -855,27 +875,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Clear Flag Robot Pick Done");
                     FlagRobotUnloadPickDone = false;
-                    Step.RunStep++;
-                    break;
-                case ERobotUnloadPickStep.Robot_MoveBack_ReadyPickPosition:
-                    Log.Debug("Robot Move Back Ready Pick Position");
-                    if (SendCommand(ERobotCommand.S1_PP_RDY, LowSpeed, HightSpeed))
-                    {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S1_PP_RDY)));
-                        Step.RunStep++;
-                        break;
-                    }
-
-                    RaiseWarning((int)EWarning.RobotUnload_SendMotionCommand_Fail);
-                    break;
-                case ERobotUnloadPickStep.Robot_MoveBack_ReadyPickPosition_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseAlarm((int)EAlarm.RobotUnload_MoveMotionCommand_Timeout);
-                        break;
-                    }
-
-                    Log.Debug($"Robot Move Motion Command {ERobotCommand.S1_PP_RDY} Done");
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.Plasma_Prepare:
@@ -951,7 +950,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPlasmaStep.Wait_PlasmaPrepareDone:
-                    if (IsPlasmaPrepare == false && !_machineStatus.IsDryRunMode)
+                    if (IsPlasmaPrepare == false && _machineStatus.IsDryRunMode == false)
                     {
                         Wait(20);
                         break;

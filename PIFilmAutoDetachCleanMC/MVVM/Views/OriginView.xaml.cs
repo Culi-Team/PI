@@ -43,6 +43,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             {
                 originVM.Processes.DetachProcess.IsOriginOrInitSelected = true;
                 originVM.Processes.RobotLoadProcess.IsOriginOrInitSelected = true;
+                originVM.Processes.RemoveFilmProcess.IsOriginOrInitSelected = true;
             }
 
             if (originVM.Processes.OutWorkConveyorProcess.IsOriginOrInitSelected ||

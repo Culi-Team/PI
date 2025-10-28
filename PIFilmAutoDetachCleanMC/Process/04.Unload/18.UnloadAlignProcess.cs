@@ -439,7 +439,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EUnloadAlignUnloadTransferPlaceStep.GlassVac_Check:
                     Log.Debug("Glass Vacuum Check");
-                    if (IsGlassVac && !_machineStatus.IsDryRunMode)
+                    if (IsGlassVac && _machineStatus.IsDryRunMode == false)
                     {
                         Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.End;
                         break;
@@ -462,7 +462,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     FlagUnloadAlignReady = false;
 
                     Wait(200);
-                    if (!_machineStatus.IsDryRunMode)
+                    if (_machineStatus.IsDryRunMode == false)
                     {
                         Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.GlassVac_Check;
                         break;
