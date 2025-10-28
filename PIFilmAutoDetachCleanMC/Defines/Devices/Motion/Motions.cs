@@ -105,11 +105,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
             {
                 if (port == EPort.Right)
                 {
-                    x = toRight ? positionX - 150 : positionX;
+                    x = toRight ? positionX - 130 : positionX;
                 }
                 else
                 {
-                    x = toRight ? positionX + 150 : positionX;
+                    x = toRight ? positionX + 130 : positionX;
                 }
                 double[] pos1 = { x, y };
 
@@ -179,11 +179,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
             {
                 if (port == EPort.Right)
                 {
-                    x = toRight ? positionX - 60 : positionX;
+                    x = toRight ? positionX - 55 : positionX;
                 }
                 else
                 {
-                    x = toRight ? positionX + 60 : positionX;
+                    x = toRight ? positionX + 55 : positionX;
                 }
                 double[] pos1 = { x, y };
 

@@ -273,7 +273,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ERobotLoadToOriginStep.IOActCONF_Check:
-                    if(IOActCONF.Value == false)
+                    if (IOActCONF.Value == false)
                     {
                         RaiseWarning((int)EWarning.RobotLoad_Automatic_External_Not_active);
                         break;
@@ -564,7 +564,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ERobotLoadProcessToRunStep.IOActCONF_Check:
-                    if(IOActCONF.Value == false)
+                    if (IOActCONF.Value == false)
                     {
                         RaiseWarning((int)EWarning.RobotLoad_Automatic_External_Not_active);
                         break;
@@ -952,7 +952,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Clamp");
                     ClampCyl1.Forward();
                     ClampCyl2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => ClampCyl1.IsForward && ClampCyl2.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,
+                        () => (ClampCyl1.IsForward && ClampCyl2.IsForward) || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Cyl_Clamp_Wait:
@@ -1074,11 +1075,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Contact");
                     ClampCyl1.Forward();
                     ClampCyl2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => ClampCyl1.IsForward && ClampCyl2.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,
+                        () => (ClampCyl1.IsForward && ClampCyl2.IsForward) || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.CylClamp_Wait:
-                    if (WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred && _machineStatus.IsDryRunMode == false)
                     {
                         RaiseWarning((int)EWarning.RobotLoad_Cylinder_Clamp_Fail);
                         break;
@@ -1195,12 +1197,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     else
                     {
-                        if (_devices.Inputs.RemoveZoneFixtureDetect.Value)
+                        if (_devices.Inputs.RemoveZoneFixtureDetect.Value || _machineStatus.IsDryRunMode)
                         {
                             if (FlagRemoveFilmRequestUnload)
                             {
                                 Log.Info("Sequence Robot Pick Fixture From Remove Zone");
                                 Sequence = ESequence.RobotPickFixtureFromRemoveZone;
+                                break;
+                            }
+
+                            else if (FlagVinylCleanRequestUnload && _machineStatus.IsDryRunMode)
+                            {
+                                Log.Info("Sequence Robot Pick Fixture From Vinyl Clean");
+                                Sequence = ESequence.RobotPickFixtureFromVinylClean;
                                 break;
                             }
                             break;
@@ -1409,11 +1418,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Clamp");
                     ClampCyl1.Forward();
                     ClampCyl2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => ClampCyl1.IsForward && ClampCyl2.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,
+                        () => (ClampCyl1.IsForward && ClampCyl2.IsForward) || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromRemoveZoneStep.Clamp_Wait:
-                    if (WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred && _machineStatus.IsDryRunMode == false)
                     {
                         RaiseWarning((int)EWarning.RobotLoad_Cylinder_Clamp_Fail);
                         break;

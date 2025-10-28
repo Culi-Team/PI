@@ -29,6 +29,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         Cyl_UpDown1_Up,
         Cyl_UpDown1_Up_Wait,
+
+        Cyl_Pusher_Down,
+        Cyl_Pusher_Down_Wait,
         Wait_RemoveFilmUnloadDone,
         End
     }

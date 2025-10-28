@@ -94,8 +94,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             cylinders.Add(Cylinders.OutWorkCV_AlignCyl1);
             cylinders.Add(Cylinders.OutWorkCV_AlignCyl2);
             cylinders.Add(Cylinders.OutWorkCV_TiltCyl);
-            cylinders.Add(Cylinders.OutWorkCV_SupportCyl2);
             cylinders.Add(Cylinders.OutWorkCV_SupportCyl1);
+            cylinders.Add(Cylinders.OutWorkCV_SupportCyl2);
             return cylinders;
         }
 
@@ -569,6 +569,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetTransferInShuttleRightInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Inputs.TransferInShuttleRVac);
             inputs.Add(Inputs.AlignStageRGlassDetect1);
             inputs.Add(Inputs.AlignStageRGlassDetect2);
             inputs.Add(Inputs.AlignStageRGlassDetect3);
@@ -583,7 +584,6 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.AlignStageR3Unalign);
             inputs.Add(Inputs.AlignStageRBrushCylUp);
             inputs.Add(Inputs.AlignStageRBrushCylDown);
-            inputs.Add(Inputs.TransferInShuttleRVac);
             inputs.Add(Inputs.TransferInShuttleR0Degree);
             inputs.Add(Inputs.TransferInShuttleR180Degree);
             return inputs;

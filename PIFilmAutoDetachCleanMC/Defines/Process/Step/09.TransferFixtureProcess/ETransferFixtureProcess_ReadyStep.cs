@@ -19,6 +19,9 @@
         Cylinder_Down,
         Cylinder_Down_Wait,
 
+        Cylinder_Unclamp,
+        Cylinder_Unclamp_Wait,
+
         End,
     }
 }

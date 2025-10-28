@@ -14,8 +14,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         Cyl_Up,
         Cyl_Up_Wait,
-        XAxis_MoveReadyPosition,
-        XAxis_MoveReadyPosition_Wait,
+
+        YAxis_MoveReadyPosition,
+        YAxis_MoveReadyPosition_Wait,
+
+        XTAxis_MoveReadyPosition,
+        XTAxis_MoveReadyPosition_Wait,
         End
     }
 }

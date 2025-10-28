@@ -775,6 +775,27 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Remove Film Unload Done");
                     Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
                     break;
+                case ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_Pusher_Down:
+                    Log.Debug("Pusher Cylinder Down");
+                    PusherCyl1.Backward();
+                    PusherCyl2.Backward();
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => PusherCyl1.IsBackward && PusherCyl2.IsBackward);
+                    Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
+                    break;
+                case ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_Pusher_Down_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        if(PusherCyl1.IsBackward == false)
+                        {
+                            RaiseWarning(EWarning.RemoveFilm_PusherCylinder1_Down_Fail);
+                            break;
+                        }
+                        RaiseWarning(EWarning.RemoveFilm_PusherCylinder2_Down_Fail);
+                        break;
+                    }
+                    Log.Debug("Pusher Cylinder Down Done");
+                    Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
+                    break;
                 case ERemoveFilmRobotPickFromRemoveZoneStep.Wait_RemoveFilmUnloadDone:
                     if (FlagRemoveFilmUnloadDone == false)
                     {
