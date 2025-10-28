@@ -275,16 +275,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                             $"\n [{moveToDescription}]");
                         return false;
                     }
-                    if (devices.Cylinders.Detach_ClampCyl1.IsForward == true ||
-                        devices.Cylinders.Detach_ClampCyl2.IsForward == true ||
-                        devices.Cylinders.Detach_ClampCyl3.IsForward == true ||
-                        devices.Cylinders.Detach_ClampCyl4.IsForward == true)
-                    {
-                        MessageBoxEx.ShowDialog($"Cylinder [DetachFixFixtureCylinder1] ," +
-                            $"\n need [move Backward] before move to ," +
-                            $"\n [{moveToDescription}]");
-                        return false;
-                    }
                     var detachGlassZAxis = devices.Motions.DetachGlassZAxis;
                     if (detachGlassZAxis != null && detachGlassZAxis.Status.ActualPosition
                         > recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisReadyPosition)
