@@ -412,24 +412,20 @@ namespace PIFilmAutoDetachCleanMC.Defines
             //Left
             _unloadTransferLeftInput[EUnloadTransferProcessInput.AF_CLEAN_REQ_UNLOAD].
                 MapTo(_afCleanLeftOutput[ECleanProcessOutput.REQ_UNLOAD]);
-            _unloadTransferLeftInput[EUnloadTransferProcessInput.UNLOAD_TRANSFER_UNLOADING].
-                MapTo(_unloadTransferRightOutput[EUnloadTransferProcessOutput.UNLOAD_TRANSFER_UNLOADING]);
-            _unloadTransferLeftInput[EUnloadTransferProcessInput.UNLOAD_ALIGN_READY].
-                MapTo(_unloadAlignOutput[EUnloadAlignProcessOutput.UNLOAD_ALIGN_READY]);
+            _unloadTransferLeftInput[EUnloadTransferProcessInput.WORK_ENABLE].
+                MapTo(_unloadAlignOutput[EUnloadAlignProcessOutput.LEFT_TRANSFER_WORK_ENABLE]);
 
             //Right
             _unloadTransferRightInput[EUnloadTransferProcessInput.AF_CLEAN_REQ_UNLOAD].
                 MapTo(_afCleanRightOutput[ECleanProcessOutput.REQ_UNLOAD]);
-            _unloadTransferRightInput[EUnloadTransferProcessInput.UNLOAD_TRANSFER_UNLOADING].
-                MapTo(_unloadTransferLeftOutput[EUnloadTransferProcessOutput.UNLOAD_TRANSFER_UNLOADING]);
-            _unloadTransferRightInput[EUnloadTransferProcessInput.UNLOAD_ALIGN_READY].
-                MapTo(_unloadAlignOutput[EUnloadAlignProcessOutput.UNLOAD_ALIGN_READY]);
+            _unloadTransferRightInput[EUnloadTransferProcessInput.WORK_ENABLE].
+                MapTo(_unloadAlignOutput[EUnloadAlignProcessOutput.RIGHT_TRANSFER_WORK_ENABLE]);
 
             // Unload Align Input Mapping
-            _unloadAlignInput[EUnloadAlignProcessInput.UNLOAD_TRANSFER_LEFT_PLACE_DONE].
-                MapTo(_unloadTransferLeftOutput[EUnloadTransferProcessOutput.UNLOAD_TRANSFER_PLACE_DONE]);
-            _unloadAlignInput[EUnloadAlignProcessInput.UNLOAD_TRANSFER_RIGHT_PLACE_DONE].
-                MapTo(_unloadTransferRightOutput[EUnloadTransferProcessOutput.UNLOAD_TRANSFER_PLACE_DONE]);
+            _unloadAlignInput[EUnloadAlignProcessInput.UNLOAD_TRANSFER_LEFT_READY_TO_UNLOAD].
+                MapTo(_unloadTransferLeftOutput[EUnloadTransferProcessOutput.UNLOAD_TRANSFER_READY_TO_UNLOAD]);
+            _unloadAlignInput[EUnloadAlignProcessInput.UNLOAD_TRANSFER_RIGHT_READY_TO_UNLOAD].
+                MapTo(_unloadTransferRightOutput[EUnloadTransferProcessOutput.UNLOAD_TRANSFER_READY_TO_UNLOAD]);
             _unloadAlignInput[EUnloadAlignProcessInput.ROBOT_UNLOAD_PICK_DONE].
                 MapTo(_robotUnloadOutput[ERobotUnloadProcessOutput.ROBOT_UNLOAD_PICK_DONE]);
 

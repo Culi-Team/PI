@@ -8,7 +8,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
 {
     public enum EUnloadAlignProcessOutput
     {
-        UNLOAD_ALIGN_READY,
+        LEFT_TRANSFER_WORK_ENABLE,
+
+        RIGHT_TRANSFER_WORK_ENABLE,
 
         UNLOAD_ALIGN_REQ_ROBOT_UNLOAD,
     }

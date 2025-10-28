@@ -376,21 +376,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Vinyl Clean Cylinder Forward Done");
                     Step.RunStep++;
                     break;
-                case EVinylCleanProcessVinylCleanStep.Cyl_Pusher_Down:
-                    Log.Debug("Vinyl Clean Cylinder Pusher Down");
-                    PusherCyl.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PusherCyl.IsBackward);
-                    Step.RunStep++;
-                    break;
-                case EVinylCleanProcessVinylCleanStep.Cyl_Pusher_Down_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)EWarning.VinylClean_PusherCylinder_Down_Fail);
-                        break;
-                    }
-                    Log.Debug("Vinyl Clean Cylinder Pusher Down Done");
-                    Step.RunStep++;
-                    break;
                 case EVinylCleanProcessVinylCleanStep.Cyl_Backward:
                     Log.Debug("Vinyl Clean Cylinder Backward");
                     RollerFwBwCyl.Backward();
@@ -404,6 +389,21 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Vinyl Clean Cylinder Backward Done");
+                    Step.RunStep++;
+                    break;
+                case EVinylCleanProcessVinylCleanStep.Cyl_Pusher_Down:
+                    Log.Debug("Vinyl Clean Cylinder Pusher Down");
+                    PusherCyl.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PusherCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case EVinylCleanProcessVinylCleanStep.Cyl_Pusher_Down_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.VinylClean_PusherCylinder_Down_Fail);
+                        break;
+                    }
+                    Log.Debug("Vinyl Clean Cylinder Pusher Down Done");
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessVinylCleanStep.End:

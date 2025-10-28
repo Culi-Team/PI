@@ -331,7 +331,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Z Axis Move Ready Position Done");
                     if(GlassVac2)
                     {
-                        Step.RunStep = (int)ETransferRotationReadyStep.End;
+                        Step.RunStep = (int)ETransferRotationReadyStep.Cyl_Transfer_Backward;
                         break;
                     }
                     Step.RunStep++;
@@ -350,6 +350,29 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Cylinder Up Done");
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationReadyStep.Cyl_Transfer_Backward:
+                    if (TransferCyl.IsBackward)
+                    {
+                        Step.RunStep = (int)ETransferRotationReadyStep.End;
+                        break;
+                    }
+
+                    Log.Debug("Cylinder Transfer Backward");
+                    TransferCyl.Backward();
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => TransferCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationReadyStep.Cyl_Transfer_Backward_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        RaiseWarning(port == EPort.Left ? EWarning.TransferRotationLeft_Cylinder_Backward_Fail :
+                                                            EWarning.TransferRotationRight_Cylinder_Backward_Fail);
+                        break;
+                    }
+
+                    Log.Debug("Cylinder Transfer Backward Done");
                     Step.RunStep++;
                     break;
                 case ETransferRotationReadyStep.End:

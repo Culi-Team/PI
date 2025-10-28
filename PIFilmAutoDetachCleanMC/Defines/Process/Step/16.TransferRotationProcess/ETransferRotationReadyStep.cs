@@ -14,6 +14,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         Cyl_Up,
         Cyl_Up_Wait,
+
+        Cyl_Transfer_Backward,
+        Cyl_Transfer_Backward_Wait,
         End
     }
 }

@@ -11,8 +11,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Start,
         Vacuum_On,
         GlassVac_Check,
-        Set_FlagUnloadAlignReady,
+        Wait_TransferReady,
         Wait_UnloadTransferPlaceDone,
+
         End
     }
 }

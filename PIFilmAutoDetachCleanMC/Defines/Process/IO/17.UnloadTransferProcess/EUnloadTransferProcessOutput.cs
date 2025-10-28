@@ -9,8 +9,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EUnloadTransferProcessOutput
     {
         AF_CLEAN_UNLOAD_DONE,
-        UNLOAD_TRANSFER_PLACE_DONE,
 
-        UNLOAD_TRANSFER_UNLOADING
+        UNLOAD_TRANSFER_READY_TO_UNLOAD,
     }
 }

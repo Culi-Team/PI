@@ -10,8 +10,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         AF_CLEAN_REQ_UNLOAD,
 
-        UNLOAD_ALIGN_READY,
-
-        UNLOAD_TRANSFER_UNLOADING
+        WORK_ENABLE,
     }
 }

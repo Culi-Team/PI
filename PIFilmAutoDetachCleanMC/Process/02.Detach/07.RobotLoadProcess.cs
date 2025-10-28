@@ -208,11 +208,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Override Methods
         public override bool ProcessToStop()
         {
-            switch ((ERobotLoadToStopStep)Step.RunStep)
+            switch ((ERobotLoadToStopStep)Step.ToRunStep)
             {
                 case ERobotLoadToStopStep.Start:
                     Log.Debug("To Stop Start");
-                    Step.RunStep++;
+                    Step.ToRunStep++;
                     break;
                 case ERobotLoadToStopStep.Stop:
                     Log.Debug("Stop Robot Load");
@@ -220,7 +220,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                     Wait(5000, () => _robotLoad.ReadResponse("Stop complete,0\r\n"));
 
-                    Step.RunStep++;
+                    Step.ToRunStep++;
                     break;
                 case ERobotLoadToStopStep.Stop_Check:
                     if (WaitTimeOutOccurred)
@@ -230,9 +230,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     Log.Debug("Robot Load Stop Complete");
-                    Step.RunStep++;
+                    Step.ToRunStep++;
                     break;
                 case ERobotLoadToStopStep.End:
+                    if(ProcessStatus == EProcessStatus.ToStopDone)
+                    {
+                        break;
+                    }
                     Log.Debug("To Stop End");
                     ProcessStatus = EProcessStatus.ToStopDone;
                     break;

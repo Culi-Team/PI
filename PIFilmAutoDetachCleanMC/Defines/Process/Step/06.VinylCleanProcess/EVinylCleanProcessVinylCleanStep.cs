@@ -16,10 +16,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_Pusher_Up_Wait,
         Cyl_Forward,
         Cyl_Forward_Wait,
-        Cyl_Pusher_Down,
-        Cyl_Pusher_Down_Wait,
         Cyl_Backward,
         Cyl_Backward_Wait,
+        Cyl_Pusher_Down,
+        Cyl_Pusher_Down_Wait,
         End,
     }
 }

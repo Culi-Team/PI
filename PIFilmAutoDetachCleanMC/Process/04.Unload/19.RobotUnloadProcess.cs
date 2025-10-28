@@ -166,6 +166,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadToStopStep.End:
+                    if (ProcessStatus == EProcessStatus.ToStopDone)
+                    {
+                        break;
+                    }
                     Log.Debug("To Stop End");
                     ProcessStatus = EProcessStatus.ToStopDone;
                     break;
@@ -361,7 +365,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    Log.Debug("Robot unload not in home ");  
+                    Log.Debug("Robot unload not in home ");
                     Step.OriginStep++;
                     break;
                 case ERobotUnloadOriginStep.RobotSeqHome:
@@ -684,7 +688,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadReadyStep.RobotHomePosition_Check:
-                    if(InHome.Value)
+                    if (InHome.Value)
                     {
                         Log.Debug("Robot in home position");
                         Step.RunStep = (int)ERobotUnloadReadyStep.End;

@@ -69,35 +69,51 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagUnloadAlignReady
-        {
-            set
-            {
-                _unloadAlignOutput[(int)EUnloadAlignProcessOutput.UNLOAD_ALIGN_READY] = value;
-            }
-        }
-
-        private bool FlagUnloadTransferLeftPlaceDone
-        {
-            get
-            {
-                return _unloadAlignInput[(int)EUnloadAlignProcessInput.UNLOAD_TRANSFER_LEFT_PLACE_DONE];
-            }
-        }
-
-        private bool FlagUnloadTransferRightPlaceDone
-        {
-            get
-            {
-                return _unloadAlignInput[(int)EUnloadAlignProcessInput.UNLOAD_TRANSFER_RIGHT_PLACE_DONE];
-            }
-        }
-
         private bool FlagRobotUnloadDone
         {
             get
             {
                 return _unloadAlignInput[(int)EUnloadAlignProcessInput.ROBOT_UNLOAD_PICK_DONE];
+            }
+        }
+
+        private bool FlagUnloadTransferLeftReadyToUnload
+        {
+            get
+            {
+                return _unloadAlignInput[(int)EUnloadAlignProcessInput.UNLOAD_TRANSFER_LEFT_READY_TO_UNLOAD];
+            }
+        }
+
+        private bool FlagUnloadTransferRightReadyToUnload
+        {
+            get
+            {
+                return _unloadAlignInput[(int)EUnloadAlignProcessInput.UNLOAD_TRANSFER_RIGHT_READY_TO_UNLOAD];
+            }
+        }
+
+        private bool FlagLeftTransferWorkEnable
+        {
+            get
+            {
+                return _unloadAlignOutput[(int)EUnloadAlignProcessOutput.LEFT_TRANSFER_WORK_ENABLE];
+            }
+            set
+            {
+                _unloadAlignOutput[(int)EUnloadAlignProcessOutput.LEFT_TRANSFER_WORK_ENABLE] = value;
+            }
+        }
+
+        private bool FlagRightTransferWorkEnable
+        {
+            get
+            {
+                return _unloadAlignOutput[(int)EUnloadAlignProcessOutput.RIGHT_TRANSFER_WORK_ENABLE];
+            }
+            set
+            {
+                _unloadAlignOutput[(int)EUnloadAlignProcessOutput.RIGHT_TRANSFER_WORK_ENABLE] = value;
             }
         }
         #endregion
@@ -446,28 +462,57 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.RunStep++;
                     break;
-                case EUnloadAlignUnloadTransferPlaceStep.Set_FlagUnloadAlignReady:
-                    Log.Debug("Set Flag Unload Align Ready");
-                    FlagUnloadAlignReady = true;
-                    Log.Debug("Wait Unload Transfer Place Done");
-                    Step.RunStep++;
-                    break;
-                case EUnloadAlignUnloadTransferPlaceStep.Wait_UnloadTransferPlaceDone:
-                    if (FlagUnloadTransferLeftPlaceDone == false && FlagUnloadTransferRightPlaceDone == false)
+                case EUnloadAlignUnloadTransferPlaceStep.Wait_TransferReady:
+                    if (FlagUnloadTransferLeftReadyToUnload == false && FlagUnloadTransferRightReadyToUnload == false)
                     {
                         Wait(20);
                         break;
                     }
-                    Log.Debug("Clear Flag Unload Align Ready");
-                    FlagUnloadAlignReady = false;
 
-                    Wait(200);
-                    if (_machineStatus.IsDryRunMode == false)
+                    if (FlagUnloadTransferLeftReadyToUnload)
                     {
+                        Log.Debug("FlagUnloadTransferLeftReadyToUnload Received");
+                        FlagLeftTransferWorkEnable = true;
+                        Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.Wait_UnloadTransferPlaceDone;
+                        break;
+                    }
+                    if (FlagUnloadTransferRightReadyToUnload)
+                    {
+                        Log.Debug("FlagUnloadTransferRightReadyToUnload Received");
+                        FlagRightTransferWorkEnable = true;
+                        Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.Wait_UnloadTransferPlaceDone;
+                        break;
+                    }
+
+                    Log.Fatal("This should not happen");
+                    break;
+                case EUnloadAlignUnloadTransferPlaceStep.Wait_UnloadTransferPlaceDone:
+                    if (FlagLeftTransferWorkEnable == true)
+                    {
+                        if (FlagUnloadTransferLeftReadyToUnload == true)
+                        {
+                            Wait(20);
+                            break;
+                        }
+                        FlagLeftTransferWorkEnable = false;
+                        Log.Debug("UnloadTransferLeft Unload Done");
                         Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.GlassVac_Check;
                         break;
                     }
-                    Step.RunStep++;
+                    if (FlagRightTransferWorkEnable == true)
+                    {
+                        if (FlagUnloadTransferRightReadyToUnload == true)
+                        {
+                            Wait(20);
+                            break;
+                        }
+                        FlagRightTransferWorkEnable = false;
+                        Log.Debug("UnloadTransferRight Unload Done");
+                        Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.GlassVac_Check;
+                        break;
+                    }
+
+                    Log.Fatal("This should not happen");
                     break;
                 case EUnloadAlignUnloadTransferPlaceStep.End:
                     Log.Debug("Unload Transfer Place End");

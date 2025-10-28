@@ -27,7 +27,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             var lines = File.ReadAllLines(filePath);
 
             // Mẫu regex tương ứng với format: [HH:mm:ss.fff],LEVEL ,LOGGER ,MESSAGE
-            var regex = new Regex(@"\[(?<time>[0-9:\.]+)\],(?<type>\w+)\s*,(?<source>.{0,18}),(?<message>.*)");
+            var regex = new Regex(@"\[(?<time>[0-9:\.]+)\],(?<type>\w+)\s*,(?<source>.{0,180}),(?<message>.*)");
 
             foreach (var line in lines)
             {

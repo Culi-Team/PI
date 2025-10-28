@@ -163,6 +163,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.OriginStep++;
                     break;
+                case ETransferFixtureOriginStep.Wait_Detach_RemoveFilm_OriginDone:
+                    if (FlagDetachProcessOriginDone == false || FlagRemoveFilmOriginDone == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
+                    Step.OriginStep++;
+                    break;
                 case ETransferFixtureOriginStep.Unclamp:
                     Log.Debug("Unclamp");
                     ClampUnClamp(false);
@@ -178,15 +187,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Unclamp Done");
                     Step.OriginStep++;
                     Log.Debug("Wait Detach and Robot Origin");
-                    break;
-                case ETransferFixtureOriginStep.Wait_Detach_RemoveFilm_OriginDone:
-                    if (FlagDetachProcessOriginDone == false || FlagRemoveFilmOriginDone == false)
-                    {
-                        Wait(20);
-                        break;
-                    }
-
-                    Step.OriginStep++;
                     break;
                 case ETransferFixtureOriginStep.CylUp:
                     Log.Debug("Cylinder Up");
