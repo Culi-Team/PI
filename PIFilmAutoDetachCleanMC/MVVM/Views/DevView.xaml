@@ -49,7 +49,7 @@
             Header="ROBOT TEST"
             IsExpanded="True">
 
-            
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -79,13 +79,13 @@
 
                     <Label Content="Robot High Speed"  HorizontalAlignment="Center"/>
                     <TextBox Text="{Binding RobotHighSpeed}"/>
-                    
+
                     <Label Content="Index X" HorizontalAlignment="Center"/>
                     <TextBox Text="{Binding IndexX}"/>
 
                     <Label Content="Index Y" HorizontalAlignment="Center"/>
                     <TextBox Text="{Binding IndexY}"/>
-                    
+
                 </UniformGrid>
 
                 <UniformGrid Columns="2"
@@ -120,7 +120,7 @@
                         Content="Disconnect"
                         Margin="5"
                         Command="{Binding RobotDisconnect}"/>
-                    
+
                     <Button
                         Content="Stop"
                         Margin="5"
@@ -129,12 +129,51 @@
             </Grid>
         </Expander>
 
-        <Expander Header="Dev Options">
+        <Expander Header="Dev Options"
+                  IsExpanded="True">
             <StackPanel>
                 <CheckBox Content="Enable Test Mode"
                           Tag="Check to endable Test Mode"
                           IsChecked="{Binding MachineStatus.MachineTestMode, Mode=TwoWay}"/>
             </StackPanel>
+        </Expander>
+
+        <Expander Header="Test Cylinder"
+                  IsExpanded="True">
+            <UniformGrid Columns="5">
+                <Button
+                    Content="GlassTransfer UP"
+                    Height="50"
+                    Command="{Binding GlassTransferUp}"/>
+                <Button
+                    Content="Align Right UP"
+                    Command="{Binding AlignRightUp}"/>
+                <Button
+                     Content="Align Left UP"
+                     Command="{Binding AlignLeftUp}"/>
+                <Button
+                    Content="Unload Align UP"
+                    Command="{Binding UnloadAignUp}"/>
+                <Button
+                    Content="Unload Robot UP"
+                    Command="{Binding UnloadRobotUp}"/>
+                <Button
+                    Content="GlassTransfer DOWN"
+                    Command="{Binding GlassTransferDown}"/>
+                <Button
+                     Content="Align Right DOWN"
+                     Command="{Binding AlignRightDown}"/>
+                <Button
+                     Content="Align Left DOWN"
+                     Command="{Binding AlignLeftDown}"/>
+                <Button
+                     Content="Unload Align DOWN"
+                     Command="{Binding UnloadAignDown}"/>
+                <Button
+                     Content="Unload Robot DOWN"
+                     Command="{Binding UnloadRobotDown}"/>
+                
+            </UniformGrid>
         </Expander>
     </DockPanel>
 </UserControl>
