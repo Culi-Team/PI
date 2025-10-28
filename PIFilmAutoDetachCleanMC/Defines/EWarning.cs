@@ -16,6 +16,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         LightCurtainLeftDetected,
         LightCurtainRightDetected,
         InitializeTimeout,
+        UnloadTransferCollisionDetect,
 
         //InConveyor
         InConveyor = 1000,

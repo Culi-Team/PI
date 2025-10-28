@@ -256,6 +256,16 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
             return true;
         }
+
+        public override bool PreProcess()
+        {
+            if (_devices.Inputs.UnloadTransferAvoidNotCollision.Value == false)
+            {
+                RaiseWarning(EWarning.UnloadTransferCollisionDetect);
+            }
+
+            return base.PreProcess();
+        }
         #endregion
 
         #region Private Methods
@@ -449,20 +459,31 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EUnloadTransferPlaceStep.Start:
                     Log.Debug("Unload Transfer Place Start");
-                    Log.Debug("Wait Unload Transfer Done And Unload Align Ready");
+                    Log.Debug("Wait Unload Transfer Done");
                     Step.RunStep++;
                     break;
-                case EUnloadTransferPlaceStep.Wait_OtherTransferUnloadingAndUnloadAlignReady:
-                    if (FlagUnloadTransferUnloading == true || FlagUnloadAlignReady == false)
+                case EUnloadTransferPlaceStep.Wait_OtherTransferUnloadingDone:
+                    if (FlagUnloadTransferUnloading == true)
                     {
                         Wait(20);
                         break;
                     }
+
+                    Log.Debug("Set Flag Unloading");
+                    FlagUnloadTransferUnloading = true;
+                    Log.Debug("Wait Unload Align Ready");
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferPlaceStep.Wait_UnloadAlignReady:
+                    if (FlagUnloadAlignReady == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.UnloadAlign_GlassVacCheck:
-                    Log.Debug("Set Flag Unloading");
-                    FlagUnloadTransferUnloading = true;
                     if (UnloadAlignVac1 == false || _machineStatus.IsDryRunMode)
                     {
 #if SIMULATION
@@ -495,7 +516,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition4;
                         break;
                     }
-                    Step.RunStep = (int)EUnloadTransferPlaceStep.Wait_OtherTransferUnloadingAndUnloadAlignReady;
+                    Step.RunStep = (int)EUnloadTransferPlaceStep.Wait_UnloadAlignReady;
                     break;
                 case EUnloadTransferPlaceStep.YAxis_Move_PlacePosition1:
                     Log.Debug("YAxis Move Place Position 1");

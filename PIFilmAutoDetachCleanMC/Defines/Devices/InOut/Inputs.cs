@@ -350,8 +350,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput OutShuttleGlassCoatingDetect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_GLASS_COATING_DETECT_2);
         public IDInput OutShuttleLVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_L_VAC);
         public IDInput OutShuttleRVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OUT_SHUTTLE_R_VAC);
-        public IDInput ShuttleRAvoidNotCollision => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.SHUTTLE_R_AVOID_COLLISION);
-        public IDInput ShuttleLAvoidNotCollision => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.SHUTTLE_L_AVOID_COLLISION);
+        public IDInput ShuttleRAvoidNotCollision => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.SHUTTLE_R_AVOID_NOT_COLLISION);
+        public IDInput ShuttleLAvoidNotCollision => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.SHUTTLE_L_AVOID_NOT_COLLISION);
         public IDInput UnloadTransferLVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_TRANSFER_L_VAC);
         public IDInput UnloadTransferRVac => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_TRANSFER_R_VAC);
         public IDInput OpRButtonStop => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.OP_R_BUTTON_STOP);
@@ -442,7 +442,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput PlasmaStatus4 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.PLASMA_STATUS_4);
         public IDInput RelayPlasmaMotorError => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.RELAY_PLASMA_MOTOR_ERROR);
 
-        public IDInput UnloadTransferAvoidCollision => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_TRANSFER_AVOID_COLLISION);
+        public IDInput UnloadTransferAvoidNotCollision => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_TRANSFER_AVOID_NOT_COLLISION);
 
         //Main Air
         public IDInput MainAir1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.MAIN_AIR_1);
