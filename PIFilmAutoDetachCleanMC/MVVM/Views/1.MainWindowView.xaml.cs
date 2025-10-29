@@ -23,7 +23,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             _navigationService = navigationService;
             _viewModelProvider = viewModelProvider;
             _machineStatus = machineStatus;
-            
+
             InitializeComponent();
         }
 
