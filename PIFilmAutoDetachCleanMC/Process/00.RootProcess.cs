@@ -68,9 +68,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool IsAutoMode => _devices.Inputs.AutoModeSwitchL.Value && _devices.Inputs.AutoModeSwitchR.Value;
-        private bool IsManualMode => _devices.Inputs.ManualModeSwitchL.Value || _devices.Inputs.ManualModeSwitchR.Value;
-
         private bool IsLightCurtainLeftDetect => _devices.Inputs.OutCstLightCurtainAlarmDetect.Value;
         private bool IsLightCurtainRightDetect => _devices.Inputs.InCstLightCurtainAlarmDetect.Value;
         private bool RobotLoadAlarmStop => _devices.Inputs.LoadRobAlarmStop.Value;
@@ -135,10 +132,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Childs!.ToList().ForEach(p => p.IsAlarm = true);
 
                     RaiseAlarm(alarmId: (int)EAlarm.LightCurtainRightDetected);
-                }
-                if (IsAutoMode == false || IsManualMode == true)
-                {
-                    RaiseWarning((int)EWarning.ManualModeSwitch);
                 }
             }
 
@@ -278,14 +271,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     _devices.Outputs.Lamp_Run();
                     Step.OriginStep++;
                     break;
-                case ERootProcessToOriginStep.AutoMode_Check:
-                    if (IsAutoMode == false || IsManualMode == true)
-                    {
-                        RaiseWarning((int)EWarning.ManualModeSwitch);
-                        break;
-                    }
-                    Step.OriginStep++;
-                    break;
                 case ERootProcessToOriginStep.DoorSensorCheck:
                     //if (_machineStatus.IsByPassMode)
                     //{
@@ -370,14 +355,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     _devices.Outputs.Lamp_Run();
                     Step.ToRunStep++;
                     break;
-                case ERootProcessToRunStep.AutoMode_Check:
-                    if (IsAutoMode == false || IsManualMode == true)
-                    {
-                        RaiseWarning((int)EWarning.ManualModeSwitch);
-                        break;
-                    }
-                    Step.ToRunStep++;
-                    break;
                 case ERootProcessToRunStep.DoorSensorCheck:
                     //if (_machineStatus.IsByPassMode)
                     //{
@@ -452,6 +429,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         _machineStatus.MachineReadyDone = true;
 
                         ProcessMode = EProcessMode.Stop;
+                        _devices.Outputs.Lamp_Stop();
                         Log.Info("Initialize done");
                     }
                     break;
@@ -459,6 +437,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Childs!.Count(child => child.Sequence != ESequence.Stop) == 0)
                     {
                         ProcessMode = EProcessMode.Stop;
+                        _devices.Outputs.Lamp_Stop();
                         Log.Info("SemiAuto sequence done");
                     }
                     break;

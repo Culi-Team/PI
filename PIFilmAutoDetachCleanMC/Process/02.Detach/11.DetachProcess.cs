@@ -169,6 +169,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("To Run Start");
                     Step.ToRunStep++;
                     break;
+                case EDetachProcessToRunStep.Detach_Shuttle_Check:
+                    if (IsGlassShuttleVacAll == false && (IsGlassShuttleVac1 || IsGlassShuttleVac2 || IsGlassShuttleVac3))
+                    {
+                        RaiseWarning(EWarning.Detach_Shuttle_Status_Fail);
+                        break;
+                    }
+                    Log.Debug("Detach Shuttle Check Done");
+                    Step.ToRunStep++;
+                    break;
                 case EDetachProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
                     ((MappableOutputDevice<EDetachProcessOutput>)_detachOutput).ClearOutputs();
@@ -390,6 +399,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachAutoRunStep.ShuttleTransfer_Vac_Check:
                     if (IsGlassShuttleVacAll)
                     {
+                        if (_machineStatus.IsFixtureDetached)
+                        {
+                            Log.Debug("Fixture Detached -> Set Flag Detach Done");
+                            FlagDetachDone = true;
+                        }
                         Log.Info("Sequence Detach Unload");
                         Sequence = ESequence.DetachUnload;
                         break;
@@ -397,7 +411,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.Fixture_Detect_Check:
-                    if (IsFixtureDetect)
+                    if (IsFixtureDetect && _machineStatus.IsFixtureDetached == false)
                     {
                         Log.Info("Sequence Detach");
                         Sequence = ESequence.Detach;

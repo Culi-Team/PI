@@ -27,7 +27,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             _fixtureExistStatus = new List<bool>() { false, false, false };
         }
 
-        public const int DryRunVacuumDurationMilliseconds = 1000;
         private readonly Inputs _inputs;
 
         public EScreen ActiveScreen
@@ -149,6 +148,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 MultiThreadingHelpers.SafeSetValue(ref _SemiAutoSequence, value);
             }
         }
+
+        public bool IsFixtureDetached { get; set; }
 
         public bool MachineTestMode { get; set; }
 

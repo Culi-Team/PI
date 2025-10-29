@@ -10,6 +10,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         Start,
         
+        Detach_Shuttle_Check,
+
         Clear_Flags,
         End
     }

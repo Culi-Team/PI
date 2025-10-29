@@ -12,8 +12,8 @@ namespace PIFilmAutoDetachCleanMC.Converters
 {
     public class EmergencyStatusToImageConverter : IMultiValueConverter, IValueConverter
     {
-        private static readonly ImageSource NormalImage = CreateImage("pack://application:,,,/EQX.UI;component/Resources/Images/ems_normal.png");
-        private static readonly ImageSource SelectedImage = CreateImage("pack://application:,,,/EQX.UI;component/Resources/Images/ems_selected.png");
+        private static readonly ImageSource NormalImage = CreateImage("pack://application:,,,/EQX.UI;component/Resources/Images/Components/Common/ems_normal.png");
+        private static readonly ImageSource SelectedImage = CreateImage("pack://application:,,,/EQX.UI;component/Resources/Images/Components/Common/ems_selected.png");
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

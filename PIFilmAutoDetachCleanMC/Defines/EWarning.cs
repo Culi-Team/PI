@@ -126,6 +126,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Detach_DetachCylinder1_Down_Fail,
         Detach_DetachCylinder2_Up_Fail,
         Detach_DetachCylinder2_Down_Fail,
+        Detach_Shuttle_Status_Fail,
 
         //Remove Film
         RemoveFilm = 11000,

@@ -152,6 +152,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     {
                         IsConnecting = false;
                         OnPropertyChanged(nameof(IsConnecting));
+                        Devices.Outputs.Lamp_Stop();
                     }
                 });
             }
