@@ -367,6 +367,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             {
                 var outShuttleLXAxis = devices.Motions.OutShuttleLXAxis;
                 var transferRotationLZAxis = devices.Motions.TransferRotationLZAxis;
+                var inShuttleLTAxis = devices.Motions.InShuttleRTAxis;
                 if (moveToDescription == "X Axis Ready Position"
                     || moveToDescription == "X Axis Load Position"
                     || moveToDescription == "Y Axis Load Position"
@@ -382,12 +383,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                         != recipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisLoadPosition)
                         && (devices.Cylinders.TransferInShuttleL_RotateCyl.IsBackward == false
                         || transferRotationLZAxis != null && transferRotationLZAxis.Status.ActualPosition
-                        > recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition))
+                        > recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition)
+                        || (inShuttleLTAxis != null && inShuttleLTAxis.Status.ActualPosition
+                        > recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[WetCleanBrushLeftUpDown] ," +
                             $"\n [WetCleanBrushLeftUpDown] ," +
-                            $"\n [WetCleanPusherLeftUpDown]," +
-                            $"\n need [Backward] and [AF X Axis Position] ," +
+                            $"\n [WetCleanPusherLeftUpDown],need [Backward] " +
+                            $"\n and [AF X Axis Position] ," +
                             $"\n need move to [Unload Position] before move to " +
                             $"\n[{moveToDescription}]");
                         return false;
@@ -449,7 +452,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             {
                 var outShuttleRXAxis = devices.Motions.OutShuttleRXAxis;
                 var transferRotationRZAxis = devices.Motions.TransferRotationRZAxis;
-                if (moveToDescription == "X Axis Load Position"
+                var inShuttleRTAxis = devices.Motions.InShuttleRTAxis;
+                if (moveToDescription == "X Axis Ready Position"
+                    || moveToDescription == "X Axis Load Position"
                     || moveToDescription == "Y Axis Load Position"
                     || moveToDescription == "X Axis Clean Horizontal Position"
                     || moveToDescription == "Y Axis Clean Horizontal Position"
@@ -463,13 +468,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                         != recipeSelector.CurrentRecipe.AfCleanRightRecipe.XAxisLoadPosition)
                         && (devices.Cylinders.TransferInShuttleR_RotateCyl.IsBackward == false
                         || transferRotationRZAxis != null && transferRotationRZAxis.Status.ActualPosition
-                        > recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisReadyPosition))
+                        > recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisReadyPosition)
+                        || (inShuttleRTAxis != null && inShuttleRTAxis.Status.ActualPosition
+                        > recipeSelector.CurrentRecipe.WetCleanRightRecipe.TAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[WetCleanBrushLeftUpDown] ," +
                             $"\n [WetCleanBrushLeftUpDown] ," +
-                            $"\n [WetCleanPusherLeftUpDown] ," +
-                            $"\n [WetCleanPusherLeftUpDown] ," +
-                            $"\n [Backward] and [AF X Axis Left Position]" +
+                            $"\n [WetCleanPusherLeftUpDown] need [Backward]" +
+                            $"\n and [AF X Axis Left Position]" + 
+                            $"\n [In Shuttle R T Axis] ," +
                             $"\n move to [Unload Position] before move to " +
                             $"\n[{moveToDescription}]");
                         return false;
@@ -504,7 +511,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             {
                 var inShuttleRXAxis = devices.Motions.InShuttleRXAxis;
                 var transferRotationRZAxis = devices.Motions.TransferRotationRZAxis;
-                if (moveToDescription == "X Axis UnLoad Position"
+                if (moveToDescription == "X Axis Ready Position"
+                    || moveToDescription == "X Axis UnLoad Position"
                     || moveToDescription == "Y Axis Load Position"
                     || moveToDescription == "X Axis Clean Horizontal Position"
                     || moveToDescription == "Y Axis Clean Horizontal Position"
