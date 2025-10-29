@@ -452,6 +452,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         _machineStatus.MachineReadyDone = true;
 
                         ProcessMode = EProcessMode.Stop;
+                        _devices.Outputs.Lamp_Stop();
                         Log.Info("Initialize done");
                     }
                     break;
@@ -459,6 +460,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (Childs!.Count(child => child.Sequence != ESequence.Stop) == 0)
                     {
                         ProcessMode = EProcessMode.Stop;
+                        _devices.Outputs.Lamp_Stop();
                         Log.Info("SemiAuto sequence done");
                     }
                     break;

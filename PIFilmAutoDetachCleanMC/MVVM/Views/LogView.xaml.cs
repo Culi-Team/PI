@@ -317,33 +317,5 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             }
             return null;
         }
-
-        private List<LogEntry> SafeLoadLogEntries(string path)
-        {
-            if (DataContext is not LogViewModel viewModel) return new List<LogEntry>();
-
-            int retryCount = 0;
-            const int maxRetry = 50;
-            const int delayMs = 100;
-
-            while (true)
-            {
-                try
-                {
-                    return viewModel.LoadLogEntries(path);
-                }
-                catch (System.Xml.XmlException ex)
-                {
-                    retryCount++;
-                    if (retryCount >= maxRetry)
-                    {
-                        MessageBox.Show(ex.Message);
-                        return new List<LogEntry>();
-                    }
-
-                    System.Threading.Thread.Sleep(delayMs);
-                }
-            }
-        }
     }
 }

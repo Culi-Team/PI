@@ -11,6 +11,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Start,
         Cyl_Up,
         Cyl_Up_Wait,
+        Cyl_Backward,
+        Cyl_Backward_Wait,
         Set_FlagTransferRotationReadyPick,
         Wait_WETCleanRequestUnload,
         ZAxis_Move_PickPosition,

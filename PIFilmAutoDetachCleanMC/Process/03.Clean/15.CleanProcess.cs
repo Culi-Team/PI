@@ -1116,6 +1116,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Auto Run Start");
                     Step.RunStep++;
                     break;
+                case ECleanProcessAutoRunStep.Vacuum_On:
+                    Log.Debug("Vacuum On");
+                    GlassVac.Value = true;
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Step.RunStep++;
+                    break;
                 case ECleanProcessAutoRunStep.Dispense_Remain:
                     SyringePump.Dispense(1.0, 7);
                     Thread.Sleep(100);
@@ -1170,6 +1176,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessAutoRunStep.End:
+                    Log.Debug("Vacuum Off");
+                    GlassVac.Value = false;
                     if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
                         Log.Info("Sequence WET Clean Load");
