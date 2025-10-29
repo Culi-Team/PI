@@ -86,6 +86,8 @@
                     <Label Content="Index Y" HorizontalAlignment="Center"/>
                     <TextBox Text="{Binding IndexY}"/>
 
+                    <Label Content="Robot response" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding RobotResponse}"/>
                 </UniformGrid>
 
                 <UniformGrid Columns="2"
@@ -125,6 +127,11 @@
                         Content="Stop"
                         Margin="5"
                         Command="{Binding RobotStopCommand}"/>
+
+                    <Button
+                        Content="Last position check"
+                        Margin="5"
+                        Command="{Binding LastPosition}"/>
                 </UniformGrid>
             </Grid>
         </Expander>
