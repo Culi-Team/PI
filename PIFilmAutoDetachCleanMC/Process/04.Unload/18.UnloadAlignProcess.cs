@@ -283,6 +283,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Auto Run Start");
                     Step.RunStep++;
                     break;
+                case EUnloadAlignAutoRunStep.Vacuum_On:
+                    Log.Info("Vacuum On");
+                    VacOnOff(true);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Step.RunStep++;
+                    break;
                 case EUnloadAlignAutoRunStep.GlassVac_Check:
                     if (IsGlassVac || IsGlassDetect)
                     {

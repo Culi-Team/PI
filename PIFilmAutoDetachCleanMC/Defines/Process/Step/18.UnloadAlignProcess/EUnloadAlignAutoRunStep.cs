@@ -9,6 +9,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EUnloadAlignAutoRunStep
     {
         Start,
+        Vacuum_On,
         GlassVac_Check,
         End
     }
