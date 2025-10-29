@@ -183,7 +183,8 @@
                   Grid.RowSpan="3"
                   Panel.ZIndex="2">
                 <Canvas x:Name="EmergencyOverlay"
-                        Background="Transparent">
+                        Background="Transparent"
+                        IsHitTestVisible="False">
                     <Image Style="{StaticResource EmergencyIndicatorImageStyle}"
                            Canvas.Left="146"
                            Canvas.Top="13"
@@ -245,7 +246,8 @@
             <Grid Grid.Row="2"
                   Grid.ColumnSpan="9"
                   Grid.RowSpan="3"
-                  Panel.ZIndex="3">
+                  Panel.ZIndex="3"
+                  IsHitTestVisible="False">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="17*" />
@@ -422,7 +424,8 @@
             <Grid Grid.Row="2"
                   Grid.Column="1"
                   Grid.RowSpan="3"
-                  Panel.ZIndex="1">
+                  Panel.ZIndex="1"
+                  IsHitTestVisible="False">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1.2*" />
                     <RowDefinition Height="1.0*" />
@@ -636,7 +639,10 @@
                     <Image Source="{StaticResource GlassDetach}"
                            Grid.Column="1"
                            Grid.Row="1"
-                           Stretch="Fill">
+                           Stretch="Fill"
+                           Panel.ZIndex="5"
+                           Cursor="Hand"
+                           MouseLeftButtonUp="GlassDetachImage_MouseLeftButtonUp">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                 <Binding Path="Devices.Inputs.DetachFixtureDetect.Value" />
@@ -869,6 +875,7 @@
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                 <Binding Path="Devices.Inputs.TrRotateLeftVac1.Value" />
                                 <Binding Path="Devices.Inputs.TrRotateLeftVac2.Value" />
+                                <Binding Path="Devices.Inputs.TrRotateLeftRotVac.Value" />
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
@@ -891,6 +898,7 @@
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                 <Binding Path="Devices.Inputs.TrRotateRightVac1.Value" />
                                 <Binding Path="Devices.Inputs.TrRotateRightVac2.Value" />
+                                <Binding Path="Devices.Inputs.TrRotateRightRotVac.Value" />
                             </MultiBinding>
                         </Image.Visibility>
                     </Image>
