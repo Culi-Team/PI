@@ -369,14 +369,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                             switch ((ESyringePumpInitializeStep)step)
                             {
                                 case ESyringePumpInitializeStep.Initialize:
-                                    SyringePump.SetSpeed(1);
+                                    SyringePump.SetSpeed(10);
                                     Thread.Sleep(200);
                                     SyringePump.SetAcceleration(20);
                                     Thread.Sleep(200);
                                     SyringePump.SetDeccelation(20);
                                     Thread.Sleep(200);
 
-                                    SyringePump.Initialize();
+                                    //SyringePump.Initialize();
                                     Thread.Sleep(100);
                                     step++;
                                     break;

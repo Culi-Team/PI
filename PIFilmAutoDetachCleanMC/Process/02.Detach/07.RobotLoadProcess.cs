@@ -239,6 +239,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("To Stop End");
                     ProcessStatus = EProcessStatus.ToStopDone;
+                    Step.ToRunStep++;
+                    break;
+                default:
                     break;
             }
             return true;

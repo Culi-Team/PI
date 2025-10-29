@@ -382,7 +382,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         break;
                     case EHandleStep.CommunicationHandle:
                         Thread.Sleep(50);
-                        _torqueModbusCommnication.Disconnect();
                         _syringePumpSerialCommunicator.Disconnect();
                         _indicatorModbusCommunication.Disconnect();
 
@@ -399,13 +398,17 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         _devices.Motions.All.ForEach(m => m.Disconnect());
 
-                        _devices.TorqueControllers.All.ForEach(t => t.Disconnect());
-
                         if(_rollerModbusCommunication.IsConnected)
                         {
                             _devices.RollerList.All.ForEach(r => r.Stop());
                         }    
                         _rollerModbusCommunication.Disconnect();
+
+                        if(_torqueModbusCommnication.IsConnected)
+                        {
+                            _devices.TorqueControllers.All.ForEach(t => t.Stop());
+                        }
+                        _torqueModbusCommnication.Disconnect();
 
                         Thread.Sleep(50);
                         _step++;

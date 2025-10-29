@@ -1339,6 +1339,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                             break;
                         }
                     }
+
+                    GlassVac.Value = true;
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.TAxisMoveLoadPosition:

@@ -47,8 +47,19 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
 
         private IRobot _currentRobot => isRobotLoadSelected ? _robotLoad : _robotUnload;
+        private string _robotResponse;
 
         #region Properties
+        public string RobotResponse
+        {
+            get => _robotResponse;
+            set
+            {
+                _robotResponse = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool IsRobotLoadSelected
         {
             get => isRobotLoadSelected;
@@ -160,6 +171,31 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 return new RelayCommand(() =>
                 {
                     _currentRobot.SendCommand(RobotHelpers.RobotStop);
+                });
+            }
+        }
+
+        public ICommand RobotResponseCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    RobotResponse = _currentRobot.ReadResponse();
+
+                });
+            }
+        }
+
+        public ICommand LastPosition
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _currentRobot.SendCommand($"LastPosition,0\r\n");
+                    Thread.Sleep(100);
+                    RobotResponse = _currentRobot.ReadResponse();
                 });
             }
         }

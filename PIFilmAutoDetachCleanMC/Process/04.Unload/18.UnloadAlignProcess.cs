@@ -500,8 +500,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                             Wait(20);
                             break;
                         }
+                        
                         FlagLeftTransferWorkEnable = false;
                         Log.Debug("UnloadTransferLeft Unload Done");
+                        if (Parent.Sequence != ESequence.AutoRun)
+                        {
+                            Sequence = ESequence.Stop;
+                            break;
+                        }
                         Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.GlassVac_Check;
                         break;
                     }
@@ -514,6 +520,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                         }
                         FlagRightTransferWorkEnable = false;
                         Log.Debug("UnloadTransferRight Unload Done");
+                        if (Parent.Sequence != ESequence.AutoRun)
+                        {
+                            Sequence = ESequence.Stop;
+                            break;
+                        }
                         Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.GlassVac_Check;
                         break;
                     }
