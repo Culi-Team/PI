@@ -266,6 +266,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             }
             if (Name == "Transfer Fixture")
             {
+                var detachGlassZAxis = devices.Motions.DetachGlassZAxis;
                 if (moveToDescription == "Transfer Fixture Y Axis Load Position"
                     || moveToDescription == "Transfer Fixture Y Axis Unload Position")
                 {
@@ -276,7 +277,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                             $"\n [{moveToDescription}]");
                         return false;
                     }
-                    var detachGlassZAxis = devices.Motions.DetachGlassZAxis;
                     if (detachGlassZAxis != null && detachGlassZAxis.Status.ActualPosition > recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisReadyPosition)
                     {
                         MessageBoxEx.ShowDialog($"[Detach Z Axis] ," +
@@ -288,12 +288,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             }
             if (Name == "Detach")
             {
+                var shuttleTransferZAxis = devices.Motions.ShuttleTransferZAxis;
                 if (moveToDescription == "Sht Tr X Axis Detach Position"
                     || moveToDescription == "Sht Tr X Axis Detach Check Position"
                     || moveToDescription == "Sht Tr X Axis Unload Position")
                 {
-                    var shuttleTransferZAxis = devices.Motions.ShuttleTransferZAxis;
-                    if (shuttleTransferZAxis != null && !shuttleTransferZAxis.IsOnPosition(recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisReadyPosition))
+                    if (shuttleTransferZAxis != null && !(shuttleTransferZAxis.IsOnPosition(recipeSelector.CurrentRecipe.DetachRecipe.DetachZAxisReadyPosition)))
                     {
                         MessageBoxEx.ShowDialog($"[Shuttle Transfer Z Axis] ," +
                             $"\n Need Move [Ready Position] before move to " +
@@ -304,18 +304,23 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             }
             if (Name == "Glass Transfer")
             {
+                var transferInShuttleLZAxis = devices.Motions.TransferInShuttleLZAxis;
+                var transferInShuttleRZAxis = devices.Motions.TransferInShuttleRZAxis;
                 if (moveToDescription == "Glass Transfer Y Axis Ready Position"
                     || moveToDescription == "Glass Transfer Y Axis Pick Position"
                     || moveToDescription == "Glass Transfer Y Axis Left Place Position"
                     || moveToDescription == "Glass Transfer Y Axis Right Place Position")
                 {
-                    var transferInShuttleLZAxis = devices.Motions.TransferInShuttleLZAxis;
-                    var transferInShuttleRZAxis = devices.Motions.TransferInShuttleRZAxis;
-                    if ((transferInShuttleLZAxis != null && transferInShuttleLZAxis.Status.ActualPosition > recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition)
-                        || (transferInShuttleRZAxis != null && transferInShuttleRZAxis.Status.ActualPosition > recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisReadyPosition))
+                    if (transferInShuttleLZAxis != null && !transferInShuttleLZAxis.IsOnPosition(recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[Transfer InShuttle Left Z Axis] ," +
-                            $"\n [Transfer InShuttle Right Z Axis]," +
+                            $"\n need move [Ready Position] before move to " +
+                            $"\n [{moveToDescription}]");
+                        return false;
+                    }
+                    if (transferInShuttleRZAxis != null && !transferInShuttleRZAxis.IsOnPosition(recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisReadyPosition))
+                    {
+                        MessageBoxEx.ShowDialog($"[Transfer InShuttle Right Z Axis] ," +
                             $"\n need move [Ready Position] before move to " +
                             $"\n [{moveToDescription}]");
                         return false;
@@ -325,14 +330,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             }
             if (Name == "Transfer In Shuttle Left")
             {
+                var transferInShuttleLZAxis = devices.Motions.TransferInShuttleLZAxis;
                 if (moveToDescription == "Y Axis Ready Position"
                     || moveToDescription == "Y Axis Pick Position 1"
                     || moveToDescription == "Y Axis Pick Position 2"
                     || moveToDescription == "Y Axis Pick Position 3"
                     || moveToDescription == "Y Axis Place Position")
                 {
-                    var transferInShuttleLZAxis = devices.Motions.TransferInShuttleLZAxis;
-                    if (transferInShuttleLZAxis != null && transferInShuttleLZAxis.Status.ActualPosition > recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition)
+                    if (transferInShuttleLZAxis != null && !transferInShuttleLZAxis.IsOnPosition(recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[Transfer InShuttle Left Z Axis] ," +
                             $"\n  need move [Ready Position] before move to" +
@@ -343,14 +348,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             }
             if (Name == "Transfer In Shuttle Right")
             {
+                var transferInShuttleRZAxis = devices.Motions.TransferInShuttleRZAxis;
                 if (moveToDescription == "Y Axis Ready Position"
                     || moveToDescription == "Y Axis Pick Position 1"
                     || moveToDescription == "Y Axis Pick Position 2"
                     || moveToDescription == "Y Axis Pick Position 3"
                     || moveToDescription == "Y Axis Place Position")
                 {
-                    var transferInShuttleRZAxis = devices.Motions.TransferInShuttleRZAxis;
-                    if (transferInShuttleRZAxis != null && transferInShuttleRZAxis.Status.ActualPosition > recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisReadyPosition)
+                    if (transferInShuttleRZAxis != null && !transferInShuttleRZAxis.IsOnPosition(recipeSelector.CurrentRecipe.TransferInShuttleRightRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[Transfer InShuttle Right Z Axis] ," +
                             $"\n need move [Ready Position] before move to" +
@@ -370,21 +375,22 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "X Axis Load Position"
                     || moveToDescription == "X Axis Unload Position")
                 {
-                    if (transferInShuttlerLeft != null && transferInShuttlerLeft.Status.ActualPosition > recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition)
+                    if (transferInShuttlerLeft != null && !transferInShuttlerLeft.IsOnPosition(recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[Transfer InShuttle Left Z Axis]" +
                             $"\n befor move to [{moveToDescription}]");
                         return false;
                     }
-                    if (transferRotationLZAxis != null && transferRotationLZAxis.Status.ActualPosition > recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition)
+                    if (transferRotationLZAxis != null && !transferRotationLZAxis.IsOnPosition(recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[Transfer Rotation Left Z Axis]" +
                             $"\n befor move to [{moveToDescription}]");
                         return false;
                     }
-                    if (inShuttleLTAxis != null && !(inShuttleLTAxis.Status.ActualPosition > recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanVerticalPosition - 30 || inShuttleLTAxis.Status.ActualPosition < recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanVerticalPosition + 30))
+                    if (inShuttleLTAxis != null && !inShuttleLTAxis.IsOnPosition(recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisReadyPosition))
                     {
-                        MessageBoxEx.ShowDialog($"[InShuttle Left T Axis] need move to [Ready Position]" +
+                        MessageBoxEx.ShowDialog($"[InShuttle Left T Axis] need move to " +
+                            $"\n [Ready Position]" +
                             $"\n befor move to [{moveToDescription}]");
                         return false;
                     }
@@ -406,8 +412,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
 
             if (Name == "Transfer Rotation Left")
             {
-                if (moveToDescription == "Z Axis Pick Position" ||
-                        moveToDescription == "Z Axis Place Position")
+                if (moveToDescription == "Z Axis Pick Position" 
+                    || moveToDescription == "Z Axis Place Position")
                 {
                     if (devices.Cylinders.TransferRotationL_BwFwCyl.IsBackward == false)
                     {
@@ -439,7 +445,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "X Axis UnLoad Position"
                     || moveToDescription == "X Axis Load Position")
                 {
-                    if (transferRotationLZAxis != null && transferRotationLZAxis.Status.ActualPosition > recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition)
+                    if (transferRotationLZAxis != null && !transferRotationLZAxis.IsOnPosition(recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($" [Transfer Rotation Left Z Axis] ," +
                             $"\n need [move Ready Position] before move to ," +
@@ -483,19 +489,19 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "X Axis Load Position"
                     || moveToDescription == "X Axis Unload Position")
                 {
-                    if (transferInShuttlerRight != null && transferInShuttlerRight.Status.ActualPosition > recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition)
+                    if (transferInShuttlerRight != null && !transferInShuttlerRight.IsOnPosition(recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[Transfer InShuttle Right Z Axis]" +
                             $"\n befor move to [{moveToDescription}]");
                         return false;
                     }
-                    if (transferRotationRZAxis != null && transferRotationRZAxis.Status.ActualPosition > recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition)
+                    if (transferRotationRZAxis != null && !transferRotationRZAxis.IsOnPosition(recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[Transfer Rotation Right Z Axis]" +
                             $"\n befor move to [{moveToDescription}]");
                         return false;
                     }
-                    if (inShuttleRTAxis != null && !(inShuttleRTAxis.Status.ActualPosition > recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanVerticalPosition - 30 || inShuttleRTAxis.Status.ActualPosition < recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanVerticalPosition + 30))
+                    if (inShuttleRTAxis != null && !inShuttleRTAxis.IsOnPosition(recipeSelector.CurrentRecipe.WetCleanRightRecipe.TAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[InShuttle Right T Axis] need move to [Ready Position]" +
                             $"\n befor move to [{moveToDescription}]");
@@ -520,8 +526,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
 
             if (Name == "Transfer Rotation Right")
             {
-                if (moveToDescription == "Z Axis Pick Position" ||
-                        moveToDescription == "Z Axis Place Position")
+                if (moveToDescription == "Z Axis Pick Position" 
+                    || moveToDescription == "Z Axis Place Position")
                 {
                     if (devices.Cylinders.TransferRotationR_BwFwCyl.IsBackward == false)
                     {
@@ -552,7 +558,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "X Axis UnLoad Position"
                     || moveToDescription == "X Axis Load Position")
                 {
-                    if (transferRotationRZAxis != null && transferRotationRZAxis.Status.ActualPosition > recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisReadyPosition)
+                    if (transferRotationRZAxis != null && !transferRotationRZAxis.IsOnPosition(recipeSelector.CurrentRecipe.TransferRotationRightRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($" [Transfer Rotation Right Z Axis] ," +
                             $"\n need [move Ready Position] before move to ," +
@@ -586,6 +592,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             }
             if (Name == "Unload Transfer Left")
             {
+                var glassUnloadLAxis = devices.Motions.GlassUnloadLZAxis;
                 if (moveToDescription == "Y Axis Ready Position"
                     || moveToDescription == "Y Axis Pick Position"
                     || moveToDescription == "Y Axis Place Position 1"
@@ -593,9 +600,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Y Axis Place Position 3"
                     || moveToDescription == "Y Axis Place Position 4")
                 {
-                    var glassUnloadLAxis = devices.Motions.GlassUnloadLZAxis;
-                    if (glassUnloadLAxis != null && glassUnloadLAxis.Status.ActualPosition
-                        > recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisReadyPosition)
+                    if (glassUnloadLAxis != null && !glassUnloadLAxis.IsOnPosition(recipeSelector.CurrentRecipe.UnloadTransferLeftRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[Glass Unload Left Z Axis] ," +
                             $"\n need move to [Ready Position] before move to " +
@@ -606,6 +611,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             }
             if (Name == "Unload Transfer Right")
             {
+                var glassUnloadRAxis = devices.Motions.GlassUnloadRZAxis;
                 if (moveToDescription == "Y Axis Ready Position"
                     || moveToDescription == "Y Axis Pick Position"
                     || moveToDescription == "Y Axis Place Position 1"
@@ -613,9 +619,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     || moveToDescription == "Y Axis Place Position 3"
                     || moveToDescription == "Y Axis Place Position 4")
                 {
-                    var glassUnloadRAxis = devices.Motions.GlassUnloadRZAxis;
-                    if (glassUnloadRAxis != null && glassUnloadRAxis.Status.ActualPosition
-                        > recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisReadyPosition)
+                    if (glassUnloadRAxis != null && !glassUnloadRAxis.IsOnPosition(recipeSelector.CurrentRecipe.UnloadTransferRightRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[Glass Unload Right Z Axis] ," +
                             $"\n move to [Ready Position] before move to " +
