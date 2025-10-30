@@ -19,6 +19,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Motor_UnWinder_Run,
         Motor_UnWinder_Run_Wait,
         Set_Flag_RequestFixture,
+        Wait_RobotMoveVinylCleanDone,
+        Cyl_Clamp,
+        Cyl_Clamp_Wait,
+        SetFlag_VinylCleanClampDone,
         Wait_FixtureLoadDone,
         Fixture_Detect_Check,
         End

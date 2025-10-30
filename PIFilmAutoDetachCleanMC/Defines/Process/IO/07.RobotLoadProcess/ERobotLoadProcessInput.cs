@@ -13,6 +13,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         OUT_CST_READY,
         VINYL_CLEAN_REQ_UNLOAD,
+        VINYL_CLEAN_CLAMP_UNCLAMP_DONE,
 
         FIXTURE_ALIGN_REQ_LOAD,
         REMOVE_FILM_REQ_UNLOAD

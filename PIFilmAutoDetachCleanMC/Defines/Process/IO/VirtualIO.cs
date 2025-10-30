@@ -268,6 +268,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 MapTo(_outWorkConveyorOutput[EWorkConveyorProcessOutput.CST_READY]);
             _robotLoadInput[ERobotLoadProcessInput.VINYL_CLEAN_REQ_LOAD].
                 MapTo(_vinylCleanOutput[EVinylCleanProcessOutput.VINYL_CLEAN_REQ_LOAD]);
+            _robotLoadInput[ERobotLoadProcessInput.VINYL_CLEAN_CLAMP_UNCLAMP_DONE].
+                MapTo(_vinylCleanOutput[EVinylCleanProcessOutput.VINYL_CLEAN_CLAMP_UNCLAMP_DONE]);
             _robotLoadInput[ERobotLoadProcessInput.VINYL_CLEAN_REQ_UNLOAD].
                 MapTo(_vinylCleanOutput[EVinylCleanProcessOutput.VINYL_CLEAN_REQ_UNLOAD]);
             _robotLoadInput[ERobotLoadProcessInput.FIXTURE_ALIGN_REQ_LOAD].
@@ -280,6 +282,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 MapTo(_robotLoadOutput[ERobotLoadProcessOutput.VINYL_CLEAN_LOAD_DONE]);
             _vinylCleanInput[EVinylCleanProcessInput.VINYL_CLEAN_UNLOAD_DONE].
                 MapTo(_robotLoadOutput[ERobotLoadProcessOutput.VINYL_CLEAN_UNLOAD_DONE]);
+            _vinylCleanInput[EVinylCleanProcessInput.ROBOT_MOVE_VINYL_CLEAN_DONE].
+                MapTo(_robotLoadOutput[ERobotLoadProcessOutput.ROBOT_MOVE_VINYL_CLEAN_DONE]);
 
             //Fixture Align Input Mapping
             _fixtureAlignInput[EFixtureAlignProcessInput.FIXTURE_ALIGN_LOAD_DONE].

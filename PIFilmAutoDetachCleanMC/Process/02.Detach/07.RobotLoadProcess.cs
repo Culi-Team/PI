@@ -138,6 +138,22 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private bool FlagIn_VinylCleanClampUnClampDone
+        {
+            get
+            {
+                return _robotLoadInput[(int)ERobotLoadProcessInput.VINYL_CLEAN_CLAMP_UNCLAMP_DONE];
+            }
+        }
+
+        private bool FlagOut_RobotMoveVinylCleanDone
+        {
+            set
+            {
+                _robotLoadOutput[(int)ERobotLoadProcessOutput.ROBOT_MOVE_VINYL_CLEAN_DONE] = value;
+            }
+        }
+
         private bool FlagFixtureAlignLoadDone
         {
             set
@@ -1054,14 +1070,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseAlarm((int)EAlarm.RobotLoad_MoveMotionCommand_Timeout);
                         break;
                     }
+
                     Log.Debug($"Robot Move Motion Command {ERobotCommand.S2_RDY_PP} Done");
+
                     if (isUnload)
                     {
                         Step.RunStep++;
                         break;
                     }
 
-                    Step.RunStep = (int)ERobotLoadPickPlaceFixtureVinylCleanStep.CylUnClamp;
+                    Step.RunStep = (int)ERobotLoadPickPlaceFixtureVinylCleanStep.SetFlag_RobotMoveVinylCleanDone_Load;
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.CylAlign:
                     Log.Debug("Cylinder Align start");
@@ -1093,7 +1111,42 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Cylinder Clamp Done");
+                    Log.Debug("Wait Vinyl Clean UnClamp Done");
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPickPlaceFixtureVinylCleanStep.SetFlag_RobotMoveVinylCleanDone_Unload:
+                    Log.Debug("Set Flag Robot Move Vilyn Clean Done");
+                    FlagOut_RobotMoveVinylCleanDone = true;
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPickPlaceFixtureVinylCleanStep.Wait_VinylCleanUnClampDone:
+                    if (FlagIn_VinylCleanClampUnClampDone == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
+                    Log.Debug("Clear Flag RobotMoveVinylCleanDone");
+                    FlagOut_RobotMoveVinylCleanDone = false;
+                    Log.Debug("Vinyl Clean UnClamp Done");
                     Step.RunStep = (int)ERobotLoadPickPlaceFixtureVinylCleanStep.Move_VinylClean_ReadyPosition;
+                    break;
+                case ERobotLoadPickPlaceFixtureVinylCleanStep.SetFlag_RobotMoveVinylCleanDone_Load:
+                    Log.Debug("Set Flag Robot Move Vinyl Clean Done");
+                    FlagOut_RobotMoveVinylCleanDone = true;
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPickPlaceFixtureVinylCleanStep.Wait_VinylCleanClampDone:
+                    if (FlagIn_VinylCleanClampUnClampDone == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
+                    Log.Debug("Clear Flag RobotMoveVinylCleanDone");
+                    FlagOut_RobotMoveVinylCleanDone = false;
+                    Log.Debug("Vinyl Clean Clamp Done");
+                    Step.RunStep++;
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.CylUnClamp:
                     Log.Debug("Cylinder UnContact");
@@ -1126,6 +1179,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder UnClamp Done");
                     Step.RunStep++;
                     break;
+                case ERobotLoadPickPlaceFixtureVinylCleanStep.SetFlag_VinylCleanLoadDone:
+                    Log.Debug("Set Flag Vinyl Clean Load Done");
+                    FlagVinylCleanLoadDone = true;
+                    Step.RunStep++;
+                    break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.Move_VinylClean_ReadyPosition:
                     Log.Debug("Move Vinyl Clean Ready Position");
                     if (SendCommand(ERobotCommand.S2_PP_RDY, LowSpeed, HightSpeed))
@@ -1146,7 +1204,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug($"Robot Move Motion Command {ERobotCommand.S2_PP_RDY} Done");
                     Step.RunStep++;
                     break;
-                case ERobotLoadPickPlaceFixtureVinylCleanStep.SetFlag_VinylCleanLoadUnloadDone:
+                case ERobotLoadPickPlaceFixtureVinylCleanStep.SetFlag_VinylCleanUnloadDone:
                     if (isUnload)
                     {
                         Log.Debug("Set Flag Vinyl Clean Unload Done");
@@ -1155,9 +1213,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep++;
                         break;
                     }
-
-                    Log.Debug("Set Flag Vinyl Clean Load Done");
-                    FlagVinylCleanLoadDone = true;
+                    
                     Log.Debug("Wait Vinyl Clean Receive Load Done");
                     Step.RunStep++;
                     break;
