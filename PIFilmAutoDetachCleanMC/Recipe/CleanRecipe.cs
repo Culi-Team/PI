@@ -410,7 +410,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             }
         }
 
-        [SingleRecipeDescription(Description = "Clean Shuttle Cycle", Unit = Unit.mm)]
+        [SingleRecipeDescription(Description = "Clean Shuttle Cycle")]
         public int CleanShuttleCycle
         {
             get { return cleanShuttleCycle; }

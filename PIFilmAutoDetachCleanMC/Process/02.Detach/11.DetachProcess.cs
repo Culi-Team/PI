@@ -452,37 +452,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Shuttle Transfer Z Axis Move to Ready Position Done");
                     Step.RunStep++;
                     break;
-                case EDetachUnloadStep.XAxis_Move_DetachCheck_Position:
-                    Log.Debug("Shuttle Transfer X Axis Move to Detach Check Position");
-                    ShuttleTransferXAxis.MoveAbs(_detachRecipe.ShuttleTransferXAxisDetachCheckPosition,
-                        ShuttleTransferXAxis.Parameter.Velocity * 0.3);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
-                        () => { return ShuttleTransferXAxis.IsOnPosition(_detachRecipe.ShuttleTransferXAxisDetachCheckPosition); });
-                    Step.RunStep++;
-                    break;
-                case EDetachUnloadStep.XAxis_Move_DetachCheck_Position_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseAlarm((int)EAlarm.Detach_ShuttleTransferXAxis_MoveDetachCheckPosition_Fail);
-                        break;
-                    }
-                    Log.Debug("Shuttle Transfer X Axis Move to Detach Check Position Done");
-                    Step.RunStep++;
-                    break;
-                case EDetachUnloadStep.Vacuum_Check:
-                    if (IsGlassShuttleVacAll == false && _machineStatus.IsDryRunMode == false)
-                    {
-                        RaiseWarning((int)EWarning.DetachFail);
-                        break;
-                    }
-#if SIMULATION
-                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac1, false);
-                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac2, false);
-                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac3, false);
-#endif
-                    Log.Debug("Glass Shuttle Vacuum Check Done");
-                    Step.RunStep++;
-                    break;
+                
                 case EDetachUnloadStep.XAxis_Move_UnloadPosition:
                     Log.Debug("Shuttle Transfer X Axis Move to Unload Position");
                     ShuttleTransferXAxis.MoveAbs(_detachRecipe.ShuttleTransferXAxisUnloadPosition);
@@ -740,6 +710,37 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Detach 2 Up Done");
                     Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
+                case EDetachStep.XAxis_Move_DetachCheck_Position:
+                    Log.Debug("Shuttle Transfer X Axis Move to Detach Check Position");
+                    ShuttleTransferXAxis.MoveAbs(_detachRecipe.ShuttleTransferXAxisDetachCheckPosition,
+                        ShuttleTransferXAxis.Parameter.Velocity * 0.3);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
+                        () => { return ShuttleTransferXAxis.IsOnPosition(_detachRecipe.ShuttleTransferXAxisDetachCheckPosition); });
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
+                    break;
+                case EDetachStep.XAxis_Move_DetachCheck_Position_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)EAlarm.Detach_ShuttleTransferXAxis_MoveDetachCheckPosition_Fail);
+                        break;
+                    }
+                    Log.Debug("Shuttle Transfer X Axis Move to Detach Check Position Done");
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
+                    break;
+                case EDetachStep.Vacuum_Check:
+                    if (IsGlassShuttleVacAll == false && _machineStatus.IsDryRunMode == false)
+                    {
+                        RaiseWarning((int)EWarning.DetachFail);
+                        break;
+                    }
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac1, false);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac2, false);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac3, false);
+#endif
+                    Log.Debug("Glass Shuttle Vacuum Check Done");
+                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
+                    break;
                 case EDetachStep.Cyl_Clamp_Backward:
                     Log.Debug("Clamp Cylinder Backward");
                     ClampCylinderFwBw(false);
@@ -757,6 +758,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EDetachStep.Set_FlagDetachDone:
                     Log.Debug("Set Flag Detach Done");
+                    _machineStatus.IsFixtureDetached = true;
                     FlagDetachDone = true;
                     Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
@@ -847,6 +849,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachProcessTransferFixtureLoadStep.Clear_FlagDetachDone:
+                    _machineStatus.IsFixtureDetached = false;
                     FlagDetachDone = false;
                     Step.RunStep++;
                     break;
@@ -884,7 +887,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EDetachProcessGlassTransferPickStep.Start:
                     Log.Debug("Glass Transfer Pick Start");
-                    Log.Debug("Clear Flag Detach Glass Transfer Pick Done Received");
                     Step.RunStep++;
                     break;
                 case EDetachProcessGlassTransferPickStep.Vacuum_Off:
@@ -907,8 +909,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Clear Flag Detach Request Unload");
                     FlagDetachRequestUnloadGlass = false;
-
-                    Log.Debug("Set Flag Detach Glass Transfer Pick Done Received");
                     Step.RunStep++;
                     break;
                 case EDetachProcessGlassTransferPickStep.End:

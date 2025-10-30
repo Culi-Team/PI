@@ -60,7 +60,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
             }
         }
 
-        private int conveyorSpeed = 200;
+        private int conveyorSpeed = 1500;
 
         public int ConveyorSpeed
         {
@@ -68,7 +68,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
             set { conveyorSpeed = value; OnPropertyChanged(); }
         }
 
-        private int conveyorAcc = 500;
+        private int conveyorAcc = 6000;
 
         public int ConveyorAcc
         {
@@ -76,7 +76,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
             set { conveyorAcc = value; OnPropertyChanged(); }
         }
 
-        private int conveyorDec = 500;
+        private int conveyorDec = 6000;
 
         public int ConveyorDec
         {

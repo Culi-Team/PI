@@ -71,6 +71,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             EDetachStep.Cyl_Detach_Up,
             EDetachStep.Cyl_Detach_Up_Wait,
 
+            EDetachStep.XAxis_Move_DetachCheck_Position,
+            EDetachStep.XAxis_Move_DetachCheck_Position_Wait,
+            EDetachStep.Vacuum_Check,
+
             EDetachStep.Cyl_Clamp_Backward,
             EDetachStep.Cyl_Clamp_Backward_Wait,
 
