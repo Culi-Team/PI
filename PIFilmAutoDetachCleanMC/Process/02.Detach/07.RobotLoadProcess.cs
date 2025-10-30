@@ -222,46 +222,46 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
-        public override bool ProcessToStop()
-        {
-            switch ((ERobotLoadToStopStep)Step.ToRunStep)
-            {
-                case ERobotLoadToStopStep.Start:
-                    Log.Debug("To Stop Start");
-                    Step.ToRunStep++;
-                    break;
-                case ERobotLoadToStopStep.Stop:
-                    Log.Debug("Stop Robot Load");
-                    _robotLoad.SendCommand(RobotHelpers.RobotStop);
+        //public override bool ProcessToStop()
+        //{
+        //    switch ((ERobotLoadToStopStep)Step.ToRunStep)
+        //    {
+        //        case ERobotLoadToStopStep.Start:
+        //            Log.Debug("To Stop Start");
+        //            Step.ToRunStep++;
+        //            break;
+        //        case ERobotLoadToStopStep.Stop:
+        //            Log.Debug("Stop Robot Load");
+        //            _robotLoad.SendCommand(RobotHelpers.RobotStop);
 
-                    Wait(5000, () => _robotLoad.ReadResponse("Stop complete,0\r\n"));
+        //            Wait(5000, () => _robotLoad.ReadResponse("Stop complete,0\r\n"));
 
-                    Step.ToRunStep++;
-                    break;
-                case ERobotLoadToStopStep.Stop_Check:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)EWarning.RobotLoad_Stop_Fail);
-                        break;
-                    }
+        //            Step.ToRunStep++;
+        //            break;
+        //        case ERobotLoadToStopStep.Stop_Check:
+        //            if (WaitTimeOutOccurred)
+        //            {
+        //                RaiseWarning((int)EWarning.RobotLoad_Stop_Fail);
+        //                break;
+        //            }
 
-                    Log.Debug("Robot Load Stop Complete");
-                    Step.ToRunStep++;
-                    break;
-                case ERobotLoadToStopStep.End:
-                    if (ProcessStatus == EProcessStatus.ToStopDone)
-                    {
-                        break;
-                    }
-                    Log.Debug("To Stop End");
-                    ProcessStatus = EProcessStatus.ToStopDone;
-                    Step.ToRunStep++;
-                    break;
-                default:
-                    break;
-            }
-            return true;
-        }
+        //            Log.Debug("Robot Load Stop Complete");
+        //            Step.ToRunStep++;
+        //            break;
+        //        case ERobotLoadToStopStep.End:
+        //            if (ProcessStatus == EProcessStatus.ToStopDone)
+        //            {
+        //                break;
+        //            }
+        //            Log.Debug("To Stop End");
+        //            ProcessStatus = EProcessStatus.ToStopDone;
+        //            Step.ToRunStep++;
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //    return true;
+        //}
 
         public override bool ProcessToOrigin()
         {
@@ -799,6 +799,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Set Model: " + _robotLoadRecipe.Model + " success");
                     Step.RunStep++;
                     break;
+                case ERobotLoad_ReadyStep.RobotCurrentPosition_Check:
+                    Step.RunStep++;
+                    break;
+                case ERobotLoad_ReadyStep.RobotCurrentPosition_Condition:
+                    Step.RunStep++;
+                    break;
                 case ERobotLoad_ReadyStep.RobotHomePosition_Check:
                     if (InHome.Value || InReady.Value)
                     {
@@ -975,8 +981,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Clamp");
                     ClampCyl1.Forward();
                     ClampCyl2.Forward();
+                    Wait(300);
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPickFixtureFromCSTStep.Cyl_Clamp_Delay:
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,
-                        () => (ClampCyl1.IsForward && ClampCyl2.IsForward) || _machineStatus.IsDryRunMode);
+                        () => (IsFixtureDetect) || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Cyl_Clamp_Wait:
@@ -1100,8 +1110,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Contact");
                     ClampCyl1.Forward();
                     ClampCyl2.Forward();
+                    Wait(300);
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPickPlaceFixtureVinylCleanStep.CylClamp_Delay:
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,
-                        () => (ClampCyl1.IsForward && ClampCyl2.IsForward) || _machineStatus.IsDryRunMode);
+                        () => (IsFixtureDetect) || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickPlaceFixtureVinylCleanStep.CylClamp_Wait:
@@ -1488,8 +1502,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Clamp");
                     ClampCyl1.Forward();
                     ClampCyl2.Forward();
+                    Wait(300);
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPickFixtureFromRemoveZoneStep.Clamp_Delay:
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,
-                        () => (ClampCyl1.IsForward && ClampCyl2.IsForward) || _machineStatus.IsDryRunMode);
+                        () => (IsFixtureDetect) || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromRemoveZoneStep.Clamp_Wait:

@@ -25,6 +25,9 @@ namespace PIFilmAutoDetachCleanMC
     {
         public static IHost? AppHost { get; private set; }
 
+        private const string AppGuid = "2341E081-7BFC-4738-85A4-CF782120EDCC";
+        private Mutex _mutex;
+
         public App()
         {
             AppHost = Host.CreateDefaultBuilder()
@@ -44,10 +47,29 @@ namespace PIFilmAutoDetachCleanMC
 
         protected override async void OnStartup(StartupEventArgs e)
         {
+            bool isNewInstance = false;
+
+            try
+            {
+                _mutex = new Mutex(true, AppGuid, out isNewInstance);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Mutex create error: {ex.Message}");
+                Shutdown();
+                return;
+            }
+
+            if (!isNewInstance)
+            {
+                MessageBox.Show("Ứng dụng đã được khởi chạy trước đó");
+
+                Shutdown();
+                return;
+            }
+
             ThreadPool.GetMinThreads(out int workerThreads, out int completionPortThreads);
-
-            ThreadPool.SetMinThreads(25, completionPortThreads);
-
+            ThreadPool.SetMinThreads(40, completionPortThreads);
             ThreadPool.GetMinThreads(out int newWorker, out _);
 
             await AppHost!.StartAsync();

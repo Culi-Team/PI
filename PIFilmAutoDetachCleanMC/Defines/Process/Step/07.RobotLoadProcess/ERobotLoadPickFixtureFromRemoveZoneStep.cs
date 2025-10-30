@@ -15,7 +15,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Align,
         Align_Wait,
 
-        Clamp, 
+        Clamp,
+        Clamp_Delay,
         Clamp_Wait,
 
         Move_RemoveZoneReadyPosition,

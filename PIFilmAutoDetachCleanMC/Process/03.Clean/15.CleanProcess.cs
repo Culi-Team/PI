@@ -1455,11 +1455,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessLoadStep.Axis_MoveReadyPosition:
                     Log.Debug("X Y T Axis Move Ready Position");
                     XAxis.MoveAbs(XAxisReadyPosition);
-                    YAxis.MoveAbs(YAxisLoadPosition);
-                    TAxis.MoveAbs(TAxisLoadPosition);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => XAxis.IsOnPosition(XAxisReadyPosition) &&
-                                                                                TAxis.IsOnPosition(TAxisReadyPosition) && 
-                                                                                YAxis.IsOnPosition(YAxisReadyPosition));
+                    YAxis.MoveAbs(YAxisReadyPosition);
+                    TAxis.MoveAbs(TAxisReadyPosition);
+
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () =>
+                        XAxis.IsOnPosition(XAxisReadyPosition) &&
+                        YAxis.IsOnPosition(YAxisReadyPosition) &&
+                        TAxis.IsOnPosition(TAxisReadyPosition)
+                        );
+
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.Axis_MoveReadyPosition_Wait:

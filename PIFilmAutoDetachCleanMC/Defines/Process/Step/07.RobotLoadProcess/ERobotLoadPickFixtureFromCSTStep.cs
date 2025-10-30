@@ -13,6 +13,7 @@
         Cyl_Align,
         Cyl_Align_Wait,
         Cyl_Clamp,
+        Cyl_Clamp_Delay,
         Cyl_Clamp_Wait,
 
         Move_InCST_ReadyPositon,

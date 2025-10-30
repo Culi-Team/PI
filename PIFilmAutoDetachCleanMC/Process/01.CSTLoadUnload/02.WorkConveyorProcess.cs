@@ -78,7 +78,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                                                          _devices.Inputs.OutCstWorkDetect2.Value;
         private bool Detect3 => port == EPort.Right ? _devices.Inputs.InCstWorkDetect3.Value :
                                                          _devices.Inputs.OutCstWorkDetect3.Value;
-        private bool InCstDetectFixture => _devices.Inputs.InCstWorkFixtureDetect.Value;
 
         private bool IsCassetteDetect
         {

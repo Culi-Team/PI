@@ -27,6 +27,9 @@
         SetModel,
         SetModel_Check,
 
+        RobotCurrentPosition_Check,
+        RobotCurrentPosition_Condition,
+
         RobotHomePosition_Check,
 
         RobotSeqHome,
