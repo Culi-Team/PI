@@ -31,6 +31,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private int CurrentInWorkCSTFixtureIndex = -1;
         private int CurrentOutWorkCSTFixtureIndex = -1;
         private string[] paras = new string[8] { "0", "0", "0", "0", "0", "0", "0", "0" };
+        private string strLastPosition;
+        private int LastPosition;
 
         private int HightSpeed => _robotLoadRecipe.RobotSpeedHigh;
         private int LowSpeed => _robotLoadRecipe.RobotSpeedLow;

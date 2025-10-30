@@ -88,6 +88,7 @@
 
                     <Label Content="Robot response" HorizontalAlignment="Center"/>
                     <TextBlock Text="{Binding RobotResponse}"/>
+
                 </UniformGrid>
 
                 <UniformGrid Columns="2"
