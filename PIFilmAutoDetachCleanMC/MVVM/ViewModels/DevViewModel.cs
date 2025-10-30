@@ -200,7 +200,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                     string[] parts = strRobotResponse.Split(',');
 
-                    if (parts.Length > 0 && int.TryParse(parts[0], out int value))
+                    if (parts.Length > 0 && int.TryParse(parts[1], out int value))
                     {
                         _robotResponse = value;
                     }

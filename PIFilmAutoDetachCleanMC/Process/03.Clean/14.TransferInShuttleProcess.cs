@@ -406,6 +406,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ETransferInShuttleAutoRunStep.Start:
                     Log.Debug("Auto Run Start");
+                    AlignVacOnOff(true);
+                    Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleAutoRunStep.Transfer_VacCheck:

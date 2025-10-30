@@ -1800,6 +1800,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep++;
                         break;
                     }
+
+                    FlagAFCleanCleaning = false;
                     Step.RunStep = (int)ECleanProcessCleanStep.End;
                     break;
                 case ECleanProcessCleanStep.Axis_Move_CleanVerticalPosition:

@@ -28,7 +28,15 @@
         SetModel_Check,
 
         RobotCurrentPosition_Check,
-        RobotCurrentPosition_Condition,
+        RobotCurrentPosition_Wait,
+        Check_RobotInPPPosition,
+        Check_RobotInRDYPosition,
+        Handle_RobotInUnknownPosition,
+
+        UnClamp,
+        UnClamp_Wait,
+        UnAlign,
+        UnAlign_Wait,
 
         RobotHomePosition_Check,
 

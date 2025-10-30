@@ -9,6 +9,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ERobotLoad_AutoRunStep
     {
         Start,
+
+        Check_FixtureDetect,
+
         Check_Flag_VinylCleanRequestFixture,
         Check_Flag_RemoveFilm,
         Check_Flag_VinylCleanRequestUnload,

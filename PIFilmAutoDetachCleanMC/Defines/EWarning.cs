@@ -78,20 +78,21 @@ namespace PIFilmAutoDetachCleanMC.Defines
         RobotLoad = 7000,
         RobotLoad_Connect_Fail,
         RobotLoad_Programing_Not_Running,
-        RobotLoadOriginFixtureDetect,
+        RobotLoad_OriginFixtureDetect,
         RobotLoad_Home_Manual_By_TeachingPendant,
         RobotLoad_Cylinder_Clamp_Fail,
         RobotLoad_Cylinder_UnClamp_Fail,
         RobotLoad_Cylinder_Align_Fail,
         RobotLoad_Cylinder_UnAlign_Fail,
         RobotLoad_SetModel_Fail,
+        RobotLoad_GetLastPosition_Fail,
         RobotLoad_No_Ready_Response,
         RobotLoad_SetCassettePitch_Fail,
         RobotLoad_SendMotionCommand_Fail,
         RobotLoad_Stop_Fail,
         RobotLoad_SafetyFenceSwitch_Not_Active,
         RobotLoad_Automatic_External_Not_active,
-
+        RobotLoad_FixtureStatusAbnormal,
 
         //Fixture Align
         FixtureAlign = 8000,

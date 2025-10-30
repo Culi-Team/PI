@@ -341,14 +341,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Initialize Start");
                     Step.RunStep++;
                     break;
+                    // TODO: REMOVE THIS STEP
                 case ERemoveFilm_ReadyStep.Wait_Robot_Ready:
-                    if (RobotInReady.Value == false && RobotInHome.Value == false)
-                    {
-                        Wait(20);
-                        break;
-                    }
-
-                    Log.Debug("Robot Safety Detect");
                     Step.RunStep++;
                     break;
                 case ERemoveFilm_ReadyStep.CylUpDown_CylPusher_MoveBackward:

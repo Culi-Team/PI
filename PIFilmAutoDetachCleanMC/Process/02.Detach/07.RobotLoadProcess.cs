@@ -5,6 +5,7 @@ using EQX.InOut;
 using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
@@ -12,6 +13,7 @@ using PIFilmAutoDetachCleanMC.Defines.Devices.Robot;
 using PIFilmAutoDetachCleanMC.Defines.Process;
 using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 using PIFilmAutoDetachCleanMC.Recipe;
+using System.Text.RegularExpressions;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
@@ -58,6 +60,45 @@ namespace PIFilmAutoDetachCleanMC.Process
             return !WaitTimeOutOccurred;
         }
 
+        private bool RobotInPPPosition(int currentPos)
+        {
+            switch ((ERobotCommand)currentPos)
+            {
+                case ERobotCommand.S1_PP:
+                case ERobotCommand.S2_PP:
+                case ERobotCommand.S3_PP:
+                case ERobotCommand.S4_PP:
+                case ERobotCommand.S5_PP:
+                    return true;
+                case ERobotCommand.S1_RDY:
+                case ERobotCommand.S2_RDY:
+                case ERobotCommand.S3_RDY:
+                case ERobotCommand.S4_RDY:
+                case ERobotCommand.S5_RDY:
+                default:
+                    return false;
+            }
+        }
+
+        private bool RobotInRDYPosition(int currentPos)
+        {
+            switch ((ERobotCommand)currentPos)
+            {
+                case ERobotCommand.S1_RDY:
+                case ERobotCommand.S2_RDY:
+                case ERobotCommand.S3_RDY:
+                case ERobotCommand.S4_RDY:
+                case ERobotCommand.S5_RDY:
+                    return true;
+                case ERobotCommand.S1_PP:
+                case ERobotCommand.S2_PP:
+                case ERobotCommand.S3_PP:
+                case ERobotCommand.S4_PP:
+                case ERobotCommand.S5_PP:
+                default:
+                    return false;
+            }
+        }
         #endregion
 
         #region Inputs
@@ -439,7 +480,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadOriginStep.Fixture_Detect_Check:
                     if (IsFixtureDetect)
                     {
-                        RaiseWarning((int)EWarning.RobotLoadOriginFixtureDetect);
+                        RaiseWarning((int)EWarning.RobotLoad_OriginFixtureDetect);
                         break;
                     }
                     Step.OriginStep++;
@@ -626,6 +667,93 @@ namespace PIFilmAutoDetachCleanMC.Process
                     _workData.TaktTime.TaktTimeCounter = Environment.TickCount;
                     Step.RunStep++;
                     break;
+                case ERobotLoad_AutoRunStep.Check_FixtureDetect:
+                    if (IsFixtureDetect == false)
+                    {
+                        Step.RunStep = (int)ERobotLoad_AutoRunStep.Check_Flag_VinylCleanRequestFixture;
+                        break;
+                    }
+
+                    // FIXTURE DETECT
+                    if (LastPosition == (int)ERobotCommand.S1_PP || LastPosition == (int)ERobotCommand.S1_RDY)
+                    {
+                        if (_devices.Inputs.VinylCleanFixtureDetect.Value == true)
+                        {
+                            RaiseWarning((int)EWarning.RobotLoad_FixtureStatusAbnormal);
+                            break;
+                        }
+
+                        if (FlagVinylCleanRequestLoad == false)
+                        {
+                            Wait(20);
+                            break;
+                        }
+
+                        Sequence = ESequence.RobotPlaceFixtureToVinylClean;
+                        break;
+                    }
+                    if (LastPosition == (int)ERobotCommand.S2_PP || LastPosition == (int)ERobotCommand.S2_RDY)
+                    {
+                        if (_devices.Inputs.VinylCleanFixtureDetect.Value == false)
+                        {
+                            if (FlagVinylCleanRequestLoad == false)
+                            {
+                                Wait(20);
+                                break;
+                            }
+
+                            Sequence = ESequence.RobotPlaceFixtureToVinylClean;
+                            break;
+                        }
+
+                        if (_devices.Inputs.AlignFixtureDetect.Value == false)
+                        {
+                            if (FlagFixtureAlignRequestLoad == false)
+                            {
+                                Wait(20);
+                                break;
+                            }
+
+                            Sequence = ESequence.RobotPlaceFixtureToAlign;
+                            break;
+                        }
+
+                        RaiseWarning((int)EWarning.RobotLoad_FixtureStatusAbnormal);
+                        break;
+                    }
+                    if (LastPosition == (int)ERobotCommand.S3_PP || LastPosition == (int)ERobotCommand.S3_RDY)
+                    {
+                        if (_devices.Inputs.RemoveZoneFixtureDetect.Value == true ||
+                            _devices.Inputs.AlignFixtureDetect.Value == true)
+                        {
+                            RaiseWarning((int)EWarning.RobotLoad_FixtureStatusAbnormal);
+                            break;
+                        }
+
+                        if (FlagFixtureAlignRequestLoad == false)
+                        {
+                            Wait(20);
+                            break;
+                        }
+
+                        Sequence = ESequence.RobotPlaceFixtureToAlign;
+                        break;
+                    }
+                    if (LastPosition == (int)ERobotCommand.S4_PP || LastPosition == (int)ERobotCommand.S4_RDY ||
+                        LastPosition == (int)ERobotCommand.S5_PP || LastPosition == (int)ERobotCommand.S5_RDY)
+                    {
+                        if (FlagOutCSTReady == false)
+                        {
+                            Wait(20);
+                            break;
+                        }
+
+                        Sequence = ESequence.RobotPlaceFixtureToOutWorkCST;
+                        break;
+                    }
+
+                    RaiseWarning((int)EWarning.RobotLoad_FixtureStatusAbnormal);
+                    break;
                 case ERobotLoad_AutoRunStep.Check_Flag_VinylCleanRequestFixture:
                     if (FlagVinylCleanRequestLoad && FlagInCSTReady)
                     {
@@ -802,13 +930,119 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoad_ReadyStep.RobotCurrentPosition_Check:
+                    Log.Debug("Check robot last position");
+                    _robotLoad.SendCommand(RobotHelpers.CheckLastPosition);
+
+                    Wait(5000, () =>
+                    {
+                        strLastPosition = _robotLoad.ReadResponse();
+                        return strLastPosition != string.Empty;
+                    });
+
                     Step.RunStep++;
                     break;
-                case ERobotLoad_ReadyStep.RobotCurrentPosition_Condition:
+                case ERobotLoad_ReadyStep.RobotCurrentPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.RobotLoad_GetLastPosition_Fail);
+                        break;
+                    }
+                    Match match = Regex.Match(strLastPosition, @",(\d+),");
+
+                    if (match.Success)
+                    {
+                        string data = match.Groups[1].Value;
+
+                        if (int.TryParse(data, out LastPosition))
+                        {
+                            Log.Debug($"{_robotLoad.Name} is current in #{LastPosition} position");
+                        }
+                    }
+
+                    Step.RunStep++;
+                    break;
+                case ERobotLoad_ReadyStep.Check_RobotInPPPosition:
+                    if (RobotInPPPosition(LastPosition))
+                    {
+                        Log.Debug("Robot in PP position");
+                        Step.RunStep = (int)ERobotLoad_ReadyStep.UnClamp;
+                        break;
+                    }
+
+                    Step.RunStep++;
+                    break;
+                case ERobotLoad_ReadyStep.Check_RobotInRDYPosition:
+                    if (RobotInRDYPosition(LastPosition) || InHome.Value || InReady.Value)
+                    {
+                        Log.Debug("Robot in RDY position");
+
+                        // No Fixture Detect, Unclamp to prevent colision later
+                        if (IsFixtureDetect == false)
+                        {
+                            Step.RunStep = (int)ERobotLoad_ReadyStep.UnClamp;
+                            break;
+                        }
+
+                        // Fixture Detected in RDY position, just move on
+                        Step.RunStep = (int)ERobotLoad_ReadyStep.Send_CassettePitch;
+                        break;
+                    }
+
+                    Step.RunStep++;
+                    break;
+                case ERobotLoad_ReadyStep.Handle_RobotInUnknownPosition:
+                    // Robot is not in PP / READY / HOME position
+                    Log.Debug("Robot in UNKNOWN position, Please origin and try again");
+                    RaiseWarning((int)EWarning.RobotLoad_Home_Manual_By_TeachingPendant);
+                    break;
+                case ERobotLoad_ReadyStep.UnClamp:
+                    if (ClampCyl1.IsBackward && ClampCyl2.IsBackward)
+                    {
+                        Step.RunStep = (int)ERobotLoad_ReadyStep.UnAlign;
+                        break;
+                    }
+
+                    Log.Debug("Unclamp");
+                    ClampCyl1.Backward();
+                    ClampCyl2.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => ClampCyl1.IsBackward && ClampCyl2.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ERobotLoad_ReadyStep.UnClamp_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnClamp_Fail);
+                        break;
+                    }
+
+                    Log.Debug("UnClamp Done");
+                    Step.RunStep++;
+                    break;
+                case ERobotLoad_ReadyStep.UnAlign:
+                    if (AlignCyl.IsBackward)
+                    {
+                        Step.RunStep = (int)ERobotLoad_ReadyStep.RobotHomePosition_Check;
+                        break;
+                    }
+
+                    Log.Debug("UnAlign");
+                    AlignCyl.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ERobotLoad_ReadyStep.UnAlign_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnAlign_Fail);
+                        break;
+                    }
+
+                    Log.Debug("UnAlign Done");
                     Step.RunStep++;
                     break;
                 case ERobotLoad_ReadyStep.RobotHomePosition_Check:
-                    if (InHome.Value || InReady.Value)
+                    // InReady.Value and RobotInRDYPosition(LastPosition) is the same; just make sure
+                    if (InHome.Value || InReady.Value || RobotInRDYPosition(LastPosition))
                     {
                         Log.Debug($"Robot load in {(InHome.Value ? "HOME" : "READY")} position");
                         Step.RunStep = (int)ERobotLoad_ReadyStep.Send_CassettePitch;
@@ -1229,7 +1463,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep++;
                         break;
                     }
-                    
+
                     Log.Debug("Wait Vinyl Clean Receive Load Done");
                     Step.RunStep++;
                     break;

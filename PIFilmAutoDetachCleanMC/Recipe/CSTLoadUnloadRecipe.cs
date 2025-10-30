@@ -83,6 +83,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             get { return casetteRows; }
             set
             {
+                if (casetteRows == value) return;
                 OnRecipeChanged(casetteRows, value);
                 casetteRows = value;
 
