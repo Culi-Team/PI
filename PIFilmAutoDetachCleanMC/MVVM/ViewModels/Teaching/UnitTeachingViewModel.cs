@@ -382,7 +382,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                             $"\n befor move to [{moveToDescription}]");
                         return false;
                     }
-                    if (inShuttleLTAxis != null && (inShuttleLTAxis.Status.ActualPosition > recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanVerticalPosition - 30 || inShuttleLTAxis.Status.ActualPosition < recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanVerticalPosition + 30))
+                    if (inShuttleLTAxis != null && !(inShuttleLTAxis.Status.ActualPosition > recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanVerticalPosition - 30 || inShuttleLTAxis.Status.ActualPosition < recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanVerticalPosition + 30))
                     {
                         MessageBoxEx.ShowDialog($"[InShuttle Left T Axis] need move to [Ready Position]" +
                             $"\n befor move to [{moveToDescription}]");
@@ -495,7 +495,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                             $"\n befor move to [{moveToDescription}]");
                         return false;
                     }
-                    if (inShuttleRTAxis != null && (inShuttleRTAxis.Status.ActualPosition > recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanVerticalPosition - 30 || inShuttleRTAxis.Status.ActualPosition < recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanVerticalPosition + 30))
+                    if (inShuttleRTAxis != null && !(inShuttleRTAxis.Status.ActualPosition > recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanVerticalPosition - 30 || inShuttleRTAxis.Status.ActualPosition < recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisCleanVerticalPosition + 30))
                     {
                         MessageBoxEx.ShowDialog($"[InShuttle Right T Axis] need move to [Ready Position]" +
                             $"\n befor move to [{moveToDescription}]");
