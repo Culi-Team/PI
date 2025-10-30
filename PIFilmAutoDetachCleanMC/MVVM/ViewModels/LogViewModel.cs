@@ -24,25 +24,31 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         public List<LogEntry> LoadLogEntries(string filePath)
         {
             var logEntries = new List<LogEntry>();
-            var lines = File.ReadAllLines(filePath);
 
-            // Mẫu regex tương ứng với format: [HH:mm:ss.fff],LEVEL ,LOGGER ,MESSAGE
-            var regex = new Regex(@"\[(?<time>[0-9:\.]+)\],(?<type>\w+)\s*,(?<source>.{0,180}),(?<message>.*)");
-
-            foreach (var line in lines)
+            foreach (var line in File.ReadAllLines(filePath))
             {
-                var match = regex.Match(line);
-                if (match.Success)
+                if (string.IsNullOrWhiteSpace(line))
+                    continue;
+
+                var parts = line.Split(new[] { ',' }, 4);
+
+                if (parts.Length < 4)
+                    continue; 
+
+                var time = parts[0].Trim().Trim('[', ']');
+                var type = parts[1].Trim();
+                var source = parts[2].Trim();
+                var description = parts[3].Trim(); 
+
+                logEntries.Add(new LogEntry
                 {
-                    logEntries.Add(new LogEntry
-                    {
-                        Time = match.Groups["time"].Value.Trim(),
-                        Type = match.Groups["type"].Value.Trim(),
-                        Source = match.Groups["source"].Value.Trim(),
-                        Description = match.Groups["message"].Value.Trim()
-                    });
-                }
+                    Time = time,
+                    Type = type,
+                    Source = source,
+                    Description = description
+                });
             }
+
             return logEntries;
         }
 

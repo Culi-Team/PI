@@ -511,10 +511,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetDetachInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
-            inputs.Add(Inputs.DetachFixtureDetect);
             inputs.Add(Inputs.DetachGlassShtVac1);
             inputs.Add(Inputs.DetachGlassShtVac2);
             inputs.Add(Inputs.DetachGlassShtVac3);
+            inputs.Add(Inputs.DetachFixtureDetect);
             inputs.Add(Inputs.DetachCyl1Up);
             inputs.Add(Inputs.DetachCyl1Down);
             inputs.Add(Inputs.DetachCyl2Up);
