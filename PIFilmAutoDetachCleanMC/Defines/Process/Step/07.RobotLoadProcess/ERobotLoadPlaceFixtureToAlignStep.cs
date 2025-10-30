@@ -14,8 +14,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Move_FixtureAlignPlacePosition,
         Move_FixtureAlignPlacePosition_Wait,
 
-        UnContact,
-        UnContact_Wait,
+        UnClamp,
+        UnClamp_Wait,
+        UnAlign,
+        UnAlign_Wait,
 
         Move_FixtureAlignReadyPosition,
         Move_FixtureAlignReadyPosition_Wait,

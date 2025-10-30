@@ -233,7 +233,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ERobotLoadToStopStep.End:
-                    if(ProcessStatus == EProcessStatus.ToStopDone)
+                    if (ProcessStatus == EProcessStatus.ToStopDone)
                     {
                         break;
                     }
@@ -1271,30 +1271,37 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug($"Robot Move Motion Command {ERobotCommand.S3_RDY_PP} Done");
                     Step.RunStep++;
                     break;
-                case ERobotLoadPlaceFixtureToAlignStep.UnContact:
-                    Log.Debug("UnContact");
-                    AlignCyl.Backward();
+                case ERobotLoadPlaceFixtureToAlignStep.UnClamp:
+                    Log.Debug("Unclamp");
                     ClampCyl1.Backward();
                     ClampCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl.IsBackward && ClampCyl1.IsBackward && ClampCyl2.IsBackward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => ClampCyl1.IsBackward && ClampCyl2.IsBackward);
                     Step.RunStep++;
                     break;
-                case ERobotLoadPlaceFixtureToAlignStep.UnContact_Wait:
+                case ERobotLoadPlaceFixtureToAlignStep.UnClamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        if (AlignCyl.IsBackward == false)
-                        {
-                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_Align_Fail);
-                            break;
-                        }
-                        if (ClampCyl1.IsBackward == false || ClampCyl2.IsBackward == false)
-                        {
-                            RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnClamp_Fail);
-                            break;
-                        }
+                        RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnClamp_Fail);
                         break;
                     }
-                    Log.Debug("UnContact Done");
+
+                    Log.Debug("UnClamp Done");
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPlaceFixtureToAlignStep.UnAlign:
+                    Log.Debug("UnAlign");
+                    AlignCyl.Backward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPlaceFixtureToAlignStep.UnAlign_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.RobotLoad_Cylinder_UnAlign_Fail);
+                        break;
+                    }
+
+                    Log.Debug("UnAlign Done");
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToAlignStep.Move_FixtureAlignReadyPosition:
