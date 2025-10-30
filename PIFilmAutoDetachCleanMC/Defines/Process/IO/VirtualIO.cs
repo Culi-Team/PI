@@ -286,6 +286,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 MapTo(_robotLoadOutput[ERobotLoadProcessOutput.FIXTURE_ALIGN_LOAD_DONE]);
             _fixtureAlignInput[EFixtureAlignProcessInput.FIXTURE_TRANSFER_DONE].
                 MapTo(_transferFixtureOutput[ETransferFixtureProcessOutput.FIXTURE_TRANSFER_DONE]);
+            _fixtureAlignInput[EFixtureAlignProcessInput.TRANSFER_FIXTURE_CLAMP_DONE].
+               MapTo(_transferFixtureOutput[ETransferFixtureProcessOutput.TRANSFER_FIXTURE_CLAMP_ALIGN_DONE]);
 
             //Remove Film Input Mapping
             _removeFilmInput[ERemoveFilmProcessInput.REMOVE_FILM_UNLOAD_DONE].
@@ -310,12 +312,18 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 MapTo(_removeFilmOutput[ERemoveFilmProcessOutput.REMOVE_FILM_ORIGIN_DONE]);
             _transferFixtureInput[ETransferFixtureProcessInput.REMOVE_FILM_READY_DONE].
                 MapTo(_removeFilmOutput[ERemoveFilmProcessOutput.REMOVE_FILM_READY_DONE]);
+            _transferFixtureInput[ETransferFixtureProcessInput.ALIGN_FIXTURE_UNCLAMP_DONE].
+                MapTo(_fixtureAlignOutput[EFixtureAlignProcessOutput.FIXTURE_ALIGN_UNCLAMP_DONE]);
+            _transferFixtureInput[ETransferFixtureProcessInput.DETACH_FIXTURE_UNCLAMP_DONE].
+                MapTo(_detachOutput[EDetachProcessOutput.DETACH_UNCLAMP_DONE]);
 
             //Detach Input Mapping
             _detachInput[EDetachProcessInput.FIXTURE_TRANSFER_DONE].
                 MapTo(_transferFixtureOutput[ETransferFixtureProcessOutput.FIXTURE_TRANSFER_DONE]);
             _detachInput[EDetachProcessInput.GLASS_TRANSFER_PICK_DONE].
                 MapTo(_glassTransferOutput[EGlassTransferProcessOutput.GLASS_TRANSFER_PICK_DONE]);
+            _detachInput[EDetachProcessInput.TRANSFER_FIXTURE_CLAMP_DONE].
+                MapTo(_transferFixtureOutput[ETransferFixtureProcessOutput.TRANSFER_FIXTURE_CLAMP_DETACH_DONE]);
 
             //Glass Transfer Input Mapping
             _glassTransferInput[EGlassTransferProcessInput.DETACH_REQ_UNLOAD_GLASS].

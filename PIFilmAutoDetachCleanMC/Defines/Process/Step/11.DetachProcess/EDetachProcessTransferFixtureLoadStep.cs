@@ -14,10 +14,15 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         Detach_Cylinder_Up,
         Detach_Cylinder_Up_Wait,
+        Set_FlagDetachDoneForSemiAutoSequence,
+
+        Wait_TransferFixtureClampDone,
 
         Cyl_Clamp_Backward,
         Cyl_Clamp_Backward_Wait,
-        Set_FlagDetachDone,
+
+        Set_FlagDetachFixtureUnClampDone,
+        Clear_FlagDetachFixtureUnClampDone,
 
         Wait_FixtureTransferDone,
         Clear_FlagDetachDone,

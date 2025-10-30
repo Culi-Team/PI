@@ -119,11 +119,43 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private bool FlagIn_AlignFixtureUnClampDone
+        {
+            get
+            {
+                return _transferFixtureInput[(int)ETransferFixtureProcessInput.ALIGN_FIXTURE_UNCLAMP_DONE];
+            }
+        }
+
+        private bool FlagIn_DetachFixtureUnClampDone
+        {
+            get
+            {
+                return _transferFixtureInput[(int)ETransferFixtureProcessInput.DETACH_FIXTURE_UNCLAMP_DONE];
+            }
+        }
+
         private bool FlagFixtureTransferDone
         {
             set
             {
                 _transferFixtureOutput[(int)ETransferFixtureProcessOutput.FIXTURE_TRANSFER_DONE] = value;
+            }
+        }
+
+        private bool FlagOut_ClampFixtureAlignDone
+        {
+            set
+            {
+                _transferFixtureOutput[(int)ETransferFixtureProcessOutput.TRANSFER_FIXTURE_CLAMP_ALIGN_DONE] = value;
+            }
+        }
+
+        private bool FlagOut_ClampFixtureDetachDone
+        {
+            set
+            {
+                _transferFixtureOutput[(int)ETransferFixtureProcessOutput.TRANSFER_FIXTURE_CLAMP_DETACH_DONE] = value;
             }
         }
         #endregion
@@ -536,6 +568,24 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Transfer Fixture Cylinder Clamp Done");
+                    Step.RunStep = (int)ETransferFixtureProcessLoadStep.StepQueue_EmptyCheck;
+                    break;
+                case ETransferFixtureProcessLoadStep.Set_FlagClampDone:
+                    Log.Debug("Set flag clamp done");
+                    FlagOut_ClampFixtureAlignDone = true;
+                    FlagOut_ClampFixtureDetachDone = true;
+                    Step.RunStep = (int)ETransferFixtureProcessLoadStep.StepQueue_EmptyCheck;
+                    break;
+                case ETransferFixtureProcessLoadStep.Wait_FixtureUnClampDone:
+                    if(FlagIn_AlignFixtureUnClampDone == false || FlagIn_DetachFixtureUnClampDone == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
+                    FlagOut_ClampFixtureAlignDone = false;
+                    FlagOut_ClampFixtureDetachDone = false;
+                    Log.Debug("Clear flag clamp done");
                     Step.RunStep = (int)ETransferFixtureProcessLoadStep.StepQueue_EmptyCheck;
                     break;
                 case ETransferFixtureProcessLoadStep.Wait_RemoveFilm_Done:
