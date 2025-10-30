@@ -43,8 +43,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
             SupportConveyorRoller1.SetDirection(true);
             InWorkConveyorRoller1.SetDirection(true);
             InWorkConveyorRoller2.SetDirection(true);
-
             SupportConveyorRoller2.SetDirection(false);
+
             BufferConveyorRoller1.SetDirection(false);
             BufferConveyorRoller2.SetDirection(false);
 

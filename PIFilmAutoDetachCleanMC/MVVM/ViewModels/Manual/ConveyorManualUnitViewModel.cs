@@ -29,13 +29,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Manual
                 {
                     foreach (var roller in Rollers)
                     {
-                        roller.SetSpeed(ConveyorSpeed);
-                        roller.SetAcceleration(ConveyorAcc);
-                        roller.SetDeceleration(ConveyorDec);
                         if (roller.IsConnected == false)
                         {
                             MessageBoxEx.ShowDialog("Conveyor is not connected.");
                         }
+
+                        roller.SetSpeed(ConveyorSpeed);
+                        roller.SetAcceleration(ConveyorAcc);
+                        roller.SetDeceleration(ConveyorDec);
+                        
                         roller.Run();
                     }
                 });
