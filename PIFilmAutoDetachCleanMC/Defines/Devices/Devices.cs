@@ -151,6 +151,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             cylinders.Add(Cylinders.RemoveZone_PusherCyl1);
             cylinders.Add(Cylinders.RemoveZone_PusherCyl2);
             cylinders.Add(Cylinders.RemoveZone_TransferCyl);
+            cylinders.Add(Cylinders.RemoveZone_UpDownCyl1);
+            cylinders.Add(Cylinders.RemoveZone_UpDownCyl2);
             return cylinders;
         }
 
@@ -478,6 +480,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDInput> GetRemoveFilmInputs()
         {
             ObservableCollection<IDInput> inputs = new ObservableCollection<IDInput>();
+            inputs.Add(Inputs.RemoveZoneZCyl1Up);
+            inputs.Add(Inputs.RemoveZoneZCyl1Down);
+            inputs.Add(Inputs.RemoveZoneZCyl2Up);
+            inputs.Add(Inputs.RemoveZoneZCyl2Down);
             inputs.Add(Inputs.RemoveZoneFixtureDetect);
             inputs.Add(Inputs.RemoveZoneClampCyl1Clamp);
             inputs.Add(Inputs.RemoveZoneClampCyl1Unclamp);
@@ -944,6 +950,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public ObservableCollection<IDOutput> GetRemoveFilmOutputs()
         {
             ObservableCollection<IDOutput> outputs = new ObservableCollection<IDOutput>();
+            outputs.Add(Outputs.RemoveZoneZCyl1Down);
+            outputs.Add(Outputs.RemoveZoneZCyl2Down);
             outputs.Add(Outputs.RemoveZoneTrCylFw);
             outputs.Add(Outputs.RemoveZoneTrCylBw);
             outputs.Add(Outputs.RemoveZoneZCyl1Down);
