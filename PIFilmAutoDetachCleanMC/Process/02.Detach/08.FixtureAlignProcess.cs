@@ -34,12 +34,28 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _fixtureAlignOutput[(int)EFixtureAlignProcessOutput.FIXTURE_ALIGN_REQ_LOAD] = value;
             }
         }
-    
+
         private bool FlagFixtureAlignLoadDone
         {
             get
             {
                 return _fixtureAlignInput[(int)EFixtureAlignProcessInput.FIXTURE_ALIGN_LOAD_DONE];
+            }
+        }
+
+        private bool FlagIn_TransferFixtureClampDone
+        {
+            get
+            {
+                return _fixtureAlignInput[(int)EFixtureAlignProcessInput.TRANSFER_FIXTURE_CLAMP_DONE];
+            }
+        }
+
+        private bool FlagOut_FixtureAlignUnClampDone
+        {
+            set
+            {
+                _fixtureAlignOutput[(int)EFixtureAlignProcessOutput.FIXTURE_ALIGN_UNCLAMP_DONE] = value;
             }
         }
 
@@ -281,22 +297,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.RunStep++;
                     break;
-                case EFixtureAlignStep.Cyl_UnAlign:
-                    Log.Debug("UnAlign Fixture");
-                    AlignFixtureCyl1.Backward();
-                    AlignFixtureCyl2.Backward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignFixtureCyl1.IsBackward && AlignFixtureCyl2.IsBackward);
-                    Step.RunStep++;
-                    break;
-                case EFixtureAlignStep.Cyl_UnAlign_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)EWarning.FixtureAlign_AlignCylinder_Backward_Fail);
-                        break;
-                    }
-                    Log.Debug("UnAlign Fixture Done");
-                    Step.RunStep++;
-                    break;
                 case EFixtureAlignStep.SetFlagAlignDone:
                     Log.Debug("Set Flag Align Done");
                     FlagFixtureAlignDone = true;
@@ -323,8 +323,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Fixture Transfer Start");
                     Step.RunStep++;
                     break;
-                case EFixtureAlignTransferStep.Clear_Flag:
-                    Log.Debug("Wait Fixture Transfer Done");
+                case EFixtureAlignTransferStep.Set_FlagAlignDoneForSemiAutoSequence:
+                    Log.Debug("Set Flag Align Done");
+                    FlagFixtureAlignDone = true;
+                    Step.RunStep++;
+                    break;
+                case EFixtureAlignTransferStep.Wait_TransferFixtureClampDone:
+                    if(FlagIn_TransferFixtureClampDone == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
+                    Log.Debug("Transfer Fixture Clamp Done");
                     Step.RunStep++;
                     break;
                 case EFixtureAlignTransferStep.Cyl_UnAlign:
@@ -343,9 +354,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("UnAlign Fixture Done");
                     Step.RunStep++;
                     break;
-                case EFixtureAlignTransferStep.Set_FlagAlignDone:
-                    Log.Debug("Set Flag Align Done");
-                    FlagFixtureAlignDone = true;
+                case EFixtureAlignTransferStep.Set_FlagUnClampDone:
+                    Log.Debug("Set Flag Fixture Align UnClamp Done");
+                    FlagOut_FixtureAlignUnClampDone = true;
+                    Step.RunStep++;
+                    break;
+                case EFixtureAlignTransferStep.Clear_FlagUnClampDone:
+                    if (FlagIn_TransferFixtureClampDone)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
+                    FlagOut_FixtureAlignUnClampDone = false;
+                    Log.Debug("Clear Flag Align Fixture UnClamp Done");
                     Step.RunStep++;
                     break;
                 case EFixtureAlignTransferStep.Wait_TransferDone:

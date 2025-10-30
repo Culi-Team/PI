@@ -20,6 +20,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             ETransferFixtureProcessLoadStep.Cyl_Down_Wait,
             ETransferFixtureProcessLoadStep.Cyl_Clamp,
             ETransferFixtureProcessLoadStep.Cyl_Clamp_Wait,
+            ETransferFixtureProcessLoadStep.Set_FlagClampDone,
+            ETransferFixtureProcessLoadStep.Wait_FixtureUnClampDone,
             ETransferFixtureProcessLoadStep.Cyl_Up, // Cyl Up 2nd
             ETransferFixtureProcessLoadStep.Cyl_Up_Wait,
             ETransferFixtureProcessLoadStep.Wait_RemoveFilm_Done,
@@ -70,9 +72,6 @@ namespace PIFilmAutoDetachCleanMC.Process
 
             EDetachStep.Cyl_Detach_Up,
             EDetachStep.Cyl_Detach_Up_Wait,
-
-            EDetachStep.Cyl_Clamp_Backward,
-            EDetachStep.Cyl_Clamp_Backward_Wait,
 
             EDetachStep.Set_FlagDetachDone,
         };

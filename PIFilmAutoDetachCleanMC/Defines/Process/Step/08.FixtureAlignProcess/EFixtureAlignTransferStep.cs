@@ -9,10 +9,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EFixtureAlignTransferStep
     {
         Start,
-        Clear_Flag,
+        Set_FlagAlignDoneForSemiAutoSequence,
+        Wait_TransferFixtureClampDone,
         Cyl_UnAlign,
         Cyl_UnAlign_Wait,
-        Set_FlagAlignDone,
+        Set_FlagUnClampDone,
+        Clear_FlagUnClampDone,
         Wait_TransferDone,
         End,
     }

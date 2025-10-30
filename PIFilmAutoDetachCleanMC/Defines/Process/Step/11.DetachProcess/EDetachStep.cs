@@ -42,9 +42,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_Detach_Up,
         Cyl_Detach_Up_Wait,
 
-        Cyl_Clamp_Backward,
-        Cyl_Clamp_Backward_Wait,
-
         Set_FlagDetachDone,
 
         End
