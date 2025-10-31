@@ -454,15 +454,6 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private bool FlagAFCleanCleaning
         {
-            get
-            {
-                if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
-                {
-                    return Inputs[(int)ECleanProcessInput.AF_CLEAN_CLEANING];
-                }
-
-                return false;
-            }
             set
             {
                 if (cleanType == EClean.AFCleanLeft || cleanType == EClean.AFCleanRight)
@@ -1796,6 +1787,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
+                    Log.Debug("Clear Flag AF Clean Cleaning");
                     FlagAFCleanCleaning = false;
                     Step.RunStep = (int)ECleanProcessCleanStep.End;
                     break;
@@ -1958,6 +1950,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     Log.Debug("X Axis Move Ready Position Done");
+
+                    Log.Debug("Clear Flag AF Clean Cleaning");
                     FlagAFCleanCleaning = false;
                     Step.RunStep++;
                     break;
@@ -1990,7 +1984,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Unload Start");
                     if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
-                        Log.Debug("Wait Transfer Rotation Ready Pick and AF Clean Done");
+                        Log.Debug("Wait Transfer Rotation Ready Pick");
                     }
                     Step.RunStep++;
                     break;

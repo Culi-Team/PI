@@ -485,9 +485,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferFixtureProcessLoadStep.Check_Y_Position:
-                    if (TransferFixtureYAxis.IsOnPosition(_transferFixtureRecipe.TransferFixtureYAxisLoadPosition))
+                    if (TransferFixtureYAxis.IsOnPosition(_transferFixtureRecipe.TransferFixtureYAxisLoadPosition) && CylUpDown.IsForward)
                     {
                         TransferFixtureLoadSteps = new Queue<ETransferFixtureProcessLoadStep>(ProcessesWorkSequence.TransferFixtureLoadSequence.Skip(4).ToList());
+                    }
+                    else if(TransferFixtureYAxis.IsOnPosition(_transferFixtureRecipe.TransferFixtureYAxisLoadPosition) && CylUpDown.IsBackward)
+                    {
+                        TransferFixtureLoadSteps = new Queue<ETransferFixtureProcessLoadStep>(ProcessesWorkSequence.TransferFixtureLoadSequence.Skip(6).ToList());
                     }
                     else
                     {
@@ -537,7 +541,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessLoadStep.Cyl_Down:
                     if (CylUpDown.IsBackward)
                     {
-                        Step.RunStep = (int)ETransferFixtureProcessLoadStep.Cyl_Clamp;
+                        Step.RunStep = (int)ETransferFixtureProcessLoadStep.StepQueue_EmptyCheck;
                         break;
                     }
 

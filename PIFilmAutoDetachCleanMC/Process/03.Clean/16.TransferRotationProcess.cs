@@ -478,7 +478,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationWETCleanUnloadStep.Cyl_Backward:
                     if (TransferCyl.IsBackward)
                     {
-                        Step.RunStep = (int)ETransferRotationWETCleanUnloadStep.Set_FlagTransferRotationReadyPick;
+                        Step.RunStep = (int)ETransferRotationWETCleanUnloadStep.Wait_AFClean_CleanDone;
                         break;
                     }
                     Log.Debug("Cylinder Backward");

@@ -5,6 +5,7 @@ using EQX.UI.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
+using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
 using System;
 using System.Windows;
 
@@ -17,6 +18,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Privates
         private readonly Devices _devices;
         private readonly MachineStatus _machineStatus;
+        private readonly ViewModelNavigationStore _viewModelavigationStore;
         private int raisedAlarmCode = -1;
         private int raisedWarningCode = -1;
         private readonly IAlertService _alarmService;
@@ -28,21 +30,20 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return true;
-                //return _devices.Inputs.DoorLock1L.Value &&
-                //       _devices.Inputs.DoorLock1R.Value &&
-                //       _devices.Inputs.DoorLock2L.Value &&
-                //       _devices.Inputs.DoorLock2R.Value &&
-                //       _devices.Inputs.DoorLock3L.Value &&
-                //       _devices.Inputs.DoorLock3R.Value &&
-                //       _devices.Inputs.DoorLock4L.Value &&
-                //       _devices.Inputs.DoorLock4R.Value &&
-                //       _devices.Inputs.DoorLock5L.Value &&
-                //       _devices.Inputs.DoorLock5R.Value &&
-                //       _devices.Inputs.DoorLock6L.Value &&
-                //       _devices.Inputs.DoorLock6R.Value &&
-                //       _devices.Inputs.DoorLock7L.Value &&
-                //       _devices.Inputs.DoorLock7R.Value;
+                return _devices.Inputs.DoorLock1L.Value &&
+                       _devices.Inputs.DoorLock1R.Value &&
+                       _devices.Inputs.DoorLock2L.Value &&
+                       _devices.Inputs.DoorLock2R.Value &&
+                       _devices.Inputs.DoorLock3L.Value &&
+                       _devices.Inputs.DoorLock3R.Value &&
+                       _devices.Inputs.DoorLock4L.Value &&
+                       _devices.Inputs.DoorLock4R.Value &&
+                       _devices.Inputs.DoorLock5L.Value &&
+                       _devices.Inputs.DoorLock5R.Value &&
+                       _devices.Inputs.DoorLock6L.Value &&
+                       _devices.Inputs.DoorLock6R.Value &&
+                       _devices.Inputs.DoorLock7L.Value &&
+                       _devices.Inputs.DoorLock7R.Value;
             }
         }
 
@@ -50,21 +51,20 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                //return _devices.Inputs.DoorLatch1L.Value &&
-                //       _devices.Inputs.DoorLatch1R.Value &&
-                //       _devices.Inputs.DoorLatch2L.Value &&
-                //       _devices.Inputs.DoorLatch2R.Value &&
-                //       _devices.Inputs.DoorLatch3L.Value &&
-                //       _devices.Inputs.DoorLatch3R.Value &&
-                //       _devices.Inputs.DoorLatch4L.Value &&
-                //       _devices.Inputs.DoorLatch4R.Value &&
-                //       _devices.Inputs.DoorLatch5L.Value &&
-                //       _devices.Inputs.DoorLatch5R.Value &&
-                //       _devices.Inputs.DoorLatch6L.Value &&
-                //       _devices.Inputs.DoorLatch6R.Value &&
-                //       _devices.Inputs.DoorLatch7L.Value &&
-                //       _devices.Inputs.DoorLatch7R.Value;
-                return true;
+                return _devices.Inputs.DoorLatch1L.Value &&
+                       _devices.Inputs.DoorLatch1R.Value &&
+                       _devices.Inputs.DoorLatch2L.Value &&
+                       _devices.Inputs.DoorLatch2R.Value &&
+                       _devices.Inputs.DoorLatch3L.Value &&
+                       _devices.Inputs.DoorLatch3R.Value &&
+                       _devices.Inputs.DoorLatch4L.Value &&
+                       _devices.Inputs.DoorLatch4R.Value &&
+                       _devices.Inputs.DoorLatch5L.Value &&
+                       _devices.Inputs.DoorLatch5R.Value &&
+                       _devices.Inputs.DoorLatch6L.Value &&
+                       _devices.Inputs.DoorLatch6R.Value &&
+                       _devices.Inputs.DoorLatch7L.Value &&
+                       _devices.Inputs.DoorLatch7R.Value;
             }
         }
 
@@ -88,11 +88,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Constructor
         public RootProcess(Devices devices,
             MachineStatus machineStatus,
+            ViewModelNavigationStore viewModelavigationStore,
             [FromKeyedServices("AlarmService")] IAlertService alarmService,
             [FromKeyedServices("WarningService")] IAlertService warningService)
         {
             _devices = devices;
             _machineStatus = machineStatus;
+            _viewModelavigationStore = viewModelavigationStore;
             _alarmService = alarmService;
             _warningService = warningService;
 
@@ -163,15 +165,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                 if (ProcessMode != EProcessMode.ToAlarm &&
                     ProcessMode != EProcessMode.Alarm && ProcessMode != EProcessMode.None)
                 {
-                    if (_machineStatus.OPCommand == EOperationCommand.Ready
+                    if ((_machineStatus.OPCommand == EOperationCommand.Ready
                         || _devices.Inputs.OpLButtonReset.Value == true
-                        || _devices.Inputs.OpRButtonReset.Value == true)
+                        || _devices.Inputs.OpRButtonReset.Value == true) && _viewModelavigationStore.CurrentViewModel is AutoViewModel)
                     {
                         command = EOperationCommand.Ready;
                     }
-                    else if (_machineStatus.OPCommand == EOperationCommand.Start
+                    else if ((_machineStatus.OPCommand == EOperationCommand.Start
                         || _devices.Inputs.OpLButtonStart.Value == true
-                        || _devices.Inputs.OpRButtonStart.Value == true)
+                        || _devices.Inputs.OpRButtonStart.Value == true) && _viewModelavigationStore.CurrentViewModel is AutoViewModel)
                     {
                         command = EOperationCommand.Start;
                     }
@@ -180,10 +182,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                         command = EOperationCommand.SemiAuto;
                     }
                 }
-                else if (_machineStatus.OPCommand == EOperationCommand.Ready
+                else if ((_machineStatus.OPCommand == EOperationCommand.Ready
                     || _machineStatus.OPCommand == EOperationCommand.Start
+                    || _devices.Inputs.OpLButtonStart.Value == true
+                    || _devices.Inputs.OpRButtonStart.Value == true
                     || _devices.Inputs.OpLButtonReset.Value == true
-                    || _devices.Inputs.OpRButtonReset.Value == true)
+                    || _devices.Inputs.OpRButtonReset.Value == true) && _viewModelavigationStore.CurrentViewModel is AutoViewModel)
                 {
                     MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_ResetAlarmBeforeRun"], (string)Application.Current.Resources["str_Confirm"]);
                     _machineStatus.OPCommand = EOperationCommand.None;
@@ -247,6 +251,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                 _devices.RollerList.SetDirection();
 
+                _devices.Outputs.Lamp_Stop();
                 //foreach (var motion in _devices.Motions.All!) { motion.ClearPosition(); }
 
                 MessageBoxEx.Show(Application.Current.Resources["str_OriginSuccess"].ToString(), false);
@@ -497,7 +502,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 return;
             }
 
-            if(RobotLoadUserSaf == false ||  RobotUnloadUserSaf == false)
+            if (RobotLoadUserSaf == false || RobotUnloadUserSaf == false)
             {
                 RaiseWarning(RobotLoadUserSaf == false
                              ? (int)EWarning.RobotLoad_SafetyFenceSwitch_Not_Active

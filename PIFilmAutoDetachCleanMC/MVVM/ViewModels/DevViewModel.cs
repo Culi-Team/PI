@@ -215,9 +215,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    GlassTransferCylinderUpDown1.Forward();
-                    GlassTransferCylinderUpDown2.Forward();
-                    GlassTransferCylinderUpDown3.Forward();
+                    GlassTransferCylinderUpDown1.Backward();
+                    GlassTransferCylinderUpDown2.Backward();
+                    GlassTransferCylinderUpDown3.Backward();
                 });
             }
         }
@@ -228,9 +228,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    GlassTransferCylinderUpDown1.Backward();
-                    GlassTransferCylinderUpDown2.Backward();
-                    GlassTransferCylinderUpDown3.Backward();
+                    GlassTransferCylinderUpDown1.Forward();
+                    GlassTransferCylinderUpDown2.Forward();
+                    GlassTransferCylinderUpDown3.Forward();
                 });
             }
         }
@@ -321,10 +321,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    UnLoadRobCyl1.Forward();
-                    UnLoadRobCyl2.Forward();
-                    UnLoadRobCyl3.Forward();
-                    UnLoadRobCyl4.Forward();
+                    UnLoadRobCyl1.Backward();
+                    UnLoadRobCyl2.Backward();
+                    UnLoadRobCyl3.Backward();
+                    UnLoadRobCyl4.Backward();
                 });
             }
         }
@@ -335,10 +335,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    UnLoadRobCyl1.Backward();
-                    UnLoadRobCyl2.Backward();
-                    UnLoadRobCyl3.Backward();
-                    UnLoadRobCyl4.Backward();
+                    UnLoadRobCyl1.Forward();
+                    UnLoadRobCyl2.Forward();
+                    UnLoadRobCyl3.Forward();
+                    UnLoadRobCyl4.Forward();
                 });
             }
         }

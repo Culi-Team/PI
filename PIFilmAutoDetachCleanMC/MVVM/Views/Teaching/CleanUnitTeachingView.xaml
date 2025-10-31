@@ -110,13 +110,13 @@
                                             Content="{Binding .}"
                                             Margin="3"
                                             Height="150"
-                                            Width="170"/>       
+                                            Width="170"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
             </GroupBox>
-            
+
             <GroupBox Header="Regulator"
                       Grid.Row="0"
                       Style="{StaticResource TextBlockHeaderGroupBox}">
@@ -323,7 +323,7 @@
                                 BorderThickness="1"
                                 Margin="5 0 0 0"
                                 Grid.Column="1">
-                            <UniformGrid Rows="3">
+                            <UniformGrid Rows="4">
                                 <UniformGrid Columns="4"
                                              VerticalAlignment="Center">
                                     <Label Content="Volume"
@@ -348,6 +348,10 @@
                                             Command="{Binding SyringePumpRunTestCommand}" />
                                     <Button Content="Stop"
                                             Command="{Binding SyringePumpStopCommand}" />
+                                </UniformGrid>
+                                <UniformGrid VerticalAlignment="Center">
+                                    <Button Content="Fill"
+                                            Command="{Binding FillCommand}" />
                                 </UniformGrid>
                                 <UniformGrid VerticalAlignment="Center">
                                     <Button Content="Initialize"

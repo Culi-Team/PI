@@ -1019,7 +1019,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.Wait_MachineRequestPlace:
-                    if (FlagMachineRequestPlace == false && !_machineStatus.IsDryRunMode)
+                    if (FlagMachineRequestPlace == false && !_machineStatus.IsDryRunMode && !_machineStatus.MachineTestMode)
                     {
                         Wait(20);
                         break;
