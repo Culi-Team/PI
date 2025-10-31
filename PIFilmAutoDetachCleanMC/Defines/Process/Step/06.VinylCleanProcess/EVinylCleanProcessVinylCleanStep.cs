@@ -11,6 +11,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Start,
         FixtureDetect_Check,
         Cyl_Clamp,
+        Cyl_Clamp_Delay,
         Cyl_Clamp_Wait,
         Cyl_Pusher_Up,
         Cyl_Pusher_Up_Wait,

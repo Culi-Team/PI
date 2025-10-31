@@ -21,6 +21,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Set_Flag_RequestFixture,
         Wait_RobotMoveVinylCleanDone,
         Cyl_Clamp,
+        Cyl_Clamp_Delay,
         Cyl_Clamp_Wait,
         SetFlag_VinylCleanClampDone,
         Wait_FixtureLoadDone,

@@ -1,21 +1,22 @@
 ﻿using EQX.Core.Common;
+using EQX.Core.Communication;
+using EQX.Core.Communication.Modbus;
+using EQX.Core.Device.SpeedController;
 using EQX.Core.InOut;
+using EQX.Core.Robot;
+using EQX.UI.Controls;
+using log4net;
 using Microsoft.Extensions.DependencyInjection;
+using PIFilmAutoDetachCleanMC.Defines;
+using PIFilmAutoDetachCleanMC.Defines.Devices;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
+using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
+using PIFilmAutoDetachCleanMC.Process;
+using PIFilmAutoDetachCleanMC.Recipe;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Threading;
-using PIFilmAutoDetachCleanMC.Defines;
-using PIFilmAutoDetachCleanMC.Process;
-using EQX.Core.Device.SpeedController;
-using EQX.Core.Communication.Modbus;
-using PIFilmAutoDetachCleanMC.Defines.Devices;
-using PIFilmAutoDetachCleanMC.Recipe;
-using log4net;
-using System.Runtime.CompilerServices;
-using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
-using EQX.Core.Robot;
-using EQX.Core.Communication;
-using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 
 namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
@@ -373,6 +374,38 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     case EHandleStep.Start:
                         MessageText = "Deinit Start";
                         MessageText = "Stop Processes";
+
+                        if (_devices.Inputs.GlassTransferVac1.Value ||
+                            _devices.Inputs.GlassTransferVac2.Value ||
+                            _devices.Inputs.GlassTransferVac3.Value ||
+                            _devices.Inputs.TransferInShuttleLVac.Value ||
+                            _devices.Inputs.TransferInShuttleRVac.Value ||
+                            _devices.Inputs.TrRotateLeftVac1.Value ||
+                            _devices.Inputs.TrRotateLeftVac2.Value ||
+                            _devices.Inputs.TrRotateLeftRotVac.Value ||
+                            _devices.Inputs.TrRotateRightVac1.Value ||
+                            _devices.Inputs.TrRotateRightVac2.Value ||
+                            _devices.Inputs.TrRotateRightRotVac.Value ||
+                            _devices.Inputs.UnloadTransferLVac.Value ||
+                            _devices.Inputs.UnloadTransferRVac.Value ||
+                            _devices.Inputs.UnloadRobotVac1.Value ||
+                            _devices.Inputs.UnloadRobotVac2.Value ||
+                            _devices.Inputs.UnloadRobotVac3.Value ||
+                            _devices.Inputs.UnloadRobotVac4.Value)
+                        {
+                            bool? ret = MessageBoxEx.ShowDialog("Glass detected on some of pickup head.\n" +
+                                "Please remove all glass before SHUT DOWN.\n" +
+                                "Do you still want to SHUT DOWN?", "WARNING");
+
+                            if (ret == false)
+                            {
+                                MessageText = "Navigating to main view again...";
+                                _navigationService.NavigateTo<AutoViewModel>();
+                                isHandling = false;
+                                return;
+                            }
+                        }
+
                         Thread.Sleep(50);
                         _step++;
                         break;

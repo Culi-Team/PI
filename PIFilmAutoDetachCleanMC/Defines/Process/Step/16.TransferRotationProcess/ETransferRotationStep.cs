@@ -30,6 +30,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         GlassRotVac_On_Check,
         ZAxis_Move_ReadyPosition,
         ZAxis_Move_ReadyPosition_Wait,
+
+        Transfer_Cyl_Forward_2nd,
+        Transfer_Cyl_Forward__2nd_Wait,
+
         Cyl_Rotate_180D,
         Cyl_Rotate_180D_Wait,
 

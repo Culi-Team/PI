@@ -774,6 +774,28 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Z Axis Move Ready Position Done");
                     Step.RunStep++;
                     break;
+                case ETransferRotationStep.Transfer_Cyl_Forward_2nd:
+                    if(TransferCyl.IsForward)
+                    {
+                        Step.RunStep = (int)ETransferRotationStep.Cyl_Rotate_180D;
+                        break;
+                    }
+                    Log.Debug("Transfer Cylinder Forward");
+                    TransferCyl.Forward();
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => TransferCyl.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationStep.Transfer_Cyl_Forward__2nd_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_Cylinder_Forward_Fail :
+                                                          EWarning.TransferRotationRight_Cylinder_Forward_Fail));
+                        break;
+                    }
+
+                    Log.Debug("Transfer Cylinder Forward Done");
+                    Step.RunStep++;
+                    break;
                 case ETransferRotationStep.Cyl_Rotate_180D:
                     Log.Debug("Cylinder Rotate 180 Degree");
                     RotateCyl.Forward();

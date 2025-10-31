@@ -30,6 +30,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                 return _devices.Inputs.VinylCleanFixtureDetect.Value;
             }
         }
+
+        private bool IsFixtureClamp => (!FixtureClampCyl1.IsBackward && !FixtureClampCyl1.IsForward && !FixtureClampCyl2.IsBackward && !FixtureClampCyl2.IsForward) &&
+                                        (_devices.Outputs.VinylCleanFixtureClamp.Value);
         private ICylinder FixtureClampCyl1 => _devices.Cylinders.VinylClean_ClampCyl1;
         private ICylinder FixtureClampCyl2 => _devices.Cylinders.VinylClean_ClampCyl2;
 
@@ -349,8 +352,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Vinyl Clean Cylinder Clamp");
                     FixtureClampCyl1.Forward();
                     FixtureClampCyl2.Forward();
+                    Wait(200);
+                    Step.RunStep++;
+                    break;
+                case EVinylCleanProcessVinylCleanStep.Cyl_Clamp_Delay:
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,
-                        () => (FixtureClampCyl1.IsForward && FixtureClampCyl2.IsForward) || _machineStatus.IsDryRunMode);
+                        () => IsFixtureClamp || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessVinylCleanStep.Cyl_Clamp_Wait:
@@ -607,8 +614,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Vinyl Clean Cylinder Clamp");
                     FixtureClampCyl1.Forward();
                     FixtureClampCyl2.Forward();
+                    Wait(200);
+                    Step.RunStep++;
+                    break;
+                case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_Clamp_Delay:
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000,
-                        () => (FixtureClampCyl1.IsForward && FixtureClampCyl2.IsForward) || _machineStatus.IsDryRunMode);
+                        () => IsFixtureClamp || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Cyl_Clamp_Wait:
