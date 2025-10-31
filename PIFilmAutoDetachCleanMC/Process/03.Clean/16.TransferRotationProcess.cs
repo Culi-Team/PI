@@ -23,6 +23,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private EPort port => Name == EProcess.TransferRotationLeft.ToString() ? EPort.Left : EPort.Right;
 
         private readonly Devices _devices;
+        private readonly RecipeList _recipeList;
         private readonly CommonRecipe _commonRecipe;
         private readonly TransferRotationRecipe _transferRotationLeftRecipe;
         private readonly TransferRotationRecipe _transferRotationRightRecipe;
@@ -83,6 +84,22 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private bool FlagAFCleanDisable
+        {
+            set
+            {
+                Outputs[(int)ETransferRotationProcessOutput.AF_CLEAN_DISABLE] = value;
+            }
+        }
+
+        private bool FlagAFCleanCleaning
+        {
+            get
+            {
+                return Inputs[(int)ETransferRotationProcessInput.AF_CLEAN_CLEANING];
+            }
+        }
+
         private bool FlagWETCleanUnloadDone
         {
             set
@@ -122,10 +139,26 @@ namespace PIFilmAutoDetachCleanMC.Process
                 Outputs[(int)ETransferRotationProcessOutput.TRANSFER_ROTATION_READY_PLACE] = value;
             }
         }
+
+        private bool FlagWETCleanAvoidPosition
+        {
+            get
+            {
+                if (port == EPort.Left)
+                {
+                    return _devices.Motions.InShuttleLXAxis.Status.ActualPosition <= _recipeList.WetCleanLeftRecipe.XAxisCleanHorizontalPosition;
+                }
+                else
+                {
+                    return _devices.Motions.InShuttleRXAxis.Status.ActualPosition <= _recipeList.WetCleanRightRecipe.XAxisCleanHorizontalPosition;
+                }
+            }
+        }
         #endregion
 
         #region Constructor
         public TransferRotationProcess(Devices devices,
+            RecipeList recipeList,
             CommonRecipe commonRecipe,
             MachineStatus machineStatus,
             [FromKeyedServices("TransferRotationLeftRecipe")] TransferRotationRecipe transferRotationLeftRecipe,
@@ -136,6 +169,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             [FromKeyedServices("TransferRotationRightOutput")] IDOutputDevice transferRotationRightOutput)
         {
             _devices = devices;
+            _recipeList = recipeList;
             _commonRecipe = commonRecipe;
             _machineStatus = machineStatus;
             _transferRotationLeftRecipe = transferRotationLeftRecipe;
@@ -463,6 +497,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Backward Done");
                     Step.RunStep++;
                     break;
+                case ETransferRotationWETCleanUnloadStep.Wait_AFClean_CleanDone:
+                    if (FlagAFCleanCleaning == true)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
+                    FlagAFCleanDisable = true;
+                    Step.RunStep++;
+                    break;
                 case ETransferRotationWETCleanUnloadStep.Set_FlagTransferRotationReadyPick:
                     Log.Debug("Set Flag Transfer Rotation Ready Pick");
                     FlagTransferRotationReadyPick = true;
@@ -558,7 +602,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationWETCleanUnloadStep.Wait_WETCleanUnloadDoneReceived:
-                    if (FlagWETCleanRequestUnload == true)
+                    //If AutoRun -> Wait WET Clean Move Over Avoid Position
+                    if (FlagWETCleanRequestUnload == true || ((FlagWETCleanAvoidPosition == false) && (Parent.Sequence == ESequence.AutoRun)))
                     {
                         Wait(20);
                         break;
@@ -566,8 +611,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Clear Flag WET Clean Unload Done");
                     FlagWETCleanUnloadDone = false;
 
+                    //Enable AF Clean
+                    FlagAFCleanDisable = false;
+
                     Log.Debug("Clear Flag Transfer Rotation Ready Pick");
                     FlagTransferRotationReadyPick = false;
+
+                    //Set Flag for AF Clean Move to Load Position
+                    Log.Debug("Set Flag Transfer Rotation Ready Place");
+                    FlagTransferRotationReadyPlace = true;
                     Step.RunStep++;
                     break;
                 case ETransferRotationWETCleanUnloadStep.End:

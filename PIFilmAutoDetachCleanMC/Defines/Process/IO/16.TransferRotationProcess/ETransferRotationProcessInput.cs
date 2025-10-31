@@ -10,5 +10,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         WET_CLEAN_REQ_UNLOAD,
         AF_CLEAN_REQ_LOAD,
+
+        AF_CLEAN_CLEANING,
     }
 }

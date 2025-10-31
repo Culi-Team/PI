@@ -12,5 +12,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         AF_CLEAN_LOAD_DONE,
         TRANSFER_ROTATION_READY_PICK,
         TRANSFER_ROTATION_READY_PLACE,
+
+        AF_CLEAN_DISABLE,
     }
 }

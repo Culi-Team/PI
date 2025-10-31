@@ -394,8 +394,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 MapTo(_unloadTransferLeftOutput[EUnloadTransferProcessOutput.AF_CLEAN_UNLOAD_DONE]);
             _afCleanLeftInput[ECleanProcessInput.TRANSFER_ROTATION_READY_PICK_PLACE].
                 MapTo(_transferRotationLeftOutput[ETransferRotationProcessOutput.TRANSFER_ROTATION_READY_PLACE]);
-            _afCleanLeftInput[ECleanProcessInput.WET_CLEAN_UNLOADING].
-                MapTo(_wetCleanLeftOutput[ECleanProcessOutput.WET_CLEAN_UNLOADING]);
+            _afCleanLeftInput[ECleanProcessInput.AF_CLEAN_DISABLE].
+                MapTo(_transferRotationLeftOutput[ETransferRotationProcessOutput.AF_CLEAN_DISABLE]);
 
             //Right
             _afCleanRightInput[ECleanProcessInput.LOAD_DONE].
@@ -404,8 +404,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 MapTo(_unloadTransferRightOutput[EUnloadTransferProcessOutput.AF_CLEAN_UNLOAD_DONE]);
             _afCleanRightInput[ECleanProcessInput.TRANSFER_ROTATION_READY_PICK_PLACE].
                 MapTo(_transferRotationRightOutput[ETransferRotationProcessOutput.TRANSFER_ROTATION_READY_PLACE]);
-            _afCleanRightInput[ECleanProcessInput.WET_CLEAN_UNLOADING].
-                MapTo(_wetCleanRightOutput[ECleanProcessOutput.WET_CLEAN_UNLOADING]);
+            _afCleanRightInput[ECleanProcessInput.AF_CLEAN_DISABLE].
+                MapTo(_transferRotationRightOutput[ETransferRotationProcessOutput.AF_CLEAN_DISABLE]);
 
             //Transfer Rotation Input Mapping
             //Left
@@ -413,12 +413,16 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 MapTo(_wetCleanLeftOutput[ECleanProcessOutput.REQ_UNLOAD]);
             _transferRotationLeftInput[ETransferRotationProcessInput.AF_CLEAN_REQ_LOAD].
                 MapTo(_afCleanLeftOutput[ECleanProcessOutput.REQ_LOAD]);
+            _transferRotationLeftInput[ETransferRotationProcessInput.AF_CLEAN_CLEANING].
+                MapTo(_afCleanLeftOutput[ECleanProcessOutput.AF_CLEAN_CLEANING]);
 
             //Right
             _transferRotationRightInput[ETransferRotationProcessInput.WET_CLEAN_REQ_UNLOAD].
                 MapTo(_wetCleanRightOutput[ECleanProcessOutput.REQ_UNLOAD]);
             _transferRotationRightInput[ETransferRotationProcessInput.AF_CLEAN_REQ_LOAD].
                 MapTo(_afCleanRightOutput[ECleanProcessOutput.REQ_LOAD]);
+            _transferRotationRightInput[ETransferRotationProcessInput.AF_CLEAN_CLEANING].
+                MapTo(_afCleanRightOutput[ECleanProcessOutput.AF_CLEAN_CLEANING]);
 
             //Unload Transfer Input Mapping
             //Left
