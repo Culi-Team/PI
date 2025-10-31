@@ -173,9 +173,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDOutput AlignBlow2 => port == EPort.Left ? _devices.Outputs.AlignStageLBlow2OnOff : _devices.Outputs.AlignStageRBlow2OnOff;
         private IDOutput AlignBlow3 => port == EPort.Left ? _devices.Outputs.AlignStageLBlow3OnOff : _devices.Outputs.AlignStageRBlow3OnOff;
 
-        public IDOutput TransferVac => port == EPort.Left
+        private IDOutput TransferVac => port == EPort.Left
             ? _devices.Outputs.TransferInShuttleLVacOnOff
             : _devices.Outputs.TransferInShuttleRVacOnOff;
+
+        private IDOutput TransferBlow => port == EPort.Left
+            ? _devices.Outputs.TransferInShuttleLBlowOnOff
+            : _devices.Outputs.TransferInShuttleRBlowOnOff;
         #endregion
 
         #region Constructor
@@ -750,7 +754,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferInShuttleWETCleanLoadStep.Vacuum_On:
                     Log.Debug("Vacuum On");
-                    TransferVac.Value = true;
+                    TransferVacOnOff(true);
                     Wait((int)(_commonRecipe.VacDelay * 1000), () => IsTransfer_VacDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
@@ -855,7 +859,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferInShuttleWETCleanLoadStep.Vacuum_Off:
                     Log.Debug("Vacuum Off");
-                    TransferVac.Value = false;
+                    TransferVacOnOff(false);
                     Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
@@ -918,6 +922,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                 AlignCyl1.Backward();
                 AlignCyl2.Backward();
                 AlignCyl3.Backward();
+            }
+        }
+
+        private void TransferVacOnOff(bool bOnOff)
+        {
+            TransferVac.Value = bOnOff;
+            TransferBlow.Value = !bOnOff;
+
+            if (bOnOff == false)
+            {
+                Task.Delay(100).ContinueWith(t =>
+                {
+                    TransferBlow.Value = false;
+                });
             }
         }
 
