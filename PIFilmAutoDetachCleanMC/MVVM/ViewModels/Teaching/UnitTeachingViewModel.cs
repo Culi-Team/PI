@@ -368,7 +368,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             {
                 var transferInShuttlerLeft = devices.Motions.TransferInShuttleLZAxis;
                 var transferRotationLZAxis = devices.Motions.TransferRotationLZAxis;
-                var inShuttleLTAxis = devices.Motions.InShuttleLTAxis;
+                var inShuttleLYAxis = devices.Motions.InShuttleLYAxis;
                 var outtShuttleLXAxis = devices.Motions.OutShuttleLXAxis;
 
                 if (moveToDescription == "X Axis Ready Position"
@@ -387,9 +387,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                             $"\n befor move to [{moveToDescription}]");
                         return false;
                     }
-                    if (inShuttleLTAxis != null && !inShuttleLTAxis.IsOnPosition(recipeSelector.CurrentRecipe.WetCleanLeftRecipe.TAxisReadyPosition))
+                    if (inShuttleLYAxis != null && !inShuttleLYAxis.IsOnPosition(recipeSelector.CurrentRecipe.WetCleanLeftRecipe.YAxisReadyPosition))
                     {
-                        MessageBoxEx.ShowDialog($"[InShuttle Left T Axis] need move to " +
+                        MessageBoxEx.ShowDialog($"[InShuttle Left Y Axis] need move to " +
                             $"\n [Ready Position]" +
                             $"\n befor move to [{moveToDescription}]");
                         return false;
@@ -400,10 +400,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                             $"\n befor move to [{moveToDescription}]");
                         return false;
                     }
-                    if ((outtShuttleLXAxis != null && outtShuttleLXAxis.Status.ActualPosition <= (recipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisCleanHorizontalPosition - 100))
-                        && (moveToDescription == "X Axis Unload Position"))
+                    if ((outtShuttleLXAxis != null && !outtShuttleLXAxis.IsOnPosition(recipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisCleanHorizontalPosition)
+                        && (moveToDescription == "X Axis Unload Position")))
                     {
-                        MessageBoxEx.ShowDialog($"[Transfer InShuttle Left X Axis],need [Move Ready] before move to " +
+                        MessageBoxEx.ShowDialog($"[Out Shuttle Left X Axis],need [Move Ready] before move to " +
                             $" \n [{moveToDescription}]");
                         return false;
                     }
@@ -467,10 +467,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                             $"\n [{moveToDescription}]");
                         return false;
                     }
-                    if ((inShuttleLXAxis != null && inShuttleLXAxis.Status.ActualPosition >= (recipeSelector.CurrentRecipe.WetCleanLeftRecipe.XAxisCleanHorizontalPosition - 100))
-                        && (moveToDescription == "X Axis Load Position"))
+                    if ((inShuttleLXAxis != null && !inShuttleLXAxis.IsOnPosition(recipeSelector.CurrentRecipe.WetCleanLeftRecipe.XAxisCleanHorizontalPosition)
+                        && (moveToDescription == "X Axis Load Position")))
                     {
-                        MessageBoxEx.ShowDialog($"[Transfer InShuttle Left X Axis],need [Move Ready] before move to " +
+                        MessageBoxEx.ShowDialog($"[In Shuttle Left X Axis],need [Move Ready] before move to " +
                             $" \n [{moveToDescription}]");
                         return false;
                     }
@@ -482,7 +482,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             {
                 var transferInShuttlerRight = devices.Motions.TransferInShuttleRZAxis;
                 var transferRotationRZAxis = devices.Motions.TransferRotationRZAxis;
-                var inShuttleRTAxis = devices.Motions.InShuttleRTAxis;
+                var inShuttleRYAxis = devices.Motions.InShuttleRYAxis;
                 var outtShuttleRXAxis = devices.Motions.OutShuttleRXAxis;
 
                 if (moveToDescription == "X Axis Ready Position"
@@ -501,9 +501,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                             $"\n befor move to [{moveToDescription}]");
                         return false;
                     }
-                    if (inShuttleRTAxis != null && !inShuttleRTAxis.IsOnPosition(recipeSelector.CurrentRecipe.WetCleanRightRecipe.TAxisReadyPosition))
+                    if (inShuttleRYAxis != null && !inShuttleRYAxis.IsOnPosition(recipeSelector.CurrentRecipe.WetCleanRightRecipe.YAxisReadyPosition))
                     {
-                        MessageBoxEx.ShowDialog($"[InShuttle Right T Axis] need move to [Ready Position]" +
+                        MessageBoxEx.ShowDialog($"[InShuttle Right Y Axis] need move to [Ready Position]" +
                             $"\n befor move to [{moveToDescription}]");
                         return false;
                     }
@@ -516,7 +516,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     if ((outtShuttleRXAxis != null && outtShuttleRXAxis.Status.ActualPosition <= (recipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisCleanHorizontalPosition - 100)
                         && (moveToDescription == "X Axis Unload Position")))
                     {
-                        MessageBoxEx.ShowDialog($"[Transfer InShuttle Right X Axis],need [Move Ready] before move to " +
+                        MessageBoxEx.ShowDialog($"[Out Shuttle Right X Axis],need [Move Ready] before move to " +
                             $" \n [{moveToDescription}]");
                         return false;
                     }
@@ -583,7 +583,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     if ((inShuttleRXAxis != null && inShuttleRXAxis.Status.ActualPosition >= (recipeSelector.CurrentRecipe.WetCleanRightRecipe.XAxisCleanHorizontalPosition - 100))
                         && (moveToDescription == "X Axis Load Position"))
                     {
-                        MessageBoxEx.ShowDialog($"[Transfer InShuttle Left X Axis],need [Move Ready] before move to " +
+                        MessageBoxEx.ShowDialog($"[In Shuttle Left X Axis],need [Move Ready] before move to " +
                             $" \n [{moveToDescription}]");
                         return false;
                     }
