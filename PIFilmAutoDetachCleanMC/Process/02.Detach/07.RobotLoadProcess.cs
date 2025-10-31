@@ -1072,10 +1072,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoad_ReadyStep.RobotReady:
                     Log.Debug("Start Move Ready Position Robot Load");
-                    Log.Debug($"Send Robot Motion Command {ERobotCommand.HOME}");
-                    if (SendCommand(ERobotCommand.HOME, 10, 10))
+                    Log.Debug($"Send Robot Motion Command {ERobotCommand.READY}");
+                    if (SendCommand(ERobotCommand.READY, 10, 10))
                     {
-                        Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.HOME)));
+                        Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.READY)));
                         Step.RunStep++;
                         break;
                     }
