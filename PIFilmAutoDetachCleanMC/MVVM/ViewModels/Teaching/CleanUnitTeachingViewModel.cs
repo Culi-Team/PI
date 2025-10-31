@@ -38,7 +38,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
         End
     }
 
-    public enum ESyringePumpInitializeStep
+    public enum ESyringePumpFillStep
     {
         Initialize,
         Initialize_Wait,
@@ -125,7 +125,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
             {
                 return new RelayCommand(() =>
                 {
-                    if(this is VinylCleanTeachingViewModel)
+                    if (this is VinylCleanTeachingViewModel)
                     {
                         UnWinder.SetTorque(((VinylCleanRecipe)Recipe).UnWinderTorque);
                         return;
@@ -347,40 +347,38 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 return new RelayCommand(() =>
                 {
                     isSyringePumpRunTest = false;
-                    isSyringePumpInitialize = false;
+                    isSyringePumpFill = false;
                     SyringePump.Stop();
                 });
             }
         }
 
-        public ICommand SyringePumpInitializeCommand
+
+        public ICommand FillCommand
         {
             get
             {
                 return new RelayCommand(() =>
                 {
-                    isSyringePumpInitialize = true;
+                    isSyringePumpFill = true;
                     int step = 0;
                     int dispenseCount = 0;
                     Thread thread = new Thread(() =>
                     {
-                        while (isSyringePumpInitialize)
+                        while (isSyringePumpFill)
                         {
-                            switch ((ESyringePumpInitializeStep)step)
+                            switch ((ESyringePumpFillStep)step)
                             {
-                                case ESyringePumpInitializeStep.Initialize:
+                                case ESyringePumpFillStep.Initialize:
                                     SyringePump.SetSpeed(10);
                                     Thread.Sleep(200);
                                     SyringePump.SetAcceleration(20);
                                     Thread.Sleep(200);
                                     SyringePump.SetDeccelation(20);
                                     Thread.Sleep(200);
-
-                                    //SyringePump.Initialize();
-                                    Thread.Sleep(100);
                                     step++;
                                     break;
-                                case ESyringePumpInitializeStep.Initialize_Wait:
+                                case ESyringePumpFillStep.Initialize_Wait:
                                     if (SyringePump.IsReady() == false)
                                     {
                                         Thread.Sleep(100);
@@ -388,20 +386,20 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                     }
                                     step++;
                                     break;
-                                case ESyringePumpInitializeStep.DispenseCount_Check:
+                                case ESyringePumpFillStep.DispenseCount_Check:
                                     if (dispenseCount >= 5)
                                     {
-                                        step = (int)ESyringePumpInitializeStep.End;
+                                        step = (int)ESyringePumpFillStep.End;
                                         break;
                                     }
                                     step++;
                                     break;
-                                case ESyringePumpInitializeStep.Dispense_Port8:
+                                case ESyringePumpFillStep.Dispense_Port8:
                                     SyringePump.Dispense(1.0, 8);
                                     Thread.Sleep(100);
                                     step++;
                                     break;
-                                case ESyringePumpInitializeStep.Dispense_Port8_Wait:
+                                case ESyringePumpFillStep.Dispense_Port8_Wait:
                                     if (SyringePump.IsReady() == false)
                                     {
                                         Thread.Sleep(100);
@@ -409,12 +407,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                     }
                                     step++;
                                     break;
-                                case ESyringePumpInitializeStep.Fill_Port7:
+                                case ESyringePumpFillStep.Fill_Port7:
                                     SyringePump.Fill(1.0);
                                     Thread.Sleep(100);
                                     step++;
                                     break;
-                                case ESyringePumpInitializeStep.Fill_Port7_Wait:
+                                case ESyringePumpFillStep.Fill_Port7_Wait:
                                     if (SyringePump.IsReady() == false)
                                     {
                                         Thread.Sleep(100);
@@ -422,10 +420,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                     }
 
                                     dispenseCount++;
-                                    step = (int)ESyringePumpInitializeStep.DispenseCount_Check;
+                                    step = (int)ESyringePumpFillStep.DispenseCount_Check;
                                     break;
-                                case ESyringePumpInitializeStep.End:
-                                    isSyringePumpInitialize = false;
+                                case ESyringePumpFillStep.End:
+                                    isSyringePumpFill = false;
                                     break;
                             }
                         }
@@ -434,9 +432,19 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 });
             }
         }
+        public ICommand SyringePumpInitializeCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    SyringePump.Initialize();
+                });
+            }
+        }
 
         private bool isSyringePumpRunTest = false;
-        private bool isSyringePumpInitialize = false;
+        private bool isSyringePumpFill = false;
 
         private void PressureUpdateTimer_Tick(object? sender, EventArgs e)
         {

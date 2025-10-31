@@ -463,6 +463,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EWorkConveyorAutoRunStep.Cassette_Check:
                     if (IsCassetteDetect)
                     {
+                        ConveyorRun(true);
+                        Wait(1000);
                         Log.Info("Sequence Tilt");
                         Sequence = port == EPort.Right ? ESequence.InWorkCSTTilt : ESequence.OutWorkCSTTilt;
                         break;
@@ -535,6 +537,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EWorkConveyor_TiltStep.Start:
                     Log.Debug("Tilt Start");
+                    ConveyorStop();
                     Step.RunStep++;
                     break;
                 case EWorkConveyor_TiltStep.Cyl_SupportCV_Down:

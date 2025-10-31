@@ -27,8 +27,12 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly CWorkData _workData;
         private readonly MachineStatus _machineStatus;
 
-
         private bool IsPlasmaPrepare { get; set; } = false;
+
+        private IDOutput GlassBlowOnOff1 => _devices.Outputs.UnloadRobotBlow1OnOff;
+        private IDOutput GlassBlowOnOff2 => _devices.Outputs.UnloadRobotBlow2OnOff;
+        private IDOutput GlassBlowOnOff3 => _devices.Outputs.UnloadRobotBlow3OnOff;
+        private IDOutput GlassBlowOnOff4 => _devices.Outputs.UnloadRobotBlow4OnOff;
 
         private IDOutput GlassVacOnOff1 => _devices.Outputs.UnloadRobotVac1OnOff;
         private IDOutput GlassVacOnOff2 => _devices.Outputs.UnloadRobotVac2OnOff;
@@ -490,22 +494,38 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Private Methods
-        private void VacuumOnOff(bool bOnOff)
+        private void VacuumOnOff(bool isOn)
         {
-            GlassVacOnOff1.Value = bOnOff;
-            GlassVacOnOff2.Value = bOnOff;
-            GlassVacOnOff3.Value = bOnOff;
-            GlassVacOnOff4.Value = bOnOff;
-#if SIMULATION
-            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac1, bOnOff);
-            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac2, bOnOff);
-            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac3, bOnOff);
-            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac4, bOnOff);
+            GlassVacOnOff1.Value = isOn;
+            GlassVacOnOff2.Value = isOn;
+            GlassVacOnOff3.Value = isOn;
+            GlassVacOnOff4.Value = isOn;
 
-            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect1, bOnOff);
-            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect2, bOnOff);
-            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect3, bOnOff);
-            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect4, bOnOff);
+            GlassBlowOnOff1.Value = !isOn;
+            GlassBlowOnOff2.Value = !isOn;
+            GlassBlowOnOff3.Value = !isOn;
+            GlassBlowOnOff4.Value = !isOn;
+
+            if(isOn == false)
+            {
+                Task.Delay(100).ContinueWith(t =>
+                {
+                    GlassBlowOnOff1.Value = false;
+                    GlassBlowOnOff2.Value = false;
+                    GlassBlowOnOff3.Value = false;
+                    GlassBlowOnOff4.Value = false;
+                });
+            }
+#if SIMULATION
+            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac1, isOn);
+            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac2, isOn);
+            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac3, isOn);
+            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotVac4, isOn);
+
+            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect1, isOn);
+            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect2, isOn);
+            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect3, isOn);
+            SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadRobotDetect4, isOn);
 #endif
         }
 
@@ -1019,7 +1039,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.Wait_MachineRequestPlace:
-                    if (FlagMachineRequestPlace == false && !_machineStatus.IsDryRunMode)
+                    if (FlagMachineRequestPlace == false && !_machineStatus.IsDryRunMode && !_machineStatus.MachineTestMode)
                     {
                         Wait(20);
                         break;

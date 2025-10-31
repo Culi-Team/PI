@@ -15,6 +15,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         TRANSFER_IN_SHUTTLE_IN_SAFE_POS,
 
         AF_CLEAN_CLEANING,
-        WET_CLEAN_UNLOADING,
+
+        AF_CLEAN_DISABLE,
     }
 }

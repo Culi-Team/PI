@@ -93,6 +93,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput TransferFixture1Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_1_UNCLAMP);
         public IDOutput TransferFixture2Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_2_CLAMP);
         public IDOutput TransferFixture2Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_2_UNCLAMP);
+        public IDOutput TransferInShuttleLBlowOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_IN_SHUTTLE_L_BLOW_ON_OFF);
+        public IDOutput TransferInShuttleRBlowOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_IN_SHUTTLE_R_BLOW_ON_OFF);
         public IDOutput DetachCyl1Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DETACH_CYL_1_UP);
         public IDOutput DetachCyl1Down => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DETACH_CYL_1_DOWN);
         public IDOutput DetachCyl2Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DETACH_CYL_2_UP);
@@ -107,6 +109,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput DetachClampCyl4Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.DETACH_CLAMP_CYL_4_UNCLAMP);
         public IDOutput RemoveZoneTrCylBw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_TR_CYL_BW);
         public IDOutput RemoveZoneTrCylFw => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_TR_CYL_FW);
+        public IDOutput GlassTransferBlow1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.GLASS_TRANSFER_BLOW_1_ON_OFF);
+        public IDOutput GlassTransferBlow2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.GLASS_TRANSFER_BLOW_2_ON_OFF);
+        public IDOutput GlassTransferBlow3OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.GLASS_TRANSFER_BLOW_3_ON_OFF);
         public IDOutput RemoveZoneZCyl1Down => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_Z_CYL_1_DOWN);
         public IDOutput RemoveZoneZCyl2Down => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_Z_CYL_2_DOWN);
         public IDOutput RemoveZoneFilm1Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.REMOVE_ZONE_FILM_1_CLAMP);
@@ -197,10 +202,18 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput AfCleanPusherRightDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_PUSHER_RIGHT_DOWN);
         public IDOutput AfCleanPusherLeftUp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_PUSHER_LEFT_UP);
         public IDOutput AfCleanPusherLeftDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_PUSHER_LEFT_DOWN);
+        public IDOutput TransferRotationRightBlow1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_BLOW_1_ON_OFF);
+        public IDOutput TransferRotationRightBlow2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_BLOW_2_ON_OFF);
+        public IDOutput TransferRotationLeftBlow1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_BLOW_1_ON_OFF);
+        public IDOutput TransferRotationLeftBlow2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_BLOW_2_ON_OFF);
+        public IDOutput TransferRotationRightRotBlowOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_RIGHT_ROT_BLOW_ON_OFF);
+        public IDOutput TransferRotationLeftRotBlowOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TR_ROTATE_LEFT_ROT_BLOW_ON_OFF);
         public IDOutput AfCleanBrushRightDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_BRUSH_RIGHT_DOWN);
         public IDOutput AfCleanBrushLeftDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.AF_CLEAN_BRUSH_LEFT_DOWN);
         public IDOutput OutShuttleRVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_SHUTTLE_R_VAC_ON_OFF);
         public IDOutput OutShuttleLVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_SHUTTLE_L_VAC_ON_OFF);
+        public IDOutput UnloadTransferLBlowOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_TRANSFER_L_BLOW_ON_OFF);
+        public IDOutput UnloadTransferRBlowOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_TRANSFER_R_BLOW_ON_OFF);
         public IDOutput UnloadTransferLVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_TRANSFER_L_VAC_ON_OFF);
         public IDOutput UnloadTransferRVacOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_TRANSFER_R_VAC_ON_OFF);
         public IDOutput OpRButtonStopLamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OP_R_BUTTON_STOP_LAMP);
@@ -222,6 +235,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput UnloadAlignCyl2Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ALIGN_CYL_2_UP);
         public IDOutput UnloadAlignCyl3Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ALIGN_CYL_3_UP);
         public IDOutput UnloadAlignCyl4Up => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ALIGN_CYL_4_UP);
+        public IDOutput UnloadRobotBlow1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ROBOT_BLOW_1_ON_OFF);
+        public IDOutput UnloadRobotBlow2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ROBOT_BLOW_2_ON_OFF);
+        public IDOutput UnloadRobotBlow3OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ROBOT_BLOW_3_ON_OFF);
+        public IDOutput UnloadRobotBlow4OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ROBOT_BLOW_4_ON_OFF);
         public IDOutput UnloadRobotVac1OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ROBOT_VAC_1_ON_OFF);
         public IDOutput UnloadRobotVac2OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ROBOT_VAC_2_ON_OFF);
         public IDOutput UnloadRobotVac3OnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.UNLOAD_ROBOT_VAC_3_ON_OFF);

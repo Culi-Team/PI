@@ -143,7 +143,8 @@
         </Style>
     </UserControl.Resources>
     <TabControl>
-        <TabItem Header="Recipe">
+        <TabItem Header="Recipe"
+                 Width="200">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
@@ -253,7 +254,8 @@
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem Header="Speed">
+        <TabItem Header="Speed"
+                 Width="200">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />

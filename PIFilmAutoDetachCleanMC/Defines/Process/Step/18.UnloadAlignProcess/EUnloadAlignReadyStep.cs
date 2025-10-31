@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum ETransferRotationProcessInput
+    public enum EUnloadAlignReadyStep
     {
-        WET_CLEAN_REQ_UNLOAD,
-        AF_CLEAN_REQ_LOAD,
-
-        AF_CLEAN_CLEANING,
+        Start,
+        Vacuum_On,
+        Cyl_Down,
+        Cyl_Down_Wait,
+        End,
     }
 }

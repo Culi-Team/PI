@@ -23,7 +23,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1.15*" />
             </Grid.ColumnDefinitions>
             <ScrollViewer Grid.Column="0"
                           Grid.ColumnSpan="2"

@@ -92,6 +92,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
+        public bool VinylCleanEncoderIsConnected => Devices.VinylCleanEncoder.IsConnected;
+
         public bool IndicatorIsConnected => Indicator.IsConnected;
         public bool WETCleanLeftRegulatorIsConnected => Devices.Regulators.WetCleanLRegulator.IsConnected;
         public bool WETCleanRightRegulatorIsConnected => Devices.Regulators.WetCleanRRegulator.IsConnected;
@@ -178,6 +180,17 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
+        public ICommand VinylCleanEncoderConnectCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    Devices.VinylCleanEncoder.Connect();
+                    OnPropertyChanged(nameof(VinylCleanEncoderIsConnected));
+                });
+            }
+        }
         public ICommand RobotLoadConnectCommand
         {
             get

@@ -31,6 +31,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IMotion YAxis => _devices.Motions.GlassTransferYAxis;
         private IMotion ZAxis => _devices.Motions.GlassTransferZAxis;
 
+        private IDOutput GlassBlow1 => _devices.Outputs.GlassTransferBlow1OnOff;
+        private IDOutput GlassBlow2 => _devices.Outputs.GlassTransferBlow2OnOff;
+        private IDOutput GlassBlow3 => _devices.Outputs.GlassTransferBlow3OnOff;
+
         private IDOutput GlassVac1 => _devices.Outputs.GlassTransferVac1OnOff;
         private IDOutput GlassVac2 => _devices.Outputs.GlassTransferVac2OnOff;
         private IDOutput GlassVac3 => _devices.Outputs.GlassTransferVac3OnOff;
@@ -333,6 +337,20 @@ namespace PIFilmAutoDetachCleanMC.Process
             GlassVac1.Value = bOnOff;
             GlassVac2.Value = bOnOff;
             GlassVac3.Value = bOnOff;
+
+            GlassBlow1.Value = !bOnOff;
+            GlassBlow2.Value = !bOnOff;
+            GlassBlow3.Value = !bOnOff;
+
+            if (bOnOff == false)
+            {
+                Task.Delay(100).ContinueWith(t =>
+                {
+                    GlassBlow1.Value = false;
+                    GlassBlow2.Value = false;
+                    GlassBlow3.Value = false;
+                });
+            }
 #if SIMULATION
             SimulationInputSetter.SetSimInput(_devices.Inputs.GlassTransferVac1, bOnOff);
             SimulationInputSetter.SetSimInput(_devices.Inputs.GlassTransferVac2, bOnOff);

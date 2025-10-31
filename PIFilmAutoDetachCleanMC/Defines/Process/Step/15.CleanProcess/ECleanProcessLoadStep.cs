@@ -19,13 +19,13 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Set_FlagCleanRequestLoad,
         Wait_CleanLoadDone,
 
-        Axis_MoveReadyPosition,
-        Axis_MoveReadyPosition_Wait,
-
         Cyl_Clamp,
         Cyl_Clamp_Wait,
         Vacuum_On,
         Vacuum_Check,
+
+        Axis_MoveReadyPosition,
+        Axis_MoveReadyPosition_Wait,
         End
     }
 }

@@ -144,7 +144,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     if (MessageBoxEx.ShowDialog((string)Application.Current.Resources["str_SaveAllData"]) == true)
                     {
                         RecipeSelector.Save();
-                        CassetteList.RecipeUpdateHandle();
+                        //CassetteList.RecipeUpdateHandle();
                         OnPropertyChanged(nameof(Recipes));
                     }
                 });

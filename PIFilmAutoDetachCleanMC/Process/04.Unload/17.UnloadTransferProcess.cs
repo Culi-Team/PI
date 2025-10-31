@@ -39,6 +39,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IMotion ZAxis => port == EPort.Left ? _devices.Motions.GlassUnloadLZAxis :
                                                   _devices.Motions.GlassUnloadRZAxis;
 
+        private IDOutput GlassBlowOnOff => port == EPort.Left ? _devices.Outputs.UnloadTransferLBlowOnOff :
+                                                  _devices.Outputs.UnloadTransferRBlowOnOff;
         private IDOutput GlassVacOnOff => port == EPort.Left ? _devices.Outputs.UnloadTransferLVacOnOff :
                                                   _devices.Outputs.UnloadTransferRVacOnOff;
 
@@ -379,7 +381,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EUnloadTransferAFCleanUnloadStep.Vacuum_On:
                     Log.Debug("Vacuum On");
-                    GlassVacOnOff.Value = true;
+                    GlassVacuumOnOff(true);
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(GlassVac, true);
 #endif
@@ -582,7 +584,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EUnloadTransferPlaceStep.Vacuum_Off:
                     Log.Debug("Vacuum Off");
-                    GlassVacOnOff.Value = false;
+                    GlassVacuumOnOff(false);
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(GlassVac, false);
 #endif
@@ -656,7 +658,19 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        #endregion
+        private void GlassVacuumOnOff(bool isOn)
+        {
+            GlassVacOnOff.Value = isOn;
+            GlassBlowOnOff.Value = !isOn;
 
+            if(isOn == false)
+            {
+                Task.Delay(100).ContinueWith(t =>
+                {
+                    GlassBlowOnOff.Value = false;
+                });
+            }
+        }
+        #endregion
     }
 }

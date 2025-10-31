@@ -177,7 +177,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Sequence_AutoRun();
                     break;
                 case ESequence.Ready:
-                    Sequence = ESequence.Stop;
+                    Sequence_Ready();
                     break;
                 case ESequence.UnloadTransferLeftPlace:
                     Sequence_UnloadTransferPlace();
@@ -275,6 +275,45 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        private void Sequence_Ready()
+        {
+            switch ((EUnloadAlignReadyStep)Step.RunStep)
+            {
+                case EUnloadAlignReadyStep.Start:
+                    Log.Debug("Ready Start");
+                    if (IsUnalign)
+                    {
+                        Step.RunStep = (int)EUnloadAlignReadyStep.End;
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EUnloadAlignReadyStep.Vacuum_On:
+                    Log.Debug("Vacuum On");
+                    VacOnOff(true);
+                    Step.RunStep++;
+                    break;
+                case EUnloadAlignReadyStep.Cyl_Down:
+                    Log.Debug("Cylinder Unalign");
+                    AlignUnalign(false);
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => IsUnalign);
+                    Step.RunStep++;
+                    break;
+                case EUnloadAlignReadyStep.Cyl_Down_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning(EWarning.UnloadAlign_AlignCylinder_Down_Fail);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EUnloadAlignReadyStep.End:
+                    Log.Debug("Ready End");
+                    Sequence = ESequence.Stop;
+                    break;
+            }
+        }
+
         private void Sequence_AutoRun()
         {
             switch ((EUnloadAlignAutoRunStep)Step.RunStep)
@@ -334,6 +373,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Wait((int)(_commonRecipe.VacDelay * 1000));
                     Step.RunStep++;
                     break;
+                case EUnloadAlignStep.Wait_GlassDetect:
+                    if (IsGlassDetect == false && _machineStatus.IsDryRunMode == false)
+                    {
+                        RaiseWarning(EWarning.UnloadAlign_Glass_NotDetect);
+                        break;
+                    }
+                    AlignBlow1.Value = true;
+                    AlignBlow2.Value = true;
+                    AlignBlow3.Value = true;
+                    AlignBlow4.Value = true;
+                    Wait(500);
+                    Step.RunStep++;
+                    break;
                 case EUnloadAlignStep.Vacuum_On:
                     Log.Debug("Vacuum On");
                     VacOnOff(true);
@@ -350,14 +402,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.UnloadAlign_Vacuum_Fail);
-                        break;
-                    }
-                    Step.RunStep++;
-                    break;
-                case EUnloadAlignStep.GlassDetect_Check:
-                    if (IsGlassDetect == false && !_machineStatus.IsDryRunMode)
-                    {
-                        RaiseWarning((int)EWarning.UnloadAlign_Glass_NotDetect);
                         break;
                     }
                     Step.RunStep++;
@@ -500,7 +544,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             Wait(20);
                             break;
                         }
-                        
+
                         FlagLeftTransferWorkEnable = false;
                         Log.Debug("UnloadTransferLeft Unload Done");
                         if (Parent.Sequence != ESequence.AutoRun)
@@ -543,6 +587,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
             }
         }
+
+
         #endregion
     }
 }
