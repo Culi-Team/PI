@@ -265,46 +265,48 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
-        //public override bool ProcessToStop()
-        //{
-        //    switch ((ERobotLoadToStopStep)Step.ToRunStep)
-        //    {
-        //        case ERobotLoadToStopStep.Start:
-        //            Log.Debug("To Stop Start");
-        //            Step.ToRunStep++;
-        //            break;
-        //        case ERobotLoadToStopStep.Stop:
-        //            Log.Debug("Stop Robot Load");
-        //            _robotLoad.SendCommand(RobotHelpers.RobotStop);
+        public override bool ProcessToAlarm()
+        {
+            switch ((ERobotLoadToAlarmStep)Step.ToRunStep)
+            {
+                case ERobotLoadToAlarmStep.Start:
+                    Log.Debug("To Alarm Start");
+                    Step.ToRunStep++;
+                    break;
+                case ERobotLoadToAlarmStep.Stop:
+                    Log.Debug("Stop Robot Load");
+                    _robotLoad.SendCommand(RobotHelpers.RobotStop);
 
-        //            Wait(5000, () => _robotLoad.ReadResponse("Stop complete,0\r\n"));
+                    Wait(5000, () => _robotLoad.ReadResponse("Stop complete,0\r\n"));
 
-        //            Step.ToRunStep++;
-        //            break;
-        //        case ERobotLoadToStopStep.Stop_Check:
-        //            if (WaitTimeOutOccurred)
-        //            {
-        //                RaiseWarning((int)EWarning.RobotLoad_Stop_Fail);
-        //                break;
-        //            }
+                    Step.ToRunStep++;
+                    break;
+                case ERobotLoadToAlarmStep.Stop_Check:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.RobotLoad_Stop_Fail);
+                        break;
+                    }
 
-        //            Log.Debug("Robot Load Stop Complete");
-        //            Step.ToRunStep++;
-        //            break;
-        //        case ERobotLoadToStopStep.End:
-        //            if (ProcessStatus == EProcessStatus.ToStopDone)
-        //            {
-        //                break;
-        //            }
-        //            Log.Debug("To Stop End");
-        //            ProcessStatus = EProcessStatus.ToStopDone;
-        //            Step.ToRunStep++;
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //    return true;
-        //}
+                    Log.Debug("Robot Load Stop Complete");
+                    Step.ToRunStep++;
+                    break;
+                case ERobotLoadToAlarmStep.End:
+                    if (ProcessStatus == EProcessStatus.ToAlarmDone)
+                    {
+                        Thread.Sleep(10);
+                        break;
+                    }
+
+                    Log.Debug("To Alarm End");
+                    ProcessStatus = EProcessStatus.ToAlarmDone;
+                    Step.ToRunStep++;
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        }
 
         public override bool ProcessToOrigin()
         {

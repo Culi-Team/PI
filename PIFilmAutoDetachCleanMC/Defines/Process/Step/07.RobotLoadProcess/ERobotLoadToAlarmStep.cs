@@ -1,6 +1,6 @@
 ﻿namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum ERobotLoadToStopStep
+    public enum ERobotLoadToAlarmStep
     {
         Start,
         Stop,
