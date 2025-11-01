@@ -172,6 +172,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotUnloadToStopStep.End:
                     if (ProcessStatus == EProcessStatus.ToStopDone)
                     {
+                        Thread.Sleep(10);
                         break;
                     }
                     Log.Debug("To Stop End");
@@ -183,6 +184,49 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
             return true;
         }
+
+        public override bool ProcessToAlarm()
+        {
+            switch ((ERobotUnloadToAlarmStep)Step.ToRunStep)
+            {
+                case ERobotUnloadToAlarmStep.Start:
+                    Log.Debug("To Alarm Start");
+                    Step.ToRunStep++;
+                    break;
+                case ERobotUnloadToAlarmStep.Stop:
+                    Log.Debug("Stop Robot Unload");
+                    _robotUnload.SendCommand(RobotHelpers.RobotStop);
+
+                    Wait(5000, () => _robotUnload.ReadResponse("Stop complete,0\r\n"));
+
+                    Step.ToRunStep++;
+                    break;
+                case ERobotUnloadToAlarmStep.Stop_Check:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.RobotUnload_Stop_Fail);
+                        break;
+                    }
+
+                    Log.Debug("Robot Load Stop Complete");
+                    Step.ToRunStep++;
+                    break;
+                case ERobotUnloadToAlarmStep.End:
+                    if (ProcessStatus == EProcessStatus.ToAlarmDone)
+                    {
+                        Thread.Sleep(10);
+                        break;
+                    }
+                    Log.Debug("To Alarm End");
+                    ProcessStatus = EProcessStatus.ToAlarmDone;
+                    Step.ToRunStep++;
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        }
+
         public override bool ProcessToOrigin()
         {
             switch ((ERobotUnloadToOriginStep)Step.OriginStep)
