@@ -1063,7 +1063,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.Winder_UnWinder_Run:
-                    Winder.Run(false);
+                    Winder.Run(true);
                     UnWinder.Run(false);
                     Step.ToRunStep++;
                     break;
