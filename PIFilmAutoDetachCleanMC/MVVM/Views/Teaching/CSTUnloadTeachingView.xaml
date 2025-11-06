@@ -7,6 +7,7 @@
              mc:Ignorable="d"
              x:Name="root"
              xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
+             DataContextChanged="root_DataContextChanged"
              Loaded="UserControl_Loaded"
              xmlns:inout="clr-namespace:EQX.InOut;assembly=EQX.InOut"
              d:DataContext="{d:DesignInstance Type={x:Type teachingVm:UnitTeachingViewModel}}"

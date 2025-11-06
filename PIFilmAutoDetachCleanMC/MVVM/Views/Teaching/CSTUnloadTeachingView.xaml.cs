@@ -109,5 +109,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views.Teaching
         {
             LoadPositionTeaching();
         }
+
+        private void root_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            LoadPositionTeaching();
+        }
     }
 }
