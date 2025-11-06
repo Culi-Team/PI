@@ -58,7 +58,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 {
                     if(teachingUnit is UnitTeachingViewModel unitTeachingViewModel)
                     {
+                        if (SelectedTeachingUnit.Name == unitTeachingViewModel.Name) return;
+
                         SelectedTeachingUnit = unitTeachingViewModel;
+                        SelectedUnitTeachingOnChanged();
                     }
                 });
             }
