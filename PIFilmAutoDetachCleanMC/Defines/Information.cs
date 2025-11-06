@@ -9,7 +9,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 {
     public class Information
     {
-        public string Customer => "Automation Engineering Group";
+        public string Customer => "SEVT Glass Team";
         public string MachineName => "PI Film Auto Detach & Clean";
         public string SoftwareVersion => "1.0.0.1";
 

@@ -62,6 +62,7 @@
             <TextBlock TextAlignment="Center"
                        FontFamily="Consolas"
                        Foreground="Black"
+                       FontSize="18"
                        Grid.Row="1"
                        Grid.Column="2">
                 <TextBlock.Text>
