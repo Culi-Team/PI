@@ -33,6 +33,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Feeding_Backward,
         Feeding_Backward_Wait,
 
+        RemainVolume_Check,
+        Fill,
+        FlowSensor_Check,
+        Fill_Wait,
+
         End,
     }
 }

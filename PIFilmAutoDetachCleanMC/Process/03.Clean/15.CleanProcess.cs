@@ -41,6 +41,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private int GlassCleanCount { get; set; } = 0;
 
+        private double RemainVolume { get; set; } = 0.0;
+
         private bool Is3MPrepareDone { get; set; } = false;
 
         private EPort port => cleanType == EClean.WETCleanLeft || cleanType == EClean.AFCleanLeft ? EPort.Left : EPort.Right;
@@ -246,11 +248,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FeedingRollerDetect
+        private bool FeedingRollerNotDetect
         {
             get
             {
-                if (_machineStatus.IsDryRunMode || _machineStatus.MachineTestMode) return true;
+                if (_machineStatus.IsDryRunMode || _machineStatus.MachineTestMode) return false;
 
                 return cleanType switch
                 {
@@ -340,6 +342,21 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+
+        private bool IsAlcoholDetect
+        {
+            get
+            {
+                return cleanType switch
+                {
+                    EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftAlcoholPumpDetect.Value,
+                    EClean.WETCleanRight => _devices.Inputs.WetCleanRightAlcoholPumpDetect.Value,
+                    EClean.AFCleanLeft => _devices.Inputs.AfCleanLeftAlcoholPumpDetect.Value,
+                    EClean.AFCleanRight => _devices.Inputs.AfCleanRightAlcoholPumpDetect.Value,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+        }
         private CleanRecipe cleanRecipe
         {
             get
@@ -1043,7 +1060,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Feeding Roller Detect Check");
-                    if (FeedingRollerDetect == false)
+                    if (FeedingRollerNotDetect == true)
                     {
                         EWarning? warning = cleanType switch
                         {
@@ -1160,6 +1177,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Thread.Sleep(100);
                         break;
                     }
+                    RemainVolume = 1.0;
                     Step.RunStep++;
                     break;
                 case ECleanProcessAutoRunStep.VacDetect_Check:
@@ -2298,6 +2316,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 Thread.Sleep(100);
                                 break;
                             }
+
+                            RemainVolume -= cleanRecipe.CleanVolume;
+
                             Log.Debug("Dispense Port 1 Done");
                             prepare3MStep++;
                             break;
@@ -2318,6 +2339,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 Thread.Sleep(100);
                                 break;
                             }
+
+                            RemainVolume -= cleanRecipe.CleanVolume;
+
                             Log.Debug("Dispense Port 2 Done");
                             prepare3MStep++;
                             break;
@@ -2338,6 +2362,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 Thread.Sleep(100);
                                 break;
                             }
+
+                            RemainVolume -= cleanRecipe.CleanVolume;
+
                             Log.Debug("Dispense Port 3 Done");
                             prepare3MStep++;
                             break;
@@ -2358,6 +2385,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 Thread.Sleep(100);
                                 break;
                             }
+
+                            RemainVolume -= cleanRecipe.CleanVolume;
+
                             Log.Debug("Dispense Port 4 Done");
                             prepare3MStep++;
                             break;
@@ -2378,6 +2408,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 Thread.Sleep(100);
                                 break;
                             }
+
+                            RemainVolume -= cleanRecipe.CleanVolume;
+
                             Log.Debug("Dispense Port 5 Done");
                             prepare3MStep++;
                             break;
@@ -2398,6 +2431,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 Thread.Sleep(100);
                                 break;
                             }
+
+                            RemainVolume -= cleanRecipe.CleanVolume;
+
                             Log.Debug("Dispense Port 6 Done");
                             prepare3MStep++;
                             break;
@@ -2427,13 +2463,61 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 Thread.Sleep(10);
                                 break;
                             }
+
+                            Is3MPrepareDone = true;
+
                             Log.Debug("R Feeding Axis Move Backward Done");
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.RemainVolume_Check:
+                            if (RemainVolume >= 0.3)
+                            {
+                                prepare3MStep = (int)ECleanProcessPrepare3MStep.End;
+                                break;
+                            }
+
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Fill:
+                            SyringePump.Fill(1.0);
+                            StepWaitTime = Environment.TickCount;
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.FlowSensor_Check:
+                            if (Environment.TickCount - StepWaitTime > 300)
+                            {
+                                EWarning? warning = cleanType switch
+                                {
+                                    EClean.WETCleanLeft => EWarning.WETCleanLeft_AlcoholLeak_Detect,
+                                    EClean.WETCleanRight => EWarning.WETCleanRight_Alcohol_Not_Detect,
+                                    EClean.AFCleanLeft => EWarning.AFCleanLeft_Alcohol_Not_Detect,
+                                    EClean.AFCleanRight => EWarning.AFCleanRight_Alcohol_Not_Detect,
+                                    _ => null
+                                };
+                                RaiseWarning((int)warning!);
+                                break;
+                            }
+                            if (IsAlcoholDetect == false && _machineStatus.IsDryRunMode == false && _machineStatus.MachineTestMode == false)
+                            {
+                                Thread.Sleep(10);
+                                break;
+                            }
+
+                            prepare3MStep++;
+                            break;
+                        case ECleanProcessPrepare3MStep.Fill_Wait:
+                            if (SyringePump.IsReady() == false)
+                            {
+                                Thread.Sleep(100);
+                                break;
+                            }
+
+                            RemainVolume = 1.0;
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.End:
                             Log.Debug("Prepare 3M End");
                             prepare3MRun = false;
-                            Is3MPrepareDone = true;
                             break;
                     }
                 }

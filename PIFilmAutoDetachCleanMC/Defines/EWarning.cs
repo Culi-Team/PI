@@ -206,6 +206,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Shuttle_Left_XAxis_Collision_Detect,
         WETCleanLeft_BrushCylinder_Up_Fail,
         WETCleanLeft_BrushCylinder_Down_Fail,
+        WETCleanLeft_Alcohol_Not_Detect,
 
         //WET Clean Right
         WETCleanRight = 18000,
@@ -221,6 +222,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Shuttle_Right_XAxis_Collision_Detect,
         WETCleanRight_BrushCylinder_Up_Fail,
         WETCleanRight_BrushCylinder_Down_Fail,
+        WETCleanRight_Alcohol_Not_Detect,
 
         //Transfer Rotation Left
         TransferRotationLeft = 19000,
@@ -261,6 +263,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         AFCleanLeft_Vacuum_Detect_Fail,
         AFCleanLeft_BrushCylinder_Up_Fail,
         AFCleanLeft_BrushCylinder_Down_Fail,
+        AFCleanLeft_Alcohol_Not_Detect,
 
         //AF Clean Right
         AFCleanRight = 22000,
@@ -273,6 +276,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         AFCleanRight_Vacuum_Detect_Fail,
         AFCleanRight_BrushCylinder_Up_Fail,
         AFCleanRight_BrushCylinder_Down_Fail,
+        AFCleanRight_Alcohol_Not_Detect,
 
         //Unload Glass Left
         UnloadTransferLeft = 23000,

@@ -325,11 +325,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Muting_LightCurtain:
                     Log.Debug("Disable Light Curtain");
-
-                    _blinkTimer.EnableAction(InLightCurtainnMutingActionKey,
-                        () => InMutingButtonLamp.Value = true,
-                        () => InMutingButtonLamp.Value = false);
-
                     MutingLightCurtain(true);
                     Step.RunStep++;
                     break;
@@ -358,9 +353,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EInWorkConveyorProcessInWorkCSTLoadStep.Enable_LightCurtain:
                     Log.Debug("Enable Light Curtain");
-
-                    _blinkTimer.DisableAction(InLightCurtainnMutingActionKey);
-
                     MutingLightCurtain(false);
                     Step.RunStep++;
                     break;

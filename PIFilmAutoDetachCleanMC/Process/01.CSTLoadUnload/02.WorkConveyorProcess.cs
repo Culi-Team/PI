@@ -963,10 +963,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         _devices.Outputs.OutCstLightCurtainInterlock.Value = true;
                         Thread.Sleep(300);
                         _devices.Outputs.OutCstLightCurtainMuting.Value = true;
-
-                        _blinkTimer.EnableAction(OutLightCurtainMutingActionKey,
-                            () => _devices.Outputs.OutMutingButtonLamp.Value = true,
-                            () => _devices.Outputs.OutMutingButtonLamp.Value = false);
                     }
                     Step.RunStep++;
                     break;
@@ -1011,8 +1007,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         _devices.Outputs.OutCstLightCurtainInterlock.Value = false;
                         Wait(50);
                         _devices.Outputs.OutCstLightCurtainMuting.Value = false;
-
-                        _blinkTimer.DisableAction(OutLightCurtainMutingActionKey);
                     }
 
                     Step.RunStep++;
