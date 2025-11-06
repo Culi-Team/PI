@@ -571,7 +571,17 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.PreProcessStep++;
                     break;
                 case ECleanPreProcessStep.Wiper_Detect_Check:
-                    if (_machineStatus.IsDryRunMode == false && _machineStatus.MachineTestMode == false && (WiperCleanDetect1 == false || WiperCleanDetect2 == false || WiperCleanDetect3 == false))
+                    if (_commonRecipe.DisableLeftPort && port == EPort.Left)
+                    {
+                        Step.PreProcessStep++;
+                        break;
+                    }
+                    if (_commonRecipe.DisableRightPort && port == EPort.Right)
+                    {
+                        Step.PreProcessStep++;
+                        break;
+                    }
+                    if (_machineStatus.IsDryRunMode == false && _machineStatus.MachineTestMode == false && (WiperCleanDetect1 == true || WiperCleanDetect2 == true || WiperCleanDetect3 == true))
                     {
                         EWarning? warning = cleanType switch
                         {
@@ -1022,6 +1032,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.FeedingRollerDetect_Check:
+                    if (_commonRecipe.DisableLeftPort && port == EPort.Left)
+                    {
+                        Step.ToRunStep++;
+                        break;
+                    }
+                    if (_commonRecipe.DisableRightPort && port == EPort.Right)
+                    {
+                        Step.ToRunStep++;
+                        break;
+                    }
                     Log.Debug("Feeding Roller Detect Check");
                     if (FeedingRollerDetect == false)
                     {
@@ -1040,8 +1060,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.Wiper_Check:
+                    if (_commonRecipe.DisableLeftPort && port == EPort.Left)
+                    {
+                        Step.ToRunStep++;
+                        break;
+                    }
+                    if (_commonRecipe.DisableRightPort && port == EPort.Right)
+                    {
+                        Step.ToRunStep++;
+                        break;
+                    }
+
                     Log.Debug("Wiper Clean Detect Check");
-                    if (_machineStatus.IsDryRunMode == false && _machineStatus.MachineTestMode == false && (WiperCleanDetect1 == false || WiperCleanDetect2 == false || WiperCleanDetect3 == false))
+                    if (_machineStatus.IsDryRunMode == false && _machineStatus.MachineTestMode == false && (WiperCleanDetect1 == true || WiperCleanDetect2 == true || WiperCleanDetect3 == true))
                     {
                         EWarning? warning = cleanType switch
                         {
@@ -1431,7 +1462,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep++;
                         break;
                     }
-                    if(Parent.Sequence == ESequence.AutoRun)
+                    if (Parent.Sequence == ESequence.AutoRun)
                     {
                         Log.Debug("Set Flag AF Clean Cleaning");
                         FlagAFCleanCleaning = true;
