@@ -68,6 +68,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly Processes _processes;
         private readonly SerialCommunicator _syringPumpSerialCommunicator;
         private readonly IModbusCommunication _indicatorModbusCommunication;
+        private readonly ViewModelNavigationStore _navigationStore;
+        private System.Timers.Timer _inoutUpdateTimer;
         #endregion
 
         #region Properties
@@ -105,6 +107,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private string SelectedManualUnit => ManualUnits.First(u => u.IsSelected).UnitName;
 
         public ManualUnitViewModel CurrentManualUnitViewModel => GetManualUnitViewModel(SelectedManualUnit);
+        private ManualUnitViewModel _currentManualUnitVM;
         #endregion
 
         #region Commands
@@ -123,6 +126,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     }
 
                     OnPropertyChanged(nameof(CurrentManualUnitViewModel));
+                    _currentManualUnitVM = CurrentManualUnitViewModel;
                 });
             }
         }
@@ -335,7 +339,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             Processes processes,
             [FromKeyedServices("SyringePumpSerialCommunicator")] SerialCommunicator SyringPumpSerialCommunicator,
             [FromKeyedServices("IndicatorModbusCommunication")] IModbusCommunication indicatorModbusCommunication,
-            NEOSHSDIndicator indicator)
+            NEOSHSDIndicator indicator,
+            ViewModelNavigationStore navigationStore)
         {
             Devices = devices;
             MachineStatus = machineStatus;
@@ -348,6 +353,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _syringPumpSerialCommunicator = SyringPumpSerialCommunicator;
             _indicatorModbusCommunication = indicatorModbusCommunication;
             Indicator = indicator;
+            _navigationStore = navigationStore;
 
             ManualUnits = new ObservableCollection<ManualVMWithSelection>()
             {
@@ -376,6 +382,26 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 new ManualVMWithSelection("Unload Align", false),
                 new ManualVMWithSelection("Unload Robot", false),
             };
+
+            _inoutUpdateTimer = new System.Timers.Timer(100);
+            _inoutUpdateTimer.Elapsed += _inoutUpdateTimer_Elapsed;
+            _inoutUpdateTimer.Start();
+
+            _currentManualUnitVM = CurrentManualUnitViewModel;
+        }
+
+        private void _inoutUpdateTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (_navigationStore.CurrentViewModel.GetType() != typeof(ManualViewModel)) return;
+
+            if (_currentManualUnitVM == null) return;
+            if (_currentManualUnitVM.Inputs == null) return;
+            if (_currentManualUnitVM.Inputs.Count <= 0) return;
+
+            foreach (var input in _currentManualUnitVM.Inputs)
+            {
+                input.RaiseValueUpdated();
+            }
         }
         #endregion
 

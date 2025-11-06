@@ -9,7 +9,6 @@
              mc:Ignorable="d"
              x:Name="root"
              d:DataContext="{d:DesignInstance Type=vm:ManualUnitViewModel}"
-             DataContextChanged="root_DataContextChanged"
              xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              d:DesignHeight="450"
              d:DesignWidth="800">

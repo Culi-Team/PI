@@ -105,21 +105,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views.Teaching
             }
         }
 
-        private void root_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            LoadPositionTeaching();
-            if (e.OldValue is UnitTeachingViewModel oldUnit)
-            {
-                oldUnit.IsSelected = false;
-                oldUnit.DisableTimer();
-            }
-            if (e.NewValue is UnitTeachingViewModel newUnit)
-            {
-                newUnit.IsSelected = true;
-                newUnit.EnableTimer();
-            }
-        }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             LoadPositionTeaching();

@@ -22,14 +22,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
 {
     public class UnitTeachingViewModel : ViewModelBase, INameable
     {
-        protected System.Timers.Timer timer;
-
         public UnitTeachingViewModel(string name, RecipeSelector recipeSelector)
         {
             Name = name;
             RecipeSelector = recipeSelector;
-            timer = new System.Timers.Timer(100);
-            timer.Elapsed += Timer_Elapsed;
         }
 
         private bool isSelected;
@@ -42,16 +38,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                 isSelected = value;
                 OnPropertyChanged();
             }
-        }
-
-        public void EnableTimer()
-        {
-            timer.Start();
-        }
-
-        public void DisableTimer()
-        {
-            timer.Stop();
         }
 
         private void Timer_Elapsed(object? sender, ElapsedEventArgs e)

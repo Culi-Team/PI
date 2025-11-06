@@ -107,21 +107,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views.Teaching
             LoadPositionTeaching();
         }
 
-        private void root_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            LoadPositionTeaching();
-            if (e.OldValue is UnitTeachingViewModel oldUnit)
-            {
-                oldUnit.IsSelected = false;
-                oldUnit.DisableTimer();
-            }
-            if (e.NewValue is UnitTeachingViewModel newUnit)
-            {
-                newUnit.IsSelected = true;
-                newUnit.EnableTimer();
-            }
-        }
-
         private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (sender is Label label)

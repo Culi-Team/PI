@@ -26,17 +26,5 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views.Manual
         {
             InitializeComponent();
         }
-
-        private void root_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.OldValue is ManualUnitViewModel oldUnit)
-            {
-                oldUnit.DisableTimer();
-            }
-            if (e.NewValue is ManualUnitViewModel newUnit)
-            {
-                newUnit.EnableTimer();
-            }
-        }
     }
 }

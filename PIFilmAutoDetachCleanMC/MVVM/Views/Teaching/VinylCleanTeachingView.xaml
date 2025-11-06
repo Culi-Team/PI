@@ -8,7 +8,6 @@
              x:Name="root"
              xmlns:ui="clr-namespace:EQX.UI.Controls;assembly=EQX.UI"
              Loaded="UserControl_Loaded"
-             DataContextChanged="root_DataContextChanged"
              xmlns:inout="clr-namespace:EQX.InOut;assembly=EQX.InOut"
              d:DataContext="{d:DesignInstance Type={x:Type teachingVm:VinylCleanTeachingViewModel}}"
              xmlns:teachingVm="clr-namespace:PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching"

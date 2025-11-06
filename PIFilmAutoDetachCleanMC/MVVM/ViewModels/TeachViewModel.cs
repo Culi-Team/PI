@@ -14,12 +14,15 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 {
     public class TeachViewModel : ViewModelBase
     {
+        private System.Timers.Timer _inoutUpdateTimer;
+
         #region Properties
 
         public Devices Devices { get; }
         public RecipeList RecipeList;
         public RecipeSelector RecipeSelector;
         public Processes Processes;
+        private readonly ViewModelNavigationStore _navigationStore;
 
         public MachineStatus MachineStatus { get; }
 
@@ -64,14 +67,17 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             RecipeList recipeList,
             RecipeSelector recipeSelector,
             Processes processes,
-            MachineStatus machineStatus)
+            MachineStatus machineStatus,
+            ViewModelNavigationStore navigationStore)
         {
             Devices = devices;
             RecipeList = recipeList;
             Processes = processes;
             RecipeSelector = recipeSelector;
             MachineStatus = machineStatus;
+            _navigationStore = navigationStore;
 
+            #region INIT UNIT TEACHING
             // Initialize Unit Teachings
             UnitTeachingViewModel CSTLoadUnitTeaching = new UnitTeachingViewModel("CST Load", recipeSelector);
             CSTLoadUnitTeaching.Cylinders = Devices.GetInWorkConveyorCylinders();
@@ -243,8 +249,27 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 UnloadTransferLeftUnitTeaching,
                 UnloadTransferRightUnitTeaching
             };
+            #endregion
 
             SelectedTeachingUnit = TeachingUnits.First();
+
+            _inoutUpdateTimer = new System.Timers.Timer(100);
+            _inoutUpdateTimer.Elapsed += _inoutUpdateTimer_Elapsed;
+            _inoutUpdateTimer.Start();
+        }
+
+        private void _inoutUpdateTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (_navigationStore.CurrentViewModel.GetType() != typeof(TeachViewModel)) return;
+
+            if (SelectedTeachingUnit == null) return;
+            if (SelectedTeachingUnit.Inputs == null) return;
+            if (SelectedTeachingUnit.Inputs.Count <= 0) return;
+
+            foreach (var input in SelectedTeachingUnit.Inputs)
+            {
+                input.RaiseValueUpdated();
+            }
         }
     }
 
