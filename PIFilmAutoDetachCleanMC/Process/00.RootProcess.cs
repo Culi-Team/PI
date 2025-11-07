@@ -204,6 +204,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             if (Childs.All(child => child.ProcessStatus == EProcessStatus.ToAlarmDone))
             {
                 foreach (var motion in _devices.Motions.All!) { motion.Stop(); }
+                _devices.RollerList.All.ForEach(r => r.Stop());
 
                 _machineStatus.OriginDone = false;
 
@@ -227,6 +228,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             if (Childs!.Count(child => child.ProcessStatus != EProcessStatus.ToWarningDone) == 0)
             {
                 foreach (var motion in _devices.Motions.All!) { motion.Stop(); }
+                _devices.RollerList.All.ForEach(r => r.Stop());
 
                 _devices.Outputs.Lamp_Alarm();
                 ProcessMode = EProcessMode.Warning;
@@ -340,6 +342,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 ProcessMode = EProcessMode.Stop;
 
+                _devices.RollerList.All.ForEach(r => r.Stop());
                 _devices.Outputs.Lamp_Stop();
                 Log.Info("ToStop Done, Stop");
             }

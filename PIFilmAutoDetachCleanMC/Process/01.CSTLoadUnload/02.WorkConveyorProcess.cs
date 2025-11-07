@@ -837,14 +837,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.End:
+                    Log.Debug("Load End");
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         break;
                     }
-                    Log.Debug("Load End");
-                    Log.Info("Sequence CST Tilt");
 
+                    Log.Info("Sequence CST Tilt");
                     Sequence = port == EPort.Right ? ESequence.InWorkCSTTilt : ESequence.OutWorkCSTTilt;
                     break;
             }
@@ -1012,13 +1012,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.End:
+                    Log.Debug("Unload End");
+
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
                         Sequence = ESequence.Stop;
                         break;
                     }
 
-                    Log.Debug("Unload End");
                     if (port == EPort.Right)
                     {
                         Log.Info("Sequence In Work CST Load");
