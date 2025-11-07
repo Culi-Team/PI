@@ -1,14 +1,8 @@
 ﻿using EQX.Core.Motion;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
-using PIFilmAutoDetachCleanMC.Factories;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching;
 using PIFilmAutoDetachCleanMC.Recipe;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace PIFilmAutoDetachCleanMC.Services.Factories
