@@ -209,7 +209,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                 case ESyringePumpTestStep.Fill_Wait:
                                     if (SyringePump.IsReady() == false)
                                     {
-                                        Thread.Sleep(100);
+                                        Thread.Sleep(delay);
                                         break;
                                     }
                                     step++;
@@ -228,7 +228,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                 case ESyringePumpTestStep.DispensePort1_Wait:
                                     if (SyringePump.IsReady() == false)
                                     {
-                                        Thread.Sleep(100);
+                                        Thread.Sleep(delay);
                                         break;
                                     }
                                     step++;
@@ -247,7 +247,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                 case ESyringePumpTestStep.DispensePort2_Wait:
                                     if (SyringePump.IsReady() == false)
                                     {
-                                        Thread.Sleep(100);
+                                        Thread.Sleep(delay);
                                         break;
                                     }
                                     step++;
@@ -266,7 +266,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                 case ESyringePumpTestStep.DispensePort3_Wait:
                                     if (SyringePump.IsReady() == false)
                                     {
-                                        Thread.Sleep(100);
+                                        Thread.Sleep(delay);
                                         break;
                                     }
                                     step++;
@@ -285,7 +285,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                 case ESyringePumpTestStep.DispensePort4_Wait:
                                     if (SyringePump.IsReady() == false)
                                     {
-                                        Thread.Sleep(100);
+                                        Thread.Sleep(delay);
                                         break;
                                     }
                                     step++;
@@ -304,7 +304,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                 case ESyringePumpTestStep.DispensePort5_Wait:
                                     if (SyringePump.IsReady() == false)
                                     {
-                                        Thread.Sleep(100);
+                                        Thread.Sleep(delay);
                                         break;
                                     }
                                     step++;
@@ -323,7 +323,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                                 case ESyringePumpTestStep.DispensePort6_Wait:
                                     if (SyringePump.IsReady() == false)
                                     {
-                                        Thread.Sleep(100);
+                                        Thread.Sleep(delay);
                                         break;
                                     }
                                     step++;
@@ -370,7 +370,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                             switch ((ESyringePumpFillStep)step)
                             {
                                 case ESyringePumpFillStep.Initialize:
-                                    SyringePump.SetSpeed(10);
+                                    SyringePump.SetSpeed(1);
                                     Thread.Sleep(200);
                                     SyringePump.SetAcceleration(20);
                                     Thread.Sleep(200);

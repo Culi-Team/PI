@@ -1122,6 +1122,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Regulator.SetPressure(cleanRecipe.CylinderPressure);
                     Step.ToRunStep++;
                     break;
+                case ECleanProcessToRunStep.Initialize_SyringePump_Parameter:
+                    SyringePump.SetSpeed(1);
+                    Thread.Sleep(100);
+                    SyringePump.SetAcceleration(20);
+                    Thread.Sleep(100);
+                    SyringePump.SetDeccelation(20);
+                    Thread.Sleep(100);
+                    Step.ToRunStep++;
+                    break;
                 case ECleanProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
                     ((MappableOutputDevice<ECleanProcessOutput>)Outputs).ClearOutputs();
@@ -1749,7 +1758,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ECleanProcessCleanStep.Wait_3M_PrepareDone:
                     // Stop Prepare3M Task if Timeout
-                    if (ProcessTimer.StepElapsedTime > 50000)
+                    if (ProcessTimer.StepElapsedTime > 5000)
                     {
                         ctsPrepare3M.Cancel();
 
@@ -2277,7 +2286,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             int prepare3MStep = 0;
             int StepWaitTime = 0;
-            double feedingAxisCurrentPos = 0.0;
 
             bool prepare3MRun = true;
 
@@ -2285,7 +2293,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
             Task prepare3MThread = new Task(async () =>
             {
-                while (prepare3MRun && ProcessMode == EProcessMode.Run)
+                while (prepare3MRun && ProcessMode == EProcessMode.Run && ctsPrepare3M.IsCancellationRequested == false)
                 {
                     switch ((ECleanProcessPrepare3MStep)prepare3MStep)
                     {
@@ -2493,6 +2501,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                             prepare3MStep++;
                             break;
                         case ECleanProcessPrepare3MStep.RemainVolume_Check:
+                            prepare3MStep++;
+                            break;
                             if (RemainVolume >= 0.3)
                             {
                                 prepare3MStep = (int)ECleanProcessPrepare3MStep.End;

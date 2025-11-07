@@ -9,6 +9,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ETransferInShuttleOriginStep
     {
         Start,
+
+        Cyl_Align_Down,
+        Cyl_Align_Down_Wait,
+
         ZAxis_Origin,
         ZAxis_Origin_Wait,
         YAxis_Origin,

@@ -16,6 +16,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Set_Torque,
         Winder_UnWinder_Run,
         Set_Pressure,
+        Initialize_SyringePump_Parameter,
         Clear_Flags,
         End
     }

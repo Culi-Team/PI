@@ -220,6 +220,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Origin Start");
                     Step.OriginStep++;
                     break;
+                case ETransferInShuttleOriginStep.Cyl_Align_Down:
+                    AlignCylUpDown(false);
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => IsAlignCylDown);
+                    Step.OriginStep++;
+                    break;
+                case ETransferInShuttleOriginStep.Cyl_Align_Down_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        RaiseWarning(port == EPort.Left ? EWarning.GlassAlignLeft_AlignCylinder_Down_Fail
+                                                        : EWarning.GlassAlignRight_AlignCylinder_Down_Fail);
+                        break;
+                    }
+                    Step.OriginStep++;
+                    break;
                 case ETransferInShuttleOriginStep.ZAxis_Origin:
                     Log.Debug("Transfer In Shuttle Z Axis Origin Start");
                     ZAxis.SearchOrigin();
@@ -348,6 +362,20 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ETransferInShuttleReadyStep.Start:
                     Log.Debug("Initialize Start");
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleReadyStep.Cyl_Align_Down:
+                    AlignCylUpDown(false);
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => IsAlignCylDown);
+                    Step.RunStep++;
+                    break;
+                case ETransferInShuttleReadyStep.Cyl_Align_Down_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning(port == EPort.Left ? EWarning.GlassAlignLeft_AlignCylinder_Down_Fail
+                                                        : EWarning.GlassAlignRight_AlignCylinder_Down_Fail);
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleReadyStep.SafetyPosition_Check:
