@@ -364,26 +364,26 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     if (transferInShuttlerLeft != null && !transferInShuttlerLeft.IsOnPosition(recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[Transfer InShuttle Left Z Axis]" +
-                            $"\n befor move to [{moveToDescription}]");
+                            $"\n before move to [{moveToDescription}]");
                         return false;
                     }
                     if (transferRotationLZAxis != null && !transferRotationLZAxis.IsOnPosition(recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[Transfer Rotation Left Z Axis]" +
-                            $"\n befor move to [{moveToDescription}]");
+                            $"\n before move to [{moveToDescription}]");
                         return false;
                     }
                     if (inShuttleLYAxis != null && !inShuttleLYAxis.IsOnPosition(recipeSelector.CurrentRecipe.WetCleanLeftRecipe.YAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[InShuttle Left Y Axis] need move to " +
                             $"\n [Ready Position]" +
-                            $"\n befor move to [{moveToDescription}]");
+                            $"\n before move to [{moveToDescription}]");
                         return false;
                     }
                     if (devices.Cylinders.WetCleanL_PusherCyl.IsBackward == false)
                     {
                         MessageBoxEx.ShowDialog($"[AFClean Left Pusher Cyl] move Up" +
-                            $"\n befor move to [{moveToDescription}]");
+                            $"\n before move to [{moveToDescription}]");
                         return false;
                     }
                     if ((outtShuttleLXAxis != null && !outtShuttleLXAxis.IsOnPosition(recipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisReadyPosition)
@@ -398,8 +398,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
 
             if (Name == "Transfer Rotation Left")
             {
-                if (moveToDescription == "Z Axis Pick Position" 
-                    || moveToDescription == "Z Axis Place Position")
+                if (moveToDescription == "Z Axis Pick Position")
                 {
                     if (devices.Cylinders.TransferRotationL_BwFwCyl.IsBackward == false)
                     {
@@ -417,6 +416,16 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     }
                 }
 
+                if (moveToDescription == "Z Axis Place Position")
+                {
+                    if (devices.Cylinders.TransferRotationL_BwFwCyl.IsBackward == false)
+                    {
+                        MessageBoxEx.ShowDialog($"Cylinder [Transfer Rotation Left Backward Forward] ," +
+                            $"\n need [move Backward] before move to ," +
+                            $"\n [{moveToDescription}]");
+                        return false;
+                    }
+                }
             }
 
             if (Name == "AF Clean Left")
@@ -478,28 +487,28 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     if (transferInShuttlerRight != null && !transferInShuttlerRight.IsOnPosition(recipeSelector.CurrentRecipe.TransferInShuttleLeftRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[Transfer InShuttle Right Z Axis]" +
-                            $"\n befor move to [{moveToDescription}]");
+                            $"\n before move to [{moveToDescription}]");
                         return false;
                     }
                     if (transferRotationRZAxis != null && !transferRotationRZAxis.IsOnPosition(recipeSelector.CurrentRecipe.TransferRotationLeftRecipe.ZAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[Transfer Rotation Right Z Axis]" +
-                            $"\n befor move to [{moveToDescription}]");
+                            $"\n before move to [{moveToDescription}]");
                         return false;
                     }
                     if (inShuttleRYAxis != null && !inShuttleRYAxis.IsOnPosition(recipeSelector.CurrentRecipe.WetCleanRightRecipe.YAxisReadyPosition))
                     {
                         MessageBoxEx.ShowDialog($"[InShuttle Right Y Axis] need move to [Ready Position]" +
-                            $"\n befor move to [{moveToDescription}]");
+                            $"\n before move to [{moveToDescription}]");
                         return false;
                     }
                     if (devices.Cylinders.WetCleanR_PusherCyl.IsBackward == false)
                     {
                         MessageBoxEx.ShowDialog($"[AFClean Right Pusher Cyl] move Up" +
-                            $"\n befor move to [{moveToDescription}]");
+                            $"\n before move to [{moveToDescription}]");
                         return false;
                     }
-                    if ((outtShuttleRXAxis != null && !outtShuttleRXAxis.IsOnPosition(recipeSelector.CurrentRecipe.AfCleanLeftRecipe.XAxisReadyPosition)
+                    if ((outtShuttleRXAxis != null && !outtShuttleRXAxis.IsOnPosition(recipeSelector.CurrentRecipe.AfCleanRightRecipe.XAxisReadyPosition)
                         && (moveToDescription == "X Axis Unload Position")))
                     {
                         MessageBoxEx.ShowDialog($"[Out Shuttle Right X Axis],need [Move Ready] before move to " +
@@ -512,8 +521,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
 
             if (Name == "Transfer Rotation Right")
             {
-                if (moveToDescription == "Z Axis Pick Position" 
-                    || moveToDescription == "Z Axis Place Position")
+                if (moveToDescription == "Z Axis Pick Position")
                 {
                     if (devices.Cylinders.TransferRotationR_BwFwCyl.IsBackward == false)
                     {
@@ -526,6 +534,17 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                     if(devices.Cylinders.TransferRotationR_UpDownCyl.IsBackward == false)
                     {
                         MessageBoxEx.ShowDialog($"Cylinder [Transfer Rotation Right Up Down] ," +
+                            $"\n need [move Backward] before move to ," +
+                            $"\n [{moveToDescription}]");
+                        return false;
+                    }
+                }
+
+                if (moveToDescription == "Z Axis Place Position")
+                {
+                    if (devices.Cylinders.TransferRotationR_BwFwCyl.IsBackward == false)
+                    {
+                        MessageBoxEx.ShowDialog($"Cylinder [Transfer Rotation Right Backward Forward] ," +
                             $"\n need [move Backward] before move to ," +
                             $"\n [{moveToDescription}]");
                         return false;
@@ -566,7 +585,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                             $"\n [{moveToDescription}]");
                         return false;
                     }
-                    if ((inShuttleRXAxis != null && !inShuttleRXAxis.IsOnPosition(recipeSelector.CurrentRecipe.WetCleanRightRecipe.XAxisCleanHorizontalPosition)
+                    if ((inShuttleRXAxis != null && !inShuttleRXAxis.IsOnPosition(recipeSelector.CurrentRecipe.WetCleanRightRecipe.XAxisReadyPosition)
                         && (moveToDescription == "X Axis Load Position")))
                     {
                         MessageBoxEx.ShowDialog($"[In Shuttle Left X Axis],need [Move Ready] before move to " +
