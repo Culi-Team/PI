@@ -8,6 +8,7 @@ using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels;
 using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Services;
+using PIFilmAutoDetachCleanMC.Services.Factories;
 using PIFilmAutoDetachCleanMC.Services.User;
 
 namespace PIFilmAutoDetachCleanMC.Extensions
@@ -21,6 +22,9 @@ namespace PIFilmAutoDetachCleanMC.Extensions
                 services.AddSingleton<UserStore>();
                 services.AddSingleton<ICellColorRepository,CellColorRepository>();
                 services.AddSingleton<CellStatusToColorConverter>();
+
+                services.AddSingleton<TeachingViewModelFactory>();
+                services.AddSingleton<ManualViewModelFactory>();
 
                 services.AddSingleton<CCountData>();
                 services.AddSingleton<CTaktTime>();
