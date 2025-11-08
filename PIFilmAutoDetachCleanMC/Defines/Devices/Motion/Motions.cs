@@ -92,7 +92,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
             EPort port = cleanUnit == EClean.WETCleanLeft || cleanUnit == EClean.AFCleanLeft ? EPort.Left : EPort.Right;
             AXM.AxmContiBeginNode((int)cleanUnit);
 
-            double YStep = 0.1 / count;
+            double YStep = height / count;
 
             double x = 0;
             double y = positionY;

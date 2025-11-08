@@ -135,6 +135,23 @@ namespace PIFilmAutoDetachCleanMC.Process
             return base.PreProcess();
         }
 
+        public override bool ProcessToStop()
+        {
+            MotorOnOff.Value = false;
+            return base.ProcessToStop();
+        }
+
+        public override bool ProcessToAlarm()
+        {
+            MotorOnOff.Value = false;
+            return base.ProcessToAlarm();
+        }
+
+        public override bool ProcessToWarning()
+        {
+            MotorOnOff.Value = false;
+            return base.ProcessToWarning();
+        }
         public override bool ProcessOrigin()
         {
             switch ((EVinylCleanOriginStep)Step.OriginStep)
