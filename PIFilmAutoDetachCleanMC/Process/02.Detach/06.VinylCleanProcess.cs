@@ -243,6 +243,13 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EVinylCleanProcess_AutoRunStep)Step.RunStep)
             {
                 case EVinylCleanProcess_AutoRunStep.Start:
+                    if (_commonRecipe.SkipVinylClean)
+                    {
+                        Log.Debug("Vinyl Clean Sequence Skipped");
+                        Sequence = ESequence.Stop;
+                        break;
+                    }
+
                     Log.Debug("Auto Run Start");
                     Step.RunStep++;
                     break;
@@ -458,7 +465,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Robot Move Vinyl Clean Done");
                     break;
                 case EVinylCleanProcessRobotPickFixtureFromVinylClean.Wait_RobotMoveVinylCleanDone:
-                    if(FlagIn_RobotMoveVinylCleanDone == false)
+                    if (FlagIn_RobotMoveVinylCleanDone == false)
                     {
                         Wait(20);
                         break;
@@ -601,7 +608,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Fixture Load Done");
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Wait_RobotMoveVinylCleanDone:
-                    if(FlagIn_RobotMoveVinylCleanDone == false)
+                    if (FlagIn_RobotMoveVinylCleanDone == false)
                     {
                         Wait(20);
                         break;

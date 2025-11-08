@@ -694,6 +694,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.RobotPlaceFixtureToVinylClean;
                         break;
                     }
+
                     if (LastPosition == (int)ERobotCommand.S2_PP || LastPosition == (int)ERobotCommand.S2_RDY)
                     {
                         if (_devices.Inputs.VinylCleanFixtureDetect.Value == false)

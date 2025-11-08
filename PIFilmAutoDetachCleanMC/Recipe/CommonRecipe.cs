@@ -21,6 +21,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             get { return cylinderMoveTimeout; }
             set
             {
+                if (cylinderMoveTimeout == value) return;
+
                 OnRecipeChanged(cylinderMoveTimeout, value);
                 cylinderMoveTimeout = value;
             }
@@ -32,6 +34,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             get { return motionOriginTimeout; }
             set
             {
+                if (motionOriginTimeout == value) return;
+
                 OnRecipeChanged(motionOriginTimeout, value);
                 motionOriginTimeout = value;
             }
@@ -43,6 +47,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             get { return motionMoveTimeout; }
             set
             {
+                if (motionMoveTimeout == value) return;
+
                 OnRecipeChanged(motionMoveTimeout, value);
                 motionMoveTimeout = value;
             }
@@ -54,6 +60,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             get { return vacDelay; }
             set
             {
+                if (vacDelay == value) return;
+
                 OnRecipeChanged(vacDelay, value);
                 vacDelay = value;
             }
@@ -67,7 +75,9 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             get { return disableLeftPort; }
             set
             {
-                OnRecipeChanged(DisableLeftPort, value);
+                if (disableLeftPort == value) return;
+
+                OnRecipeChanged(disableLeftPort, value);
                 disableLeftPort = value;
             }
         }
@@ -80,14 +90,32 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             get { return disableRightPort; }
             set
             {
+                if (disableRightPort == value) return;
+
                 OnRecipeChanged(DisableRightPort, value);
                 disableRightPort = value;
+            }
+        }
+
+        [SingleRecipeDescription(
+            Description = "Skip Vinyl Clean",
+            Detail = "Check to skip Vinyl Clean")]
+        public bool SkipVinylClean
+        {
+            get { return skipVinylClean; }
+            set
+            {
+                if (skipVinylClean == value) return;
+
+                OnRecipeChanged(skipVinylClean, value);
+                skipVinylClean = value;
             }
         }
 
         #region Privates
         private bool disableLeftPort;
         private bool disableRightPort;
+        private bool skipVinylClean;
         #endregion
     }
 }
