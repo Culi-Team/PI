@@ -71,7 +71,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IMotion InShuttleLYAxis => AjinMotions.All.First(m => m.Id == (int)EMotionAjin.InShuttleLYAxis);
         public IMotion OutShuttleLYAxis => AjinMotions.All.First(m => m.Id == (int)EMotionAjin.OutShuttleLYAxis);
 
-        public void CleanHorizontal(EClean cleanUnit, double positionX, double positionY, int count, double vel = 200, double acc = 0.25, double dec = 0.25)
+        public void CleanHorizontal(EClean cleanUnit, double positionX, double positionY, double width, double height, int count, double vel = 200, double acc = 0.25, double dec = 0.25)
         {
             switch (cleanUnit)
             {
@@ -101,15 +101,15 @@ namespace PIFilmAutoDetachCleanMC.Defines
             double[] startPos = { positionX, positionY };
             AXM.AxmLineMove((int)cleanUnit, startPos, vel, acc, dec);
 
-            while (port == EPort.Right ? y <= positionY + 0.1 : y >= positionY - 0.1)
+            while (port == EPort.Right ? y <= positionY + height : y >= positionY - height)
             {
                 if (port == EPort.Right)
                 {
-                    x = toRight ? positionX - 140 : positionX;
+                    x = toRight ? positionX - width : positionX;
                 }
                 else
                 {
-                    x = toRight ? positionX + 140 : positionX;
+                    x = toRight ? positionX + width : positionX;
                 }
                 double[] pos1 = { x, y };
 
@@ -124,7 +124,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
                     y -= YStep;
                 }
 
-                if (port == EPort.Right ? y <= positionY + 0.1 : y >= positionY - 0.1)
+                if (port == EPort.Right ? y <= positionY + height : y >= positionY - height)
                 {
                     double[] pos2 = { x, y };
                     AXM.AxmLineMove((int)cleanUnit, pos2, vel, acc, dec);
@@ -144,7 +144,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
             return uInMotion == 1;
         }
 
-        public void CleanVertical(EClean cleanUnit, double positionX, double positionY, int count, double vel = 200, double acc = 0.25, double dec = 0.25)
+        public void CleanVertical(EClean cleanUnit, double positionX, double positionY, double width, double height, int count, double vel = 200, double acc = 0.25, double dec = 0.25)
         {
             switch (cleanUnit)
             {
@@ -166,7 +166,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
             AXM.AxmContiBeginNode((int)cleanUnit);
 
-            double YStep = 80.0 / count;
+            double YStep = height / count;
 
             double x = 0;
             double y = positionY;
@@ -175,15 +175,15 @@ namespace PIFilmAutoDetachCleanMC.Defines
             double[] startPos = { positionX, positionY };
             AXM.AxmLineMove((int)cleanUnit, startPos, vel, acc, dec);
 
-            while (port == EPort.Right ? y <= positionY + 80 : y >= positionY - 80)
+            while (port == EPort.Right ? y <= positionY + height : y >= positionY - height)
             {
                 if (port == EPort.Right)
                 {
-                    x = toRight ? positionX - 55 : positionX;
+                    x = toRight ? positionX - width : positionX;
                 }
                 else
                 {
-                    x = toRight ? positionX + 55 : positionX;
+                    x = toRight ? positionX + width : positionX;
                 }
                 double[] pos1 = { x, y };
 
@@ -198,7 +198,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
                     y -= YStep;
                 }
 
-                if (port == EPort.Right ? y <= positionY + 80 : y >= positionY - 80)
+                if (port == EPort.Right ? y <= positionY + height : y >= positionY - height)
                 {
                     double[] pos2 = { x, y };
                     AXM.AxmLineMove((int)cleanUnit, pos2, vel, acc, dec);

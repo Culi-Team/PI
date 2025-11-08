@@ -1812,7 +1812,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Clean Horizontal");
                     FeedingAxis.MoveJog(cleanRecipe.RFeedingAxisCleaningSpeed, true);
 #if !SIMULATION
-                    _devices.Motions.CleanHorizontal(cleanType, XAxisCleanHorizontalPosition, YAxisCleanHorizontalPosition, cleanRecipe.CleanHorizontalCount, cleanRecipe.CleanHorizontalSpeed);
+                    _devices.Motions.CleanHorizontal(cleanType, XAxisCleanHorizontalPosition, YAxisCleanHorizontalPosition,
+                        cleanRecipe.CleanHorizontalWidth, cleanRecipe.CleanHorizontalHeight,
+                        cleanRecipe.CleanHorizontalCount, cleanRecipe.CleanHorizontalSpeed);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _devices.Motions.IsContiMotioning(cleanType) == false);
 #else
                     Thread.Sleep(100);
@@ -1953,7 +1955,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanStep.CleanVertical:
                     Log.Debug("Clean Vertical");
 #if !SIMULATION
-                    _devices.Motions.CleanVertical(cleanType, XAxisCleanVerticalPosition, YAxisCleanVerticalPosition, cleanRecipe.CleanVerticalCount, cleanRecipe.CleanVerticalSpeed);
+                    _devices.Motions.CleanVertical(cleanType, XAxisCleanVerticalPosition, YAxisCleanVerticalPosition,
+                        cleanRecipe.CleanVerticalWidth, cleanRecipe.CleanVerticalHeight,
+                        cleanRecipe.CleanVerticalCount, cleanRecipe.CleanVerticalSpeed);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _devices.Motions.IsContiMotioning(cleanType) == false);
 #else
                     Thread.Sleep(100);
@@ -2741,7 +2745,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanShuttleStep.CleanShuttle:
                     Log.Debug("Clean Shuttle");
 #if !SIMULATION
-                    _devices.Motions.CleanHorizontal(cleanType, XAxisCleanShuttlePosition, YAxisCleanShuttlePosition, cleanRecipe.CleanHorizontalCount);
+                    _devices.Motions.CleanHorizontal(cleanType, XAxisCleanShuttlePosition, YAxisCleanShuttlePosition,
+                        cleanRecipe.CleanHorizontalWidth, cleanRecipe.CleanHorizontalHeight,
+                        cleanRecipe.CleanHorizontalCount);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _devices.Motions.IsContiMotioning(cleanType) == false);
 #else
                     Thread.Sleep(100);

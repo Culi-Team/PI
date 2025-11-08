@@ -17,7 +17,12 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private int cleanHorizontalCount;
         private int cleanVerticalCount;
         private double cleanHorizontalSpeed;
+        private double cleanHorizontalWidth = 50.0;
+        private double cleanHorizontalHeight = 0.1;
         private int cleanVerticalSpeed;
+        private double cleanVerticalWidth = 20.0;
+        private double cleanVerticalHeight = 50.0;
+
         private double cylinderPushPressure;
 
         private double rFeedingAxisForwardDistance;
@@ -115,12 +120,36 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public double CleanHorizontalSpeed
         {
             get { return cleanHorizontalSpeed; }
-            set 
+            set
             {
                 OnRecipeChanged(cleanHorizontalSpeed, value);
-                cleanHorizontalSpeed = value; 
+                cleanHorizontalSpeed = value;
             }
         }
+
+        [SingleRecipeDescription(Description = "Clean Horizontal Width", Unit = Unit.mm,
+                                    Detail = "Clean Horizontal Width , X Axis Direction")]
+        public double CleanHorizontalWidth
+        {
+            get { return cleanHorizontalWidth; }
+            set
+            {
+                OnRecipeChanged(cleanHorizontalWidth, value);
+                cleanHorizontalWidth = value;
+            }
+        }
+
+        [SingleRecipeDescription(Description = "Clean Horizontal Height", Unit = Unit.mm,
+                                    Detail = "Clean Horizontal Height , Y Axis Direction")]
+        public double CleanHorizontalHeight
+        {
+            get { return cleanHorizontalHeight; }
+            set
+            {
+                cleanHorizontalHeight = value;
+            }
+        }
+
 
         [SingleRecipeDescription(Description = "Clean Vertical Count", Unit = Unit.ETC)]
         [SingleRecipeMinMax(Max = 50, Min = 1)]
@@ -139,12 +168,39 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public int CleanVerticalSpeed
         {
             get { return cleanVerticalSpeed; }
-            set 
+            set
             {
                 OnRecipeChanged(cleanVerticalSpeed, value);
-                cleanVerticalSpeed = value; 
+                cleanVerticalSpeed = value;
             }
         }
+
+
+        [SingleRecipeDescription(Description = "Clean Vertical Width", Unit = Unit.mm,
+                                    Detail = "Clean Vertical Width , X Axis Direction")]
+        public double CleanVerticalWidth
+        {
+            get { return cleanVerticalWidth; }
+            set
+            {
+                OnRecipeChanged(cleanVerticalWidth, value);
+                cleanVerticalWidth = value;
+            }
+        }
+
+
+        [SingleRecipeDescription(Description = "Clean Vertical Height", Unit = Unit.mm,
+                                    Detail = "Clean Vertical Height , Y Axis Direction")]
+        public double CleanVerticalHeight
+        {
+            get { return cleanVerticalHeight; }
+            set
+            {
+                OnRecipeChanged(cleanVerticalHeight, value);
+                cleanVerticalHeight = value;
+            }
+        }
+
 
         [SingleRecipeDescription(Description = "Cylinder Push Pressure", Unit = Unit.MilliPascal)]
         [SingleRecipeMinMax(Max = 0.9, Min = 0)]
@@ -414,16 +470,16 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         public int CleanShuttleCycle
         {
             get { return cleanShuttleCycle; }
-            set 
+            set
             {
                 OnRecipeChanged(cleanShuttleCycle, value);
-                cleanShuttleCycle = value; 
+                cleanShuttleCycle = value;
             }
         }
 
 
         [SingleRecipeDescription(Description = "Use Syringe Pump Port 1",
-            Detail ="Check to enable Syring Pump Port 1")]
+            Detail = "Check to enable Syring Pump Port 1")]
         public bool UsePort1
         {
             get { return usePort1; }

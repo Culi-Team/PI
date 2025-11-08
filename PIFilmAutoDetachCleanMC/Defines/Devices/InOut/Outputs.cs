@@ -91,6 +91,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput TransferFixtureDown => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_DOWN);
         public IDOutput TransferFixture1Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_1_CLAMP);
         public IDOutput TransferFixture1Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_1_UNCLAMP);
+        public IDOutput MachineAutoRun => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.MACHINE_AUTO_RUN);
         public IDOutput TransferFixture2Clamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_2_CLAMP);
         public IDOutput TransferFixture2Unclamp => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_FIXTURE_2_UNCLAMP);
         public IDOutput TransferInShuttleLBlowOnOff => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.TRANSFER_IN_SHUTTLE_L_BLOW_ON_OFF);
@@ -271,6 +272,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public void Lamp_Run()
         {
             Lamp_Clear();
+
+            MachineAutoRun.Value = true;
+
             TowerLampGreen.Value = true;
             OpLButtonStartLamp.Value = true;
             OpRButtonStartLamp.Value = true;
@@ -279,6 +283,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public void Lamp_Stop()
         {
             Lamp_Clear();
+
+            MachineAutoRun.Value = false;
+
             TowerLampYellow.Value = true;
             OpLButtonStopLamp.Value = true;
             OpRButtonStopLamp.Value = true;
@@ -287,6 +294,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public void Lamp_Alarm()
         {
             Lamp_Clear();
+
+            MachineAutoRun.Value = false;
+
             TowerLampRed.Value = true;
             TowerBuzzer.Value = true;
             Task.Delay(3000).ContinueWith(t => TowerBuzzer.Value = false);

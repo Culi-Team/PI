@@ -275,7 +275,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ERootProcessToOriginStep.Start:
                     Log.Info("To Origin started");
-                    _devices.Outputs.Lamp_Run();
                     Step.OriginStep++;
                     break;
                 case ERootProcessToOriginStep.DoorSensorCheck:
@@ -316,6 +315,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.DoorNotSafetyLock);
                         break;
                     }
+
+                    _devices.Outputs.Lamp_Run();
+
                     Log.Debug("Doors locked safely.");
                     Step.OriginStep++;
                     break;
@@ -360,7 +362,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ERootProcessToRunStep.Start:
                     Log.Debug("ToRun Start");
-                    _devices.Outputs.Lamp_Run();
                     Step.ToRunStep++;
                     break;
                 case ERootProcessToRunStep.DoorSensorCheck:
@@ -400,6 +401,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.DoorNotSafetyLock);
                         break;
                     }
+                    _devices.Outputs.Lamp_Run();
+
                     Log.Debug("Doors locked safely.");
                     Step.ToRunStep++;
                     break;
