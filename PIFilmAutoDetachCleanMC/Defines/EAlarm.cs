@@ -13,6 +13,9 @@
         LightCurtainRightDetected = 5,
         EmergencyStopActivated = 6,
         PowerMCOff = 7,
+        Motion_Driver_Off,
+        Motion_Limit_Detected,
+        Motion_Alarm_Detected,
 
         //InConveyor
         InConveyor = 1000,

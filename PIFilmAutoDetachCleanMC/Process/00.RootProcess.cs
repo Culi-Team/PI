@@ -500,6 +500,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                 return;
             }
 
+            if (_devices.Motions.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
+            {
+                RaiseAlarm((int)EAlarm.Motion_Driver_Off);
+            }
+            if (_devices.Motions.All.Count(motion => motion.Status.HwNegLimitDetect == true || motion.Status.HwPosLimitDetect == true) > 0
+                && ProcessMode != EProcessMode.Origin && ProcessMode != EProcessMode.ToOrigin)
+            {
+                RaiseAlarm((int)EAlarm.Motion_Limit_Detected);
+            }
+            if (_devices.Motions.All.Count(motion => motion.Status.IsAlarm == true) > 0)
+            {
+                RaiseAlarm((int)EAlarm.Motion_Alarm_Detected);
+            }
+
             if (RobotLoadAlarmStop == false || RobotUnloadAlarmStop == false)
             {
                 RaiseAlarm(RobotLoadAlarmStop == false
