@@ -10,6 +10,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         Start,
 
+        Cylinder_Up,
+        Cylinder_Up_Wait,
+
         Robot_Move_ReadyPickPosition,
         Robot_Move_ReadyPickPosition_Wait,
 
@@ -18,8 +21,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Robot_Move_PickPosition,
         Robot_Move_PickPosition_Wait,
 
-        Cylinder_Down,
-        Cylinder_Down_Wait,
         Vacuum_On,
         Vacuum_On_Wait,
 

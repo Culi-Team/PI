@@ -9,6 +9,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ERobotUnloadPlasmaStep
     {
         Start,
+
+        Cylinder_Up,
+        Cylinder_Up_Wait,
+
         Wait_PlasmaPrepareDone,
         Robot_Move_PlasmaPosition,
         Robot_Move_PlasmaPosition_Wait,

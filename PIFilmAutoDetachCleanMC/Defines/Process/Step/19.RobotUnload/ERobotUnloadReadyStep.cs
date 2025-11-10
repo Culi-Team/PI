@@ -4,6 +4,9 @@
     {
         Start,
 
+        Cylinder_Up,
+        Cylinder_Up_Wait,
+
         ReConnectIfRequired,
         CheckConnection,
 

@@ -550,7 +550,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             GlassBlowOnOff3.Value = !isOn;
             GlassBlowOnOff4.Value = !isOn;
 
-            if(isOn == false)
+            if (isOn == false)
             {
                 Task.Delay(100).ContinueWith(t =>
                 {
@@ -624,6 +624,24 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ERobotUnloadReadyStep.Start:
                     Log.Debug("Ready Start");
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.Cylinder_Up:
+                    if (IsCylindersUp)
+                    {
+                        Step.RunStep = (int)ERobotUnloadReadyStep.ReConnectIfRequired;
+                        break;
+                    }
+                    CylinderContact(false);
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => IsCylindersUp);
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.Cylinder_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning(EWarning.RobotUnload_Cylinder_Up_Fail);
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case ERobotUnloadReadyStep.ReConnectIfRequired:
@@ -824,6 +842,24 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     Log.Debug("Wait Unload Align Request Unload");
                     break;
+                case ERobotUnloadPickStep.Cylinder_Up:
+                    if (IsCylindersUp)
+                    {
+                        Step.RunStep = (int)ERobotUnloadPickStep.Robot_Move_ReadyPickPosition;
+                        break;
+                    }
+                    CylinderContact(false);
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => IsCylindersUp);
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadPickStep.Cylinder_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning(EWarning.RobotUnload_Cylinder_Up_Fail);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
                 case ERobotUnloadPickStep.Robot_Move_ReadyPickPosition:
                     Log.Debug("Robot Move Ready Pick Position");
                     if (SendCommand(ERobotCommand.S1_RDY, LowSpeed, HightSpeed))
@@ -873,21 +909,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     Log.Debug($"Robot Move Motion Command {ERobotCommand.S1_PP_RDY} Done");
-                    Step.RunStep++;
-                    break;
-                case ERobotUnloadPickStep.Cylinder_Down:
-                    Log.Debug("Cylinders Down");
-                    CylinderContact(true);
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsCylindersDown);
-                    Step.RunStep++;
-                    break;
-                case ERobotUnloadPickStep.Cylinder_Down_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)EWarning.RobotUnload_Cylinder_Down_Fail);
-                        break;
-                    }
-                    Log.Debug("Cylinders Down Done");
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.Vacuum_On:
@@ -1018,6 +1039,28 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ERobotUnloadPlasmaStep.Start:
                     Log.Debug("Unload Robot Plasma Start");
+                    if (Parent.Sequence != ESequence.AutoRun)
+                    {
+                        PlasmaPrepare();
+                    }
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadPlasmaStep.Cylinder_Up:
+                    if (IsCylindersUp)
+                    {
+                        Step.RunStep = (int)ERobotUnloadPlasmaStep.Wait_PlasmaPrepareDone;
+                        break;
+                    }
+                    CylinderContact(false);
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => IsCylindersUp);
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadPlasmaStep.Cylinder_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning(EWarning.RobotUnload_Cylinder_Up_Fail);
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPlasmaStep.Wait_PlasmaPrepareDone:
@@ -1072,6 +1115,24 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EUnloadRobotPlaceStep.Start:
                     Log.Debug("Unload Robot Place Start");
+                    Step.RunStep++;
+                    break;
+                case EUnloadRobotPlaceStep.Cylinder_Up:
+                    if (IsCylindersUp)
+                    {
+                        Step.RunStep = (int)EUnloadRobotPlaceStep.CheckOutputStopValue;
+                        break;
+                    }
+                    CylinderContact(false);
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => IsCylindersUp);
+                    Step.RunStep++;
+                    break;
+                case EUnloadRobotPlaceStep.Cylinder_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning(EWarning.RobotUnload_Cylinder_Up_Fail);
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.CheckOutputStopValue:
