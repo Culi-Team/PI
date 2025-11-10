@@ -1368,6 +1368,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                     if (cleanType == EClean.AFCleanLeft || cleanType == EClean.AFCleanRight)
                     {
+                        GlassVac.Value = true;
                         Log.Debug("Wait Transfer Rotation Ready Place");
                     }
 
@@ -2525,7 +2526,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             {
                                 EWarning? warning = cleanType switch
                                 {
-                                    EClean.WETCleanLeft => EWarning.WETCleanLeft_AlcoholLeak_Detect,
+                                    EClean.WETCleanLeft => EWarning.WETCleanLeft_Alcohol_Not_Detect,
                                     EClean.WETCleanRight => EWarning.WETCleanRight_Alcohol_Not_Detect,
                                     EClean.AFCleanLeft => EWarning.AFCleanLeft_Alcohol_Not_Detect,
                                     EClean.AFCleanRight => EWarning.AFCleanRight_Alcohol_Not_Detect,
@@ -2536,7 +2537,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             }
                             if (IsAlcoholDetect == false && _machineStatus.IsDryRunMode == false && _machineStatus.MachineTestMode == false)
                             {
-                                await Task.Delay(2, ctsPrepare3M.Token);
+                                await Task.Delay(1, ctsPrepare3M.Token);
                                 break;
                             }
 

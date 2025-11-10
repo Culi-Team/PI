@@ -114,6 +114,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
+                return true;
                 return _robotUnloadInput[(int)ERobotUnloadProcessInput.MACHINE_REQUEST_PLACE];
             }
         }
@@ -1077,7 +1078,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Robot Move Plasma Position");
                     if (SendCommand(ERobotCommand.S2_RDY_PP, PlasmaSpeed, HightSpeed))
                     {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S2_RDY_PP)));
+                        Wait(300000, () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S2_RDY_PP)));
                         Step.RunStep++;
                         break;
                     }
