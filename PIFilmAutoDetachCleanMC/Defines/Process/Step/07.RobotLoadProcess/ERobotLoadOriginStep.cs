@@ -9,6 +9,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ERobotLoadOriginStep
     {
         Start,
+        RobotCurrentPosition_Check,
+        RobotCurrentPosition_Wait,
+        Check_RobotInPPPosition,
         Fixture_Detect_Check,
         Cyl_Unclamp,
         Cyl_Unclamp_Wait,
