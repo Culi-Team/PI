@@ -479,6 +479,48 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Origin Start");
                     Step.OriginStep++;
                     break;
+                case ERobotLoadOriginStep.RobotCurrentPosition_Check:
+                    Log.Debug("Check robot last position");
+                    _robotLoad.SendCommand(RobotHelpers.CheckLastPosition);
+
+                    Wait(5000, () =>
+                    {
+                        strLastPosition = _robotLoad.ReadResponse();
+                        return strLastPosition != string.Empty;
+                    });
+
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadOriginStep.RobotCurrentPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.RobotLoad_GetLastPosition_Fail);
+                        break;
+                    }
+                    Match match = Regex.Match(strLastPosition, @",(\d+),");
+
+                    if (match.Success)
+                    {
+                        string data = match.Groups[1].Value;
+
+                        if (int.TryParse(data, out LastPosition))
+                        {
+                            Log.Debug($"{_robotLoad.Name} is current in #{LastPosition} position");
+                        }
+                    }
+
+                    Step.OriginStep++;
+                    break;
+                case ERobotLoadOriginStep.Check_RobotInPPPosition:
+                    if (RobotInPPPosition(LastPosition))
+                    {
+                        Log.Debug("Robot in PP position");
+                        Step.OriginStep = (int)ERobotLoadOriginStep.Cyl_Unclamp;
+                        break;
+                    }
+
+                    Step.OriginStep++;
+                    break;
                 case ERobotLoadOriginStep.Fixture_Detect_Check:
                     if (IsFixtureDetect)
                     {
