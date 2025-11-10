@@ -1159,9 +1159,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessAutoRunStep.Vacuum_On:
-                    Log.Debug("Vacuum On");
-                    GlassVac.Value = true;
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    if (GlassVac.Value == false)
+                    {
+                        Log.Debug("Vacuum On");
+                        GlassVac.Value = true;
+                        Wait((int)(_commonRecipe.VacDelay * 1000));
+                    }
                     Step.RunStep++;
                     break;
                 case ECleanProcessAutoRunStep.Dispense_Remain:

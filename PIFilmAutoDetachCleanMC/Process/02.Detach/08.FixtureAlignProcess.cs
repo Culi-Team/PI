@@ -282,19 +282,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.TiltCheck:
-                    if (IsFixtureTiltDetect == true && _machineStatus.IsDryRunMode == false)
-                    {
-                        RaiseWarning((int)EWarning.FixtureAlign_Fixture_TiltDetect);
-                        break;
-                    }
+                    //if (IsFixtureTiltDetect == true && _machineStatus.IsDryRunMode == false)
+                    //{
+                    //    RaiseWarning((int)EWarning.FixtureAlign_Fixture_TiltDetect);
+                    //    break;
+                    //}
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.ReverseCheck:
-                    if (IsFixtureReverseDetect == true && _machineStatus.IsDryRunMode == false)
-                    {
-                        RaiseWarning((int)EWarning.FixtureAlign_Fixture_ReverseDetect);
-                        break;
-                    }
+                    //if (IsFixtureReverseDetect == true && _machineStatus.IsDryRunMode == false)
+                    //{
+                    //    RaiseWarning((int)EWarning.FixtureAlign_Fixture_ReverseDetect);
+                    //    break;
+                    //}
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.SetFlagAlignDone:
