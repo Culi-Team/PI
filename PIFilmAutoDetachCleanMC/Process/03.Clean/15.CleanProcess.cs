@@ -633,7 +633,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.PreProcessStep++;
                     break;
                 case ECleanPreProcessStep.AlcoholLeak_Detect_Check:
-                    if (IsAlcoholLeakDetect)
+                    if (_machineStatus.IsDryRunMode == false && _machineStatus.MachineTestMode == false && IsAlcoholLeakDetect)
                     {
                         EWarning? warning = cleanType switch
                         {

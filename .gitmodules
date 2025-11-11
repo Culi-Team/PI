@@ -1,21 +1,21 @@
 [submodule "EQX.Core"]
 	path = EQX.Core
-	url = \\\\192.168.113.17\\SetupFiles\\GitServer\\EQX.Core.git
+	url = https://github.com/TopEngineering/EQX.Core
 [submodule "EQX.Device"]
 	path = EQX.Device
-	url = \\\\192.168.113.17\\SetupFiles\\GitServer\\EQX.Device.git
+	url = https://github.com/TopEngineering/EQX.Device
 [submodule "EQX.Motion"]
 	path = EQX.Motion
-	url = \\\\192.168.113.17\\SetupFiles\\GitServer\\EQX.Motion.git
+	url = https://github.com/TopEngineering/EQX.Motion
 [submodule "EQX.InOut"]
 	path = EQX.InOut
-	url = \\\\192.168.113.17\\SetupFiles\\GitServer\\EQX.InOut.git
+	url = https://github.com/TopEngineering/EQX.InOut
 [submodule "EQX.UI"]
 	path = EQX.UI
-	url = \\\\192.168.113.17\\SetupFiles\\GitServer\\EQX.UI.git
+	url = https://github.com/TopEngineering/EQX.UI
 [submodule "EQX.Process"]
 	path = EQX.Process
-	url = \\\\192.168.113.17\\SetupFiles\\GitServer\\EQX.Process.git
+	url = https://github.com/TopEngineering/EQX.Process
 [submodule "EQX.ThirdParty"]
 	path = EQX.ThirdParty
-	url = \\\\192.168.113.17\\SetupFiles\\GitServer\\EQX.ThirdParty.git
+	url = https://github.com/TopEngineering/EQX.ThirdParty

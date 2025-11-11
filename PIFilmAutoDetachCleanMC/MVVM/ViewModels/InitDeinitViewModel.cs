@@ -429,8 +429,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         _devices.Outputs.Lamp_Stop();
 
-                        _devices.Outputs.MachineAutoRun.Value = false;
-
                         _devices.Outputs.DoorOpen.Value = true;
 
                         _devices.Motions.InovanceMaster.Disconnect();

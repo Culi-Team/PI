@@ -779,21 +779,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Glass Shuttle Vacuum Check Done");
                     Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
-                case EDetachStep.Cyl_Clamp_Backward:
-                    Log.Debug("Clamp Cylinder Backward");
-                    ClampCylinderFwBw(false);
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderBw);
-                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
-                    break;
-                case EDetachStep.Cyl_Clamp_Backward_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)EWarning.Detach_ClampCylinder_Backward_Fail);
-                        break;
-                    }
-                    Log.Debug("Clamp Cylinder Backward Done");
-                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
-                    break;
                 case EDetachStep.Set_FlagDetachDone:
                     Log.Debug("Set Flag Detach Done");
                     _machineStatus.IsFixtureDetached = true;

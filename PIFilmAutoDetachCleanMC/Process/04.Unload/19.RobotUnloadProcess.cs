@@ -173,6 +173,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotUnloadToStopStep.End:
                     if (ProcessStatus == EProcessStatus.ToStopDone)
                     {
+                        Thread.Sleep(10);
                         break;
                     }
                     Log.Debug("To Stop End");
@@ -217,7 +218,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Thread.Sleep(10);
                         break;
                     }
-
                     Log.Debug("To Alarm End");
                     ProcessStatus = EProcessStatus.ToAlarmDone;
                     Step.ToRunStep++;
