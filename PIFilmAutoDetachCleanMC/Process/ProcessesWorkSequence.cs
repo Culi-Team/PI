@@ -78,8 +78,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             EDetachStep.XAxis_Move_DetachCheck_Position_Wait,
             EDetachStep.Vacuum_Check,
 
-            //EDetachStep.Cyl_Clamp_Backward,
-            //EDetachStep.Cyl_Clamp_Backward_Wait,
+            EDetachStep.Cyl_Clamp_Backward,
+            EDetachStep.Cyl_Clamp_Backward_Wait,
 
             EDetachStep.Set_FlagDetachDone,
         };

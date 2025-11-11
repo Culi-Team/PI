@@ -1238,6 +1238,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ECleanProcessReadyStep.Start:
                     Log.Debug("Ready Start");
+                    if (GlassVac.Value == false)
+                    {
+                        //Vacuum On
+                        GlassVac.Value = true;
+                    }
                     Step.RunStep++;
                     break;
                 case ECleanProcessReadyStep.TransInShuttle_SafePos_Wait:
@@ -1635,8 +1640,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ECleanProcessCleanStep.Start:
                     Log.Debug("Clean Start");
-                    GlassVac.Value = false;
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                    {
+                        GlassVac.Value = false;
+                        Wait((int)(_commonRecipe.VacDelay * 1000));
+                    }
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.Wait_WETCleanUnloadDone:

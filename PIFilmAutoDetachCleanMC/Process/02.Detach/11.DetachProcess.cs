@@ -535,7 +535,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachStep.Cyl_Clamp_Forward:
                     Log.Debug("Clamp Cylinder Forward");
                     ClampCylinderFwBw(true);
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderFw);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderFw );
                     Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.Cyl_Clamp_Forward_Wait:
@@ -982,6 +982,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
+                    if(_machineStatus.IsFixtureDetached == false)
+                    {
+                        Log.Info("Sequence Detach");
+                        Sequence = ESequence.Detach;
+                        break;
+                    }
                     Log.Info("Sequence Transfer Fixture");
                     Sequence = ESequence.TransferFixture;
                     break;
