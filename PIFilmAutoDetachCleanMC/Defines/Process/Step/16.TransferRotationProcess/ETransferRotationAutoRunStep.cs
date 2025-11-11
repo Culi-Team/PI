@@ -10,6 +10,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         Start,
         GlassVac_Check,
+
+        OutShuttle_Vacuum,
+        OutShuttle_Glass_Check,
+
+        Wait_AFClean_Done,
+
         End
     }
 }

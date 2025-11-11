@@ -647,16 +647,18 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Detach Glass Z Axis Move to Ready Detach 2 Position");
                     DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisDetachReadyPosition2);
                     //ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisDetachReadyPosition);
+                    DetachCyl2.Forward();
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
                         () =>
                         {
-                            return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetachReadyPosition2);
-                            //return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetachReadyPosition2)
-                            //    && ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetachReadyPosition);
+                            //return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetachReadyPosition2);
+                            return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetachReadyPosition2)
+                                //&& ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetachReadyPosition)
+                                 && DetachCyl2.IsForward;
                         });
                     Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
-                case EDetachStep.ZAxis_Move_ReadyDetach2Position_Wait:
+                case EDetachStep.ZAxis_Move_ReadyDetach2Position_Wait   :
                     if (WaitTimeOutOccurred)
                     {
                         RaiseAlarm((int)EAlarm.Detach_ZAxis_MoveDetachReadyPosition_Fail);
