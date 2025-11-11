@@ -65,8 +65,8 @@ namespace PIFilmAutoDetachCleanMC.Test.DetachTest
             ICylinder Detach_Clamp4 = devices.Cylinders.Detach_ClampCyl4;
 
             // 1. Move to Ready Position
-            Detach_ZAxis.MoveAbs(detachRecipe.DetachZAxisReadyPosition);
-            Shuttle_ZAxis.MoveAbs(detachRecipe.ShuttleTransferZAxisReadyPosition);
+            Detach_ZAxis.MoveAbs(detachRecipe.DetachZAxisReadyPosition);    // 1
+            Shuttle_ZAxis.MoveAbs(detachRecipe.ShuttleTransferZAxisReadyPosition);  // 1
 
             Detach_Cyl1.Backward();
             Detach_Cyl2.Backward();
@@ -87,8 +87,8 @@ namespace PIFilmAutoDetachCleanMC.Test.DetachTest
                 );
 
             // 2. Move to Detach Ready Position
-            Detach_ZAxis.MoveAbs(detachRecipe.DetachZAxisDetachReadyPosition1);
-            Shuttle_ZAxis.MoveAbs(detachRecipe.ShuttleTransferZAxisDetachReadyPosition);
+            Detach_ZAxis.MoveAbs(detachRecipe.DetachZAxisDetachReadyPosition1); // 123
+            Shuttle_ZAxis.MoveAbs(detachRecipe.ShuttleTransferZAxisDetachReadyPosition); // 34
 
             Detach_Cyl2.Backward();
             Detach_Cyl1.Forward();
@@ -103,25 +103,25 @@ namespace PIFilmAutoDetachCleanMC.Test.DetachTest
                 );
 
             // 3. Detach 1
-            Detach_ZAxis.MoveAbs(detachRecipe.DetachZAxisDetach1Position, 10);
-            Shuttle_ZAxis.MoveAbs(detachRecipe.ShuttleTransferZAxisDetach1Position, 10);
+            Detach_ZAxis.MoveAbs(detachRecipe.DetachZAxisDetach1Position, 10);  // 136 (+13)
+            Shuttle_ZAxis.MoveAbs(detachRecipe.ShuttleTransferZAxisDetach1Position, 10);    // 26 (-8)
 
             // 4. Detach 1 Up
-            Detach_ZAxis.MoveAbs(detachRecipe.DetachZAxisDetachReadyPosition2);
-            Shuttle_ZAxis.MoveAbs(detachRecipe.ShuttleTransferZAxisDetach1Position + 6);
+            Detach_ZAxis.MoveAbs(detachRecipe.DetachZAxisDetachReadyPosition2); // 128 (-8)
+            Shuttle_ZAxis.MoveAbs(detachRecipe.ShuttleTransferZAxisDetach1Position + 6);    // 32 (+6)
 
             // 5.1. Detach 2
             Detach_Cyl2.Forward();
 
             // 5.2. Detach 2
-            Detach_ZAxis.MoveAbs(detachRecipe.DetachZAxisDetach2Position, 10);
-            Shuttle_ZAxis.MoveAbs(detachRecipe.ShuttleTransferZAxisDetach2Position, 10);
+            Detach_ZAxis.MoveAbs(detachRecipe.DetachZAxisDetach2Position, 10);  // 136 (+8)
+            Shuttle_ZAxis.MoveAbs(detachRecipe.ShuttleTransferZAxisDetach2Position, 10);    // 10 (-22)
 
             // 6. Detach Finishing
             Detach_Cyl1.Backward();
             Detach_Cyl2.Backward();
-            Detach_ZAxis.MoveAbs(detachRecipe.DetachZAxisReadyPosition, 50);
-            Shuttle_ZAxis.MoveAbs(detachRecipe.ShuttleTransferZAxisUnloadPosition, 50);
+            Detach_ZAxis.MoveAbs(detachRecipe.DetachZAxisReadyPosition, 50);        // 1
+            Shuttle_ZAxis.MoveAbs(detachRecipe.ShuttleTransferZAxisUnloadPosition, 50); // 1
 
             // 7. Finishing
             Detach_Clamp1.Backward();
