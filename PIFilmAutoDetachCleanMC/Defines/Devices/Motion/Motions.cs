@@ -2,9 +2,22 @@
 using EQX.Motion;
 using EQX.Motion.ByVendor.Inovance;
 using Microsoft.Extensions.DependencyInjection;
+using PIFilmAutoDetachCleanMC.Recipe;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
+    public class CleanExecutor
+    {
+        private readonly Motions motions;
+        private readonly RecipeSelector recipeSelector;
+
+        public CleanExecutor(Motions motions, RecipeSelector recipeSelector)
+        {
+            this.motions = motions;
+            this.recipeSelector = recipeSelector;
+        }
+    }
+
     public class Motions
     {
         public Motions([FromKeyedServices("InovanceMaster#1")] IMotionMaster inovanceMaster,
@@ -101,7 +114,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
             double[] startPos = { positionX, positionY };
             AXM.AxmLineMove((int)cleanUnit, startPos, vel, acc, dec);
 
-            while (port == EPort.Right ? y <= positionY + height : y >= positionY - height)
+            for (int i = 0; i < count; i++)
             {
                 if (port == EPort.Right)
                 {
@@ -124,11 +137,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                     y -= YStep;
                 }
 
-                if (port == EPort.Right ? y <= positionY + height : y >= positionY - height)
-                {
-                    double[] pos2 = { x, y };
-                    AXM.AxmLineMove((int)cleanUnit, pos2, vel, acc, dec);
-                }
+                double[] pos2 = { x, y };
+                AXM.AxmLineMove((int)cleanUnit, pos2, vel, acc, dec);
 
                 toRight = !toRight;
             }
@@ -175,7 +185,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
             double[] startPos = { positionX, positionY };
             AXM.AxmLineMove((int)cleanUnit, startPos, vel, acc, dec);
 
-            while (port == EPort.Right ? y <= positionY + height : y >= positionY - height)
+            for (int i = 0; i < count; i++)
             {
                 if (port == EPort.Right)
                 {
@@ -198,17 +208,15 @@ namespace PIFilmAutoDetachCleanMC.Defines
                     y -= YStep;
                 }
 
-                if (port == EPort.Right ? y <= positionY + height : y >= positionY - height)
-                {
-                    double[] pos2 = { x, y };
-                    AXM.AxmLineMove((int)cleanUnit, pos2, vel, acc, dec);
-                }
+                double[] pos2 = { x, y };
+                AXM.AxmLineMove((int)cleanUnit, pos2, vel, acc, dec);
 
                 toRight = !toRight;
             }
             AXM.AxmContiEndNode((int)cleanUnit);
             AXM.AxmContiStart((int)cleanUnit, 0, 0);
         }
+
         #endregion
     }
 }
