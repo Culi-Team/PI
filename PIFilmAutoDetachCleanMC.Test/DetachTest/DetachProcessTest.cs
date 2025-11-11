@@ -107,7 +107,7 @@ namespace PIFilmAutoDetachCleanMC.Test.DetachTest
             Shuttle_ZAxis.MoveAbs(detachRecipe.ShuttleTransferZAxisDetach1Position, 10);    // 26 (-8)
 
             // 4. Detach 1 Up
-            Detach_ZAxis.MoveAbs(detachRecipe.DetachZAxisDetachReadyPosition2); // 128 (-8)
+            Detach_ZAxis.MoveAbs(detachRecipe.DetachZAxisDetachReadyPosition2); // 123 (-21)
             Shuttle_ZAxis.MoveAbs(detachRecipe.ShuttleTransferZAxisDetach1Position + 6);    // 32 (+6)
 
             // 5.1. Detach 2
@@ -134,7 +134,7 @@ namespace PIFilmAutoDetachCleanMC.Test.DetachTest
 
             Shuttle_XAxis.MoveAbs(detachRecipe.ShuttleTransferXAxisDetachCheckPosition, 50);
 
-            recipeSelector.Save();
+            azrecipeSelector.Save();
 
 
             recipeSelector.Save();
