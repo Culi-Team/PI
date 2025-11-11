@@ -597,7 +597,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     _vinylCleanEncoder.MoveInc(_vinylCleanRecipe.VinylLengthPerCleaning);
 #endif
                     MotorOnOff.Value = true;
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _vinylCleanEncoder.Status.ActualPosition >= _vinylCleanRecipe.VinylLengthPerCleaning);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => Math.Abs(_vinylCleanEncoder.Status.ActualPosition) >= _vinylCleanRecipe.VinylLengthPerCleaning);
                     Step.RunStep++;
                     break;
                 case EVinylCleanProcessRobotPlaceFixtureToVinylClean.Motor_UnWinder_Run_Wait:
