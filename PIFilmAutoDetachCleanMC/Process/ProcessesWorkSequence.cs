@@ -54,24 +54,25 @@ namespace PIFilmAutoDetachCleanMC.Process
             EDetachStep.Cyl_Detach1_Down,
             EDetachStep.Cyl_Detach1_Down_Wait,
 
+            EDetachStep.Vacuum_On,
+
             EDetachStep.ZAxis_Move_Detach1Position,
             EDetachStep.ZAxis_Move_Detach1Position_Wait,
 
-            EDetachStep.Vacuum_On,
             EDetachStep.ZAxis_Move_ReadyDetach2Position, // Z Axis Move Ready Detach Position 2nd
             EDetachStep.ZAxis_Move_ReadyDetach2Position_Wait,
 
-            //EDetachStep.Cyl_Detach2_Down,
-            //EDetachStep.Cyl_Detach2_Down_Wait,
+            EDetachStep.Cyl_Detach2_Down,
+            EDetachStep.Cyl_Detach2_Down_Wait,
 
             EDetachStep.ZAxis_Move_Detach2Position,
             EDetachStep.ZAxis_Move_Detach2Position_Wait,
 
-            EDetachStep.ZAxis_Move_ReadyPosition,
-            EDetachStep.ZAxis_Move_ReadyPosition_Wait,
-
             EDetachStep.Cyl_Detach_Up,
             EDetachStep.Cyl_Detach_Up_Wait,
+
+            EDetachStep.ZAxis_Move_ReadyPosition,
+            EDetachStep.ZAxis_Move_ReadyPosition_Wait,
 
             EDetachStep.XAxis_Move_DetachCheck_Position,
             EDetachStep.XAxis_Move_DetachCheck_Position_Wait,
