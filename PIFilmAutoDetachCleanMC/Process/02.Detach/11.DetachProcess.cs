@@ -956,7 +956,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachProcessGlassTransferPickStep.Vacuum_Off:
                     Log.Debug("Glass Shuttle Vacuum Off");
                     GlassShuttleVacOnOff(false);
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait(300);
                     Step.RunStep++;
                     break;
                 case EDetachProcessGlassTransferPickStep.Set_FlagDetachRequestUnload:

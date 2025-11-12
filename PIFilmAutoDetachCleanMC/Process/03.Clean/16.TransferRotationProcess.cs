@@ -153,11 +153,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 if (port == EPort.Left)
                 {
-                    return _devices.Motions.InShuttleLXAxis.Status.ActualPosition <= 0.00011;
+                    return _devices.Motions.InShuttleLXAxis.Status.ActualPosition <= _recipeList.WetCleanLeftRecipe.XAxisCleanCenterPosition;
                 }
                 else
                 {
-                    return _devices.Motions.InShuttleRXAxis.Status.ActualPosition <= 0.00011;
+                    return _devices.Motions.InShuttleRXAxis.Status.ActualPosition <= _recipeList.WetCleanRightRecipe.XAxisCleanCenterPosition;
                 }
             }
         }

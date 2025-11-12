@@ -83,6 +83,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDInput ProACT => _devices.Inputs.UnloadRobProAct;
         private IDInput InHome => _devices.Inputs.UnloadRobInHome;
         private IDInput IOActCONF => _devices.Inputs.UnloadRobIoActconf;
+
+        private IDInput DownStreamGlassDetect1 => _devices.Inputs.DownStreamGlassDetect1;
+        private IDInput DownStreamGlassDetect2 => _devices.Inputs.DownStreamGlassDetect2;
+        private IDInput DownStreamGlassDetect3 => _devices.Inputs.DownStreamGlassDetect3;
+        private IDInput DownStreamGlassDetect4 => _devices.Inputs.DownStreamGlassDetect4;
         #endregion
 
         #region Outputs
@@ -114,8 +119,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return true;
-                return _robotUnloadInput[(int)ERobotUnloadProcessInput.MACHINE_REQUEST_PLACE];
+                return DownStreamGlassDetect1.Value == false &&
+                        DownStreamGlassDetect2.Value == false &&
+                        DownStreamGlassDetect3.Value == false &&
+                        DownStreamGlassDetect4.Value == false;
             }
         }
         #endregion
@@ -1176,6 +1183,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadRobotPlaceStep.VacuumOff:
                     Log.Debug("Vacuum Off");
                     VacuumOnOff(false);
+                    Wait(300);
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.Robot_Move_ReadyPlacePosition:

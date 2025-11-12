@@ -507,7 +507,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 RaiseAlarm((int)EAlarm.Motion_Driver_Off);
             }
             if (_devices.Motions.All.Count(motion => motion.Status.HwNegLimitDetect == true || motion.Status.HwPosLimitDetect == true) > 0
-                && ProcessMode != EProcessMode.Origin && ProcessMode != EProcessMode.ToOrigin)
+                && ProcessMode != EProcessMode.Origin && ProcessMode != EProcessMode.ToOrigin 
+                && ProcessMode != EProcessMode.ToWarning && ProcessMode != EProcessMode.Warning)
             {
                 RaiseAlarm((int)EAlarm.Motion_Limit_Detected);
             }

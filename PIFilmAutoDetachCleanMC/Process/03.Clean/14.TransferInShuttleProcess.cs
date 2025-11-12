@@ -888,7 +888,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttleWETCleanLoadStep.Vacuum_Off:
                     Log.Debug("Vacuum Off");
                     TransferVacOnOff(false);
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait(300);
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_ReadyPosition:

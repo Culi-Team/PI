@@ -1801,26 +1801,26 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
 
                 case ECleanProcessCleanStep.CylPusher_Down_CleanHorizontal:
-                    //Log.Debug("Cylinder Pusher Down");
-                    //PushCyl.Forward();
-                    //Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PushCyl.IsForward);
+                    Log.Debug("Cylinder Pusher Down");
+                    PushCyl.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PushCyl.IsForward);
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.CylPusher_Down_CleanHorizontal_Wait:
-                    //if (WaitTimeOutOccurred)
-                    //{
-                    //    EWarning? warning = cleanType switch
-                    //    {
-                    //        EClean.WETCleanLeft => EWarning.WETCleanLeft_PusherCylinder_Down_Fail,
-                    //        EClean.WETCleanRight => EWarning.WETCleanRight_PusherCylinder_Down_Fail,
-                    //        EClean.AFCleanLeft => EWarning.AFCleanLeft_PusherCylinder_Down_Fail,
-                    //        EClean.AFCleanRight => EWarning.AFCleanRight_PusherCylinder_Down_Fail,
-                    //        _ => null
-                    //    };
+                    if (WaitTimeOutOccurred)
+                    {
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_PusherCylinder_Down_Fail,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_PusherCylinder_Down_Fail,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_PusherCylinder_Down_Fail,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_PusherCylinder_Down_Fail,
+                            _ => null
+                        };
 
-                    //    RaiseWarning((int)warning!);
-                    //    break;
-                    //}
+                        RaiseWarning((int)warning!);
+                        break;
+                    }
                     Log.Debug("Cylinder Pusher Down Done");
                     Step.RunStep++;
                     break;
@@ -1886,6 +1886,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep = (int)ECleanProcessCleanStep.End;
                     break;
                 case ECleanProcessCleanStep.Axis_Move_CleanVerticalPosition:
+                    if (cleanRecipe.VerticalPointData == null || cleanRecipe.VerticalPointData.Count <= 0)
+                    {
+                        RaiseWarning((int)EWarning.CleanDataError);
+                        break;
+                    }
                     Log.Debug("X Y T Axis Move Clean Vertical Position");
                     XAxis.MoveAbs(cleanRecipe.XAxisCleanCenterPosition);
                     YAxis.MoveAbs(cleanRecipe.YAxisCleanCenterPosition + cleanRecipe.VerticalPointData[0].Point);
@@ -1943,26 +1948,26 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.CylPusher_Down_CleanVertical:
-                    //Log.Debug("Cylinder Pusher Down");
-                    //PushCyl.Forward();
-                    //Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PushCyl.IsForward);
+                    Log.Debug("Cylinder Pusher Down");
+                    PushCyl.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => PushCyl.IsForward);
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.CylPusher_Down_CleanVertical_Wait:
-                    //if (WaitTimeOutOccurred)
-                    //{
-                    //    EWarning? warning = cleanType switch
-                    //    {
-                    //        EClean.WETCleanLeft => EWarning.WETCleanLeft_PusherCylinder_Down_Fail,
-                    //        EClean.WETCleanRight => EWarning.WETCleanRight_PusherCylinder_Down_Fail,
-                    //        EClean.AFCleanLeft => EWarning.AFCleanLeft_PusherCylinder_Down_Fail,
-                    //        EClean.AFCleanRight => EWarning.AFCleanRight_PusherCylinder_Down_Fail,
-                    //        _ => null
-                    //    };
+                    if (WaitTimeOutOccurred)
+                    {
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_PusherCylinder_Down_Fail,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_PusherCylinder_Down_Fail,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_PusherCylinder_Down_Fail,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_PusherCylinder_Down_Fail,
+                            _ => null
+                        };
 
-                    //    RaiseWarning((int)warning!);
-                    //    break;
-                    //}
+                        RaiseWarning((int)warning!);
+                        break;
+                    }
                     Log.Debug("Cylinder Pusher Down Done");
                     Step.RunStep++;
                     break;
@@ -2181,7 +2186,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(VacDetect, false);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait(300);
                     Step.RunStep++;
                     break;
                 case ECleanProcessUnloadStep.Set_FlagRequestUnload:
@@ -2763,9 +2768,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanShuttleStep.CleanShuttle:
                     Log.Debug("Clean Shuttle");
 #if !SIMULATION
-                    _devices.Motions.CleanHorizontal(cleanType, XAxisCleanShuttlePosition, YAxisCleanShuttlePosition,
-                        0.00011, 0.00011,
-                        (int)0.00011);
+                    Clean(isHorizontal : true);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _devices.Motions.IsContiMotioning(cleanType) == false);
 #else
                     Thread.Sleep(100);

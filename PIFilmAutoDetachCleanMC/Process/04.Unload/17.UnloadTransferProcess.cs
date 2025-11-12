@@ -33,6 +33,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly CWorkData _workData;
         private readonly MachineStatus _machineStatus;
 
+        private int UnloadAlignCurrentIndex { get; set; } = -1;
+
         private IMotion YAxis => port == EPort.Left ? _devices.Motions.GlassUnloadLYAxis :
                                                   _devices.Motions.GlassUnloadRYAxis;
 
@@ -56,6 +58,11 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private UnloadTransferRecipe Recipe => port == EPort.Left ? _unloadTransferLeftRecipe :
                                                     _unloadTransferRightRecipe;
+
+        private IDInput[] UnloadAlignGlassVac => new IDInput[] { _devices.Inputs.UnloadGlassAlignVac1 ,
+                                                                 _devices.Inputs.UnloadGlassAlignVac2,
+                                                                 _devices.Inputs.UnloadGlassAlignVac3,
+                                                                 _devices.Inputs.UnloadGlassAlignVac4};
 
         private IDInputDevice Inputs => port == EPort.Left ? _unloadTransferLeftInput : _unloadTransferRightInput;
         private IDOutputDevice Outputs => port == EPort.Left ? _unloadTransferLeftOutput : _unloadTransferRightOutput;
@@ -452,7 +459,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Unload Transfer Done");
                     Step.RunStep++;
                     break;
-                case EUnloadTransferPlaceStep.Wait_OtherTransferUnloadingDone:
+                case EUnloadTransferPlaceStep.SetFlagUnloadTransferReady:
                     Log.Debug("Set FlagUnloadTransferReadyToUnload");
                     FlagUnloadTransferReadyToUnload = true;
                     Step.RunStep++;
@@ -475,6 +482,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                         SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac3, true);
 #endif
+                            UnloadAlignCurrentIndex = 3;
                             Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition3;
                             break;
                         }
@@ -483,6 +491,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                         SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac4, true);
 #endif
+                            UnloadAlignCurrentIndex = 4;
                             Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition4;
                             break;
                         }
@@ -492,6 +501,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                         SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac2, true);
 #endif
+                            UnloadAlignCurrentIndex = 2;
+
                             Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition2;
                             break;
                         }
@@ -501,6 +512,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                         SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac1, true);
 #endif
+                            UnloadAlignCurrentIndex = 1;
+
                             Step.RunStep++;
                             break;
                         }
@@ -512,6 +525,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                         SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac2, true);
 #endif
+                            UnloadAlignCurrentIndex = 2;
+
                             Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition2;
                             break;
                         }
@@ -521,6 +536,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                         SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac1, true);
 #endif
+                            UnloadAlignCurrentIndex = 1;
                             Step.RunStep++;
                             break;
                         }
@@ -530,6 +546,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                         SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac3, true);
 #endif
+                            UnloadAlignCurrentIndex = 3;
                             Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition3;
                             break;
                         }
@@ -538,6 +555,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                         SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac4, true);
 #endif
+                            UnloadAlignCurrentIndex = 4;
                             Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition4;
                             break;
                         }
@@ -630,7 +648,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(GlassVac, false);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait(300);
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.ZAxis_Move_ReadyPosition:
@@ -647,6 +665,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Z Axis Move Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case EUnloadTransferPlaceStep.UnloadAlign_GlassVac_Check:
+                    if (UnloadAlignGlassVac[UnloadAlignCurrentIndex - 1].Value == false)
+                    {
+                        RaiseWarning(EWarning.UnloadAlign_Vacuum_Fail);
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.YAxis_Move_ReadyPosition:
