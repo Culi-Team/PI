@@ -468,37 +468,79 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.UnloadAlign_GlassVacCheck:
-                    if (UnloadAlignVac1 == false || _machineStatus.IsDryRunMode)
+                    if (port == EPort.Left)
                     {
-#if SIMULATION
-                        SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac1, true);
-#endif
-                        Step.RunStep++;
-                        break;
-                    }
-                    if (UnloadAlignVac2 == false)
-                    {
-#if SIMULATION
-                        SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac2, true);
-#endif
-                        Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition2;
-                        break;
-                    }
-                    if (UnloadAlignVac3 == false)
-                    {
+                        if (UnloadAlignVac3 == false)
+                        {
 #if SIMULATION
                         SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac3, true);
 #endif
-                        Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition3;
-                        break;
-                    }
-                    if (UnloadAlignVac4 == false)
-                    {
+                            Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition3;
+                            break;
+                        }
+                        if (UnloadAlignVac4 == false)
+                        {
 #if SIMULATION
                         SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac4, true);
 #endif
-                        Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition4;
-                        break;
+                            Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition4;
+                            break;
+                        }
+
+                        if (UnloadAlignVac2 == false)
+                        {
+#if SIMULATION
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac2, true);
+#endif
+                            Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition2;
+                            break;
+                        }
+
+                        if (UnloadAlignVac1 == false || _machineStatus.IsDryRunMode)
+                        {
+#if SIMULATION
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac1, true);
+#endif
+                            Step.RunStep++;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (UnloadAlignVac2 == false)
+                        {
+#if SIMULATION
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac2, true);
+#endif
+                            Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition2;
+                            break;
+                        }
+
+                        if (UnloadAlignVac1 == false || _machineStatus.IsDryRunMode)
+                        {
+#if SIMULATION
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac1, true);
+#endif
+                            Step.RunStep++;
+                            break;
+                        }
+
+                        if (UnloadAlignVac3 == false)
+                        {
+#if SIMULATION
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac3, true);
+#endif
+                            Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition3;
+                            break;
+                        }
+                        if (UnloadAlignVac4 == false)
+                        {
+#if SIMULATION
+                        SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassAlignVac4, true);
+#endif
+                            Step.RunStep = (int)EUnloadTransferPlaceStep.YAxis_Move_PlacePosition4;
+                            break;
+                        }
                     }
                     Step.RunStep = (int)EUnloadTransferPlaceStep.Wait_UnloadAlignReady;
                     break;
@@ -663,7 +705,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             GlassVacOnOff.Value = isOn;
             GlassBlowOnOff.Value = !isOn;
 
-            if(isOn == false)
+            if (isOn == false)
             {
                 Task.Delay(100).ContinueWith(t =>
                 {

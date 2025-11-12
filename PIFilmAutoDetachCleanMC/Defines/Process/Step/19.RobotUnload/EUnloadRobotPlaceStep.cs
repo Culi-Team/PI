@@ -10,6 +10,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         Start,
 
+        Cylinder_Up,
+        Cylinder_Up_Wait,
+
         CheckOutputStopValue,
 
         Wait_MachineRequestPlace,

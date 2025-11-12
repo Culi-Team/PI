@@ -56,7 +56,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                                                       _devices.Outputs.TransferRotationRightRotBlowOnOff;
         private IDOutput GlassRotateVacOnOff => port == EPort.Left ? _devices.Outputs.TrRotateLeftRotVacOnOff :
                                                       _devices.Outputs.TrRotateRightRotVacOnOff;
-
+        private IDOutput OutShuttleVacOnOff => port == EPort.Left ? _devices.Outputs.OutShuttleLVacOnOff :
+                                                            _devices.Outputs.OutShuttleRVacOnOff;
         private bool IsGlassVac1 => port == EPort.Left ? _devices.Inputs.TrRotateLeftVac1.Value :
                                                       _devices.Inputs.TrRotateRightVac1.Value;
 
@@ -66,6 +67,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool IsGlassRotVac => port == EPort.Left ? _devices.Inputs.TrRotateLeftRotVac.Value :
                                                       _devices.Inputs.TrRotateRightRotVac.Value;
 
+        private bool IsOutShuttleGlassExist => port == EPort.Left ? _devices.Inputs.OutShuttleLVac.Value :
+                                                                    _devices.Inputs.OutShuttleRVac.Value;
         private TransferRotationRecipe Recipe => port == EPort.Left ? _transferRotationLeftRecipe : _transferRotationRightRecipe;
 
         private double ZAxisReadyPosition => Recipe.ZAxisReadyPosition;
@@ -150,11 +153,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 if (port == EPort.Left)
                 {
-                    return _devices.Motions.InShuttleLXAxis.Status.ActualPosition <= _recipeList.WetCleanLeftRecipe.XAxisCleanHorizontalPosition;
+                    return _devices.Motions.InShuttleLXAxis.Status.ActualPosition <= 0.00011;
                 }
                 else
                 {
-                    return _devices.Motions.InShuttleRXAxis.Status.ActualPosition <= _recipeList.WetCleanRightRecipe.XAxisCleanHorizontalPosition;
+                    return _devices.Motions.InShuttleRXAxis.Status.ActualPosition <= 0.00011;
                 }
             }
         }
@@ -439,6 +442,35 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         Log.Info("Sequence AF Clean Load");
                         Sequence = port == EPort.Left ? ESequence.AFCleanLeftLoad : ESequence.AFCleanRightLoad;
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationAutoRunStep.OutShuttle_Vacuum:
+                    if (OutShuttleVacOnOff.Value == false)
+                    {
+                        OutShuttleVacOnOff.Value = true;
+                        Wait((int)(_commonRecipe.VacDelay * 1000));
+                    }
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationAutoRunStep.OutShuttle_Glass_Check:
+                    if (IsOutShuttleGlassExist == false)
+                    {
+                        Step.RunStep = (int)ETransferRotationAutoRunStep.End;
+                        break;
+                    }
+                    if (FlagAFCleanCleaning == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationAutoRunStep.Wait_AFClean_Done:
+                    if (FlagAFCleanCleaning)
+                    {
+                        Wait(20);
                         break;
                     }
                     Step.RunStep++;
@@ -775,7 +807,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.Transfer_Cyl_Forward_2nd:
-                    if(TransferCyl.IsForward)
+                    if (TransferCyl.IsForward)
                     {
                         Step.RunStep = (int)ETransferRotationStep.Cyl_Rotate_180D;
                         break;
@@ -786,7 +818,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.Transfer_Cyl_Forward__2nd_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_Cylinder_Forward_Fail :
                                                           EWarning.TransferRotationRight_Cylinder_Forward_Fail));
@@ -1029,11 +1061,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         }
 
         private void GlassVacuum1OnOff(bool isOn)
-        { 
+        {
             GlassVac1OnOff.Value = isOn;
             GlassBlow1OnOff.Value = !isOn;
 
-            if(isOn == false)
+            if (isOn == false)
             {
                 Task.Delay(100).ContinueWith(t =>
                 {

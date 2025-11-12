@@ -186,11 +186,11 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         {
                             ErrorMessages.Add("Torque Controller Connect Fail");
                         }
-                        if(_syringePumpSerialCommunicator.Connect() == false)
+                        if (_syringePumpSerialCommunicator.Connect() == false)
                         {
                             ErrorMessages.Add("Syringe Pump Connect Fail");
                         }
-                        if(_indicatorModbusCommunication.Connect() == false)
+                        if (_indicatorModbusCommunication.Connect() == false)
                         {
                             ErrorMessages.Add("Indicator Connect Fail");
                         }
@@ -212,7 +212,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         _devices.RollerList.All.ForEach(s => s.Connect());
 
-                        if(_rollerModbusCommunication.IsConnected)
+                        if (_rollerModbusCommunication.IsConnected)
                         {
                             _devices.RollerList.SetDirection();
                         }
@@ -240,7 +240,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                                 $"{string.Join(", ", _devices.Motions.All.Where(m => m.IsConnected == false).Select(m => m.Name))}");
                         }
 
-                        if(_robotLoad.IsConnected == false)
+                        if (_robotLoad.IsConnected == false)
                         {
                             ErrorMessages.Add("Robot Load is not connected");
                         }
@@ -250,7 +250,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                             ErrorMessages.Add("Robot Unload is not connected");
                         }
 
-                        if(_devices.VinylCleanEncoder.IsConnected == false)
+                        if (_devices.VinylCleanEncoder.IsConnected == false)
                         {
                             ErrorMessages.Add("Vinyl Clean Encoder is not connected");
                         }
@@ -319,7 +319,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         break;
                     case EHandleStep.CassetteHandle:
                         Log.Debug("Init Cassette");
-                        if(_cassetteList.Load() == false)
+                        if (_cassetteList.Load() == false)
                         {
                             _cassetteList.RecipeUpdateHandle();
                         }
@@ -336,6 +336,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         break;
                     case EHandleStep.End:
 
+                        _devices.Outputs.Lamp_Stop();
                         Thread.Sleep(50);
                         _step++;
                         break;
@@ -373,7 +374,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                 {
                     case EHandleStep.Start:
                         MessageText = "Deinit Start";
-                        MessageText = "Stop Processes";
 
                         if (_devices.Inputs.GlassTransferVac1.Value ||
                             _devices.Inputs.GlassTransferVac2.Value ||
@@ -406,6 +406,9 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                             }
                         }
 
+                        MessageText = "Stop Processes";
+                        _processes.ProcessesStop();
+
                         Thread.Sleep(50);
                         _step++;
                         break;
@@ -424,6 +427,8 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                     case EHandleStep.MotionDeviceHandle:
                         MessageText = "Disconnect Motion Devices";
 
+                        _devices.Outputs.Lamp_Stop();
+
                         _devices.Outputs.DoorOpen.Value = true;
 
                         _devices.Motions.InovanceMaster.Disconnect();
@@ -431,13 +436,13 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
 
                         _devices.Motions.All.ForEach(m => m.Disconnect());
 
-                        if(_rollerModbusCommunication.IsConnected)
+                        if (_rollerModbusCommunication.IsConnected)
                         {
                             _devices.RollerList.All.ForEach(r => r.Stop());
-                        }    
+                        }
                         _rollerModbusCommunication.Disconnect();
 
-                        if(_torqueModbusCommnication.IsConnected)
+                        if (_torqueModbusCommnication.IsConnected)
                         {
                             _devices.TorqueControllers.All.ForEach(t => t.Stop());
                         }
@@ -466,7 +471,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _step++;
                         break;
                     case EHandleStep.ProcessHandle:
-                        _processes.ProcessesStop();
 
                         Thread.Sleep(50);
                         _step++;

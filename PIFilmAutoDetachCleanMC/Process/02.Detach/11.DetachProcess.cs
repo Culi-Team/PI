@@ -468,7 +468,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Shuttle Transfer Z Axis Move to Ready Position Done");
                     Step.RunStep++;
                     break;
-                
+
                 case EDetachUnloadStep.XAxis_Move_UnloadPosition:
                     Log.Debug("Shuttle Transfer X Axis Move to Unload Position");
                     ShuttleTransferXAxis.MoveAbs(_detachRecipe.ShuttleTransferXAxisUnloadPosition);
@@ -535,7 +535,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachStep.Cyl_Clamp_Forward:
                     Log.Debug("Clamp Cylinder Forward");
                     ClampCylinderFwBw(true);
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderFw);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderFw );
                     Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.Cyl_Clamp_Forward_Wait:
@@ -646,13 +646,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachStep.ZAxis_Move_ReadyDetach2Position:
                     Log.Debug("Detach Glass Z Axis Move to Ready Detach 2 Position");
                     DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisDetachReadyPosition2);
-                    //ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisDetachReadyPosition);
+                    ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisDetach1Position + 6);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
                         () =>
                         {
-                            return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetachReadyPosition2);
-                            //return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetachReadyPosition2)
-                            //    && ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetachReadyPosition);
+                            return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetachReadyPosition2)
+                                && ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetach1Position + 6);
                         });
                     Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
@@ -780,21 +779,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Glass Shuttle Vacuum Check Done");
                     Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
-                case EDetachStep.Cyl_Clamp_Backward:
-                    Log.Debug("Clamp Cylinder Backward");
-                    ClampCylinderFwBw(false);
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderBw);
-                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
-                    break;
-                case EDetachStep.Cyl_Clamp_Backward_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)EWarning.Detach_ClampCylinder_Backward_Fail);
-                        break;
-                    }
-                    Log.Debug("Clamp Cylinder Backward Done");
-                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
-                    break;
                 case EDetachStep.Set_FlagDetachDone:
                     Log.Debug("Set Flag Detach Done");
                     _machineStatus.IsFixtureDetached = true;
@@ -895,7 +879,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachProcessTransferFixtureLoadStep.Clear_FlagDetachFixtureUnClampDone:
-                    if(FlagIn_TransferFixtureClampDone)
+                    if (FlagIn_TransferFixtureClampDone)
                     {
                         Wait(20);
                         break;
@@ -983,6 +967,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
+                    if(_machineStatus.IsFixtureDetached == false)
+                    {
+                        Log.Info("Sequence Detach");
+                        Sequence = ESequence.Detach;
+                        break;
+                    }
                     Log.Info("Sequence Transfer Fixture");
                     Sequence = ESequence.TransferFixture;
                     break;

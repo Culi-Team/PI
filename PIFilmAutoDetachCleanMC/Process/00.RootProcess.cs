@@ -74,7 +74,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool RobotLoadUserSaf => _devices.Inputs.LoadRobUserSaf.Value;
         private bool RobotUnloadAlarmStop => _devices.Inputs.UnloadRobAlarmStop.Value;
         private bool RobotUnloadUserSaf => _devices.Inputs.UnloadRobUserSaf.Value;
-        private bool IsMainAirSupplied => _devices.Inputs.MainAir1.Value && _devices.Inputs.MainAir2.Value && _devices.Inputs.MainAir3.Value && _devices.Inputs.MainAir4.Value;
+        private bool IsMainAirSupplied => _devices.Inputs.MainAir1.Value && _devices.Inputs.MainAir2.Value /*&& _devices.Inputs.MainAir3.Value*/ && _devices.Inputs.MainAir4.Value;
         private bool IsEmergencyStopActive =>
             _devices.Inputs.EmoLoadL.Value ||
             _devices.Inputs.EmoLoadR.Value ||
@@ -301,6 +301,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     //    break;
                     //}
                     _devices.Outputs.DoorOpen.Value = false;
+                    Wait(1000, () => DoorLatch);
                     Step.OriginStep++;
                     break;
                 case ERootProcessToOriginStep.DoorLatchCheck:
@@ -310,7 +311,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     //    Step.OriginStep++;
                     //    break;
                     //}
-                    if (DoorLatch == false)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.DoorNotSafetyLock);
                         break;
@@ -387,6 +388,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     //    break;
                     //}
                     _devices.Outputs.DoorOpen.Value = false;
+                    Wait(1000, () => DoorLatch);
                     Step.ToRunStep++;
                     break;
                 case ERootProcessToRunStep.DoorLatchCheck:
@@ -396,7 +398,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     //    Step.ToRunStep++;
                     //    break;
                     //}
-                    if (DoorLatch == false)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.DoorNotSafetyLock);
                         break;
@@ -498,6 +500,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                 }
                 RaiseAlarm((int)EAlarm.MainAirNotSupplied);
                 return;
+            }
+
+            if (_devices.Motions.All.Count(motion => motion.Status.IsMotionOn != true) > 0)
+            {
+                RaiseAlarm((int)EAlarm.Motion_Driver_Off);
+            }
+            if (_devices.Motions.All.Count(motion => motion.Status.HwNegLimitDetect == true || motion.Status.HwPosLimitDetect == true) > 0
+                && ProcessMode != EProcessMode.Origin && ProcessMode != EProcessMode.ToOrigin)
+            {
+                RaiseAlarm((int)EAlarm.Motion_Limit_Detected);
+            }
+            if (_devices.Motions.All.Count(motion => motion.Status.IsAlarm == true) > 0)
+            {
+                RaiseAlarm((int)EAlarm.Motion_Alarm_Detected);
             }
 
             if (RobotLoadAlarmStop == false || RobotUnloadAlarmStop == false)

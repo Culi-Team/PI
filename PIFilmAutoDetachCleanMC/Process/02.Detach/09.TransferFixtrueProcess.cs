@@ -581,7 +581,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep = (int)ETransferFixtureProcessLoadStep.StepQueue_EmptyCheck;
                     break;
                 case ETransferFixtureProcessLoadStep.Wait_FixtureUnClampDone:
-                    if(FlagIn_AlignFixtureUnClampDone == false || FlagIn_DetachFixtureUnClampDone == false)
+                    if(FlagIn_AlignFixtureUnClampDone == false /*|| FlagIn_DetachFixtureUnClampDone == false*/)
                     {
                         Wait(20);
                         break;
