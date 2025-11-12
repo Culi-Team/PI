@@ -18,6 +18,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         InitializeTimeout,
         UnloadTransferCollisionDetect,
 
+        CleanDataError = 100,
+
         //InConveyor
         InConveyor = 1000,
         InConveyor_CST_Position_Error,
