@@ -397,13 +397,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                                 "Please remove all glass before SHUT DOWN.\n" +
                                 "Do you still want to SHUT DOWN?", "WARNING");
 
-                            if (ret == false)
-                            {
-                                MessageText = "Navigating to main view again...";
-                                _navigationService.NavigateTo<AutoViewModel>();
-                                isHandling = false;
-                                return;
-                            }
+                            MessageText = "Navigating to main view again...";
+                            _navigationService.NavigateTo<AutoViewModel>();
+                            isHandling = false;
+                            return;
                         }
 
                         MessageText = "Stop Processes";

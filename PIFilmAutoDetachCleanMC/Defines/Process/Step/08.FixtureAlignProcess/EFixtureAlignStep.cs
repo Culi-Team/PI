@@ -11,6 +11,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Start,
         Cyl_Align,
         Cyl_Align_Wait,
+        Cyl_Align2,
+        Cyl_Align_Wait2,
         TiltCheck,
         ReverseCheck,
         SetFlagAlignDone,

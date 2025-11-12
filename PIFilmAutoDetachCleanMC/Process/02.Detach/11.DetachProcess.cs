@@ -646,12 +646,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachStep.ZAxis_Move_ReadyDetach2Position:
                     Log.Debug("Detach Glass Z Axis Move to Ready Detach 2 Position");
                     DetachGlassZAxis.MoveAbs(_detachRecipe.DetachZAxisDetachReadyPosition2);
-                    ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisDetach1Position);
+                    ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisDetach1Position + 6);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
                         () =>
                         {
                             return DetachGlassZAxis.IsOnPosition(_detachRecipe.DetachZAxisDetachReadyPosition2)
-                                && ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetach1Position);
+                                && ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisDetach1Position + 6);
                         });
                     Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
@@ -981,7 +981,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.Stop;
                         break;
                     }
-
+                    if(_machineStatus.IsFixtureDetached == false)
+                    {
+                        Sequence = ESequence.Detach;
+                        break;
+                    }
                     Log.Info("Sequence Transfer Fixture");
                     Sequence = ESequence.TransferFixture;
                     break;

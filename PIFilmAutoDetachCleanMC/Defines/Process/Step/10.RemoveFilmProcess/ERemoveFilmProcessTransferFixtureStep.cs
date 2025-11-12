@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Defines
 {
-    public enum ERemoveFilmProcessTransferFixtureUnloadStep
+    public enum ERemoveFilmProcessTransferFixtureStep
     {
         Start,
         Cyl_Fix_Backward,
         Cyl_Fix_Backward_Done,
+        Wait_PreviousTransferDone,
         Set_Flag_RemoveFilmDone,
         Wait_TransferFixtureDone,
         Fixture_Detect_Check,

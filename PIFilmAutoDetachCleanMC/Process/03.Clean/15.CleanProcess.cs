@@ -2540,6 +2540,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 prepare3MStep++;
                                 break;
                             case ECleanProcessPrepare3MStep.FlowSensor_Check:
+                                prepare3MStep++;
+                                break;
                                 if (Environment.TickCount - StepWaitTime > 1000)
                                 {
                                     EWarning? warning = cleanType switch

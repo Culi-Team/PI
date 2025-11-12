@@ -29,6 +29,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             ETransferFixtureProcessLoadStep.YAxis_Move_UnloadPosition_Wait,
             ETransferFixtureProcessLoadStep.Cyl_Down, // Cyl Down 2nd
             ETransferFixtureProcessLoadStep.Cyl_Down_Wait,
+            ETransferFixtureProcessLoadStep.Set_DetachStatus,
             ETransferFixtureProcessLoadStep.Cyl_UnClamp,
             ETransferFixtureProcessLoadStep.Cyl_UnClamp_Wait,
             ETransferFixtureProcessLoadStep.Cyl_Up, // Cyl Up 3rd

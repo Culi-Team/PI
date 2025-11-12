@@ -266,10 +266,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.Cyl_Align:
-                    Log.Debug("Align Fixture");
-                    AlignFixtureCyl1.Forward();
+                    Log.Debug("Align Fixture #1");
                     AlignFixtureCyl2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignFixtureCyl1.IsForward && AlignFixtureCyl2.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignFixtureCyl2.IsForward);
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.Cyl_Align_Wait:
@@ -278,7 +277,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.FixtureAlign_AlignCylinder_Forward_Fail);
                         break;
                     }
-                    Log.Debug("Align Fixture Done");
+                    Log.Debug("Align Fixture #1 Done");
+                    Step.RunStep++;
+                    break;
+                case EFixtureAlignStep.Cyl_Align2:
+                    Log.Debug("Align Fixture #2");
+                    AlignFixtureCyl1.Forward();
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignFixtureCyl1.IsForward);
+                    Step.RunStep++;
+                    break;
+                case EFixtureAlignStep.Cyl_Align_Wait2:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.FixtureAlign_AlignCylinder_Forward_Fail);
+                        break;
+                    }
+                    Log.Debug("Align Fixture Done #2");
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.TiltCheck:

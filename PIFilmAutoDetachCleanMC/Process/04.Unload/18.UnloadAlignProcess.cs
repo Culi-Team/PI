@@ -383,7 +383,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     AlignBlow2.Value = true;
                     AlignBlow3.Value = true;
                     AlignBlow4.Value = true;
-                    Wait(500);
+                    Wait(1500);
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.Vacuum_On:

@@ -111,11 +111,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagRemoveFilmDone
+        private bool FlagRemoveFilmLoadReady
         {
             get
             {
-                return _transferFixtureInput[(int)ETransferFixtureProcessInput.REMOVE_FILM_DONE];
+                return _transferFixtureInput[(int)ETransferFixtureProcessInput.REMOVE_FILM_LOAD_READY];
             }
         }
 
@@ -559,6 +559,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Transfer Fixture Cylinder Down Done");
                     Step.RunStep = (int)ETransferFixtureProcessLoadStep.StepQueue_EmptyCheck;
                     break;
+                case ETransferFixtureProcessLoadStep.Set_DetachStatus:
+                    if (_machineStatus.FixtureExistStatus[0] == true)
+                    {
+                        _machineStatus.IsFixtureDetached = false;
+                    }
+                    Step.RunStep = (int)ETransferFixtureProcessLoadStep.StepQueue_EmptyCheck;
+                    break;
                 case ETransferFixtureProcessLoadStep.Cyl_Clamp:
                     Log.Debug("Transfer Fixture Cylinder Clamp");
                     ClampUnClamp(true);
@@ -593,7 +600,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep = (int)ETransferFixtureProcessLoadStep.StepQueue_EmptyCheck;
                     break;
                 case ETransferFixtureProcessLoadStep.Wait_RemoveFilm_Done:
-                    if (FlagRemoveFilmDone == false)
+                    if (FlagRemoveFilmLoadReady == false)
                     {
                         Wait(20);
                         break;
@@ -639,7 +646,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferFixtureProcessLoadStep.WaitProcesses_ReceiveTransferDone:
                     if (FlagFixtureAlignDone == true ||
                        FlagDetachDone == true ||
-                       FlagRemoveFilmDone == true)
+                       FlagRemoveFilmLoadReady == true)
                     {
                         Wait(20);
                         break;
