@@ -749,11 +749,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferRotationStep.GlassRotVac_On:
                     Log.Debug("Glass Rotation Vacuum On");
-                    GlassRotateVacuumonOff(true);
+                    GlassRotateVacuumOnOff(true);
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftRotVac : _devices.Inputs.TrRotateRightRotVac, true);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait(200);
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.ZAxis_Move_TransferBeforeRotatePosition:
@@ -778,11 +778,11 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftVac1 : _devices.Inputs.TrRotateRightVac1, false);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait((int)(_commonRecipe.VacDelay * 1000) , () => IsGlassRotVac || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassRotVac_On_Check:
-                    if (IsGlassRotVac == false && !_machineStatus.IsDryRunMode)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.TransferRotationLeft_RotateVac_Check_Fail :
                                                           EWarning.TransferRotationRight_RotateVac_Check_Fail));
@@ -882,16 +882,16 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftVac2 : _devices.Inputs.TrRotateRightVac2, true);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsGlassVac2);
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassRotVac_Off:
                     Log.Debug("Glass Rotation Vacuum Off");
-                    GlassRotateVacuumonOff(false);
+                    GlassRotateVacuumOnOff(false);
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftRotVac : _devices.Inputs.TrRotateRightRotVac, false);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait(200);
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassVac2_On_Check:
@@ -1009,7 +1009,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftVac2 : _devices.Inputs.TrRotateRightVac2, false);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait(200);
                     Step.RunStep++;
                     break;
                 case ETransferRotationAFCleanLoad.ZAxis_Move_ReadyPosition:
@@ -1088,7 +1088,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private void GlassRotateVacuumonOff(bool isOn)
+        private void GlassRotateVacuumOnOff(bool isOn)
         {
             GlassRotateVacOnOff.Value = isOn;
             GlassRotateBlowOnOff.Value = !isOn;

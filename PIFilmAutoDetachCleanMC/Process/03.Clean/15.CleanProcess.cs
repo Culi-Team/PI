@@ -1159,7 +1159,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     {
                         Log.Debug("Vacuum On");
                         GlassVac.Value = true;
-                        Wait((int)(_commonRecipe.VacDelay * 1000));
+                        Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect);
                     }
                     Step.RunStep++;
                     break;
@@ -1643,7 +1643,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
                         GlassVac.Value = false;
-                        Wait((int)(_commonRecipe.VacDelay * 1000));
+                        Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect);
                     }
                     Step.RunStep++;
                     break;

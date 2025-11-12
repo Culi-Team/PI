@@ -411,7 +411,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachAutoRunStep.Start:
                     Log.Debug("AutoRun Start");
                     GlassShuttleVacOnOff(true);
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait((int)(_commonRecipe.VacDelay * 1000),() => IsGlassShuttleVacAll);
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.ShuttleTransfer_Vac_Check:
