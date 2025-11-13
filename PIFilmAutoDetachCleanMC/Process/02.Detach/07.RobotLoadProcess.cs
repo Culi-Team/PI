@@ -721,7 +721,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoad_AutoRunStep.Check_FixtureDetect:
                     if (IsFixtureDetect == false)
                     {
-                        Step.RunStep = (int)ERobotLoad_AutoRunStep.Check_Flag_VinylCleanRequestFixture;
+                        Step.RunStep = (int)ERobotLoad_AutoRunStep.Check_Flag_FirstInputRequest;
                         break;
                     }
 
@@ -806,10 +806,29 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                     RaiseWarning((int)EWarning.RobotLoad_FixtureStatusAbnormal);
                     break;
-                case ERobotLoad_AutoRunStep.Check_Flag_VinylCleanRequestFixture:
+                case ERobotLoad_AutoRunStep.Check_Flag_FirstInputRequest:
+                    if (_commonRecipe.SkipVinylClean)
+                    {
+                        Step.RunStep = (int)ERobotLoad_AutoRunStep.Check_Flag_VinylCleanInputRequest;
+                        break;
+                    }
+
+                    Step.RunStep++;
+                    break;
+                case ERobotLoad_AutoRunStep.Check_Flag_VinylCleanInputRequest:
                     if (FlagVinylCleanRequestLoad && FlagInCSTReady)
                     {
-                        Log.Info("Sequence Robot Pick Fixture From CST");
+                        Log.Info("Sequence Robot Pick Fixture From CST -> Vinyl Clean");
+                        Sequence = ESequence.RobotPickFixtureFromCST;
+                        break;
+                    }
+
+                    Step.RunStep++;
+                    break;
+                case ERobotLoad_AutoRunStep.Check_Flag_FixtrureAlignInputRequest:
+                    if (FlagFixtureAlignRequestLoad && FlagInCSTReady)
+                    {
+                        Log.Info("Sequence Robot Pick Fixture From CST -> Align");
                         Sequence = ESequence.RobotPickFixtureFromCST;
                         break;
                     }
@@ -838,7 +857,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    Step.RunStep = (int)ERobotLoad_AutoRunStep.Check_Flag_VinylCleanRequestFixture;
+                    Step.RunStep = (int)ERobotLoad_AutoRunStep.Check_Flag_FirstInputRequest;
                     break;
                 case ERobotLoad_AutoRunStep.End:
                     break;
@@ -1357,6 +1376,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
+                    if (_commonRecipe.SkipVinylClean)
+                    {
+                        Log.Info("Sequence Place Fixture To Fixture Align");
+                        Sequence = ESequence.RobotPlaceFixtureToAlign;
+                        break;
+                    }
+
                     Log.Info("Sequence Place Fixture To Vinyl Clean");
                     Sequence = ESequence.RobotPlaceFixtureToVinylClean;
                     break;
@@ -1729,7 +1755,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToAlignStep.Wait_NextSequence:
-                    if (FlagVinylCleanRequestLoad && FlagInCSTReady)
+                    if (FlagVinylCleanRequestLoad && FlagInCSTReady && _commonRecipe.SkipVinylClean == false)
                     {
                         Log.Debug("Clear Flag Vinyl Clean Load Done");
                         FlagVinylCleanLoadDone = false;
@@ -2019,7 +2045,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Wait_NextSequence:
-                    if (FlagVinylCleanRequestUnload)
+                    if (FlagVinylCleanRequestUnload && _commonRecipe.SkipVinylClean == false)
                     {
                         Log.Debug("Clear Flag Vinyl Clean Unload Done");
                         FlagVinylCleanUnloadDone = false;
@@ -2028,10 +2054,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.RobotPickFixtureFromVinylClean;
                         break;
                     }
-                    if (FlagVinylCleanRequestLoad && FlagInCSTReady)
+                    if (FlagVinylCleanRequestLoad && FlagInCSTReady && _commonRecipe.SkipVinylClean == false)
                     {
                         Log.Debug("Clear Flag Vinyl Clean Load Done");
                         FlagVinylCleanLoadDone = false;
+
+                        Log.Info("Sequence Robot Pick Fixture From In Cassette");
+                        Sequence = ESequence.RobotPickFixtureFromCST;
+                        break;
+                    }
+                    if (FlagFixtureAlignRequestLoad && FlagInCSTReady && _commonRecipe.SkipVinylClean)
+                    {
+                        Log.Debug("Clear Flag Fixture Align Done");
+                        FlagFixtureAlignLoadDone = false;
 
                         Log.Info("Sequence Robot Pick Fixture From In Cassette");
                         Sequence = ESequence.RobotPickFixtureFromCST;

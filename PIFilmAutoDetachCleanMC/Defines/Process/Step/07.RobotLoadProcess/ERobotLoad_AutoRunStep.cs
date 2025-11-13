@@ -12,7 +12,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         Check_FixtureDetect,
 
-        Check_Flag_VinylCleanRequestFixture,
+        Check_Flag_FirstInputRequest,
+        Check_Flag_VinylCleanInputRequest,
+        Check_Flag_FixtrureAlignInputRequest,
         Check_Flag_RemoveFilm,
         Check_Flag_VinylCleanRequestUnload,
         End
