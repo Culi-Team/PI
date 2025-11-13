@@ -229,7 +229,6 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             }
         }
 
-
         [SingleRecipeDescription(Description = "X Axis Ready Position", Unit = Unit.mm)]
         [SinglePositionTeaching(Motion = "XAxis")]
         public double XAxisReadyPosition
@@ -385,7 +384,6 @@ namespace PIFilmAutoDetachCleanMC.Recipe
                 tAxisUnloadPosition = value;
             }
         }
-
 
         [SingleRecipeDescription(Description = "X Axis Clean Shuttle Position", Unit = Unit.mm)]
         [SinglePositionTeaching(Motion = "XAxis")]

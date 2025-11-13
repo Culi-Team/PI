@@ -325,7 +325,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadAlignAutoRunStep.Vacuum_On:
                     Log.Info("Vacuum On");
                     VacOnOff(true);
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsGlassVac);
                     Step.RunStep++;
                     break;
                 case EUnloadAlignAutoRunStep.GlassVac_Check:
@@ -370,23 +370,25 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadAlignStep.Vacuum_Off_Align:
                     Log.Debug("Vacuum Off");
                     VacOnOff(false);
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait(300);
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.Wait_GlassDetect:
-                    if (IsGlassDetect == false && _machineStatus.IsDryRunMode == false)
-                    {
-                        RaiseWarning(EWarning.UnloadAlign_Glass_NotDetect);
-                        break;
-                    }
                     AlignBlow1.Value = true;
                     AlignBlow2.Value = true;
                     AlignBlow3.Value = true;
                     AlignBlow4.Value = true;
-                    Wait(500);
+                    Wait(3000, () => IsGlassDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.Vacuum_On:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning(EWarning.UnloadAlign_Glass_NotDetect);
+                        break;
+                    }
+
+                    Wait(1000);
                     Log.Debug("Vacuum On");
                     VacOnOff(true);
 #if SIMULATION
@@ -419,6 +421,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Cylinder Align Down Done");
+                    Wait(500);
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.End:
@@ -500,7 +503,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadAlignUnloadTransferPlaceStep.Vacuum_On:
                     Log.Debug("Vacuum On");
                     VacOnOff(true);
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsGlassVac);
                     Step.RunStep++;
                     break;
                 case EUnloadAlignUnloadTransferPlaceStep.GlassVac_Check:

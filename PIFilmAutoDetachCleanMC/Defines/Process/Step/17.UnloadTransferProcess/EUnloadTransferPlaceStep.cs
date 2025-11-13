@@ -9,7 +9,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EUnloadTransferPlaceStep
     {
         Start,
-        Wait_OtherTransferUnloadingDone,
+        SetFlagUnloadTransferReady,
         Wait_UnloadAlignReady,
 
         UnloadAlign_GlassVacCheck,
@@ -30,6 +30,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         ZAxis_Move_ReadyPosition,
         ZAxis_Move_ReadyPosition_Wait,
+
+        UnloadAlign_GlassVac_Check,
 
         YAxis_Move_ReadyPosition,
         YAxis_Move_ReadyPosition_Wait,

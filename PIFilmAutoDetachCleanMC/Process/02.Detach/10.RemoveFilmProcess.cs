@@ -91,11 +91,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagRemoveFilmDone
+        private bool FlagRemoveFilmLoadReady
         {
             set
             {
-                _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_DONE] = value;
+                _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_LOAD_READY] = value;
             }
         }
 
@@ -437,19 +437,19 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void Sequence_TransferFixture()
         {
-            switch ((ERemoveFilmProcessTransferFixtureUnloadStep)Step.RunStep)
+            switch ((ERemoveFilmProcessTransferFixtureStep)Step.RunStep)
             {
-                case ERemoveFilmProcessTransferFixtureUnloadStep.Start:
+                case ERemoveFilmProcessTransferFixtureStep.Start:
                     Log.Debug("Remove Film Process Transfer Fixture Unload Start");
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessTransferFixtureUnloadStep.Cyl_Fix_Backward:
+                case ERemoveFilmProcessTransferFixtureStep.Cyl_Fix_Backward:
                     Log.Debug("Fix Cylinder Backward");
                     ClampCylClampUnclamp(false);
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderUnClamp);
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessTransferFixtureUnloadStep.Cyl_Fix_Backward_Done:
+                case ERemoveFilmProcessTransferFixtureStep.Cyl_Fix_Backward_Done:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.RemoveFilm_ClampCylinder_UnClamp_Fail);
@@ -458,13 +458,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Fix Cylinder Backward Done");
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessTransferFixtureUnloadStep.Set_Flag_RemoveFilmDone:
+                case ERemoveFilmProcessTransferFixtureStep.Wait_PreviousTransferDone:
+                    if (FlagFixtureTransferDone == true)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
+                    Step.RunStep++;
+                    break;
+                case ERemoveFilmProcessTransferFixtureStep.Set_Flag_RemoveFilmDone:
                     Log.Debug("Set Flag Remove Film Done");
-                    FlagRemoveFilmDone = true;
+                    FlagRemoveFilmLoadReady = true;
                     Step.RunStep++;
                     Log.Debug("Wait Transfer Fixture Done");
                     break;
-                case ERemoveFilmProcessTransferFixtureUnloadStep.Wait_TransferFixtureDone:
+                case ERemoveFilmProcessTransferFixtureStep.Wait_TransferFixtureDone:
                     if (FlagFixtureTransferDone == false)
                     {
                         Wait(20);
@@ -475,11 +484,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(_devices.Inputs.RemoveZoneFixtureDetect, true);
 #endif
                     Log.Debug("Clear Flag Remove Film Done");
-                    FlagRemoveFilmDone = false;
+                    FlagRemoveFilmLoadReady = false;
 
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessTransferFixtureUnloadStep.Fixture_Detect_Check:
+                case ERemoveFilmProcessTransferFixtureStep.Fixture_Detect_Check:
                     if (_machineStatus.FixtureExistStatus[1] == false)
                     {
                         // No up-stream fixture exist before transfer
@@ -501,7 +510,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessTransferFixtureUnloadStep.End:
+                case ERemoveFilmProcessTransferFixtureStep.End:
                     Log.Debug("Transfer Fixture Unload End");
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {

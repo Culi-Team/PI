@@ -394,16 +394,12 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                             _devices.Inputs.UnloadRobotVac4.Value)
                         {
                             bool? ret = MessageBoxEx.ShowDialog("Glass detected on some of pickup head.\n" +
-                                "Please remove all glass before SHUT DOWN.\n" +
-                                "Do you still want to SHUT DOWN?", "WARNING");
+                                "Please remove all glass before SHUT DOWN.", false, "WARNING");
 
-                            if (ret == false)
-                            {
-                                MessageText = "Navigating to main view again...";
-                                _navigationService.NavigateTo<AutoViewModel>();
-                                isHandling = false;
-                                return;
-                            }
+                            MessageText = "Navigating to main view again...";
+                            _navigationService.NavigateTo<AutoViewModel>();
+                            isHandling = false;
+                            return;
                         }
 
                         MessageText = "Stop Processes";

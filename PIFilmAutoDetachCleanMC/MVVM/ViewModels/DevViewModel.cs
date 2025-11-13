@@ -20,6 +20,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly IRobot _robotLoad;
         private readonly IRobot _robotUnload;
         private readonly Devices _devices;
+        private readonly DieHardK180Plasma _plasma;
         private bool isRobotLoadSelected = true;
         private bool isRobotUnloadSelected;
         private bool isCylinderInterlockBypassed;
@@ -343,7 +344,58 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             }
         }
 
+        public ICommand PlasmaRunTest
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    Task plasmaPrepareTask = Task.Run(async () =>
+                    {
+                        bool running = true;
+                        int plasmaPrepareStep = 0;
+                        while (running)
+                        {
+                            switch ((EPlasmaPrepareStep)plasmaPrepareStep)
+                            {
+                                case EPlasmaPrepareStep.Start:
+                                    _plasma.EnableRemote();
+                                    await Task.Delay(500);
+                                    plasmaPrepareStep++;
+                                    break;
 
+                                case EPlasmaPrepareStep.Air_Valve_Open:
+                                    _plasma.AirOpenClose(true);
+                                    await Task.Delay(500);
+                                    plasmaPrepareStep++;
+                                    break;
+
+                                case EPlasmaPrepareStep.Plasma_On:
+                                    _plasma.PlasmaOnOff(true);
+                                    await Task.Delay(500);
+                                    plasmaPrepareStep++;
+                                    break;
+
+                                case EPlasmaPrepareStep.End:
+                                    running = false;
+                                    break;
+                            }
+                        }
+                    });
+                });
+            }
+        }
+
+        public ICommand PlasmaStop
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _plasma.IdleMode();
+                });
+            }
+        }
         public bool IsCylinderInterlockEnabled
         {
             get => !IsCylinderInterlockBypassed;
@@ -390,13 +442,14 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             [FromKeyedServices("RobotLoad")] IRobot robotLoad,
             [FromKeyedServices("RobotUnload")] IRobot robotUnload,
             Devices devices,
-            MachineStatus machineStatus)
+            MachineStatus machineStatus,
+            DieHardK180Plasma plasma)
         {
             _robotLoad = robotLoad;
             _robotUnload = robotUnload;
             _devices = devices;
             MachineStatus = machineStatus;
-
+            this._plasma = plasma;
             isCylinderInterlockBypassed = InterlockService.Default.IsBypassAllEnabled;
         }
 

@@ -83,6 +83,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDInput ProACT => _devices.Inputs.UnloadRobProAct;
         private IDInput InHome => _devices.Inputs.UnloadRobInHome;
         private IDInput IOActCONF => _devices.Inputs.UnloadRobIoActconf;
+
+        private IDInput DownStreamGlassDetect1 => _devices.Inputs.DownStreamGlassDetect1;
+        private IDInput DownStreamGlassDetect2 => _devices.Inputs.DownStreamGlassDetect2;
+        private IDInput DownStreamGlassDetect3 => _devices.Inputs.DownStreamGlassDetect3;
+        private IDInput DownStreamGlassDetect4 => _devices.Inputs.DownStreamGlassDetect4;
         #endregion
 
         #region Outputs
@@ -114,8 +119,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return true;
-                return _robotUnloadInput[(int)ERobotUnloadProcessInput.MACHINE_REQUEST_PLACE];
+                return DownStreamGlassDetect1.Value == false &&
+                        DownStreamGlassDetect2.Value == false &&
+                        DownStreamGlassDetect3.Value == false &&
+                        DownStreamGlassDetect4.Value == false;
             }
         }
         #endregion
@@ -144,47 +151,47 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
-        public override bool ProcessToStop()
-        {
-            switch ((ERobotUnloadToStopStep)Step.ToRunStep)
-            {
-                case ERobotUnloadToStopStep.Start:
-                    Log.Debug("To Stop Start");
-                    Step.ToRunStep++;
-                    break;
-                case ERobotUnloadToStopStep.Stop:
-                    Log.Debug("Stop Robot Unload");
-                    _robotUnload.SendCommand(RobotHelpers.RobotStop);
+        //public override bool ProcessToStop()
+        //{
+        //    switch ((ERobotUnloadToStopStep)Step.ToRunStep)
+        //    {
+        //        case ERobotUnloadToStopStep.Start:
+        //            Log.Debug("To Stop Start");
+        //            Step.ToRunStep++;
+        //            break;
+        //        case ERobotUnloadToStopStep.Stop:
+        //            Log.Debug("Stop Robot Unload");
+        //            _robotUnload.SendCommand(RobotHelpers.RobotStop);
 
-                    Wait(5000, () => _robotUnload.ReadResponse("Stop complete,0\r\n"));
+        //            Wait(5000, () => _robotUnload.ReadResponse("Stop complete,0\r\n"));
 
-                    Step.ToRunStep++;
-                    break;
-                case ERobotUnloadToStopStep.Stop_Check:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)EWarning.RobotUnload_Stop_Fail);
-                        break;
-                    }
+        //            Step.ToRunStep++;
+        //            break;
+        //        case ERobotUnloadToStopStep.Stop_Check:
+        //            if (WaitTimeOutOccurred)
+        //            {
+        //                RaiseWarning((int)EWarning.RobotUnload_Stop_Fail);
+        //                break;
+        //            }
 
-                    Log.Debug("Robot Load Stop Complete");
-                    Step.ToRunStep++;
-                    break;
-                case ERobotUnloadToStopStep.End:
-                    if (ProcessStatus == EProcessStatus.ToStopDone)
-                    {
-                        Thread.Sleep(10);
-                        break;
-                    }
-                    Log.Debug("To Stop End");
-                    ProcessStatus = EProcessStatus.ToStopDone;
-                    Step.ToRunStep++;
-                    break;
-                default:
-                    break;
-            }
-            return true;
-        }
+        //            Log.Debug("Robot Load Stop Complete");
+        //            Step.ToRunStep++;
+        //            break;
+        //        case ERobotUnloadToStopStep.End:
+        //            if (ProcessStatus == EProcessStatus.ToStopDone)
+        //            {
+        //                Thread.Sleep(10);
+        //                break;
+        //            }
+        //            Log.Debug("To Stop End");
+        //            ProcessStatus = EProcessStatus.ToStopDone;
+        //            Step.ToRunStep++;
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //    return true;
+        //}
 
         public override bool ProcessToAlarm()
         {
@@ -977,7 +984,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep++;
                         break;
                     }
-                    PlasmaPrepare();
+                    if (Parent.Sequence == ESequence.AutoRun)
+                    {
+                        PlasmaPrepare();
+                    }
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.End:
@@ -995,6 +1005,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void PlasmaPrepare()
         {
+            IsPlasmaPrepare = true;
+            return;
             int plasmaPrepareStep = 0;
 
             Task plasmaPrepareTask = Task.Run(async () =>
@@ -1145,7 +1157,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.Wait_MachineRequestPlace:
-                    if (FlagMachineRequestPlace == false && !_machineStatus.IsDryRunMode && !_machineStatus.MachineTestMode)
+                    if (FlagMachineRequestPlace == false && _devices.Inputs.DownStreamReady.Value &&
+                        !_machineStatus.IsDryRunMode && !_machineStatus.MachineTestMode)
                     {
                         Wait(20);
                         break;
@@ -1176,6 +1189,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadRobotPlaceStep.VacuumOff:
                     Log.Debug("Vacuum Off");
                     VacuumOnOff(false);
+                    Wait(300);
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.Robot_Move_ReadyPlacePosition:

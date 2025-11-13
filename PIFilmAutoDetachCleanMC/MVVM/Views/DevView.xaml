@@ -180,7 +180,18 @@
                 <Button
                      Content="Unload Robot DOWN"
                      Command="{Binding UnloadRobotDown}"/>
-                
+
+            </UniformGrid>
+        </Expander>
+
+        <Expander Header="Plasma">
+            <UniformGrid>
+                <Button Content="Plasma Run Test"
+                        Height="50"
+                        Command="{Binding PlasmaRunTest}"/>
+                <Button Content="Plasma Stop"
+                        Height="50"
+                        Command="{Binding PlasmaStop}"/>
             </UniformGrid>
         </Expander>
     </DockPanel>

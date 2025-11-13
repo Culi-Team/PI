@@ -29,6 +29,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             ETransferFixtureProcessLoadStep.YAxis_Move_UnloadPosition_Wait,
             ETransferFixtureProcessLoadStep.Cyl_Down, // Cyl Down 2nd
             ETransferFixtureProcessLoadStep.Cyl_Down_Wait,
+            ETransferFixtureProcessLoadStep.Set_DetachStatus,
             ETransferFixtureProcessLoadStep.Cyl_UnClamp,
             ETransferFixtureProcessLoadStep.Cyl_UnClamp_Wait,
             ETransferFixtureProcessLoadStep.Cyl_Up, // Cyl Up 3rd
@@ -43,8 +44,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             EDetachStep.Cyl_Clamp_Forward,
             EDetachStep.Cyl_Clamp_Forward_Wait,
+
             EDetachStep.ShuttleZAxis_Move_ReadyPosition,
             EDetachStep.ShuttleZAxis_Move_ReadyPosition_Wait,
+
             EDetachStep.XAxis_Move_DetachPosition,
             EDetachStep.XAxis_Move_DetachPosition_Wait,
 
@@ -68,20 +71,23 @@ namespace PIFilmAutoDetachCleanMC.Process
             EDetachStep.ZAxis_Move_Detach2Position,
             EDetachStep.ZAxis_Move_Detach2Position_Wait,
 
+            EDetachStep.ShuttleZAxis_Move_ReadyPosition,
+            EDetachStep.ShuttleZAxis_Move_ReadyPosition_Wait,
+
+            EDetachStep.Detach_ZAxis_Move_ReadyPosition,
+            EDetachStep.Detach_ZAxis_Move_ReadyPosition_Wait,
+
             EDetachStep.Cyl_Detach_Up,
             EDetachStep.Cyl_Detach_Up_Wait,
 
-            EDetachStep.ZAxis_Move_ReadyPosition,
-            EDetachStep.ZAxis_Move_ReadyPosition_Wait,
+            //EDetachStep.XAxis_Move_DetachCheck_Position,
+            //EDetachStep.XAxis_Move_DetachCheck_Position_Wait,
+            //EDetachStep.Vacuum_Check,
 
-            EDetachStep.XAxis_Move_DetachCheck_Position,
-            EDetachStep.XAxis_Move_DetachCheck_Position_Wait,
-            EDetachStep.Vacuum_Check,
+            //EDetachStep.Cyl_Clamp_Backward,
+            //EDetachStep.Cyl_Clamp_Backward_Wait,
 
-            EDetachStep.Cyl_Clamp_Backward,
-            EDetachStep.Cyl_Clamp_Backward_Wait,
-
-            EDetachStep.Set_FlagDetachDone,
+            //EDetachStep.Set_FlagDetachDone,
         };
 
         public static readonly List<ERemoveFilmRobotPickFromRemoveZoneStep> RemoveFilmRobotPickFromRemoveZoneSequence = new List<ERemoveFilmRobotPickFromRemoveZoneStep>

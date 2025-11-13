@@ -10,7 +10,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         FIXTURE_ALIGN_DONE,
         DETACH_DONE,
-        REMOVE_FILM_DONE,
+        REMOVE_FILM_LOAD_READY,
         DETACH_ORIGIN_DONE,
         DETACH_READY_DONE,
 

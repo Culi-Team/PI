@@ -115,6 +115,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Override Methods
         public override bool PreProcess()
         {
+            _devices.Outputs.MachineEmergencyStop.Value = IsEmergencyStopActive || !IsPowerMCOn;
+
             // 1. CHECK ALARM STATUS (Utils, Motion, Safety...)
             if (ProcessMode != EProcessMode.ToAlarm && ProcessMode != EProcessMode.Alarm)
             {
@@ -507,7 +509,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 RaiseAlarm((int)EAlarm.Motion_Driver_Off);
             }
             if (_devices.Motions.All.Count(motion => motion.Status.HwNegLimitDetect == true || motion.Status.HwPosLimitDetect == true) > 0
-                && ProcessMode != EProcessMode.Origin && ProcessMode != EProcessMode.ToOrigin)
+                && ProcessMode != EProcessMode.Origin && ProcessMode != EProcessMode.ToOrigin
+                && ProcessMode != EProcessMode.ToWarning && ProcessMode != EProcessMode.Warning)
             {
                 RaiseAlarm((int)EAlarm.Motion_Limit_Detected);
             }

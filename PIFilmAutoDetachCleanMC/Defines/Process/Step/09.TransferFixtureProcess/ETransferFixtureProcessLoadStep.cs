@@ -20,6 +20,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         YAxis_Move_LoadPosition_Wait,
         Cyl_Down,
         Cyl_Down_Wait,
+        Set_DetachStatus,
         Cyl_Clamp,
         Cyl_Clamp_Wait,
         Set_FlagClampDone,

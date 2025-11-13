@@ -55,6 +55,45 @@
                 </Grid>
             </Border>
         </DataTemplate>
+
+        <Style TargetType="DataGrid" x:Key="DataViewDataGridStyle">
+            <Setter Property="GridLinesVisibility" Value="All" />
+            <Setter Property="HeadersVisibility" Value="Column" />
+            <Setter Property="RowHeaderWidth" Value="0" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="CanUserAddRows" Value="False" />
+            <Setter Property="CanUserDeleteRows" Value="False" />
+            <Setter Property="CanUserReorderColumns" Value="False" />
+            <Setter Property="CanUserResizeColumns" Value="False" />
+            <Setter Property="CanUserSortColumns" Value="False" />
+            <Setter Property="IsReadOnly" Value="False" />
+            <Setter Property="RowHeight" Value="30" />
+            <Setter Property="BorderBrush" Value="#E0E0E0" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+        
+        <!-- DataGrid Cell Style -->
+        <Style TargetType="DataGridCell" x:Key="DataViewDataGridCellStyle">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0,0,0.5,0.5" />
+            <Setter Property="BorderBrush" Value="#F0F0F0" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderBrush" Value="#F0F0F0" />
+                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground}" />
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderBrush" Value="#F0F0F0" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F0F8FF" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -82,25 +121,25 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="2.5*"/>
+                <ColumnDefinition Width="2.2*"/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="1.5*" />
+                <RowDefinition Height="1.9*" />
                 <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
 
             <!--Cylinder and Pressure-->
             <GroupBox Header="Cylinder"
                       Grid.Row="1"
-                      Grid.ColumnSpan="2"
+                      Grid.ColumnSpan="1"
                       Style="{StaticResource TextBlockHeaderGroupBox}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding Cylinders}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <UniformGrid Columns="6"
+                                <UniformGrid Columns="4"
                                              VerticalAlignment="Top" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
@@ -108,7 +147,7 @@
                             <DataTemplate>
                                 <ContentControl
                                             Content="{Binding .}"
-                                            Margin="3"
+                                            Margin="1"
                                             Height="150"
                                             Width="170"/>
                             </DataTemplate>
@@ -117,6 +156,73 @@
                 </ScrollViewer>
             </GroupBox>
 
+            <!--Clean Setting-->
+            <GroupBox Header="Clean Setting"
+                      Style="{StaticResource TextBlockHeaderGroupBox}"
+                      Grid.Row="1"
+                      Grid.Column="1">
+                <TabControl TabStripPlacement="Top"
+                            Style="{x:Null}">
+                    <TabItem Header="Clean Horizontal"
+                             Width="150">
+                        <DataGrid ItemsSource="{Binding Recipe.HorizontalPointData}"
+                                  Style="{StaticResource DataViewDataGridStyle}">
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridCell"
+                                        BasedOn="{StaticResource DataViewDataGridCellStyle}">
+                                    <Setter Property="BorderThickness"
+                                            Value="0" />
+                                    <Setter Property="Padding"
+                                            Value="4,0,4,0" />
+                                    <Setter Property="HorizontalContentAlignment"
+                                            Value="Center" />
+                                    <Setter Property="VerticalContentAlignment"
+                                            Value="Center" />
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Point"
+                                                    IsReadOnly="True"
+                                                    Binding="{Binding Point}"
+                                                    Width="*" />
+                                <DataGridTextColumn Header="Repeat"
+                                                    IsReadOnly="True"
+                                                    Binding="{Binding Repeat}"
+                                                    Width="*" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                    <TabItem Header="Clean Vertical"
+                             Width="150">
+                        <DataGrid ItemsSource="{Binding Recipe.VerticalPointData}"
+                                  Style="{StaticResource DataViewDataGridStyle}">
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridCell"
+                                        BasedOn="{StaticResource DataViewDataGridCellStyle}">
+                                    <Setter Property="BorderThickness"
+                                            Value="0" />
+                                    <Setter Property="Padding"
+                                            Value="4,0,4,0" />
+                                    <Setter Property="HorizontalContentAlignment"
+                                            Value="Center" />
+                                    <Setter Property="VerticalContentAlignment"
+                                            Value="Center" />
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Point"
+                                                    IsReadOnly="True"
+                                                    Binding="{Binding Point}"
+                                                    Width="*" />
+                                <DataGridTextColumn Header="Repeat"
+                                                    IsReadOnly="True"
+                                                    Binding="{Binding Repeat}"
+                                                    Width="*" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                </TabControl>
+            </GroupBox>
             <GroupBox Header="Regulator"
                       Grid.Row="0"
                       Style="{StaticResource TextBlockHeaderGroupBox}">

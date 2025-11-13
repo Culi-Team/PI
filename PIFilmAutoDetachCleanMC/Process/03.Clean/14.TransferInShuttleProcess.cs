@@ -439,7 +439,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttleAutoRunStep.Start:
                     Log.Debug("Auto Run Start");
                     AlignVacOnOff(true);
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsTransfer_VacDetect);
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleAutoRunStep.Transfer_VacCheck:
@@ -601,11 +601,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassAlignStep.Vacuum_Off:
                     Log.Debug("Vacuum Off");
                     AlignVacOnOff(false);
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait((int)(_commonRecipe.VacDelay * 1000) , () => IsAlign_GlassDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Wait_GlassDetect:
-                    if (IsAlign_GlassDetect == false && _machineStatus.IsDryRunMode == false)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_GlassNotDetect : EWarning.GlassAlignRight_GlassNotDetect));
                         break;
@@ -616,7 +616,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     AlignBlow3.Value = true;
 
                     Log.Debug("Glass Align Done");
-                    Wait(500);
+                    Wait(1000);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Vacuum_On_2nd:
@@ -888,7 +888,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferInShuttleWETCleanLoadStep.Vacuum_Off:
                     Log.Debug("Vacuum Off");
                     TransferVacOnOff(false);
-                    Wait((int)(_commonRecipe.VacDelay * 1000));
+                    Wait(300);
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleWETCleanLoadStep.ZAxis_Move_ReadyPosition:

@@ -443,6 +443,12 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput RelayPlasmaMotorError => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.RELAY_PLASMA_MOTOR_ERROR);
 
         public IDInput UnloadTransferAvoidNotCollision => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_TRANSFER_AVOID_NOT_COLLISION);
+        public IDInput DownStreamStop => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOWNSTREAM_STOP);
+        public IDInput DownStreamGlassDetect1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOWNSTREAM_GLASS_DETECT_1);
+        public IDInput DownStreamGlassDetect2 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOWNSTREAM_GLASS_DETECT_2);
+        public IDInput DownStreamGlassDetect3 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOWNSTREAM_GLASS_DETECT_3);
+        public IDInput DownStreamGlassDetect4 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOWNSTREAM_GLASS_DETECT_4);
+        public IDInput DownStreamReady => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.DOWNSTREAM_READY);
 
         //Main Air
         public IDInput MainAir1 => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.MAIN_AIR_1);
