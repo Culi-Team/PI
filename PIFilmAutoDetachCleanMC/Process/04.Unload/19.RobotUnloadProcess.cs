@@ -984,7 +984,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep++;
                         break;
                     }
-                    PlasmaPrepare();
+                    if (Parent.Sequence == ESequence.AutoRun)
+                    {
+                        PlasmaPrepare();
+                    }
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.End:
@@ -1002,6 +1005,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void PlasmaPrepare()
         {
+            IsPlasmaPrepare = true;
+            return;
             int plasmaPrepareStep = 0;
 
             Task plasmaPrepareTask = Task.Run(async () =>
@@ -1152,7 +1157,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.Wait_MachineRequestPlace:
-                    if (FlagMachineRequestPlace == false && !_machineStatus.IsDryRunMode && !_machineStatus.MachineTestMode)
+                    if (FlagMachineRequestPlace == false && _devices.Inputs.DownStreamReady.Value &&
+                        !_machineStatus.IsDryRunMode && !_machineStatus.MachineTestMode)
                     {
                         Wait(20);
                         break;

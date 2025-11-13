@@ -891,7 +891,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftRotVac : _devices.Inputs.TrRotateRightRotVac, false);
 #endif
-                    Wait(200);
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsGlassVac2);
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassVac2_On_Check:

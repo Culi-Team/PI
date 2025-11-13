@@ -514,6 +514,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadOriginStep.Check_RobotInPPPosition:
                     if (RobotInPPPosition(LastPosition))
                     {
+                        if (LastPosition == (int)ERobotCommand.S5_PP && IsFixtureDetect)
+                        {
+                            if (_cassetteList.CassetteOut.Cells.First(c => c.Status == ETrayCellStatus.Working) != null)
+                            {
+                                _cassetteList.CassetteOut.Cells.First(c => c.Status == ETrayCellStatus.Working).Status = ETrayCellStatus.Done;
+                            }
+                        }
                         Log.Debug("Robot in PP position");
                         Step.OriginStep = (int)ERobotLoadOriginStep.Cyl_Unclamp;
                         break;
@@ -1008,6 +1015,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoad_ReadyStep.Check_RobotInPPPosition:
                     if (RobotInPPPosition(LastPosition))
                     {
+                        if (LastPosition == (int)ERobotCommand.S5_PP && IsFixtureDetect)
+                        {
+                            if (_cassetteList.CassetteOut.Cells.First(c => c.Status == ETrayCellStatus.Working) != null)
+                            {
+                                _cassetteList.CassetteOut.Cells.First(c => c.Status == ETrayCellStatus.Working).Status = ETrayCellStatus.Done;
+                            }
+                        }
                         Log.Debug("Robot in PP position");
                         Step.RunStep = (int)ERobotLoad_ReadyStep.UnClamp;
                         break;
@@ -1117,7 +1131,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoad_ReadyStep.RobotReady:
                     Log.Debug("Start Move Ready Position Robot Load");
 
-                    if(LastPosition == (int)ERobotCommand.S5_PP)
+                    if (LastPosition == (int)ERobotCommand.S5_PP)
                     {
                         Log.Debug($"Send Robot Motion Command {ERobotCommand.HOME}");
                         if (SendCommand(ERobotCommand.HOME, 10, 10))
@@ -1207,7 +1221,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Wait_InCST_Ready:
-                    if (FlagInCSTReady == false)
+                    if (FlagInCSTReady == false && _machineStatus.IsInputStop == true)
                     {
                         Wait(20);
                         break;
@@ -1295,6 +1309,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Move In Cassette Ready Position");
                     if (SendCommand(ERobotCommand.S1_PP_RDY, LowSpeed, HightSpeed, paras))
                     {
+                        _cassetteList.CassetteIn[(uint)CurrentInWorkCSTFixtureIndex] = ETrayCellStatus.Done;
+
                         Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S1_PP_RDY)));
                         Step.RunStep++;
                         break;
@@ -1314,7 +1330,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Update_Cassette_Status:
                     Log.Debug("Update Cassette Status");
-                    _cassetteList.CassetteIn[(uint)CurrentInWorkCSTFixtureIndex] = ETrayCellStatus.Done;
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Set_Flag_RobotPickInCSTDone:
@@ -1575,7 +1590,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 break;
                             }
 
-                            else if (FlagVinylCleanRequestUnload && _machineStatus.IsDryRunMode)
+                            else if (FlagVinylCleanRequestUnload && _devices.Inputs.AlignFixtureDetect.Value == false)
                             {
                                 Log.Info("Sequence Robot Pick Fixture From Vinyl Clean");
                                 Sequence = ESequence.RobotPickFixtureFromVinylClean;

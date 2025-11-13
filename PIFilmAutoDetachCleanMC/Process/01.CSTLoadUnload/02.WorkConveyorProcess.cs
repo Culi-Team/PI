@@ -800,11 +800,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.CheckInputStopValue:
-                    if (_machineStatus.IsInputStop == true)
-                    {
-                        Wait(20);
-                        break;
-                    }
+                    //if (_machineStatus.IsInputStop == true)
+                    //{
+                    //    Wait(20);
+                    //    break;
+                    //}
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Conveyor_Run:

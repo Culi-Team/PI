@@ -2830,6 +2830,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         }
 
+        object ajinContiLock = new object();
+
         public void Clean(bool isHorizontal)
         {
             List<PointAndCount> pointDatas = isHorizontal ? cleanRecipe.HorizontalPointData : cleanRecipe.VerticalPointData;
@@ -2840,35 +2842,38 @@ namespace PIFilmAutoDetachCleanMC.Process
 
             double[] pos;
 
-            AXM.AxmContiSetAxisMap((int)cleanType, 2, new int[] { XAxis.Id, YAxis.Id });
-            AXM.AxmContiBeginNode((int)cleanType);
-
-            foreach (var pointData in pointDatas)
+            lock (ajinContiLock)
             {
-                double yPosition = cleanRecipe.YAxisCleanCenterPosition + pointData.Point;
-                
-                for (int i = 0; i < pointData.Repeat; i++)
+                AXM.AxmContiSetAxisMap((int)cleanType, 2, new int[] { XAxis.Id, YAxis.Id });
+                AXM.AxmContiBeginNode((int)cleanType);
+
+                foreach (var pointData in pointDatas)
                 {
-                    double xPosition = cleanRecipe.XAxisCleanCenterPosition + length / 2.0;
+                    double yPosition = cleanRecipe.YAxisCleanCenterPosition + pointData.Point;
 
-                    pos = new double[] { xPosition, yPosition };
-                    AXM.AxmLineMove((int)cleanType, pos, speed, 0.2, 0.2);
+                    for (int i = 0; i < pointData.Repeat; i++)
+                    {
+                        double xPosition = cleanRecipe.XAxisCleanCenterPosition + length / 2.0;
 
-                    xPosition = cleanRecipe.XAxisCleanCenterPosition - length / 2.0;
+                        pos = new double[] { xPosition, yPosition };
+                        AXM.AxmLineMove((int)cleanType, pos, speed, 0.2, 0.2);
 
-                    pos = new double[] { xPosition, yPosition };
-                    AXM.AxmLineMove((int)cleanType, pos, speed, 0.2, 0.2);
+                        xPosition = cleanRecipe.XAxisCleanCenterPosition - length / 2.0;
+
+                        pos = new double[] { xPosition, yPosition };
+                        AXM.AxmLineMove((int)cleanType, pos, speed, 0.2, 0.2);
+                    }
+
+                    if (isHorizontal == false)
+                    {
+                        pos = new double[] { cleanRecipe.XAxisCleanCenterPosition, yPosition };
+                        AXM.AxmLineMove((int)cleanType, pos, speed, 0.2, 0.2);
+                    }
                 }
 
-                if (isHorizontal == false)
-                {
-                    pos = new double[] { cleanRecipe.XAxisCleanCenterPosition, yPosition };
-                    AXM.AxmLineMove((int)cleanType, pos, speed, 0.2, 0.2);
-                }
+                AXM.AxmContiEndNode((int)cleanType);
+                AXM.AxmContiStart((int)cleanType, 0, 0);
             }
-
-            AXM.AxmContiEndNode((int)cleanType);
-            AXM.AxmContiStart((int)cleanType, 0, 0);
         }
     }
 }

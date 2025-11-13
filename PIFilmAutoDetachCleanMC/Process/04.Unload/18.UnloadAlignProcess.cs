@@ -370,23 +370,25 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadAlignStep.Vacuum_Off_Align:
                     Log.Debug("Vacuum Off");
                     VacOnOff(false);
-                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsGlassDetect || _machineStatus.IsDryRunMode);
+                    Wait(300);
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.Wait_GlassDetect:
+                    AlignBlow1.Value = true;
+                    AlignBlow2.Value = true;
+                    AlignBlow3.Value = true;
+                    AlignBlow4.Value = true;
+                    Wait(3000, () => IsGlassDetect || _machineStatus.IsDryRunMode);
+                    Step.RunStep++;
+                    break;
+                case EUnloadAlignStep.Vacuum_On:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning(EWarning.UnloadAlign_Glass_NotDetect);
                         break;
                     }
-                    AlignBlow1.Value = true;
-                    AlignBlow2.Value = true;
-                    AlignBlow3.Value = true;
-                    AlignBlow4.Value = true;
-                    Wait(1500);
-                    Step.RunStep++;
-                    break;
-                case EUnloadAlignStep.Vacuum_On:
+
+                    Wait(1000);
                     Log.Debug("Vacuum On");
                     VacOnOff(true);
 #if SIMULATION
@@ -419,6 +421,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Cylinder Align Down Done");
+                    Wait(500);
                     Step.RunStep++;
                     break;
                 case EUnloadAlignStep.End:

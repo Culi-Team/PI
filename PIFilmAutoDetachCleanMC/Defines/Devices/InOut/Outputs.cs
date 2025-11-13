@@ -269,6 +269,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDOutput PlasmaIdleMode => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_IDLE_MODE);
         public IDOutput PlasmaMotorMCOn => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.PLASMA_MOTOR_MC_ON);
 
+        public IDOutput MachineEmergencyStop => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.MACHINE_EMERGENCY_STOP);
+
         public void Lamp_Run()
         {
             Lamp_Clear();
