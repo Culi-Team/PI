@@ -338,8 +338,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EFixtureAlignTransferStep.Set_FlagAlignDoneForSemiAutoSequence:
-                    Log.Debug("Set Flag Align Done");
-                    FlagFixtureAlignDone = true;
+                    if (Parent!.Sequence != ESequence.AutoRun)
+                    {
+                        Log.Debug("Set Flag Align Done");
+                        FlagFixtureAlignDone = true;
+                        Step.RunStep++;
+                        break;
+                    }
+
                     Step.RunStep++;
                     break;
                 case EFixtureAlignTransferStep.Wait_TransferFixtureClampDone:
@@ -366,6 +372,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("UnAlign Fixture Done");
+                    Step.RunStep++;
+                    break;
+                case EFixtureAlignTransferStep.Wait_PreviousTransferDone:
+                    if (FlagFixtureTransferDone == true)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
                     Step.RunStep++;
                     break;
                 case EFixtureAlignTransferStep.Set_FlagUnClampDone:

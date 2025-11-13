@@ -388,7 +388,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    Wait(1000);
+                    Thread.Sleep(1000);
                     Log.Debug("Vacuum On");
                     VacOnOff(true);
 #if SIMULATION

@@ -209,6 +209,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _devices.VinylCleanEncoder.Connect();
 
                         _devices.Motions.All.ForEach(m => m.Connect());
+                        _devices.Motions.All.ForEach(m => m.MotionOn());
 
                         _devices.RollerList.All.ForEach(s => s.Connect());
 

@@ -1005,8 +1005,6 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void PlasmaPrepare()
         {
-            IsPlasmaPrepare = true;
-            return;
             int plasmaPrepareStep = 0;
 
             Task plasmaPrepareTask = Task.Run(async () =>

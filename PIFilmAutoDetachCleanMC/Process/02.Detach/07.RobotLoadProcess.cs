@@ -1241,7 +1241,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromCSTStep.Wait_InCST_Ready:
-                    if (FlagInCSTReady == false && _machineStatus.IsInputStop == true)
+                    if (FlagInCSTReady == false || _machineStatus.IsInputStop == true)
                     {
                         Wait(20);
                         break;
