@@ -515,6 +515,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EUnloadRobotToRunStep.Start:
                     Log.Debug("To Run Start");
+                    _devices.Outputs.PlasmaRemoteEnable.Value = true;
                     Step.ToRunStep++;
                     break;
                 case EUnloadRobotToRunStep.IOActCONF_Check:
@@ -1107,6 +1108,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPlasmaStep.End:
+                    _plasma.IdleMode();
                     Log.Debug("Plasma End");
                     if (Parent?.Sequence != ESequence.AutoRun)
                     {
