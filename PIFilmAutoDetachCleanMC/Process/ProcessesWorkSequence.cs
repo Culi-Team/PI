@@ -75,14 +75,14 @@ namespace PIFilmAutoDetachCleanMC.Process
             EDetachStep.ZAxis_Move_ReadyPosition,
             EDetachStep.ZAxis_Move_ReadyPosition_Wait,
 
-            EDetachStep.XAxis_Move_DetachCheck_Position,
-            EDetachStep.XAxis_Move_DetachCheck_Position_Wait,
-            EDetachStep.Vacuum_Check,
+            //EDetachStep.XAxis_Move_DetachCheck_Position,
+            //EDetachStep.XAxis_Move_DetachCheck_Position_Wait,
+            //EDetachStep.Vacuum_Check,
 
-            EDetachStep.Cyl_Clamp_Backward,
-            EDetachStep.Cyl_Clamp_Backward_Wait,
+            //EDetachStep.Cyl_Clamp_Backward,
+            //EDetachStep.Cyl_Clamp_Backward_Wait,
 
-            EDetachStep.Set_FlagDetachDone,
+            //EDetachStep.Set_FlagDetachDone,
         };
 
         public static readonly List<ERemoveFilmRobotPickFromRemoveZoneStep> RemoveFilmRobotPickFromRemoveZoneSequence = new List<ERemoveFilmRobotPickFromRemoveZoneStep>

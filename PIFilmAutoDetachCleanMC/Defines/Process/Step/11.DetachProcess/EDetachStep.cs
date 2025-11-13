@@ -10,6 +10,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         Start,
 
+        InitQueue,
         StepQueue_EmptyCheck,
 
         Cyl_Clamp_Forward,

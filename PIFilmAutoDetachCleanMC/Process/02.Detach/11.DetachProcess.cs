@@ -27,6 +27,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly MachineStatus _machineStatus;
 
         private Queue<EDetachStep> DetachSteps = new Queue<EDetachStep>();
+        private int retryCount;
 
         private IMotion DetachGlassZAxis => _devices.Motions.DetachGlassZAxis;
         private IMotion ShuttleTransferXAxis => _devices.Motions.ShuttleTransferXAxis;
@@ -411,7 +412,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachAutoRunStep.Start:
                     Log.Debug("AutoRun Start");
                     GlassShuttleVacOnOff(true);
-                    Wait((int)(_commonRecipe.VacDelay * 1000),() => IsGlassShuttleVacAll);
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsGlassShuttleVacAll);
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.ShuttleTransfer_Vac_Check:
@@ -521,13 +522,18 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case EDetachStep.Start:
                     Log.Debug("Detach Start");
+                    retryCount = 1;
+                    Step.RunStep++;
+                    break;
+                case EDetachStep.InitQueue:
+                    Log.Debug("Init Queue");
                     DetachSteps = new Queue<EDetachStep>(ProcessesWorkSequence.DetachSequence);
                     Step.RunStep++;
                     break;
                 case EDetachStep.StepQueue_EmptyCheck:
                     if (DetachSteps.Count <= 0)
                     {
-                        Step.RunStep = (int)EDetachStep.End;
+                        Step.RunStep = (int)EDetachStep.Vacuum_Check;
                         break;
                     }
                     Step.RunStep = (int)DetachSteps.Dequeue();
@@ -768,7 +774,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachStep.Vacuum_Check:
                     if (IsGlassShuttleVacAll == false && _machineStatus.IsDryRunMode == false)
                     {
-                        RaiseWarning((int)EWarning.DetachFail);
+                        if (retryCount > 3)
+                        {
+                            RaiseWarning(EWarning.DetachFail);
+                            break;
+                        }
+                        retryCount++;
+                        Step.RunStep = (int)EDetachStep.InitQueue;
                         break;
                     }
 #if SIMULATION
@@ -777,13 +789,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac3, false);
 #endif
                     Log.Debug("Glass Shuttle Vacuum Check Done");
-                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
+                    Step.RunStep++;
                     break;
                 case EDetachStep.Cyl_Clamp_Backward:
                     Log.Debug("Clamp Cylinder Backward");
                     ClampCylinderFwBw(false);
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderBw);
-                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
+                    Step.RunStep++;
                     break;
                 case EDetachStep.Cyl_Clamp_Backward_Wait:
                     if (WaitTimeOutOccurred)
@@ -792,13 +804,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Clamp Cylinder Backward Done");
-                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
+                    Step.RunStep++;
                     break;
                 case EDetachStep.Set_FlagDetachDone:
                     Log.Debug("Set Flag Detach Done");
                     _machineStatus.IsFixtureDetached = true;
                     FlagDetachDone = true;
-                    Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
+                    Step.RunStep++;
                     break;
                 case EDetachStep.End:
                     Log.Debug("Detach End");
@@ -981,7 +993,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.Stop;
                         break;
                     }
-                    if(_machineStatus.IsFixtureDetached == false)
+                    if (_machineStatus.IsFixtureDetached == false)
                     {
                         Sequence = ESequence.Detach;
                         break;
