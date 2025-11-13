@@ -1469,6 +1469,7 @@
                     <ui:ImageButton Content="{Binding Devices.Outputs.DoorOpen.Value,Converter={StaticResource BooleanOnOffToContentConverter},ConverterParameter=Door}"
                         Visibility="{Binding UserStore.Permission,Converter={StaticResource UserPermissionToVisibilityConverter}}"
                         Command="{Binding DoorOpenCommand}"
+                                    IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
                         Image="/EQX.UI;component/Resources/Images/Components/Common/lock_selected.png"
                         FontSize="18" />
                 </UniformGrid>

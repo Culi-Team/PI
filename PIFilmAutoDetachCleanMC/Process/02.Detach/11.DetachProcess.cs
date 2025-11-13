@@ -94,6 +94,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             set
             {
+                _machineStatus.IsFixtureDetached = value;
                 _detachOutput[(int)EDetachProcessOutput.DETACH_DONE] = value;
             }
         }
@@ -119,14 +120,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             get
             {
                 return _detachInput[(int)EDetachProcessInput.TRANSFER_FIXTURE_CLAMP_DONE];
-            }
-        }
-
-        private bool FlagOut_DetachFixtureUnClampDone
-        {
-            set
-            {
-                _detachOutput[(int)EDetachProcessOutput.DETACH_UNCLAMP_DONE] = value;
             }
         }
 
@@ -457,6 +450,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.End:
+                    if (_machineStatus.IsFixtureDetached)
+                    {
+                        Log.Debug("Fixture Detached -> Set Flag Detach Done");
+                        FlagDetachDone = true;
+                    }
                     Log.Info("Sequence Transfer Fixture");
                     Sequence = ESequence.TransferFixture;
                     break;
@@ -821,9 +819,17 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Clamp Cylinder Backward Done");
                     Step.RunStep++;
                     break;
+                case EDetachStep.Wait_PreviousTransferDone:
+                    if (FlagFixtureTransferDone == true)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
+                    Step.RunStep++;
+                    break;
                 case EDetachStep.Set_FlagDetachDone:
                     Log.Debug("Set Flag Detach Done");
-                    _machineStatus.IsFixtureDetached = true;
                     FlagDetachDone = true;
                     Step.RunStep++;
                     break;
@@ -897,13 +903,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachProcessTransferFixtureLoadStep.Wait_TransferFixtureClampDone:
-                    if (FlagIn_TransferFixtureClampDone == false)
-                    {
-                        Wait(20);
-                        break;
-                    }
+                    //if (FlagIn_TransferFixtureClampDone == false)
+                    //{
+                    //    Wait(20);
+                    //    break;
+                    //}
 
-                    Log.Debug("TransferFixtureClampDone received");
+                    //Log.Debug("TransferFixtureClampDone received");
                     Step.RunStep++;
                     break;
                 case EDetachProcessTransferFixtureLoadStep.Cyl_Clamp_Backward:
@@ -921,22 +927,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Clamp Cylinder Backward Done");
                     Step.RunStep++;
                     break;
-                case EDetachProcessTransferFixtureLoadStep.Set_FlagDetachFixtureUnClampDone:
-                    Log.Debug("Set Flag Detach Fixture UnClamp Done");
-                    FlagOut_DetachFixtureUnClampDone = true;
-                    Step.RunStep++;
-                    break;
-                case EDetachProcessTransferFixtureLoadStep.Clear_FlagDetachFixtureUnClampDone:
-                    if (FlagIn_TransferFixtureClampDone)
-                    {
-                        Wait(20);
-                        break;
-                    }
-
-                    Log.Debug("Clear FlagDetachFixtureUnClampDone done");
-                    FlagOut_DetachFixtureUnClampDone = false;
-                    Step.RunStep++;
-                    break;
                 case EDetachProcessTransferFixtureLoadStep.Wait_FixtureTransferDone:
                     if (FlagFixtureTransferDone == false)
                     {
@@ -946,7 +936,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachProcessTransferFixtureLoadStep.Clear_FlagDetachDone:
-                    _machineStatus.IsFixtureDetached = false;
                     FlagDetachDone = false;
                     Step.RunStep++;
                     break;

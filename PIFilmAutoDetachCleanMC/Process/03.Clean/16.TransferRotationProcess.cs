@@ -758,7 +758,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferRotationStep.ZAxis_Move_TransferBeforeRotatePosition:
                     Log.Debug("Z Axis Move Transfer Before Rotate Position");
-                    ZAxis.MoveAbs(ZAxisTransferBeforeRotatePosition);
+                    ZAxis.MoveAbs(ZAxisTransferBeforeRotatePosition, ZAxis.Parameter.Velocity * 0.2);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisTransferBeforeRotatePosition));
                     Step.RunStep++;
                     break;

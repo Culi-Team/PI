@@ -18,6 +18,5 @@ namespace PIFilmAutoDetachCleanMC.Defines
         REMOVE_FILM_READY_DONE,
 
         ALIGN_FIXTURE_UNCLAMP_DONE,
-        DETACH_FIXTURE_UNCLAMP_DONE,
     }
 }

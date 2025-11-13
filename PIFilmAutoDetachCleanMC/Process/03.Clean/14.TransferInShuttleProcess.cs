@@ -601,25 +601,27 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EGlassAlignStep.Vacuum_Off:
                     Log.Debug("Vacuum Off");
                     AlignVacOnOff(false);
-                    Wait((int)(_commonRecipe.VacDelay * 1000) , () => IsAlign_GlassDetect || _machineStatus.IsDryRunMode);
+                    Wait(300);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Wait_GlassDetect:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)(port == EPort.Left ? EWarning.GlassAlignLeft_GlassNotDetect : EWarning.GlassAlignRight_GlassNotDetect));
-                        break;
-                    }
-
                     AlignBlow1.Value = true;
                     AlignBlow2.Value = true;
                     AlignBlow3.Value = true;
 
                     Log.Debug("Glass Align Done");
-                    Wait(1000);
+                    Wait(3000, () => IsAlign_GlassDetect);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Vacuum_On_2nd:
+                    if(WaitTimeOutOccurred)
+                    {
+                        RaiseWarning(port == EPort.Left ? EWarning.GlassAlignLeft_GlassNotDetect :
+                                                            EWarning.GlassAlignRight_GlassNotDetect);
+                        break;
+                    }
+
+                    Thread.Sleep(1000);
                     Log.Debug("Vacuum On 2nd");
                     AlignVacOnOff(true);
                     Wait((int)(_commonRecipe.VacDelay * 1000), () => IsAlign_VacDetect || _machineStatus.IsDryRunMode);

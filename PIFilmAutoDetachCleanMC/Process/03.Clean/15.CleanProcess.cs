@@ -1119,7 +1119,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.Initialize_SyringePump_Parameter:
-                    SyringePump.SetSpeed(1);
+                    SyringePump.SetSpeed(5);
                     Thread.Sleep(100);
                     SyringePump.SetAcceleration(20);
                     Thread.Sleep(100);

@@ -13,6 +13,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Wait_TransferFixtureClampDone,
         Cyl_UnAlign,
         Cyl_UnAlign_Wait,
+
+        Wait_PreviousTransferDone,
+
         Set_FlagUnClampDone,
         Clear_FlagUnClampDone,
         Wait_TransferDone,

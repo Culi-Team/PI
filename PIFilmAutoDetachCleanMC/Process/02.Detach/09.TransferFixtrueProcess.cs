@@ -127,14 +127,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagIn_DetachFixtureUnClampDone
-        {
-            get
-            {
-                return _transferFixtureInput[(int)ETransferFixtureProcessInput.DETACH_FIXTURE_UNCLAMP_DONE];
-            }
-        }
-
         private bool FlagFixtureTransferDone
         {
             set

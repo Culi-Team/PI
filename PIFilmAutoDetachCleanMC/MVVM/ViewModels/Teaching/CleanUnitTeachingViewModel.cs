@@ -195,7 +195,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                             switch ((ESyringePumpTestStep)step)
                             {
                                 case ESyringePumpTestStep.Fill:
-                                    SyringePump.SetSpeed(1);
+                                    SyringePump.SetSpeed(5);
                                     Thread.Sleep(300);
                                     SyringePump.SetAcceleration(20);
                                     Thread.Sleep(300);
@@ -370,7 +370,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching
                             switch ((ESyringePumpFillStep)step)
                             {
                                 case ESyringePumpFillStep.Initialize:
-                                    SyringePump.SetSpeed(1);
+                                    SyringePump.SetSpeed(5);
                                     Thread.Sleep(200);
                                     SyringePump.SetAcceleration(20);
                                     Thread.Sleep(200);
