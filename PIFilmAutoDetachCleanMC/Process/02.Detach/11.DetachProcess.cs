@@ -97,6 +97,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _machineStatus.IsFixtureDetached = value;
                 _detachOutput[(int)EDetachProcessOutput.DETACH_DONE] = value;
             }
+            get
+            {
+                return _detachOutput[(int)EDetachProcessOutput.DETACH_DONE];
+            }
         }
 
         private bool FlagFixtureTransferDone
@@ -432,7 +436,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         if (_machineStatus.IsFixtureDetached)
                         {
                             Log.Debug("Fixture Detached -> Set Flag Detach Done");
-                            FlagDetachDone = true;
+                            FlagDetachDone = true;  // Auto RUN
                         }
                         Log.Info("Sequence Detach Unload");
                         Sequence = ESequence.DetachUnload;
@@ -453,7 +457,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     if (_machineStatus.IsFixtureDetached || IsFixtureDetect == false)
                     {
                         Log.Debug("Fixture Detached -> Set Flag Detach Done");
-                        FlagDetachDone = true;
+                        FlagDetachDone = true;  // AUTO RUN
                     }
                     Log.Info("Sequence Transfer Fixture");
                     Sequence = ESequence.TransferFixture;
@@ -537,7 +541,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             switch ((EDetachStep)Step.RunStep)
             {
                 case EDetachStep.Start:
-                    Log.Debug("Detach Start");
+                    Log.Info("Detach Start");
                     retryCount = 1;
                     Step.RunStep++;
                     break;
@@ -830,7 +834,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EDetachStep.Set_FlagDetachDone:
                     Log.Debug("Set Flag Detach Done");
-                    FlagDetachDone = true;
+                    FlagDetachDone = true;  // AFTER DETACH DONE
                     Step.RunStep++;
                     break;
                 case EDetachStep.End:
@@ -892,10 +896,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachProcessTransferFixtureLoadStep.Set_FlagDetachDoneForSemiAutoSequence:
-                    if (Parent!.Sequence != ESequence.AutoRun)
+                    if (Parent!.Sequence == ESequence.TransferFixture)
                     {
                         Log.Debug("Set Flag Detach Done");
-                        FlagDetachDone = true;
+                        FlagDetachDone = true;  // SEMI-AUTO
                         Step.RunStep++;
                         break;
                     }
@@ -936,7 +940,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachProcessTransferFixtureLoadStep.Clear_FlagDetachDone:
-                    FlagDetachDone = false;
+                    FlagDetachDone = false; // AFTER FIXTURE TRANSFER DONE
                     Step.RunStep++;
                     break;
                 case EDetachProcessTransferFixtureLoadStep.Wait_TransferFixtureClear:
@@ -1015,7 +1019,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.Stop;
                         break;
                     }
-                    if (_machineStatus.IsFixtureDetached == false)
+                    if (_machineStatus.IsFixtureDetached == false && FlagDetachDone)
                     {
                         Log.Info("Sequence Detach");
                         Sequence = ESequence.Detach;

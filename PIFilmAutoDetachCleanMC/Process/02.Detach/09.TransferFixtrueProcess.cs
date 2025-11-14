@@ -471,7 +471,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    // Record fixture existing status before transfer
+                    Log.Debug("Record fixture existing status before transfer");
                     _machineStatus.RecordFixtureExistStatus();
 
                     Step.RunStep++;
@@ -552,10 +552,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep = (int)ETransferFixtureProcessLoadStep.StepQueue_EmptyCheck;
                     break;
                 case ETransferFixtureProcessLoadStep.Set_DetachStatus:
-                    if (_machineStatus.FixtureExistStatus[0] == true)
-                    {
-                        _machineStatus.IsFixtureDetached = false;
-                    }
+                    //if (_machineStatus.FixtureExistStatus[0] == true)
+                    //{
+                    //    _machineStatus.IsFixtureDetached = false;
+                    //}
                     Step.RunStep = (int)ETransferFixtureProcessLoadStep.StepQueue_EmptyCheck;
                     break;
                 case ETransferFixtureProcessLoadStep.Cyl_Clamp:
