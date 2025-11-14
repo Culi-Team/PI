@@ -455,6 +455,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.RemoveFilm_ClampCylinder_UnClamp_Fail);
                         break;
                     }
+                    FlagRemoveFilmLoadReady = true;
                     Log.Debug("Fix Cylinder Backward Done");
                     Step.RunStep++;
                     break;

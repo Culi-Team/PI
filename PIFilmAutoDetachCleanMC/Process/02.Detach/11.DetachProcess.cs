@@ -450,7 +450,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.End:
-                    if (_machineStatus.IsFixtureDetached)
+                    if (_machineStatus.IsFixtureDetached || IsFixtureDetect == false)
                     {
                         Log.Debug("Fixture Detached -> Set Flag Detach Done");
                         FlagDetachDone = true;

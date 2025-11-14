@@ -283,6 +283,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                             ErrorMessages.Add("IO Devices init failed.");
                         }
 
+                        _devices.Outputs.PlasmaMotorMCOn.Value = true;
                         Thread.Sleep(50);
                         _step++;
                         break;

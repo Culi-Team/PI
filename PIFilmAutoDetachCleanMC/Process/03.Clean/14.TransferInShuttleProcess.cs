@@ -844,6 +844,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Y Axis Move Place Position Done");
+                    if(port == EPort.Left)
+                    {
+                        Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.Wait_WETCleanRequestLoad;
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleWETCleanLoadStep.Cyl_Rotate_180D:

@@ -1973,6 +1973,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ECleanProcessCleanStep.CleanVertical:
                     Log.Debug("Clean Vertical");
+                    FeedingAxis.MoveJog(cleanRecipe.RFeedingAxisCleaningSpeed, true);
 #if !SIMULATION
                     Clean(false);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _devices.Motions.IsContiMotioning(cleanType) == false);
@@ -1996,6 +1997,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Clean Vertical Done");
+                    FeedingAxis.Stop();
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.CylPusher_Up_CleanVertical:
@@ -2830,8 +2832,6 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         }
 
-        object ajinContiLock = new object();
-
         public void Clean(bool isHorizontal)
         {
             List<PointAndCount> pointDatas = isHorizontal ? cleanRecipe.HorizontalPointData : cleanRecipe.VerticalPointData;
@@ -2842,10 +2842,13 @@ namespace PIFilmAutoDetachCleanMC.Process
 
             double[] pos;
 
-            lock (ajinContiLock)
+            lock (_machineStatus.AjinContiLock)
             {
+                AXM.AxmContiWriteClear((int)cleanType);
                 AXM.AxmContiSetAxisMap((int)cleanType, 2, new int[] { XAxis.Id, YAxis.Id });
                 AXM.AxmContiBeginNode((int)cleanType);
+
+                int trueCount = 0;
 
                 foreach (var pointData in pointDatas)
                 {
@@ -2857,22 +2860,80 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                         pos = new double[] { xPosition, yPosition };
                         AXM.AxmLineMove((int)cleanType, pos, speed, 0.2, 0.2);
+                        trueCount++;
 
                         xPosition = cleanRecipe.XAxisCleanCenterPosition - length / 2.0;
 
                         pos = new double[] { xPosition, yPosition };
                         AXM.AxmLineMove((int)cleanType, pos, speed, 0.2, 0.2);
+                        trueCount++;
                     }
 
                     if (isHorizontal == false)
                     {
                         pos = new double[] { cleanRecipe.XAxisCleanCenterPosition, yPosition };
                         AXM.AxmLineMove((int)cleanType, pos, speed, 0.2, 0.2);
+                        trueCount++;
                     }
                 }
 
                 AXM.AxmContiEndNode((int)cleanType);
+                
+                int totalNode = -1;
+                AXM.AxmContiGetTotalNodeNum((int)cleanType, ref totalNode);
+
+                if (totalNode != trueCount)
+                {
+                    Log.Error($"AxmContiGetNode Error: Get [{totalNode}] / True [{trueCount}]");
+                    Thread.Sleep(100);
+                    Clean(isHorizontal);
+                }
+                            
                 AXM.AxmContiStart((int)cleanType, 0, 0);
+            }
+        }
+
+        public void CleanP2P(bool isHorizontal)
+        {
+            List<PointAndCount> pointDatas = isHorizontal ? cleanRecipe.HorizontalPointData : cleanRecipe.VerticalPointData;
+            double length = isHorizontal ? cleanRecipe.HorizontalCleanLength : cleanRecipe.VerticalCleanLength;
+            double speed = isHorizontal ? cleanRecipe.CleanHorizontalSpeed : cleanRecipe.CleanVerticalSpeed;
+
+            if (pointDatas.Count <= 0) return;
+
+            double[] pos;
+
+            foreach (var pointData in pointDatas)
+            {
+                double yPosition = cleanRecipe.YAxisCleanCenterPosition + pointData.Point;
+                double xPosition;
+
+                for (int i = 0; i < pointData.Repeat; i++)
+                {
+                    xPosition = cleanRecipe.XAxisCleanCenterPosition + length / 2.0;
+
+                    XAxis.MoveAbs(xPosition, speed);
+                    YAxis.MoveAbs(yPosition, speed);
+
+                    while ((XAxis.IsOnPosition(xPosition) && YAxis.IsOnPosition(yPosition)) == false) Thread.Sleep(2);
+
+                    xPosition = cleanRecipe.XAxisCleanCenterPosition - length / 2.0;
+
+                    XAxis.MoveAbs(xPosition, speed);
+                    YAxis.MoveAbs(yPosition, speed);
+
+                    while ((XAxis.IsOnPosition(xPosition) && YAxis.IsOnPosition(yPosition)) == false) Thread.Sleep(2);
+                }
+
+                if (isHorizontal == false)
+                {
+                    xPosition = cleanRecipe.XAxisCleanCenterPosition;
+
+                    XAxis.MoveAbs(xPosition, speed);
+                    YAxis.MoveAbs(yPosition, speed);
+
+                    while ((XAxis.IsOnPosition(xPosition) && YAxis.IsOnPosition(yPosition)) == false) Thread.Sleep(2);
+                }
             }
         }
     }

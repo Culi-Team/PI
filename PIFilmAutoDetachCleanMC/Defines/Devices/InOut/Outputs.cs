@@ -280,6 +280,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
             TowerLampGreen.Value = true;
             OpLButtonStartLamp.Value = true;
             OpRButtonStartLamp.Value = true;
+
+            TowerBuzzer.Value = false;
         }
 
         public void Lamp_Stop()

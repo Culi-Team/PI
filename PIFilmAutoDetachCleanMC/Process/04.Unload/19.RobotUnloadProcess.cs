@@ -1208,9 +1208,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EUnloadRobotPlaceStep.Robot_Move_PP_UP_Position:
                     Log.Debug("Robot Move Place Up Position");
-                    if (SendCommand(ERobotCommand.S3_RDY_UP, LowSpeed, HightSpeed))
+                    if (SendCommand(ERobotCommand.S3_RDY, LowSpeed, HightSpeed))
                     {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S3_RDY_UP)));
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S3_RDY)));
                         Step.RunStep++;
                         break;
                     }
@@ -1224,7 +1224,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    Log.Debug($"Robot Move Motion Command {ERobotCommand.S3_RDY_UP} Done");
+                    Log.Debug($"Robot Move Motion Command {ERobotCommand.S3_RDY} Done");
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.CheckOutputStopValue:
@@ -1236,8 +1236,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.Wait_MachineRequestPlace:
-                    if (FlagMachineRequestPlace == false && _devices.Inputs.DownStreamReady.Value &&
-                        !_machineStatus.IsDryRunMode && !_machineStatus.MachineTestMode)
+                    if ((FlagMachineRequestPlace == false || _devices.Inputs.DownStreamReady.Value == false) &&
+                        !_machineStatus.IsDryRunMode)
                     {
                         Wait(20);
                         break;
@@ -1246,9 +1246,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EUnloadRobotPlaceStep.Robot_Move_Place_Position:
                     Log.Debug("Robot Move Place Position");
-                    if (SendCommand(ERobotCommand.S3_PP, LowSpeed, HightSpeed))
+                    if (SendCommand(ERobotCommand.S3_RDY_PP, LowSpeed, HightSpeed))
                     {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S3_PP)));
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S3_RDY_PP)));
                         Step.RunStep++;
                         break;
                     }
@@ -1262,7 +1262,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    Log.Debug($"Robot Move Motion Command {ERobotCommand.S3_PP} Done");
+                    Log.Debug($"Robot Move Motion Command {ERobotCommand.S3_RDY_PP} Done");
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.VacuumOff:

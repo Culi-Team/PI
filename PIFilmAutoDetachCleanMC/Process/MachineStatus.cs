@@ -25,9 +25,13 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             _inputs = inputs;
             _fixtureExistStatus = new List<bool>() { false, false, false };
+
+            AjinContiLock = new object();
         }
 
         private readonly Inputs _inputs;
+
+        public readonly object AjinContiLock;
 
         public EScreen ActiveScreen
         {

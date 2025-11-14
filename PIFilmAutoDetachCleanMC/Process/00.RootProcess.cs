@@ -325,7 +325,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    _devices.Outputs.Lamp_Run();
+                    _devices.Outputs.Lamp_Alarm();
 
                     Log.Debug("Doors locked safely.");
                     Step.OriginStep++;
@@ -411,8 +411,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.DoorNotSafetyLock);
                         break;
                     }
-                    _devices.Outputs.Lamp_Run();
-
+                    if(Sequence != ESequence.Ready)
+                    {
+                        _devices.Outputs.Lamp_Run();
+                    }
+                    _devices.Outputs.PlasmaMotorMCOn.Value = true;
                     Log.Debug("Doors locked safely.");
                     Step.ToRunStep++;
                     break;
