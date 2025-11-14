@@ -1755,14 +1755,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToAlignStep.Wait_NextSequence:
-                    if (_devices.Inputs.RemoveZoneFixtureDetect.Value)
+                    if (FlagRemoveFilmRequestUnload)
                     {
-                        if (FlagRemoveFilmRequestUnload)
-                        {
-                            Log.Info("Sequence Robot Pick Fixture From Remove Zone");
-                            Sequence = ESequence.RobotPickFixtureFromRemoveZone;
-                            break;
-                        }
+                        Log.Info("Sequence Robot Pick Fixture From Remove Zone");
+                        Sequence = ESequence.RobotPickFixtureFromRemoveZone;
                         break;
                     }
                     if (FlagFixtureAlignRequestLoad && FlagInCSTReady && _commonRecipe.SkipVinylClean == true)
@@ -1773,7 +1769,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.RobotPickFixtureFromCST;
                         break;
                     }
-                    
+
                     if (FlagVinylCleanRequestLoad && FlagInCSTReady && _commonRecipe.SkipVinylClean == false)
                     {
                         Log.Debug("Clear Flag Vinyl Clean Load Done");

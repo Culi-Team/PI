@@ -23,6 +23,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         Wait_FixtureTransferDone,
         Clear_FlagDetachDone,
+        Wait_TransferFixtureClear,
 
         Fixture_Detect_Check,
 

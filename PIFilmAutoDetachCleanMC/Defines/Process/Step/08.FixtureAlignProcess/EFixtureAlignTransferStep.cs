@@ -19,6 +19,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Set_FlagUnClampDone,
         Clear_FlagUnClampDone,
         Wait_TransferDone,
+
+        Wait_TransferFixtureClear,
+
         End,
     }
 }

@@ -939,6 +939,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                     FlagDetachDone = false;
                     Step.RunStep++;
                     break;
+                case EDetachProcessTransferFixtureLoadStep.Wait_TransferFixtureClear:
+                    if (FlagFixtureTransferDone == true)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
+                    Log.Debug("FlagFixtureTransferDone Clear");
+                    Step.RunStep++;
+                    break;
                 case EDetachProcessTransferFixtureLoadStep.Fixture_Detect_Check:
                     if (_machineStatus.FixtureExistStatus[0] == false)
                     {

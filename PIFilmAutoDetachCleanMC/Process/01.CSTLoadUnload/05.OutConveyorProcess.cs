@@ -89,6 +89,17 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
+        public override bool PreProcess()
+        {
+            if(CstStopper.IsForward)
+            {
+                CstStopper.Backward();
+                Task.Delay(20000).ContinueWith(t =>
+                {
+                    CstStopper.Forward();
+                });
+            }
+        }
         public override bool ProcessToStop()
         {
             if (ProcessStatus == EProcessStatus.ToStopDone)

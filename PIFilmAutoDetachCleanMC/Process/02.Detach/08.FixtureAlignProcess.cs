@@ -406,6 +406,16 @@ namespace PIFilmAutoDetachCleanMC.Process
 #endif
                     Step.RunStep++;
                     break;
+                case EFixtureAlignTransferStep.Wait_TransferFixtureClear:
+                    if (FlagFixtureTransferDone == true)
+                    {
+                        Wait(20);
+                        break;
+                    }
+
+                    Log.Debug("FlagFixtureTransferDone Clear");
+                    Step.RunStep++;
+                    break;
                 case EFixtureAlignTransferStep.End:
                     Log.Debug("Transfer Fixture Load End");
                     if (Parent?.Sequence != ESequence.AutoRun)
