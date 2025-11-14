@@ -1133,6 +1133,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ECleanProcessToRunStep.End:
+                    FeedingAxis.Stop();
                     Log.Debug("To Run End");
                     Step.ToRunStep++;
                     ProcessStatus = EProcessStatus.ToRunDone;

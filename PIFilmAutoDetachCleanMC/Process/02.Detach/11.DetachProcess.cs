@@ -959,6 +959,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                             break;
                         }
 
+                        Log.Info("Sequence Transfer Fixture");
                         Sequence = ESequence.TransferFixture;
                         break;
                     }
@@ -972,6 +973,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
+                    Log.Info("Sequence Detach");
                     Sequence = ESequence.Detach;
                     break;
             }
@@ -1015,6 +1017,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     if (_machineStatus.IsFixtureDetached == false)
                     {
+                        Log.Info("Sequence Detach");
                         Sequence = ESequence.Detach;
                         break;
                     }
