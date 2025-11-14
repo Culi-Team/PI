@@ -91,14 +91,19 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Override Methods
         public override bool PreProcess()
         {
-            if(CstStopper.IsForward)
+            if (_devices.Inputs.OutCompleteButton.Value)
             {
-                CstStopper.Backward();
-                Task.Delay(20000).ContinueWith(t =>
+                if (CstStopper.IsForward)
                 {
-                    CstStopper.Forward();
-                });
+                    CstStopper.Backward();
+                    Task.Delay(20000).ContinueWith(t =>
+                    {
+                        CstStopper.Forward();
+                    });
+                }
             }
+
+            return base.PreProcess();
         }
         public override bool ProcessToStop()
         {
@@ -375,7 +380,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(50);
                         break;
                     }
-                    
+
                     Step.RunStep++;
                     break;
                 case EOutConveyorProcessOutWorkCSTUnloadStep.Stopper_Up:
