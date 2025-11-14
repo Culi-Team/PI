@@ -9,17 +9,16 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EDetachProcessTransferFixtureLoadStep
     {
         Start,
+
+        Cyl_Clamp_Backward,
+        Cyl_Clamp_Backward_Wait,
+
         DetachZAxis_Move_ReadyPosition,
         DetachZAxis_Move_ReadyPosition_Wait,
 
         Detach_Cylinder_Up,
         Detach_Cylinder_Up_Wait,
         Set_FlagDetachDoneForSemiAutoSequence,
-
-        Wait_TransferFixtureClampDone,
-
-        Cyl_Clamp_Backward,
-        Cyl_Clamp_Backward_Wait,
 
         Wait_FixtureTransferDone,
         Clear_FlagDetachDone,

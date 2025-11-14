@@ -285,6 +285,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Info("To Origin started");
                     Step.OriginStep++;
                     break;
+                case ERootProcessToOriginStep.Muting_Off:
+                    Log.Debug("Muting Off");
+                    _devices.Outputs.InCstLightCurtainInterlock.Value = false;
+                    _devices.Outputs.InCstLightCurtainMuting.Value = false;
+
+                    _devices.Outputs.OutCstLightCurtainInterlock.Value = false;
+                    _devices.Outputs.OutCstLightCurtainMuting.Value = false;
+                    Step.OriginStep++;
+                    break;
                 case ERootProcessToOriginStep.DoorSensorCheck:
                     //if (_machineStatus.IsByPassMode)
                     //{
@@ -371,6 +380,15 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ERootProcessToRunStep.Start:
                     Log.Debug("ToRun Start");
+                    Step.ToRunStep++;
+                    break;
+                case ERootProcessToRunStep.Muting_Off:
+                    Log.Debug("Muting Off");
+                    _devices.Outputs.InCstLightCurtainInterlock.Value = false;
+                    _devices.Outputs.InCstLightCurtainMuting.Value = false;
+
+                    _devices.Outputs.OutCstLightCurtainInterlock.Value = false;
+                    _devices.Outputs.OutCstLightCurtainMuting.Value = false;
                     Step.ToRunStep++;
                     break;
                 case ERootProcessToRunStep.DoorSensorCheck:

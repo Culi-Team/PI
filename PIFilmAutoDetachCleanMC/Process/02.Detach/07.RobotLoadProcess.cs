@@ -728,19 +728,26 @@ namespace PIFilmAutoDetachCleanMC.Process
                     // FIXTURE DETECT
                     if (LastPosition == (int)ERobotCommand.S1_PP || LastPosition == (int)ERobotCommand.S1_RDY)
                     {
-                        if (_devices.Inputs.VinylCleanFixtureDetect.Value == true)
+                        if (_devices.Inputs.VinylCleanFixtureDetect.Value == true && _commonRecipe.SkipVinylClean == false)
                         {
                             RaiseWarning((int)EWarning.RobotLoad_FixtureStatusAbnormal);
                             break;
                         }
 
-                        if (FlagVinylCleanRequestLoad == false)
+                        if (FlagVinylCleanRequestLoad == false && _commonRecipe.SkipVinylClean == false)
                         {
                             Wait(20);
                             break;
                         }
 
-                        Sequence = ESequence.RobotPlaceFixtureToVinylClean;
+                        if (FlagFixtureAlignRequestLoad == false && _commonRecipe.SkipVinylClean == true)
+                        {
+                            Wait(20);
+                            break;
+                        }
+
+                        if (_commonRecipe.SkipVinylClean == false) Sequence = ESequence.RobotPlaceFixtureToVinylClean;
+                        else Sequence = ESequence.RobotPlaceFixtureToAlign;
                         break;
                     }
 

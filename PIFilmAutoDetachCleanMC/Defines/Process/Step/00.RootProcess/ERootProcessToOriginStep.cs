@@ -9,6 +9,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ERootProcessToOriginStep
     {
         Start,
+        Muting_Off,
         DoorSensorCheck,
         DoorLock,
         DoorLatchCheck,
