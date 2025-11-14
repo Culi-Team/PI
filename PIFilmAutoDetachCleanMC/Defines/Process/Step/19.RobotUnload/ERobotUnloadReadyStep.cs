@@ -30,11 +30,14 @@
         SetModel,
         SetModel_Check,
 
-        RobotHomePosition_Check,
+        RobotCurrentPosition_Check,
+        RobotCurrentPosition_Wait,
+        Check_RobotInRDYPosition,
+
         RobotSeqHome,
         RobotSeqHome_Check,
-        RobotHome,
-        RobotHome_Check,
+        RobotReady,
+        RobotReady_Check,
 
         End
     }

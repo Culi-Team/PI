@@ -13,12 +13,15 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cylinder_Up,
         Cylinder_Up_Wait,
 
+        Robot_Move_PP_UP_Position,
+        Robot_Move_PP_UP_Position_Wait,
+
         CheckOutputStopValue,
 
         Wait_MachineRequestPlace,
 
-        Robot_Move_PlacePosition,
-        Robot_Move_PlacePosition_Wait,
+        Robot_Move_Place_Position,
+        Robot_Move_Place_Position_Wait,
 
         VacuumOff,
 

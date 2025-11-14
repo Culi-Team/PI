@@ -315,5 +315,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
         RobotUnload_Stop_Fail,
         RobotUnload_SafetyFenceSwitch_Not_Active,
         RobotUnload_Automatic_External_Not_active,
+        RobotUnload_GetLastPosition_Fail,
     }
 }

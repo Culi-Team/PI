@@ -22,6 +22,7 @@
         S3_RDY = 210,
         S3_PP_UP = 211,
         S3_PP = 212,
+        S3_RDY_UP = 249,
         S3_RDY_PP = 250,
         S3_PP_RDY = 251,
 

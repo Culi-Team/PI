@@ -7,10 +7,12 @@ using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Cassette;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Robot;
 using PIFilmAutoDetachCleanMC.Defines.Process;
 using PIFilmAutoDetachCleanMC.Defines.ProductDatas;
 using PIFilmAutoDetachCleanMC.Recipe;
+using System.Text.RegularExpressions;
 
 namespace PIFilmAutoDetachCleanMC.Process
 {
@@ -26,6 +28,8 @@ namespace PIFilmAutoDetachCleanMC.Process
         private readonly DieHardK180Plasma _plasma;
         private readonly CWorkData _workData;
         private readonly MachineStatus _machineStatus;
+        private string strLastPosition;
+        private int LastPosition;
 
         private bool IsPlasmaPrepare { get; set; } = false;
 
@@ -75,6 +79,18 @@ namespace PIFilmAutoDetachCleanMC.Process
             Wait(5000, () => _robotUnload.ReadResponse(RobotHelpers.MotionRspStart(command)));
             return !WaitTimeOutOccurred;
         }
+        
+        private bool RobotInRDYPosition(int currentPos)
+        {
+            if (currentPos == (int)ERobotCommand.S1_RDY ||
+                currentPos == (int)ERobotCommand.S2_RDY ||
+                currentPos == (int)ERobotCommand.S3_RDY)
+            {
+                return true;
+            }
+            return false;
+        }
+
         #endregion
 
         #region Inputs
@@ -611,14 +627,25 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadAutoRunStep.GlassVac_Check:
-                    if (GlassVac1 || GlassVac2 || GlassVac3 || GlassVac4)
+                    if ((GlassVac1 || GlassVac2 || GlassVac3 || GlassVac4) == false)
                     {
-                        PlasmaPrepare();
-                        Log.Info("Sequence Unload Robot Plasma");
-                        Sequence = ESequence.UnloadRobotPlasma;
+                        Step.RunStep++;
                         break;
                     }
-                    Step.RunStep++;
+
+                    if (LastPosition == (int)ERobotCommand.S2_PP ||
+                        LastPosition == (int)ERobotCommand.S3_RDY ||
+                        LastPosition == (int)ERobotCommand.S3_PP_UP ||
+                        LastPosition == (int)ERobotCommand.S3_PP)
+                    {
+                        Log.Info("Sequence Unload Robot Place");
+                        Sequence = ESequence.UnloadRobotPlace;
+                        break;
+                    }
+
+                    PlasmaPrepare();
+                    Log.Info("Sequence Unload Robot Plasma");
+                    Sequence = ESequence.UnloadRobotPlasma;
                     break;
                 case ERobotUnloadAutoRunStep.End:
                     Log.Info("Unload Robot Pick");
@@ -781,19 +808,50 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Set Model: " + _robotUnloadRecipe.Model + " success");
                     Step.RunStep++;
                     break;
-                case ERobotUnloadReadyStep.RobotHomePosition_Check:
-                    if (InHome.Value)
+                case ERobotUnloadReadyStep.RobotCurrentPosition_Check:
+                    Log.Debug("Check robot last position");
+                    _robotUnload.SendCommand(RobotHelpers.CheckLastPosition);
+
+                    Wait(5000, () =>
                     {
-                        Log.Debug("Robot in home position");
+                        strLastPosition = _robotUnload.ReadResponse();
+                        return strLastPosition != string.Empty;
+                    });
+
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.RobotCurrentPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseWarning((int)EWarning.RobotUnload_GetLastPosition_Fail);
+                        break;
+                    }
+                    Match match = Regex.Match(strLastPosition, @",(\d+),");
+
+                    if (match.Success)
+                    {
+                        string data = match.Groups[1].Value;
+
+                        if (int.TryParse(data, out LastPosition))
+                        {
+                            Log.Debug($"{_robotUnload.Name} is current in #{LastPosition} position");
+                        }
+                    }
+
+                    Step.RunStep++;
+                    break;
+                case ERobotUnloadReadyStep.Check_RobotInRDYPosition:
+                    if (RobotInRDYPosition(LastPosition) || InHome.Value)
+                    {
+                        Log.Debug("Robot in RDY position");
                         Step.RunStep = (int)ERobotUnloadReadyStep.End;
                         break;
                     }
 
-                    Log.Debug("Robot unload not in home");
                     Step.RunStep++;
                     break;
                 case ERobotUnloadReadyStep.RobotSeqHome:
-                    Log.Debug("Check sequence home robot load");
+                    Log.Debug("Check sequence Ready Robot Unload");
                     _robotUnload.SendCommand(RobotHelpers.SeqHomeCheck);
 
                     Wait(5000, () => _robotUnload.ReadResponse("Home safety,0\r\n"));
@@ -807,29 +865,29 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    Log.Debug("Robot Unload Home Safely");
+                    Log.Debug("Robot Unload Ready Safely");
                     Step.RunStep++;
                     break;
-                case ERobotUnloadReadyStep.RobotHome:
-                    Log.Debug("Start Home Robot Unload");
-                    Log.Debug($"Send Robot Motion Command {ERobotCommand.HOME}");
-                    if (SendCommand(ERobotCommand.HOME, 10, 10))
+                case ERobotUnloadReadyStep.RobotReady:
+                    Log.Debug("Start Ready Robot Unload");
+                    Log.Debug($"Send Robot Motion Command {ERobotCommand.READY}");
+                    if (SendCommand(ERobotCommand.READY, 10, 10))
                     {
-                        Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.HOME)));
+                        Wait((int)(_commonRecipe.MotionOriginTimeout * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.READY)));
                         Step.RunStep++;
                         break;
                     }
 
                     RaiseWarning((int)EWarning.RobotUnload_SendMotionCommand_Fail);
                     break;
-                case ERobotUnloadReadyStep.RobotHome_Check:
+                case ERobotUnloadReadyStep.RobotReady_Check:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseAlarm((int)EAlarm.RobotLoad_MoveMotionCommand_Timeout);
+                        RaiseAlarm((int)EAlarm.RobotUnload_MoveMotionCommand_Timeout);
                         break;
                     }
 
-                    Log.Debug("Robot Unload Home Done");
+                    Log.Debug("Robot Unload Ready Done");
                     Step.RunStep++;
                     break;
                 case ERobotUnloadReadyStep.End:
@@ -1133,7 +1191,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadRobotPlaceStep.Cylinder_Up:
                     if (IsCylindersUp)
                     {
-                        Step.RunStep = (int)EUnloadRobotPlaceStep.CheckOutputStopValue;
+                        Step.RunStep = (int)EUnloadRobotPlaceStep.Robot_Move_PP_UP_Position;
                         break;
                     }
                     CylinderContact(false);
@@ -1146,6 +1204,27 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning(EWarning.RobotUnload_Cylinder_Up_Fail);
                         break;
                     }
+                    Step.RunStep++;
+                    break;
+                case EUnloadRobotPlaceStep.Robot_Move_PP_UP_Position:
+                    Log.Debug("Robot Move Place Up Position");
+                    if (SendCommand(ERobotCommand.S3_RDY_UP, LowSpeed, HightSpeed))
+                    {
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S3_RDY_UP)));
+                        Step.RunStep++;
+                        break;
+                    }
+
+                    RaiseWarning((int)EWarning.RobotUnload_SendMotionCommand_Fail);
+                    break;
+                case EUnloadRobotPlaceStep.Robot_Move_PP_UP_Position_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)EAlarm.RobotUnload_MoveMotionCommand_Timeout);
+                        break;
+                    }
+
+                    Log.Debug($"Robot Move Motion Command {ERobotCommand.S3_RDY_UP} Done");
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.CheckOutputStopValue:
@@ -1165,25 +1244,25 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.RunStep++;
                     break;
-                case EUnloadRobotPlaceStep.Robot_Move_PlacePosition:
+                case EUnloadRobotPlaceStep.Robot_Move_Place_Position:
                     Log.Debug("Robot Move Place Position");
-                    if (SendCommand(ERobotCommand.S3_RDY_PP, LowSpeed, HightSpeed))
+                    if (SendCommand(ERobotCommand.S3_PP, LowSpeed, HightSpeed))
                     {
-                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S3_RDY_PP)));
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotUnload.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S3_PP)));
                         Step.RunStep++;
                         break;
                     }
 
                     RaiseWarning((int)EWarning.RobotUnload_SendMotionCommand_Fail);
                     break;
-                case EUnloadRobotPlaceStep.Robot_Move_PlacePosition_Wait:
+                case EUnloadRobotPlaceStep.Robot_Move_Place_Position_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseAlarm((int)EAlarm.RobotUnload_MoveMotionCommand_Timeout);
                         break;
                     }
 
-                    Log.Debug($"Robot Move Motion Command {ERobotCommand.S3_RDY_PP} Done");
+                    Log.Debug($"Robot Move Motion Command {ERobotCommand.S3_PP} Done");
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.VacuumOff:
