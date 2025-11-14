@@ -820,11 +820,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachStep.Wait_PreviousTransferDone:
-                    if (FlagFixtureTransferDone == true)
-                    {
-                        Wait(20);
-                        break;
-                    }
+                    //if (FlagFixtureTransferDone == true)
+                    //{
+                    //    Wait(20);
+                    //    break;
+                    //}
 
                     Step.RunStep++;
                     break;

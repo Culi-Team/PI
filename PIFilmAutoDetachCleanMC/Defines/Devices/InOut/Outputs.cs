@@ -295,15 +295,19 @@ namespace PIFilmAutoDetachCleanMC.Defines
             OpRButtonStopLamp.Value = true;
         }
 
-        public void Lamp_Alarm()
+        public void Lamp_Alarm(bool isUseBuzzer)
         {
             Lamp_Clear();
 
             MachineAutoRun.Value = false;
 
             TowerLampRed.Value = true;
-            TowerBuzzer.Value = true;
-            Task.Delay(3000).ContinueWith(t => TowerBuzzer.Value = false);
+
+            if(isUseBuzzer)
+            {
+                TowerBuzzer.Value = true;
+                Task.Delay(3000).ContinueWith(t => TowerBuzzer.Value = false);
+            }
         }
         private void Lamp_Clear()
         {

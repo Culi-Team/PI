@@ -312,8 +312,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.SetFlagAlignDone:
-                    Log.Debug("Set Flag Align Done");
-                    FlagFixtureAlignDone = true;
+                    //Log.Debug("Set Flag Align Done");
+                    //FlagFixtureAlignDone = true;
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.End:
@@ -338,18 +338,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EFixtureAlignTransferStep.Set_FlagAlignDoneForSemiAutoSequence:
-                    if (Parent!.Sequence != ESequence.AutoRun)
-                    {
-                        Log.Debug("Set Flag Align Done");
-                        FlagFixtureAlignDone = true;
-                        Step.RunStep++;
-                        break;
-                    }
-
+                    Log.Debug("Set Flag Align Done");
+                    FlagFixtureAlignDone = true;
                     Step.RunStep++;
                     break;
                 case EFixtureAlignTransferStep.Wait_TransferFixtureClampDone:
-                    if(FlagIn_TransferFixtureClampDone == false)
+                    if (FlagIn_TransferFixtureClampDone == false)
                     {
                         Wait(20);
                         break;
@@ -375,11 +369,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EFixtureAlignTransferStep.Wait_PreviousTransferDone:
-                    if (FlagFixtureTransferDone == true)
-                    {
-                        Wait(20);
-                        break;
-                    }
+                    //if (FlagFixtureTransferDone == true)
+                    //{
+                    //    Wait(20);
+                    //    break;
+                    //}
 
                     Step.RunStep++;
                     break;

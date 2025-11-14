@@ -21,7 +21,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             }
         }
 
-        [SingleRecipeDescription(Description = "Robot Speed Low", Unit = Unit.mmPerSecond)]
+        [SingleRecipeDescription(Description = "Robot Speed Low", Unit = Unit.Percentage)]
         [SingleRecipeMinMax(Max = 100, Min = 1)]
         public int RobotSpeedLow
         {
@@ -33,7 +33,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             }
         }
 
-        [SingleRecipeDescription(Description = "Robot Speed High", Unit = Unit.mmPerSecond)]
+        [SingleRecipeDescription(Description = "Robot Speed High", Unit = Unit.Percentage)]
         [SingleRecipeMinMax(Max = 100, Min = 1)]
         public int RobotSpeedHigh
         {

@@ -496,7 +496,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
                         _step++;
                         break;
                     case EHandleStep.End:
-                        _devices.Outputs.Lamp_Alarm();
+                        _devices.Outputs.Lamp_Alarm(false);
                         Thread.Sleep(50);
                         _step++;
                         break;

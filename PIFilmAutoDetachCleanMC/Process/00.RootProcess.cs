@@ -216,7 +216,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                 _machineStatus.OriginDone = false;
 
-                _devices.Outputs.Lamp_Alarm();
+                _devices.Outputs.Lamp_Alarm(true);
 
                 ProcessMode = EProcessMode.Alarm;
                 Log.Info("ToAlarm Done, Alarm");
@@ -238,7 +238,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 foreach (var motion in _devices.Motions.All!) { motion.Stop(); }
                 _devices.RollerList.All.ForEach(r => r.Stop());
 
-                _devices.Outputs.Lamp_Alarm();
+                _devices.Outputs.Lamp_Alarm(true);
                 ProcessMode = EProcessMode.Warning;
                 Log.Info("ToWarning Done, Warning");
                 AlertNotifyView.ShowDialog(_warningService.GetById(raisedWarningCode), true);
@@ -325,7 +325,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
-                    _devices.Outputs.Lamp_Alarm();
+                    _devices.Outputs.Lamp_Alarm(false);
 
                     Log.Debug("Doors locked safely.");
                     Step.OriginStep++;
