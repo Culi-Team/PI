@@ -2211,12 +2211,27 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessUnloadStep.YAxis_MoveReadyPosition:
                     Log.Debug("Y Axis Move Ready Position");
                     YAxis.MoveAbs(YAxisReadyPosition);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisReadyPosition));
+                    BrushCyl.Forward();
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisReadyPosition) && BrushCyl.IsForward);
                     Step.RunStep++;
                     break;
                 case ECleanProcessUnloadStep.YAxis_MoveReadyPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
+                        if (BrushCyl.IsForward == false)
+                        {
+                            EWarning? warning = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EWarning.WETCleanLeft_BrushCylinder_Down_Fail,
+                                EClean.WETCleanRight => EWarning.WETCleanRight_BrushCylinder_Down_Fail,
+                                EClean.AFCleanLeft => EWarning.AFCleanLeft_BrushCylinder_Down_Fail,
+                                EClean.AFCleanRight => EWarning.AFCleanRight_BrushCylinder_Down_Fail,
+                                _ => null
+                            };
+                            RaiseWarning((int)warning!);
+                            break;
+                        }
+
                         EAlarm? alarm = cleanType switch
                         {
                             EClean.WETCleanLeft => EAlarm.WETCleanLeft_YAxis_MoveReadyPosition_Fail,
@@ -2271,6 +2286,32 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     Log.Debug("X T Axis Move Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessUnloadStep.Brush_Up:
+                    Log.Debug("Brush up");
+
+                    BrushCyl.Backward();
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => BrushCyl.IsBackward);
+
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessUnloadStep.Brush_Up_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_BrushCylinder_Up_Fail,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_BrushCylinder_Up_Fail,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_BrushCylinder_Up_Fail,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_BrushCylinder_Up_Fail,
+                            _ => null
+                        };
+                        RaiseWarning((int)warning!);
+                        break;
+                    }
+
+                    Log.Debug("Brush up Done");
                     Step.RunStep++;
                     break;
                 case ECleanProcessUnloadStep.End:

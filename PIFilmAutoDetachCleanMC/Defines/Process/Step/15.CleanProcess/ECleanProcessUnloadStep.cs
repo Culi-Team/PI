@@ -22,6 +22,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         YAxis_MoveReadyPosition_Wait,
         XTAxis_MoveReadyPosition,
         XTAxis_MoveReadyPosition_Wait,
+
+        Brush_Up,
+        Brush_Up_Wait,
+
         End
     }
 }

@@ -8,6 +8,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private int robotHighSpeed;
         private int robotLowSpeed;
         private int robotPlasmaSpeed;
+        private int robotPlasmaMinTemperature;
         private int model;
 
         [SingleRecipeDescription(Description = "Model")]
@@ -31,6 +32,20 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             {
                 OnRecipeChanged(robotPlasmaSpeed, value);
                 robotPlasmaSpeed = value;
+            }
+        }
+
+        [SingleRecipeDescription(Description = "Plasma Min Temparature", Unit = Unit.Celsius)]
+        [SingleRecipeMinMax(Max = 50, Min = 25)]
+        public int RobotPlasmaMinTemparature
+        {
+            get { return robotPlasmaMinTemperature; }
+            set
+            {
+                if (robotPlasmaMinTemperature == value) return;
+
+                OnRecipeChanged(robotPlasmaMinTemperature, value);
+                robotPlasmaMinTemperature = value;
             }
         }
 

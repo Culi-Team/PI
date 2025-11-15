@@ -1134,7 +1134,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPlasmaStep.Wait_PlasmaPrepareDone:
-                    if (IsPlasmaPrepare == false && _machineStatus.IsDryRunMode == false)
+                    if ((IsPlasmaPrepare == false || _plasma.Temperature < _robotUnloadRecipe.RobotPlasmaMinTemparature)
+                        && _machineStatus.IsDryRunMode == false)
                     {
                         Wait(20);
                         break;

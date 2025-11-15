@@ -68,7 +68,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             _outputs.PlasmaN2SolOpen.Value = false;
             _outputs.PlasmaCDASolOpen.Value = false;
 
-            _outputs.PlasmaIdleMode.Value = true;
+            //_outputs.PlasmaIdleMode.Value = true;
         }
 
         public void Reset()
