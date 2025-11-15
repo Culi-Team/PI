@@ -184,7 +184,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case EDetachProcessToRunStep.Detach_Shuttle_Check:
-                    if (IsGlassShuttleVacAll == false && (IsGlassShuttleVac1 || IsGlassShuttleVac2 || IsGlassShuttleVac3))
+                    if ((IsGlassShuttleVacAll == false && (IsGlassShuttleVac1 || IsGlassShuttleVac2 || IsGlassShuttleVac3)) && !_machineStatus.IsDryRunMode)
                     {
                         RaiseWarning(EWarning.Detach_Shuttle_Status_Fail);
                         break;

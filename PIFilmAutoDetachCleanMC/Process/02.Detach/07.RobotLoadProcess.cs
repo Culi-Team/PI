@@ -843,7 +843,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotLoad_AutoRunStep.Check_Flag_RemoveFilm:
-                    if (_devices.Inputs.RemoveZoneFixtureDetect.Value && !_machineStatus.IsDryRunMode)
+                    if (_devices.Inputs.RemoveZoneFixtureDetect.Value)
                     {
                         if (FlagRemoveFilmRequestUnload)
                         {

@@ -668,7 +668,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadTransferPlaceStep.UnloadAlign_GlassVac_Check:
-                    if (UnloadAlignGlassVac[UnloadAlignCurrentIndex - 1].Value == false)
+                    if (UnloadAlignGlassVac[UnloadAlignCurrentIndex - 1].Value == false && !_machineStatus.IsDryRunMode)
                     {
                         RaiseWarning(EWarning.UnloadAlign_Vacuum_Fail);
                         break;

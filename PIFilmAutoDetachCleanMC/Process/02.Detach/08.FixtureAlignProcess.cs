@@ -268,7 +268,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EFixtureAlignStep.Cyl_Align:
                     Log.Debug("Align Fixture #1");
                     AlignFixtureCyl2.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignFixtureCyl2.IsForward);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => AlignFixtureCyl2.IsForward || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EFixtureAlignStep.Cyl_Align_Wait:

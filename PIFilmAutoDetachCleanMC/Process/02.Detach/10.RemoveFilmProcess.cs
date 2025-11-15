@@ -45,7 +45,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
-                return _devices.Inputs.RemoveZoneFixtureDetect.Value || _machineStatus.IsDryRunMode;
+                return _devices.Inputs.RemoveZoneFixtureDetect.Value;
             }
         }
 
@@ -545,7 +545,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmProcessRemoveStep.Clamp_Cyl_Forward:
                     Log.Debug("Clamp Cylinder Forward");
                     ClampCylClampUnclamp(true);
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderClamp);
+                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderClamp || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ERemoveFilmProcessRemoveStep.Clamp_Cyl_Forward_Wait:

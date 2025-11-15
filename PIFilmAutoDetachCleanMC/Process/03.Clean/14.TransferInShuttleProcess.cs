@@ -610,7 +610,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     AlignBlow3.Value = true;
 
                     Log.Debug("Glass Align Done");
-                    Wait(3000, () => IsAlign_GlassDetect);
+                    Wait(3000, () => IsAlign_GlassDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Vacuum_On_2nd:
