@@ -94,18 +94,18 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             ERemoveFilmRobotPickFromRemoveZoneStep.Set_Flag_RemoveFilmRequestUnload,
 
+            ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown1_Down,
+            ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown1_Down_Wait,
+
+            ERemoveFilmRobotPickFromRemoveZoneStep.FilmCyl_UnClamp,
+            ERemoveFilmRobotPickFromRemoveZoneStep.FilmCyl_UnClamp_Wait,
+
             ERemoveFilmRobotPickFromRemoveZoneStep.Wait_RobotClampDone,
             ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UnClamp,
             ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UnClamp_Wait,
 
             ERemoveFilmRobotPickFromRemoveZoneStep.SetFlag_RemoveFilmUnclampFixtureDone,
             ERemoveFilmRobotPickFromRemoveZoneStep.Wait_RobotRemoveFilmUnclampFixtureDoneReceived,
-
-            ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown1_Down,
-            ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown1_Down_Wait,
-
-            ERemoveFilmRobotPickFromRemoveZoneStep.FilmCyl_UnClamp,
-            ERemoveFilmRobotPickFromRemoveZoneStep.FilmCyl_UnClamp_Wait,
 
             ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown2_Down,
             ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown2_Down_Wait,

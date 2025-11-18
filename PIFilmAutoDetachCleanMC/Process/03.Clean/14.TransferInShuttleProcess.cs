@@ -678,6 +678,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ETransferInShuttleWETCleanLoadStep.Start:
                     Log.Debug("WET Clean Load Start");
+                    if(IsTransfer_VacDetect)
+                    {
+                        Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.YAxis_Move_PlacePosition;
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleWETCleanLoadStep.Cyl_Rotate_0D:

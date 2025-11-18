@@ -793,7 +793,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.RemoveFilm_UpDownCylinder2_Down_Fail);
                         break;
                     }
-                    Wait(1500);
                     Log.Debug("Cylinder UpDown2 Down Done");
                     Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
                     break;

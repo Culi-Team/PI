@@ -560,7 +560,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferRotationWETCleanUnloadStep.ZAxis_Move_PickPosition:
                     Log.Debug("Z Axis Move Pick Position");
-                    ZAxis.MoveAbs(ZAxisPickPosition);
+                    ZAxis.MoveAbs(ZAxisPickPosition, 400.0);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisPickPosition));
                     Step.RunStep++;
                     break;
@@ -778,7 +778,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftVac1 : _devices.Inputs.TrRotateRightVac1, false);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000) , () => IsGlassRotVac || _machineStatus.IsDryRunMode);
+                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsGlassRotVac || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassRotVac_On_Check:
@@ -989,7 +989,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferRotationAFCleanLoad.ZAxis_Move_PlacePosition:
                     Log.Debug("Z Axis Move Place Position");
-                    ZAxis.MoveAbs(ZAxisPlacePosition);
+                    ZAxis.MoveAbs(ZAxisPlacePosition, 400.0);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisPlacePosition));
                     Step.RunStep++;
                     break;
@@ -1010,7 +1010,26 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftVac2 : _devices.Inputs.TrRotateRightVac2, false);
 #endif
                     Wait(200);
+                    if(Parent.Sequence == ESequence.AutoRun)
+                    {
+                        Step.RunStep++;
+                        break;
+                    }
+                    Step.RunStep = (int)ETransferRotationAFCleanLoad.ZAxis_Move_ReadyPosition;
+                    break;
+                case ETransferRotationAFCleanLoad.ZAxis_MoveBeforeRotationPosition:
+                    ZAxis.MoveAbs(ZAxisTransferBeforeRotatePosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => ZAxis.IsOnPosition(ZAxisTransferBeforeRotatePosition));
                     Step.RunStep++;
+                    break;
+                case ETransferRotationAFCleanLoad.ZAxis_MoveBeforeRotationPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferRotationLeft_ZAxis_Move_TransferBeforeRotatePosition_Fail :
+                                                        EAlarm.TransferRotationRight_ZAxis_Move_TransferBeforeRotatePosition_Fail));
+                        break;
+                    }
+                    Step.RunStep = (int)ETransferRotationAFCleanLoad.Set_FlagAFCleanLoadDone;
                     break;
                 case ETransferRotationAFCleanLoad.ZAxis_Move_ReadyPosition:
                     Log.Debug("Z Axis Move Ready Position");
