@@ -86,7 +86,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 return Detect1 && Detect2 && Detect3;
             }
         }
-
+  
         private bool IsCassetteOut
         {
             get
@@ -999,7 +999,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorUnloadStep.Wait_CSTOut_Done:
-                    if (FlagDownStreamReady == true || IsCassetteDetect)
+                    if (FlagDownStreamReady == true || IsCassetteOut == false)
                     {
                         Wait(20);
                         break;

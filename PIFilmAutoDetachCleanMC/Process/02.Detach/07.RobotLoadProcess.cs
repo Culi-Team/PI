@@ -236,6 +236,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _robotLoadOutput[(int)ERobotLoadProcessOutput.ROBOT_PICK_IN_CST_DONE] = value;
             }
         }
+
+        private bool FlagRobotClampRemoveFilmFixtureDone
+        {
+            set
+            {
+                _robotLoadOutput[(int)ERobotLoadProcessOutput.ROBOT_CLAMP_REMOVE_FILM_FIXTURE_DONE] = value;
+            }
+        }
+
+        private bool FlagRemoveFilmUnclampFixtureDone
+        {
+            get
+            {
+                return _robotLoadInput[(int)ERobotLoadProcessInput.REMOVE_FILM_UNCLAMP_FIXTURE_DONE];
+            }
+        }
         #endregion
 
         #region Constructor
@@ -1864,6 +1880,21 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
 
                     Log.Debug("Load Robot Clamp Done");
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPickFixtureFromRemoveZoneStep.SetFlag_RobotRemoveFilmFixtureClampDone:
+                    Log.Debug("Set Flag Robot Clamp Remove Film Fixture Done");
+                    FlagRobotClampRemoveFilmFixtureDone = true;
+                    Log.Debug("Wait Remove Film Unclamp Fixture Done");
+                    Step.RunStep++;
+                    break;
+                case ERobotLoadPickFixtureFromRemoveZoneStep.Wait_RemoveFilmUnclampFixture_Done:
+                    if (FlagRemoveFilmUnclampFixtureDone == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    FlagRobotClampRemoveFilmFixtureDone = false;
                     Step.RunStep++;
                     break;
                 case ERobotLoadPickFixtureFromRemoveZoneStep.Move_RemoveZoneReadyPosition:

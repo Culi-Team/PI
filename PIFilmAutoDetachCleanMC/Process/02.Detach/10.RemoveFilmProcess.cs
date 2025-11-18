@@ -130,6 +130,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_READY_DONE] = value;
             }
         }
+
+        private bool FlagRemoveFilmUnclampFixtureDone
+        {
+            set
+            {
+                _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_UNCLAMP_FIXTURE_DONE] = value;
+            }
+        }
+
+        private bool FlagRobotClampRemoveFilmFixtureDone
+        {
+            get
+            {
+                return _removeFilmInput[(int)ERemoveFilmProcessInput.ROBOT_CLAMP_REMOVE_FILM_FIXTURE_DONE];
+            }
+        }
         #endregion
 
         #region Override Methods
@@ -692,6 +708,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.RunStep = (int)RobotPickFixtureFromRemoveZoneSteps.Dequeue();
                     break;
+                case ERemoveFilmRobotPickFromRemoveZoneStep.Set_Flag_RemoveFilmRequestUnload:
+                    Log.Debug("Set Flag Remove Film Request Unload");
+                    FlagRemoveFilmRequestUnload = true;
+                    Log.Debug("Wait Robot Clamp Done");
+                    Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
+                    break;
+                case ERemoveFilmRobotPickFromRemoveZoneStep.Wait_RobotClampDone:
+                    if(FlagRobotClampRemoveFilmFixtureDone == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
+                    break;
                 case ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UnClamp:
                     Log.Debug("Cylinder UnClamp");
                     ClampCylClampUnclamp(false);
@@ -707,9 +737,17 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder UnClamp Done");
                     Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
                     break;
-                case ERemoveFilmRobotPickFromRemoveZoneStep.Set_Flag_RemoveFilmRequestUnload:
-                    Log.Debug("Set Flag Remove Film Request Unload");
-                    FlagRemoveFilmRequestUnload = true;
+                case ERemoveFilmRobotPickFromRemoveZoneStep.SetFlag_RemoveFilmUnclampFixtureDone:
+                    Log.Debug("Set Flag Remove Film Unclamp Fixture Done");
+                    FlagRemoveFilmUnclampFixtureDone = true;
+                    Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
+                    break;
+                case ERemoveFilmRobotPickFromRemoveZoneStep.Wait_RobotRemoveFilmUnclampFixtureDoneReceived:
+                    if(FlagRobotClampRemoveFilmFixtureDone == true)
+                    {
+                        Wait(20);
+                        break;
+                    }
                     Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
                     break;
                 case ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown1_Down:

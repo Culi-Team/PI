@@ -12,5 +12,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         FIXTURE_TRANSFER_DONE,
 
         ROBOT_ORIGIN_DONE,
+
+        ROBOT_CLAMP_REMOVE_FILM_FIXTURE_DONE
     }
 }

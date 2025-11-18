@@ -19,6 +19,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Clamp_Delay,
         Clamp_Wait,
 
+        SetFlag_RobotRemoveFilmFixtureClampDone,
+
+        Wait_RemoveFilmUnclampFixture_Done,
+
         Move_RemoveZoneReadyPosition,
         Move_RemoveZoneReadyPosition_Wait,
 

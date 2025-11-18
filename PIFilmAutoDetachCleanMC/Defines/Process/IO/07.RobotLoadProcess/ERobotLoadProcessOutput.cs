@@ -18,5 +18,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         ROBOT_PLACE_OUT_CST_DONE,
         ROBOT_MOVE_VINYL_CLEAN_DONE,
         ROBOT_ORIGIN_DONE,
+
+        ROBOT_CLAMP_REMOVE_FILM_FIXTURE_DONE,
     }
 }

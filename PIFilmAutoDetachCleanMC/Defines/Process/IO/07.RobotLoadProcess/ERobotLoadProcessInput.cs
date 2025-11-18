@@ -16,6 +16,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         VINYL_CLEAN_CLAMP_UNCLAMP_DONE,
 
         FIXTURE_ALIGN_REQ_LOAD,
-        REMOVE_FILM_REQ_UNLOAD
+        REMOVE_FILM_REQ_UNLOAD,
+
+        REMOVE_FILM_UNCLAMP_FIXTURE_DONE,
     }
 }

@@ -12,10 +12,16 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         StepQueue_EmptyCheck,
 
+        Set_Flag_RemoveFilmRequestUnload,
+
+        Wait_RobotClampDone,
+
         Cyl_UnClamp,
         Cyl_UnClamp_Wait,
 
-        Set_Flag_RemoveFilmRequestUnload,
+        SetFlag_RemoveFilmUnclampFixtureDone,
+        Wait_RobotRemoveFilmUnclampFixtureDoneReceived,
+
         Cyl_UpDown1_Down,
         Cyl_UpDown1_Down_Wait,
 

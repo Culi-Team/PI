@@ -92,10 +92,15 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         public static readonly List<ERemoveFilmRobotPickFromRemoveZoneStep> RemoveFilmRobotPickFromRemoveZoneSequence = new List<ERemoveFilmRobotPickFromRemoveZoneStep>
         {
+            ERemoveFilmRobotPickFromRemoveZoneStep.Set_Flag_RemoveFilmRequestUnload,
+
+            ERemoveFilmRobotPickFromRemoveZoneStep.Wait_RobotClampDone,
             ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UnClamp,
             ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UnClamp_Wait,
 
-            ERemoveFilmRobotPickFromRemoveZoneStep.Set_Flag_RemoveFilmRequestUnload,
+            ERemoveFilmRobotPickFromRemoveZoneStep.SetFlag_RemoveFilmUnclampFixtureDone,
+            ERemoveFilmRobotPickFromRemoveZoneStep.Wait_RobotRemoveFilmUnclampFixtureDoneReceived,
+
             ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown1_Down,
             ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown1_Down_Wait,
 
