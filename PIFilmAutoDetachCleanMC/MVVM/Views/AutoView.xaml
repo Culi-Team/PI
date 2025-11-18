@@ -82,21 +82,21 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0"
-            RenderTransformOrigin="0.5,0.5">
+              RenderTransformOrigin="0.5,0.5">
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">
                     <Style.Triggers>
-                        <DataTrigger
-                            Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                            Value="{x:Static defines:EScreen.LeftScreen}"
-                            d:Value="true">
+                        <DataTrigger Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                     Value="{x:Static defines:EScreen.LeftScreen}"
+                                     d:Value="true">
                             <Setter Property="RenderTransform">
                                 <Setter.Value>
                                     <TransformGroup>
-                                        <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform/>
+                                        <ScaleTransform ScaleX="-1"
+                                                        ScaleY="-1" />
+                                        <SkewTransform />
+                                        <RotateTransform />
+                                        <TranslateTransform />
                                     </TransformGroup>
                                 </Setter.Value>
                             </Setter>
@@ -105,17 +105,17 @@
                 </Style>
             </Grid.Style>
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
                 <!--OUT CST index-->
@@ -124,17 +124,17 @@
                     <Grid.Style>
                         <Style TargetType="{x:Type Grid}">
                             <Style.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                    Value="{x:Static defines:EScreen.LeftScreen}"
-                                    d:Value="true">
+                                <DataTrigger Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                             Value="{x:Static defines:EScreen.LeftScreen}"
+                                             d:Value="true">
                                     <Setter Property="RenderTransform">
                                         <Setter.Value>
                                             <TransformGroup>
-                                                <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                                                <SkewTransform/>
-                                                <RotateTransform/>
-                                                <TranslateTransform/>
+                                                <ScaleTransform ScaleX="-1"
+                                                                ScaleY="-1" />
+                                                <SkewTransform />
+                                                <RotateTransform />
+                                                <TranslateTransform />
                                             </TransformGroup>
                                         </Setter.Value>
                                     </Setter>
@@ -148,18 +148,17 @@
                     </Grid.RowDefinitions>
                     <UniformGrid Columns="2">
                         <Label Content="Cassette Out"
-                           Background="Beige"
-                           HorizontalContentAlignment="Center"
-                           FontWeight="Bold"
-                           FontSize="14" />
+                               Background="Beige"
+                               HorizontalContentAlignment="Center"
+                               FontWeight="Bold"
+                               FontSize="14" />
                         <Button Content="Reset"
-                Margin="5 0 0 0"
-                IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
-                Command="{Binding ResetCSTOutCommand}" />
+                                Margin="5 0 0 0"
+                                IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
+                                Command="{Binding ResetCSTOutCommand}" />
                     </UniformGrid>
-                    <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
-                  ItemsSource="{Binding CassetteList.CassetteOut.Cells}"
-                  Grid.Row="1">
+                    <ItemsControl ItemsSource="{Binding CassetteList.CassetteOut.Cells}"
+                                  Grid.Row="1">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <ui:TrayCellView />
@@ -175,24 +174,24 @@
 
                 <!--Clean Status View-->
                 <Border Grid.Column="1"
-                    BorderBrush="Gray"
-                    BorderThickness="1"
-                    Margin="5"
+                        BorderBrush="Gray"
+                        BorderThickness="1"
+                        Margin="5"
                         RenderTransformOrigin="0.5 0.5">
                     <Border.Style>
                         <Style TargetType="{x:Type Border}">
                             <Style.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                    Value="{x:Static defines:EScreen.LeftScreen}"
-                                    d:Value="true">
+                                <DataTrigger Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                             Value="{x:Static defines:EScreen.LeftScreen}"
+                                             d:Value="true">
                                     <Setter Property="RenderTransform">
                                         <Setter.Value>
                                             <TransformGroup>
-                                                <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                                                <SkewTransform/>
-                                                <RotateTransform/>
-                                                <TranslateTransform/>
+                                                <ScaleTransform ScaleX="-1"
+                                                                ScaleY="-1" />
+                                                <SkewTransform />
+                                                <RotateTransform />
+                                                <TranslateTransform />
                                             </TransformGroup>
                                         </Setter.Value>
                                     </Setter>
@@ -203,24 +202,24 @@
                     <control:CleanUnitStatusView DataContext="{Binding RecipeSelector.CurrentRecipe.WetCleanLeftRecipe}" />
                 </Border>
                 <Border Grid.Column="2"
-                    BorderBrush="Gray"
-                    BorderThickness="1"
-                    Margin="5"
+                        BorderBrush="Gray"
+                        BorderThickness="1"
+                        Margin="5"
                         RenderTransformOrigin="0.5 0.5">
                     <Border.Style>
                         <Style TargetType="{x:Type Border}">
                             <Style.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                    Value="{x:Static defines:EScreen.LeftScreen}"
-                                    d:Value="true">
+                                <DataTrigger Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                             Value="{x:Static defines:EScreen.LeftScreen}"
+                                             d:Value="true">
                                     <Setter Property="RenderTransform">
                                         <Setter.Value>
                                             <TransformGroup>
-                                                <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                                                <SkewTransform/>
-                                                <RotateTransform/>
-                                                <TranslateTransform/>
+                                                <ScaleTransform ScaleX="-1"
+                                                                ScaleY="-1" />
+                                                <SkewTransform />
+                                                <RotateTransform />
+                                                <TranslateTransform />
                                             </TransformGroup>
                                         </Setter.Value>
                                     </Setter>
@@ -233,24 +232,24 @@
 
                 <!--Plasma Status View-->
                 <Border Grid.Column="3"
-                    BorderBrush="Gray"
-                    BorderThickness="1"
-                    Margin="5"
+                        BorderBrush="Gray"
+                        BorderThickness="1"
+                        Margin="5"
                         RenderTransformOrigin="0.5 0.5">
                     <Border.Style>
                         <Style TargetType="{x:Type Border}">
                             <Style.Triggers>
-                                <DataTrigger
-                Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                Value="{x:Static defines:EScreen.LeftScreen}"
-                d:Value="true">
+                                <DataTrigger Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                             Value="{x:Static defines:EScreen.LeftScreen}"
+                                             d:Value="true">
                                     <Setter Property="RenderTransform">
                                         <Setter.Value>
                                             <TransformGroup>
-                                                <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                                                <SkewTransform/>
-                                                <RotateTransform/>
-                                                <TranslateTransform/>
+                                                <ScaleTransform ScaleX="-1"
+                                                                ScaleY="-1" />
+                                                <SkewTransform />
+                                                <RotateTransform />
+                                                <TranslateTransform />
                                             </TransformGroup>
                                         </Setter.Value>
                                     </Setter>
@@ -264,91 +263,91 @@
 
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
                 <!-- Machine Image overlay-->
                 <Grid Grid.Row="0"
-                    Grid.ColumnSpan="9"
-                    Grid.RowSpan="3"
-                    Panel.ZIndex="0">
+                      Grid.ColumnSpan="9"
+                      Grid.RowSpan="3"
+                      Panel.ZIndex="0">
                     <Image Source="{StaticResource AutoViewImage}"
-                        Stretch="Fill" />
+                           Stretch="Fill" />
                 </Grid>
-                
+
                 <!--Emegency Overlay-->
                 <Grid Grid.Row="0"
-                    Grid.ColumnSpan="9"
-                    Grid.RowSpan="3"
-                    Panel.ZIndex="2">
+                      Grid.ColumnSpan="9"
+                      Grid.RowSpan="3"
+                      Panel.ZIndex="2">
                     <Canvas x:Name="EmergencyOverlay"
-                        Background="Transparent"
-                        IsHitTestVisible="False">
+                            Background="Transparent"
+                            IsHitTestVisible="False">
                         <Image Style="{StaticResource EmergencyIndicatorImageStyle}"
-                           Canvas.Left="146"
-                           Canvas.Top="13"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Center">
+                               Canvas.Left="146"
+                               Canvas.Top="13"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center">
                             <Image.Source>
                                 <Binding Path="Devices.Inputs.EmoLoadL.Value"
-                         Converter="{StaticResource EmergencyStatusToImageConverter}" />
+                                         Converter="{StaticResource EmergencyStatusToImageConverter}" />
                             </Image.Source>
                         </Image>
                         <Image Style="{StaticResource EmergencyIndicatorImageStyle}"
-               Canvas.Left="146"
-               Canvas.Top="360">
+                               Canvas.Left="146"
+                               Canvas.Top="360">
                             <Image.Source>
                                 <Binding Path="Devices.Inputs.EmoLoadR.Value"
-                         Converter="{StaticResource EmergencyStatusToImageConverter}" />
+                                         Converter="{StaticResource EmergencyStatusToImageConverter}" />
                             </Image.Source>
                         </Image>
                         <Image Style="{StaticResource EmergencyIndicatorImageStyle}"
-               Canvas.Left="720"
-               Canvas.Top="15">
+                               Canvas.Left="720"
+                               Canvas.Top="15">
                             <Image.Source>
                                 <Binding Path="Devices.Inputs.OpLEmo.Value"
-                         Converter="{StaticResource EmergencyStatusToImageConverter}" />
+                                         Converter="{StaticResource EmergencyStatusToImageConverter}" />
                             </Image.Source>
                         </Image>
                         <Image Style="{StaticResource EmergencyIndicatorImageStyle}"
-               Canvas.Left="720"
-               Canvas.Top="360">
+                               Canvas.Left="720"
+                               Canvas.Top="360">
                             <Image.Source>
                                 <Binding Path="Devices.Inputs.OpREmo.Value"
-                         Converter="{StaticResource EmergencyStatusToImageConverter}" />
+                                         Converter="{StaticResource EmergencyStatusToImageConverter}" />
                             </Image.Source>
                         </Image>
                         <Image Style="{StaticResource EmergencyIndicatorImageStyle}"
-               Canvas.Left="1535"
-               Canvas.Top="13"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Top">
+                               Canvas.Left="1535"
+                               Canvas.Top="13"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top">
                             <Image.Source>
                                 <Binding Path="Devices.Inputs.EmoUnloadL.Value"
-                         Converter="{StaticResource EmergencyStatusToImageConverter}" />
+                                         Converter="{StaticResource EmergencyStatusToImageConverter}" />
                             </Image.Source>
                         </Image>
                         <Image Style="{StaticResource EmergencyIndicatorImageStyle}"
-               Canvas.Left="1535"
-               Canvas.Top="360"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Top">
+                               Canvas.Left="1535"
+                               Canvas.Top="360"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top">
                             <Image.Source>
                                 <Binding Path="Devices.Inputs.EmoUnloadR.Value"
-                         Converter="{StaticResource EmergencyStatusToImageConverter}" />
+                                         Converter="{StaticResource EmergencyStatusToImageConverter}" />
                             </Image.Source>
                         </Image>
                     </Canvas>
@@ -356,10 +355,10 @@
                 </Grid>
                 <!--Door Indicators Overlay-->
                 <Grid Grid.Row="0"
-                    Grid.ColumnSpan="9"
-                    Grid.RowSpan="3"
-                    Panel.ZIndex="3"
-                    IsHitTestVisible="False">
+                      Grid.ColumnSpan="9"
+                      Grid.RowSpan="3"
+                      Panel.ZIndex="3"
+                      IsHitTestVisible="False">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="17*" />
@@ -379,8 +378,8 @@
 
                         <!-- Left Door Indicators -->
                         <Rectangle Grid.Column="0"
-                   Grid.Row="0"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="0"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                             <Rectangle.Fill>
                                 <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                     <Binding Path="Devices.Inputs.DoorLock1L.Value" />
@@ -389,8 +388,8 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <Rectangle Grid.Column="1"
-                   Grid.Row="0"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="0"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                             <Rectangle.Fill>
                                 <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                     <Binding Path="Devices.Inputs.DoorLock2L.Value" />
@@ -399,13 +398,13 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <Rectangle Grid.Column="2"
-                   Grid.Row="0"
-                   Fill="Ivory"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="0"
+                                   Fill="Ivory"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                         </Rectangle>
                         <Rectangle Grid.Column="3"
-                   Grid.Row="0"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="0"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                             <Rectangle.Fill>
                                 <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                     <Binding Path="Devices.Inputs.DoorLock3L.Value" />
@@ -414,8 +413,8 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <Rectangle Grid.Column="4"
-                   Grid.Row="0"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="0"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                             <Rectangle.Fill>
                                 <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                     <Binding Path="Devices.Inputs.DoorLock4L.Value" />
@@ -424,8 +423,8 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <Rectangle Grid.Column="5"
-                   Grid.Row="0"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="0"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                             <Rectangle.Fill>
                                 <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                     <Binding Path="Devices.Inputs.DoorLock5L.Value" />
@@ -434,8 +433,8 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <Rectangle Grid.Column="6"
-                   Grid.Row="0"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="0"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                             <Rectangle.Fill>
                                 <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                     <Binding Path="Devices.Inputs.DoorLock6L.Value" />
@@ -444,8 +443,8 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <Rectangle Grid.Column="7"
-                   Grid.Row="0"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="0"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                             <Rectangle.Fill>
                                 <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                     <Binding Path="Devices.Inputs.DoorLock7L.Value" />
@@ -456,8 +455,8 @@
 
                         <!-- Right Door Indicators -->
                         <Rectangle Grid.Column="0"
-                   Grid.Row="2"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="2"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                             <Rectangle.Fill>
                                 <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                     <Binding Path="Devices.Inputs.DoorLock1R.Value" />
@@ -466,8 +465,8 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <Rectangle Grid.Column="1"
-                   Grid.Row="2"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="2"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                             <Rectangle.Fill>
                                 <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                     <Binding Path="Devices.Inputs.DoorLock2R.Value" />
@@ -476,13 +475,13 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <Rectangle Grid.Column="2"
-                   Grid.Row="2"
-                   Fill="Ivory"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="2"
+                                   Fill="Ivory"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                         </Rectangle>
                         <Rectangle Grid.Column="3"
-                   Grid.Row="2"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="2"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                             <Rectangle.Fill>
                                 <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                     <Binding Path="Devices.Inputs.DoorLock3R.Value" />
@@ -491,8 +490,8 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <Rectangle Grid.Column="4"
-                   Grid.Row="2"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="2"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                             <Rectangle.Fill>
                                 <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                     <Binding Path="Devices.Inputs.DoorLock4R.Value" />
@@ -501,8 +500,8 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <Rectangle Grid.Column="5"
-                   Grid.Row="2"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="2"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                             <Rectangle.Fill>
                                 <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                     <Binding Path="Devices.Inputs.DoorLock5R.Value" />
@@ -511,8 +510,8 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <Rectangle Grid.Column="6"
-                   Grid.Row="2"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="2"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                             <Rectangle.Fill>
                                 <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                     <Binding Path="Devices.Inputs.DoorLock6R.Value" />
@@ -521,8 +520,8 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <Rectangle Grid.Column="7"
-                   Grid.Row="2"
-                   Style="{StaticResource DoorIndicatorRectangleStyle}">
+                                   Grid.Row="2"
+                                   Style="{StaticResource DoorIndicatorRectangleStyle}">
                             <Rectangle.Fill>
                                 <MultiBinding Converter="{StaticResource DoorStatusToBrushConverter}">
                                     <Binding Path="Devices.Inputs.DoorLock7R.Value" />
@@ -534,10 +533,10 @@
                 </Grid>
                 <!--Status Images Overlay-->
                 <Grid Grid.Row="0"
-                    Grid.Column="1"
-                    Grid.RowSpan="3"
-                    Panel.ZIndex="1"
-                    IsHitTestVisible="False">
+                      Grid.Column="1"
+                      Grid.RowSpan="3"
+                      Panel.ZIndex="1"
+                      IsHitTestVisible="False">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1.2*" />
                         <RowDefinition Height="1.0*" />
@@ -556,9 +555,9 @@
                             <ColumnDefinition Width="0.22*" />
                         </Grid.ColumnDefinitions>
                         <Image Source="{StaticResource InCSTWorkImage}"
-               Grid.Column="1"
-               Grid.Row="1"
-               Stretch="Fill">
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               Stretch="Fill">
                             <Image.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                     <Binding Path="Devices.Inputs.InCstWorkDetect1.Value" />
@@ -581,9 +580,9 @@
                             <ColumnDefinition Width="0.23*" />
                         </Grid.ColumnDefinitions>
                         <Image Source="{StaticResource BufferImage}"
-               Grid.Column="1"
-               Grid.Row="1"
-               Stretch="Fill">
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               Stretch="Fill">
                             <Image.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                     <Binding Path="Devices.Inputs.BufferCstDetect1.Value" />
@@ -605,9 +604,9 @@
                             <ColumnDefinition Width="0.5*" />
                         </Grid.ColumnDefinitions>
                         <Image Source="{StaticResource OutCSTWorkImage}"
-               Grid.Column="1"
-               Grid.Row="1"
-               Stretch="Fill">
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               Stretch="Fill">
                             <Image.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                     <Binding Path="Devices.Inputs.OutCstWorkDetect1.Value" />
@@ -620,7 +619,7 @@
                 </Grid>
 
                 <Grid Grid.Row="0"
-                    Grid.RowSpan="3">
+                      Grid.RowSpan="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1.2*" />
                         <RowDefinition Height="1.0*" />
@@ -639,9 +638,9 @@
                             <ColumnDefinition Width="0.6*" />
                         </Grid.ColumnDefinitions>
                         <Image Source="{StaticResource InCSTImage}"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            Stretch="Fill">
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               Stretch="Fill">
                             <Image.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                     <Binding Path="Devices.Inputs.InCstDetect1.Value" />
@@ -663,9 +662,9 @@
                             <ColumnDefinition Width="0.7*" />
                         </Grid.ColumnDefinitions>
                         <Image Source="{StaticResource OutCSTImage}"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            Stretch="Fill">
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               Stretch="Fill">
                             <Image.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                     <Binding Path="Devices.Inputs.OutCstDetect1.Value" />
@@ -677,9 +676,9 @@
                 </Grid>
 
                 <Grid Grid.Row="0"
-                    Grid.Column="2"
-                    Grid.RowSpan="3"
-                    Grid.ColumnSpan="2">
+                      Grid.Column="2"
+                      Grid.RowSpan="3"
+                      Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="1.2*" />
@@ -704,9 +703,9 @@
                             <ColumnDefinition Width="0.13*" />
                         </Grid.ColumnDefinitions>
                         <Image Source="{StaticResource VinylCleanImageDetach}"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            Stretch="Fill">
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               Stretch="Fill">
                             <Image.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                     <Binding Path="Devices.Inputs.VinylCleanFixtureDetect.Value" />
@@ -716,7 +715,7 @@
                     </Grid>
                     <!-- FixtureAlign Image overlay-->
                     <Grid Grid.Row="2"
-                        Grid.Column="1">
+                          Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*" />
                             <RowDefinition Height="0.65*" />
@@ -726,8 +725,8 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
                         <Image Source="{StaticResource AlignFixtureImageDetach}"
-                            Grid.Column="1"
-                            Stretch="Fill">
+                               Grid.Column="1"
+                               Stretch="Fill">
                             <Image.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                     <Binding Path="Devices.Inputs.AlignFixtureDetect.Value" />
@@ -737,7 +736,7 @@
                     </Grid>
                     <!-- Detach Image overlay-->
                     <Grid Grid.Row="1"
-                        Grid.Column="1">
+                          Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.22*" />
                             <RowDefinition Height="1*" />
@@ -749,12 +748,12 @@
                             <ColumnDefinition Width="0.05*" />
                         </Grid.ColumnDefinitions>
                         <Image Source="{StaticResource GlassDetach}"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            Stretch="Fill"
-                            Panel.ZIndex="5"
-                            Cursor="Hand"
-                            MouseLeftButtonUp="GlassDetachImage_MouseLeftButtonUp">
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               Stretch="Fill"
+                               Panel.ZIndex="5"
+                               Cursor="Hand"
+                               MouseLeftButtonUp="GlassDetachImage_MouseLeftButtonUp">
                             <Image.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                     <Binding Path="Devices.Inputs.DetachFixtureDetect.Value" />
@@ -764,7 +763,7 @@
                     </Grid>
                     <!-- RemoveFilm Image overlay-->
                     <Grid Grid.Row="0"
-                        Grid.Column="1">
+                          Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*" />
                             <RowDefinition Height="1.9*" />
@@ -774,9 +773,9 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
                         <Image Source="{StaticResource RemoveZoneImageDetach}"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            Stretch="Fill">
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               Stretch="Fill">
                             <Image.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                     <Binding Path="Devices.Inputs.RemoveZoneFixtureDetect.Value" />
@@ -786,7 +785,7 @@
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="1"
-                    Grid.Column="4">
+                      Grid.Column="4">
                     <!--Glass Align Detach Image overlay-->
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.75*" />
@@ -799,9 +798,9 @@
                         <ColumnDefinition Width="1.55*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="{StaticResource AlignStageDetachImage}"
-                        Grid.Column="1"
-                        Grid.Row="1"
-                        Stretch="Fill">
+                           Grid.Column="1"
+                           Grid.Row="1"
+                           Stretch="Fill">
                         <Image.Visibility>
                             <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                 <Binding Path="Devices.Inputs.DetachGlassShtVac1.Value" />
@@ -812,8 +811,8 @@
                     </Image>
                 </Grid>
                 <Grid Grid.Row="0"
-                    Grid.Column="4"
-                    Grid.RowSpan="3">
+                      Grid.Column="4"
+                      Grid.RowSpan="3">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -831,9 +830,9 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
                         <Image Source="{StaticResource AlignStageDetachLeftImage}"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            Stretch="Fill">
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               Stretch="Fill">
                             <Image.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                     <Binding Path="Devices.Inputs.AlignStageLGlassDetect1.Value" />
@@ -856,9 +855,9 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
                         <Image Source="{StaticResource AlignStageDetachRightImage}"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            Stretch="Fill">
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               Stretch="Fill">
                             <Image.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                     <Binding Path="Devices.Inputs.AlignStageRGlassDetect1.Value" />
@@ -870,9 +869,9 @@
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="0"
-                    Grid.Column="5"
-                    Grid.RowSpan="3"
-                    Grid.ColumnSpan="2">
+                      Grid.Column="5"
+                      Grid.RowSpan="3"
+                      Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.4*" />
                         <ColumnDefinition Width="1.5*" />
@@ -891,9 +890,9 @@
                             <RowDefinition Height="0.45*" />
                         </Grid.RowDefinitions>
                         <Image Source="{StaticResource WetCleanImageDetachLeft}"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            Stretch="Fill">
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               Stretch="Fill">
                             <Image.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                     <Binding Path="Devices.Inputs.InShuttleLVac.Value" />
@@ -921,7 +920,7 @@
                     </Grid>
                     <!--Wet Clean Left Image overlay-->
                     <Grid Grid.Column="1"
-                        Grid.Row="1">
+                          Grid.Row="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.33*" />
                             <RowDefinition Height="1*" />
@@ -940,7 +939,7 @@
                     </Grid>
                     <!--AF Clean Left Image overlay-->
                     <Grid Grid.Column="3"
-                        Grid.Row="1">
+                          Grid.Row="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.33*" />
                             <RowDefinition Height="1*" />
@@ -1032,7 +1031,7 @@
                     </Grid.RowDefinitions>
                     <!--Unload Glass Image overlay-->
                     <Grid Grid.Column="1"
-                            Grid.Row="1">
+                          Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.27*" />
                             <ColumnDefinition />
@@ -1048,9 +1047,9 @@
                         </Grid.RowDefinitions>
                         <!--Image 1-->
                         <Border Grid.Column="1"
-                            Grid.Row="4">
+                                Grid.Row="4">
                             <Image Source="{StaticResource UnloadAlignDetachImage_1 }"
-                                Stretch="Fill">
+                                   Stretch="Fill">
                                 <Image.Visibility>
                                     <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                         <Binding Path="Devices.Inputs.UnloadGlassAlignVac1.Value" />
@@ -1061,9 +1060,9 @@
                         </Border>
                         <!--Image 2-->
                         <Border Grid.Column="1"
-                            Grid.Row="3">
+                                Grid.Row="3">
                             <Image Source="{StaticResource UnloadAlignDetachImage_2 }"
-                   Stretch="Fill">
+                                   Stretch="Fill">
                                 <Image.Visibility>
                                     <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                         <Binding Path="Devices.Inputs.UnloadGlassAlignVac2.Value" />
@@ -1074,9 +1073,9 @@
                         </Border>
                         <!--Image 3-->
                         <Border Grid.Column="1"
-                Grid.Row="2">
+                                Grid.Row="2">
                             <Image Source="{StaticResource UnloadAlignDetachImage_3 }"
-                   Stretch="Fill">
+                                   Stretch="Fill">
                                 <Image.Visibility>
                                     <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                         <Binding Path="Devices.Inputs.UnloadGlassAlignVac3.Value" />
@@ -1087,9 +1086,9 @@
                         </Border>
                         <!--Image 4-->
                         <Border Grid.Column="1"
-                Grid.Row="1">
+                                Grid.Row="1">
                             <Image Source="{StaticResource UnloadAlignDetachImage_4 }"
-                   Stretch="Fill">
+                                   Stretch="Fill">
                                 <Image.Visibility>
                                     <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                         <Binding Path="Devices.Inputs.UnloadGlassDetect4.Value" />
@@ -1113,9 +1112,9 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Image Source="{StaticResource UnloadRobotDetachImage}"
-               Grid.Column="1"
-               Grid.Row="1"
-               Stretch="Fill">
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               Stretch="Fill">
                             <Image.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                     <Binding Path="Devices.Inputs.UnloadRobotDetect1.Value" />
@@ -1132,7 +1131,7 @@
                     </Grid>
                     <!--Unload Transfer Right Image overlay-->
                     <Grid Grid.Row="2"
-          Grid.Column="1">
+                          Grid.Column="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.3*" />
                             <ColumnDefinition />
@@ -1144,9 +1143,9 @@
                             <RowDefinition Height="4*" />
                         </Grid.RowDefinitions>
                         <Image Grid.Column="1"
-               Grid.Row="1"
-               Source="{StaticResource UnloadTransferRightImage}"
-               Stretch="Fill">
+                               Grid.Row="1"
+                               Source="{StaticResource UnloadTransferRightImage}"
+                               Stretch="Fill">
                             <Image.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                     <Binding Path="Devices.Inputs.UnloadTransferRVac.Value" />
@@ -1156,7 +1155,7 @@
                     </Grid>
                     <!--Unload Transfer Left Image overlay-->
                     <Grid Grid.Row="0"
-          Grid.Column="1">
+                          Grid.Column="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.3*" />
                             <ColumnDefinition />
@@ -1168,9 +1167,9 @@
                             <RowDefinition Height="3.3*" />
                         </Grid.RowDefinitions>
                         <Image Grid.Column="1"
-               Grid.Row="1"
-               Source="{StaticResource UnloadTransferLeftImage}"
-               Stretch="Fill">
+                               Grid.Row="1"
+                               Source="{StaticResource UnloadTransferLeftImage}"
+                               Stretch="Fill">
                             <Image.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
                                     <Binding Path="Devices.Inputs.UnloadTransferLVac.Value" />
@@ -1183,10 +1182,10 @@
 
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
                 <!--In CST index-->
@@ -1195,17 +1194,17 @@
                     <Grid.Style>
                         <Style TargetType="{x:Type Grid}">
                             <Style.Triggers>
-                                <DataTrigger
-                Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                Value="{x:Static defines:EScreen.LeftScreen}"
-                d:Value="true">
+                                <DataTrigger Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                             Value="{x:Static defines:EScreen.LeftScreen}"
+                                             d:Value="true">
                                     <Setter Property="RenderTransform">
                                         <Setter.Value>
                                             <TransformGroup>
-                                                <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                                                <SkewTransform/>
-                                                <RotateTransform/>
-                                                <TranslateTransform/>
+                                                <ScaleTransform ScaleX="-1"
+                                                                ScaleY="-1" />
+                                                <SkewTransform />
+                                                <RotateTransform />
+                                                <TranslateTransform />
                                             </TransformGroup>
                                         </Setter.Value>
                                     </Setter>
@@ -1219,18 +1218,17 @@
                     </Grid.RowDefinitions>
                     <UniformGrid Columns="2">
                         <Label Content="Cassette In"
-                           Background="Beige"
-                           HorizontalContentAlignment="Center"
-                           FontWeight="Bold"
-                           FontSize="14" />
+                               Background="Beige"
+                               HorizontalContentAlignment="Center"
+                               FontWeight="Bold"
+                               FontSize="14" />
                         <Button Content="Reset"
-                            IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
-                            Margin="5 0 0 0"
-                            Command="{Binding ResetCSTInCommand}" />
+                                IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
+                                Margin="5 0 0 0"
+                                Command="{Binding ResetCSTInCommand}" />
                     </UniformGrid>
-                    <ItemsControl IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
-                        ItemsSource="{Binding CassetteList.CassetteIn.Cells}"
-                        Grid.Row="1">
+                    <ItemsControl ItemsSource="{Binding CassetteList.CassetteIn.Cells}"
+                                  Grid.Row="1">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <ui:TrayCellView />
@@ -1245,24 +1243,24 @@
                 </Grid>
 
                 <Border Grid.Column="1"
-                    BorderBrush="Gray"
-                    BorderThickness="1"
-                    Margin="5"
+                        BorderBrush="Gray"
+                        BorderThickness="1"
+                        Margin="5"
                         RenderTransformOrigin="0.5 0.5">
                     <Border.Style>
                         <Style TargetType="{x:Type Border}">
                             <Style.Triggers>
-                                <DataTrigger
-                Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                Value="{x:Static defines:EScreen.LeftScreen}"
-                d:Value="true">
+                                <DataTrigger Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                             Value="{x:Static defines:EScreen.LeftScreen}"
+                                             d:Value="true">
                                     <Setter Property="RenderTransform">
                                         <Setter.Value>
                                             <TransformGroup>
-                                                <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                                                <SkewTransform/>
-                                                <RotateTransform/>
-                                                <TranslateTransform/>
+                                                <ScaleTransform ScaleX="-1"
+                                                                ScaleY="-1" />
+                                                <SkewTransform />
+                                                <RotateTransform />
+                                                <TranslateTransform />
                                             </TransformGroup>
                                         </Setter.Value>
                                     </Setter>
@@ -1273,24 +1271,24 @@
                     <control:CleanUnitStatusView DataContext="{Binding RecipeSelector.CurrentRecipe.WetCleanRightRecipe}" />
                 </Border>
                 <Border Grid.Column="2"
-                    BorderBrush="Gray"
-                    BorderThickness="1"
-                    Margin="5"
+                        BorderBrush="Gray"
+                        BorderThickness="1"
+                        Margin="5"
                         RenderTransformOrigin="0.5 0.5">
                     <Border.Style>
                         <Style TargetType="{x:Type Border}">
                             <Style.Triggers>
-                                <DataTrigger
-                Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                Value="{x:Static defines:EScreen.LeftScreen}"
-                d:Value="true">
+                                <DataTrigger Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                             Value="{x:Static defines:EScreen.LeftScreen}"
+                                             d:Value="true">
                                     <Setter Property="RenderTransform">
                                         <Setter.Value>
                                             <TransformGroup>
-                                                <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                                                <SkewTransform/>
-                                                <RotateTransform/>
-                                                <TranslateTransform/>
+                                                <ScaleTransform ScaleX="-1"
+                                                                ScaleY="-1" />
+                                                <SkewTransform />
+                                                <RotateTransform />
+                                                <TranslateTransform />
                                             </TransformGroup>
                                         </Setter.Value>
                                     </Setter>
@@ -1302,9 +1300,9 @@
                 </Border>
 
                 <Border Grid.Column="3"
-                    BorderBrush="Gray"
+                        BorderBrush="Gray"
                         Background="LightGray"
-                    BorderThickness="1">
+                        BorderThickness="1">
                 </Border>
             </Grid>
         </Grid>
@@ -1312,20 +1310,20 @@
         <Grid Grid.Column="1"
               Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="1.2*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="1.2*" />
+                <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
             <UniformGrid Columns="1">
                 <Label Content="MACHINE STATUS"
-                   HorizontalContentAlignment="Center"
-                   VerticalContentAlignment="Center"
-                   FontSize="16"
-                   Margin="0 0 0 5"
-                   FontWeight="Bold"
+                       HorizontalContentAlignment="Center"
+                       VerticalContentAlignment="Center"
+                       FontSize="16"
+                       Margin="0 0 0 5"
+                       FontWeight="Bold"
                        Foreground="Wheat"
-                   Background="{StaticResource SecondaryBackgroundColor}" />
+                       Background="{StaticResource SecondaryBackgroundColor}" />
                 <Label Content="{Binding MachineStatus.CurrentProcessMode}"
                        FontSize="20"
                        FontWeight="Bold"
@@ -1337,37 +1335,33 @@
 
             <UniformGrid Columns="1"
                          Grid.Row="1">
-                <ui:ImageButton 
-                Image="/EQX.UI;component/Resources/Images/Components/Common/model_change_Selected.png"
-                Content="{Binding MachineStatus.MachineRunModeDisplay}"
-                Background="LightBlue"
-                FontSize="18"
-                Command="{Binding SelectRunModeCommand}"
-                IsEnabled="{Binding MachineStatus.IsStandByProcessMode}" />
+                <ui:ImageButton Image="/EQX.UI;component/Resources/Images/Components/Common/model_change_Selected.png"
+                                Content="{Binding MachineStatus.MachineRunModeDisplay}"
+                                Background="LightBlue"
+                                FontSize="18"
+                                Command="{Binding SelectRunModeCommand}"
+                                IsEnabled="{Binding MachineStatus.IsStandByProcessMode}" />
 
-                <ui:ImageButton 
-                Image="/EQX.UI;component/Resources/Images/Components/Common/IO_selected.png"
-                Content="IO Monitoring"
-                FontSize="18"
-                Command="{Binding IOMonitoringNavigate}"
-                Background="LightBlue"
-                IsEnabled="{Binding MachineStatus.IsStandByProcessMode}" />
+                <ui:ImageButton Image="/EQX.UI;component/Resources/Images/Components/Common/IO_selected.png"
+                                Content="IO Monitoring"
+                                FontSize="18"
+                                Command="{Binding IOMonitoringNavigate}"
+                                Background="LightBlue"
+                                IsEnabled="{Binding MachineStatus.IsStandByProcessMode}" />
 
-                <ui:ImageButton 
-                Image="/EQX.UI;component/Resources/Images/Components/Common/idling_selected.png"
-                Content="Initialize"
-                FontSize="18"
-                Background="LightBlue"
-                Command="{Binding InitializeNavigate}"
-                IsEnabled="{Binding MachineStatus.IsStandByProcessMode}" />
+                <ui:ImageButton Image="/EQX.UI;component/Resources/Images/Components/Common/idling_selected.png"
+                                Content="Initialize"
+                                FontSize="18"
+                                Background="LightBlue"
+                                Command="{Binding InitializeNavigate}"
+                                IsEnabled="{Binding MachineStatus.IsStandByProcessMode}" />
 
-                <ui:ImageButton 
-                Image="/EQX.UI;component/Resources/Images/Components/Common/return_origin_selected.png"
-                Content="Origin"
-                FontSize="18"
-                Background="LightBlue"
-                Command="{Binding OriginCommand}"
-                IsEnabled="{Binding MachineStatus.IsStandByProcessMode}" />
+                <ui:ImageButton Image="/EQX.UI;component/Resources/Images/Components/Common/return_origin_selected.png"
+                                Content="Origin"
+                                FontSize="18"
+                                Background="LightBlue"
+                                Command="{Binding OriginCommand}"
+                                IsEnabled="{Binding MachineStatus.IsStandByProcessMode}" />
             </UniformGrid>
 
             <!-- PRODUCT INFORMATION -->
@@ -1425,53 +1419,53 @@
 
             <Grid Grid.Row="3">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1.5*"/>
-                    <RowDefinition Height="1.5*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
-                
+
                 <UniformGrid Rows="1"
                              Margin="2">
                     <Button Content="Input Stop"
                             Height="Auto"
-                        FontSize="18"
-                        Command="{Binding InputStopCommand}"
-                        Background="{Binding MachineStatus.IsInputStop, Converter={StaticResource InputOutputStopConverter}}" />
+                            FontSize="18"
+                            Command="{Binding InputStopCommand}"
+                            Background="{Binding MachineStatus.IsInputStop, Converter={StaticResource InputOutputStopConverter}}" />
                     <Button Content="Output Stop"
                             Height="Auto"
-                        FontSize="18"
-                        Command="{Binding OutputStopCommand}"
-                        Background="{Binding MachineStatus.IsOutputStop, Converter={StaticResource InputOutputStopConverter}}" />
+                            FontSize="18"
+                            Command="{Binding OutputStopCommand}"
+                            Background="{Binding MachineStatus.IsOutputStop, Converter={StaticResource InputOutputStopConverter}}" />
                 </UniformGrid>
 
                 <ui:ImageButton Grid.Row="1"
                                 Margin="2"
-                    Image="/EQX.UI;component/Resources/Images/Components/Common/start_selected.png"
-                    Content="Start"
-                    FontSize="18"
-                    Command="{Binding StartCommand}" />
+                                Image="/EQX.UI;component/Resources/Images/Components/Common/start_selected.png"
+                                Content="Start"
+                                FontSize="18"
+                                Command="{Binding StartCommand}" />
 
                 <ui:ImageButton Grid.Row="2"
                                 Margin="2"
-                    Image="/EQX.UI;component/Resources/Images/Components/Common/stop_selected.png"
-                    Content="Stop"
-                    FontSize="18"
-                    Command="{Binding StopCommand}" />
+                                Image="/EQX.UI;component/Resources/Images/Components/Common/stop_selected.png"
+                                Content="Stop"
+                                FontSize="18"
+                                Command="{Binding StopCommand}" />
 
                 <UniformGrid Columns="2"
                              Grid.Row="3"
                              Margin="2">
                     <ui:ImageButton Content="Buzzer Off"
-                        Image="/EQX.UI;component/Resources/Images/Components/Common/alarm_selected.png"
-                        Command="{Binding BuzzerOffCommand}"
-                        FontSize="18" />
+                                    Image="/EQX.UI;component/Resources/Images/Components/Common/alarm_selected.png"
+                                    Command="{Binding BuzzerOffCommand}"
+                                    FontSize="18" />
                     <ui:ImageButton Content="{Binding Devices.Outputs.DoorOpen.Value,Converter={StaticResource BooleanOnOffToContentConverter},ConverterParameter=Door}"
-                        Visibility="{Binding UserStore.Permission,Converter={StaticResource UserPermissionToVisibilityConverter}}"
-                        Command="{Binding DoorOpenCommand}"
+                                    Visibility="{Binding UserStore.Permission,Converter={StaticResource UserPermissionToVisibilityConverter}}"
+                                    Command="{Binding DoorOpenCommand}"
                                     IsEnabled="{Binding MachineStatus.IsStandByProcessMode}"
-                        Image="/EQX.UI;component/Resources/Images/Components/Common/lock_selected.png"
-                        FontSize="18" />
+                                    Image="/EQX.UI;component/Resources/Images/Components/Common/lock_selected.png"
+                                    FontSize="18" />
                 </UniformGrid>
             </Grid>
         </Grid>

@@ -24,6 +24,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         CheckInputStopValue,
 
+        Wait_UpStreamCSTExist,
+
         Conveyor_Run,
 
         Set_FlagRequestCassetteIn,

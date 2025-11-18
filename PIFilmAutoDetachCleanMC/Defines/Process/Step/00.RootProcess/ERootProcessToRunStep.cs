@@ -10,6 +10,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
     {
         Start,
         Muting_Off,
+
+        LightCurtain_Check,
+
         DoorSensorCheck,
         DoorLock,
         DoorLatchCheck,

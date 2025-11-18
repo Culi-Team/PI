@@ -2,6 +2,7 @@
 using EQX.UI.Controls;
 using Newtonsoft.Json.Linq;
 using PIFilmAutoDetachCleanMC.MVVM.ViewModels.Teaching;
+using PIFilmAutoDetachCleanMC.Recipe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -123,6 +124,29 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views.Teaching
         private void root_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             LoadPositionTeaching();
+        }
+
+        private void TextBoxMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                if (textBox.DataContext is PointAndCount pointAndCount)
+                {
+                    var dataEditor = new DataEditor(Convert.ToDouble(textBox.Text), null);
+                    if (dataEditor.ShowDialog() == true)
+                    {
+                        if (textBox.Tag.ToString() == "Point")
+                        {
+                            pointAndCount.Point = dataEditor.NewValue;
+                        }
+
+                        if (textBox.Tag.ToString() == "Repeat")
+                        {
+                            pointAndCount.Repeat = Convert.ToInt32(dataEditor.NewValue);
+                        }
+                    }
+                }
+            }
         }
     }
 }

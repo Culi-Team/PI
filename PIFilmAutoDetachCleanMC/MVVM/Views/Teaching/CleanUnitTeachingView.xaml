@@ -56,56 +56,85 @@
             </Border>
         </DataTemplate>
 
-        <Style TargetType="DataGrid" x:Key="DataViewDataGridStyle">
-            <Setter Property="GridLinesVisibility" Value="All" />
-            <Setter Property="HeadersVisibility" Value="Column" />
-            <Setter Property="RowHeaderWidth" Value="0" />
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="AutoGenerateColumns" Value="False" />
-            <Setter Property="CanUserAddRows" Value="False" />
-            <Setter Property="CanUserDeleteRows" Value="False" />
-            <Setter Property="CanUserReorderColumns" Value="False" />
-            <Setter Property="CanUserResizeColumns" Value="False" />
-            <Setter Property="CanUserSortColumns" Value="False" />
-            <Setter Property="IsReadOnly" Value="False" />
-            <Setter Property="RowHeight" Value="30" />
-            <Setter Property="BorderBrush" Value="#E0E0E0" />
-            <Setter Property="BorderThickness" Value="1" />
+        <Style TargetType="DataGrid"
+               x:Key="DataViewDataGridStyle">
+            <Setter Property="GridLinesVisibility"
+                    Value="All" />
+            <Setter Property="HeadersVisibility"
+                    Value="Column" />
+            <Setter Property="RowHeaderWidth"
+                    Value="0" />
+            <Setter Property="Margin"
+                    Value="5" />
+            <Setter Property="AutoGenerateColumns"
+                    Value="False" />
+            <Setter Property="CanUserAddRows"
+                    Value="False" />
+            <Setter Property="CanUserDeleteRows"
+                    Value="False" />
+            <Setter Property="CanUserReorderColumns"
+                    Value="False" />
+            <Setter Property="CanUserResizeColumns"
+                    Value="False" />
+            <Setter Property="CanUserSortColumns"
+                    Value="False" />
+            <Setter Property="IsReadOnly"
+                    Value="False" />
+            <Setter Property="RowHeight"
+                    Value="30" />
+            <Setter Property="BorderBrush"
+                    Value="#E0E0E0" />
+            <Setter Property="BorderThickness"
+                    Value="1" />
         </Style>
-        
+
         <!-- DataGrid Cell Style -->
-        <Style TargetType="DataGridCell" x:Key="DataViewDataGridCellStyle">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0,0,0.5,0.5" />
-            <Setter Property="BorderBrush" Value="#F0F0F0" />
-            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Style TargetType="DataGridCell"
+               x:Key="DataViewDataGridCellStyle">
+            <Setter Property="Background"
+                    Value="Transparent" />
+            <Setter Property="BorderThickness"
+                    Value="0,0,0.5,0.5" />
+            <Setter Property="BorderBrush"
+                    Value="#F0F0F0" />
+            <Setter Property="FocusVisualStyle"
+                    Value="{x:Null}" />
             <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="BorderBrush" Value="#F0F0F0" />
-                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground}" />
+                <Trigger Property="IsSelected"
+                         Value="True">
+                    <Setter Property="Background"
+                            Value="Transparent" />
+                    <Setter Property="BorderBrush"
+                            Value="#F0F0F0" />
+                    <Setter Property="Foreground"
+                            Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground}" />
                 </Trigger>
-                <Trigger Property="IsKeyboardFocused" Value="True">
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="BorderBrush" Value="#F0F0F0" />
+                <Trigger Property="IsKeyboardFocused"
+                         Value="True">
+                    <Setter Property="Background"
+                            Value="Transparent" />
+                    <Setter Property="BorderBrush"
+                            Value="#F0F0F0" />
                 </Trigger>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#F0F8FF" />
+                <Trigger Property="IsMouseOver"
+                         Value="True">
+                    <Setter Property="Background"
+                            Value="#F0F8FF" />
                 </Trigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="7*"/>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="7*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0"
               Margin="2 5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition Width="1.15*"/>
+                <ColumnDefinition Width="1.15*" />
             </Grid.ColumnDefinitions>
             <ScrollViewer Grid.Column="0"
                           Grid.ColumnSpan="2">
@@ -120,9 +149,9 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="2.2*"/>
-                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="2.2*" />
+                <ColumnDefinition Width="4*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
@@ -145,11 +174,10 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <ContentControl
-                                            Content="{Binding .}"
-                                            Margin="1"
-                                            Height="150"
-                                            Width="170"/>
+                                <ContentControl Content="{Binding .}"
+                                                Margin="1"
+                                                Height="150"
+                                                Width="170" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -169,7 +197,7 @@
                                   Style="{StaticResource DataViewDataGridStyle}">
                             <DataGrid.Resources>
                                 <Style TargetType="DataGridCell"
-                                        BasedOn="{StaticResource DataViewDataGridCellStyle}">
+                                       BasedOn="{StaticResource DataViewDataGridCellStyle}">
                                     <Setter Property="BorderThickness"
                                             Value="0" />
                                     <Setter Property="Padding"
@@ -181,14 +209,37 @@
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Point"
-                                                    IsReadOnly="True"
-                                                    Binding="{Binding Point}"
-                                                    Width="*" />
-                                <DataGridTextColumn Header="Repeat"
-                                                    IsReadOnly="True"
-                                                    Binding="{Binding Repeat}"
-                                                    Width="*" />
+                                <DataGridTemplateColumn Header="Point"
+                                                        Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding Point,Mode=TwoWay}"
+                                                     MouseUp="TextBoxMouseUp"
+                                                     Tag="Point"
+                                                     Style="{StaticResource TextBoxWithNumberLeftStyle}"
+                                                     Background="Transparent"
+                                                     BorderThickness="0"
+                                                     Foreground="#2f3640"
+                                                     HorizontalAlignment="Center" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Header="Repeat"
+                                                        Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding Repeat,Mode=TwoWay}"
+                                                     MouseUp="TextBoxMouseUp"
+                                                     Tag="Repeat"
+                                                     Style="{StaticResource TextBoxWithNumberLeftStyle}"
+                                                     Background="Transparent"
+                                                     BorderThickness="0"
+                                                     Foreground="#2f3640"
+                                                     HorizontalAlignment="Center" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
@@ -198,7 +249,7 @@
                                   Style="{StaticResource DataViewDataGridStyle}">
                             <DataGrid.Resources>
                                 <Style TargetType="DataGridCell"
-                                        BasedOn="{StaticResource DataViewDataGridCellStyle}">
+                                       BasedOn="{StaticResource DataViewDataGridCellStyle}">
                                     <Setter Property="BorderThickness"
                                             Value="0" />
                                     <Setter Property="Padding"
@@ -210,15 +261,39 @@
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Point"
-                                                    IsReadOnly="True"
-                                                    Binding="{Binding Point}"
-                                                    Width="*" />
-                                <DataGridTextColumn Header="Repeat"
-                                                    IsReadOnly="True"
-                                                    Binding="{Binding Repeat}"
-                                                    Width="*" />
+                                <DataGridTemplateColumn Header="Point"
+                                                        Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding Point,Mode=TwoWay}"
+                                                     MouseUp="TextBoxMouseUp"
+                                                     Tag="Point"
+                                                     Style="{StaticResource TextBoxWithNumberLeftStyle}"
+                                                     Background="Transparent"
+                                                     BorderThickness="0"
+                                                     Foreground="#2f3640"
+                                                     HorizontalAlignment="Center" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Header="Repeat"
+                                                        Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding Repeat,Mode=TwoWay}"
+                                                     MouseUp="TextBoxMouseUp"
+                                                     Tag="Repeat"
+                                                     Style="{StaticResource TextBoxWithNumberLeftStyle}"
+                                                     Background="Transparent"
+                                                     BorderThickness="0"
+                                                     Foreground="#2f3640"
+                                                     HorizontalAlignment="Center" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
+
                         </DataGrid>
                     </TabItem>
                 </TabControl>
@@ -228,7 +303,7 @@
                       Style="{StaticResource TextBlockHeaderGroupBox}">
                 <StackPanel VerticalAlignment="Center">
                     <UniformGrid Rows="1"
-                                Margin="0 0 0 5">
+                                 Margin="0 0 0 5">
                         <Label Content="Pressure"
                                FontSize="14" />
                         <Label Content="{Binding Recipe.CylinderPressure,Mode=TwoWay}"

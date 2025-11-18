@@ -86,7 +86,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 return Detect1 && Detect2 && Detect3;
             }
         }
-  
+
         private bool IsCassetteOut
         {
             get
@@ -172,6 +172,20 @@ namespace PIFilmAutoDetachCleanMC.Process
             get
             {
                 return Inputs[(int)EWorkConveyorProcessInput.DOWN_STREAM_READY];
+            }
+        }
+
+        private bool IsUpStreamCSTExist
+        {
+            get
+            {
+                if (port == EPort.Left)
+                {
+                    return _devices.Inputs.BufferCstDetect1.Value || _devices.Inputs.BufferCstDetect2.Value;
+                }
+
+                return _devices.Inputs.InCstDetect1.Value || _devices.Inputs.InCstDetect2.Value;
+
             }
         }
         #endregion
@@ -741,7 +755,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                                                            EWarning.OutWorkConveyor_TiltCylinder_Down_Fail));
                             break;
                         }
-                        
+
                         RaiseWarning((int)(port == EPort.Right ? EWarning.InWorkConveyor_SupportCV_Down_Fail :
                                    EWarning.OutWorkConveyor_SupportCV_Down_Fail));
                         break;
@@ -805,6 +819,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     //    Wait(20);
                     //    break;
                     //}
+                    Step.RunStep++;
+                    break;
+                case EWorkConveyorProcessLoadStep.Wait_UpStreamCSTExist:
+                    if (IsUpStreamCSTExist == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Conveyor_Run:

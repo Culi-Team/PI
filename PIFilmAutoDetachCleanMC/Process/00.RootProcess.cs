@@ -292,6 +292,22 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                     _devices.Outputs.OutCstLightCurtainInterlock.Value = false;
                     _devices.Outputs.OutCstLightCurtainMuting.Value = false;
+                    Wait(100);
+                    Step.OriginStep++;
+                    break;
+                case ERootProcessToOriginStep.LightCurtain_Check:
+                    if (IsLightCurtainLeftDetect)
+                    {
+                        RaiseWarning((int)EWarning.LightCurtainLeftDetected);
+                        break;
+                    }
+
+                    if (IsLightCurtainRightDetect)
+                    {
+                        RaiseWarning(EWarning.LightCurtainRightDetected);
+                        break;
+                    }
+
                     Step.OriginStep++;
                     break;
                 case ERootProcessToOriginStep.DoorSensorCheck:
@@ -389,6 +405,22 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                     _devices.Outputs.OutCstLightCurtainInterlock.Value = false;
                     _devices.Outputs.OutCstLightCurtainMuting.Value = false;
+                    Wait(200);
+                    Step.ToRunStep++;
+                    break;
+                case ERootProcessToRunStep.LightCurtain_Check:
+                    if (IsLightCurtainLeftDetect)
+                    {
+                        RaiseWarning((int)EWarning.LightCurtainLeftDetected);
+                        break;
+                    }
+
+                    if (IsLightCurtainRightDetect)
+                    {
+                        RaiseWarning(EWarning.LightCurtainRightDetected);
+                        break;
+                    }
+
                     Step.ToRunStep++;
                     break;
                 case ERootProcessToRunStep.DoorSensorCheck:

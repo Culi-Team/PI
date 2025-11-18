@@ -9,9 +9,20 @@ using System.Threading.Tasks;
 
 namespace PIFilmAutoDetachCleanMC.Recipe
 {
-    public class PointAndCount
+    public class PointAndCount : ObservableObject
     {
-        public double Point { get; set; }
+        private double _point;
+
+        public double Point 
+        {
+            get { return _point; }
+            set
+            {
+                if (value == _point) return;
+                _point = value;
+                OnPropertyChanged();
+            }
+        }
         private int _repeat;
 
         public int Repeat
@@ -23,10 +34,12 @@ namespace PIFilmAutoDetachCleanMC.Recipe
                 if (value < 1)
                 {
                     _repeat = 1;
+                    OnPropertyChanged();
                     return;
                 }
 
                 _repeat = value;
+                OnPropertyChanged();
             }
         }
 
