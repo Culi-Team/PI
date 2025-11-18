@@ -226,7 +226,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ETransferInShuttleOriginStep.Cyl_Align_Down_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning(port == EPort.Left ? EWarning.GlassAlignLeft_AlignCylinder_Down_Fail
                                                         : EWarning.GlassAlignRight_AlignCylinder_Down_Fail);
@@ -620,7 +620,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EGlassAlignStep.Vacuum_On_2nd:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning(port == EPort.Left ? EWarning.GlassAlignLeft_GlassNotDetect :
                                                             EWarning.GlassAlignRight_GlassNotDetect);
@@ -681,6 +681,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleWETCleanLoadStep.Cyl_Rotate_0D:
+                    if (RotCyl.IsBackward)
+                    {
+                        Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.GlassDetect_Check;
+                        break;
+                    }
                     Log.Debug("Cylinder Rotate 0 Degree");
                     RotCyl.Backward();
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => RotCyl.IsBackward);
@@ -694,7 +699,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Cylinder Rotate 0 Degree Done");
-                    if(IsTransfer_VacDetect)
+                    if (IsTransfer_VacDetect)
                     {
                         Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.YAxis_Move_PlacePosition;
                         break;
@@ -838,50 +843,47 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferInShuttleWETCleanLoadStep.YAxis_Move_PlacePosition:
                     Log.Debug("Y Axis Move Place Position");
+                    if (port == EPort.Right)
+                    {
+                        RotCyl.Forward();
+                    }
                     YAxis.MoveAbs(YAxisPlacePosition);
-                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisPlacePosition));
+                    if (port == EPort.Right)
+                    {
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisPlacePosition) && RotCyl.IsForward);
+                    }
+                    else
+                    {
+                        Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => YAxis.IsOnPosition(YAxisPlacePosition));
+                    }
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleWETCleanLoadStep.YAxis_Move_PlacePosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
-                        RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MovePlacePosition_Fail :
+                        if (YAxis.IsOnPosition(YAxisPlacePosition) == false)
+                        {
+                            RaiseAlarm((int)(port == EPort.Left ? EAlarm.TransferInShuttleLeft_YAxis_MovePlacePosition_Fail :
                                                         EAlarm.TransferInShuttleRight_YAxis_MovePlacePosition_Fail));
-                        break;
+                            break;
+                        }
+                        if (RotCyl.IsForward == false)
+                        {
+                            RaiseWarning(EWarning.TransferInShuttleLeft_RotateCylinder_180D_Fail);
+                            break;
+                        }
                     }
                     Log.Debug("Y Axis Move Place Position Done");
 
                     //If Auto Run , After  Transfer In Shuttle Pickup Glass and move Place Position ,
                     //Check Align Vacuum to Set Flag Request glass from Glass Transfer
-                    if(Parent.Sequence == ESequence.AutoRun)
+                    if (Parent.Sequence == ESequence.AutoRun)
                     {
-                        if(IsAlign_VacDetect == false)
+                        if (IsAlign_VacDetect == false)
                         {
                             OutFlag_TransferInShuttleGlassRequest = true;
                         }
                     }
-                    if(port == EPort.Left)
-                    {
-                        Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.Wait_WETCleanRequestLoad;
-                        break;
-                    }
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttleWETCleanLoadStep.Cyl_Rotate_180D:
-                    Log.Debug("Cylinder Rotate 180 Degree");
-                    RotCyl.Forward();
-                    Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => RotCyl.IsForward);
-                    Step.RunStep++;
-                    break;
-                case ETransferInShuttleWETCleanLoadStep.Cyl_Rotate_180D_Wait:
-                    if (WaitTimeOutOccurred)
-                    {
-                        RaiseWarning((int)(port == EPort.Left ? EWarning.TransferInShuttleLeft_RotateCylinder_180D_Fail :
-                                                          EWarning.TransferInShuttleRight_RotateCylinder_180D_Fail));
-                        break;
-                    }
-                    Log.Debug("Cylinder Rotate 180 Degree Done");
-                    Log.Debug("Wait WET Clean Request Load");
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleWETCleanLoadStep.Wait_WETCleanRequestLoad:
