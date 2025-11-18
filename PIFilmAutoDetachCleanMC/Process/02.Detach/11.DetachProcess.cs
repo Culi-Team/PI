@@ -576,7 +576,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EDetachStep.ShuttleZAxis_Move_ReadyPosition:
                     Log.Debug("Shuttle Transfer Z Axis Move to Ready Position");
-                    ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisReadyPosition);
+                    ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisReadyPosition, 20);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
                         () => { return ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisReadyPosition); });
                     Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
@@ -772,7 +772,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Cylinder Detach 2 Up Done");
                     Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
-                
+
                 case EDetachStep.Vacuum_Check:
                     if (IsGlassShuttleVacAll == false && _machineStatus.IsDryRunMode == false)
                     {
@@ -1013,6 +1013,45 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Clear Flag Detach Request Unload");
                     FlagDetachRequestUnloadGlass = false;
+
+                    //If SemiAuto => End
+                    if (Parent.Sequence != ESequence.AutoRun)
+                    {
+                        Step.RunStep = (int)EDetachProcessGlassTransferPickStep.End;
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessGlassTransferPickStep.ShuttleZAxis_Move_ReadyPosition:
+                    Log.Debug("Shuttle Transfer Z Axis Move to Ready Position");
+                    ShuttleTransferZAxis.MoveAbs(_detachRecipe.ShuttleTransferZAxisReadyPosition, 20);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
+                        () => { return ShuttleTransferZAxis.IsOnPosition(_detachRecipe.ShuttleTransferZAxisReadyPosition); });
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessGlassTransferPickStep.ShuttleZAxis_Move_ReadyPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm((int)EAlarm.Detach_ShuttleTransferZAxis_MoveReadyPosition_Fail);
+                        break;
+                    }
+                    Log.Debug("Shuttle Transfer Z Axis Move to Ready Position Done");
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessGlassTransferPickStep.ShuttleXAxis_Move_DetachPosition:
+                    Log.Debug("Shuttle X Axis Move Detach Position");
+                    ShuttleTransferXAxis.MoveAbs(_detachRecipe.ShuttleTransferXAxisDetachPosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
+                        () => { return ShuttleTransferXAxis.IsOnPosition(_detachRecipe.ShuttleTransferXAxisDetachPosition); });
+                    Step.RunStep++;
+                    break;
+                case EDetachProcessGlassTransferPickStep.ShuttleXAxis_Move_DetachPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        RaiseAlarm(EAlarm.Detach_ShuttleTransferXAxis_MoveDetachPosition_Fail);
+                        break;
+                    }
+                    Log.Debug("Shuttle Transfer X Axis Move Detach Position Done");
                     Step.RunStep++;
                     break;
                 case EDetachProcessGlassTransferPickStep.End:

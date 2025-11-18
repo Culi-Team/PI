@@ -816,6 +816,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Step.OriginStep = (int)ECleanOriginStep.SyringePump_Origin;
                     break;
+                case ECleanOriginStep.VacuumOff:
+                    GlassVac.Value = false;
+                    Wait(300);
+                    Step.OriginStep++;
+                    break;
                 case ECleanOriginStep.Cyl_UnClamp:
                     Log.Debug("Cylinder UnClamp");
                     ClampCyl1.Backward();

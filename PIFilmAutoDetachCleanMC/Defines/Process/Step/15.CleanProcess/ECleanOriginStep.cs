@@ -17,6 +17,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         TAxisOrigin,
         TAxisOrigin_Wait,
 
+        VacuumOff,
+
         Cyl_UnClamp,
         Cyl_UnClamp_Wait,
         SyringePump_Origin,
