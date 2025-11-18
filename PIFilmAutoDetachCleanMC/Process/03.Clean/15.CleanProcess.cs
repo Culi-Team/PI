@@ -286,6 +286,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
+                return false;
                 return cleanType switch
                 {
                     EClean.WETCleanLeft => _devices.Inputs.WetCleanLeftWiperCleanDetect2.Value,
