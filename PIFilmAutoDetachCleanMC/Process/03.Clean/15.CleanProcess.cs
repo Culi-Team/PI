@@ -1376,6 +1376,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessLoadStep.Start:
                     Log.Debug("Clean Load Start");
 
+                    Sequence_Prepare3M();
+
                     if (cleanType == EClean.AFCleanLeft || cleanType == EClean.AFCleanRight)
                     {
                         GlassVac.Value = true;
@@ -1548,7 +1550,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)warning!);
                         break;
                     }
-                    Sequence_Prepare3M();
                     if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                     {
                         Step.RunStep = (int)ECleanProcessLoadStep.End;

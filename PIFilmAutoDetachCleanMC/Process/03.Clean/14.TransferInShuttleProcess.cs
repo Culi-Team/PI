@@ -485,6 +485,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EGlassAlignGlassTransferPlaceStep.CylDown_ZAxisUp:
+                    if (IsAlignCylDown && ZAxis.IsOnPosition(ZAxisReadyPosition))
+                    {
+                        Step.RunStep = (int)EGlassAlignGlassTransferPlaceStep.YAxis_MoveReady;
+                        break;
+                    }
+
                     Log.Debug("Move Align Cylinder Down / ZAxis Ready");
                     AlignCylUpDown(false);
                     ZAxis.MoveAbs(ZAxisReadyPosition);
@@ -844,6 +850,16 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
                     Log.Debug("Y Axis Move Place Position Done");
+
+                    //If Auto Run , After  Transfer In Shuttle Pickup Glass and move Place Position ,
+                    //Check Align Vacuum to Set Flag Request glass from Glass Transfer
+                    if(Parent.Sequence == ESequence.AutoRun)
+                    {
+                        if(IsAlign_VacDetect == false)
+                        {
+                            OutFlag_TransferInShuttleGlassRequest = true;
+                        }
+                    }
                     if(port == EPort.Left)
                     {
                         Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.Wait_WETCleanRequestLoad;
