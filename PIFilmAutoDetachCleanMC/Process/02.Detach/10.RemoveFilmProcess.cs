@@ -748,6 +748,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
+                    FlagRemoveFilmUnclampFixtureDone = false;
                     Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
                     break;
                 case ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown1_Down:
