@@ -1004,6 +1004,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
+                    Log.Debug("Clear Flag Request CST Out");
+                    FlagRequestCSTOut = false;
 
                     ConveyorStop();
 

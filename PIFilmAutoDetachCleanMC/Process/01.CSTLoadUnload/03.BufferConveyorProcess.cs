@@ -6,6 +6,7 @@ using EQX.InOut;
 using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
@@ -72,6 +73,10 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private bool FlagBufferConveyorReady
         {
+            get
+            {
+                return _bufferConveyorOutput[(int)EBufferConveyorProcessOutput.BUFFER_CONVEYOR_READY];
+            }
             set
             {
                 _bufferConveyorOutput[(int)EBufferConveyorProcessOutput.BUFFER_CONVEYOR_READY] = value;
@@ -368,8 +373,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                         }
                     }
 
-                    Log.Debug("Set Flag Buffer Conveyor Ready");
-                    FlagBufferConveyorReady = true;
+                    if(FlagBufferConveyorReady == false)
+                    {
+                        Log.Debug("Set Flag Buffer Conveyor Ready");
+                        FlagBufferConveyorReady = true;
+                    }
+                    
                     Step.RunStep++;
                     break;
                 case EBufferConveyorInWorkCSTUnloadStep.Wait_InWorkCSTRequestCSTOut:

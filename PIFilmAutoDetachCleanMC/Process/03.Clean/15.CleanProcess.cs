@@ -1395,7 +1395,78 @@ namespace PIFilmAutoDetachCleanMC.Process
                             break;
                         }
                     }
+                    if (Parent.Sequence == ESequence.AutoRun)
+                    {
+                        Step.RunStep++;
+                        break;
+                    }
+                    Step.RunStep = (int)ECleanProcessLoadStep.TAxisMoveLoadPosition;
+                    break;
+                case ECleanProcessLoadStep.XYTAxisMoveLoadPosition:
+                    Log.Debug("X Y T Axis Move Load Position");
+                    XAxis.MoveAbs(XAxisLoadPosition);
+                    YAxis.MoveAbs(YAxisLoadPosition);
+                    TAxis.MoveAbs(TAxisLoadPosition);
+                    Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000),
+                        () => XAxis.IsOnPosition(XAxisLoadPosition) &&
+                                YAxis.IsOnPosition(YAxisLoadPosition) &&
+                                TAxis.IsOnPosition(TAxisLoadPosition));
+
                     Step.RunStep++;
+                    break;
+                case ECleanProcessLoadStep.XYTAxisMoveLoadPosition_Wait:
+                    if (WaitTimeOutOccurred)
+                    {
+                        if (XAxis.IsOnPosition(XAxisLoadPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_XAxis_MoveLoadPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_XAxis_MoveLoadPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_XAxis_MoveLoadPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_XAxis_MoveLoadPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+
+                        if (YAxis.IsOnPosition(YAxisLoadPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_YAxis_MoveLoadPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_YAxis_MoveLoadPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_YAxis_MoveLoadPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_YAxis_MoveLoadPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+
+                        if (TAxis.IsOnPosition(TAxisLoadPosition) == false)
+                        {
+                            EAlarm? alarm = cleanType switch
+                            {
+                                EClean.WETCleanLeft => EAlarm.WETCleanLeft_TAxis_MoveLoadPosition_Fail,
+                                EClean.WETCleanRight => EAlarm.WETCleanRight_TAxis_MoveLoadPosition_Fail,
+                                EClean.AFCleanLeft => EAlarm.AFCleanLeft_TAxis_MoveLoadPosition_Fail,
+                                EClean.AFCleanRight => EAlarm.AFCleanRight_TAxis_MoveLoadPosition_Fail,
+                                _ => null
+                            };
+                            RaiseAlarm((int)alarm!);
+                            break;
+                        }
+                        break;
+                    }
+                    Log.Debug("X Y T Axis Move Load Position Done");
+                    if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                    {
+                        Step.RunStep = (int)ECleanProcessLoadStep.Cyl_UnClamp;
+                        break;
+                    }
+                    Step.RunStep = (int)ECleanProcessLoadStep.Set_FlagCleanRequestLoad;
                     break;
                 case ECleanProcessLoadStep.TAxisMoveLoadPosition:
                     Log.Debug("T Axis Move Load Position");
@@ -1421,14 +1492,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("T Axis Move Load Position Done");
                     Step.RunStep++;
                     break;
-                case ECleanProcessLoadStep.AxisMoveLoadPosition:
+                case ECleanProcessLoadStep.XYAxisMoveLoadPosition:
                     Log.Debug("X Y Axis Move Load Position");
                     XAxis.MoveAbs(XAxisLoadPosition);
                     YAxis.MoveAbs(YAxisLoadPosition);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => XAxis.IsOnPosition(XAxisLoadPosition) && YAxis.IsOnPosition(YAxisLoadPosition));
                     Step.RunStep++;
                     break;
-                case ECleanProcessLoadStep.AxisMoveLoadPosition_Wait:
+                case ECleanProcessLoadStep.XYAxisMoveLoadPosition_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         if (XAxis.IsOnPosition(XAxisLoadPosition) == false)
@@ -2212,6 +2283,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Clear Flag Request Unload");
                     FlagCleanRequestUnload = false;
+
+                    if (Parent.Sequence == ESequence.AutoRun)
+                    {
+                        Step.RunStep = (int)ECleanProcessUnloadStep.Brush_Up;
+                        break;
+                    }
                     Step.RunStep++;
                     break;
                 case ECleanProcessUnloadStep.YAxis_MoveReadyPosition:
@@ -2820,7 +2897,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessCleanShuttleStep.CleanShuttle:
                     Log.Debug("Clean Shuttle");
 #if !SIMULATION
-                    Clean(isHorizontal : true);
+                    Clean(isHorizontal: true);
                     Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _devices.Motions.IsContiMotioning(cleanType) == false);
 #else
                     Thread.Sleep(100);
@@ -2926,7 +3003,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 }
 
                 AXM.AxmContiEndNode((int)cleanType);
-                
+
                 int totalNode = -1;
                 AXM.AxmContiGetTotalNodeNum((int)cleanType, ref totalNode);
 
@@ -2936,7 +3013,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Thread.Sleep(100);
                     Clean(isHorizontal);
                 }
-                            
+
                 AXM.AxmContiStart((int)cleanType, 0, 0);
             }
         }
