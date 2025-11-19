@@ -9,8 +9,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum EDetachAutoRunStep
     {
         Start,
-        ShuttleTransfer_Vac_Check,
-        Fixture_Detect_Check,
+
+        Handle_GlassOnShuttle,
+        Handle_GlassNotOnShuttle,
+
         End
     }
 }

@@ -310,8 +310,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
                 MapTo(_detachOutput[EDetachProcessOutput.DETACH_ORIGIN_DONE]);
             _transferFixtureInput[ETransferFixtureProcessInput.DETACH_READY_DONE].
                 MapTo(_detachOutput[EDetachProcessOutput.DETACH_READY_DONE]);
-            _transferFixtureInput[ETransferFixtureProcessInput.DETACH_DONE].
-                MapTo(_detachOutput[EDetachProcessOutput.DETACH_DONE]);
+            _transferFixtureInput[ETransferFixtureProcessInput.READY_TO_TRANSFER].
+                MapTo(_detachOutput[EDetachProcessOutput.READY_TO_TRANSFER]);
             _transferFixtureInput[ETransferFixtureProcessInput.FIXTURE_ALIGN_DONE].
                 MapTo(_fixtureAlignOutput[EFixtureAlignProcessOutput.FIXTURE_ALIGN_DONE]);
             _transferFixtureInput[ETransferFixtureProcessInput.REMOVE_FILM_LOAD_READY].

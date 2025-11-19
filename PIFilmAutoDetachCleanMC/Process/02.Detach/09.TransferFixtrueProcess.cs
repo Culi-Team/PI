@@ -103,11 +103,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagDetachDone
+        private bool FlagDetachReadyToTransfer
         {
             get
             {
-                return _transferFixtureInput[(int)ETransferFixtureProcessInput.DETACH_DONE];
+                return _transferFixtureInput[(int)ETransferFixtureProcessInput.READY_TO_TRANSFER];
             }
         }
 
@@ -464,7 +464,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Wait Align and Detach Done");
                     break;
                 case ETransferFixtureProcessLoadStep.Wait_Align_And_Detach_Done:
-                    if (FlagDetachDone == false || FlagFixtureAlignDone == false)
+                    if (FlagDetachReadyToTransfer == false || FlagFixtureAlignDone == false)
                     {
                         //Wait Align Fixture and Detach Ready
                         Wait(20);
@@ -637,7 +637,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ETransferFixtureProcessLoadStep.WaitProcesses_ReceiveTransferDone:
                     if (FlagFixtureAlignDone == true ||
-                       FlagDetachDone == true ||
+                       FlagDetachReadyToTransfer == true ||
                        FlagRemoveFilmLoadReady == true)
                     {
                         Wait(20);

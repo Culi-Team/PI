@@ -9,7 +9,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ETransferFixtureProcessInput
     {
         FIXTURE_ALIGN_DONE,
-        DETACH_DONE,
+        READY_TO_TRANSFER,
         REMOVE_FILM_LOAD_READY,
         DETACH_ORIGIN_DONE,
         DETACH_READY_DONE,

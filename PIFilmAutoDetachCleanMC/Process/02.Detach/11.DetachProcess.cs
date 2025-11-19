@@ -41,12 +41,14 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder DetachCyl1 => _devices.Cylinders.Detach_UpDownCyl1;
         private ICylinder DetachCyl2 => _devices.Cylinders.Detach_UpDownCyl2;
 
-        private bool IsFixtureDetect => _devices.Inputs.DetachFixtureDetect.Value;
+        private bool IsFixtureExits => _devices.Inputs.DetachFixtureDetect.Value;
 
         private bool IsGlassShuttleVac1 => _devices.Inputs.DetachGlassShtVac1.Value;
         private bool IsGlassShuttleVac2 => _devices.Inputs.DetachGlassShtVac2.Value;
         private bool IsGlassShuttleVac3 => _devices.Inputs.DetachGlassShtVac3.Value;
         private bool IsGlassShuttleVacAll => IsGlassShuttleVac1 && IsGlassShuttleVac2 && IsGlassShuttleVac3;
+
+        private bool IsGlassOnShuttleAbnormalStatus => (IsGlassShuttleVacAll == false) && (IsGlassShuttleVac1 || IsGlassShuttleVac2 || IsGlassShuttleVac3);
 
         private IDOutput GlassShuttleVac1 => _devices.Outputs.DetachGlassShtVac1OnOff;
         private IDOutput GlassShuttleVac2 => _devices.Outputs.DetachGlassShtVac2OnOff;
@@ -90,16 +92,16 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
-        private bool FlagDetachDone
+        private bool FlagReadyToTransfer
         {
             set
             {
                 _machineStatus.IsFixtureDetached = value;
-                _detachOutput[(int)EDetachProcessOutput.DETACH_DONE] = value;
+                _detachOutput[(int)EDetachProcessOutput.READY_TO_TRANSFER] = value;
             }
             get
             {
-                return _detachOutput[(int)EDetachProcessOutput.DETACH_DONE];
+                return _detachOutput[(int)EDetachProcessOutput.READY_TO_TRANSFER];
             }
         }
 
@@ -184,7 +186,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case EDetachProcessToRunStep.Detach_Shuttle_Check:
-                    if ((IsGlassShuttleVacAll == false && (IsGlassShuttleVac1 || IsGlassShuttleVac2 || IsGlassShuttleVac3)) && !_machineStatus.IsDryRunMode)
+                    if (IsGlassOnShuttleAbnormalStatus && !_machineStatus.IsDryRunMode)
                     {
                         RaiseWarning(EWarning.Detach_Shuttle_Status_Fail);
                         break;
@@ -194,7 +196,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EDetachProcessToRunStep.Clear_Flags:
                     Log.Debug("Clear Flags");
-                    ((MappableOutputDevice<EDetachProcessOutput>)_detachOutput).ClearOutputs();
+                    _detachOutput.ClearOutputs();
                     Step.ToRunStep++;
                     break;
                 case EDetachProcessToRunStep.End:
@@ -208,6 +210,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
             return true;
         }
+
         public override bool ProcessOrigin()
         {
             switch ((EDetachProcessOriginStep)Step.OriginStep)
@@ -427,39 +430,40 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachAutoRunStep.Start:
                     Log.Debug("AutoRun Start");
                     GlassShuttleVacOnOff(true);
+
                     Wait((int)(_commonRecipe.VacDelay * 1000), () => IsGlassShuttleVacAll);
+
                     Step.RunStep++;
                     break;
-                case EDetachAutoRunStep.ShuttleTransfer_Vac_Check:
+                case EDetachAutoRunStep.Handle_GlassOnShuttle:
                     if (IsGlassShuttleVacAll)
                     {
-                        if (_machineStatus.IsFixtureDetached)
+                        if (!(IsFixtureExits && _machineStatus.IsFixtureDetached == false))
                         {
-                            Log.Debug("Fixture Detached -> Set Flag Detach Done");
-                            FlagDetachDone = true;  // Auto RUN
+                            // Only not in case Fixture Exist but not Detached
+                            Log.Info("Set FlagReadyToTransfer before DetachUnload");
+                            FlagReadyToTransfer = true;
                         }
-                        ClampCylinderFwBw(false);
+
                         Log.Info("Sequence Detach Unload");
                         Sequence = ESequence.DetachUnload;
                         break;
                     }
+
                     Step.RunStep++;
                     break;
-                case EDetachAutoRunStep.Fixture_Detect_Check:
-                    if (IsFixtureDetect && _machineStatus.IsFixtureDetached == false)
+                case EDetachAutoRunStep.Handle_GlassNotOnShuttle:
+                    if (!(IsFixtureExits && _machineStatus.IsFixtureDetached == false))
                     {
+                        // Only not in case Fixture Exist but not Detached
                         Log.Info("Sequence Detach");
                         Sequence = ESequence.Detach;
                         break;
                     }
+
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.End:
-                    if (_machineStatus.IsFixtureDetached || IsFixtureDetect == false)
-                    {
-                        Log.Debug("Fixture Detached -> Set Flag Detach Done");
-                        FlagDetachDone = true;  // AUTO RUN
-                    }
                     Log.Info("Sequence Transfer Fixture");
                     Sequence = ESequence.TransferFixture;
                     break;
@@ -780,7 +784,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EDetachStep.Vacuum_Check:
                     if (IsGlassShuttleVacAll == false && _machineStatus.IsDryRunMode == false)
                     {
-                        if (retryCount > 3)
+                        if (retryCount > _detachRecipe.DetachRetryCount)
                         {
                             RaiseWarning(EWarning.DetachFail);
                             break;
@@ -850,7 +854,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EDetachStep.Set_FlagDetachDone:
                     Log.Debug("Set Flag Detach Done");
-                    FlagDetachDone = true;  // AFTER DETACH DONE
+                    FlagReadyToTransfer = true;  // AFTER DETACH DONE
                     Step.RunStep++;
                     break;
                 case EDetachStep.End:
@@ -927,13 +931,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachProcessTransferFixtureLoadStep.Set_FlagDetachDoneForSemiAutoSequence:
-                    if (Parent!.Sequence == ESequence.TransferFixture)
-                    {
-                        Log.Debug("Set Flag Detach Done");
-                        FlagDetachDone = true;  // SEMI-AUTO
-                        Step.RunStep++;
-                        break;
-                    }
+                    Log.Debug("Set FlagReadyToTransfer");
+                    FlagReadyToTransfer = true;
 
                     Step.RunStep++;
                     break;
@@ -946,7 +945,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachProcessTransferFixtureLoadStep.Clear_FlagDetachDone:
-                    FlagDetachDone = false; // AFTER FIXTURE TRANSFER DONE
+                    FlagReadyToTransfer = false;
                     Step.RunStep++;
                     break;
                 case EDetachProcessTransferFixtureLoadStep.Wait_TransferFixtureClear:
@@ -1064,14 +1063,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Sequence = ESequence.Stop;
                         break;
                     }
-                    if (_machineStatus.IsFixtureDetached == false && FlagDetachDone)
+                    if (FlagReadyToTransfer)
                     {
-                        Log.Info("Sequence Detach");
-                        Sequence = ESequence.Detach;
+                        Log.Info("Sequence Transfer Fixture");
+                        Sequence = ESequence.TransferFixture;
                         break;
                     }
-                    Log.Info("Sequence Transfer Fixture");
-                    Sequence = ESequence.TransferFixture;
+
+                    Log.Info("Sequence Detach");
+                    Sequence = ESequence.Detach;
                     break;
             }
         }

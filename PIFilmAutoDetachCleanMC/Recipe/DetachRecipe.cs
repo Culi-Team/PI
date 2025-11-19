@@ -24,6 +24,7 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private double shuttleTransferXAxisDetachCheckPosition;
         private double shuttleTransferXAxisUnloadPosition;
         private double shuttleTransferZAxisUnloadPosition;
+        private int detachRetryCount;
 
         [SingleRecipeDescription(Description = "Detach Speed", Detail = "Speed Detach Z Axis and Shuttle Transfer Z Axis when Detach Glass", Unit = Unit.mmPerSecond)]
         public double DetachSpeed
@@ -195,5 +196,15 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             }
         }
 
+        [SingleRecipeDescription(Description = "Detach Retry count", Unit = Unit.ETC)]
+        public int DetachRetryCount
+        {
+            get { return detachRetryCount; }
+            set
+            {
+                OnRecipeChanged(detachRetryCount, value);
+                detachRetryCount = value;
+            }
+        }
     }
 }
