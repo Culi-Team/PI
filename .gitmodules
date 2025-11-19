@@ -12,7 +12,7 @@
 	url = https://github.com/TopEngineering/EQX.InOut
 [submodule "EQX.UI"]
 	path = EQX.UI
-	url = \\\\192.168.113.17\\SetupFiles\\GitServer\\EQX.UI.git
+	url = \\\\192.168.0.200\\SetupFiles\\GitServer\\EQX.UI.git
 [submodule "EQX.Process"]
 	path = EQX.Process
 	url = https://github.com/TopEngineering/EQX.Process
