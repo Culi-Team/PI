@@ -829,6 +829,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Wait(5000, () =>
                     {
                         strLastPosition = _robotUnload.ReadResponse();
+#if SIMULATION
+                        strLastPosition = $"lastposition,{(int)ERobotCommand.S1_RDY},0";
+#endif
                         return strLastPosition != string.Empty;
                     });
 

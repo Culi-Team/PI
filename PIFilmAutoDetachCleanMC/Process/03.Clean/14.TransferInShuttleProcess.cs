@@ -5,6 +5,7 @@ using EQX.InOut;
 using EQX.InOut.Virtual;
 using EQX.Process;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using PIFilmAutoDetachCleanMC.Defines;
 using PIFilmAutoDetachCleanMC.Defines.Devices;
 using PIFilmAutoDetachCleanMC.Recipe;
@@ -40,6 +41,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         }
         private bool OutFlag_TransferInShuttleGlassRequest
         {
+            get
+            {
+                return OutputFlagss[(int)ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_GLASS_REQUEST];
+            }
             set
             {
                 OutputFlagss[(int)ETransferInShuttleProcessOutput.TRANSFER_IN_SHUTTLE_GLASS_REQUEST] = value;
@@ -678,7 +683,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ETransferInShuttleWETCleanLoadStep.Start:
                     Log.Debug("WET Clean Load Start");
-                    if(IsTransfer_VacDetect)
+                    if (IsTransfer_VacDetect)
                     {
                         Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.YAxis_Move_PlacePosition;
                         break;
@@ -878,6 +883,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                             break;
                         }
                     }
+
+                    if (IsAlign_VacDetect == false && IsAlign_GlassDetect == false)
+                    {
+                        OutFlag_TransferInShuttleGlassRequest = true;
+                    }
                     Log.Debug("Y Axis Move Place Position Done");
                     Step.RunStep++;
                     break;
@@ -950,6 +960,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
+                    if (OutFlag_TransferInShuttleGlassRequest)
+                    {
+                        Log.Info("Sequence Glass Transfer");
+                        Sequence = port == EPort.Left ? ESequence.GlassTransferLeft : ESequence.GlassTransferRight;
+                        Log.Debug("Jump direct to Wait_GlassTransferPlace_Done");
+                        Step.RunStep = (int)EGlassAlignGlassTransferPlaceStep.Wait_GlassTransferPlace_Done;
+                        break;
+                    }
                     Step.RunStep = (int)ETransferInShuttleWETCleanLoadStep.Cyl_Rotate_0D;
                     break;
             }
