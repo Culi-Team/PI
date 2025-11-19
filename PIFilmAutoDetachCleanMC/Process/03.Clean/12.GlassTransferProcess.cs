@@ -467,7 +467,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EGlassTransferAutoRunStep.VacuumDetect_Check:
-                    if (IsVacDetect)
+                    if (GlassTransferVac1 || GlassTransferVac2 || GlassTransferVac3)
                     {
                         Log.Info("Sequence Glass Transfer Place");
                         Sequence = ESequence.GlassTransferLeft;
@@ -644,7 +644,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Glass Transfer Place Start");
                     Step.RunStep++;
 
-                    if (Parent?.Sequence != ESequence.AutoRun && IsVacDetect == false)
+                    if (Parent?.Sequence != ESequence.AutoRun && (GlassTransferVac1 || GlassTransferVac2 || GlassTransferVac3) == false)
                     {
                         break;
                     }

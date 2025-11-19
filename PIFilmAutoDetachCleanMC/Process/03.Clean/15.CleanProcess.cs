@@ -1719,7 +1719,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ECleanProcessCleanStep.Start:
                     Log.Debug("Clean Start");
-                    if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
+                    if ((cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight) && Parent.Sequence != ESequence.AutoRun)
                     {
                         GlassVac.Value = false;
                         Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect);
@@ -1748,6 +1748,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep = (int)ECleanProcessCleanStep.Vacuum_On;
                     break;
                 case ECleanProcessCleanStep.Cyl_Clamp:
+                    if(ClampCyl1.IsForward && ClampCyl2.IsForward)
+                    {
+                        Step.RunStep = (int)ECleanProcessCleanStep.Vacuum_On;
+                        break;
+                    }
+
                     Log.Debug("Cylinder Clamp");
                     ClampCyl1.Forward();
                     ClampCyl2.Forward();
@@ -1765,6 +1771,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.Vacuum_On:
+                    if(IsVacDetect)
+                    {
+                        Step.RunStep = (int)ECleanProcessCleanStep.Axis_MoveCleanHorizontalPosition;
+                        break;
+                    }
                     GlassVac.Value = true;
                     Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
