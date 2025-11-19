@@ -60,5 +60,10 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
                 }    
             }
         }
+
+        private void UnloadAlignImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
