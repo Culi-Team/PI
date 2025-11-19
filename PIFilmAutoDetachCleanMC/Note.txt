@@ -1,0 +1,9 @@
+﻿GlassOnShuttle	FixtureExist	Detached	Sequence	FlagReadyToTransfer
+TRUE	TRUE	TRUE	UNLOAD	TRUE
+TRUE	TRUE	FALSE	UNLOAD	-
+TRUE	FALSE	TRUE	UNLOAD	TRUE
+TRUE	FALSE	FALSE	UNLOAD	TRUE
+FALSE	TRUE	TRUE	TransferFixture	-
+FALSE	TRUE	FALSE	Detach	-
+FALSE	FALSE	TRUE	TransferFixture	-
+FALSE	FALSE	FALSE	TransferFixture	-
