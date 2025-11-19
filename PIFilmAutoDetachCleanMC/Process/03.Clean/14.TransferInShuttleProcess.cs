@@ -879,16 +879,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         }
                     }
                     Log.Debug("Y Axis Move Place Position Done");
-
-                    //If Auto Run , After  Transfer In Shuttle Pickup Glass and move Place Position ,
-                    //Check Align Vacuum to Set Flag Request glass from Glass Transfer
-                    if (Parent.Sequence == ESequence.AutoRun)
-                    {
-                        if (IsAlign_VacDetect == false)
-                        {
-                            OutFlag_TransferInShuttleGlassRequest = true;
-                        }
-                    }
                     Step.RunStep++;
                     break;
                 case ETransferInShuttleWETCleanLoadStep.Wait_WETCleanRequestLoad:
