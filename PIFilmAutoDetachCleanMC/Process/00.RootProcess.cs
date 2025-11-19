@@ -127,19 +127,17 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 if (IsLightCurtainLeftDetect)
                 {
-                    Childs!.ToList().ForEach(p => p.IsAlarm = true);
+                    RaiseWarning((int)EWarning.LightCurtainLeftDetected);
 
                     RaiseAlarm((int)EAlarm.LightCurtainLeftDetected);
                 }
 
                 if (IsLightCurtainRightDetect)
                 {
-                    Childs!.ToList().ForEach(p => p.IsAlarm = true);
-
-                    RaiseAlarm(alarmId: (int)EAlarm.LightCurtainRightDetected);
+                    RaiseWarning((int)EWarning.LightCurtainRightDetected);
                 }
 
-                if(!DoorSensor || !DoorLatch)
+                if (!DoorSensor || !DoorLatch)
                 {
                     Log.Error("Door Open");
                 }

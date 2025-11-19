@@ -626,6 +626,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Detach Glass Z Axis Move to Ready Detach 1 Position Done");
                     Log.Debug("Shuttle Transfer Z Axis Move to Ready Detach Position Done");
+
+                    Log.Debug("On-Vacuum before detach");
+                    GlassShuttleVacOnOff(true);
+
                     Step.RunStep = (int)EDetachStep.StepQueue_EmptyCheck;
                     break;
                 case EDetachStep.Cyl_Detach1_Down:

@@ -447,14 +447,19 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EUnloadAlignRobotPickStep.Vacuum_Off:
                     Log.Debug("Vacuum Off");
-                    VacOnOff(false);
+
+                    //Vacuum Off , Not Blow
+                    AlignVac1.Value = false;
+                    AlignVac2.Value = false;
+                    AlignVac3.Value = false;
+                    AlignVac4.Value = false;
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(GlassVac1, false);
                     SimulationInputSetter.SetSimInput(GlassVac2, false);
                     SimulationInputSetter.SetSimInput(GlassVac3, false);
                     SimulationInputSetter.SetSimInput(GlassVac4, false);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsGlassVac || _machineStatus.IsDryRunMode);
+                    Wait(300);
                     Step.RunStep++;
                     break;
                 case EUnloadAlignRobotPickStep.Set_FlagRequestRobotUnload:

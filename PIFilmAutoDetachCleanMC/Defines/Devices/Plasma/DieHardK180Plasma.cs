@@ -42,7 +42,17 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         //LPM
         public double CDAFlowRate => AnalogConverter.Convert(_analogInputs.PlasmaCDAFlowRate.Volt, 819.1, 4095.5, 0, 10);
         //C
-        public double Temperature => AnalogConverter.Convert(_analogInputs.PlasmaTemperature.Volt, 819.1, 4095.5, 0, 100);
+        public double Temperature
+        {
+            get
+            {
+#if SIMULATION
+                return 35.0;
+#else
+                return AnalogConverter.Convert(_analogInputs.PlasmaTemperature.Volt, 819.1, 4095.5, 0, 100);
+#endif
+            }
+        }
         #endregion
 
         #region Public Methods

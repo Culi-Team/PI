@@ -357,6 +357,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ERobotLoadToOriginStep.IOActCONF_Check:
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(IOActCONF, true);
+#endif
                     if (IOActCONF.Value == false)
                     {
                         RaiseWarning((int)EWarning.RobotLoad_Automatic_External_Not_active);
@@ -501,7 +504,12 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                     Wait(5000, () =>
                     {
+#if SIMULATION
+                        strLastPosition = ERobotCommand.S1_RDY.ToString();
+#else
                         strLastPosition = _robotLoad.ReadResponse();
+
+#endif
                         return strLastPosition != string.Empty;
                     });
 
@@ -601,7 +609,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Check sequence home robot load");
                     _robotLoad.SendCommand(RobotHelpers.SeqHomeCheck);
 
+#if SIMULATION
+                    Wait(5000, () => true);
+
+#else
                     Wait(5000, () => _robotLoad.ReadResponse("Home safety,0\r\n"));
+
+#endif
 
                     Step.OriginStep++;
                     break;
@@ -697,6 +711,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case ERobotLoadProcessToRunStep.IOActCONF_Check:
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(IOActCONF, true);
+#endif
                     if (IOActCONF.Value == false)
                     {
                         RaiseWarning((int)EWarning.RobotLoad_Automatic_External_Not_active);
@@ -1029,7 +1046,11 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                     Wait(5000, () =>
                     {
+#if SIMULATION
+                        strLastPosition = $"Last position,{((int)ERobotCommand.S1_RDY).ToString()},0";
+#else
                         strLastPosition = _robotLoad.ReadResponse();
+#endif
                         return strLastPosition != string.Empty;
                     });
 
@@ -1058,13 +1079,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoad_ReadyStep.Check_RobotInPPPosition:
                     if (RobotInPPPosition(LastPosition))
                     {
-                        if (LastPosition == (int)ERobotCommand.S5_PP && IsFixtureDetect)
-                        {
-                            if (_cassetteList.CassetteOut.Cells.First(c => c.Status == ETrayCellStatus.Working) != null)
-                            {
-                                _cassetteList.CassetteOut.Cells.First(c => c.Status == ETrayCellStatus.Working).Status = ETrayCellStatus.Done;
-                            }
-                        }
                         Log.Debug("Robot in PP position");
                         Step.RunStep = (int)ERobotLoad_ReadyStep.UnClamp;
                         break;
@@ -1157,7 +1171,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Check sequence home robot load");
                     _robotLoad.SendCommand(RobotHelpers.SeqHomeCheck);
 
+#if SIMULATION
+                    Wait(5000, () => true);
+
+#else
                     Wait(5000, () => _robotLoad.ReadResponse("Home safety,0\r\n"));
+
+#endif
 
                     Step.RunStep++;
                     break;
@@ -1987,6 +2007,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Robot Move Out Cassette Place Position");
                     if (SendCommand(ERobotCommand.S5_RDY_PP, LowSpeed, HightSpeed, paras))
                     {
+                        _cassetteList.CassetteOut[(uint)CurrentOutWorkCSTFixtureIndex] = ETrayCellStatus.Done;
                         Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S5_RDY_PP)));
                         Step.RunStep++;
                         break;
@@ -2059,7 +2080,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Update_Cassette_Status:
                     Log.Debug("Update Cassette Status");
-                    _cassetteList.CassetteOut[(uint)CurrentOutWorkCSTFixtureIndex] = ETrayCellStatus.Done;
                     Step.RunStep++;
                     break;
                 case ERobotLoadPlaceFixtureToOutCSTStep.Set_FlagPlaceOutCSTDone:

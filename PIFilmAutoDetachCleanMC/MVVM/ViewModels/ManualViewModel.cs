@@ -26,7 +26,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
         private readonly IModbusCommunication _torqueModbusCommunication;
         private readonly IRobot _robotLoad;
         private readonly IRobot _robotUnload;
-        private readonly Processes _processes;
         private readonly SerialCommunicator _syringPumpSerialCommunicator;
         private readonly IModbusCommunication _indicatorModbusCommunication;
         private readonly ViewModelNavigationStore _navigationStore;
@@ -298,7 +297,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             [FromKeyedServices("TorqueControllerModbusCommunication")] IModbusCommunication torqueModbusCommunication,
             [FromKeyedServices("RobotLoad")] IRobot robotLoad,
             [FromKeyedServices("RobotUnload")] IRobot robotUnload,
-            Processes processes,
             [FromKeyedServices("SyringePumpSerialCommunicator")] SerialCommunicator SyringPumpSerialCommunicator,
             [FromKeyedServices("IndicatorModbusCommunication")] IModbusCommunication indicatorModbusCommunication,
             NEOSHSDIndicator indicator,
@@ -312,7 +310,6 @@ namespace PIFilmAutoDetachCleanMC.MVVM.ViewModels
             _torqueModbusCommunication = torqueModbusCommunication;
             _robotLoad = robotLoad;
             _robotUnload = robotUnload;
-            _processes = processes;
             _syringPumpSerialCommunicator = SyringPumpSerialCommunicator;
             _indicatorModbusCommunication = indicatorModbusCommunication;
             Indicator = indicator;

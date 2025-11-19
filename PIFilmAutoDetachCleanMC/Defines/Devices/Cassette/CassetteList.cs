@@ -6,6 +6,7 @@ using PIFilmAutoDetachCleanMC.Converters;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -35,6 +36,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cassette
             set { cassetteOut = value; }
         }
 
+
+        public ObservableCollection<ETrayCellStatus> CassetteStatusList { get; }
         public CassetteList(RecipeSelector recipeSelector,
             IConfiguration configuration)
         {
@@ -42,6 +45,14 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cassette
             _configuration = configuration;
             CassetteIn = new Tray<ETrayCellStatus>("CassetteIn");
             CassetteOut = new Tray<ETrayCellStatus>("CassetteOut");
+
+            CassetteStatusList = new ObservableCollection<ETrayCellStatus>()
+            {
+                ETrayCellStatus.Ready,
+                ETrayCellStatus.Skip,
+                ETrayCellStatus.Working,
+                ETrayCellStatus.Done,
+            };
         }
 
 

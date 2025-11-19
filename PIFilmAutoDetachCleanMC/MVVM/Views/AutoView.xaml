@@ -1049,6 +1049,8 @@
                         <Border Grid.Column="1"
                                 Grid.Row="4">
                             <Image Source="{StaticResource UnloadAlignDetachImage_1 }"
+                                   Cursor="Hand"
+                                   MouseUp="UnloadAlignImage_MouseLeftButtonUp"
                                    Stretch="Fill">
                                 <Image.Visibility>
                                     <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -1062,6 +1064,8 @@
                         <Border Grid.Column="1"
                                 Grid.Row="3">
                             <Image Source="{StaticResource UnloadAlignDetachImage_2 }"
+                                   Cursor="Hand"
+                                   MouseUp="UnloadAlignImage_MouseLeftButtonUp"
                                    Stretch="Fill">
                                 <Image.Visibility>
                                     <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -1075,6 +1079,8 @@
                         <Border Grid.Column="1"
                                 Grid.Row="2">
                             <Image Source="{StaticResource UnloadAlignDetachImage_3 }"
+                                   Cursor="Hand"
+                                   MouseUp="UnloadAlignImage_MouseLeftButtonUp"
                                    Stretch="Fill">
                                 <Image.Visibility>
                                     <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -1088,6 +1094,8 @@
                         <Border Grid.Column="1"
                                 Grid.Row="1">
                             <Image Source="{StaticResource UnloadAlignDetachImage_4 }"
+                                   Cursor="Hand"
+                                   MouseUp="UnloadAlignImage_MouseLeftButtonUp"
                                    Stretch="Fill">
                                 <Image.Visibility>
                                     <MultiBinding Converter="{StaticResource BooleanOrToVisibilityConverter}">
@@ -1299,10 +1307,74 @@
                     <control:CleanUnitStatusView DataContext="{Binding RecipeSelector.CurrentRecipe.AfCleanRightRecipe}" />
                 </Border>
 
+
                 <Border Grid.Column="3"
                         BorderBrush="Gray"
-                        Background="LightGray"
-                        BorderThickness="1">
+                        BorderThickness="1"
+                        Margin="5"
+                        RenderTransformOrigin="0.5 0.5">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DataContext.MachineStatus.ActiveScreen, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                             Value="{x:Static defines:EScreen.LeftScreen}"
+                                             d:Value="true">
+                                    <Setter Property="RenderTransform">
+                                        <Setter.Value>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleX="-1"
+                                                                ScaleY="-1" />
+                                                <SkewTransform />
+                                                <RotateTransform />
+                                                <TranslateTransform />
+                                            </TransformGroup>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <GroupBox Grid.Row="0"
+                                  Style="{x:Null}">
+                            <GroupBox.Header>
+                                <TextBlock Text="Cassette Status"
+                                           FontWeight="Bold" />
+                            </GroupBox.Header>
+                            <ItemsControl ItemsSource="{Binding CassetteList.CassetteStatusList}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Rows="1">
+                                        </UniformGrid>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Height="25"
+                                                Margin="1"
+                                                MinWidth="50"
+                                                CornerRadius="3"
+                                                BorderBrush="Black"
+                                                BorderThickness="1"
+                                                Background="{Binding Path=., Converter={StaticResource CellStatusToColorConverter}}">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       Margin="2 0"
+                                                       TextWrapping="Wrap"
+                                                       VerticalAlignment="Center"
+                                                       Text="{Binding .}"
+                                                       Foreground="Black" />
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+                    </Grid>
                 </Border>
             </Grid>
         </Grid>
