@@ -64,7 +64,6 @@ namespace PIFilmAutoDetachCleanMC.Process
         private int LowSpeed => _robotUnloadRecipe.RobotSpeedLow;
         private int HightSpeed => _robotUnloadRecipe.RobotSpeedHigh;
 
-
         private bool SendCommand(ERobotCommand command, int lowSpeed, int highSpeed, string[] paras = null)
         {
             if (paras == null || paras.Count() == 0)
@@ -91,6 +90,8 @@ namespace PIFilmAutoDetachCleanMC.Process
             return false;
         }
 
+        private System.Timers.Timer _downstreamReadyTimer;
+        private int DownstreamAliveTime = 0;
         #endregion
 
         #region Inputs
@@ -163,6 +164,19 @@ namespace PIFilmAutoDetachCleanMC.Process
             _robotUnload = robotUnload;
             _plasma = plasma;
             _workData = workData;
+
+            _downstreamReadyTimer = new System.Timers.Timer(100);
+            _downstreamReadyTimer.Elapsed += _downstreamReadyTimer_Elapsed;
+            _downstreamReadyTimer.AutoReset = true;
+            _downstreamReadyTimer.Enabled = true;
+        }
+
+        private void _downstreamReadyTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (_devices.Inputs.DownStreamReady.Value == false) return;
+
+            if (DownstreamAliveTime + 100 > int.MaxValue) DownstreamAliveTime = int.MaxValue;
+            else DownstreamAliveTime += 100;
         }
         #endregion
 
@@ -1237,8 +1251,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadRobotPlaceStep.Wait_MachineRequestPlace:
-                    if ((FlagMachineRequestPlace == false || _devices.Inputs.DownStreamReady.Value == false) &&
-                        !_machineStatus.IsDryRunMode)
+                    if ((FlagMachineRequestPlace == false
+                        || _devices.Inputs.DownStreamReady.Value == false
+                        || DownstreamAliveTime < _robotUnloadRecipe.DownstreamMinAliveTime)
+                        && !_machineStatus.IsDryRunMode)
                     {
                         Wait(20);
                         break;
@@ -1269,6 +1285,8 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadRobotPlaceStep.VacuumOff:
                     Log.Debug("Vacuum Off");
                     VacuumOnOff(false);
+                    // Clear timer for next sequence
+                    DownstreamAliveTime = 0;
                     Wait(300);
                     Step.RunStep++;
                     break;

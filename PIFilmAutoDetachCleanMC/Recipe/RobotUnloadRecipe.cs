@@ -11,6 +11,8 @@ namespace PIFilmAutoDetachCleanMC.Recipe
         private int robotPlasmaMinTemperature;
         private int model;
 
+        private double downstreamMinAliveTime;
+
         [SingleRecipeDescription(Description = "Model")]
         [SingleRecipeMinMax(Max = 100, Min = 0)]
         public int Model
@@ -70,6 +72,18 @@ namespace PIFilmAutoDetachCleanMC.Recipe
             {
                 robotHighSpeed = value;
                 OnRecipeChanged(robotHighSpeed, value);
+            }
+        }
+
+        [SingleRecipeDescription(Description = "Downstream (Clean Machine) Min Alive Time", Unit = Unit.Second)]
+        [SingleRecipeMinMax(Max = 100, Min = 0)]
+        public double DownstreamMinAliveTime
+        {
+            get { return downstreamMinAliveTime; }
+            set
+            {
+                downstreamMinAliveTime = value;
+                OnRecipeChanged(downstreamMinAliveTime, value);
             }
         }
     }
