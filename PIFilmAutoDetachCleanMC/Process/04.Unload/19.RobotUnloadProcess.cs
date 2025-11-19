@@ -1253,7 +1253,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadRobotPlaceStep.Wait_MachineRequestPlace:
                     if ((FlagMachineRequestPlace == false
                         || _devices.Inputs.DownStreamReady.Value == false
-                        || DownstreamAliveTime < _robotUnloadRecipe.DownstreamMinAliveTime)
+                        || DownstreamAliveTime < (_robotUnloadRecipe.DownstreamMinAliveTime * 1000.0))
                         && !_machineStatus.IsDryRunMode)
                     {
                         Wait(20);
