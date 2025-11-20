@@ -967,7 +967,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERobotUnloadPickStep.Wait_UnloadAlignRequestUnload:
-                    if (FlagUnloadAlignRequestUnload == false)
+                    if (FlagUnloadAlignRequestUnload == false && Parent!.Sequence == ESequence.AutoRun)
                     {
                         Wait(20);
                         break;

@@ -2499,6 +2499,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                                     break;
                                 }
 
+                                await Task.Delay(100, ctsPrepare3M.Token);
                                 RemainVolume -= cleanRecipe.CleanVolume;
 
                                 Log.Debug("Dispense Port 1 Done");
@@ -2522,6 +2523,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                                     break;
                                 }
 
+                                await Task.Delay(100, ctsPrepare3M.Token);
                                 RemainVolume -= cleanRecipe.CleanVolume;
 
                                 Log.Debug("Dispense Port 2 Done");
@@ -2545,6 +2547,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                                     break;
                                 }
 
+                                await Task.Delay(100, ctsPrepare3M.Token);
                                 RemainVolume -= cleanRecipe.CleanVolume;
 
                                 Log.Debug("Dispense Port 3 Done");
@@ -2568,6 +2571,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                                     break;
                                 }
 
+                                await Task.Delay(100, ctsPrepare3M.Token);
                                 RemainVolume -= cleanRecipe.CleanVolume;
 
                                 Log.Debug("Dispense Port 4 Done");
@@ -2591,6 +2595,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                                     break;
                                 }
 
+                                await Task.Delay(100, ctsPrepare3M.Token);
                                 RemainVolume -= cleanRecipe.CleanVolume;
 
                                 Log.Debug("Dispense Port 5 Done");

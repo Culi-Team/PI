@@ -733,6 +733,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                         break;
                     }
 
+                    if (IsAlign_VacDetect && IsAlign_GlassDetect == false)
+                    {
+                        Log.Info("Sequence Align Glass");
+                        Sequence = port == EPort.Left ? ESequence.AlignGlassLeft : ESequence.AlignGlassRight;
+                        break;
+                    }
+
                     Log.Info("Sequence Glass Transfer");
                     Sequence = port == EPort.Left ? ESequence.GlassTransferLeft : ESequence.GlassTransferRight;
                     break;
