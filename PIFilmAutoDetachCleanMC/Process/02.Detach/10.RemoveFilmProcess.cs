@@ -93,6 +93,10 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private bool FlagRemoveFilmLoadReady
         {
+            get
+            {
+                return _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_LOAD_READY];
+            }
             set
             {
                 _removeFilmOutput[(int)ERemoveFilmProcessOutput.REMOVE_FILM_LOAD_READY] = value;
@@ -484,8 +488,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ERemoveFilmProcessTransferFixtureStep.Set_Flag_RemoveFilmDone:
-                    Log.Debug("Set Flag Remove Film Done");
-                    FlagRemoveFilmLoadReady = true;
+                    if (FlagRemoveFilmLoadReady == false)
+                    {
+                        Log.Debug("Set Flag Remove Film Load Ready");
+                        FlagRemoveFilmLoadReady = true;
+                    }
+
                     Step.RunStep++;
                     Log.Debug("Wait Transfer Fixture Done");
                     break;
@@ -861,6 +869,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmRobotPickFromRemoveZoneStep.Set_FlagRemoveFilmLoadReady:
                     if (Parent.Sequence == ESequence.AutoRun)
                     {
+                        Log.Debug("Set Flag Remove Film Load Ready")
                         FlagRemoveFilmLoadReady = true;
                     }
                     Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
