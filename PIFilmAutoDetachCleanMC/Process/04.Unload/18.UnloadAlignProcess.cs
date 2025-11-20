@@ -378,6 +378,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     AlignBlow2.Value = true;
                     AlignBlow3.Value = true;
                     AlignBlow4.Value = true;
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassDetect1, true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassDetect2, true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassDetect3, true);
+                    SimulationInputSetter.SetSimInput(_devices.Inputs.UnloadGlassDetect4, true);
+#endif
                     Wait(3000, () => IsGlassDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
                     break;

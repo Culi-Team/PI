@@ -43,7 +43,16 @@ namespace PIFilmAutoDetachCleanMC.Process
         private ICylinder ClampCyl2 => _devices.Cylinders.RobotLoad_ClampCyl2;
         private ICylinder AlignCyl => _devices.Cylinders.RobotLoad_AlignCyl;
 
-        private bool IsFixtureDetect => !ClampCyl1.IsBackward && !ClampCyl1.IsForward && !ClampCyl2.IsBackward && !ClampCyl2.IsForward;
+        private bool IsFixtureDetect
+        {
+            get
+            {
+#if SIMULATION
+                return !ClampCyl1.IsBackward && ClampCyl1.IsForward && !ClampCyl2.IsBackward && ClampCyl2.IsForward;
+#endif
+                return !ClampCyl1.IsBackward && !ClampCyl1.IsForward && !ClampCyl2.IsBackward && !ClampCyl2.IsForward;
+            }
+        }
 
         private bool SendCommand(ERobotCommand command, int lowSpeed, int highSpeed, string[] paras = null)
         {

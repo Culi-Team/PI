@@ -620,6 +620,11 @@ namespace PIFilmAutoDetachCleanMC.Process
                     AlignBlow2.Value = true;
                     AlignBlow3.Value = true;
 
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect1 : _devices.Inputs.AlignStageRGlassDetect1,true);
+                    SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect1 : _devices.Inputs.AlignStageRGlassDetect1,true);
+                    SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.AlignStageLGlassDetect2 : _devices.Inputs.AlignStageRGlassDetect2,true);
+#endif
                     Log.Debug("Glass Align Done");
                     Wait(3000, () => IsAlign_GlassDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
@@ -1010,6 +1015,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     TransferBlow.Value = false;
                 });
             }
+
+#if SIMULATION
+            SimulationInputSetter.SetSimInput(TransferVacuumInput, bOnOff);
+#endif
         }
 
         private void AlignVacOnOff(bool bOnOff)

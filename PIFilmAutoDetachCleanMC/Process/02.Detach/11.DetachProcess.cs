@@ -793,11 +793,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Step.RunStep = (int)EDetachStep.InitQueue;
                         break;
                     }
-#if SIMULATION
-                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac1, false);
-                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac2, false);
-                    SimulationInputSetter.SetSimInput(_devices.Inputs.DetachGlassShtVac3, false);
-#endif
                     Log.Debug("Glass Shuttle Vacuum Check Done");
                     Step.RunStep++;
                     break;

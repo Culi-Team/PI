@@ -136,6 +136,9 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             get
             {
+#if SIMULATION
+                return true;
+#endif
                 return DownStreamGlassDetect1.Value == false &&
                         DownStreamGlassDetect2.Value == false &&
                         DownStreamGlassDetect3.Value == false &&
@@ -294,6 +297,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.OriginStep++;
                     break;
                 case ERobotUnloadToOriginStep.IOActCONF_Check:
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(IOActCONF, true);
+#endif
                     if (IOActCONF.Value == false)
                     {
                         RaiseWarning((int)EWarning.RobotUnload_Automatic_External_Not_active);
@@ -550,6 +556,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case EUnloadRobotToRunStep.IOActCONF_Check:
+#if SIMULATION
+                    SimulationInputSetter.SetSimInput(IOActCONF, true);
+#endif
                     if (IOActCONF.Value == false)
                     {
                         RaiseWarning((int)EWarning.RobotUnload_Automatic_External_Not_active);
