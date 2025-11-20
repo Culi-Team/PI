@@ -2542,142 +2542,43 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 Log.Debug("R Feeding Axis Move Forward Done");
                                 prepare3MStep++;
                                 break;
-                            case ECleanProcessPrepare3MStep.Dispense_Port1:
-                                if (cleanRecipe.UsePort1 == false)
+                            case ECleanProcessPrepare3MStep.Dispense:
+                                List<int> ports = new List<int>();
+                                if(cleanRecipe.UsePort1)
                                 {
-                                    prepare3MStep = (int)ECleanProcessPrepare3MStep.Dispense_Port2;
-                                    break;
+                                    ports.Add(1);
                                 }
-                                Log.Debug("Dispense Port 1");
-                                SyringePump.Dispense(cleanRecipe.CleanVolume, 1);
+                                if (cleanRecipe.UsePort2)
+                                {
+                                    ports.Add(2);
+                                }
+                                if (cleanRecipe.UsePort3)
+                                {
+                                    ports.Add(3);
+                                }
+                                if (cleanRecipe.UsePort4)
+                                {
+                                    ports.Add(4);
+                                }
+                                if (cleanRecipe.UsePort5)
+                                {
+                                    ports.Add(5);
+                                }
+                                if (cleanRecipe.UsePort6)
+                                {
+                                    ports.Add(6);
+                                }
+
+                                SyringePump.Dispense(cleanRecipe.CleanVolume, ports.ToArray());
                                 await Task.Delay(100, ctsPrepare3M.Token);
                                 prepare3MStep++;
                                 break;
-                            case ECleanProcessPrepare3MStep.Dispense_Port1_Wait:
-                                if (SyringePump.IsReady() == false)
+                            case ECleanProcessPrepare3MStep.Dispense_Wait:
+                                if(SyringePump.IsReady() == false)
                                 {
-                                    await Task.Delay(100, ctsPrepare3M.Token);
+                                    await Task.Delay(50, ctsPrepare3M.Token);
                                     break;
                                 }
-
-                                RemainVolume -= cleanRecipe.CleanVolume;
-
-                                Log.Debug("Dispense Port 1 Done");
-                                prepare3MStep++;
-                                break;
-                            case ECleanProcessPrepare3MStep.Dispense_Port2:
-                                if (cleanRecipe.UsePort2 == false)
-                                {
-                                    prepare3MStep = (int)ECleanProcessPrepare3MStep.Dispense_Port3;
-                                    break;
-                                }
-                                Log.Debug("Dispense Port 2");
-                                SyringePump.Dispense(cleanRecipe.CleanVolume, 2);
-                                await Task.Delay(100, ctsPrepare3M.Token);
-                                prepare3MStep++;
-                                break;
-                            case ECleanProcessPrepare3MStep.Dispense_Port2_Wait:
-                                if (SyringePump.IsReady() == false)
-                                {
-                                    await Task.Delay(100, ctsPrepare3M.Token);
-                                    break;
-                                }
-
-                                RemainVolume -= cleanRecipe.CleanVolume;
-
-                                Log.Debug("Dispense Port 2 Done");
-                                prepare3MStep++;
-                                break;
-                            case ECleanProcessPrepare3MStep.Dispense_Port3:
-                                if (cleanRecipe.UsePort3 == false)
-                                {
-                                    prepare3MStep = (int)ECleanProcessPrepare3MStep.Dispense_Port4;
-                                    break;
-                                }
-                                Log.Debug("Dispense Port 3");
-                                SyringePump.Dispense(cleanRecipe.CleanVolume, 3);
-                                await Task.Delay(100, ctsPrepare3M.Token);
-                                prepare3MStep++;
-                                break;
-                            case ECleanProcessPrepare3MStep.Dispense_Port3_Wait:
-                                if (SyringePump.IsReady() == false)
-                                {
-                                    await Task.Delay(100, ctsPrepare3M.Token);
-                                    break;
-                                }
-
-                                RemainVolume -= cleanRecipe.CleanVolume;
-
-                                Log.Debug("Dispense Port 3 Done");
-                                prepare3MStep++;
-                                break;
-                            case ECleanProcessPrepare3MStep.Dispense_Port4:
-                                if (cleanRecipe.UsePort4 == false)
-                                {
-                                    prepare3MStep = (int)ECleanProcessPrepare3MStep.Dispense_Port5;
-                                    break;
-                                }
-                                Log.Debug("Dispense Port 4");
-                                SyringePump.Dispense(cleanRecipe.CleanVolume, 4);
-                                await Task.Delay(100, ctsPrepare3M.Token);
-                                prepare3MStep++;
-                                break;
-                            case ECleanProcessPrepare3MStep.Dispense_Port4_Wait:
-                                if (SyringePump.IsReady() == false)
-                                {
-                                    await Task.Delay(100, ctsPrepare3M.Token);
-                                    break;
-                                }
-
-                                RemainVolume -= cleanRecipe.CleanVolume;
-
-                                Log.Debug("Dispense Port 4 Done");
-                                prepare3MStep++;
-                                break;
-                            case ECleanProcessPrepare3MStep.Dispense_Port5:
-                                if (cleanRecipe.UsePort5 == false)
-                                {
-                                    prepare3MStep = (int)ECleanProcessPrepare3MStep.Dispense_Port6;
-                                    break;
-                                }
-                                Log.Debug("Dispense Port 5");
-                                SyringePump.Dispense(cleanRecipe.CleanVolume, 5);
-                                await Task.Delay(100, ctsPrepare3M.Token);
-                                prepare3MStep++;
-                                break;
-                            case ECleanProcessPrepare3MStep.Dispense_Port5_Wait:
-                                if (SyringePump.IsReady() == false)
-                                {
-                                    await Task.Delay(100, ctsPrepare3M.Token);
-                                    break;
-                                }
-
-                                RemainVolume -= cleanRecipe.CleanVolume;
-
-                                Log.Debug("Dispense Port 5 Done");
-                                prepare3MStep++;
-                                break;
-                            case ECleanProcessPrepare3MStep.Dispense_Port6:
-                                if (cleanRecipe.UsePort6 == false)
-                                {
-                                    prepare3MStep = (int)ECleanProcessPrepare3MStep.Feeding_Backward;
-                                    break;
-                                }
-                                Log.Debug("Dispense Port 6");
-                                SyringePump.Dispense(cleanRecipe.CleanVolume, 6);
-                                await Task.Delay(100, ctsPrepare3M.Token);
-                                prepare3MStep++;
-                                break;
-                            case ECleanProcessPrepare3MStep.Dispense_Port6_Wait:
-                                if (SyringePump.IsReady() == false)
-                                {
-                                    await Task.Delay(100, ctsPrepare3M.Token);
-                                    break;
-                                }
-
-                                RemainVolume -= cleanRecipe.CleanVolume;
-
-                                Log.Debug("Dispense Port 6 Done");
                                 prepare3MStep++;
                                 break;
                             case ECleanProcessPrepare3MStep.Feeding_Backward:
