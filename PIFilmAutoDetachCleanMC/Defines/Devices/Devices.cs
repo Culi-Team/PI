@@ -835,7 +835,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.UnloadRobAlarmStop);
             inputs.Add(Inputs.UnloadRobUserSaf);
             inputs.Add(Inputs.UnloadRobIoActconf);
-            inputs.Add(Inputs.UnloadRobOnPath);
+            inputs.Add(Inputs.UnloadRobStopped);
             inputs.Add(Inputs.UnloadRobProAct);
             inputs.Add(Inputs.UnloadRobInHome);
 

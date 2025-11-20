@@ -403,7 +403,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
         public IDInput UnloadRobAlarmStop => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_ROB_ALARM_STOP);
         public IDInput UnloadRobUserSaf => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_ROB_USER_SAF);
         public IDInput UnloadRobIoActconf => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_ROB_IO_ACTCONF);
-        public IDInput UnloadRobOnPath => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_ROB_ON_PATH);
+        public IDInput UnloadRobStopped => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_ROB_STOPPED);
         public IDInput UnloadRobProAct => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_ROB_PRO_ACT);
         public IDInput UnloadRobInHome => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.UNLOAD_ROB_IN_HOME);
         public IDInput EmoUnloadR => _dInputDevice.Inputs.First(i => i.Id == (int)EInput.EMO_UNLOAD_R);

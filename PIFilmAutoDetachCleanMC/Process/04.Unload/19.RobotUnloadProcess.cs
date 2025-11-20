@@ -97,6 +97,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         #region Inputs
         private IDInput PeriRDY => _devices.Inputs.UnloadRobPeriRdy;
         private IDInput StopMess => _devices.Inputs.UnloadRobStopmess;
+        private IDInput RobStopped => _devices.Inputs.UnloadRobStopped;
         private IDInput ProACT => _devices.Inputs.UnloadRobProAct;
         private IDInput InHome => _devices.Inputs.UnloadRobInHome;
         private IDInput IOActCONF => _devices.Inputs.UnloadRobIoActconf;
