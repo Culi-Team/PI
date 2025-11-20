@@ -1719,7 +1719,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ECleanProcessCleanStep.Start:
                     Log.Debug("Clean Start");
-                    if ((cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight) && Parent.Sequence != ESequence.AutoRun)
+                    if ((cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight))
                     {
                         GlassVac.Value = false;
                         Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect);

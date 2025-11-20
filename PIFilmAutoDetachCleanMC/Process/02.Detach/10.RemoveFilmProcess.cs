@@ -357,7 +357,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Initialize Start");
                     Step.RunStep++;
                     break;
-                    // TODO: REMOVE THIS STEP
+                // TODO: REMOVE THIS STEP
                 case ERemoveFilm_ReadyStep.Wait_Robot_Ready:
                     Step.RunStep++;
                     break;
@@ -459,13 +459,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Remove Film Process Transfer Fixture Unload Start");
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessTransferFixtureStep.Cyl_Fix_Backward:
+                case ERemoveFilmProcessTransferFixtureStep.Cyl_Fixture_Unclamp:
                     Log.Debug("Fix Cylinder Backward");
                     ClampCylClampUnclamp(false);
                     Wait((int)_commonRecipe.CylinderMoveTimeout * 1000, () => IsClampCylinderUnClamp);
                     Step.RunStep++;
                     break;
-                case ERemoveFilmProcessTransferFixtureStep.Cyl_Fix_Backward_Done:
+                case ERemoveFilmProcessTransferFixtureStep.Cyl_Fixture_Unclamp_Wait:
                     if (WaitTimeOutOccurred)
                     {
                         RaiseWarning((int)EWarning.RemoveFilm_ClampCylinder_UnClamp_Fail);
@@ -715,7 +715,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
                     break;
                 case ERemoveFilmRobotPickFromRemoveZoneStep.Wait_RobotClampDone:
-                    if(FlagRobotClampRemoveFilmFixtureDone == false)
+                    if (FlagRobotClampRemoveFilmFixtureDone == false)
                     {
                         Wait(20);
                         break;
@@ -743,7 +743,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
                     break;
                 case ERemoveFilmRobotPickFromRemoveZoneStep.Wait_RobotRemoveFilmUnclampFixtureDoneReceived:
-                    if(FlagRobotClampRemoveFilmFixtureDone == true)
+                    if (FlagRobotClampRemoveFilmFixtureDone == true)
                     {
                         Wait(20);
                         break;
@@ -835,9 +835,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
                     break;
                 case ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_Pusher_Down_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
-                        if(PusherCyl1.IsBackward == false)
+                        if (PusherCyl1.IsBackward == false)
                         {
                             RaiseWarning(EWarning.RemoveFilm_PusherCylinder1_Down_Fail);
                             break;
@@ -856,6 +856,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Info("FlagRemoveFilmRequestUnload clear");
                     FlagRemoveFilmRequestUnload = false;
+                    Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
+                    break;
+                case ERemoveFilmRobotPickFromRemoveZoneStep.Set_FlagRemoveFilmLoadReady:
+                    if (Parent.Sequence == ESequence.AutoRun)
+                    {
+                        FlagRemoveFilmLoadReady = true;
+                    }
                     Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;
                     break;
                 case ERemoveFilmRobotPickFromRemoveZoneStep.End:

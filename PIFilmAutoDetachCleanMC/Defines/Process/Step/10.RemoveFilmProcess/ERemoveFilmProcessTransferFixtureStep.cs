@@ -9,8 +9,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ERemoveFilmProcessTransferFixtureStep
     {
         Start,
-        Cyl_Fix_Backward,
-        Cyl_Fix_Backward_Done,
+        Cyl_Fixture_Unclamp,
+        Cyl_Fixture_Unclamp_Wait,
         Wait_PreviousTransferDone,
         Set_Flag_RemoveFilmDone,
         Wait_TransferFixtureDone,

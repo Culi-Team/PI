@@ -173,7 +173,8 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         private void _downstreamReadyTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
-            if (_devices.Inputs.DownStreamReady.Value == false) return;
+            if (_devices.Inputs.DownStreamReady.Value == false &&
+                (DownStreamGlassDetect1.Value == true || DownStreamGlassDetect2.Value == true || DownStreamGlassDetect3.Value == true || DownStreamGlassDetect4.Value == true)) return;
 
             if (DownstreamAliveTime + 100 > int.MaxValue) DownstreamAliveTime = int.MaxValue;
             else DownstreamAliveTime += 100;

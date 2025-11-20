@@ -92,6 +92,9 @@ namespace PIFilmAutoDetachCleanMC.Process
 
         public static readonly List<ERemoveFilmRobotPickFromRemoveZoneStep> RemoveFilmRobotPickFromRemoveZoneSequence = new List<ERemoveFilmRobotPickFromRemoveZoneStep>
         {
+            ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_Pusher_Down,
+            ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_Pusher_Down_Wait,
+
             ERemoveFilmRobotPickFromRemoveZoneStep.Set_Flag_RemoveFilmRequestUnload,
 
             ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown1_Down,
@@ -107,6 +110,10 @@ namespace PIFilmAutoDetachCleanMC.Process
             ERemoveFilmRobotPickFromRemoveZoneStep.SetFlag_RemoveFilmUnclampFixtureDone,
             ERemoveFilmRobotPickFromRemoveZoneStep.Wait_RobotRemoveFilmUnclampFixtureDoneReceived,
 
+            ERemoveFilmRobotPickFromRemoveZoneStep.Wait_RemoveFilmUnloadDone,
+
+            ERemoveFilmRobotPickFromRemoveZoneStep.Set_FlagRemoveFilmLoadReady,
+
             ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown2_Down,
             ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown2_Down_Wait,
             ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown2_Up,
@@ -117,9 +124,6 @@ namespace PIFilmAutoDetachCleanMC.Process
             ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown2_Up_Wait,
             ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown1_Up,
             ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_UpDown1_Up_Wait,
-            ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_Pusher_Down,
-            ERemoveFilmRobotPickFromRemoveZoneStep.Cyl_Pusher_Down_Wait,
-            ERemoveFilmRobotPickFromRemoveZoneStep.Wait_RemoveFilmUnloadDone,
         };
     }
 }

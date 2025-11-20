@@ -39,6 +39,8 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_Pusher_Down,
         Cyl_Pusher_Down_Wait,
         Wait_RemoveFilmUnloadDone,
+
+        Set_FlagRemoveFilmLoadReady,
         End
     }
 }

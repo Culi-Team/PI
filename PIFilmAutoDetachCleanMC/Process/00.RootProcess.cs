@@ -128,8 +128,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 if (IsLightCurtainLeftDetect)
                 {
                     RaiseWarning((int)EWarning.LightCurtainLeftDetected);
-
-                    RaiseAlarm((int)EAlarm.LightCurtainLeftDetected);
                 }
 
                 if (IsLightCurtainRightDetect)
@@ -281,6 +279,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             {
                 case ERootProcessToOriginStep.Start:
                     Log.Info("To Origin started");
+                    _devices.Outputs.TowerBuzzer.Value = false;
                     Step.OriginStep++;
                     break;
                 case ERootProcessToOriginStep.Muting_Off:
@@ -395,6 +394,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERootProcessToRunStep.Start:
                     Log.Debug("ToRun Start");
                     Step.ToRunStep++;
+                    _devices.Outputs.TowerBuzzer.Value = false;
                     break;
                 case ERootProcessToRunStep.Muting_Off:
                     Log.Debug("Muting Off");
@@ -459,7 +459,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         RaiseWarning((int)EWarning.DoorNotSafetyLock);
                         break;
                     }
-                    if(Sequence != ESequence.Ready)
+                    if (Sequence != ESequence.Ready)
                     {
                         _devices.Outputs.Lamp_Run();
                     }

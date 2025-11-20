@@ -306,7 +306,6 @@ namespace PIFilmAutoDetachCleanMC.Defines
             if(isUseBuzzer)
             {
                 TowerBuzzer.Value = true;
-                Task.Delay(3000).ContinueWith(t => TowerBuzzer.Value = false);
             }
         }
         private void Lamp_Clear()
