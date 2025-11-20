@@ -2128,7 +2128,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     if (FlagFixtureAlignRequestLoad && FlagInCSTReady && _commonRecipe.SkipVinylClean)
                     {
-                        Log.Debug("Clear Flag Fixture Align Done");
+                        Log.Debug("Clear Flag Fixture Align Load Done");
                         FlagFixtureAlignLoadDone = false;
 
                         Log.Info("Sequence Robot Pick Fixture From In Cassette");

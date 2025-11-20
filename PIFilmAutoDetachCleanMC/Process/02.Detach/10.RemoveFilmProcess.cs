@@ -869,7 +869,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERemoveFilmRobotPickFromRemoveZoneStep.Set_FlagRemoveFilmLoadReady:
                     if (Parent.Sequence == ESequence.AutoRun)
                     {
-                        Log.Debug("Set Flag Remove Film Load Ready")
+                        Log.Debug("Set Flag Remove Film Load Ready");
                         FlagRemoveFilmLoadReady = true;
                     }
                     Step.RunStep = (int)ERemoveFilmRobotPickFromRemoveZoneStep.StepQueue_EmptyCheck;

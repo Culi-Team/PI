@@ -453,7 +453,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EDetachAutoRunStep.Handle_GlassNotOnShuttle:
-                    if (!(IsFixtureExits && _machineStatus.IsFixtureDetached == false))
+                    if ((IsFixtureExits && _machineStatus.IsFixtureDetached == false))
                     {
                         // Only not in case Fixture Exist but not Detached
                         Log.Info("Sequence Detach");
