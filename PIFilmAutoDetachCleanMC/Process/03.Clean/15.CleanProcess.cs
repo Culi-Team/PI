@@ -1194,6 +1194,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Thread.Sleep(100);
                         break;
                     }
+
+                    Thread.Sleep(2000);
+
                     RemainVolume = 1.0;
                     Step.RunStep++;
                     break;
@@ -2570,13 +2573,13 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 }
 
                                 SyringePump.Dispense(cleanRecipe.CleanVolume, ports.ToArray());
-                                await Task.Delay(100, ctsPrepare3M.Token);
+                                await Task.Delay(1000, ctsPrepare3M.Token);
                                 prepare3MStep++;
                                 break;
                             case ECleanProcessPrepare3MStep.Dispense_Wait:
                                 if(SyringePump.IsReady() == false)
                                 {
-                                    await Task.Delay(50, ctsPrepare3M.Token);
+                                    await Task.Delay(100, ctsPrepare3M.Token);
                                     break;
                                 }
                                 prepare3MStep++;

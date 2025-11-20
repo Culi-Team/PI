@@ -547,13 +547,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ERobotLoadOriginStep.Check_RobotInPPPosition:
                     if (RobotInPPPosition(LastPosition))
                     {
-                        if (LastPosition == (int)ERobotCommand.S5_PP && IsFixtureDetect)
-                        {
-                            if (_cassetteList.CassetteOut.Cells.First(c => c.Status == ETrayCellStatus.Working) != null)
-                            {
-                                _cassetteList.CassetteOut.Cells.First(c => c.Status == ETrayCellStatus.Working).Status = ETrayCellStatus.Done;
-                            }
-                        }
                         Log.Debug("Robot in PP position");
                         Step.OriginStep = (int)ERobotLoadOriginStep.Cyl_Unclamp;
                         break;
