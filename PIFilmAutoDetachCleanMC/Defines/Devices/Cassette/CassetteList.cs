@@ -96,6 +96,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cassette
             {
                 cell.CellClicked += (id, status) =>
                 {
+                    if (cell.Status == ETrayCellStatus.Working) return;
+
                     if (status == ETrayCellStatus.Skip) cell.Status = ETrayCellStatus.Ready;
                     else cell.Status = ETrayCellStatus.Skip;
                 };
@@ -105,6 +107,8 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cassette
             {
                 cell.CellClicked += (id, status) =>
                 {
+                    if (cell.Status == ETrayCellStatus.Working) return;
+
                     if (status == ETrayCellStatus.Skip) cell.Status = ETrayCellStatus.Ready;
                     else cell.Status = ETrayCellStatus.Skip;
                 };

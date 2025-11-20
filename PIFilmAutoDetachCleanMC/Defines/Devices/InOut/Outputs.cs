@@ -271,6 +271,7 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         public IDOutput MachineEmergencyStop => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.MACHINE_EMERGENCY_STOP);
 
+        public IDOutput OutShuttleLeftBlow => _dOutputDevice.Outputs.First(i => i.Id == (int)EOutput.OUT_SHUTTLE_LEFT_BLOW);
         public void Lamp_Run()
         {
             Lamp_Clear();

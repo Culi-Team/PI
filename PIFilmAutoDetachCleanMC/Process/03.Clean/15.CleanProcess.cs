@@ -1198,9 +1198,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessAutoRunStep.VacDetect_Check:
+                    Sequence_Prepare3M();
                     if (IsVacDetect)
                     {
-                        Sequence_Prepare3M();
                         if (cleanType == EClean.WETCleanLeft || cleanType == EClean.WETCleanRight)
                         {
                             Log.Info("Sequence WET Clean");
@@ -1377,14 +1377,35 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ECleanProcessLoadStep.Start:
                     Log.Debug("Clean Load Start");
 
-                    Sequence_Prepare3M();
-
                     if (cleanType == EClean.AFCleanLeft || cleanType == EClean.AFCleanRight)
                     {
                         GlassVac.Value = true;
                         Log.Debug("Wait Transfer Rotation Ready Place");
                     }
 
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessLoadStep.Cyl_Brush_Down:
+                    Log.Debug("Brush Cylinder Down");
+                    BrushCyl.Forward();
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => BrushCyl.IsForward);
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessLoadStep.Cyl_Brush_Down_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_BrushCylinder_Down_Fail,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_BrushCylinder_Down_Fail,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_BrushCylinder_Down_Fail,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_BrushCylinder_Down_Fail,
+                            _ => null
+                        };
+                        RaiseWarning((int)warning!);
+                        break;
+                    }
+                    Log.Debug("Brush Cylinder Down Done");
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.Wait_WETCleanUnloadDone:
@@ -1561,6 +1582,29 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Set Flag Request Load");
                     FlagCleanRequestLoad = true;
                     Log.Debug("Wait Clean Load Glass Done");
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessLoadStep.Cyl_Brush_Up:
+                    Log.Debug("Brush Up");
+                    BrushCyl.Backward();
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => BrushCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ECleanProcessLoadStep.Cyl_Brush_Up_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        EWarning? warning = cleanType switch
+                        {
+                            EClean.WETCleanLeft => EWarning.WETCleanLeft_BrushCylinder_Up_Fail,
+                            EClean.WETCleanRight => EWarning.WETCleanRight_BrushCylinder_Up_Fail,
+                            EClean.AFCleanLeft => EWarning.AFCleanLeft_BrushCylinder_Up_Fail,
+                            EClean.AFCleanRight => EWarning.AFCleanRight_BrushCylinder_Up_Fail,
+                            _ => null
+                        };
+                        RaiseWarning((int)warning!);
+                        break;
+                    }
+                    Log.Debug("Brush Cylinder Up Done");
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.Wait_CleanLoadDone:
@@ -2278,7 +2322,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(VacDetect, false);
 #endif
-                    Wait(300);
+                    Wait(500);
                     Step.RunStep++;
                     break;
                 case ECleanProcessUnloadStep.Set_FlagRequestUnload:
@@ -2293,6 +2337,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Wait(20);
                         break;
                     }
+
+                    if (Parent.Sequence == ESequence.AutoRun)
+                    {
+                        Sequence_Prepare3M();
+                    }
+
                     Log.Debug("Clear Flag Request Unload");
                     FlagCleanRequestUnload = false;
 

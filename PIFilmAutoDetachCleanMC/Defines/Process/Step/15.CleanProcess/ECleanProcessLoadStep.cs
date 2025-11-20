@@ -9,6 +9,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
     public enum ECleanProcessLoadStep
     {
         Start,
+
+        Cyl_Brush_Down,
+        Cyl_Brush_Down_Wait,
+
         Wait_WETCleanUnloadDone,
 
         XYTAxisMoveLoadPosition,
@@ -21,6 +25,10 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Cyl_UnClamp,
         Cyl_UnClamp_Wait,
         Set_FlagCleanRequestLoad,
+
+        Cyl_Brush_Up,
+        Cyl_Brush_Up_Wait,
+
         Wait_CleanLoadDone,
 
         Cyl_Clamp,
