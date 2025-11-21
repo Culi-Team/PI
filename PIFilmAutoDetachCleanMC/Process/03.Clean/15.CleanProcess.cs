@@ -1844,11 +1844,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.Vacuum_On:
-                    if (IsVacDetect)
-                    {
-                        Step.RunStep = (int)ECleanProcessCleanStep.Axis_MoveCleanHorizontalPosition;
-                        break;
-                    }
                     GlassVac.Value = true;
                     Wait((int)(_commonRecipe.VacDelay * 1000), () => IsVacDetect || _machineStatus.IsDryRunMode);
                     Step.RunStep++;
