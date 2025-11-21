@@ -389,15 +389,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case EUnloadTransferAFCleanUnloadStep.Vacuum_On:
                     Log.Debug("Vacuum On");
                     GlassVacuumOnOff(true);
-                    Thread.Sleep(300);
-                    if (port == EPort.Left)
-                    {
-                        _devices.Outputs.OutShuttleLeftBlow.Value = true;
-                        Task.Delay(100).ContinueWith(t =>
-                        {
-                            _devices.Outputs.OutShuttleLeftBlow.Value = false;
-                        });
-                    }
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(GlassVac, true);
 #endif
@@ -411,6 +402,15 @@ namespace PIFilmAutoDetachCleanMC.Process
                                                         EWarning.UnloadTransferRight_VacuumOn_Fail));
                         break;
                     }
+                    if (port == EPort.Left)
+                    {
+                        _devices.Outputs.OutShuttleLeftBlow.Value = true;
+                        Task.Delay(300).ContinueWith(t =>
+                        {
+                            _devices.Outputs.OutShuttleLeftBlow.Value = false;
+                        });
+                    }
+                    Thread.Sleep(300);
                     Log.Debug("Vacuum On Done");
                     Step.RunStep++;
                     break;

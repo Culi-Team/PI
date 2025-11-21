@@ -12,7 +12,7 @@
         <Button
             Margin="0 0 0 50"
             DockPanel.Dock="Bottom"
-            Content="SET ACTIVE SCREEN(KÍCH HOẠT MÀN HÌNH)"
+            Content="SET ACTIVE SCREEN (KÍCH HOẠT MÀN HÌNH)"
             Width="300" Height="50"
             VerticalAlignment="Bottom"
             Command="{Binding SwitchActiveScreen}"/>
