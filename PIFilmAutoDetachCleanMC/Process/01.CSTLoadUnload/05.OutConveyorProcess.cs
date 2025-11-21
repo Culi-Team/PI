@@ -423,6 +423,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Log.Debug("Clear Flag Out Conveyor Ready");
                         FlagOutConveyorReady = false;
 
+                        Wait(2000);
                         Step.RunStep++;
                         break;
                     }

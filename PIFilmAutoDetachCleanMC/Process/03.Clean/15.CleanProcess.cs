@@ -1181,6 +1181,9 @@ namespace PIFilmAutoDetachCleanMC.Process
                         Thread.Sleep(100);
                         break;
                     }
+
+                    Thread.Sleep(2000);
+
                     Step.RunStep++;
                     break;
                 case ECleanProcessAutoRunStep.Fill:
