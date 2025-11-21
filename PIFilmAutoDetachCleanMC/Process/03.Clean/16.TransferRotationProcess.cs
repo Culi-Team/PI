@@ -1065,6 +1065,22 @@ namespace PIFilmAutoDetachCleanMC.Process
                     FlagTransferRotationReadyPlace = false;
                     Step.RunStep++;
                     break;
+                case ETransferRotationAFCleanLoad.Cyl_Rotate_0D:
+                    Log.Debug("Cylinder Rotate 0 Degree");
+                    RotateCyl.Backward();
+                    Wait((int)(_commonRecipe.CylinderMoveTimeout * 1000), () => RotateCyl.IsBackward);
+                    Step.RunStep++;
+                    break;
+                case ETransferRotationAFCleanLoad.Cyl_Rotate_0D_Wait:
+                    if(WaitTimeOutOccurred)
+                    {
+                        RaiseWarning(port == EPort.Left ? EWarning.TransferRotationLeft_RotationCylinder_0D_Fail :
+                                                            EWarning.TransferRotationRight_RotationCylinder_0D_Fail);
+                        break;
+                    }
+                    Log.Debug("Cylinder Rotate 0 Degree Done");
+                    Step.RunStep++;
+                    break;
                 case ETransferRotationAFCleanLoad.End:
                     Log.Debug("AF Clean Load End");
                     if (Parent?.Sequence != ESequence.AutoRun)

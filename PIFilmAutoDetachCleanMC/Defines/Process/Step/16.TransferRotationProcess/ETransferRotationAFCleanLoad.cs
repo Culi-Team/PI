@@ -28,6 +28,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         Set_FlagAFCleanLoadDone,
         Wait_AFCleanLoadDoneReceived,
 
+        Cyl_Rotate_0D,
+        Cyl_Rotate_0D_Wait,
+
         End
     }
 }
