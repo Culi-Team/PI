@@ -43,10 +43,11 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDOutput GlassVacOnOff3 => _devices.Outputs.UnloadRobotVac3OnOff;
         private IDOutput GlassVacOnOff4 => _devices.Outputs.UnloadRobotVac4OnOff;
 
-        private bool GlassVac1 => _devices.Inputs.UnloadRobotVac1.Value;
-        private bool GlassVac2 => _devices.Inputs.UnloadRobotVac2.Value;
-        private bool GlassVac3 => _devices.Inputs.UnloadRobotVac3.Value;
-        private bool GlassVac4 => _devices.Inputs.UnloadRobotVac4.Value;
+        private bool GlassVac1 => _devices.Inputs.UnloadRobotVac1.Value || _machineStatus.IsUnloadGlass1 == false;
+        private bool GlassVac2 => _devices.Inputs.UnloadRobotVac2.Value || _machineStatus.IsUnloadGlass2 == false;
+        private bool GlassVac3 => _devices.Inputs.UnloadRobotVac3.Value || _machineStatus.IsUnloadGlass3 == false;
+        private bool GlassVac4 => _devices.Inputs.UnloadRobotVac4.Value || _machineStatus.IsUnloadGlass4 == false;
+
         private ICylinder Cyl1 => _devices.Cylinders.UnloadRobot_UpDownCyl1;
         private ICylinder Cyl2 => _devices.Cylinders.UnloadRobot_UpDownCyl2;
         private ICylinder Cyl3 => _devices.Cylinders.UnloadRobot_UpDownCyl3;
@@ -55,10 +56,10 @@ namespace PIFilmAutoDetachCleanMC.Process
         private bool IsCylindersUp => Cyl1.IsBackward && Cyl2.IsBackward && Cyl3.IsBackward && Cyl4.IsBackward;
         private bool IsCylindersDown => Cyl1.IsForward && Cyl2.IsForward && Cyl3.IsForward && Cyl4.IsForward;
 
-        private bool GlassDetect1 => _devices.Inputs.UnloadRobotDetect1.Value;
-        private bool GlassDetect2 => _devices.Inputs.UnloadRobotDetect2.Value;
-        private bool GlassDetect3 => _devices.Inputs.UnloadRobotDetect3.Value;
-        private bool GlassDetect4 => _devices.Inputs.UnloadRobotDetect4.Value;
+        private bool GlassDetect1 => _devices.Inputs.UnloadRobotDetect1.Value || _machineStatus.IsUnloadGlass1 == false;
+        private bool GlassDetect2 => _devices.Inputs.UnloadRobotDetect2.Value || _machineStatus.IsUnloadGlass2 == false;
+        private bool GlassDetect3 => _devices.Inputs.UnloadRobotDetect3.Value || _machineStatus.IsUnloadGlass3 == false;
+        private bool GlassDetect4 => _devices.Inputs.UnloadRobotDetect4.Value || _machineStatus.IsUnloadGlass4 == false;
 
         private int PlasmaSpeed => _robotUnloadRecipe.RobotPlasmaSpeed;
         private int LowSpeed => _robotUnloadRecipe.RobotSpeedLow;
@@ -1283,6 +1284,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     VacuumOnOff(false);
                     // Clear timer for next sequence
                     DownstreamAliveTime = 0;
+
+                    _machineStatus.IsUnloadGlass1 = true;
+                    _machineStatus.IsUnloadGlass2 = true;
+                    _machineStatus.IsUnloadGlass3 = true;
+                    _machineStatus.IsUnloadGlass4 = true;
+
                     Wait(300);
                     Step.RunStep++;
                     break;

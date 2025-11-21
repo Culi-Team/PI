@@ -153,6 +153,11 @@ namespace PIFilmAutoDetachCleanMC.Process
             }
         }
 
+        public bool IsUnloadGlass1 { get; set; } = true;
+        public bool IsUnloadGlass2 { get; set; } = true;
+        public bool IsUnloadGlass3 { get; set; } = true;
+        public bool IsUnloadGlass4 { get; set; } = true;
+
         public bool IsFixtureDetached { get; set; }
 
         public bool MachineTestMode { get; set; }

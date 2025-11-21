@@ -29,7 +29,7 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
         {
             InitializeComponent();
         }
-  
+
         private void GlassDetachImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var image = sender as IInputElement;
@@ -54,17 +54,24 @@ namespace PIFilmAutoDetachCleanMC.MVVM.Views
             bool? result = dialog.ShowDialog();
             if (result == true)
             {
-                if(this.DataContext is AutoViewModel autoViewModel)
+                if (this.DataContext is AutoViewModel autoViewModel)
                 {
                     autoViewModel.MachineStatus.IsFixtureDetached = dialog.IsDetached;
-                }    
+                }
             }
         }
 
         private void UnloadAlignImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (this.DataContext is AutoViewModel autoViewModel == false) return;
             UnloadGlassSelectView unloadGlassSelectView = new UnloadGlassSelectView();
-            unloadGlassSelectView.ShowDialog();
+            if (unloadGlassSelectView.ShowDialog() == true)
+            {
+                autoViewModel.MachineStatus.IsUnloadGlass1 = unloadGlassSelectView.IsUnloadGlass1;
+                autoViewModel.MachineStatus.IsUnloadGlass2 = unloadGlassSelectView.IsUnloadGlass2;
+                autoViewModel.MachineStatus.IsUnloadGlass3 = unloadGlassSelectView.IsUnloadGlass3;
+                autoViewModel.MachineStatus.IsUnloadGlass4 = unloadGlassSelectView.IsUnloadGlass4;
+            }
         }
     }
 }

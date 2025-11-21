@@ -66,15 +66,15 @@
         </UniformGrid>
 
         <UniformGrid Grid.Row="1">
+            <Button Content="Exit"
+                    Click="ButtonExit_Click"
+                    FontSize="20"
+                    Margin="20 0 5 0" />
             <Button Content="Confirm"
                     FontSize="20"
                     Margin="5 0 20 0"
                     Click="ConfirmButton_Click"
                     Background="LightGreen" />
-            <Button Content="Exit"
-                    Click="ButtonExit_Click"
-                    FontSize="20"
-                    Margin="20 0 5 0" />
         </UniformGrid>
     </Grid>
 </Window>

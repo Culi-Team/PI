@@ -46,15 +46,15 @@ namespace PIFilmAutoDetachCleanMC.Process
         private IDInput GlassVac3 => _devices.Inputs.UnloadGlassAlignVac3;
         private IDInput GlassVac4 => _devices.Inputs.UnloadGlassAlignVac4;
 
-        private bool GlassDetect1 => _devices.Inputs.UnloadGlassDetect1.Value;
-        private bool GlassDetect2 => _devices.Inputs.UnloadGlassDetect2.Value;
-        private bool GlassDetect3 => _devices.Inputs.UnloadGlassDetect3.Value;
-        private bool GlassDetect4 => _devices.Inputs.UnloadGlassDetect4.Value;
+        private bool GlassDetect1 => _devices.Inputs.UnloadGlassDetect1.Value || _machineStatus.IsUnloadGlass1 == false;
+        private bool GlassDetect2 => _devices.Inputs.UnloadGlassDetect2.Value || _machineStatus.IsUnloadGlass2 == false;
+        private bool GlassDetect3 => _devices.Inputs.UnloadGlassDetect3.Value || _machineStatus.IsUnloadGlass3 == false;
+        private bool GlassDetect4 => _devices.Inputs.UnloadGlassDetect4.Value || _machineStatus.IsUnloadGlass4 == false;
 
-        private bool IsGlassVac1 => _devices.Inputs.UnloadGlassAlignVac1.Value;
-        private bool IsGlassVac2 => _devices.Inputs.UnloadGlassAlignVac2.Value;
-        private bool IsGlassVac3 => _devices.Inputs.UnloadGlassAlignVac3.Value;
-        private bool IsGlassVac4 => _devices.Inputs.UnloadGlassAlignVac4.Value;
+        private bool IsGlassVac1 => _devices.Inputs.UnloadGlassAlignVac1.Value || _machineStatus.IsUnloadGlass1 == false;
+        private bool IsGlassVac2 => _devices.Inputs.UnloadGlassAlignVac2.Value || _machineStatus.IsUnloadGlass2 == false;
+        private bool IsGlassVac3 => _devices.Inputs.UnloadGlassAlignVac3.Value || _machineStatus.IsUnloadGlass3 == false;
+        private bool IsGlassVac4 => _devices.Inputs.UnloadGlassAlignVac4.Value || _machineStatus.IsUnloadGlass4 == false;
         private bool IsGlassVac => IsGlassVac1 && IsGlassVac2 && IsGlassVac3 && IsGlassVac4;
 
         private bool IsGlassDetect => GlassDetect1 && GlassDetect2 && GlassDetect3 && GlassDetect4;
@@ -208,6 +208,10 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.ToRunStep++;
                     break;
                 case EUnloadAlignProcessToRunStep.Clear_Flags:
+                    _machineStatus.IsUnloadGlass1 = true;
+                    _machineStatus.IsUnloadGlass2 = true;
+                    _machineStatus.IsUnloadGlass3 = true;
+                    _machineStatus.IsUnloadGlass4 = true;
                     Log.Debug("Clear Flags");
                     ((MappableOutputDevice<EUnloadAlignProcessOutput>)_unloadAlignOutput).ClearOutputs();
                     Step.ToRunStep++;

@@ -73,20 +73,5 @@
         <Label Grid.Column="1"
                Grid.Row="4"
                Content="[mPa]" />
-
-        <TextBox Style="{StaticResource TextBoxWithNameLeftStyle}"
-                 Grid.Row="5"
-                 Text="{Binding CleanHorizontalCount,Mode=OneWay,StringFormat='{}{0:0.###}'}"
-                 Tag="Clean Horizontal Count" />
-        <Label Grid.Column="1"
-               Grid.Row="5"
-               Content="" />
-        <TextBox Style="{StaticResource TextBoxWithNameLeftStyle}"
-                 Grid.Row="6"
-                 Text="{Binding CleanVerticalCount,Mode=OneWay,StringFormat='{}{0:0.###}'}"
-                 Tag="Clean Vertical Count" />
-        <Label Grid.Column="1"
-               Grid.Row="6"
-               Content="" />
     </Grid>
 </UserControl>
