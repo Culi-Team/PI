@@ -491,6 +491,12 @@ namespace PIFilmAutoDetachCleanMC.Process
 #endif
                     Log.Debug("Clear Flag Request Robot Unload");
                     FlagUnloadAlignRequestRobotUnload = false;
+
+                    _machineStatus.IsUnloadGlass1 = true;
+                    _machineStatus.IsUnloadGlass2 = true;
+                    _machineStatus.IsUnloadGlass3 = true;
+                    _machineStatus.IsUnloadGlass4 = true;
+
                     Step.RunStep++;
                     break;
                 case EUnloadAlignRobotPickStep.End:
@@ -531,6 +537,12 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EUnloadAlignUnloadTransferPlaceStep.Wait_TransferReady:
+                    if (IsGlassVac)  //When unload not full 4 glass
+                    {
+                        Step.RunStep = (int)EUnloadAlignUnloadTransferPlaceStep.End;
+                        break;
+                    }
+
                     if (FlagUnloadTransferLeftReadyToUnload == false && FlagUnloadTransferRightReadyToUnload == false)
                     {
                         Wait(20);
