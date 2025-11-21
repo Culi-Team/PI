@@ -195,8 +195,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 return true;
             }
 
-            ProcessStatus = EProcessStatus.ToStopDone;
-            return true;
+            return base.ProcessToStop();
         }
 
         public override bool ProcessToWarning()
@@ -207,8 +206,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 return true;
             }
 
-            ProcessStatus = EProcessStatus.ToWarningDone;
-            return true;
+            return base.ProcessToStop();
         }
 
         public override bool ProcessToAlarm()

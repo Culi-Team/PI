@@ -569,6 +569,28 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
+        public override bool ProcessToStop()
+        {
+            Winder.Stop();
+            UnWinder.Stop();
+
+            return base.ProcessToStop();
+        }
+
+        public override bool ProcessToWarning()
+        {
+            Winder.Stop();
+            UnWinder.Stop();
+
+            return base.ProcessToWarning();
+        }
+
+        public override bool ProcessToAlarm()
+        {
+            Winder.Stop();
+            UnWinder.Stop();
+            return base.ProcessToAlarm();
+        }
         public override bool PreProcess()
         {
             if (ProcessMode != EProcessMode.Run) return base.PreProcess();
@@ -1398,7 +1420,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.Cyl_Brush_Down_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         EWarning? warning = cleanType switch
                         {
@@ -1597,7 +1619,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessLoadStep.Cyl_Brush_Up_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         EWarning? warning = cleanType switch
                         {
@@ -1798,7 +1820,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep = (int)ECleanProcessCleanStep.Vacuum_On;
                     break;
                 case ECleanProcessCleanStep.Cyl_Clamp:
-                    if(ClampCyl1.IsForward && ClampCyl2.IsForward)
+                    if (ClampCyl1.IsForward && ClampCyl2.IsForward)
                     {
                         Step.RunStep = (int)ECleanProcessCleanStep.Vacuum_On;
                         break;
@@ -1821,7 +1843,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ECleanProcessCleanStep.Vacuum_On:
-                    if(IsVacDetect)
+                    if (IsVacDetect)
                     {
                         Step.RunStep = (int)ECleanProcessCleanStep.Axis_MoveCleanHorizontalPosition;
                         break;
@@ -2550,7 +2572,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 break;
                             case ECleanProcessPrepare3MStep.Dispense:
                                 List<int> ports = new List<int>();
-                                if(cleanRecipe.UsePort1)
+                                if (cleanRecipe.UsePort1)
                                 {
                                     ports.Add(1);
                                 }
@@ -2580,7 +2602,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 prepare3MStep++;
                                 break;
                             case ECleanProcessPrepare3MStep.Dispense_Wait:
-                                if(SyringePump.IsReady() == false)
+                                if (SyringePump.IsReady() == false)
                                 {
                                     await Task.Delay(100, ctsPrepare3M.Token);
                                     break;
