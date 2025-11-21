@@ -589,6 +589,7 @@ namespace PIFilmAutoDetachCleanMC.Process
         {
             Winder.Stop();
             UnWinder.Stop();
+
             return base.ProcessToAlarm();
         }
         public override bool PreProcess()
@@ -2598,7 +2599,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                                 }
 
                                 SyringePump.Dispense(cleanRecipe.CleanVolume, ports.ToArray());
-                                await Task.Delay(1000, ctsPrepare3M.Token);
+                                await Task.Delay(1200, ctsPrepare3M.Token);
                                 prepare3MStep++;
                                 break;
                             case ECleanProcessPrepare3MStep.Dispense_Wait:
