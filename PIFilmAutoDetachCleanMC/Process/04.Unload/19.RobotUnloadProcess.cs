@@ -206,7 +206,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 return true;
             }
 
-            return base.ProcessToStop();
+            return base.ProcessToWarning();
         }
 
         public override bool ProcessToAlarm()
