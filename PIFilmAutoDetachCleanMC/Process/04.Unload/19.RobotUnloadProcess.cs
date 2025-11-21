@@ -78,7 +78,7 @@ namespace PIFilmAutoDetachCleanMC.Process
             Wait(5000, () => _robotUnload.ReadResponse(RobotHelpers.MotionRspStart(command)));
             return !WaitTimeOutOccurred;
         }
-        
+
         private bool RobotInRDYPosition(int currentPos)
         {
             if (currentPos == (int)ERobotCommand.S1_RDY ||
@@ -186,47 +186,29 @@ namespace PIFilmAutoDetachCleanMC.Process
         #endregion
 
         #region Override Methods
-        //public override bool ProcessToStop()
-        //{
-        //    switch ((ERobotUnloadToStopStep)Step.ToRunStep)
-        //    {
-        //        case ERobotUnloadToStopStep.Start:
-        //            Log.Debug("To Stop Start");
-        //            Step.ToRunStep++;
-        //            break;
-        //        case ERobotUnloadToStopStep.Stop:
-        //            Log.Debug("Stop Robot Unload");
-        //            _robotUnload.SendCommand(RobotHelpers.RobotStop);
+        public override bool ProcessToStop()
+        {
+            if (RobStopped.Value == false)
+            {
+                Thread.Sleep(50);
+                return true;
+            }
 
-        //            Wait(5000, () => _robotUnload.ReadResponse("Stop complete,0\r\n"));
+            ProcessStatus = EProcessStatus.ToStopDone;
+            return true;
+        }
 
-        //            Step.ToRunStep++;
-        //            break;
-        //        case ERobotUnloadToStopStep.Stop_Check:
-        //            if (WaitTimeOutOccurred)
-        //            {
-        //                RaiseWarning((int)EWarning.RobotUnload_Stop_Fail);
-        //                break;
-        //            }
+        public override bool ProcessToWarning()
+        {
+            if (RobStopped.Value == false)
+            {
+                Thread.Sleep(50);
+                return true;
+            }
 
-        //            Log.Debug("Robot Load Stop Complete");
-        //            Step.ToRunStep++;
-        //            break;
-        //        case ERobotUnloadToStopStep.End:
-        //            if (ProcessStatus == EProcessStatus.ToStopDone)
-        //            {
-        //                Thread.Sleep(10);
-        //                break;
-        //            }
-        //            Log.Debug("To Stop End");
-        //            ProcessStatus = EProcessStatus.ToStopDone;
-        //            Step.ToRunStep++;
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //    return true;
-        //}
+            ProcessStatus = EProcessStatus.ToWarningDone;
+            return true;
+        }
 
         public override bool ProcessToAlarm()
         {
