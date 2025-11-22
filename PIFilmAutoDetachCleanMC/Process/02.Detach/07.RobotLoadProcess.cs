@@ -1374,7 +1374,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Move In Cassette Ready Position");
                     if (SendCommand(ERobotCommand.S1_PP_RDY, LowSpeed, HightSpeed, paras))
                     {
-                        _cassetteList.CassetteIn[(uint)CurrentInWorkCSTFixtureIndex] = ETrayCellStatus.Done;
+                        _cassetteList.CassetteIn[(uint)CurrentInWorkCSTFixtureIndex] = ETrayCellStatus.Empty;
 
                         Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S1_PP_RDY)));
                         Step.RunStep++;
@@ -2009,7 +2009,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Log.Debug("Robot Move Out Cassette Place Position");
                     if (SendCommand(ERobotCommand.S5_RDY_PP, LowSpeed, HightSpeed, paras))
                     {
-                        _cassetteList.CassetteOut[(uint)CurrentOutWorkCSTFixtureIndex] = ETrayCellStatus.Done;
+                        _cassetteList.CassetteOut[(uint)CurrentOutWorkCSTFixtureIndex] = ETrayCellStatus.Exist;
                         Wait((int)(_commonRecipe.MotionMoveTimeOut * 1000), () => _robotLoad.ReadResponse(RobotHelpers.MotionRspComplete(ERobotCommand.S5_RDY_PP)));
                         Step.RunStep++;
                         break;

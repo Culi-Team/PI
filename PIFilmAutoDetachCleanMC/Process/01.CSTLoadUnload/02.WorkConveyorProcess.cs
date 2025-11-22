@@ -42,7 +42,17 @@ namespace PIFilmAutoDetachCleanMC.Process
         private double TAxisLoadPosition => port == EPort.Right ? _cstLoadUnloadRecipe.InCstTAxisLoadPosition : _cstLoadUnloadRecipe.OutCstTAxisLoadPosition;
         private double TAxisUnloadPosition => port == EPort.Right ? _cstLoadUnloadRecipe.InCstTAxisUnloadPosition : _cstLoadUnloadRecipe.OutCstTAxisUnloadPosition;
         private ITray<ETrayCellStatus> Cassette => port == EPort.Right ? _cassetteList.CassetteIn : _cassetteList.CassetteOut;
-        private bool CassetteWorkDone => Cassette.Cells.Any(c => c.Status == ETrayCellStatus.Ready || c.Status == ETrayCellStatus.Working) == false;
+        private bool CassetteWorkDone
+        {
+            get
+            {
+                if(port == EPort.Left)
+                {
+                    return Cassette.Cells.Any(c => c.Status == ETrayCellStatus.Empty || c.Status == ETrayCellStatus.Working) == false;
+                }
+                return Cassette.Cells.Any(c => c.Status == ETrayCellStatus.Exist || c.Status == ETrayCellStatus.Working) == false;
+            }
+        }
         private double DistanceFirstFixture => AnalogConverter.Convert(LaserSensor.Volt, 0, 8191.0, 0.0, 800.0);
         #endregion
 
@@ -486,7 +496,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case EWorkConveyorAutoRunStep.End:
-                    Log.Info("Sequence Cassette Load");
                     if (port == EPort.Right)
                     {
                         Log.Info("Sequence In Work CST Load");
@@ -676,7 +685,14 @@ namespace PIFilmAutoDetachCleanMC.Process
                     // CassetteWorkDone = false -> Atlest 1 ETrayCellStatus.Ready cell exist
                     if (Cassette.GetFirstIndex(ETrayCellStatus.Working) == -1)
                     {
-                        Cassette[(uint)Cassette.GetFirstIndex(ETrayCellStatus.Ready)] = ETrayCellStatus.Working;
+                        if(port == EPort.Left)
+                        {
+                            Cassette[(uint)Cassette.GetFirstIndex(ETrayCellStatus.Empty)] = ETrayCellStatus.Working;
+                        }
+                        else
+                        {
+                            Cassette[(uint)Cassette.GetFirstIndex(ETrayCellStatus.Exist)] = ETrayCellStatus.Working;
+                        }
                     }
 
                     Step.RunStep++;
@@ -856,7 +872,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     break;
                 case EWorkConveyorProcessLoadStep.Reset_Cassette_Status:
                     Log.Debug("Reset Cassette Status");
-                    Cassette.Cells.ToList().ForEach(c => c.Status = ETrayCellStatus.Ready);
+                    Cassette.Cells.ToList().ForEach(c => c.Status = port == EPort.Left ? ETrayCellStatus.Empty : ETrayCellStatus.Exist);
                     Step.RunStep++;
                     break;
                 case EWorkConveyorProcessLoadStep.Conveyor_Stop:

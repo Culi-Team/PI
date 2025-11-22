@@ -3,6 +3,7 @@ using EQX.UI.Controls;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using PIFilmAutoDetachCleanMC.Converters;
+using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System;
 using System.Collections.Generic;
@@ -19,16 +20,17 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cassette
     {
         private readonly RecipeSelector _recipeSelector;
         private readonly IConfiguration _configuration;
+        private readonly MachineStatus _machineStatus;
         private ITray<ETrayCellStatus> cassetteIn;
         private ITray<ETrayCellStatus> cassetteOut;
 
         private string BackupFolder => _configuration.GetValue<string>("Folders:BackupFolder") ?? "";
 
         public ITray<ETrayCellStatus> CassetteIn
-		{
-			get { return cassetteIn; }
-			set { cassetteIn = value; }
-		}
+        {
+            get { return cassetteIn; }
+            set { cassetteIn = value; }
+        }
 
         public ITray<ETrayCellStatus> CassetteOut
         {
@@ -39,32 +41,33 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cassette
 
         public ObservableCollection<ETrayCellStatus> CassetteStatusList { get; }
         public CassetteList(RecipeSelector recipeSelector,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            MachineStatus machineStatus)
         {
             _recipeSelector = recipeSelector;
             _configuration = configuration;
+            _machineStatus = machineStatus;
             CassetteIn = new Tray<ETrayCellStatus>("CassetteIn");
             CassetteOut = new Tray<ETrayCellStatus>("CassetteOut");
 
             CassetteStatusList = new ObservableCollection<ETrayCellStatus>()
             {
-                ETrayCellStatus.Ready,
-                ETrayCellStatus.Skip,
+                ETrayCellStatus.Empty,
                 ETrayCellStatus.Working,
-                ETrayCellStatus.Done,
+                ETrayCellStatus.Exist,
             };
         }
 
 
         private void ResetCassetteStatus(ITray<ETrayCellStatus> cassette)
         {
-            if (cassette.Cells.Any(c => c.Status != ETrayCellStatus.Ready))
+            if (cassette.Cells.Any(c => c.Status != ETrayCellStatus.Empty))
             {
-                cassette.SetAllCell(ETrayCellStatus.Ready);
+                cassette.SetAllCell(ETrayCellStatus.Empty);
             }
             else
             {
-                cassette.SetAllCell(ETrayCellStatus.Skip);
+                cassette.SetAllCell(ETrayCellStatus.Exist);
             }
         }
 
@@ -96,10 +99,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cassette
             {
                 cell.CellClicked += (id, status) =>
                 {
-                    if (cell.Status == ETrayCellStatus.Working) return;
+                    if (cell.Status == ETrayCellStatus.Working && _machineStatus.IsStandByProcessMode == false) return;
 
-                    if (status == ETrayCellStatus.Skip) cell.Status = ETrayCellStatus.Ready;
-                    else cell.Status = ETrayCellStatus.Skip;
+                    if (status == ETrayCellStatus.Empty) cell.Status = ETrayCellStatus.Exist;
+                    else cell.Status = ETrayCellStatus.Empty;
                 };
             });
 
@@ -107,10 +110,10 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices.Cassette
             {
                 cell.CellClicked += (id, status) =>
                 {
-                    if (cell.Status == ETrayCellStatus.Working) return;
+                    if (cell.Status == ETrayCellStatus.Working && _machineStatus.IsStandByProcessMode == false) return;
 
-                    if (status == ETrayCellStatus.Skip) cell.Status = ETrayCellStatus.Ready;
-                    else cell.Status = ETrayCellStatus.Skip;
+                    if (status == ETrayCellStatus.Empty) cell.Status = ETrayCellStatus.Exist;
+                    else cell.Status = ETrayCellStatus.Empty;
                 };
             });
         }

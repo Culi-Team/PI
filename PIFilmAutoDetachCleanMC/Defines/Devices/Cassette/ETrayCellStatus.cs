@@ -30,5 +30,9 @@ namespace PIFilmAutoDetachCleanMC.Defines
         /// Pick done with fail
         /// </summary>
         PickPlaceFail,
+
+        Exist,
+
+        Empty,
     }
 }
