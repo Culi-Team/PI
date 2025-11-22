@@ -879,19 +879,20 @@ namespace PIFilmAutoDetachCleanMC.Process
                 case ETransferRotationStep.GlassVac2_On:
                     Log.Debug("Glass Vacuum 2 On");
                     GlassVacuum2OnOff(true);
+
+                    Log.Debug("Glass Rotation Vacuum Off");
+                    GlassRotateVacOnOff.Value = false;
 #if SIMULATION
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftVac2 : _devices.Inputs.TrRotateRightVac2, true);
+                    SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftRotVac : _devices.Inputs.TrRotateRightRotVac, false);
+
 #endif
                     Wait((int)(_commonRecipe.VacDelay * 1000), () => IsGlassVac2);
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassRotVac_Off:
-                    Log.Debug("Glass Rotation Vacuum Off");
-                    GlassRotateVacuumOnOff(false);
 #if SIMULATION
-                    SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftRotVac : _devices.Inputs.TrRotateRightRotVac, false);
 #endif
-                    Wait((int)(_commonRecipe.VacDelay * 1000), () => IsGlassVac2);
                     Step.RunStep++;
                     break;
                 case ETransferRotationStep.GlassVac2_On_Check:
@@ -1010,7 +1011,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     SimulationInputSetter.SetSimInput(port == EPort.Left ? _devices.Inputs.TrRotateLeftVac2 : _devices.Inputs.TrRotateRightVac2, false);
 #endif
                     Wait(200);
-                    if(Parent.Sequence == ESequence.AutoRun)
+                    if (Parent.Sequence == ESequence.AutoRun)
                     {
                         Step.RunStep++;
                         break;
@@ -1072,7 +1073,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                     Step.RunStep++;
                     break;
                 case ETransferRotationAFCleanLoad.Cyl_Rotate_0D_Wait:
-                    if(WaitTimeOutOccurred)
+                    if (WaitTimeOutOccurred)
                     {
                         RaiseWarning(port == EPort.Left ? EWarning.TransferRotationLeft_RotationCylinder_0D_Fail :
                                                             EWarning.TransferRotationRight_RotationCylinder_0D_Fail);

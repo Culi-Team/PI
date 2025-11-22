@@ -32,10 +32,10 @@ namespace PIFilmAutoDetachCleanMC.Controls
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        private bool isUnloadGlass1;
-        private bool isUnloadGlass2;
-        private bool isUnloadGlass3;
-        private bool isUnloadGlass4;
+        private bool isUnloadGlass1 = true;
+        private bool isUnloadGlass2 = true;
+        private bool isUnloadGlass3 = true;
+        private bool isUnloadGlass4 = true;
 
         public bool IsUnloadGlass1
         {

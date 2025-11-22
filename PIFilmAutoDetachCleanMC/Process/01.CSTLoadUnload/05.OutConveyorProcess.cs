@@ -96,7 +96,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 if (CstStopper.IsForward)
                 {
                     CstStopper.Backward();
-                    Task.Delay(20000).ContinueWith(t =>
+                    Task.Delay(30000).ContinueWith(t =>
                     {
                         CstStopper.Forward();
                     });
@@ -383,6 +383,14 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                     Step.RunStep++;
                     break;
+                case EOutConveyorProcessOutWorkCSTUnloadStep.Wait_OutWorkCSTRequestUnload:
+                    if (FlagOutWorkConveyorRequestCSTOut == false)
+                    {
+                        Wait(20);
+                        break;
+                    }
+                    Step.RunStep++;
+                    break;
                 case EOutConveyorProcessOutWorkCSTUnloadStep.Stopper_Up:
                     Log.Debug("Stopper Up");
                     CstStopper.Forward();
@@ -397,14 +405,6 @@ namespace PIFilmAutoDetachCleanMC.Process
                     }
                     Log.Debug("Stopper Up Done");
                     Log.Debug("Wait Out Work CST Request Unload");
-                    Step.RunStep++;
-                    break;
-                case EOutConveyorProcessOutWorkCSTUnloadStep.Wait_OutWorkCSTRequestUnload:
-                    if (FlagOutWorkConveyorRequestCSTOut == false)
-                    {
-                        Wait(20);
-                        break;
-                    }
                     Step.RunStep++;
                     break;
                 case EOutConveyorProcessOutWorkCSTUnloadStep.Set_FlagOutConveyorReady:

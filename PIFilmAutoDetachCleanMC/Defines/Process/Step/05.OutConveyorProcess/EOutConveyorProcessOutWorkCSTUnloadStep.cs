@@ -12,11 +12,11 @@ namespace PIFilmAutoDetachCleanMC.Defines
 
         CstExist_Check,
 
-        Stopper_Up,
-        Stopper_Up_Wait,
-
         Wait_OutWorkCSTRequestUnload,
         Set_FlagOutConveyorReady,
+
+        Stopper_Up,
+        Stopper_Up_Wait,
 
         Conveyor_Run,
         Wait_OutWorkCSTUnloadDone,
