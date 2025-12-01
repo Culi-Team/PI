@@ -1,21 +1,21 @@
 [submodule "EQX.Core"]
 	path = EQX.Core
-	url = https://github.com/TopEngineering/EQX.Core
+	url = https://github.com/Culi-Team/Core.git
 [submodule "EQX.Device"]
 	path = EQX.Device
-	url = https://github.com/TopEngineering/EQX.Device
+	url = https://github.com/Culi-Team/Device.git
 [submodule "EQX.Motion"]
 	path = EQX.Motion
-	url = https://github.com/TopEngineering/EQX.Motion
+	url = https://github.com/Culi-Team/Motion.git
 [submodule "EQX.InOut"]
 	path = EQX.InOut
-	url = https://github.com/TopEngineering/EQX.InOut
+	url = https://github.com/Culi-Team/InOut.git
 [submodule "EQX.UI"]
 	path = EQX.UI
-	url = \\\\192.168.0.200\\SetupFiles\\GitServer\\EQX.UI.git
+	url = https://github.com/Culi-Team/UI.git
 [submodule "EQX.Process"]
 	path = EQX.Process
-	url = https://github.com/TopEngineering/EQX.Process
+	url = https://github.com/Culi-Team/Process.git
 [submodule "EQX.ThirdParty"]
 	path = EQX.ThirdParty
-	url = https://github.com/TopEngineering/EQX.ThirdParty
+	url = https://github.com/Culi-Team/ThirdParty.git
