@@ -119,6 +119,10 @@
             <DataTemplate DataType="{x:Type inout:CylinderBase}">
                 <viewsLib:CylinderView/>
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type inout:VacuumBase}">
+                <viewsLib:VacuumView/>
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

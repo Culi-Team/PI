@@ -101,6 +101,27 @@
                 </ScrollViewer>
             </GroupBox>
 
+            <GroupBox Grid.Column="1"
+                      Header="Vacuum"
+                      Style="{StaticResource TextBlockHeaderGroupBox}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Vacuums}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="1"
+                                             VerticalAlignment="Top" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ui:VacuumView Margin="3" DataContext="{Binding}" UseReachTimer="True" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </GroupBox>
+
             <GroupBox Grid.Row="1"
                       Header="Motions"
                       Style="{StaticResource TextBlockHeaderGroupBox}">

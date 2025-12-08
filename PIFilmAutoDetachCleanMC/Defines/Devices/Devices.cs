@@ -6,6 +6,7 @@ using EQX.Motion.ByVendor.Inovance;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Vacuum;
 using PIFilmAutoDetachCleanMC.Process;
 using PIFilmAutoDetachCleanMC.Recipe;
 using System;
@@ -23,6 +24,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             Outputs outputs,
             Motions motions,
             Cylinders cylinders,
+            Vacuums vacuums,
             TorqueControllerList torqueControllers,
             RollerList speedControllerList,
             Regulators regulators,
@@ -36,6 +38,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             Outputs = outputs;
             Motions = motions;
             Cylinders = cylinders;
+            Vacuums = vacuums;
             TorqueControllers = torqueControllers;
             RollerList = speedControllerList;
             Regulators = regulators;
@@ -49,6 +52,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
         public Outputs Outputs { get; }
         public Motions Motions { get; }
         public Cylinders Cylinders { get; }
+        public Vacuums Vacuums { get; }
         public TorqueControllerList TorqueControllers { get; }
         public RollerList RollerList { get; }
         public Regulators Regulators { get; }
@@ -626,6 +630,15 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             inputs.Add(Inputs.TrRotateLeftUp);
             inputs.Add(Inputs.TrRotateLeftDown);
             return inputs;
+        }
+
+        public ObservableCollection<IVacuum> GetTransferRotationLeftVacuums()
+        {
+            ObservableCollection<IVacuum> vacuums = new ObservableCollection<IVacuum>();
+            vacuums.Add(Vacuums.TransferRotationLeftVac1);
+            vacuums.Add(Vacuums.TransferRotationLeftVac2);
+            vacuums.Add(Vacuums.TransferRotationLeftRotVac);
+            return vacuums;
         }
 
         public ObservableCollection<IDInput> GetTransferRotationRightInputs()

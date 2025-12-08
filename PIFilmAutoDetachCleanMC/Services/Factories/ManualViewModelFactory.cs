@@ -280,6 +280,7 @@ namespace PIFilmAutoDetachCleanMC.Services.Factories
                         Motions = _devices.GetTransferRotationLeftMotions(),
                         Inputs = _devices.GetTransferRotationLeftInputs(),
                         Outputs = _devices.GetTransferRotationLeftOutputs(),
+                        Vacuums = _devices.GetTransferRotationLeftVacuums(),
                         Image = (System.Windows.Media.ImageSource)Application.Current.FindResource("TransferRotationImage"),
                         SemiAutoSequences = new ObservableCollection<ESemiSequence>()
                         {
