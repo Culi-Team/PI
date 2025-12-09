@@ -5,6 +5,7 @@ using EQX.Device.SpeedController;
 using EQX.Motion.ByVendor.Inovance;
 using Microsoft.Extensions.DependencyInjection;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Cylinder;
+using PIFilmAutoDetachCleanMC.Defines.Devices.Motion;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Regulator;
 using PIFilmAutoDetachCleanMC.Defines.Devices.Vacuum;
 using PIFilmAutoDetachCleanMC.Process;
@@ -32,6 +33,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             MachineStatus machineStatus,
             SyringePumps syringePumps,
             CSTLoadUnloadRecipe cstLoadUnloadRecipe,
+            TransferFixtureRecipe transferFixtureRecipe,
             [FromKeyedServices("VinylCleanEncoder")] IMotion vinylCleanEncoder)
         {
             Inputs = inputs;
@@ -44,6 +46,7 @@ namespace PIFilmAutoDetachCleanMC.Defines.Devices
             Regulators = regulators;
             AnalogInputs = analogInputs;
             SyringePumps = syringePumps;
+            MotionInterlockConfigurator.Configure(this, transferFixtureRecipe);
             VinylCleanEncoder = vinylCleanEncoder;
             CylinderInterlockConfigurator.Configure(this, cstLoadUnloadRecipe);
         }
