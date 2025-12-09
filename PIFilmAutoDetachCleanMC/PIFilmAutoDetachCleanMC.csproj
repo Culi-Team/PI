@@ -36,10 +36,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Alert\Alarm\data_English.json" />
+    <None Remove="Alert\Alarm\data_Vietnamese.json" />
     <None Remove="Resource\Image\PM.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Alert\Alarm\data_English.json" />
+    <Resource Include="Alert\Alarm\data_Vietnamese.json" />
     <Resource Include="Resource\Image\PM.png" />
     <Resource Include="TopIcon.ico" />
   </ItemGroup>

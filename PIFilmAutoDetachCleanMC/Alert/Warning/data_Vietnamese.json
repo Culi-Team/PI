@@ -1,0 +1,5487 @@
+[
+  {
+    "Id": 0,
+    "Message": "Root",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/LeftInCornerAll.jpg",
+    "AlertOverviewHighlightRectangle": {
+      "X": 162,
+      "Y": 89,
+      "Width": 283,
+      "Height": 153
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Door.jpg",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 42,
+      "Y": 49,
+      "Width": 238,
+      "Height": 185
+    },
+    "TroubleshootingSteps": [
+      "H\u00E3y \u0111\u00F3ng h\u1EBFt t\u1EA5t c\u1EA3 c\u00E1c c\u1EEDa."
+    ]
+  },
+  {
+    "Id": 1,
+    "Message": "ManualModeSwitch",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 162,
+      "Y": 89,
+      "Width": 283,
+      "Height": 153
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Door.jpg",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 134,
+      "Y": 112,
+      "Width": 62,
+      "Height": 68
+    },
+    "TroubleshootingSteps": [
+      "M\u00E1y \u0111ang \u1EDF ch\u1EBF \u0111\u1ED9 Manual",
+      "H\u00E3y chuy\u1EC3n v\u1EC1 ch\u1EBF \u0111\u1ED9 Auto \u0111\u1EC3 ch\u1EA1y m\u00E1y"
+    ]
+  },
+  {
+    "Id": 2,
+    "Message": "DoorOpen",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 284,
+      "Width": 758,
+      "Height": 33
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 1,
+      "Y": 237,
+      "Width": 379,
+      "Height": 18
+    },
+    "TroubleshootingSteps": [
+      "C\u1EEDa m\u00E1y \u0111ang \u0111\u01B0\u1EE3c m\u1EDF",
+      "H\u00E3y \u0111\u1EA3m b\u1EA3o an to\u00E0n khi m\u1EDF c\u1EEDa m\u00E1y"
+    ]
+  },
+  {
+    "Id": 3,
+    "Message": "DoorNotSafetyLock",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 284,
+      "Width": 758,
+      "Height": 33
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 1,
+      "Y": 237,
+      "Width": 379,
+      "Height": 18
+    },
+    "TroubleshootingSteps": [
+      "C\u1EEDa m\u00E1y ch\u01B0a \u0111\u01B0\u1EE3c kh\u00F3a an to\u00E0n",
+      "H\u00E3y kh\u00F3a c\u1EE7a m\u00E1y \u0111\u1EC3 \u0111\u1EA3m b\u1EA3o an to\u00E0n khi m\u00E1y \u0111ang ch\u1EA1y"
+    ]
+  },
+  {
+    "Id": 4,
+    "Message": "LightCurtainLeftDetected",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 2,
+      "Y": 71,
+      "Width": 302,
+      "Height": 105
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 1,
+      "Y": 132,
+      "Width": 130,
+      "Height": 63
+    },
+    "TroubleshootingSteps": [
+      "C\u1EA3m bi\u1EBFn an to\u00E0n (m\u00E0n quang) \u1EDF ph\u00EDa b\u00EAn tr\u00E1i c\u1EE7a m\u00E1y \u0111ang b\u1ECB che ch\u1EAFn ho\u1EB7c c\u00F3 v\u1EADt c\u1EA3n x\u00E2m nh\u1EADp",
+      "H\u00E3y ki\u1EC3m tra c\u1EA3m bi\u1EBFn an to\u00E0n b\u00EAn tr\u00E1i",
+      "H\u00E3y \u0111\u1EA3m b\u1EA3o kh\u00F4ng c\u00F3 v\u1EADt c\u1EA3n n\u00E0o che ch\u1EAFn c\u1EA3m bi\u1EBFn"
+    ]
+  },
+  {
+    "Id": 5,
+    "Message": "LightCurtainRightDetected",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 1,
+      "Y": 224,
+      "Width": 290,
+      "Height": 90
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 3,
+      "Y": 209,
+      "Width": 147,
+      "Height": 42
+    },
+    "TroubleshootingSteps": [
+      "C\u1EA3m bi\u1EBFn an to\u00E0n (m\u00E0n quang) \u1EDF ph\u00EDa b\u00EAn ph\u1EA3i c\u1EE7a m\u00E1y \u0111ang b\u1ECB che ch\u1EAFn ho\u1EB7c c\u00F3 v\u1EADt c\u1EA3n x\u00E2m nh\u1EADp",
+      "H\u00E3y ki\u1EC3m tra c\u1EA3m bi\u1EBFn an to\u00E0n b\u00EAn ph\u1EA3i",
+      "H\u00E3y \u0111\u1EA3m b\u1EA3o kh\u00F4ng c\u00F3 v\u1EADt c\u1EA3n n\u00E0o che ch\u1EAFn c\u1EA3m bi\u1EBFn"
+    ]
+  },
+  {
+    "Id": 6,
+    "Message": "InitializeTimeout",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Qu\u00E1 th\u1EDDi gian Initialize"
+    ]
+  },
+  {
+    "Id": 7,
+    "Message": "UnloadTransferCollisionDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Unload Transfer Left Right ch\u1EA1m v\u00E0o nhau",
+      "Teaching l\u1EA1i v\u1ECB tr\u00ED"
+    ]
+  },
+  {
+    "Id": 100,
+    "Message": "CleanDataError",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra l\u1EA1i th\u00F4ng s\u1ED1 Clean"
+    ]
+  },
+  {
+    "Id": 1000,
+    "Message": "InConveyor",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 1001,
+    "Message": "InConveyor_CST_Position_Error",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 2,
+      "Y": 227,
+      "Width": 78,
+      "Height": 86
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/InputCassetteStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 161,
+      "Y": 153,
+      "Width": 210,
+      "Height": 138
+    },
+    "TroubleshootingSteps": [
+      "V\u1ECB tr\u00ED CST \u1EDF tr\u00EAn c\u1EE5m In Conveyor \u0111ang kh\u00F4ng \u0111\u00FAng",
+      "Ki\u1EC3m tra l\u1EA1i C\u00E1ch \u0111\u1EB7t CST"
+    ]
+  },
+  {
+    "Id": 1002,
+    "Message": "InConveyor_CST_Stopper_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 2,
+      "Y": 227,
+      "Width": 78,
+      "Height": 86
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/InputCassetteStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 161,
+      "Y": 153,
+      "Width": 210,
+      "Height": 138
+    },
+    "TroubleshootingSteps": [
+      "Cylinder Stopper kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input c\u1EE7a Sensor cylinder, ki\u1EC3m tra output c\u1EE7a cylinder (sol, d\u00E2y kh\u00ED, fitting",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 1003,
+    "Message": "InConveyor_CST_Stopper_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 2,
+      "Y": 227,
+      "Width": 78,
+      "Height": 86
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/InputCassetteStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 161,
+      "Y": 153,
+      "Width": 210,
+      "Height": 138
+    },
+    "TroubleshootingSteps": [
+      "Cylinder Stopper kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input c\u1EE7a Sensor cylinder, ki\u1EC3m tra output c\u1EE7a cylinder (sol, d\u00E2y kh\u00ED, fitting",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 2000,
+    "Message": "InWorkConveyor",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 2001,
+    "Message": "InWorkConveyorCSTNotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 73,
+      "Y": 228,
+      "Width": 98,
+      "Height": 70
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/LoadWorkCassetteStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 320,
+      "Height": 266
+    },
+    "TroubleshootingSteps": [
+      "V\u1ECB tr\u00ED CST \u1EDF tr\u00EAn c\u1EE5m In Conveyor \u0111ang kh\u00F4ng \u0111\u00FAng",
+      "Ki\u1EC3m tra l\u1EA1i c\u00E1ch \u0111\u1EB7t CST"
+    ]
+  },
+  {
+    "Id": 2002,
+    "Message": "InWorkConveyor_TiltCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 73,
+      "Y": 228,
+      "Width": 98,
+      "Height": 70
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/LoadWorkCassetteStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 320,
+      "Height": 266
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input c\u1EE7a Sensor cylinder, ki\u1EC3m tra output c\u1EE7a cylinder(sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 2003,
+    "Message": "InWorkConveyor_TiltCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 73,
+      "Y": 228,
+      "Width": 98,
+      "Height": 70
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/LoadWorkCassetteStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 320,
+      "Height": 266
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input c\u1EE7a Sensor cylinder, ki\u1EC3m tra output c\u1EE7a cylinder(sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 2004,
+    "Message": "InWorkConveyor_SupportCV_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 73,
+      "Y": 228,
+      "Width": 98,
+      "Height": 70
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/LoadWorkCassetteStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 320,
+      "Height": 266
+    },
+    "TroubleshootingSteps": [
+      "L\u1ED7i InConveyor kh\u00F4ng ho\u1EA1t \u0111\u1ED9ng",
+      "T\u1EA1i tr\u1EA1m l\u00E0m vi\u1EC7c tr\u00EAn b\u0103ng t\u1EA3i, c\u01A1 c\u1EA5u n\u00E2ng (ho\u1EB7c c\u1EE5m Support) \u0111\u00E3 \u0111\u01B0\u1EE3c k\u00EDch ho\u1EA1t \u0111i l\u00EAn, nh\u01B0ng c\u1EA3m bi\u1EBFn b\u00E1o v\u1ECB tr\u00ED \u0027L\u00EAn\u0027 (Up Sensor) kh\u00F4ng b\u1EADt sau m\u1ED9t kho\u1EA3ng th\u1EDDi gian ch\u1EDD (Timeout).",
+      "Ki\u1EC3m tra Kh\u00ED n\u00E9n, Ki\u1EC3m tra C\u1EA3m bi\u1EBFn"
+    ]
+  },
+  {
+    "Id": 2005,
+    "Message": "InWorkConveyor_SupportCV_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 73,
+      "Y": 228,
+      "Width": 98,
+      "Height": 70
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/LoadWorkCassetteStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 320,
+      "Height": 266
+    },
+    "TroubleshootingSteps": [
+      "L\u1ED7i InConveyor kh\u00F4ng ho\u1EA1t \u0111\u1ED9ng",
+      "T\u1EA1i tr\u1EA1m l\u00E0m vi\u1EC7c tr\u00EAn b\u0103ng t\u1EA3i, c\u01A1 c\u1EA5u n\u00E2ng (ho\u1EB7c c\u1EE5m Support) \u0111\u00E3 \u0111\u01B0\u1EE3c k\u00EDch ho\u1EA1t \u0111i l\u00EAn, nh\u01B0ng c\u1EA3m bi\u1EBFn b\u00E1o v\u1ECB tr\u00ED \u0027L\u00EAn\u0027 (Up Sensor) kh\u00F4ng b\u1EADt sau m\u1ED9t kho\u1EA3ng th\u1EDDi gian ch\u1EDD (Timeout).",
+      "Ki\u1EC3m tra Kh\u00ED n\u00E9n, Ki\u1EC3m tra C\u1EA3m bi\u1EBFn"
+    ]
+  },
+  {
+    "Id": 2006,
+    "Message": "InWorkConveyor_AlignCylinder_Backward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 73,
+      "Y": 228,
+      "Width": 98,
+      "Height": 70
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/LoadWorkCassetteStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 320,
+      "Height": 266
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a sensor cylinder(sol, d\u00E2y kh\u00ED, fitting)",
+      "ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 2007,
+    "Message": "InWorkConveyor_AlignCylinder_Forward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 73,
+      "Y": 228,
+      "Width": 98,
+      "Height": 70
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/LoadWorkCassetteStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 320,
+      "Height": 266
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a sensor cylinder(sol, d\u00E2y kh\u00ED, fitting)",
+      "ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 2008,
+    "Message": "InWorkConveyor_CSTSensorStatus_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 73,
+      "Y": 228,
+      "Width": 98,
+      "Height": 70
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/LoadWorkCassetteStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 320,
+      "Height": 266
+    },
+    "TroubleshootingSteps": [
+      "V\u1ECB tr\u00ED CST \u0111ang kh\u00F4ng \u0111\u00FAng, c\u00F3 th\u1EC3 sensor detect fixture \u0111ang kh\u00F4ng \u0111\u00FAng",
+      "Ki\u1EC3m tra l\u1EA1i c\u00E1ch \u0111\u1EB7t CST v\u00E0 fixture"
+    ]
+  },
+  {
+    "Id": 3000,
+    "Message": "BufferConveyor",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 3001,
+    "Message": "BufferConveyor_CST_Position_Error",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 78,
+      "Y": 157,
+      "Width": 86,
+      "Height": 73
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/BufferCV.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 4,
+      "Y": 51,
+      "Width": 365,
+      "Height": 293
+    },
+    "TroubleshootingSteps": [
+      "V\u1ECB tr\u00ED CST \u0111ang kh\u00F4ng \u0111\u00FAng",
+      "Ki\u1EC3m tra l\u1EA1i c\u00E1ch \u0111\u1EB7t CST"
+    ]
+  },
+  {
+    "Id": 3002,
+    "Message": "BufferConveyor_Stopper1_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 76,
+      "Y": 151,
+      "Width": 90,
+      "Height": 83
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/BufferCV.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 2,
+      "Y": 51,
+      "Width": 378,
+      "Height": 298
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a cylinder(sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 3003,
+    "Message": "BufferConveyor_Stopper1_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 76,
+      "Y": 151,
+      "Width": 90,
+      "Height": 83
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/BufferCV.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 2,
+      "Y": 51,
+      "Width": 378,
+      "Height": 298
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a cylinder(sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 3004,
+    "Message": "BufferConveyor_Stopper2_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 76,
+      "Y": 151,
+      "Width": 90,
+      "Height": 83
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/BufferCV.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 2,
+      "Y": 51,
+      "Width": 378,
+      "Height": 298
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a cylinder(sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 3005,
+    "Message": "BufferConveyor_Stopper2_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 76,
+      "Y": 151,
+      "Width": 90,
+      "Height": 83
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/BufferCV.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 2,
+      "Y": 51,
+      "Width": 378,
+      "Height": 298
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a cylinder(sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 3006,
+    "Message": "BufferConveyor_Stopper_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 76,
+      "Y": 151,
+      "Width": 90,
+      "Height": 83
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/BufferCV.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 2,
+      "Y": 51,
+      "Width": 378,
+      "Height": 298
+    },
+    "TroubleshootingSteps": [
+      "V\u1ECB tr\u00ED CST \u0111ang kh\u00F4ng \u0111\u00FAng",
+      "Ki\u1EC3m tra l\u1EA1i c\u00E0i \u0111\u1EB7t CST"
+    ]
+  },
+  {
+    "Id": 3007,
+    "Message": "BufferConveyor_Stopper_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 76,
+      "Y": 151,
+      "Width": 90,
+      "Height": 83
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/BufferCV.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 2,
+      "Y": 51,
+      "Width": 378,
+      "Height": 298
+    },
+    "TroubleshootingSteps": [
+      "V\u1ECB tr\u00ED CST \u0111ang kh\u00F4ng \u0111\u00FAng",
+      "Ki\u1EC3m tra l\u1EA1i c\u00E0i \u0111\u1EB7t CST"
+    ]
+  },
+  {
+    "Id": 3008,
+    "Message": "BufferConveyor_CSTSensorStatus_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 76,
+      "Y": 151,
+      "Width": 90,
+      "Height": 83
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/BufferCV.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 2,
+      "Y": 51,
+      "Width": 378,
+      "Height": 298
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra sensor detect"
+    ]
+  },
+  {
+    "Id": 4000,
+    "Message": "OutWorkConveyor",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 4001,
+    "Message": "OutWorkConveyorCSTNotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 76,
+      "Y": 151,
+      "Width": 90,
+      "Height": 83
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/BufferCV.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 2,
+      "Y": 51,
+      "Width": 378,
+      "Height": 298
+    },
+    "TroubleshootingSteps": [
+      "V\u1ECB tr\u00ED CST \u0111ang kh\u00F4ng \u0111\u00FAng",
+      "Ki\u1EC3m tra l\u1EA1i c\u00E0i \u0111\u1EB7t CST"
+    ]
+  },
+  {
+    "Id": 4002,
+    "Message": "OutWorkConveyor_TiltCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 75,
+      "Y": 77,
+      "Width": 90,
+      "Height": 78
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/OUT_CST_Work.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 15,
+      "Y": 1,
+      "Width": 354,
+      "Height": 389
+    },
+    "TroubleshootingSteps": [
+      "Cylinder CST \u0111ang kh\u00F4ng \u0111\u00FAng",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 4003,
+    "Message": "OutWorkConveyor_TiltCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 75,
+      "Y": 77,
+      "Width": 90,
+      "Height": 78
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/OUT_CST_Work.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 15,
+      "Y": 1,
+      "Width": 354,
+      "Height": 389
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 4004,
+    "Message": "OutWorkConveyor_SupportCV_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 75,
+      "Y": 77,
+      "Width": 90,
+      "Height": 78
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/OUT_CST_Work.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 15,
+      "Y": 1,
+      "Width": 354,
+      "Height": 389
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 4005,
+    "Message": "OutWorkConveyor_SupportCV_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 75,
+      "Y": 77,
+      "Width": 90,
+      "Height": 78
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/OUT_CST_Work.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 15,
+      "Y": 1,
+      "Width": 354,
+      "Height": 389
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 4006,
+    "Message": "OutWorkConveyor_AlignCylinder_Backward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 75,
+      "Y": 77,
+      "Width": 90,
+      "Height": 78
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/OUT_CST_Work.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 15,
+      "Y": 1,
+      "Width": 354,
+      "Height": 389
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 4007,
+    "Message": "OutWorkConveyor_AlignCylinder_Forward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 75,
+      "Y": 77,
+      "Width": 90,
+      "Height": 78
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/OUT_CST_Work.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 15,
+      "Y": 1,
+      "Width": 354,
+      "Height": 389
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 4008,
+    "Message": "OutWorkConveyor_CSTSensorStatus_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 75,
+      "Y": 77,
+      "Width": 90,
+      "Height": 78
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/OUT_CST_Work.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 15,
+      "Y": 1,
+      "Width": 354,
+      "Height": 389
+    },
+    "TroubleshootingSteps": [
+      "V\u1ECB tr\u00ED CST \u0111ang kh\u00F4ng \u0111\u00FAng, c\u00F3 th\u1EC3 sensor detect fixture \u0111ang kh\u00F4ng \u0111\u00FAng",
+      "Ki\u1EC3m tra l\u1EA1i c\u00E1ch \u0111\u1EB7t CST v\u00E0 fixture"
+    ]
+  },
+  {
+    "Id": 5000,
+    "Message": "OutConveyor",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 5001,
+    "Message": "OutConveyor_Stopper_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 68,
+      "Y": 73,
+      "Width": 146,
+      "Height": 278
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/RollerCVSupport4.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 24,
+      "Y": 4,
+      "Width": 329,
+      "Height": 333
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 5002,
+    "Message": "OutConveyor_Stopper_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 68,
+      "Y": 73,
+      "Width": 146,
+      "Height": 278
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/01.CSTLoadUnload/RollerCVSupport4.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 24,
+      "Y": 4,
+      "Width": 329,
+      "Height": 333
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 6000,
+    "Message": "VinylClean",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 6001,
+    "Message": "VinylClean_Fixture_NotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 169,
+      "Y": 232,
+      "Width": 62,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/VinylClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 20,
+      "Y": 25,
+      "Width": 342,
+      "Height": 353
+    },
+    "TroubleshootingSteps": [
+      "c\u00F3 th\u1EC3 Robot \u0111\u1EB7t k\u00EAnh Fixture",
+      "Ki\u1EC3m tra l\u1EA1i Robot"
+    ]
+  },
+  {
+    "Id": 6002,
+    "Message": "VinylClean_ClampCylinder_Clamp_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 169,
+      "Y": 232,
+      "Width": 62,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/VinylClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 20,
+      "Y": 25,
+      "Width": 342,
+      "Height": 353
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 6003,
+    "Message": "VinylClean_ClampCylinder_UnClamp_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 169,
+      "Y": 232,
+      "Width": 62,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/VinylClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 20,
+      "Y": 25,
+      "Width": 342,
+      "Height": 353
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 6004,
+    "Message": "VinylClean_PusherCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 169,
+      "Y": 232,
+      "Width": 62,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/VinylClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 20,
+      "Y": 25,
+      "Width": 342,
+      "Height": 353
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 6005,
+    "Message": "VinylClean_PusherCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 169,
+      "Y": 232,
+      "Width": 62,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/VinylClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 20,
+      "Y": 25,
+      "Width": 342,
+      "Height": 353
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 6006,
+    "Message": "VinylClean_RollerBwFwCylinder_Backward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 169,
+      "Y": 232,
+      "Width": 62,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/VinylClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 20,
+      "Y": 25,
+      "Width": 342,
+      "Height": 353
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 6007,
+    "Message": "VinylClean_RollerBwFwCylinder_Forward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 169,
+      "Y": 232,
+      "Width": 62,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/VinylClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 20,
+      "Y": 25,
+      "Width": 342,
+      "Height": 353
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 6008,
+    "Message": "VinylClean_Full_Detect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 169,
+      "Y": 232,
+      "Width": 62,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/VinylClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 20,
+      "Y": 25,
+      "Width": 342,
+      "Height": 353
+    },
+    "TroubleshootingSteps": [
+      "Cu\u1ED9n Vinyl \u0111\u00E3 lau h\u1EBFt",
+      "C\u1EA7n thay m\u1EDBi cu\u1ED9n Vinyl"
+    ]
+  },
+  {
+    "Id": 6009,
+    "Message": "VinylClean_Vinyl_NotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 169,
+      "Y": 232,
+      "Width": 62,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/VinylClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 20,
+      "Y": 25,
+      "Width": 342,
+      "Height": 353
+    },
+    "TroubleshootingSteps": [
+      "Cu\u1ED9n Vinyl \u0111\u00E3 lau h\u1EBFt",
+      "C\u1EA7n thay m\u1EDBi cu\u1ED9n Vinyl"
+    ]
+  },
+  {
+    "Id": 7000,
+    "Message": "RobotLoad",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 7001,
+    "Message": "RobotLoad_Connect_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "PC kh\u00F4ng k\u1EBFt n\u1ED1i \u0111\u01B0\u1EE3c v\u1EDBi Robot",
+      "Ki\u1EC3m tra k\u1EBFt n\u1ED1i"
+    ]
+  },
+  {
+    "Id": 7002,
+    "Message": "RobotLoad_Programing_Not_Running",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra Robot"
+    ]
+  },
+  {
+    "Id": 7003,
+    "Message": "RobotLoad_OriginFixtureDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "Robot v\u1EC1 Origin v\u00E0 v\u1EABn \u0111ang k\u1EB9p Fixture",
+      "C\u1EA7n x\u1EED l\u00FD thao t\u00E1c tay l\u1EA5y Fixture ra an to\u00E0n"
+    ]
+  },
+  {
+    "Id": 7004,
+    "Message": "RobotLoad_Home_Manual_By_TeachingPendant",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "Robot \u0111ang \u1EDF v\u1ECB tr\u00ED kh\u00F4ng t\u1ED1t \u0111\u1EC3 v\u1EC1 home",
+      "H\u00E3y v\u1EC1 home/origin b\u1EB1ng Teaching pendant tr\u01B0\u1EDBc"
+    ]
+  },
+  {
+    "Id": 7005,
+    "Message": "RobotLoad_Cylinder_Clamp_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 7006,
+    "Message": "RobotLoad_Cylinder_UnClamp_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 7007,
+    "Message": "RobotLoad_Cylinder_Align_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 7008,
+    "Message": "RobotLoad_Cylinder_UnAlign_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 7009,
+    "Message": "RobotLoad_SetModel_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "Kh\u00F4ng g\u1EEDi \u0111\u01B0\u1EE3c model cho robot",
+      "Ki\u1EC3m tra model trong DataView"
+    ]
+  },
+  {
+    "Id": 7010,
+    "Message": "RobotLoad_GetLastPosition_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "Robot hi\u1EC7n kh\u00F4ng bi\u1EBFt v\u1ECB tr\u00ED hi\u1EC7n t\u1EA1i \u1EDF v\u1ECB tr\u00ED n\u00E0o",
+      "Ki\u1EC3m tra model trong DataView"
+    ]
+  },
+  {
+    "Id": 7011,
+    "Message": "RobotLoad_No_Ready_Response",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "Robot hi\u1EC7n \u0111ang kh\u00F4ng Read",
+      "H\u00E3y v\u1EC1 home/origin b\u1EB1ng Teaching pendant tr\u01B0\u1EDBc"
+    ]
+  },
+  {
+    "Id": 7012,
+    "Message": "RobotLoad_SetCassettePitch_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "Th\u00F4ng s\u1ED1 CST Pitch \u0111ang c\u00F3 v\u1EA5n \u0111\u1EC1",
+      "Ki\u1EC3m tra l\u1EA1i th\u00F4ng s\u1ED1 CST pitch"
+    ]
+  },
+  {
+    "Id": 7013,
+    "Message": "RobotLoad_SendMotionCommand_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "Kh\u00F4ng g\u1EEDi \u0111\u01B0\u1EE3c l\u1EC7nh move robot",
+      "Ki\u1EC3m tra l\u1EA1i \u0111i\u1EC3m teching robot"
+    ]
+  },
+  {
+    "Id": 7014,
+    "Message": "RobotLoad_Stop_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "\u0110\u1EC3 robot d\u1EEBng chu\u1EA9n b\u1ECB qu\u00E1 th\u1EDDi gian",
+      "Ki\u1EC3m tra robot"
+    ]
+  },
+  {
+    "Id": 7015,
+    "Message": "RobotLoad_SafetyFenceSwitch_Not_Active",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "Robot \u0111ang \u1EDF ch\u1EBF \u0111\u1ED9 T1",
+      "Set robot v\u1EC1 ch\u1EBF \u0111\u1ED9 External"
+    ]
+  },
+  {
+    "Id": 7016,
+    "Message": "RobotLoad_Automatic_External_Not_active",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "Robot \u0111ang kh\u00F4ng set ch\u1EBF \u0111\u1ED9 External",
+      "Set robot v\u1EC1 ch\u1EBF \u0111\u1ED9 External"
+    ]
+  },
+  {
+    "Id": 7017,
+    "Message": "RobotLoad_FixtureStatusAbnormal",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 172,
+      "Y": 143,
+      "Width": 56,
+      "Height": 75
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/LoadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 39,
+      "Y": 15,
+      "Width": 320,
+      "Height": 342
+    },
+    "TroubleshootingSteps": [
+      "Robot \u0111ang k\u1EB9p fixture nh\u01B0ng nh\u1EEFng Unit kh\u00E1c \u0111\u00E3 h\u1EBFt ch\u1ED7 \u0111\u1EC3 \u0111\u1EB7t",
+      "C\u1EA7n thao t\u00E1c x\u1EED l\u00FD tay \u0111\u1EC3 l\u1EA5y b\u1EDBt ra"
+    ]
+  },
+  {
+    "Id": 8000,
+    "Message": "FixtureAlign",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 8001,
+    "Message": "FixtureAlign_Fixture_TiltDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 244,
+      "Y": 226,
+      "Width": 46,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/AlignFixture.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 367,
+      "Y": 366,
+      "Width": 2,
+      "Height": 5
+    },
+    "TroubleshootingSteps": [
+      "Fixture b\u1ECB \u0111\u1EB7t ng\u01B0\u1EE3c, c\u00F3 th\u1EC3 d\u1EABn \u0111\u1EBFn vi\u1EC7c khi Detach th\u00EC v\u1EE1 k\u00EDnh",
+      "Ki\u1EC3m tra l\u1EA1i"
+    ]
+  },
+  {
+    "Id": 8002,
+    "Message": "FixtureAlign_Fixture_ReverseDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 244,
+      "Y": 226,
+      "Width": 46,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/AlignFixture.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 367,
+      "Y": 366,
+      "Width": 2,
+      "Height": 5
+    },
+    "TroubleshootingSteps": [
+      "Fixture b\u1ECB \u0111\u1EB7t ng\u01B0\u1EE3c, c\u00F3 th\u1EC3 d\u1EABn \u0111\u1EBFn vi\u1EC7c khi Detach th\u00EC v\u1EE1 k\u00EDnh",
+      "Ki\u1EC3m tra l\u1EA1i"
+    ]
+  },
+  {
+    "Id": 8003,
+    "Message": "FixtureAlign_Fixture_NotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 244,
+      "Y": 226,
+      "Width": 46,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/AlignFixture.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 367,
+      "Y": 366,
+      "Width": 2,
+      "Height": 5
+    },
+    "TroubleshootingSteps": [
+      " Kh\u00F4ng Detect \u0111\u01B0\u1EE3c fixture khi robot  v\u1EEBa \u0111\u1EB7t Fixture",
+      "Ki\u1EC3m tra l\u1EA1i"
+    ]
+  },
+  {
+    "Id": 8004,
+    "Message": "FixtureAlign_AlignCylinder_Backward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 244,
+      "Y": 226,
+      "Width": 46,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/AlignFixture.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 367,
+      "Y": 366,
+      "Width": 2,
+      "Height": 5
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 8005,
+    "Message": "FixtureAlign_AlignCylinder_Forward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 244,
+      "Y": 226,
+      "Width": 46,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/AlignFixture.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 367,
+      "Y": 366,
+      "Width": 2,
+      "Height": 5
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 9000,
+    "Message": "TransferFixture",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 9001,
+    "Message": "TransferFixtureOriginFixtureDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 202,
+      "Y": 111,
+      "Width": 44,
+      "Height": 187
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/TransferFixture2.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 28,
+      "Y": 70,
+      "Width": 338,
+      "Height": 208
+    },
+    "TroubleshootingSteps": [
+      "Move \u0111\u1EBFn v\u1ECB tr\u00ED Load l\u1ED7i",
+      "C\u00F3 th\u1EC3 c\u00F3 va ch\u1EA1m"
+    ]
+  },
+  {
+    "Id": 9002,
+    "Message": "TransferFixture_UpDownCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 202,
+      "Y": 111,
+      "Width": 44,
+      "Height": 187
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/TransferFixture2.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 28,
+      "Y": 70,
+      "Width": 338,
+      "Height": 208
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 9003,
+    "Message": "TransferFixture_UpDownCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 202,
+      "Y": 111,
+      "Width": 44,
+      "Height": 187
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/TransferFixture2.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 28,
+      "Y": 70,
+      "Width": 338,
+      "Height": 208
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 9004,
+    "Message": "TransferFixture_ClampCylinder_Clamp_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 202,
+      "Y": 111,
+      "Width": 44,
+      "Height": 187
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/TransferFixture2.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 28,
+      "Y": 70,
+      "Width": 338,
+      "Height": 208
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 9005,
+    "Message": "TransferFixture_ClampCylinder_UnClamp_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 202,
+      "Y": 111,
+      "Width": 44,
+      "Height": 187
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/TransferFixture2.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 28,
+      "Y": 70,
+      "Width": 338,
+      "Height": 208
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input/output c\u1EE7a Cylinder (sol, d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 9006,
+    "Message": "TransferFixture_TransHand1_MayContainsFixture",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 202,
+      "Y": 111,
+      "Width": 44,
+      "Height": 187
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/TransferFixture2.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 28,
+      "Y": 70,
+      "Width": 338,
+      "Height": 208
+    },
+    "TroubleshootingSteps": [
+      "Manual \u0111\u1EC3 x\u00E1c nh\u1EADn l\u1EA1i Fixture c\u00F3 n\u1EB1m tr\u00EAn tay k\u1EB9p kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 9007,
+    "Message": "TransferFixture_TransHand2_MayContainsFixture",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 202,
+      "Y": 111,
+      "Width": 44,
+      "Height": 187
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/TransferFixture2.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 28,
+      "Y": 70,
+      "Width": 338,
+      "Height": 208
+    },
+    "TroubleshootingSteps": [
+      "Manual \u0111\u1EC3 x\u00E1c nh\u1EADn l\u1EA1i Fixture c\u00F3 n\u1EB1m tr\u00EAn tay k\u1EB9p kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 10000,
+    "Message": "Detach",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 10001,
+    "Message": "DetachFail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 236,
+      "Y": 161,
+      "Width": 173,
+      "Height": 62
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/Detach.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 12,
+      "Y": 41,
+      "Width": 367,
+      "Height": 287
+    },
+    "TroubleshootingSteps": [
+      "Detach l\u1ED7i, c\u1EA7n thao t\u00E1c tay g\u1EE1 k\u00EDnh ra"
+    ]
+  },
+  {
+    "Id": 10002,
+    "Message": "Detach_ClampCylinder_Backward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 236,
+      "Y": 161,
+      "Width": 173,
+      "Height": 62
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/Detach.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 12,
+      "Y": 41,
+      "Width": 367,
+      "Height": 287
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 10003,
+    "Message": "Detach_ClampCylinder_Forward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 236,
+      "Y": 161,
+      "Width": 173,
+      "Height": 62
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/Detach.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 12,
+      "Y": 41,
+      "Width": 367,
+      "Height": 287
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 10004,
+    "Message": "Detach_DetachCylinder1_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 236,
+      "Y": 161,
+      "Width": 173,
+      "Height": 62
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/Detach.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 12,
+      "Y": 41,
+      "Width": 367,
+      "Height": 287
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 10005,
+    "Message": "Detach_DetachCylinder1_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 236,
+      "Y": 161,
+      "Width": 173,
+      "Height": 62
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/Detach.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 12,
+      "Y": 41,
+      "Width": 367,
+      "Height": 287
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 10006,
+    "Message": "Detach_DetachCylinder2_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 236,
+      "Y": 161,
+      "Width": 173,
+      "Height": 62
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/Detach.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 12,
+      "Y": 41,
+      "Width": 367,
+      "Height": 287
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Forward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 10007,
+    "Message": "Detach_DetachCylinder2_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 236,
+      "Y": 161,
+      "Width": 173,
+      "Height": 62
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/Detach.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 12,
+      "Y": 41,
+      "Width": 367,
+      "Height": 287
+    },
+    "TroubleshootingSteps": [
+      "Cylinder kh\u00F4ng Backward \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 10008,
+    "Message": "Detach_Shuttle_Status_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 236,
+      "Y": 161,
+      "Width": 173,
+      "Height": 62
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/Detach.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 12,
+      "Y": 41,
+      "Width": 367,
+      "Height": 287
+    },
+    "TroubleshootingSteps": [
+      "Ch\u01B0a ch\u1EAFc ch\u1EAFn Detach \u0111\u00E3 OK ch\u01B0a v\u00EC Vacum b\u00E0n Shuttle ch\u1EC9 nh\u1EADn 2 Glass",
+      "C\u1EA7n t\u1EAFt h\u1EBFt Vacuum \u0111\u1EC3 Detach l\u1EA1i"
+    ]
+  },
+  {
+    "Id": 11000,
+    "Message": "RemoveFilm",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 11001,
+    "Message": "RemoveFilm_ClampCylinder_UnClamp_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 11002,
+    "Message": "RemoveFilm_ClampCylinder_Clamp_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 11003,
+    "Message": "RemoveFilm_TransferCylinder_Backward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 11004,
+    "Message": "RemoveFilm_TransferCylinder_Forward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 11005,
+    "Message": "RemoveFilm_UpDownCylinder1_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 11006,
+    "Message": "RemoveFilm_UpDownCylinder1_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 11007,
+    "Message": "RemoveFilm_UpDownCylinder2_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 11008,
+    "Message": "RemoveFilm_UpDownCylinder2_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 11009,
+    "Message": "RemoveFilm_PusherCylinder1_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 11010,
+    "Message": "RemoveFilm_PusherCylinder1_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 11011,
+    "Message": "RemoveFilm_PusherCylinder2_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 11012,
+    "Message": "RemoveFilm_PusherCylinder2_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 11013,
+    "Message": "RemoveFilm_FilmClampCylinder_Clamp_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 11014,
+    "Message": "RemoveFilm_FilmClampCylinder_UnClamp_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 11015,
+    "Message": "RemoveFilm_Full_Tape",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "\u0110\u1EA7y th\u00F9ng r\u00E1c b\u0103ng Tape"
+    ]
+  },
+  {
+    "Id": 11016,
+    "Message": "RemoveFilm_Fixture_NotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Kh\u00F4ng nh\u1EADn \u0111\u01B0\u1EE3c Fixture khi \u0111\u00E3 Transfer xong",
+      "Ki\u1EC3m tra l\u1EA1i thao t\u00E1c manual"
+    ]
+  },
+  {
+    "Id": 12000,
+    "Message": "GlassTransfer",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 12001,
+    "Message": "GlassTransfer_UpDownCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 12002,
+    "Message": "GlassTransfer_UpDownCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 12003,
+    "Message": "GlassTransfer_Vacuum_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra h\u00FAt \u0111\u00E3 \u0111\u1EA1t ch\u01B0a, N\u1EBFu ch\u01B0a th\u00EC c\u00F3 th\u1EC3 Teaching l\u1EA1i",
+      "Ki\u1EC3m tra vacuum, c\u01A1 kh\u00ED"
+    ]
+  },
+  {
+    "Id": 13000,
+    "Message": "GlassAlignLeft",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 13001,
+    "Message": "GlassAlignLeft_AlignCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/AlertImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 374,
+      "Y": 48,
+      "Width": 24,
+      "Height": 22
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AlignStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 4,
+      "Y": 29,
+      "Width": 289,
+      "Height": 174
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra Cylinder"
+    ]
+  },
+  {
+    "Id": 13002,
+    "Message": "GlassAlignLeft_AlignCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/AlertImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 374,
+      "Y": 48,
+      "Width": 24,
+      "Height": 22
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AlignStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 4,
+      "Y": 29,
+      "Width": 289,
+      "Height": 174
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra Cylinder"
+    ]
+  },
+  {
+    "Id": 13003,
+    "Message": "GlassAlignLeft_GlassNotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/AlertImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 374,
+      "Y": 52,
+      "Width": 23,
+      "Height": 17
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AlignStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 10,
+      "Y": 37,
+      "Width": 269,
+      "Height": 127
+    },
+    "TroubleshootingSteps": [
+      "Kh\u00F4ng Detect \u0111\u01B0\u1EE3c k\u00EDnh"
+    ]
+  },
+  {
+    "Id": 13004,
+    "Message": "GlassAlignLeft_BrushCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/AlertImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 374,
+      "Y": 52,
+      "Width": 23,
+      "Height": 17
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AlignStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 3,
+      "Y": 119,
+      "Width": 104,
+      "Height": 119
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra cylinder"
+    ]
+  },
+  {
+    "Id": 13005,
+    "Message": "GlassAlignLeft_BrushCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/AlertImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 374,
+      "Y": 52,
+      "Width": 23,
+      "Height": 17
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AlignStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 3,
+      "Y": 119,
+      "Width": 104,
+      "Height": 119
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra cylinder"
+    ]
+  },
+  {
+    "Id": 13006,
+    "Message": "GlassAlignLeft_Vacuum_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/AlertImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 374,
+      "Y": 52,
+      "Width": 23,
+      "Height": 17
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AlignStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 7,
+      "Y": 25,
+      "Width": 295,
+      "Height": 282
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra Vacuum"
+    ]
+  },
+  {
+    "Id": 14000,
+    "Message": "GlassAlignRight",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 14001,
+    "Message": "GlassAlignRight_AlignCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/AlertImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 374,
+      "Y": 94,
+      "Width": 18,
+      "Height": 19
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AlignStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 3,
+      "Y": 27,
+      "Width": 291,
+      "Height": 196
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra Cylinder"
+    ]
+  },
+  {
+    "Id": 14002,
+    "Message": "GlassAlignRight_AlignCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/AlertImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 374,
+      "Y": 94,
+      "Width": 18,
+      "Height": 19
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AlignStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 3,
+      "Y": 27,
+      "Width": 291,
+      "Height": 196
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra Cylinder"
+    ]
+  },
+  {
+    "Id": 14003,
+    "Message": "GlassAlignRight_GlassNotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/AlertImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 374,
+      "Y": 94,
+      "Width": 18,
+      "Height": 19
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AlignStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 3,
+      "Y": 27,
+      "Width": 291,
+      "Height": 196
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra Cylinder"
+    ]
+  },
+  {
+    "Id": 14004,
+    "Message": "GlassAlignRight_BrushCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/AlertImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 374,
+      "Y": 94,
+      "Width": 18,
+      "Height": 19
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AlignStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 3,
+      "Y": 121,
+      "Width": 109,
+      "Height": 112
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra Cylinder"
+    ]
+  },
+  {
+    "Id": 14005,
+    "Message": "GlassAlignRight_BrushCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/AlertImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 374,
+      "Y": 94,
+      "Width": 18,
+      "Height": 19
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AlignStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 3,
+      "Y": 121,
+      "Width": 109,
+      "Height": 112
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra Cylinder"
+    ]
+  },
+  {
+    "Id": 14006,
+    "Message": "GlassAlignRight_Vacuum_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/AlertImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 374,
+      "Y": 94,
+      "Width": 18,
+      "Height": 19
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AlignStage.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 3,
+      "Y": 28,
+      "Width": 297,
+      "Height": 278
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra Vacuum"
+    ]
+  },
+  {
+    "Id": 15000,
+    "Message": "TransferInShuttleLeft",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 15001,
+    "Message": "TransferInShuttleLeft_RotateCylinder_180D_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 15002,
+    "Message": "TransferInShuttleLeft_RotateCylinder_0D_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 15003,
+    "Message": "TransferInShuttleLeft_Vacuum_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra h\u00FAt \u0111\u00E3 \u0111\u1EA1t ch\u01B0a, N\u1EBFu ch\u01B0a th\u00EC c\u00F3 th\u1EC3 Teaching l\u1EA1i,",
+      "Ki\u1EC3m tra vacuum, c\u01A1 kh\u00ED"
+    ]
+  },
+  {
+    "Id": 15004,
+    "Message": "TransferInShuttleLeft_ZAxis_MoveReady_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 15005,
+    "Message": "TransferInShuttleLeft_YAxis_MoveReady_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 15006,
+    "Message": "TransferInShuttleLeft_BrushCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 15007,
+    "Message": "TransferInShuttleLeft_BrushCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 241,
+      "Y": 96,
+      "Width": 57,
+      "Height": 65
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/02.Detach/RemoveZone.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 33,
+      "Y": 8,
+      "Width": 322,
+      "Height": 382
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 16000,
+    "Message": "TransferInShuttleRight",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 16001,
+    "Message": "TransferInShuttleRight_RotateCylinder_180D_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 330,
+      "Y": 205,
+      "Width": 49,
+      "Height": 97
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/InShuttle.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 16002,
+    "Message": "TransferInShuttleRight_RotateCylinder_0D_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 330,
+      "Y": 205,
+      "Width": 49,
+      "Height": 97
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/InShuttle.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 16003,
+    "Message": "TransferInShuttleRight_Vacuum_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 330,
+      "Y": 205,
+      "Width": 49,
+      "Height": 97
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/InShuttle.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra h\u00FAt \u0111\u00E3 \u0111\u1EA1t ch\u01B0a, n\u1EBFu ch\u01B0a th\u00EC c\u00F3 th\u1EC3 Teaching l\u1EA1i",
+      "Ki\u1EC3m tra vacuum, c\u01A1 kh\u00ED"
+    ]
+  },
+  {
+    "Id": 16004,
+    "Message": "TransferInShuttleRight_ZAxis_MoveReady_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 16005,
+    "Message": "TransferInShuttleRight_YAxis_MoveReady_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 16006,
+    "Message": "TransferInShuttleRight_BrushCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 330,
+      "Y": 205,
+      "Width": 49,
+      "Height": 97
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/InShuttle.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 16007,
+    "Message": "TransferInShuttleRight_BrushCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 330,
+      "Y": 205,
+      "Width": 49,
+      "Height": 97
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/InShuttle.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 17000,
+    "Message": "WETCleanLeft",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 17001,
+    "Message": "WETCleanLeft_PusherCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 17002,
+    "Message": "WETCleanLeft_PusherCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 17003,
+    "Message": "WETCleanLeft_FeedingRoller_NotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Kh\u00F4ng c\u00F3 cu\u1ED9n lau",
+      "Thay m\u1EB7t cu\u1ED9n lau"
+    ]
+  },
+  {
+    "Id": 17004,
+    "Message": "WETCleanLeft_WiperClean_NotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "H\u1EBFt cu\u1ED9n lau, h\u00E3y thay cu\u1ED9n m\u1EDBi"
+    ]
+  },
+  {
+    "Id": 17005,
+    "Message": "WETCleanLeft_PumpLeak_Detect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "R\u00F2 dung d\u1ECBch, h\u00E3y ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 17006,
+    "Message": "WETCleanLeft_AlcoholLeak_Detect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "R\u00F2 dung d\u1ECBch",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 17007,
+    "Message": "WETCleanLeft_ClampCylinder_Clamp_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 17008,
+    "Message": "WETCleanLeft_ClampCylinder_Unclamp_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 17009,
+    "Message": "WETCleanLeft_Vacuum_Detect_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "B\u00E0n Shuttle kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c k\u00EDnh",
+      "C\u1EA7n ki\u1EC3m tra l\u1EA1i"
+    ]
+  },
+  {
+    "Id": 17010,
+    "Message": "Shuttle_Left_XAxis_Collision_Detect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "2 tr\u1EE5c \u0111\u1ED9ng c\u01A1 WET Clean, AF Clean ch\u1EA1m nhau",
+      "C\u1EA7n teaching l\u1EA1i"
+    ]
+  },
+  {
+    "Id": 17011,
+    "Message": "WETCleanLeft_BrushCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 17012,
+    "Message": "WETCleanLeft_BrushCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 17013,
+    "Message": "WETCleanLeft_Alcohol_Not_Detect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "H\u1EBFt dung d\u1ECBch",
+      "Thay dung d\u1ECBch"
+    ]
+  },
+  {
+    "Id": 17014,
+    "Message": "WETCleanLeft_Prepare3M_Error",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra nguy\u00EAn v\u1EADt li\u1EC7u",
+      "Ki\u1EC3m tra nguy\u00EAn v\u1EADt li\u1EC7u"
+    ]
+  },
+  {
+    "Id": 18000,
+    "Message": "WETCleanRight",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 18001,
+    "Message": "WETCleanRight_PusherCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 18002,
+    "Message": "WETCleanRight_PusherCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 18003,
+    "Message": "WETCleanRight_FeedingRoller_NotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Kh\u00F4ng c\u00F3 cu\u1ED9n lau",
+      "Thay m\u1EDBi cu\u1ED9n lau"
+    ]
+  },
+  {
+    "Id": 18004,
+    "Message": "WETCleanRight_WiperClean_NotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "h\u1EBFt cu\u1ED9n lau, thay cu\u1ED9n m\u1EDBi"
+    ]
+  },
+  {
+    "Id": 18005,
+    "Message": "WETCleanRight_PumpLeak_Detect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "R\u00F2 dung d\u1ECBch, h\u00E3y ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 18006,
+    "Message": "WETCleanRight_AlcoholLeak_Detect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "R\u00F2 dung d\u1ECBch",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 18007,
+    "Message": "WETCleanRight_ClampCylinder_Clamp_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 18008,
+    "Message": "WETCleanRight_ClampCylinder_Unclamp_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 18009,
+    "Message": "WETCleanRight_Vacuum_Detect_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "B\u00E0n Shuttle kh\u00F4ng hut \u0111\u01B0\u1EE3c k\u00EDnh",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 18010,
+    "Message": "Shuttle_Right_XAxis_Collision_Detect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "2 tr\u1EE5c \u0111\u1ED9ng c\u01A1 WET Clean, AF Clean ch\u1EA1m nhau",
+      "C\u1EA7n teaching l\u1EA1i"
+    ]
+  },
+  {
+    "Id": 18011,
+    "Message": "WETCleanRight_BrushCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 18012,
+    "Message": "WETCleanRight_BrushCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 18013,
+    "Message": "WETCleanRight_Alcohol_Not_Detect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "H\u1EBFt dung d\u1ECBch",
+      "Thay dung d\u1ECBch"
+    ]
+  },
+  {
+    "Id": 18014,
+    "Message": "WETCleanRight_Prepare3M_Error",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 334,
+      "Y": 223,
+      "Width": 198,
+      "Height": 71
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/WetClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra nguy\u00EAn v\u1EADt li\u1EC7u",
+      "Ki\u1EC3m tra nguy\u00EAn v\u1EADt li\u1EC7u"
+    ]
+  },
+  {
+    "Id": 19000,
+    "Message": "TransferRotationLeft",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 19001,
+    "Message": "TransferRotationLeft_Cylinder_Backward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 496,
+      "Y": 196,
+      "Width": 41,
+      "Height": 106
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 13,
+      "Y": 11,
+      "Width": 346,
+      "Height": 374
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 19002,
+    "Message": "TransferRotationLeft_Cylinder_Forward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 496,
+      "Y": 196,
+      "Width": 41,
+      "Height": 106
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 13,
+      "Y": 11,
+      "Width": 346,
+      "Height": 374
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 19003,
+    "Message": "TransferRotationLeft_RotationCylinder_0D_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 496,
+      "Y": 196,
+      "Width": 41,
+      "Height": 106
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 13,
+      "Y": 11,
+      "Width": 346,
+      "Height": 374
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 19004,
+    "Message": "TransferRotationLeft_RotationCylinder_180D_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 496,
+      "Y": 196,
+      "Width": 41,
+      "Height": 106
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 13,
+      "Y": 11,
+      "Width": 346,
+      "Height": 374
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 19005,
+    "Message": "TransferRotationLeft_Cylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 496,
+      "Y": 196,
+      "Width": 41,
+      "Height": 106
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 13,
+      "Y": 11,
+      "Width": 346,
+      "Height": 374
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 19006,
+    "Message": "TransferRotationLeft_Cylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 496,
+      "Y": 196,
+      "Width": 41,
+      "Height": 106
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 13,
+      "Y": 11,
+      "Width": 346,
+      "Height": 374
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 19007,
+    "Message": "TransferRotationLeft_RotateVac_Check_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 496,
+      "Y": 196,
+      "Width": 41,
+      "Height": 106
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 13,
+      "Y": 11,
+      "Width": 346,
+      "Height": 374
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c k\u00EDnh",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 19008,
+    "Message": "TransferRotationLeft_GlassVacAfterRotate_Check_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 496,
+      "Y": 196,
+      "Width": 41,
+      "Height": 106
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 13,
+      "Y": 11,
+      "Width": 346,
+      "Height": 374
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c k\u00EDnh",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 19009,
+    "Message": "TransferRotationLeft_GlassVacuum1_Check_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 496,
+      "Y": 196,
+      "Width": 41,
+      "Height": 106
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 13,
+      "Y": 11,
+      "Width": 346,
+      "Height": 374
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c k\u00EDnh",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 19010,
+    "Message": "TransferRotationLeft_GlassVacuum2_Check_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 496,
+      "Y": 196,
+      "Width": 41,
+      "Height": 106
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 13,
+      "Y": 11,
+      "Width": 346,
+      "Height": 374
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c k\u00EDnh",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 19011,
+    "Message": "TransferRotationLeft_GlassVacuumRotate_Check_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 496,
+      "Y": 196,
+      "Width": 41,
+      "Height": 106
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 13,
+      "Y": 11,
+      "Width": 346,
+      "Height": 374
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c k\u00EDnh",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 20000,
+    "Message": "TransferRotationRight",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 20001,
+    "Message": "TransferRotationRight_Cylinder_Backward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 493,
+      "Y": 195,
+      "Width": 45,
+      "Height": 98
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 20002,
+    "Message": "TransferRotationRight_Cylinder_Forward_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 493,
+      "Y": 195,
+      "Width": 45,
+      "Height": 98
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 20003,
+    "Message": "TransferRotationRight_RotationCylinder_0D_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 493,
+      "Y": 195,
+      "Width": 45,
+      "Height": 98
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 20004,
+    "Message": "TransferRotationRight_RotationCylinder_180D_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 493,
+      "Y": 195,
+      "Width": 45,
+      "Height": 98
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 20005,
+    "Message": "TransferRotationRight_Cylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 493,
+      "Y": 195,
+      "Width": 45,
+      "Height": 98
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 20006,
+    "Message": "TransferRotationRight_Cylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 493,
+      "Y": 195,
+      "Width": 45,
+      "Height": 98
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 20007,
+    "Message": "TransferRotationRight_RotateVac_Check_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 493,
+      "Y": 195,
+      "Width": 45,
+      "Height": 98
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c k\u00EDnh",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 20008,
+    "Message": "TransferRotationRight_GlassVacAfterRotate_Check_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 493,
+      "Y": 195,
+      "Width": 45,
+      "Height": 98
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 20009,
+    "Message": "TransferRotationRight_GlassVacuum1_Check_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 493,
+      "Y": 195,
+      "Width": 45,
+      "Height": 98
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 20010,
+    "Message": "TransferRotationRight_GlassVacuum2_Check_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 493,
+      "Y": 195,
+      "Width": 45,
+      "Height": 98
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 20011,
+    "Message": "TransferRotationRight_GlassVacuumRotate_Check_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 493,
+      "Y": 195,
+      "Width": 45,
+      "Height": 98
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/TransferRotation.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 29,
+      "Y": 5,
+      "Width": 321,
+      "Height": 384
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 21000,
+    "Message": "AFCleanLeft",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 21001,
+    "Message": "AFCleanLeft_PusherCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 329,
+      "Y": 212,
+      "Width": 177,
+      "Height": 90
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 196,
+      "Y": 92,
+      "Width": 140,
+      "Height": 210
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 21002,
+    "Message": "AFCleanLeft_PusherCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 329,
+      "Y": 212,
+      "Width": 177,
+      "Height": 90
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 196,
+      "Y": 92,
+      "Width": 140,
+      "Height": 210
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 21003,
+    "Message": "AFCleanLeft_FeedingRoller_NotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 329,
+      "Y": 212,
+      "Width": 177,
+      "Height": 90
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 196,
+      "Y": 92,
+      "Width": 140,
+      "Height": 210
+    },
+    "TroubleshootingSteps": [
+      "Kh\u00F4ng c\u00F3 cu\u1ED9n lau",
+      "Thay m\u1EDBi cu\u1ED9n lau"
+    ]
+  },
+  {
+    "Id": 21004,
+    "Message": "AFCleanLeft_WiperClean_NotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 329,
+      "Y": 212,
+      "Width": 177,
+      "Height": 90
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 196,
+      "Y": 92,
+      "Width": 140,
+      "Height": 210
+    },
+    "TroubleshootingSteps": [
+      "R\u00F2 dung d\u1ECBch",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 21005,
+    "Message": "AFCleanLeft_PumpLeak_Detect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 329,
+      "Y": 212,
+      "Width": 177,
+      "Height": 90
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 196,
+      "Y": 92,
+      "Width": 140,
+      "Height": 210
+    },
+    "TroubleshootingSteps": [
+      "R\u00F2 dung d\u1ECBch, h\u00E3y ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 21006,
+    "Message": "AFCleanLeft_AlcoholLeak_Detect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 329,
+      "Y": 212,
+      "Width": 177,
+      "Height": 90
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 196,
+      "Y": 92,
+      "Width": 140,
+      "Height": 210
+    },
+    "TroubleshootingSteps": [
+      "R\u00F2 dung d\u1ECBch",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 21007,
+    "Message": "AFCleanLeft_Vacuum_Detect_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 329,
+      "Y": 212,
+      "Width": 177,
+      "Height": 90
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 196,
+      "Y": 92,
+      "Width": 140,
+      "Height": 210
+    },
+    "TroubleshootingSteps": [
+      "B\u00E0n Shuttle kh\u00F4ng hut \u0111\u01B0\u1EE3c k\u00EDnh",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 21008,
+    "Message": "AFCleanLeft_BrushCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 329,
+      "Y": 212,
+      "Width": 177,
+      "Height": 90
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 196,
+      "Y": 92,
+      "Width": 140,
+      "Height": 210
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 21009,
+    "Message": "AFCleanLeft_BrushCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 329,
+      "Y": 212,
+      "Width": 177,
+      "Height": 90
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 196,
+      "Y": 92,
+      "Width": 140,
+      "Height": 210
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 21010,
+    "Message": "AFCleanLeft_Alcohol_Not_Detect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 329,
+      "Y": 212,
+      "Width": 177,
+      "Height": 90
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 196,
+      "Y": 92,
+      "Width": 140,
+      "Height": 210
+    },
+    "TroubleshootingSteps": [
+      "H\u1EBFt dung d\u1ECBch",
+      "Thay dung d\u1ECBch"
+    ]
+  },
+  {
+    "Id": 21011,
+    "Message": "AFCleanLeft_PrepareSumo_Error",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 329,
+      "Y": 212,
+      "Width": 177,
+      "Height": 90
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 196,
+      "Y": 92,
+      "Width": 140,
+      "Height": 210
+    },
+    "TroubleshootingSteps": [
+      "H\u00E3y ki\u1EC3m tra l\u1ECD dung d\u1ECBch"
+    ]
+  },
+  {
+    "Id": 22000,
+    "Message": "AFCleanRight",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 22001,
+    "Message": "AFCleanRight_PusherCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 332,
+      "Y": 217,
+      "Width": 202,
+      "Height": 80
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 76,
+      "Y": 45,
+      "Width": 263,
+      "Height": 240
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 22002,
+    "Message": "AFCleanRight_PusherCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 332,
+      "Y": 217,
+      "Width": 202,
+      "Height": 80
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 76,
+      "Y": 45,
+      "Width": 263,
+      "Height": 240
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 22003,
+    "Message": "AFCleanRight_FeedingRoller_NotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 332,
+      "Y": 217,
+      "Width": 202,
+      "Height": 80
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 76,
+      "Y": 45,
+      "Width": 263,
+      "Height": 240
+    },
+    "TroubleshootingSteps": [
+      "Kh\u00F4ng c\u00F3 cu\u1ED9n lau",
+      "Thay m\u1EDBi cu\u1ED9n lau"
+    ]
+  },
+  {
+    "Id": 22004,
+    "Message": "AFCleanRight_WiperClean_NotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 332,
+      "Y": 217,
+      "Width": 202,
+      "Height": 80
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 76,
+      "Y": 45,
+      "Width": 263,
+      "Height": 240
+    },
+    "TroubleshootingSteps": [
+      "H\u1EBFt cu\u1ED9n lau, thay m\u1EDBi"
+    ]
+  },
+  {
+    "Id": 22005,
+    "Message": "AFCleanRight_PumpLeak_Detect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 332,
+      "Y": 217,
+      "Width": 202,
+      "Height": 80
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 76,
+      "Y": 45,
+      "Width": 263,
+      "Height": 240
+    },
+    "TroubleshootingSteps": [
+      "R\u00F2 dung d\u1ECBch, h\u00E3y ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 22006,
+    "Message": "AFCleanRight_AlcoholLeak_Detect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 332,
+      "Y": 217,
+      "Width": 202,
+      "Height": 80
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 76,
+      "Y": 45,
+      "Width": 263,
+      "Height": 240
+    },
+    "TroubleshootingSteps": [
+      "R\u00F2 dung d\u1ECBch",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 22007,
+    "Message": "AFCleanRight_Vacuum_Detect_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 332,
+      "Y": 217,
+      "Width": 202,
+      "Height": 80
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 76,
+      "Y": 45,
+      "Width": 263,
+      "Height": 240
+    },
+    "TroubleshootingSteps": [
+      "B\u00E0n Shuttle kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c k\u00EDnh",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 22008,
+    "Message": "AFCleanRight_BrushCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 332,
+      "Y": 217,
+      "Width": 202,
+      "Height": 80
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 76,
+      "Y": 45,
+      "Width": 263,
+      "Height": 240
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 22009,
+    "Message": "AFCleanRight_BrushCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 332,
+      "Y": 217,
+      "Width": 202,
+      "Height": 80
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 76,
+      "Y": 45,
+      "Width": 263,
+      "Height": 240
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 22010,
+    "Message": "AFCleanRight_Alcohol_Not_Detect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 332,
+      "Y": 217,
+      "Width": 202,
+      "Height": 80
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 76,
+      "Y": 45,
+      "Width": 263,
+      "Height": 240
+    },
+    "TroubleshootingSteps": [
+      "H\u1EBFt dung d\u1ECBch",
+      "Thay dung d\u1ECBch"
+    ]
+  },
+  {
+    "Id": 22011,
+    "Message": "AFCleanRight_PrepareSumo_Error",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/InitializeImage.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 332,
+      "Y": 217,
+      "Width": 202,
+      "Height": 80
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/03.Clean/AFClean.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 76,
+      "Y": 45,
+      "Width": 263,
+      "Height": 240
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra l\u1ECD dung d\u1ECBch"
+    ]
+  },
+  {
+    "Id": 23000,
+    "Message": "UnloadTransferLeft",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 23001,
+    "Message": "UnloadTransferLeft_VacuumOn_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 606,
+      "Y": 90,
+      "Width": 52,
+      "Height": 208
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/OutShuttle.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 4,
+      "Y": 34,
+      "Width": 377,
+      "Height": 328
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra h\u00FAt \u0111\u00E3 \u0111\u1EA1t ch\u01B0a, N\u1EBFu ch\u01B0a th\u00EC c\u00F3 th\u1EC3 teaching l\u1EA1i",
+      "Ki\u1EC3m tra vacuum, c\u01A1 kh\u00ED"
+    ]
+  },
+  {
+    "Id": 24000,
+    "Message": "UnloadTransferRight",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 24001,
+    "Message": "UnloadTransferRight_VacuumOn_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 606,
+      "Y": 90,
+      "Width": 52,
+      "Height": 208
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/OutShuttle.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 4,
+      "Y": 34,
+      "Width": 377,
+      "Height": 328
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra h\u00FAt \u0111\u00E3 \u0111\u1EA1t ch\u01B0a, N\u1EBFu ch\u01B0a th\u00EC c\u00F3 th\u1EC3 teaching l\u1EA1i",
+      "Ki\u1EC3m tra vacuum, c\u01A1 kh\u00ED"
+    ]
+  },
+  {
+    "Id": 25000,
+    "Message": "UnloadAlign",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 25001,
+    "Message": "UnloadAlign_AlignCylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 606,
+      "Y": 90,
+      "Width": 52,
+      "Height": 208
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/OutShuttle.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 4,
+      "Y": 34,
+      "Width": 377,
+      "Height": 328
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 25002,
+    "Message": "UnloadAlign_AlignCylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 606,
+      "Y": 90,
+      "Width": 52,
+      "Height": 208
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/OutShuttle.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 4,
+      "Y": 34,
+      "Width": 377,
+      "Height": 328
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 25003,
+    "Message": "UnloadAlign_Vacuum_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 606,
+      "Y": 90,
+      "Width": 52,
+      "Height": 208
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/OutShuttle.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 4,
+      "Y": 34,
+      "Width": 377,
+      "Height": 328
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt",
+      "Ki\u1EC3m tra h\u00FAt \u0111\u00E3 \u0111\u1EA1t ch\u01B0a, n\u1EBFu ch\u01B0a th\u00EC c\u00F3 th\u1EC3 Teaching l\u1EA1i",
+      "Ki\u1EC3m tra vacuum, c\u01A1 kh\u00ED"
+    ]
+  },
+  {
+    "Id": 25004,
+    "Message": "UnloadAlign_Glass_NotDetect",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 606,
+      "Y": 90,
+      "Width": 52,
+      "Height": 208
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/OutShuttle.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 4,
+      "Y": 34,
+      "Width": 377,
+      "Height": 328
+    },
+    "TroubleshootingSteps": [
+      "Sensor kh\u00F4ng dectect \u0111\u01B0\u1EE3c",
+      "C\u1EA7n ki\u1EC3m tra"
+    ]
+  },
+  {
+    "Id": 26000,
+    "Message": "RobotUnload",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 26001,
+    "Message": "RobotUnload_Cylinder_Up_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 697,
+      "Y": 100,
+      "Width": 60,
+      "Height": 145
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 27,
+      "Y": 10,
+      "Width": 334,
+      "Height": 373
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 26002,
+    "Message": "RobotUnload_Cylinder_Down_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 697,
+      "Y": 100,
+      "Width": 60,
+      "Height": 145
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 27,
+      "Y": 10,
+      "Width": 334,
+      "Height": 373
+    },
+    "TroubleshootingSteps": [
+      "Cylinder l\u1ED7i",
+      "Ki\u1EC3m tra input c\u1EE7a sensor cylinder, Ki\u1EC3m tra output c\u1EE7a cylinder(sol,d\u00E2y kh\u00ED, fitting)",
+      "Ki\u1EC3m tra c\u00F3 k\u1EB9t cylinder kh\u00F4ng"
+    ]
+  },
+  {
+    "Id": 26003,
+    "Message": "RobotUnload_Vacuum_On_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 697,
+      "Y": 100,
+      "Width": 60,
+      "Height": 145
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 27,
+      "Y": 10,
+      "Width": 334,
+      "Height": 373
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra h\u00FAt \u0111\u00E3 \u0111\u1EA1t ch\u01B0a, n\u1EBFu ch\u01B0a th\u00EC c\u00F3 th\u1EC3 Teaching l\u1EA1i",
+      "Ki\u1EC3m tra vacuum, c\u01A1 kh\u00ED"
+    ]
+  },
+  {
+    "Id": 26004,
+    "Message": "RobotUnload_Pick_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 697,
+      "Y": 100,
+      "Width": 60,
+      "Height": 145
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 27,
+      "Y": 10,
+      "Width": 334,
+      "Height": 373
+    },
+    "TroubleshootingSteps": [
+      "Vacuum kh\u00F4ng h\u00FAt \u0111\u01B0\u1EE3c",
+      "Ki\u1EC3m tra h\u00FAt \u0111\u00E3 \u0111\u1EA1t ch\u01B0a, n\u1EBFu ch\u01B0a th\u00EC c\u00F3 th\u1EC3 Teaching l\u1EA1i",
+      "Ki\u1EC3m tra vacuum, c\u01A1 kh\u00ED"
+    ]
+  },
+  {
+    "Id": 26005,
+    "Message": "RobotUnload_Home_Manual_By_TeachingPendant",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 697,
+      "Y": 100,
+      "Width": 60,
+      "Height": 145
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 27,
+      "Y": 10,
+      "Width": 334,
+      "Height": 373
+    },
+    "TroubleshootingSteps": [
+      "Robot v\u1EC1 home b\u1EB1ng Teaching pendanet",
+      "Robot v\u1EC1 home b\u1EB1ng Teaching pedanet"
+    ]
+  },
+  {
+    "Id": 26006,
+    "Message": "RobotUnload_Programing_Not_Running",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 697,
+      "Y": 100,
+      "Width": 60,
+      "Height": 145
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 27,
+      "Y": 10,
+      "Width": 334,
+      "Height": 373
+    },
+    "TroubleshootingSteps": [
+      "Robot v\u1EC1 home b\u1EB1ng Teaching pendanet",
+      "Robot v\u1EC1 home b\u1EB1ng Teaching pedanet"
+    ]
+  },
+  {
+    "Id": 26007,
+    "Message": "RobotUnload_Connect_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 697,
+      "Y": 100,
+      "Width": 60,
+      "Height": 145
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 27,
+      "Y": 10,
+      "Width": 334,
+      "Height": 373
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra k\u1EBFt n\u1ED1i robot",
+      "ki\u1EC3m tra k\u1EBFt n\u1ED1i robot"
+    ]
+  },
+  {
+    "Id": 26008,
+    "Message": "RobotUnload_SetModel_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/PictureName.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 0,
+      "Y": 0,
+      "Width": 0,
+      "Height": 0
+    },
+    "TroubleshootingSteps": [
+      "Fix problem"
+    ]
+  },
+  {
+    "Id": 26009,
+    "Message": "RobotUnload_No_Ready_Response",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 697,
+      "Y": 100,
+      "Width": 60,
+      "Height": 145
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 27,
+      "Y": 10,
+      "Width": 334,
+      "Height": 373
+    },
+    "TroubleshootingSteps": [
+      "Ki\u1EC3m tra k\u1EBFt n\u1ED1i robot",
+      "ki\u1EC3m tra k\u1EBFt n\u1ED1i robot"
+    ]
+  },
+  {
+    "Id": 26010,
+    "Message": "RobotUnload_SendMotionCommand_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 697,
+      "Y": 100,
+      "Width": 60,
+      "Height": 145
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 27,
+      "Y": 10,
+      "Width": 334,
+      "Height": 373
+    },
+    "TroubleshootingSteps": [
+      "Robot v\u1EC1 home b\u1EB1ng teaching pendanet",
+      "Robot v\u1EC1 home b\u1EB1ng teaching pendanet"
+    ]
+  },
+  {
+    "Id": 26011,
+    "Message": "RobotUnload_Stop_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 697,
+      "Y": 100,
+      "Width": 60,
+      "Height": 145
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 27,
+      "Y": 10,
+      "Width": 334,
+      "Height": 373
+    },
+    "TroubleshootingSteps": [
+      "Robot d\u1EEBng l\u1ED7i",
+      "ki\u1EC3m tra robot"
+    ]
+  },
+  {
+    "Id": 26012,
+    "Message": "RobotUnload_SafetyFenceSwitch_Not_Active",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 697,
+      "Y": 100,
+      "Width": 60,
+      "Height": 145
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 27,
+      "Y": 10,
+      "Width": 334,
+      "Height": 373
+    },
+    "TroubleshootingSteps": [
+      "Robot \u0111ang \u1EDF mode T1",
+      "Chuy\u1EC3n robot sang Ext"
+    ]
+  },
+  {
+    "Id": 26013,
+    "Message": "RobotUnload_Automatic_External_Not_active",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 697,
+      "Y": 100,
+      "Width": 60,
+      "Height": 145
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 27,
+      "Y": 10,
+      "Width": 334,
+      "Height": 373
+    },
+    "TroubleshootingSteps": [
+      "Robot \u0111ang \u1EDF mode T1",
+      "Chuy\u1EC3n robot sang Ext"
+    ]
+  },
+  {
+    "Id": 26014,
+    "Message": "RobotUnload_GetLastPosition_Fail",
+    "AlertOverviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/Machine.png",
+    "AlertOverviewHighlightRectangle": {
+      "X": 697,
+      "Y": 100,
+      "Width": 60,
+      "Height": 145
+    },
+    "AlertDetailviewSource": "/PIFilmAutoDetachCleanMC;component/Resource/Image/04.Unload/UnloadRobot.png",
+    "AlertDetailviewHighlightRectangle": {
+      "X": 27,
+      "Y": 10,
+      "Width": 334,
+      "Height": 373
+    },
+    "TroubleshootingSteps": [
+      "Robot kh\u00F4ng bi\u1EBFt \u0111ang \u1EDF \u0111\u00E2u",
+      "V\u1EC1 home robot"
+    ]
+  }
+]

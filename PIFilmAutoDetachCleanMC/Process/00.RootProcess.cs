@@ -216,7 +216,7 @@ namespace PIFilmAutoDetachCleanMC.Process
 
                 ProcessMode = EProcessMode.Alarm;
                 Log.Info("ToAlarm Done, Alarm");
-                AlertNotifyView.ShowDialog(_alarmService.GetById(raisedAlarmCode));
+                AlertNotifyView.ShowDialog(_alarmService, raisedAlarmCode);
                 raisedAlarmCode = -1;
             }
             else
@@ -237,7 +237,7 @@ namespace PIFilmAutoDetachCleanMC.Process
                 _devices.Outputs.Lamp_Alarm(true);
                 ProcessMode = EProcessMode.Warning;
                 Log.Info("ToWarning Done, Warning");
-                AlertNotifyView.ShowDialog(_warningService.GetById(raisedWarningCode), true);
+                AlertNotifyView.ShowDialog(_warningService, raisedAlarmCode, true);
                 raisedWarningCode = -1;
             }
             else
